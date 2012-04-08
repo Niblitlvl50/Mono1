@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Sprite name="AnimatedGuy" frames="4">
+	<Texture name="animation.png" />
+	<TextureCoordinate x="0.0" y="0.0" u="1.0" v="1.0" />
+	<TextureCoordinate x="0.0" y="0.0" u="1.0" v="1.0" />
+	<TextureCoordinate x="0.0" y="0.0" u="1.0" v="1.0" />
+	<TextureCoordinate x="0.0" y="0.0" u="1.0" v="1.0" />
+</Sprite>
