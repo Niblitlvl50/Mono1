@@ -50,9 +50,9 @@ void TriangleObject::Draw() const
 
 void TriangleObject::Update(unsigned int delta)
 {
-	mRotation += 1.0f;
-	if(mRotation > 360.0f)
-		mRotation = 0.0f;
+	mRotation += 0.05 * delta;
+	if(mRotation >= 360.0f)
+		mRotation -= 360.0f;
     
     EntityBase::Update(delta);
 }
