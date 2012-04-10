@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		002F3C0109D093BD00EBEB88 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F3C0009D093BD00EBEB88 /* OpenGL.framework */; };
+		2B4B069C15330335006D0C75 /* AnimatedSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B4B069A15330330006D0C75 /* AnimatedSprite.cpp */; };
+		2B4B069D15330335006D0C75 /* AnimatedSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B4B069B15330332006D0C75 /* AnimatedSprite.h */; };
+		2B4B06A015331F13006D0C75 /* AnimatedDude.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B4B069E15331F12006D0C75 /* AnimatedDude.cpp */; };
+		2B4B06A3153336E8006D0C75 /* Vector2f.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B4B06A2153336E8006D0C75 /* Vector2f.h */; };
 		2B6872D61531FB9600B8C2FB /* gtest_main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D41531FB9600B8C2FB /* gtest_main.cc */; };
 		2B6872D71531FB9600B8C2FB /* EngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D51531FB9600B8C2FB /* EngineTest.cpp */; };
 		2B6A74231531F9A7002CB834 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6A74221531F9A7002CB834 /* gtest.framework */; };
@@ -198,6 +202,11 @@
 /* Begin PBXFileReference section */
 		002F3C0009D093BD00EBEB88 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2B4B069A15330330006D0C75 /* AnimatedSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedSprite.cpp; sourceTree = "<group>"; };
+		2B4B069B15330332006D0C75 /* AnimatedSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedSprite.h; sourceTree = "<group>"; };
+		2B4B069E15331F12006D0C75 /* AnimatedDude.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimatedDude.cpp; path = Game/AnimatedDude.cpp; sourceTree = "<group>"; };
+		2B4B069F15331F12006D0C75 /* AnimatedDude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedDude.h; path = Game/AnimatedDude.h; sourceTree = "<group>"; };
+		2B4B06A2153336E8006D0C75 /* Vector2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vector2f.h; path = Math/Vector2f.h; sourceTree = "<group>"; };
 		2B6872D41531FB9600B8C2FB /* gtest_main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gtest_main.cc; sourceTree = "<group>"; };
 		2B6872D51531FB9600B8C2FB /* EngineTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EngineTest.cpp; sourceTree = "<group>"; };
 		2B6872DC1531FEA800B8C2FB /* MonoEngine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = MonoEngine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -532,6 +541,14 @@
 			path = "src/zlib-1.2.5";
 			sourceTree = "<group>";
 		};
+		2B4B06A1153336BE006D0C75 /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				2B4B06A2153336E8006D0C75 /* Vector2f.h */,
+			);
+			name = Math;
+			sourceTree = "<group>";
+		};
 		2B52D16813049C500094C7EB /* Lua 5.1.4 */ = {
 			isa = PBXGroup;
 			children = (
@@ -597,6 +614,7 @@
 		2B6872DD1531FEA800B8C2FB /* MonoEngine */ = {
 			isa = PBXGroup;
 			children = (
+				2B4B06A1153336BE006D0C75 /* Math */,
 				2BE474881532033C00CA5ACB /* Linked Frameworks */,
 				2B6872DE1531FEA800B8C2FB /* Supporting Files */,
 				2BE473DF153201CC00CA5ACB /* EventHandler */,
@@ -628,6 +646,8 @@
 				2BE473FB153201CC00CA5ACB /* OGLRenderer.h */,
 				2BE473FC153201CC00CA5ACB /* Sprite.cpp */,
 				2BE473FD153201CC00CA5ACB /* Sprite.h */,
+				2B4B069A15330330006D0C75 /* AnimatedSprite.cpp */,
+				2B4B069B15330332006D0C75 /* AnimatedSprite.h */,
 			);
 			path = MonoEngine;
 			sourceTree = "<group>";
@@ -712,6 +732,8 @@
 				2BD1E5E91532080500A75171 /* TestZone.h */,
 				2BD1E5EA1532080500A75171 /* TriangleObject.cpp */,
 				2BD1E5EB1532080500A75171 /* TriangleObject.h */,
+				2B4B069E15331F12006D0C75 /* AnimatedDude.cpp */,
+				2B4B069F15331F12006D0C75 /* AnimatedDude.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -849,6 +871,8 @@
 				2BE4744A153201CC00CA5ACB /* ITexture.h in Headers */,
 				2BE4744C153201CC00CA5ACB /* Texture.h in Headers */,
 				2BE4744E153201CC00CA5ACB /* TextureFactory.h in Headers */,
+				2B4B069D15330335006D0C75 /* AnimatedSprite.h in Headers */,
+				2B4B06A3153336E8006D0C75 /* Vector2f.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1036,6 +1060,7 @@
 				2BE47448153201CC00CA5ACB /* WindowFactory.cpp in Sources */,
 				2BE4744B153201CC00CA5ACB /* Texture.cpp in Sources */,
 				2BE4744D153201CC00CA5ACB /* TextureFactory.cpp in Sources */,
+				2B4B069C15330335006D0C75 /* AnimatedSprite.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1059,6 +1084,7 @@
 				2BD1E5EF1532080500A75171 /* TestZone.cpp in Sources */,
 				2BD1E5F01532080500A75171 /* TriangleObject.cpp in Sources */,
 				2BD1E5F21532081300A75171 /* main.cpp in Sources */,
+				2B4B06A015331F13006D0C75 /* AnimatedDude.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

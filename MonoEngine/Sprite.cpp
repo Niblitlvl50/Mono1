@@ -18,22 +18,16 @@ using namespace mono;
 namespace
 {
     static const float vertices[] = { -1.0f, -1.0f,
-                                       1.0f, -1.0f,
-                                       1.0f,  1.0f,
-        
-                                      -1.0f, -1.0f,
                                       -1.0f,  1.0f,
-                                       1.0f,  1.0f };
+                                       1.0f,  1.0f,        
+                                       1.0f, -1.0f };
     
-    // This is only valid if all textures cover all of the surface. So its probably not valid in the long
-    // run when more than one texture is on the same sheet.
     static const float texCoords[] = { 0.0f, 0.0f, 
-                                       1.0f, 0.0f, 
+                                       0.0f, 1.0f, 
                                        1.0f, 1.0f,
-        
-                                       0.0f, 0.0f,
-                                       0.0f, 1.0f,
-                                       1.0f, 1.0f };
+                                       1.0f, 0.0f };
+    
+    static const unsigned short indices[] = { 0, 1, 2, 0, 2, 3 };
 }
 
 
@@ -41,7 +35,6 @@ Sprite::Sprite(const std::string& file, float xscale, float yscale)
     : mXScale(xscale),
       mYScale(yscale)
 {
-    //const std::map<std::string, std::string> configmap = mono::LuaConfig(file);
     mTexture = mono::CreateTexture(file);
 }
 
@@ -60,7 +53,7 @@ void Sprite::DrawAt(float x, float y) const
 
     glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
     glVertexPointer(2, GL_FLOAT, 0, vertices);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
     
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);

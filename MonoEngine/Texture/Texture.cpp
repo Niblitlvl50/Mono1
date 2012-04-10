@@ -13,11 +13,13 @@
 using namespace mono;
 
 
-unsigned int mono::Texture::mBoundTexture = -1;
+unsigned int mono::Texture::sBoundTexture = -1;
 
 
 Texture::Texture(IImagePtr image)
-    : mTextureId(-1)
+    : mTextureId(-1),
+      mWidth(image->Width()),
+      mHeight(image->Height())
 {
     glGenTextures(1, &mTextureId);
     glBindTexture(GL_TEXTURE_2D, mTextureId);
@@ -38,15 +40,25 @@ Texture::~Texture()
 
 void Texture::Use() const
 {
-    if(mBoundTexture != mTextureId)
+    if(sBoundTexture != mTextureId)
     {
         glBindTexture(GL_TEXTURE_2D, mTextureId);
-        mBoundTexture = mTextureId;
+        sBoundTexture = mTextureId;
     }
+}
+
+int Texture::Width() const
+{
+    return mWidth;
+}
+
+int Texture::Height() const
+{
+    return mHeight;
 }
 
 void Texture::Clear()
 {
     glBindTexture(GL_TEXTURE_2D, 0);
-    mBoundTexture = -1;
+    sBoundTexture = -1;
 }

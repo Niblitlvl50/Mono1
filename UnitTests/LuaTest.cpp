@@ -11,7 +11,6 @@
 
 namespace
 {
-
     bool functionCalled = false;
     
     int FunctionToCallFromLua(lua_State* L)
@@ -23,7 +22,7 @@ namespace
     }
 }
 
-TEST(LuaTest, Basic)
+TEST(LuaTest, BasicFunction)
 {
     mono::LuaInterpreter lua;
     EXPECT_NO_THROW(lua.RegisterFunction("FunctionToCallFromLua", FunctionToCallFromLua));

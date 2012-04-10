@@ -17,7 +17,7 @@ class lua_State;
 
 namespace mono
 {
-    typedef std::tr1::function<void (lua_State*)> LuaFunction;
+    typedef std::tr1::function<int (lua_State*)> LuaFunction;
     
 	class LuaInterpreter
 	{

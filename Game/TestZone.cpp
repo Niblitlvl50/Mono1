@@ -9,6 +9,7 @@
 #include "TestZone.h"
 #include "TriangleObject.h"
 #include "OscillatingLine.h"
+#include "AnimatedDude.h"
 #include "IRenderer.h"
 
 #include "SysTime.h"
@@ -20,6 +21,7 @@ TestZone::TestZone()
 {
     mEntities.push_back(mono::IEntityPtr(new TriangleObject));
     mEntities.push_back(mono::IEntityPtr(new OscillatingLine));
+    mEntities.push_back(mono::IEntityPtr(new AnimatedDude(-10.0f, -5.0f)));
 }
 
 void TestZone::Accept(mono::IRenderer& renderer)

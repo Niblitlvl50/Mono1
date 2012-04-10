@@ -46,6 +46,10 @@ int main()
     {
         std::cout << "Shutdown due to exception: " << e.what() << std::endl;
     }
+    catch(const std::exception& e)
+    {
+        std::cout << "Shutdown due to exception: " << e.what() << std::endl;
+    }
     catch(...)
     {
         std::cout << "Shutdown due to unknown exception" << std::endl;

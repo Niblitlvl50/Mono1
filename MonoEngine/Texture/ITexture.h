@@ -19,6 +19,8 @@ namespace mono
         { }
         
         virtual void Use() const = 0;
+        virtual int Width() const = 0;
+        virtual int Height() const = 0;
     };
 
 }

@@ -26,9 +26,14 @@ namespace mono
                 
     private:
         virtual void Use() const;
+        virtual int Width() const;
+        virtual int Height() const;
         
         unsigned int mTextureId;
-        static unsigned int mBoundTexture;
+        unsigned int mWidth;
+        unsigned int mHeight;
+        
+        static unsigned int sBoundTexture;
     };
     
 }

@@ -30,9 +30,6 @@ namespace mono
 	
 	private:
 		
-		int mWidth;
-		int mHeight;
-		unsigned int mFlags;
         IOGLSetupPtr mOGLSetup;
 		        
         SDL_Window* mWindow;

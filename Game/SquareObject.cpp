@@ -23,7 +23,7 @@ SquareObject::SquareObject(float x, float y, float z)
 
 void SquareObject::Draw() const
 {
-    mSprite.DrawAt(mPosX, mPosY);	
+    mSprite.DrawAt(mPosX, mPosY);
 	EntityBase::Draw();
 }
 

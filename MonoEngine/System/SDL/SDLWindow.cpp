@@ -21,10 +21,7 @@ using namespace mono;
 
 
 SDLWindow::SDLWindow(const std::string& title, int width, int height, unsigned int flags, IOGLSetupPtr setup)
-    : mWidth(width),
-      mHeight(height),
-      mFlags(flags),
-      mOGLSetup(setup)
+    : mOGLSetup(setup)
 {
     
     /* Request opengl 2.1 context.
@@ -60,9 +57,6 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, unsigned i
 
 void SDLWindow::SurfaceChanged(int width, int height)
 {
-	mWidth = width;
-	mHeight = height;
-	    
     mOGLSetup->OnChanged(width, height);
 }
 
