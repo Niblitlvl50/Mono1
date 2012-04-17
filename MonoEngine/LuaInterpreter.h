@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef MONO_LUAINTERPRETER_H
-#define MONO_LUAINTERPRETER_H
+#pragma once
 
 #include <string>
 #include <tr1/functional>
@@ -35,7 +34,4 @@ namespace mono
 	};
     
 }
-
-
-#endif
 

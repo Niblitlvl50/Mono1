@@ -21,14 +21,15 @@ OscillatingLine::OscillatingLine()
 
 void OscillatingLine::Draw() const
 {
-    const float deltasin = sin(mDelta);
-    const float deltacos = cos(mDelta);
+    const float radius = 50.0f;
+    const float deltasin = sin(mDelta) * radius;
+    const float deltacos = cos(mDelta) * radius;
     
     mono::Texture::Clear();
     
     glPushMatrix();
     
-    glTranslated(0.0, -4.0, 0.0);
+    glTranslated(400.0, 100.0, 0.0);
     glColor3f(0.0f, 0.0f, 0.0f);
     glPointSize(4.0f);
 

@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef MONO_ENTITYBASE_H
-#define MONO_ENTITYBASE_H
+#pragma once
 
 #include "IEntity.h"
 #include "MonoFwd.h"
@@ -34,6 +33,4 @@ namespace mono
 	};
     
 }
-
-#endif
 

@@ -6,8 +6,7 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef SYSTEM_FILE_H
-#define SYSTEM_FILE_H
+#pragma once
 
 #include <tr1/memory>
 
@@ -17,6 +16,3 @@ namespace File
     
     FilePtr OpenBinaryFile(const std::string& source);
 }
-
-#endif
-

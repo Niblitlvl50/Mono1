@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef MONO_OGLRENDERER_H
-#define MONO_OGLRENDERER_H
+#pragma once
 
 #include "IRenderer.h"
 
@@ -33,8 +32,4 @@ namespace mono
 	};
 
 }
-
-
-#endif
-
 

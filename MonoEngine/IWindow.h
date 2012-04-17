@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef MONO_IWINDOW_H
-#define MONO_IWINDOW_H
+#pragma once
 
 #include "MonoFwd.h"
 
@@ -23,10 +22,10 @@ namespace mono
 		virtual void SurfaceChanged(int width, int height) = 0;
 		virtual void Activated(bool activated) = 0;
 		virtual void DrawFrame(IRenderer& renderer) const = 0;
+        
+        virtual int GetWidth() const = 0;
+        virtual int GetHeight() const = 0;
 	};
 
 }
-
-
-#endif
 

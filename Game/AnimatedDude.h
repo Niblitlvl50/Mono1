@@ -6,16 +6,19 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef GAME_ANIMATEDDUDE_H
-#define GAME_ANIMATEDDUDE_H
+#pragma once
 
 #include "EntityBase.h"
+#include "Vector2f.h"
 #include "AnimatedSprite.h"
+#include "AnimatedDudeController.h"
 
 namespace game
 {
 	class AnimatedDude : public mono::EntityBase
 	{
+        friend class AnimatedDudeController;
+        
 	public:
 		
 		AnimatedDude(float x, float y);
@@ -25,11 +28,11 @@ namespace game
 		virtual void Draw() const;
         virtual void Update(unsigned int delta);
         
-        float mX;
-        float mY;
+        Math::Vector2f mPosition;
+        Math::Vector2f mTarget;
         mono::AnimatedSprite mSprite;
+        AnimatedDudeController mController;
+        
 	};
 }
-
-#endif
 

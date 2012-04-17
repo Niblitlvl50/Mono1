@@ -6,8 +6,7 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef MONO_IMAGEFACTORY_H
-#define MONO_IMAGEFACTORY_H
+#pragma once
 
 #include "IImage.h"
 #include <string>
@@ -16,5 +15,3 @@ namespace mono
 {
     IImagePtr LoadImage(const std::string& source);
 }
-
-#endif

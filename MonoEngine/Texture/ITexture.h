@@ -7,8 +7,7 @@
 //
 
 
-#ifndef MONO_ITEXTURE_H
-#define MONO_ITEXTURE_H
+#pragma once
 
 namespace mono
 {
@@ -24,6 +23,4 @@ namespace mono
     };
 
 }
-
-#endif
 

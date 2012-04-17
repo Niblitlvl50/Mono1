@@ -6,14 +6,11 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef EVENT_QUITEVENT_H
-#define EVENT_QUITEVENT_H
+#pragma once
 
 namespace Event
 {
     struct QuitEvent
     { };
 }
-
-#endif
 

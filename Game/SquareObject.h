@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef GAME_SQUAREOBJECT_H
-#define GAME_SQUAREOBJECT_H
+#pragma once
 
 #include "EntityBase.h"
 #include "Sprite.h"
@@ -35,6 +34,4 @@ namespace game
 	};
 
 }
-
-#endif
 

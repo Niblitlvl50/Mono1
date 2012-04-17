@@ -18,8 +18,7 @@
 //!
 
 
-#ifndef MONO_ANIMATEDSPRITE_H
-#define MONO_ANIMATEDSPRITE_H
+#pragma once
 
 #include "MonoFwd.h"
 #include "IUpdatable.h"
@@ -87,6 +86,4 @@ namespace mono
         std::map<int, AnimationSequence> mDefinedAnimations;
     };
 }
-
-#endif
 

@@ -71,11 +71,11 @@ void Events::ProcessSystemEvents(mono::IInputHandlerPtr handler)
 				break;
                 
 			case SDL_MOUSEBUTTONDOWN:
-				handler->OnMouseDown(event.button.button);
+				handler->OnMouseDown(event.button.button, event.button.x, event.button.y);
 				break;
                 
 			case SDL_MOUSEBUTTONUP:
-				handler->OnMouseUp(event.button.button);
+				handler->OnMouseUp(event.button.button, event.button.x, event.button.y);
 				break;
                 
 			case SDL_MOUSEMOTION:

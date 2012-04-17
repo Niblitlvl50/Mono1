@@ -8,8 +8,7 @@
  */
 
 
-#ifndef MONO_SDLWINDOW_H
-#define MONO_SDLWINDOW_H
+#pragma once
 
 #include "IWindow.h"
 #include "MonoFwd.h"
@@ -22,21 +21,22 @@ namespace mono
 	class SDLWindow : public mono::IWindow
 	{
 	public:
-		SDLWindow(const std::string& title, int width, int height, unsigned int flags, const IOGLSetupPtr setup);
+		SDLWindow(const std::string& title, int width, int height, bool fullscreen);
 
 		virtual void SurfaceChanged(int width, int height);
 		virtual void Activated(bool activated);
 		virtual void DrawFrame(IRenderer& renderer) const;
+        
+        virtual int GetWidth() const;
+        virtual int GetHeight() const;
 	
 	private:
-		
-        IOGLSetupPtr mOGLSetup;
-		        
+        
+        int mWidth;
+        int mHeight;
+        
         SDL_Window* mWindow;
         void* mContext;
 	};
 }
-
-
-#endif
 

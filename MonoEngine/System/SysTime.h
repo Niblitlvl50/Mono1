@@ -7,8 +7,7 @@
 //
 
 
-#ifndef SYSTEM_TIME_H
-#define SYSTEM_TIME_H
+#pragma once
 
 namespace Time
 {
@@ -16,4 +15,3 @@ namespace Time
     void Sleep(unsigned int milliseconds);
 }
 
-#endif

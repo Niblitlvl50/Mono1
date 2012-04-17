@@ -6,8 +6,7 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef LIBPNG_PNGIMAGE_H
-#define LIBPNG_PNGIMAGE_H
+#pragma once
 
 #include "IImage.h"
 #include <string>
@@ -37,6 +36,4 @@ namespace libpng
         std::tr1::shared_ptr<byte> mData;
     };
 }
-
-#endif
 

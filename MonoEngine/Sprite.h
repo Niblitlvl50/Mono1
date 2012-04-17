@@ -7,8 +7,7 @@
 //
 
 
-#ifndef MONO_SPRITE_H
-#define MONO_SPRITE_H
+#pragma once
 
 #include "MonoFwd.h"
 
@@ -28,6 +27,4 @@ namespace mono
         ITexturePtr mTexture;
     };
 }
-
-#endif
 

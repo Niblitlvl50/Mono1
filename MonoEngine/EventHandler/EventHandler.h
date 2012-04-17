@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef MONO_EVENTHANDLER_H
-#define MONO_EVENTHANDLER_H
+#pragma once
 
 #include <typeinfo>
 #include <map>
@@ -108,6 +107,4 @@ namespace mono
 		
 	};
 }
-
-#endif
 

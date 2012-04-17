@@ -12,6 +12,11 @@
 #include "QuitEvent.h"
 #include "SurfaceChangedEvent.h"
 #include "ActivatedEvent.h"
+#include "KeyDownEvent.h"
+#include "KeyUpEvent.h"
+#include "MouseUpEvent.h"
+#include "GameController.h"
+#include "Vector2f.h"
 
 #include <SDL_events.h>
 
@@ -19,7 +24,13 @@ using namespace mono;
 
 
 void InputHandler::OnKeyDown(unsigned int key)
-{ }
+{
+    if(key == SDLK_ESCAPE)
+        return;
+
+    const Event::KeyDownEvent event(key);
+    EventHandler::DispatchEvent(event);
+}
 
 void InputHandler::OnKeyUp(unsigned int key)
 {
@@ -28,36 +39,23 @@ void InputHandler::OnKeyUp(unsigned int key)
 		SDL_Event event;
 		event.type = SDL_QUIT;
 		SDL_PushEvent(&event);
+        return;
 	}
-	
-	if(key == SDLK_q)
-	{
-		mLua.ExecuteString("print 'Hello ffs'");
-	}
-	
+    
+    const Event::KeyUpEvent event(key);
+    EventHandler::DispatchEvent(event);
 }
 
-void InputHandler::OnMouseDown(unsigned int button)
+void InputHandler::OnMouseDown(unsigned int button, int x, int y)
 { }
 
-void InputHandler::OnMouseUp(unsigned int button)
+void InputHandler::OnMouseUp(unsigned int button, int x, int y)
 {
-	switch(button)
-	{
-		case SDL_BUTTON_LEFT:
-		{
-			break;
-		}
-			
-		case SDL_BUTTON_RIGHT:
-		{
-			break;
-		}
-			
-		default:
-			break;
-	}
-	
+    const Math::Vector2f& size = GameControllerInstance().GetWindowSize();
+    const int height = static_cast<int>(size.mY);
+    
+    const Event::MouseUpEvent event(button, x, height - y);
+    EventHandler::DispatchEvent(event);
 }
 
 void InputHandler::OnMouseMotion(unsigned int x, unsigned int y)
@@ -67,17 +65,17 @@ void InputHandler::OnUserEvent(int code, void* data1, void* data2)
 
 void InputHandler::OnQuit()
 {
-    Event::QuitEvent event;
+    const Event::QuitEvent event;
     EventHandler::DispatchEvent(event);
 }
 void InputHandler::OnSurfaceChanged(int width, int height)
 {
-    Event::SurfaceChangedEvent event(width, height);
+    const Event::SurfaceChangedEvent event(width, height);
     EventHandler::DispatchEvent(event);
 }
 void InputHandler::OnActivated(bool gain)
 {
-    Event::ActivatedEvent event(gain);
+    const Event::ActivatedEvent event(gain);
     EventHandler::DispatchEvent(event);
 }
 

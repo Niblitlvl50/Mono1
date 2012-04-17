@@ -26,9 +26,11 @@ void TriangleObject::Draw() const
     mono::Texture::Clear();
     
 	glPushMatrix();
-		
+    
+	glTranslatef(400.0f, 300.0f, 0.0f);
 	glRotatef(mRotation, 0.0f, 0.0f, 1.0f);
-	glColor3f(1.0f, 0.0f, 0.0f);
+    glScalef(20.0f, 20.0f, 20.f);
+    glColor3f(1.0f, 0.0f, 0.0f);
 	
 	glBegin(GL_TRIANGLES);
 	

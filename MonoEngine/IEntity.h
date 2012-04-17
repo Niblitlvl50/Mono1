@@ -7,8 +7,7 @@
 //
 
 
-#ifndef MONO_IENTITY_H
-#define MONO_IENTITY_H
+#pragma once
 
 #include "IDrawable.h"
 #include "IUpdatable.h"
@@ -23,6 +22,4 @@ namespace mono
         //virtual unsigned int GetId() const = 0;
     };
 }
-
-#endif
 

@@ -7,8 +7,7 @@
 //
 
 
-#ifndef EVENT_SURFACECHANGEDEVENT_H
-#define EVENT_SURFACECHANGEDEVENT_H
+#pragma once
 
 namespace Event
 {
@@ -24,6 +23,4 @@ namespace Event
         const int height;
     };
 }
-
-#endif
 

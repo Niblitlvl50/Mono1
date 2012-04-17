@@ -15,7 +15,10 @@
 		2B6872D61531FB9600B8C2FB /* gtest_main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D41531FB9600B8C2FB /* gtest_main.cc */; };
 		2B6872D71531FB9600B8C2FB /* EngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D51531FB9600B8C2FB /* EngineTest.cpp */; };
 		2B6A74231531F9A7002CB834 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6A74221531F9A7002CB834 /* gtest.framework */; };
-		2BD1E5EC1532080500A75171 /* OpenGLSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E21532080500A75171 /* OpenGLSetup.cpp */; };
+		2BC214701535E4130063834F /* KeyDownEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC2146F1535E4130063834F /* KeyDownEvent.h */; };
+		2BC214721535E50A0063834F /* KeyUpEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC214711535E50A0063834F /* KeyUpEvent.h */; };
+		2BC214751535E6B40063834F /* AnimatedDudeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BC214731535E6B30063834F /* AnimatedDudeController.cpp */; };
+		2BC214771535F7430063834F /* MouseUpEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC214761535F7430063834F /* MouseUpEvent.h */; };
 		2BD1E5ED1532080500A75171 /* OscillatingLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E41532080500A75171 /* OscillatingLine.cpp */; };
 		2BD1E5EE1532080500A75171 /* SquareObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E61532080500A75171 /* SquareObject.cpp */; };
 		2BD1E5EF1532080500A75171 /* TestZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E81532080500A75171 /* TestZone.cpp */; };
@@ -107,7 +110,6 @@
 		2BE47429153201CC00CA5ACB /* IInputHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473EE153201CC00CA5ACB /* IInputHandler.h */; };
 		2BE4742A153201CC00CA5ACB /* InputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473F0153201CC00CA5ACB /* InputHandler.cpp */; };
 		2BE4742B153201CC00CA5ACB /* InputHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F1153201CC00CA5ACB /* InputHandler.h */; };
-		2BE4742C153201CC00CA5ACB /* IOGLSetup.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F2153201CC00CA5ACB /* IOGLSetup.h */; };
 		2BE4742D153201CC00CA5ACB /* IRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F3153201CC00CA5ACB /* IRenderer.h */; };
 		2BE4742E153201CC00CA5ACB /* IUpdatable.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F4153201CC00CA5ACB /* IUpdatable.h */; };
 		2BE4742F153201CC00CA5ACB /* IWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F5153201CC00CA5ACB /* IWindow.h */; };
@@ -215,6 +217,11 @@
 		2B6872E11531FEA800B8C2FB /* MonoEngineTarget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MonoEngineTarget.xcconfig; sourceTree = "<group>"; };
 		2B6A74171531F881002CB834 /* UnitTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B6A74221531F9A7002CB834 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = Library/Frameworks/gtest.framework; sourceTree = SDKROOT; };
+		2BC2146F1535E4130063834F /* KeyDownEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyDownEvent.h; sourceTree = "<group>"; };
+		2BC214711535E50A0063834F /* KeyUpEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyUpEvent.h; sourceTree = "<group>"; };
+		2BC214731535E6B30063834F /* AnimatedDudeController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimatedDudeController.cpp; path = Game/AnimatedDudeController.cpp; sourceTree = "<group>"; };
+		2BC214741535E6B40063834F /* AnimatedDudeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedDudeController.h; path = Game/AnimatedDudeController.h; sourceTree = "<group>"; };
+		2BC214761535F7430063834F /* MouseUpEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseUpEvent.h; sourceTree = "<group>"; };
 		2BD1E569153206F400A75171 /* ticpp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ticpp.cpp; path = "External Libs/ticpp/ticpp.cpp"; sourceTree = "<group>"; };
 		2BD1E56A153206F400A75171 /* ticpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ticpp.h; path = "External Libs/ticpp/ticpp.h"; sourceTree = "<group>"; };
 		2BD1E56B153206F400A75171 /* ticpprc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ticpprc.h; path = "External Libs/ticpp/ticpprc.h"; sourceTree = "<group>"; };
@@ -333,8 +340,6 @@
 		2BD1E5DF153207E600A75171 /* zlib.pc.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = zlib.pc.in; path = "External Libs/zlib-1.2.5/zlib.pc.in"; sourceTree = SOURCE_ROOT; };
 		2BD1E5E0153207E600A75171 /* zutil.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = zutil.c; path = "External Libs/zlib-1.2.5/zutil.c"; sourceTree = SOURCE_ROOT; };
 		2BD1E5E1153207E600A75171 /* zutil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = zutil.h; path = "External Libs/zlib-1.2.5/zutil.h"; sourceTree = SOURCE_ROOT; };
-		2BD1E5E21532080500A75171 /* OpenGLSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenGLSetup.cpp; path = Game/OpenGLSetup.cpp; sourceTree = "<group>"; };
-		2BD1E5E31532080500A75171 /* OpenGLSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGLSetup.h; path = Game/OpenGLSetup.h; sourceTree = "<group>"; };
 		2BD1E5E41532080500A75171 /* OscillatingLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OscillatingLine.cpp; path = Game/OscillatingLine.cpp; sourceTree = "<group>"; };
 		2BD1E5E51532080500A75171 /* OscillatingLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OscillatingLine.h; path = Game/OscillatingLine.h; sourceTree = "<group>"; };
 		2BD1E5E61532080500A75171 /* SquareObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SquareObject.cpp; path = Game/SquareObject.cpp; sourceTree = "<group>"; };
@@ -366,7 +371,6 @@
 		2BE473EE153201CC00CA5ACB /* IInputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IInputHandler.h; sourceTree = "<group>"; };
 		2BE473F0153201CC00CA5ACB /* InputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputHandler.cpp; sourceTree = "<group>"; };
 		2BE473F1153201CC00CA5ACB /* InputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputHandler.h; sourceTree = "<group>"; };
-		2BE473F2153201CC00CA5ACB /* IOGLSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOGLSetup.h; sourceTree = "<group>"; };
 		2BE473F3153201CC00CA5ACB /* IRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRenderer.h; sourceTree = "<group>"; };
 		2BE473F4153201CC00CA5ACB /* IUpdatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUpdatable.h; sourceTree = "<group>"; };
 		2BE473F5153201CC00CA5ACB /* IWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWindow.h; sourceTree = "<group>"; };
@@ -621,7 +625,6 @@
 				2BE473E3153201CC00CA5ACB /* Events */,
 				2BE473FE153201CC00CA5ACB /* System */,
 				2BE47413153201CC00CA5ACB /* Texture */,
-				2BE473EF153201CC00CA5ACB /* Include */,
 				2BE473DB153201CC00CA5ACB /* Engine.cpp */,
 				2BE473DC153201CC00CA5ACB /* Engine.h */,
 				2BE473DD153201CC00CA5ACB /* EntityBase.cpp */,
@@ -634,7 +637,6 @@
 				2BE473EE153201CC00CA5ACB /* IInputHandler.h */,
 				2BE473F0153201CC00CA5ACB /* InputHandler.cpp */,
 				2BE473F1153201CC00CA5ACB /* InputHandler.h */,
-				2BE473F2153201CC00CA5ACB /* IOGLSetup.h */,
 				2BE473F3153201CC00CA5ACB /* IRenderer.h */,
 				2BE473F4153201CC00CA5ACB /* IUpdatable.h */,
 				2BE473F5153201CC00CA5ACB /* IWindow.h */,
@@ -722,8 +724,6 @@
 				2BD1E5681532068600A75171 /* Linked Frameworks */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				2BD1E5F11532081300A75171 /* main.cpp */,
-				2BD1E5E21532080500A75171 /* OpenGLSetup.cpp */,
-				2BD1E5E31532080500A75171 /* OpenGLSetup.h */,
 				2BD1E5E41532080500A75171 /* OscillatingLine.cpp */,
 				2BD1E5E51532080500A75171 /* OscillatingLine.h */,
 				2BD1E5E61532080500A75171 /* SquareObject.cpp */,
@@ -734,6 +734,8 @@
 				2BD1E5EB1532080500A75171 /* TriangleObject.h */,
 				2B4B069E15331F12006D0C75 /* AnimatedDude.cpp */,
 				2B4B069F15331F12006D0C75 /* AnimatedDude.h */,
+				2BC214731535E6B30063834F /* AnimatedDudeController.cpp */,
+				2BC214741535E6B40063834F /* AnimatedDudeController.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -755,15 +757,11 @@
 				2BE473E5153201CC00CA5ACB /* EventFwd.h */,
 				2BE473E7153201CC00CA5ACB /* QuitEvent.h */,
 				2BE473E8153201CC00CA5ACB /* SurfaceChangedEvent.h */,
+				2BC2146F1535E4130063834F /* KeyDownEvent.h */,
+				2BC214711535E50A0063834F /* KeyUpEvent.h */,
+				2BC214761535F7430063834F /* MouseUpEvent.h */,
 			);
 			path = Events;
-			sourceTree = "<group>";
-		};
-		2BE473EF153201CC00CA5ACB /* Include */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Include;
 			sourceTree = "<group>";
 		};
 		2BE473FE153201CC00CA5ACB /* System */ = {
@@ -849,7 +847,6 @@
 				2BE47428153201CC00CA5ACB /* IEntity.h in Headers */,
 				2BE47429153201CC00CA5ACB /* IInputHandler.h in Headers */,
 				2BE4742B153201CC00CA5ACB /* InputHandler.h in Headers */,
-				2BE4742C153201CC00CA5ACB /* IOGLSetup.h in Headers */,
 				2BE4742D153201CC00CA5ACB /* IRenderer.h in Headers */,
 				2BE4742E153201CC00CA5ACB /* IUpdatable.h in Headers */,
 				2BE4742F153201CC00CA5ACB /* IWindow.h in Headers */,
@@ -873,6 +870,9 @@
 				2BE4744E153201CC00CA5ACB /* TextureFactory.h in Headers */,
 				2B4B069D15330335006D0C75 /* AnimatedSprite.h in Headers */,
 				2B4B06A3153336E8006D0C75 /* Vector2f.h in Headers */,
+				2BC214701535E4130063834F /* KeyDownEvent.h in Headers */,
+				2BC214721535E50A0063834F /* KeyUpEvent.h in Headers */,
+				2BC214771535F7430063834F /* MouseUpEvent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1078,13 +1078,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BD1E5EC1532080500A75171 /* OpenGLSetup.cpp in Sources */,
 				2BD1E5ED1532080500A75171 /* OscillatingLine.cpp in Sources */,
 				2BD1E5EE1532080500A75171 /* SquareObject.cpp in Sources */,
 				2BD1E5EF1532080500A75171 /* TestZone.cpp in Sources */,
 				2BD1E5F01532080500A75171 /* TriangleObject.cpp in Sources */,
 				2BD1E5F21532081300A75171 /* main.cpp in Sources */,
 				2B4B06A015331F13006D0C75 /* AnimatedDude.cpp in Sources */,
+				2BC214751535E6B40063834F /* AnimatedDudeController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

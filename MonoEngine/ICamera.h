@@ -7,8 +7,7 @@
 //
 
 
-#ifndef MONO_ICAMERA_H
-#define MONO_ICAMERA_H
+#pragma once
 
 namespace mono
 {
@@ -21,6 +20,4 @@ namespace mono
     
 }
 
-
-#endif
 

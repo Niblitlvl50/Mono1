@@ -9,18 +9,12 @@
 #include "GameController.h"
 
 #include "TestZone.h"
-#include "OpenGLSetup.h"
 
 #include <stdexcept>
 #include <iostream>
 
 namespace
-{
-    const std::string title = "Mono1";
-    const int width = 800;
-    const int height = 480;
-    const bool fullscreen = false;
-        
+{        
     struct BasicCamera : public mono::ICamera
     {
         // Dummy...
@@ -33,12 +27,12 @@ int main()
     {
         Libs::Init();
                 
-        mono::IWindowPtr window = mono::CreateOpenGLWindow(title, width, height, fullscreen, mono::IOGLSetupPtr(new game::OpenGLSetup));
+        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 800, 600, false);
         mono::ICameraPtr camera(new BasicCamera);
         mono::Engine engine(60.0f, window, camera);
         
         // Do the zone initialization here.
-        mono::GameController::Instance().InsertZone(mono::IZonePtr(new game::TestZone));
+        mono::GameControllerInstance().InsertZone(mono::IZonePtr(new game::TestZone));
 
         engine.Run();
     }

@@ -6,10 +6,7 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef SYSTEM_OPENGL_H
-#define SYSTEM_OPENGL_H
+#pragma once
 
 #include <GLUT/glut.h>
-
-#endif
 

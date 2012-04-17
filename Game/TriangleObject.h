@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef GAME_TRIANGLEOBJECT_H
-#define GAME_TRIANGLEOBJECT_H
+#pragma once
 
 #include "EntityBase.h"
 
@@ -28,6 +27,4 @@ namespace game
         float mRotation;
 	};
 }
-
-#endif
 

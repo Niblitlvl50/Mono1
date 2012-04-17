@@ -8,8 +8,7 @@
  */
 
 
-#ifndef MONO_EVENTTOKEN_H
-#define MONO_EVENTTOKEN_H
+#pragma once
 
 static unsigned int currentId = 0;
 
@@ -38,7 +37,4 @@ namespace mono
 	};
 
 }
-
-
-#endif
 

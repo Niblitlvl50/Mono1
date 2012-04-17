@@ -6,9 +6,7 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-
-#ifndef MONO_IUPDATEABLE_H
-#define MONO_IUPDATEABLE_H
+#pragma once
 
 namespace mono
 {
@@ -22,6 +20,4 @@ namespace mono
     };
     
 }
-
-#endif
 

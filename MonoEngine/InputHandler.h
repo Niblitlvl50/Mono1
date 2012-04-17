@@ -7,12 +7,9 @@
  *
  */
 
-#ifndef MONO_INPUTHANDLER_H
-#define MONO_INPUTHANDLER_H
+#pragma once
 
 #include "IInputHandler.h"
-#include "LuaInterpreter.h"
-
 
 namespace mono
 {
@@ -21,8 +18,8 @@ namespace mono
 	{		
 		virtual void OnKeyDown(unsigned int key);
 		virtual void OnKeyUp(unsigned int key);
-		virtual void OnMouseDown(unsigned int button);
-		virtual void OnMouseUp(unsigned int button);
+		virtual void OnMouseDown(unsigned int button, int x, int y);
+		virtual void OnMouseUp(unsigned int button, int x, int y);
 		virtual void OnMouseMotion(unsigned int x, unsigned int y);
         
         virtual void OnUserEvent(int code, void* data1, void* data2);
@@ -30,13 +27,7 @@ namespace mono
         
         virtual void OnSurfaceChanged(int width, int height);
         virtual void OnActivated(bool gain);
-
-		LuaInterpreter mLua;
 	};
 
 }
-
-
-
-#endif
 

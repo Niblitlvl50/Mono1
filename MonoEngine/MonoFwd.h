@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef MONO_MONOFWD_H
-#define MONO_MONOFWD_H
+#pragma once
 
 #include <tr1/memory>
 #include <vector>
@@ -50,7 +49,9 @@ namespace mono
     typedef std::tr1::shared_ptr<ITexture> ITexturePtr;
 }
 
-
-#endif
+namespace Math
+{
+    struct Vector2f;
+}
 
 

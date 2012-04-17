@@ -7,15 +7,12 @@
 //
 
 
-#ifndef SYSTEM_WINDOW_FACTORY_H
-#define SYSTEM_WINDOW_FACTORY_H
+#pragma once
 
 #include "MonoFwd.h"
 
 namespace mono
 {
-    IWindowPtr CreateOpenGLWindow(const std::string& title, int width, int height, bool fullscreen, IOGLSetupPtr setup);
+    IWindowPtr CreateOpenGLWindow(const std::string& title, int width, int height, bool fullscreen);
 }
-
-#endif
 

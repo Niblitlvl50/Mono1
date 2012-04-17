@@ -6,8 +6,7 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef MATH_VECTOR2F_H
-#define MATH_VECTOR2F_H
+#pragma once
 
 namespace Math
 {
@@ -27,6 +26,4 @@ namespace Math
         float mY;
     };    
 }
-
-#endif
 

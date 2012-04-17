@@ -6,15 +6,10 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-
-#ifndef SYSTEM_LIBS_H
-#define SYSTEM_LIBS_H
+#pragma once
 
 namespace Libs
 {
     void Init();
     void Exit();
 }
-
-#endif
-

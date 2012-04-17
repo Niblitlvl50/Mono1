@@ -25,6 +25,8 @@
 #include "OGLRenderer.h"
 #include "GameController.h"
 
+#include "Vector2f.h"
+
 
 using namespace mono;
 using namespace std::tr1::placeholders;
@@ -37,6 +39,9 @@ Engine::Engine(float hz, IWindowPtr window, ICameraPtr camera)
       mQuit(false),
       mInputHandler(new InputHandler)
 {
+    const Math::Vector2f windowSize(window->GetWidth(), window->GetHeight());
+    GameControllerInstance().SetWindowSize(windowSize);
+    
     const Event::QuitEventFunc quitFunc = std::tr1::bind(&Engine::OnQuit, this, _1);
 	mQuitToken = EventHandler::AddListener(quitFunc);
 
@@ -70,7 +75,7 @@ void Engine::Run()
         OGLRenderer renderer;
         
         // The current zone
-        IZonePtr zone = GameController::Instance().GetCurrentZone();
+        IZonePtr zone = mono::GameControllerInstance().GetCurrentZone();
         zone->Accept(renderer);
         
         // Update the stuff, and then render the frame.
@@ -95,6 +100,9 @@ void Engine::OnQuit(const Event::QuitEvent&)
 void Engine::OnSurfaceChanged(const Event::SurfaceChangedEvent& event)
 {
     mWindow->SurfaceChanged(event.width, event.height);
+
+    const Math::Vector2f windowSize(mWindow->GetWidth(), mWindow->GetHeight());
+    GameControllerInstance().SetWindowSize(windowSize);
 }
 
 void Engine::OnActivated(const Event::ActivatedEvent& event)

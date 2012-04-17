@@ -6,29 +6,24 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-
-#ifndef MONO_GAMECONTROLLER_H
-#define MONO_GAMECONTROLLER_H
+#pragma once
 
 #include "MonoFwd.h"
-#include <stack>
 
 namespace mono
 {
-    class GameController
+    struct IGameController
     {
-    public:
-        static GameController& Instance();
+        virtual ~IGameController()
+        { }
         
-        void InsertZone(IZonePtr zone);
-        IZonePtr GetCurrentZone();
+        virtual void InsertZone(IZonePtr zone) = 0;
+        virtual IZonePtr GetCurrentZone() = 0;
         
-    private:
-        GameController();
-        
-        std::stack<IZonePtr> mZoneStack;
+        virtual void SetWindowSize(const Math::Vector2f& size) = 0;
+        virtual const Math::Vector2f& GetWindowSize() const = 0;
     };
+    
+    IGameController& GameControllerInstance();
 }
-
-#endif
 

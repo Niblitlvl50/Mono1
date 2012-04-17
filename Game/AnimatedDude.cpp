@@ -13,7 +13,7 @@ using namespace game;
 
 namespace constants
 {
-    const float SPEED = 0.005f;
+    const float SPEED = 0.05f;
     
     enum
     {
@@ -24,9 +24,10 @@ namespace constants
 }
 
 AnimatedDude::AnimatedDude(float x, float y)
-    : mX(x),
-      mY(y),
-      mSprite("ryu.png", 3, 4, 0.8f, 0.8f)
+    : mPosition(x, y),
+      mTarget(x, y),
+      mSprite("ryu.png", 3, 4, 10.0f, 10.0f),
+      mController(*this)
 {
     mono::FrameDurations runDurations;
     runDurations.push_back(100);
@@ -53,16 +54,32 @@ AnimatedDude::AnimatedDude(float x, float y)
 
 void AnimatedDude::Draw() const
 {
-    mSprite.DrawAt(mX, mY);
+    mSprite.DrawAt(mPosition.mX, mPosition.mY);
     EntityBase::Draw();
 }
 
 void AnimatedDude::Update(unsigned int delta)
 {
-    mX += (delta * constants::SPEED);
+    const float value = (delta * constants::SPEED);
     
-    if(mX > 15.0f)
-        mX = -15.0f;
+    const float xzero = std::floor(std::abs(mPosition.mX - mTarget.mY));
+    const float yzero = std::floor(std::abs(mPosition.mY - mTarget.mY));
+    
+    if(xzero != 0.0f)
+    {
+        if(mPosition.mX > mTarget.mX)
+            mPosition.mX -= value;
+        else if(mPosition.mX < mTarget.mX)
+            mPosition.mX += value;
+    }
+    
+    if(yzero != 0.0f)
+    {
+        if(mPosition.mY > mTarget.mY)
+            mPosition.mY -= value;
+        else if(mPosition.mY < mTarget.mY)
+            mPosition.mY += value;
+    }
     
     mSprite.Update(delta);
     

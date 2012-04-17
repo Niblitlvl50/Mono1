@@ -6,8 +6,7 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef EVENT_EVENTFWD_H
-#define EVENT_EVENTFWD_H
+#pragma once
 
 #include <tr1/functional>
 
@@ -21,7 +20,14 @@ namespace Event
     
     struct ActivatedEvent;
     typedef std::tr1::function<void (const ActivatedEvent&)> ActivatedEventFunc;
-}
+    
+    struct KeyDownEvent;
+    typedef std::tr1::function<void (const KeyDownEvent&)> KeyDownEventFunc;
 
-#endif
+    struct KeyUpEvent;
+    typedef std::tr1::function<void (const KeyUpEvent&)> KeyUpEventFunc;
+    
+    struct MouseUpEvent;
+    typedef std::tr1::function<void (const MouseUpEvent&)> MouseUpEventFunc;
+}
 

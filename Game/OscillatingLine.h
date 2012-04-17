@@ -7,8 +7,7 @@
 //
 
 
-#ifndef GAME_OSCILLATINGLINE_H
-#define GAME_OSCILLATINGLINE_H
+#pragma once
 
 #include "EntityBase.h"
 
@@ -28,7 +27,4 @@ namespace game
         float mDelta;
     };
 }
-
-
-#endif
 

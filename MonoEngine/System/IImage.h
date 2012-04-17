@@ -6,8 +6,7 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef MONO_IIMAGE_H
-#define MONO_IIMAGE_H
+#pragma once
 
 #include <tr1/memory>
 
@@ -30,6 +29,4 @@ namespace mono
     typedef std::tr1::shared_ptr<IImage> IImagePtr;
 
 }
-
-#endif
 

@@ -6,8 +6,7 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef MONO_TEXTURE_H
-#define MONO_TEXTURE_H
+#pragma once
 
 #include "ITexture.h"
 #include "IImage.h"
@@ -37,6 +36,4 @@ namespace mono
     };
     
 }
-
-#endif
 

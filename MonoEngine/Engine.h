@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef MONO_ENGINE_H
-#define MONO_ENGINE_H
+#pragma once
 
 #include "MonoFwd.h"
 #include "EventFwd.h"
@@ -53,4 +52,3 @@ namespace mono
 
 #pragma GCC visibility pop
 
-#endif

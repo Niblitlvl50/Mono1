@@ -7,8 +7,7 @@
 //
 
 
-#ifndef GAME_TESTZONE_H
-#define GAME_TESTZONE_H
+#pragma once
 
 #include "IZone.h"
 
@@ -30,6 +29,4 @@ namespace game
         unsigned int mStartTime;
     };
 }
-
-#endif
 

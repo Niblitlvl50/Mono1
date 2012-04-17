@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef MONO_IRENDERER_H
-#define MONO_IRENDERER_H
+#pragma once
 
 #include "MonoFwd.h"
 
@@ -29,6 +28,4 @@ namespace mono
 	};
     
 }
-
-#endif
 

@@ -7,8 +7,7 @@
 //
 
 
-#ifndef EVENT_ACTIVATEDEVENT_H
-#define EVENT_ACTIVATEDEVENT_H
+#pragma once
 
 namespace Event
 {
@@ -21,6 +20,3 @@ namespace Event
         const bool gain;
     };
 }
-
-#endif
-

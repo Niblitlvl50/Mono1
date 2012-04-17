@@ -21,7 +21,7 @@ TestZone::TestZone()
 {
     mEntities.push_back(mono::IEntityPtr(new TriangleObject));
     mEntities.push_back(mono::IEntityPtr(new OscillatingLine));
-    mEntities.push_back(mono::IEntityPtr(new AnimatedDude(-10.0f, -5.0f)));
+    mEntities.push_back(mono::IEntityPtr(new AnimatedDude(100.0f, 50.0f)));
 }
 
 void TestZone::Accept(mono::IRenderer& renderer)

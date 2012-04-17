@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef MONO_IDRAWABLE_H
-#define MONO_IDRAWABLE_H
+#pragma once
 
 namespace mono
 {
@@ -23,6 +22,4 @@ namespace mono
 
 }
 
-
-#endif
 
