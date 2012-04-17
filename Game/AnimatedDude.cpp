@@ -13,7 +13,7 @@ using namespace game;
 
 namespace constants
 {
-    const float SPEED = 0.05f;
+    const float SPEED = 0.1f;
     
     enum
     {
@@ -26,7 +26,7 @@ namespace constants
 AnimatedDude::AnimatedDude(float x, float y)
     : mPosition(x, y),
       mTarget(x, y),
-      mSprite("ryu.png", 3, 4, 10.0f, 10.0f),
+      mSprite("ryu.png", 3, 4, 20.0f, 20.0f),
       mController(*this)
 {
     mono::FrameDurations runDurations;
@@ -64,6 +64,8 @@ void AnimatedDude::Update(unsigned int delta)
     
     const float xzero = std::floor(std::abs(mPosition.mX - mTarget.mY));
     const float yzero = std::floor(std::abs(mPosition.mY - mTarget.mY));
+    
+    // This shit is not working!
     
     if(xzero != 0.0f)
     {

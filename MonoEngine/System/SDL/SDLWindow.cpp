@@ -117,6 +117,12 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
     SetProjection(width, height);
 }
 
+SDLWindow::~SDLWindow()
+{
+    SDL_GL_DeleteContext(mContext);
+    SDL_DestroyWindow(mWindow);
+}
+
 void SDLWindow::SurfaceChanged(int width, int height)
 {
     mWidth = width;

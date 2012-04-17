@@ -22,6 +22,7 @@ namespace mono
 	{
 	public:
 		SDLWindow(const std::string& title, int width, int height, bool fullscreen);
+        virtual ~SDLWindow();
 
 		virtual void SurfaceChanged(int width, int height);
 		virtual void Activated(bool activated);

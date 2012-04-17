@@ -27,7 +27,7 @@ int main()
     {
         Libs::Init();
                 
-        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 800, 600, false);
+        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 800, 480, false);
         mono::ICameraPtr camera(new BasicCamera);
         mono::Engine engine(60.0f, window, camera);
         
