@@ -50,7 +50,15 @@ namespace
             mono::EventHandler::DispatchEvent(event);
 
             mFrameDrawn = true;
-        }        
+        }
+        virtual int GetWidth() const
+        {
+            return 10;
+        }
+        virtual int GetHeight() const
+        {
+            return 10;
+        }
 
         bool mSurfaceChangedCalled;
         bool mActivatedCalled;
@@ -94,7 +102,7 @@ TEST(EngineTest, Basic)
     MocZone* mocZone = new MocZone;
     mono::IZonePtr zone(mocZone);
     
-    mono::GameController::Instance().InsertZone(zone);
+    mono::GameControllerInstance().InsertZone(zone);
 
     EXPECT_NO_THROW(engine.Run());
     
