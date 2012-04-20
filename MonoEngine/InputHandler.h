@@ -20,8 +20,7 @@ namespace mono
         virtual void OnKeyUp(unsigned int key);
         virtual void OnMouseDown(unsigned int button, int x, int y);
         virtual void OnMouseUp(unsigned int button, int x, int y);
-        virtual void OnMouseMotion(unsigned int x, unsigned int y);
-
+        virtual void OnMouseMotion(int x, int y);
         virtual void OnUserEvent(int code, void* data1, void* data2);
         virtual void OnQuit();
 

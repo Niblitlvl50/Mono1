@@ -20,8 +20,8 @@ namespace Event
         { }
         
         const unsigned int mKey;
-        const unsigned int mX;
-        const unsigned int mY;
+        const int mX;
+        const int mY;
     };
 }
 

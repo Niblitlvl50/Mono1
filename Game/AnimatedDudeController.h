@@ -26,11 +26,13 @@ namespace game
         
         void OnKeyDown(const Event::KeyDownEvent& event);
         void OnMouseUp(const Event::MouseUpEvent& event);
+        void OnMouseMotion(const Event::MouseMotionEvent& event);
         
     private:
         
         AnimatedDude& mDude;
         mono::EventToken<Event::KeyDownEvent> mKeyDownToken;
         mono::EventToken<Event::MouseUpEvent> mMouseUpToken;
+        mono::EventToken<Event::MouseMotionEvent> mMouseMotionToken;
     };
 }

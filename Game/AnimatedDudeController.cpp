@@ -11,6 +11,7 @@
 #include "EventHandler.h"
 #include "KeyDownEvent.h"
 #include "MouseUpEvent.h"
+#include "MouseMotionEvent.h"
 
 #include "SDL_keycode.h"
 
@@ -25,13 +26,17 @@ AnimatedDudeController::AnimatedDudeController(AnimatedDude& dude)
     mKeyDownToken = mono::EventHandler::AddListener(keyDownFunc);
     
     const Event::MouseUpEventFunc mouseUpFunc = std::tr1::bind(&AnimatedDudeController::OnMouseUp, this, _1);
-    mMouseUpToken = mono::EventHandler::AddListener(mouseUpFunc);    
+    mMouseUpToken = mono::EventHandler::AddListener(mouseUpFunc);
+    
+    const Event::MouseMotionEventFunc mouseMotionFunc = std::tr1::bind(&AnimatedDudeController::OnMouseMotion, this, _1);
+    mMouseMotionToken = mono::EventHandler::AddListener(mouseMotionFunc);
 }
 
 AnimatedDudeController::~AnimatedDudeController()
 {
     mono::EventHandler::RemoveListener(mKeyDownToken);
     mono::EventHandler::RemoveListener(mMouseUpToken);
+    mono::EventHandler::RemoveListener(mMouseMotionToken);
 }
 
 void AnimatedDudeController::OnKeyDown(const Event::KeyDownEvent& event)
@@ -51,5 +56,11 @@ void AnimatedDudeController::OnMouseUp(const Event::MouseUpEvent& event)
 {
     mDude.mTarget = Math::Vector2f(event.mX, event.mY);
 }
+
+void AnimatedDudeController::OnMouseMotion(const Event::MouseMotionEvent& event)
+{
+    mDude.mTarget = Math::Vector2f(event.mX, event.mY);
+}
+
 
 

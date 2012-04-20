@@ -29,5 +29,8 @@ namespace Event
     
     struct MouseUpEvent;
     typedef std::tr1::function<void (const MouseUpEvent&)> MouseUpEventFunc;
+    
+    struct MouseMotionEvent;
+    typedef std::tr1::function<void (const MouseMotionEvent&)> MouseMotionEventFunc;
 }
 
