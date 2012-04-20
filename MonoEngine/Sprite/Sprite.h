@@ -37,12 +37,12 @@ namespace mono
         Math::Vector2f br;
     };
 
-    class AnimatedSprite : public IUpdatable
+    class Sprite : public IUpdatable
     {
     public:
 
-        AnimatedSprite(const std::string& file, float xscale, float yscale);
-        AnimatedSprite(const std::string& file, int rows, int columns, float xscale, float yscale);
+        Sprite(const std::string& file, float xscale, float yscale);
+        Sprite(const std::string& file, int rows, int columns, float xscale, float yscale);
 
         void DrawAt(float x, float y) const;
         void DefineAnimation(int id, unsigned int start, unsigned int end, const FrameDurations& durations);

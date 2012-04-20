@@ -6,7 +6,7 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#include "AnimatedSprite.h"
+#include "Sprite.h"
 #include "ITexture.h"
 #include "TextureFactory.h"
 #include "SysOpenGL.h"
@@ -53,21 +53,21 @@ namespace
 
 }
 
-AnimatedSprite::AnimatedSprite(const std::string& file, float xscale, float yscale)
+Sprite::Sprite(const std::string& file, float xscale, float yscale)
     : mXScale(xscale),
       mYScale(yscale)
 {
     Init(file, 1, 1);
 }
 
-AnimatedSprite::AnimatedSprite(const std::string& file, int rows, int columns, float xscale, float yscale)
+Sprite::Sprite(const std::string& file, int rows, int columns, float xscale, float yscale)
     : mXScale(xscale),
       mYScale(yscale)
 {
     Init(file, rows, columns);
 }
 
-void AnimatedSprite::Init(const std::string& file, int rows, int columns)
+void Sprite::Init(const std::string& file, int rows, int columns)
 {
     mTexture = mono::CreateTexture(file);
     GenerateTextureCoordinates(rows, columns, mTextureCoordinates);
@@ -78,7 +78,7 @@ void AnimatedSprite::Init(const std::string& file, int rows, int columns)
     mActiveAnimationId = DEFAULT_ANIMATION_ID;
 }
 
-void AnimatedSprite::DrawAt(float x, float y) const
+void Sprite::DrawAt(float x, float y) const
 {
     const AnimationSequence& anim = mDefinedAnimations.find(mActiveAnimationId)->second;
     const SpriteTextureCoord& texcoords = mTextureCoordinates.at(anim.Frame());
@@ -104,18 +104,18 @@ void AnimatedSprite::DrawAt(float x, float y) const
     glPopMatrix();
 }
 
-void AnimatedSprite::Update(unsigned int delta)
+void Sprite::Update(unsigned int delta)
 {
     AnimationSequence& anim = mDefinedAnimations[mActiveAnimationId];
     anim.Tick(delta);
 }
 
-void AnimatedSprite::SetAnimation(int id)
+void Sprite::SetAnimation(int id)
 {
     mActiveAnimationId = id;
 }
 
-void AnimatedSprite::DefineAnimation(int id, unsigned int start, unsigned int end, const FrameDurations& durations)
+void Sprite::DefineAnimation(int id, unsigned int start, unsigned int end, const FrameDurations& durations)
 {
     const int diff = end - start;
     if(diff < 0)

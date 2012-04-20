@@ -10,7 +10,7 @@
 #pragma once
 
 #include "EntityBase.h"
-#include "AnimatedSprite.h"
+#include "Sprite.h"
 
 namespace game
 {
@@ -30,7 +30,7 @@ namespace game
         float mPosY;
         float mPosZ;
 
-        mono::AnimatedSprite mSprite;
+        mono::Sprite mSprite;
     };
 
 }

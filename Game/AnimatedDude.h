@@ -10,7 +10,7 @@
 
 #include "EntityBase.h"
 #include "Vector2f.h"
-#include "AnimatedSprite.h"
+#include "Sprite.h"
 #include "AnimatedDudeController.h"
 
 namespace game
@@ -30,7 +30,7 @@ namespace game
         
         Math::Vector2f mPosition;
         Math::Vector2f mTarget;
-        mono::AnimatedSprite mSprite;
+        mono::Sprite mSprite;
         AnimatedDudeController mController;
         
     };
