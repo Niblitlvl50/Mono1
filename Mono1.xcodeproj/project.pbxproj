@@ -121,8 +121,6 @@
 		2BE47433153201CC00CA5ACB /* MonoFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F9153201CC00CA5ACB /* MonoFwd.h */; };
 		2BE47434153201CC00CA5ACB /* OGLRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473FA153201CC00CA5ACB /* OGLRenderer.cpp */; };
 		2BE47435153201CC00CA5ACB /* OGLRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473FB153201CC00CA5ACB /* OGLRenderer.h */; };
-		2BE47436153201CC00CA5ACB /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473FC153201CC00CA5ACB /* Sprite.cpp */; };
-		2BE47437153201CC00CA5ACB /* Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473FD153201CC00CA5ACB /* Sprite.h */; };
 		2BE47438153201CC00CA5ACB /* IImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473FF153201CC00CA5ACB /* IImage.h */; };
 		2BE47439153201CC00CA5ACB /* ImageFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE47400153201CC00CA5ACB /* ImageFactory.cpp */; };
 		2BE4743A153201CC00CA5ACB /* ImageFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47401153201CC00CA5ACB /* ImageFactory.h */; };
@@ -386,8 +384,6 @@
 		2BE473F9153201CC00CA5ACB /* MonoFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonoFwd.h; sourceTree = "<group>"; };
 		2BE473FA153201CC00CA5ACB /* OGLRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OGLRenderer.cpp; sourceTree = "<group>"; };
 		2BE473FB153201CC00CA5ACB /* OGLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLRenderer.h; sourceTree = "<group>"; };
-		2BE473FC153201CC00CA5ACB /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sprite.cpp; sourceTree = "<group>"; };
-		2BE473FD153201CC00CA5ACB /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
 		2BE473FF153201CC00CA5ACB /* IImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IImage.h; sourceTree = "<group>"; };
 		2BE47400153201CC00CA5ACB /* ImageFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageFactory.cpp; sourceTree = "<group>"; };
 		2BE47401153201CC00CA5ACB /* ImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFactory.h; sourceTree = "<group>"; };
@@ -664,8 +660,6 @@
 				2BE473F9153201CC00CA5ACB /* MonoFwd.h */,
 				2BE473FA153201CC00CA5ACB /* OGLRenderer.cpp */,
 				2BE473FB153201CC00CA5ACB /* OGLRenderer.h */,
-				2BE473FC153201CC00CA5ACB /* Sprite.cpp */,
-				2BE473FD153201CC00CA5ACB /* Sprite.h */,
 				2B4B069A15330330006D0C75 /* AnimatedSprite.cpp */,
 				2B4B069B15330332006D0C75 /* AnimatedSprite.h */,
 			);
@@ -874,7 +868,6 @@
 				2BE47432153201CC00CA5ACB /* LuaInterpreter.h in Headers */,
 				2BE47433153201CC00CA5ACB /* MonoFwd.h in Headers */,
 				2BE47435153201CC00CA5ACB /* OGLRenderer.h in Headers */,
-				2BE47437153201CC00CA5ACB /* Sprite.h in Headers */,
 				2BE47438153201CC00CA5ACB /* IImage.h in Headers */,
 				2BE4743A153201CC00CA5ACB /* ImageFactory.h in Headers */,
 				2BE4743C153201CC00CA5ACB /* PNGImage.h in Headers */,
@@ -1071,7 +1064,6 @@
 				2BE4742A153201CC00CA5ACB /* InputHandler.cpp in Sources */,
 				2BE47431153201CC00CA5ACB /* LuaInterpreter.cpp in Sources */,
 				2BE47434153201CC00CA5ACB /* OGLRenderer.cpp in Sources */,
-				2BE47436153201CC00CA5ACB /* Sprite.cpp in Sources */,
 				2BE47439153201CC00CA5ACB /* ImageFactory.cpp in Sources */,
 				2BE4743B153201CC00CA5ACB /* PNGImage.cpp in Sources */,
 				2BE4743D153201CC00CA5ACB /* SDLWindow.cpp in Sources */,

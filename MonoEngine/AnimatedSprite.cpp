@@ -11,6 +11,8 @@
 #include "TextureFactory.h"
 #include "SysOpenGL.h"
 
+#include <stdexcept>
+
 using namespace mono;
 
 namespace
@@ -51,11 +53,21 @@ namespace
 
 }
 
+AnimatedSprite::AnimatedSprite(const std::string& file, float xscale, float yscale)
+    : mXScale(xscale),
+      mYScale(yscale)
+{
+    Init(file, 1, 1);
+}
 
 AnimatedSprite::AnimatedSprite(const std::string& file, int rows, int columns, float xscale, float yscale)
     : mXScale(xscale),
-      mYScale(yscale),
-      mActiveAnimationId(0)
+      mYScale(yscale)
+{
+    Init(file, rows, columns);
+}
+
+void AnimatedSprite::Init(const std::string& file, int rows, int columns)
 {
     mTexture = mono::CreateTexture(file);
     GenerateTextureCoordinates(rows, columns, mTextureCoordinates);
@@ -63,6 +75,7 @@ AnimatedSprite::AnimatedSprite(const std::string& file, int rows, int columns, f
     FrameDurations durations;
     durations.push_back(-1);
     DefineAnimation(DEFAULT_ANIMATION_ID, 0, 0, durations);
+    mActiveAnimationId = DEFAULT_ANIMATION_ID;
 }
 
 void AnimatedSprite::DrawAt(float x, float y) const
@@ -104,6 +117,10 @@ void AnimatedSprite::SetAnimation(int id)
 
 void AnimatedSprite::DefineAnimation(int id, unsigned int start, unsigned int end, const FrameDurations& durations)
 {
+    const int diff = end - start;
+    if(diff < 0)
+        throw std::runtime_error("Animation definition's start and end does not match up");
+                                 
     mDefinedAnimations[id] = AnimationSequence(start, end, durations);
 }
 

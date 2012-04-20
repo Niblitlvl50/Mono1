@@ -41,6 +41,7 @@ namespace mono
     {
     public:
 
+        AnimatedSprite(const std::string& file, float xscale, float yscale);
         AnimatedSprite(const std::string& file, int rows, int columns, float xscale, float yscale);
 
         void DrawAt(float x, float y) const;
@@ -50,6 +51,8 @@ namespace mono
         virtual void Update(unsigned int delta);
 
     private:
+        
+        void Init(const std::string& file, int rows, int columns);
         
         float mXScale;
         float mYScale;
