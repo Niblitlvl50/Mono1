@@ -34,14 +34,14 @@ void InputHandler::OnKeyDown(unsigned int key)
 
 void InputHandler::OnKeyUp(unsigned int key)
 {
-	if(key == SDLK_ESCAPE)
-	{
-		SDL_Event event;
-		event.type = SDL_QUIT;
-		SDL_PushEvent(&event);
+    if(key == SDLK_ESCAPE)
+    {
+        SDL_Event event;
+        event.type = SDL_QUIT;
+        SDL_PushEvent(&event);
         return;
-	}
-    
+    }
+
     const Event::KeyUpEvent event(key);
     EventHandler::DispatchEvent(event);
 }
@@ -53,7 +53,7 @@ void InputHandler::OnMouseUp(unsigned int button, int x, int y)
 {
     const Math::Vector2f& size = GameControllerInstance().GetWindowSize();
     const int height = static_cast<int>(size.mY);
-    
+
     const Event::MouseUpEvent event(button, x, height - y);
     EventHandler::DispatchEvent(event);
 }

@@ -13,21 +13,21 @@
 
 namespace mono
 {
-	
-	class InputHandler : public IInputHandler
-	{		
-		virtual void OnKeyDown(unsigned int key);
-		virtual void OnKeyUp(unsigned int key);
-		virtual void OnMouseDown(unsigned int button, int x, int y);
-		virtual void OnMouseUp(unsigned int button, int x, int y);
-		virtual void OnMouseMotion(unsigned int x, unsigned int y);
-        
+
+    class InputHandler : public IInputHandler
+    {		
+        virtual void OnKeyDown(unsigned int key);
+        virtual void OnKeyUp(unsigned int key);
+        virtual void OnMouseDown(unsigned int button, int x, int y);
+        virtual void OnMouseUp(unsigned int button, int x, int y);
+        virtual void OnMouseMotion(unsigned int x, unsigned int y);
+
         virtual void OnUserEvent(int code, void* data1, void* data2);
         virtual void OnQuit();
-        
+
         virtual void OnSurfaceChanged(int width, int height);
         virtual void OnActivated(bool gain);
-	};
+    };
 
 }
 

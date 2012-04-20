@@ -14,27 +14,27 @@ static unsigned int currentId = 0;
 
 namespace mono
 {
-	template <typename Event>
-	class EventToken
-	{
-	public:
-		EventToken()
-			: mId(++currentId)
-		{ }
-		
-		unsigned int GetId() const
-		{
-			return mId;
-		}
-		
-		bool operator < (const EventToken<Event>& other) const
-		{
-			return mId < other.GetId();
-		}
-		
-	private:
+    template <typename Event>
+    class EventToken
+    {
+    public:
+        EventToken()
+            : mId(++currentId)
+        { }
+
+        unsigned int GetId() const
+        {
+            return mId;
+        }
+
+        bool operator < (const EventToken<Event>& other) const
+        {
+            return mId < other.GetId();
+        }
+
+    private:
         unsigned int mId;
-	};
+    };
 
 }
 

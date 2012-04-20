@@ -15,16 +15,16 @@
 using namespace game;
 
 SquareObject::SquareObject(float x, float y, float z)
-	: mPosX(x),
-	  mPosY(y),
-	  mPosZ(z),
+    : mPosX(x),
+      mPosY(y),
+      mPosZ(z),
       mSprite("small_craft.png", 1.0f, 1.0f)
 { }
 
 void SquareObject::Draw() const
 {
     mSprite.DrawAt(mPosX, mPosY);
-	EntityBase::Draw();
+    EntityBase::Draw();
 }
 
 void SquareObject::Update(unsigned int delta)

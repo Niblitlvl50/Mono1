@@ -1,0 +1,225 @@
+TUnitTests
+v3
+r1
+cCheck dependencies
+cCompileC build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/gtest_main.o /Users/Niblit/Xcode_Projects/Mono1/UnitTests/gtest_main.cc normal i386 c++ com.apple.compilers.llvmgcc42
+cCompileC build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/EngineTest.o /Users/Niblit/Xcode_Projects/Mono1/UnitTests/EngineTest.cpp normal i386 c++ com.apple.compilers.llvmgcc42
+cCompileC build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/LuaTest.o /Users/Niblit/Xcode_Projects/Mono1/UnitTests/LuaTest.cpp normal i386 c++ com.apple.compilers.llvmgcc42
+cLd /Users/Niblit/Xcode_Projects/Mono1/build/Debug/UnitTests normal i386
+
+N/Developer/SDKs/MacOSX10.6.sdk
+c000000004DA341F300000000000000EE
+t1302544883
+s238
+
+N/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/gtest.framework/Headers/gtest.h
+c000000004F81A5380000000000014212
+t1333896504
+s82450
+
+N/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/gtest.framework/gtest
+c000000004F81A53A00000000000704D0
+t1333896506
+s459984
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/Engine.h
+c000000004F8DCF9C000000000000041D
+t1334693788
+s1053
+i"MonoFwd.h"
+i"EventFwd.h"
+i"EventToken.h"
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/EventHandler/EventHandler.h
+c000000004F8DD13A0000000000000B2F
+t1334694202
+s2863
+i<typeinfo>
+i<map>
+i<string>
+i<tr1/functional>
+i<tr1/memory>
+i"EventToken.h"
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/EventHandler/EventToken.h
+c000000004F8DD14700000000000001FE
+t1334694215
+s510
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/Events/ActivatedEvent.h
+c000000004F8DD0E90000000000000140
+t1334694121
+s320
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/Events/EventFwd.h
+c000000004F8DD0F3000000000000034A
+t1334694131
+s842
+i<tr1/functional>
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/Events/QuitEvent.h
+c000000004F8DD10100000000000000C9
+t1334694145
+s201
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/Events/SurfaceChangedEvent.h
+c000000004F8DD10C0000000000000181
+t1334694156
+s385
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/GameController.h
+c000000004F8DCF710000000000000246
+t1334693745
+s582
+i"MonoFwd.h"
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/ICamera.h
+c000000004F8DCF6500000000000000FB
+t1334693733
+s251
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/IWindow.h
+c000000004F8DCFD100000000000001FD
+t1334693841
+s509
+i"MonoFwd.h"
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/IZone.h
+c000000004F8DCFE1000000000000016D
+t1334693857
+s365
+i"MonoFwd.h"
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/LuaInterpreter.h
+c000000004F8DCFED000000000000026C
+t1334693869
+s620
+i<string>
+i<tr1/functional>
+
+N/Users/Niblit/Xcode_Projects/Mono1/MonoEngine/MonoFwd.h
+c000000004F8DCFF900000000000004DA
+t1334693881
+s1242
+i<tr1/memory>
+i<vector>
+i<string>
+
+N/Users/Niblit/Xcode_Projects/Mono1/UnitTests/EngineTest.cpp
+c000000004F8DD74A0000000000000AA0
+t1334695754
+s2720
+i"gtest.h"
+i"Engine.h"
+i"MonoFwd.h"
+i"IWindow.h"
+i"ICamera.h"
+i"IZone.h"
+i"GameController.h"
+i"EventHandler.h"
+i"QuitEvent.h"
+i"ActivatedEvent.h"
+i"SurfaceChangedEvent.h"
+
+N/Users/Niblit/Xcode_Projects/Mono1/UnitTests/LuaTest.cpp
+c000000004F8204D3000000000000056A
+t1333920979
+s1386
+i"gtest.h"
+i"LuaInterpreter.h"
+
+N/Users/Niblit/Xcode_Projects/Mono1/UnitTests/gtest_main.cc
+c000000004DA822A800000000000006EC
+t1302864552
+s1772
+i<iostream>
+i"gtest/gtest.h"
+
+N/Users/Niblit/Xcode_Projects/Mono1/build/Debug/MonoEngine.dylib
+c000000004F8DD69D0000000000168488
+t1334695581
+s1475720
+
+N/Users/Niblit/Xcode_Projects/Mono1/build/Debug/UnitTests
+t1334695760
+s138212
+
+N/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/EngineTest.o
+t1334695759
+s358492
+
+N/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/LuaTest.o
+t1334695733
+s168232
+
+N/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/UnitTests.LinkFileList
+c000000004F8DD6F90000000000000141
+t1334695673
+s321
+
+N/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/gtest_main.o
+t1334695680
+s23856
+
+CBuild AST from /Users/Niblit/Xcode_Projects/Mono1/UnitTests/EngineTest.cpp
+r0
+
+CBuild AST from /Users/Niblit/Xcode_Projects/Mono1/UnitTests/LuaTest.cpp
+r0
+
+CBuild AST from /Users/Niblit/Xcode_Projects/Mono1/UnitTests/gtest_main.cc
+r0
+
+CCheck dependencies
+r0
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependenciesdbf966c29a40b541^f72197c29a40b541^---0#1#0#--18"Check dependencies
+
+CCompileC build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/EngineTest.o /Users/Niblit/Xcode_Projects/Mono1/UnitTests/EngineTest.cpp normal i386 c++ com.apple.compilers.llvmgcc42
+s356388556.983549
+e356388559.489923
+r1
+xCompileC
+xbuild/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/EngineTest.o
+x/Users/Niblit/Xcode_Projects/Mono1/UnitTests/EngineTest.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvmgcc42
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection67"Compile /Users/Niblit/Xcode_Projects/Mono1/UnitTests/EngineTest.cpp51f9fbcc0e3eb541^6b7d7dcf0e3eb541^---0#0#0#-19%DVTDocumentLocation2@75"file://localhost/Users/Niblit/Xcode_Projects/Mono1/UnitTests/EngineTest.cpp0000000000000000^1750"CompileC build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/EngineTest.o UnitTests/EngineTest.cpp normal i386 c++ com.apple.compilers.llvmgcc42    cd /Users/Niblit/Xcode_Projects/Mono1    setenv LANG en_US.US-ASCII    /Developer/usr/bin/llvm-gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -Wshorten-64-to-32 -DDEBUG -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility-inlines-hidden -iquote /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/UnitTests-generated-files.hmap -I/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/UnitTests-own-target-headers.hmap -I/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/UnitTests-all-target-headers.hmap -iquote /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/UnitTests-project-headers.hmap -I/Users/Niblit/Xcode_Projects/Mono1/build/Debug/include -I/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/SDL2.framework/Headers -I/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/SDL2.framework/Headers -I/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/gtest.framework/Headers -I/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/DerivedSources/i386 -I/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/DerivedSources -F/Users/Niblit/Xcode_Projects/Mono1/build/Debug -F/Users/Niblit/Library/Frameworks -F/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks -c /Users/Niblit/Xcode_Projects/Mono1/UnitTests/EngineTest.cpp -o /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/EngineTest.o
+
+CCompileC build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/LuaTest.o /Users/Niblit/Xcode_Projects/Mono1/UnitTests/LuaTest.cpp normal i386 c++ com.apple.compilers.llvmgcc42
+s356388529.765286
+e356388533.861961
+r1
+xCompileC
+xbuild/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/LuaTest.o
+x/Users/Niblit/Xcode_Projects/Mono1/UnitTests/LuaTest.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvmgcc42
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection64"Compile /Users/Niblit/Xcode_Projects/Mono1/UnitTests/LuaTest.cppf609c4b10e3eb541^69a9dcb50e3eb541^---0#0#0#-19%DVTDocumentLocation2@72"file://localhost/Users/Niblit/Xcode_Projects/Mono1/UnitTests/LuaTest.cpp0000000000000000^1738"CompileC build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/LuaTest.o UnitTests/LuaTest.cpp normal i386 c++ com.apple.compilers.llvmgcc42    cd /Users/Niblit/Xcode_Projects/Mono1    setenv LANG en_US.US-ASCII    /Developer/usr/bin/llvm-gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -Wshorten-64-to-32 -DDEBUG -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility-inlines-hidden -iquote /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/UnitTests-generated-files.hmap -I/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/UnitTests-own-target-headers.hmap -I/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/UnitTests-all-target-headers.hmap -iquote /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/UnitTests-project-headers.hmap -I/Users/Niblit/Xcode_Projects/Mono1/build/Debug/include -I/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/SDL2.framework/Headers -I/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/SDL2.framework/Headers -I/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/gtest.framework/Headers -I/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/DerivedSources/i386 -I/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/DerivedSources -F/Users/Niblit/Xcode_Projects/Mono1/build/Debug -F/Users/Niblit/Library/Frameworks -F/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks -c /Users/Niblit/Xcode_Projects/Mono1/UnitTests/LuaTest.cpp -o /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/LuaTest.o
+
+CCompileC build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/gtest_main.o /Users/Niblit/Xcode_Projects/Mono1/UnitTests/gtest_main.cc normal i386 c++ com.apple.compilers.llvmgcc42
+s356388473.855885
+e356388480.551988
+r1
+xCompileC
+xbuild/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/gtest_main.o
+x/Users/Niblit/Xcode_Projects/Mono1/UnitTests/gtest_main.cc
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvmgcc42
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection66"Compile /Users/Niblit/Xcode_Projects/Mono1/UnitTests/gtest_main.cce160db790e3eb541^eb6f91800e3eb541^---0#0#0#-19%DVTDocumentLocation2@74"file://localhost/Users/Niblit/Xcode_Projects/Mono1/UnitTests/gtest_main.cc0000000000000000^1748"CompileC build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/gtest_main.o UnitTests/gtest_main.cc normal i386 c++ com.apple.compilers.llvmgcc42    cd /Users/Niblit/Xcode_Projects/Mono1    setenv LANG en_US.US-ASCII    /Developer/usr/bin/llvm-gcc-4.2 -x c++ -arch i386 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -Wshorten-64-to-32 -DDEBUG -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fvisibility-inlines-hidden -iquote /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/UnitTests-generated-files.hmap -I/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/UnitTests-own-target-headers.hmap -I/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/UnitTests-all-target-headers.hmap -iquote /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/UnitTests-project-headers.hmap -I/Users/Niblit/Xcode_Projects/Mono1/build/Debug/include -I/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/SDL2.framework/Headers -I/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/SDL2.framework/Headers -I/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks/gtest.framework/Headers -I/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/DerivedSources/i386 -I/Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/DerivedSources -F/Users/Niblit/Xcode_Projects/Mono1/build/Debug -F/Users/Niblit/Library/Frameworks -F/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks -c /Users/Niblit/Xcode_Projects/Mono1/UnitTests/gtest_main.cc -o /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/gtest_main.o
+
+CLd /Users/Niblit/Xcode_Projects/Mono1/build/Debug/UnitTests normal i386
+s356388559.507360
+e356388560.630316
+r1
+xLd
+x/Users/Niblit/Xcode_Projects/Mono1/build/Debug/UnitTests
+xnormal
+xi386
+lSLF03#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection61"Link /Users/Niblit/Xcode_Projects/Mono1/build/Debug/UnitTests8e0482cf0e3eb541^3fa7a4d00e3eb541^---0#0#0#--688"Ld build/Debug/UnitTests normal i386    cd /Users/Niblit/Xcode_Projects/Mono1    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/llvm-g++-4.2 -arch i386 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/Niblit/Xcode_Projects/Mono1/build/Debug -F/Users/Niblit/Xcode_Projects/Mono1/build/Debug -F/Users/Niblit/Library/Frameworks -F/Developer/SDKs/MacOSX10.6.sdk/Library/Frameworks -filelist /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/UnitTests.build/Objects-normal/i386/UnitTests.LinkFileList -mmacosx-version-min=10.6 /Users/Niblit/Xcode_Projects/Mono1/build/Debug/MonoEngine.dylib -framework gtest -o /Users/Niblit/Xcode_Projects/Mono1/build/Debug/UnitTests
+

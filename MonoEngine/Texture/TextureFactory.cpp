@@ -20,7 +20,7 @@ namespace
     typedef std::tr1::weak_ptr<mono::ITexture> ITextureWeakPtr; 
     typedef std::map<std::string, ITextureWeakPtr> TextureStoreMap;
     TextureStoreMap textureStore;
-                               
+
     struct TextureDeleter
     {
         TextureDeleter(const std::string& source)

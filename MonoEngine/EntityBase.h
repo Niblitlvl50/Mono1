@@ -15,22 +15,22 @@
 namespace mono
 {
 
-	class EntityBase : public IEntity
-	{
-	public:
-		
-		virtual void Draw() const;
+    class EntityBase : public IEntity
+    {
+    public:
+
+        virtual void Draw() const;
         virtual void Update(unsigned int delta);
-        
-		void AddChild(IEntityPtr child);
-		void RemoveChild(IEntityPtr child);
+
+        void AddChild(IEntityPtr child);
+        void RemoveChild(IEntityPtr child);
 		
-	protected:
-        
-		EntityBase();
+    protected:
+
+        EntityBase();
 		
-		IEntityCollection mChildren;
-	};
+        IEntityCollection mChildren;
+    };
     
 }
 

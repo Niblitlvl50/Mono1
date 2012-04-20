@@ -59,41 +59,42 @@ void Events::ProcessSystemEvents(mono::IInputHandlerPtr handler)
 	
     /* Grab all the events off the queue. */
     while(SDL_PollEvent(&event))
-	{
+    {
         switch(event.type)
-		{
-			case SDL_KEYDOWN:
-				handler->OnKeyDown(event.key.keysym.sym);
-				break;
-				
-			case SDL_KEYUP:
-				handler->OnKeyUp(event.key.keysym.sym);
-				break;
-                
-			case SDL_MOUSEBUTTONDOWN:
-				handler->OnMouseDown(event.button.button, event.button.x, event.button.y);
-				break;
-                
-			case SDL_MOUSEBUTTONUP:
-				handler->OnMouseUp(event.button.button, event.button.x, event.button.y);
-				break;
-                
-			case SDL_MOUSEMOTION:
-				handler->OnMouseMotion(event.motion.x, event.motion.y);
-				break;
-				
-			case SDL_USEREVENT:
+        {
+            case SDL_KEYDOWN:
+                handler->OnKeyDown(event.key.keysym.sym);
+                break;
+
+            case SDL_KEYUP:
+                handler->OnKeyUp(event.key.keysym.sym);
+                break;
+
+            case SDL_MOUSEBUTTONDOWN:
+                handler->OnMouseDown(event.button.button, event.button.x, event.button.y);
+                break;
+
+            case SDL_MOUSEBUTTONUP:
+                handler->OnMouseUp(event.button.button, event.button.x, event.button.y);
+                break;
+
+            case SDL_MOUSEMOTION:
+                handler->OnMouseMotion(event.motion.x, event.motion.y);
+                break;
+
+            case SDL_USEREVENT:
                 handler->OnUserEvent(event.user.code, event.user.data1, event.user.data2);
-				break;
-                
-			case SDL_WINDOWEVENT:
+                break;
+
+            case SDL_WINDOWEVENT:
                 HandleWindowEvent(event.window, handler);
-				break;
-                
-			case SDL_QUIT:
-				handler->OnQuit();
-				break;
+                break;
+
+            case SDL_QUIT:
+                handler->OnQuit();
+                break;
         }
     }
 
 }
+

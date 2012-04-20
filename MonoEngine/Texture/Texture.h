@@ -22,7 +22,7 @@ namespace mono
         ~Texture();
         
         static void Clear();
-                
+
     private:
         virtual void Use() const;
         virtual int Width() const;

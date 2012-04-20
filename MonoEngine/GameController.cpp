@@ -22,7 +22,7 @@ namespace
         
         virtual void InsertZone(mono::IZonePtr zone)
         {
-            mZoneStack.push(zone);        
+            mZoneStack.push(zone);
         }
         
         virtual mono::IZonePtr GetCurrentZone()
@@ -40,9 +40,9 @@ namespace
                 zone = mZoneStack.top();
             }
             
-            return zone;        
+            return zone;
         }
-        
+
         virtual void SetWindowSize(const Math::Vector2f& size)
         {
             mWindowSize = size;
@@ -52,7 +52,7 @@ namespace
         {
             return mWindowSize;
         }
-                
+
         std::stack<mono::IZonePtr> mZoneStack;
         Math::Vector2f mWindowSize;
     };

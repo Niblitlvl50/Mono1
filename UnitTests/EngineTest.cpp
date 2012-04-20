@@ -34,11 +34,11 @@ namespace
         {
             mSurfaceChangedCalled = (width == 100 && height == 100);
         }
-		virtual void Activated(bool activated)
+        virtual void Activated(bool activated)
         {
             mActivatedCalled = activated;
         }
-		virtual void DrawFrame(mono::IRenderer& renderer) const
+        virtual void DrawFrame(mono::IRenderer& renderer) const
         {
             Event::ActivatedEvent activated(true);
             mono::EventHandler::DispatchEvent(activated);

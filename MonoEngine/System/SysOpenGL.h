@@ -10,3 +10,12 @@
 
 #include <GLUT/glut.h>
 
+
+namespace OGL
+{
+    struct OGLPushPopMatrix
+    {
+        OGLPushPopMatrix();
+        ~OGLPushPopMatrix();
+    };
+}

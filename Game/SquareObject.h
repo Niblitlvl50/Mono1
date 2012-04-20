@@ -14,24 +14,24 @@
 
 namespace game
 {
-	
-	class SquareObject : public mono::EntityBase
-	{
-	public:
-		
-		SquareObject(float x, float y, float z);
-				
-	private:
-        
+    
+    class SquareObject : public mono::EntityBase
+    {
+    public:
+
+        SquareObject(float x, float y, float z);
+
+    private:
+
         virtual void Draw() const;
         virtual void Update(unsigned int delta);
-        		
-		float mPosX;
-		float mPosY;
-		float mPosZ;
-        
+
+        float mPosX;
+        float mPosY;
+        float mPosZ;
+
         mono::Sprite mSprite;
-	};
+    };
 
 }
 

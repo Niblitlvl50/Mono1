@@ -14,22 +14,22 @@
 namespace mono
 {
 
-	class OGLRenderer : public IRenderer
-	{
-	public:
+    class OGLRenderer : public IRenderer
+    {
+    public:
         
-		virtual void DrawFrame() const;
+        virtual void DrawFrame() const;
         virtual void Update(unsigned int milliseconds);
-        
+
         virtual void AddEntity(IEntityPtr entity);
         virtual void AddDrawable(IDrawablePtr drawable);
         virtual void AddUpdatable(IUpdatablePtr updatable);
-	
-	private:
-		
+
+    private:
+
         IDrawableCollection mDrawables;
         IUpdatableCollection mUpdatables;
-	};
+    };
 
 }
 

@@ -13,19 +13,19 @@
 
 namespace mono
 {
-	
-	struct IWindow
-	{
-		virtual ~IWindow()
+
+    struct IWindow
+    {
+        virtual ~IWindow()
         { }
 		
-		virtual void SurfaceChanged(int width, int height) = 0;
-		virtual void Activated(bool activated) = 0;
-		virtual void DrawFrame(IRenderer& renderer) const = 0;
-        
+        virtual void SurfaceChanged(int width, int height) = 0;
+        virtual void Activated(bool activated) = 0;
+        virtual void DrawFrame(IRenderer& renderer) const = 0;
+
         virtual int GetWidth() const = 0;
         virtual int GetHeight() const = 0;
-	};
+    };
 
 }
 

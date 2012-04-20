@@ -13,18 +13,18 @@
 
 namespace game
 {
-	class TriangleObject : public mono::EntityBase
-	{
-	public:
-		
-		TriangleObject();
-                
+    class TriangleObject : public mono::EntityBase
+    {
+    public:
+
+        TriangleObject();
+
     private:
-        
-		virtual void Draw() const;
+
+        virtual void Draw() const;
         virtual void Update(unsigned int delta);
 
         float mRotation;
-	};
+    };
 }
 

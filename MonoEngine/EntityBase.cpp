@@ -16,25 +16,25 @@ EntityBase::EntityBase()
 
 void EntityBase::Draw() const
 {
-	for(IEntityCollection::const_iterator it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
-	{
-		const IEntityPtr child = *it;
-		child->Draw();
-	}
+    for(IEntityCollection::const_iterator it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
+    {
+        const IEntityPtr child = *it;
+        child->Draw();
+    }
 }
 
 void EntityBase::Update(unsigned int delta)
 {
-	for(IEntityCollection::const_iterator it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
-	{
-		const IEntityPtr child = *it;
-		child->Update(delta);
-	}
+    for(IEntityCollection::const_iterator it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
+    {
+        const IEntityPtr child = *it;
+        child->Update(delta);
+    }
 }
 
 void EntityBase::AddChild(IEntityPtr child)
 {
-	mChildren.push_back(child);
+    mChildren.push_back(child);
 }
 
 namespace 

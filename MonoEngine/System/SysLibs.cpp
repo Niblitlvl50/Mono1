@@ -12,13 +12,13 @@
 
 void Libs::Init()
 {
-	// Init SDL video subsystem
-	const int result = SDL_Init(SDL_INIT_VIDEO);
+    // Init SDL video subsystem
+    const int result = SDL_Init(SDL_INIT_VIDEO);
     if(result != 0)
         throw std::runtime_error("Couldn't initialize SDL");
 }
 
 void Libs::Exit()
 {
-	SDL_Quit();
+    SDL_Quit();
 }

@@ -14,18 +14,18 @@
 namespace mono
 {
 
-	struct IRenderer
-	{
-		virtual ~IRenderer()
+    struct IRenderer
+    {
+        virtual ~IRenderer()
         { }
 		
-		virtual void DrawFrame() const = 0;
+        virtual void DrawFrame() const = 0;
         virtual void Update(unsigned int milliseconds) = 0;
-        
+
         virtual void AddEntity(IEntityPtr entity) = 0;
         virtual void AddDrawable(IDrawablePtr drawable) = 0;
         virtual void AddUpdatable(IUpdatablePtr updatable) = 0;
-	};
-    
+    };
+
 }
 

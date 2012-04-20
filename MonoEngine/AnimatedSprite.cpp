@@ -17,7 +17,7 @@ namespace
 {
     static const float vertices[] = { -1.0f, -1.0f,
                                       -1.0f,  1.0f,
-                                       1.0f,  1.0f,        
+                                       1.0f,  1.0f,
                                        1.0f, -1.0f };
         
     static const unsigned short indices[] = { 0, 1, 2, 0, 2, 3 };
@@ -46,6 +46,7 @@ namespace
             }
         }
     }
+
 }
 
 

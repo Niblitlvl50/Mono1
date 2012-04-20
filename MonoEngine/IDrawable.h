@@ -11,14 +11,14 @@
 
 namespace mono
 {
-    
-	struct IDrawable
-	{
-		virtual ~IDrawable()
-		{ }
+
+    struct IDrawable
+    {
+        virtual ~IDrawable()
+        { }
 		
-		virtual void Draw() const = 0;
-	};
+        virtual void Draw() const = 0;
+    };
 
 }
 

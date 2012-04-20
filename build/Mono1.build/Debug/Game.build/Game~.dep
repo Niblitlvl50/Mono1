@@ -1,0 +1,14 @@
+ffffffffffffffffffffffffffffffff 896d4b1010589903e69a78849a7c62b5 ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Debug/Game.app
+ffffffffffffffffffffffffffffffff 2f85741ed2d396eedd712f22962617c4 ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Debug/Game.app/Contents/MacOS/Game
+000000004f76f4ed000000000000312e 8b23a36ca9c54dae13c123b797940cad ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/Game.build/Objects-normal/i386/AnimatedDudeController.o
+0000000000001b860000000000000ff0 ada93908fb35329e4b1e6bdd20925ada ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/Game.build/Objects-normal/i386/AnimatedDude.o
+00000000000005640000000000000138 87731b7207ae4cff4a15b5d54a2e9271 ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/Game.build/Objects-normal/i386/main.o
+000000004f8db18f000000000000016a b1d2659d4f078acb8e9c3d574fee068a ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/Game.build/Objects-normal/i386/TestZone.o
+0000000004c54f0c00000000000054fa 50ebc2e68dc60eed85ffacf4e25abe52 ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/Game.build/Objects-normal/i386/TriangleObject.o
+000000004b47aafe00000000000055ec 07e77c5089dc8f59b2615266bc2c73ef ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/Game.build/Objects-normal/i386/SquareObject.o
+0000000004c54e9d000000000000539c 35740dd84e9612608d8fb41eadc95c59 ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Mono1.build/Debug/Game.build/Objects-normal/i386/OscillatingLine.o
+00000000000000000000000000000000 5c0e37fb003a9e8e5e4cb83eb2a936cd ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Debug/Game.app/Contents/Resources/hal.png
+00000000000000000000000000000000 4f0a6600553ca57c78ad23f724f6ebcd ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Debug/Game.app/Contents/Resources/small_craft.png
+000000004f7debfe0000000000000210 22d8f423152bb3fc236adb55d7c4ab19 ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Debug/Game.app/Contents/Resources/English.lproj/InfoPlist.strings
+00000000000000000000000000000000 6f2da06394e53be5d7897e02d220fb29 ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Debug/Game.app/Contents/Info.plist
+00000000000000000000000000000000 6f2da06394e53be5d7897e02d220fb29 ffffffffffffffffffffffffffffffff 0 /Users/Niblit/Xcode_Projects/Mono1/build/Debug/Game.app/Contents/PkgInfo

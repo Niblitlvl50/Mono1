@@ -85,5 +85,5 @@ void AnimatedDude::Update(unsigned int delta)
     
     mSprite.Update(delta);
     
-	EntityBase::Update(delta);
+    EntityBase::Update(delta);
 }

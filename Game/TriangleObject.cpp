@@ -17,44 +17,44 @@ using namespace game;
 TriangleObject::TriangleObject()
     : mRotation(1.0f)
 {
-	AddChild(mono::IEntityPtr(new game::SquareObject(1.0f, 1.0f, 0.0f)));
-	AddChild(mono::IEntityPtr(new game::SquareObject(-1.0f, -1.0f, 0.0f)));
+    AddChild(mono::IEntityPtr(new game::SquareObject(1.0f, 1.0f, 0.0f)));
+    AddChild(mono::IEntityPtr(new game::SquareObject(-1.0f, -1.0f, 0.0f)));
 }
 
 void TriangleObject::Draw() const
 {
     mono::Texture::Clear();
     
-	glPushMatrix();
+    glPushMatrix();
     
-	glTranslatef(400.0f, 300.0f, 0.0f);
-	glRotatef(mRotation, 0.0f, 0.0f, 1.0f);
+    glTranslatef(400.0f, 300.0f, 0.0f);
+    glRotatef(mRotation, 0.0f, 0.0f, 1.0f);
     glScalef(20.0f, 20.0f, 20.f);
     glColor3f(1.0f, 0.0f, 0.0f);
 	
-	glBegin(GL_TRIANGLES);
+    glBegin(GL_TRIANGLES);
 	
     glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-1.0f, -1.0f, 0.0f);
-    
+    glVertex3f(-1.0f, -1.0f, 0.0f);
+
     glTexCoord2f(1.0f, 0.0f);
-	glVertex3f(1.0f, -1.0f, 0.0f);
+    glVertex3f(1.0f, -1.0f, 0.0f);
     
     glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	
-	glEnd();	
-	
-	EntityBase::Draw();
-	
-	glPopMatrix();
+    glVertex3f(1.0f, 1.0f, 0.0f);
+
+    glEnd();	
+
+    EntityBase::Draw();
+
+    glPopMatrix();
 }
 
 void TriangleObject::Update(unsigned int delta)
 {
-	mRotation += (delta * 0.1f);
-	if(mRotation > 360.0f)
-		mRotation = 0.0f;
-    
+    mRotation += (delta * 0.1f);
+    if(mRotation > 360.0f)
+        mRotation = 0.0f;
+
     EntityBase::Update(delta);
 }

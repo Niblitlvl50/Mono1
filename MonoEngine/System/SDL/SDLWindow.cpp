@@ -44,8 +44,6 @@ namespace
         glLightfv(GL_LIGHT0, GL_POSITION, position);
         glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
         glLightModelfv(GL_LIGHT_MODEL_LOCAL_VIEWER, lmodel_localviewer);
-        //glEnable(GL_LIGHTING);
-        //glEnable(GL_LIGHT0);
         
         glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
         glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
@@ -61,7 +59,7 @@ namespace
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
-        glClearColor(0.0, 0.5, 0.9, 1.0);    
+        glClearColor(0.0, 0.5, 0.9, 1.0);
     }
     
     void SetProjection(int width, int height)

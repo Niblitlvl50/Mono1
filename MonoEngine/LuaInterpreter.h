@@ -17,21 +17,21 @@ class lua_State;
 namespace mono
 {
     typedef std::tr1::function<int (lua_State*)> LuaFunction;
-    
-	class LuaInterpreter
-	{
-	public:
-		LuaInterpreter();
-		~LuaInterpreter();
+
+    class LuaInterpreter
+    {
+    public:
+        LuaInterpreter();
+        ~LuaInterpreter();
 		
         void RegisterFunction(const std::string& name, const LuaFunction& func);
-		int ExecuteFile(const std::string& file) const;
-		int ExecuteString(const std::string& string) const;
-		
-	private:
-	
-		lua_State* mLuaState;
-	};
-    
+        int ExecuteFile(const std::string& file) const;
+        int ExecuteString(const std::string& string) const;
+
+    private:
+
+        lua_State* mLuaState;
+    };
+
 }
 

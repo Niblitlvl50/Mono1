@@ -27,7 +27,7 @@
 #include <map>
 
 namespace mono
-{
+{    
     struct SpriteTextureCoord
     {
         Math::Vector2f bl;
@@ -35,9 +35,9 @@ namespace mono
         Math::Vector2f tr;
         Math::Vector2f br;
     };
-    
+
     typedef std::vector<unsigned int> FrameDurations;
-        
+    
     struct AnimationSequence
     {
         AnimationSequence()
@@ -77,7 +77,7 @@ namespace mono
     private:
         
         float mXScale;
-        float mYScale;        
+        float mYScale;
         int mActiveAnimationId;
         
         ITexturePtr mTexture;

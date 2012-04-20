@@ -147,6 +147,7 @@
 		2BE474871532032C00CA5ACB /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE474861532032C00CA5ACB /* SDL2.framework */; };
 		2BE4748C1532038B00CA5ACB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE4748B1532038B00CA5ACB /* OpenGL.framework */; };
 		2BE474B21532050F00CA5ACB /* MonoEngine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6872DC1531FEA800B8C2FB /* MonoEngine.dylib */; };
+		2BE969451541E1D700FE8B70 /* SysOpenGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE969441541E1D700FE8B70 /* SysOpenGL.cpp */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
@@ -407,6 +408,7 @@
 		2BE47418153201CC00CA5ACB /* TextureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureFactory.h; sourceTree = "<group>"; };
 		2BE474861532032C00CA5ACB /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = Library/Frameworks/SDL2.framework; sourceTree = SDKROOT; };
 		2BE4748B1532038B00CA5ACB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		2BE969441541E1D700FE8B70 /* SysOpenGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysOpenGL.cpp; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -779,6 +781,7 @@
 				2BE4740C153201CC00CA5ACB /* SysLibs.cpp */,
 				2BE4740D153201CC00CA5ACB /* SysLibs.h */,
 				2BE4740E153201CC00CA5ACB /* SysOpenGL.h */,
+				2BE969441541E1D700FE8B70 /* SysOpenGL.cpp */,
 				2BE4740F153201CC00CA5ACB /* SysTime.cpp */,
 				2BE47410153201CC00CA5ACB /* SysTime.h */,
 				2BE47411153201CC00CA5ACB /* WindowFactory.cpp */,
@@ -1061,6 +1064,7 @@
 				2BE4744B153201CC00CA5ACB /* Texture.cpp in Sources */,
 				2BE4744D153201CC00CA5ACB /* TextureFactory.cpp in Sources */,
 				2B4B069C15330335006D0C75 /* AnimatedSprite.cpp in Sources */,
+				2BE969451541E1D700FE8B70 /* SysOpenGL.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
