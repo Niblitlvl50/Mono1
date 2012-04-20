@@ -13,16 +13,17 @@
 
 using namespace mono;
 
+OGLRenderer::OGLRenderer(ICameraPtr camera)
+    : mCamera(camera)
+{ }
+
 void OGLRenderer::DrawFrame() const
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
-    
+{    
     for(IDrawableCollection::const_iterator it = mDrawables.begin(), end = mDrawables.end(); it != end; ++it)
     {
         const OGL::OGLPushPopMatrix raii;
 
-        IDrawablePtr drawable = *it;
+        const IDrawablePtr drawable = *it;
         drawable->Draw();
     }
 }

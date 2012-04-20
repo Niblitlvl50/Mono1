@@ -72,7 +72,7 @@ void Engine::Run()
         Events::ProcessSystemEvents(mInputHandler);
 
         // Rename this, its not really a renderer... it just collects what needs to be updated and drawn.
-        OGLRenderer renderer;
+        OGLRenderer renderer(mCamera);
 
         // The current zone
         IZonePtr zone = mono::GameControllerInstance().GetCurrentZone();

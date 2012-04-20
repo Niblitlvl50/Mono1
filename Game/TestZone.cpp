@@ -10,8 +10,8 @@
 #include "TriangleObject.h"
 #include "OscillatingLine.h"
 #include "AnimatedDude.h"
+#include "ICamera.h"
 #include "IRenderer.h"
-
 #include "SysTime.h"
 
 using namespace game;

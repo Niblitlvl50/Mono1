@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		002F3C0109D093BD00EBEB88 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F3C0009D093BD00EBEB88 /* OpenGL.framework */; };
+		2B2F386215420C4E00C44D55 /* AnimationSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B2F386015420C4E00C44D55 /* AnimationSequence.cpp */; };
+		2B2F386315420C4E00C44D55 /* AnimationSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386115420C4E00C44D55 /* AnimationSequence.h */; };
 		2B4B069C15330335006D0C75 /* AnimatedSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B4B069A15330330006D0C75 /* AnimatedSprite.cpp */; };
 		2B4B069D15330335006D0C75 /* AnimatedSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B4B069B15330332006D0C75 /* AnimatedSprite.h */; };
 		2B4B06A015331F13006D0C75 /* AnimatedDude.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B4B069E15331F12006D0C75 /* AnimatedDude.cpp */; };
@@ -206,6 +208,8 @@
 /* Begin PBXFileReference section */
 		002F3C0009D093BD00EBEB88 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2B2F386015420C4E00C44D55 /* AnimationSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimationSequence.cpp; path = Sprite/AnimationSequence.cpp; sourceTree = "<group>"; };
+		2B2F386115420C4E00C44D55 /* AnimationSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimationSequence.h; path = Sprite/AnimationSequence.h; sourceTree = "<group>"; };
 		2B4B069A15330330006D0C75 /* AnimatedSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedSprite.cpp; sourceTree = "<group>"; };
 		2B4B069B15330332006D0C75 /* AnimatedSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedSprite.h; sourceTree = "<group>"; };
 		2B4B069E15331F12006D0C75 /* AnimatedDude.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimatedDude.cpp; path = Game/AnimatedDude.cpp; sourceTree = "<group>"; };
@@ -549,6 +553,15 @@
 			path = "src/zlib-1.2.5";
 			sourceTree = "<group>";
 		};
+		2B2F385F15420C2900C44D55 /* Sprite */ = {
+			isa = PBXGroup;
+			children = (
+				2B2F386015420C4E00C44D55 /* AnimationSequence.cpp */,
+				2B2F386115420C4E00C44D55 /* AnimationSequence.h */,
+			);
+			name = Sprite;
+			sourceTree = "<group>";
+		};
 		2B4B06A1153336BE006D0C75 /* Math */ = {
 			isa = PBXGroup;
 			children = (
@@ -622,6 +635,7 @@
 		2B6872DD1531FEA800B8C2FB /* MonoEngine */ = {
 			isa = PBXGroup;
 			children = (
+				2B2F385F15420C2900C44D55 /* Sprite */,
 				2B4B06A1153336BE006D0C75 /* Math */,
 				2BE474881532033C00CA5ACB /* Linked Frameworks */,
 				2B6872DE1531FEA800B8C2FB /* Supporting Files */,
@@ -880,6 +894,7 @@
 				2BC214721535E50A0063834F /* KeyUpEvent.h in Headers */,
 				2BC214771535F7430063834F /* MouseUpEvent.h in Headers */,
 				2BE969471541EC0A00FE8B70 /* MouseMotionEvent.h in Headers */,
+				2B2F386315420C4E00C44D55 /* AnimationSequence.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1069,6 +1084,7 @@
 				2BE4744D153201CC00CA5ACB /* TextureFactory.cpp in Sources */,
 				2B4B069C15330335006D0C75 /* AnimatedSprite.cpp in Sources */,
 				2BE969451541E1D700FE8B70 /* SysOpenGL.cpp in Sources */,
+				2B2F386215420C4E00C44D55 /* AnimationSequence.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

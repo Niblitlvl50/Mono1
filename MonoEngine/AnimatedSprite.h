@@ -23,6 +23,7 @@
 #include "MonoFwd.h"
 #include "IUpdatable.h"
 #include "Vector2f.h"
+#include "AnimationSequence.h"
 
 #include <map>
 
@@ -34,32 +35,6 @@ namespace mono
         Math::Vector2f tl;
         Math::Vector2f tr;
         Math::Vector2f br;
-    };
-
-    typedef std::vector<unsigned int> FrameDurations;
-    
-    struct AnimationSequence
-    {
-        AnimationSequence()
-            : mStart(0),
-              mEnd(0),
-              mFrame(0),
-              mElapsedTime(0)
-        { }
-        
-        AnimationSequence(unsigned int start, unsigned int end, const FrameDurations& durations)
-            : mStart(start),
-              mEnd(end),
-              mFrame(start),
-              mElapsedTime(0),
-              mDurations(durations)
-        { }
-        
-        unsigned int mStart;
-        unsigned int mEnd;
-        unsigned int mFrame;
-        unsigned int mElapsedTime;
-        FrameDurations mDurations;
     };
 
     class AnimatedSprite : public IUpdatable

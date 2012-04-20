@@ -15,6 +15,8 @@ using namespace mono;
 
 namespace
 {
+    static const int DEFAULT_ANIMATION_ID = 0;
+    
     static const float vertices[] = { -1.0f, -1.0f,
                                       -1.0f,  1.0f,
                                        1.0f,  1.0f,
@@ -57,12 +59,16 @@ AnimatedSprite::AnimatedSprite(const std::string& file, int rows, int columns, f
 {
     mTexture = mono::CreateTexture(file);
     GenerateTextureCoordinates(rows, columns, mTextureCoordinates);
+    
+    FrameDurations durations;
+    durations.push_back(-1);
+    DefineAnimation(DEFAULT_ANIMATION_ID, 0, 0, durations);
 }
 
 void AnimatedSprite::DrawAt(float x, float y) const
 {
     const AnimationSequence& anim = mDefinedAnimations.find(mActiveAnimationId)->second;
-    const SpriteTextureCoord& texcoords = mTextureCoordinates.at(anim.mFrame);
+    const SpriteTextureCoord& texcoords = mTextureCoordinates.at(anim.Frame());
     
     mTexture->Use();
     
@@ -88,15 +94,7 @@ void AnimatedSprite::DrawAt(float x, float y) const
 void AnimatedSprite::Update(unsigned int delta)
 {
     AnimationSequence& anim = mDefinedAnimations[mActiveAnimationId];
-    anim.mElapsedTime += delta;
-    if(anim.mElapsedTime > anim.mDurations.at(anim.mFrame - anim.mStart))
-    {
-        anim.mElapsedTime = 0;
-        anim.mFrame++;
-        
-        if(anim.mFrame > anim.mEnd)
-            anim.mFrame = anim.mStart;
-    }
+    anim.Tick(delta);
 }
 
 void AnimatedSprite::SetAnimation(int id)

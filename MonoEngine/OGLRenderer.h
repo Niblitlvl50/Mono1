@@ -18,6 +18,8 @@ namespace mono
     {
     public:
         
+        OGLRenderer(ICameraPtr camera);
+        
         virtual void DrawFrame() const;
         virtual void Update(unsigned int milliseconds);
 
@@ -27,6 +29,7 @@ namespace mono
 
     private:
 
+        ICameraPtr mCamera;
         IDrawableCollection mDrawables;
         IUpdatableCollection mUpdatables;
     };

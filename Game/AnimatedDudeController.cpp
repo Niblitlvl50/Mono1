@@ -15,6 +15,8 @@
 
 #include "SDL_keycode.h"
 
+#include <iostream>
+
 using namespace game;
 
 AnimatedDudeController::AnimatedDudeController(AnimatedDude& dude)
@@ -54,7 +56,7 @@ void AnimatedDudeController::OnKeyDown(const Event::KeyDownEvent& event)
 
 void AnimatedDudeController::OnMouseUp(const Event::MouseUpEvent& event)
 {
-    mDude.mTarget = Math::Vector2f(event.mX, event.mY);
+    std::cout << "MouseUp at: x " << event.mX << " - y " << event.mY << std::endl;
 }
 
 void AnimatedDudeController::OnMouseMotion(const Event::MouseMotionEvent& event)
