@@ -47,5 +47,5 @@ void TriangleObject::Update(unsigned int delta)
 {
     mRotation += (delta * 0.1f);
     if(mRotation > 360.0f)
-        mRotation = 0.0f;
+        mRotation -= 360.0f;
 }

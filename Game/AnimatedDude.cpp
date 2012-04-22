@@ -17,7 +17,7 @@ namespace constants
     
     enum
     {
-        RUNNING = 0,
+        RUNNING = 1,
         JUMPING,
         FIGHTING
     };
@@ -29,7 +29,7 @@ AnimatedDude::AnimatedDude(float x, float y)
       mController(*this)
 {
     mPosition = Math::Vector2f(x, y);
-    mScale = 20.0f;
+    mScale = 40.0f;
     
     const mono::FrameDurations runDurations(3, 100);
     mSprite.DefineAnimation(constants::RUNNING, 1, 3, runDurations);
@@ -40,7 +40,7 @@ AnimatedDude::AnimatedDude(float x, float y)
     const mono::FrameDurations fightDurations(4, 100);
     mSprite.DefineAnimation(constants::FIGHTING, 8, 11, fightDurations);
     
-    mSprite.SetAnimation(constants::FIGHTING);
+    //mSprite.SetAnimation(constants::FIGHTING);
 }
 
 void AnimatedDude::Draw() const
@@ -54,9 +54,7 @@ void AnimatedDude::Update(unsigned int delta)
     
     const float xzero = std::floor(std::abs(mPosition.mX - mTarget.mX));
     const float yzero = std::floor(std::abs(mPosition.mY - mTarget.mY));
-    
-    // This shit is not working!
-    
+        
     if(xzero != 0.0f)
     {
         if(mPosition.mX > mTarget.mX)
