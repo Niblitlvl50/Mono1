@@ -19,16 +19,12 @@ namespace game
     {
     public:
 
-        SquareObject(float x, float y, float z);
+        SquareObject(float x, float y);
 
     private:
 
         virtual void Draw() const;
         virtual void Update(unsigned int delta);
-
-        float mPosX;
-        float mPosY;
-        float mPosZ;
 
         mono::Sprite mSprite;
     };

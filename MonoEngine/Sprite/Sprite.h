@@ -41,23 +41,20 @@ namespace mono
     {
     public:
 
-        Sprite(const std::string& file, float xscale, float yscale);
-        Sprite(const std::string& file, int rows, int columns, float xscale, float yscale);
+        Sprite(const std::string& file);
+        Sprite(const std::string& file, int rows, int columns);
 
-        void DrawAt(float x, float y) const;
+        void Draw() const;
         void DefineAnimation(int id, unsigned int start, unsigned int end, const FrameDurations& durations);
         void SetAnimation(int id);
         
-        virtual void Update(unsigned int delta);
+        virtual void doUpdate(unsigned int delta);
 
     private:
         
         void Init(const std::string& file, int rows, int columns);
         
-        float mXScale;
-        float mYScale;
-        int mActiveAnimationId;
-        
+        int mActiveAnimationId;        
         ITexturePtr mTexture;
         
         std::vector<SpriteTextureCoord> mTextureCoordinates;

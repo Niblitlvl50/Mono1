@@ -14,20 +14,17 @@
 
 using namespace game;
 
-SquareObject::SquareObject(float x, float y, float z)
-    : mPosX(x),
-      mPosY(y),
-      mPosZ(z),
-      mSprite("small_craft.png", 1.0f, 1.0f)
-{ }
+SquareObject::SquareObject(float x, float y)
+    : mSprite("small_craft.png", 1.0f, 1.0f)
+{
+    mPosition.mX = x;
+    mPosition.mY = y;
+}
 
 void SquareObject::Draw() const
 {
-    mSprite.DrawAt(mPosX, mPosY);
-    EntityBase::Draw();
+    mSprite.Draw();
 }
 
 void SquareObject::Update(unsigned int delta)
-{
-    EntityBase::Update(delta);
-}
+{ }

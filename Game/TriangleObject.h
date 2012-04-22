@@ -23,8 +23,6 @@ namespace game
 
         virtual void Draw() const;
         virtual void Update(unsigned int delta);
-
-        float mRotation;
     };
 }
 

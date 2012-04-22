@@ -9,11 +9,11 @@
 
 #pragma once
 
-#include "IZone.h"
+#include "ZoneBase.h"
 
 namespace game
 {
-    class TestZone : public mono::IZone
+    class TestZone : public mono::ZoneBase
     {
     public:
         
@@ -21,7 +21,6 @@ namespace game
     
     private:
         
-        virtual void Accept(mono::IRenderer& renderer);
         virtual bool IsDone() const;
         
         mono::IEntityCollection mEntities;

@@ -24,38 +24,28 @@ namespace constants
 }
 
 AnimatedDude::AnimatedDude(float x, float y)
-    : mPosition(x, y),
-      mTarget(x, y),
-      mSprite("ryu.png", 3, 4, 20.0f, 20.0f),
+    : mTarget(x, y),
+      mSprite("ryu.png", 3, 4),
       mController(*this)
 {
-    mono::FrameDurations runDurations;
-    runDurations.push_back(100);
-    runDurations.push_back(100);
-    runDurations.push_back(100);
+    mPosition = Math::Vector2f(x, y);
+    mScale = 20.0f;
+    
+    const mono::FrameDurations runDurations(3, 100);
     mSprite.DefineAnimation(constants::RUNNING, 1, 3, runDurations);
     
-    mono::FrameDurations jumpDurations;
-    jumpDurations.push_back(100);
-    jumpDurations.push_back(100);
-    jumpDurations.push_back(100);
-    jumpDurations.push_back(100);
+    const mono::FrameDurations jumpDurations(4, 100);
     mSprite.DefineAnimation(constants::JUMPING, 4, 7, jumpDurations);
 
-    mono::FrameDurations fightDurations;
-    fightDurations.push_back(100);
-    fightDurations.push_back(100);
-    fightDurations.push_back(100);
-    fightDurations.push_back(100);
+    const mono::FrameDurations fightDurations(4, 100);
     mSprite.DefineAnimation(constants::FIGHTING, 8, 11, fightDurations);
     
-    mSprite.SetAnimation(constants::RUNNING);
+    mSprite.SetAnimation(constants::FIGHTING);
 }
 
 void AnimatedDude::Draw() const
 {
-    mSprite.DrawAt(mPosition.mX, mPosition.mY);
-    EntityBase::Draw();
+    mSprite.Draw();
 }
 
 void AnimatedDude::Update(unsigned int delta)
@@ -83,7 +73,5 @@ void AnimatedDude::Update(unsigned int delta)
             mPosition.mY += value;
     }
     
-    mSprite.Update(delta);
-    
-    EntityBase::Update(delta);
+    mSprite.doUpdate(delta);
 }

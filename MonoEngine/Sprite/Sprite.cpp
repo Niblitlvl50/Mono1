@@ -53,16 +53,12 @@ namespace
 
 }
 
-Sprite::Sprite(const std::string& file, float xscale, float yscale)
-    : mXScale(xscale),
-      mYScale(yscale)
+Sprite::Sprite(const std::string& file)
 {
     Init(file, 1, 1);
 }
 
-Sprite::Sprite(const std::string& file, int rows, int columns, float xscale, float yscale)
-    : mXScale(xscale),
-      mYScale(yscale)
+Sprite::Sprite(const std::string& file, int rows, int columns)
 {
     Init(file, rows, columns);
 }
@@ -78,17 +74,13 @@ void Sprite::Init(const std::string& file, int rows, int columns)
     mActiveAnimationId = DEFAULT_ANIMATION_ID;
 }
 
-void Sprite::DrawAt(float x, float y) const
+void Sprite::Draw() const
 {
     const AnimationSequence& anim = mDefinedAnimations.find(mActiveAnimationId)->second;
     const SpriteTextureCoord& texcoords = mTextureCoordinates.at(anim.Frame());
     
     mTexture->Use();
     
-    glPushMatrix();
-    
-    glTranslatef(x, y, 0.0f);
-    glScalef(mXScale, mYScale, 0.0f);
     glColor3f(1.0f, 1.0f, 1.0f);
     
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -100,11 +92,9 @@ void Sprite::DrawAt(float x, float y) const
 
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
-    
-    glPopMatrix();
 }
 
-void Sprite::Update(unsigned int delta)
+void Sprite::doUpdate(unsigned int delta)
 {
     AnimationSequence& anim = mDefinedAnimations[mActiveAnimationId];
     anim.Tick(delta);

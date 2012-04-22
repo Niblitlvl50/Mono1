@@ -16,7 +16,7 @@ namespace mono
         virtual ~IUpdatable()
         { }
         
-        virtual void Update(unsigned int delta) = 0;
+        virtual void doUpdate(unsigned int delta) = 0;
     };
     
 }

@@ -24,7 +24,7 @@ void OGLRenderer::DrawFrame() const
         const OGL::OGLPushPopMatrix raii;
 
         const IDrawablePtr drawable = *it;
-        drawable->Draw();
+        drawable->doDraw();
     }
 }
 
@@ -33,7 +33,7 @@ void OGLRenderer::Update(unsigned int milliseconds)
     for(IUpdatableCollection::iterator it = mUpdatables.begin(), end = mUpdatables.end(); it != end; ++it)
     {
         IUpdatablePtr updatable = *it;
-        updatable->Update(milliseconds);
+        updatable->doUpdate(milliseconds);
     }
 }
 

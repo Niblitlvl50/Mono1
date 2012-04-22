@@ -17,7 +17,7 @@ namespace mono
         virtual ~IDrawable()
         { }
 		
-        virtual void Draw() const = 0;
+        virtual void doDraw() const = 0;
     };
 
 }

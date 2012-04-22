@@ -12,11 +12,14 @@
 		2B2F386315420C4E00C44D55 /* AnimationSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386115420C4E00C44D55 /* AnimationSequence.h */; };
 		2B2F386A15421EE700C44D55 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B2F386815421EE700C44D55 /* Sprite.cpp */; };
 		2B2F386B15421EE700C44D55 /* Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386915421EE700C44D55 /* Sprite.h */; };
+		2B2F386E1542210B00C44D55 /* ZoneBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B2F386C1542210A00C44D55 /* ZoneBase.cpp */; };
+		2B2F386F1542210B00C44D55 /* ZoneBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386D1542210B00C44D55 /* ZoneBase.h */; };
 		2B4B06A015331F13006D0C75 /* AnimatedDude.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B4B069E15331F12006D0C75 /* AnimatedDude.cpp */; };
 		2B4B06A3153336E8006D0C75 /* Vector2f.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B4B06A2153336E8006D0C75 /* Vector2f.h */; };
 		2B6872D61531FB9600B8C2FB /* gtest_main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D41531FB9600B8C2FB /* gtest_main.cc */; };
 		2B6872D71531FB9600B8C2FB /* EngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D51531FB9600B8C2FB /* EngineTest.cpp */; };
 		2B6A74231531F9A7002CB834 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6A74221531F9A7002CB834 /* gtest.framework */; };
+		2BAA30E815435599003BF117 /* Explosion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BAA30E615435598003BF117 /* Explosion.cpp */; };
 		2BC214701535E4130063834F /* KeyDownEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC2146F1535E4130063834F /* KeyDownEvent.h */; };
 		2BC214721535E50A0063834F /* KeyUpEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC214711535E50A0063834F /* KeyUpEvent.h */; };
 		2BC214751535E6B40063834F /* AnimatedDudeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BC214731535E6B30063834F /* AnimatedDudeController.cpp */; };
@@ -210,6 +213,8 @@
 		2B2F386115420C4E00C44D55 /* AnimationSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimationSequence.h; path = Sprite/AnimationSequence.h; sourceTree = "<group>"; };
 		2B2F386815421EE700C44D55 /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite.cpp; path = Sprite/Sprite.cpp; sourceTree = "<group>"; };
 		2B2F386915421EE700C44D55 /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprite.h; path = Sprite/Sprite.h; sourceTree = "<group>"; };
+		2B2F386C1542210A00C44D55 /* ZoneBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZoneBase.cpp; sourceTree = "<group>"; };
+		2B2F386D1542210B00C44D55 /* ZoneBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoneBase.h; sourceTree = "<group>"; };
 		2B4B069E15331F12006D0C75 /* AnimatedDude.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimatedDude.cpp; path = Game/AnimatedDude.cpp; sourceTree = "<group>"; };
 		2B4B069F15331F12006D0C75 /* AnimatedDude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedDude.h; path = Game/AnimatedDude.h; sourceTree = "<group>"; };
 		2B4B06A2153336E8006D0C75 /* Vector2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vector2f.h; path = Math/Vector2f.h; sourceTree = "<group>"; };
@@ -221,6 +226,8 @@
 		2B6872E11531FEA800B8C2FB /* MonoEngineTarget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MonoEngineTarget.xcconfig; sourceTree = "<group>"; };
 		2B6A74171531F881002CB834 /* UnitTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B6A74221531F9A7002CB834 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = Library/Frameworks/gtest.framework; sourceTree = SDKROOT; };
+		2BAA30E615435598003BF117 /* Explosion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Explosion.cpp; path = Game/Explosion.cpp; sourceTree = "<group>"; };
+		2BAA30E715435599003BF117 /* Explosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Explosion.h; path = Game/Explosion.h; sourceTree = "<group>"; };
 		2BC2146F1535E4130063834F /* KeyDownEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyDownEvent.h; sourceTree = "<group>"; };
 		2BC214711535E50A0063834F /* KeyUpEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyUpEvent.h; sourceTree = "<group>"; };
 		2BC214731535E6B30063834F /* AnimatedDudeController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimatedDudeController.cpp; path = Game/AnimatedDudeController.cpp; sourceTree = "<group>"; };
@@ -662,6 +669,8 @@
 				2BE473F9153201CC00CA5ACB /* MonoFwd.h */,
 				2BE473FA153201CC00CA5ACB /* OGLRenderer.cpp */,
 				2BE473FB153201CC00CA5ACB /* OGLRenderer.h */,
+				2B2F386C1542210A00C44D55 /* ZoneBase.cpp */,
+				2B2F386D1542210B00C44D55 /* ZoneBase.h */,
 			);
 			path = MonoEngine;
 			sourceTree = "<group>";
@@ -748,6 +757,8 @@
 				2B4B069F15331F12006D0C75 /* AnimatedDude.h */,
 				2BC214731535E6B30063834F /* AnimatedDudeController.cpp */,
 				2BC214741535E6B40063834F /* AnimatedDudeController.h */,
+				2BAA30E615435598003BF117 /* Explosion.cpp */,
+				2BAA30E715435599003BF117 /* Explosion.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -888,6 +899,7 @@
 				2BE969471541EC0A00FE8B70 /* MouseMotionEvent.h in Headers */,
 				2B2F386315420C4E00C44D55 /* AnimationSequence.h in Headers */,
 				2B2F386B15421EE700C44D55 /* Sprite.h in Headers */,
+				2B2F386F1542210B00C44D55 /* ZoneBase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1077,6 +1089,7 @@
 				2BE969451541E1D700FE8B70 /* SysOpenGL.cpp in Sources */,
 				2B2F386215420C4E00C44D55 /* AnimationSequence.cpp in Sources */,
 				2B2F386A15421EE700C44D55 /* Sprite.cpp in Sources */,
+				2B2F386E1542210B00C44D55 /* ZoneBase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1101,6 +1114,7 @@
 				2BD1E5F21532081300A75171 /* main.cpp in Sources */,
 				2B4B06A015331F13006D0C75 /* AnimatedDude.cpp in Sources */,
 				2BC214751535E6B40063834F /* AnimatedDudeController.cpp in Sources */,
+				2BAA30E815435599003BF117 /* Explosion.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

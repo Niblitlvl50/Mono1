@@ -24,12 +24,18 @@ namespace
     {
         glFrontFace(GL_CCW);
         
-        glDepthFunc(GL_LESS);
-        glEnable(GL_DEPTH_TEST);
+        //glDepthFunc(GL_LESS);
+        //glEnable(GL_DEPTH_TEST);
+        glDisable(GL_DEPTH_TEST);
                 
         glEnable(GL_TEXTURE_2D);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        //glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+        
+        glEnable(GL_POINT_SMOOTH);
+        glEnable(GL_LINE_SMOOTH);
+        glEnable(GL_POLYGON_SMOOTH);
         
         glClearColor(0.0, 0.5, 0.9, 1.0);
     }

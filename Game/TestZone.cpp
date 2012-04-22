@@ -10,8 +10,8 @@
 #include "TriangleObject.h"
 #include "OscillatingLine.h"
 #include "AnimatedDude.h"
-#include "ICamera.h"
-#include "IRenderer.h"
+#include "Explosion.h"
+
 #include "SysTime.h"
 
 using namespace game;
@@ -19,18 +19,10 @@ using namespace game;
 TestZone::TestZone()
     : mStartTime(Time::GetMilliseconds())
 {
-    mEntities.push_back(mono::IEntityPtr(new TriangleObject));
-    mEntities.push_back(mono::IEntityPtr(new OscillatingLine));
-    mEntities.push_back(mono::IEntityPtr(new AnimatedDude(100.0f, 50.0f)));
-}
-
-void TestZone::Accept(mono::IRenderer& renderer)
-{
-    for(mono::IEntityCollection::iterator it = mEntities.begin(), end = mEntities.end(); it != end; ++it)
-    {
-        mono::IEntityPtr entity = *it;
-        renderer.AddEntity(entity);
-    }
+    AddEntityToLayer(BACKGROUND, mono::IEntityPtr(new TriangleObject));
+    AddEntityToLayer(FOREGROUND, mono::IEntityPtr(new OscillatingLine));
+    AddEntityToLayer(MIDDLEGROUND, mono::IEntityPtr(new AnimatedDude(100.0f, 50.0f)));
+    AddEntityToLayer(FOREGROUND, mono::IEntityPtr(new Explosion));
 }
 
 bool TestZone::IsDone() const

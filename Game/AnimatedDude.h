@@ -28,7 +28,7 @@ namespace game
         virtual void Draw() const;
         virtual void Update(unsigned int delta);
         
-        Math::Vector2f mPosition;
+        //Math::Vector2f mPosition;
         Math::Vector2f mTarget;
         mono::Sprite mSprite;
         AnimatedDudeController mController;
