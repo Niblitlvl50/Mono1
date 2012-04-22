@@ -52,7 +52,7 @@ void AnimatedDude::Update(unsigned int delta)
 {
     const float value = (delta * constants::SPEED);
     
-    const float xzero = std::floor(std::abs(mPosition.mX - mTarget.mY));
+    const float xzero = std::floor(std::abs(mPosition.mX - mTarget.mX));
     const float yzero = std::floor(std::abs(mPosition.mY - mTarget.mY));
     
     // This shit is not working!
