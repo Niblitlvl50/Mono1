@@ -119,8 +119,6 @@
 		2BE4742E153201CC00CA5ACB /* IUpdatable.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F4153201CC00CA5ACB /* IUpdatable.h */; };
 		2BE4742F153201CC00CA5ACB /* IWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F5153201CC00CA5ACB /* IWindow.h */; };
 		2BE47430153201CC00CA5ACB /* IZone.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F6153201CC00CA5ACB /* IZone.h */; };
-		2BE47431153201CC00CA5ACB /* LuaInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473F7153201CC00CA5ACB /* LuaInterpreter.cpp */; };
-		2BE47432153201CC00CA5ACB /* LuaInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F8153201CC00CA5ACB /* LuaInterpreter.h */; };
 		2BE47433153201CC00CA5ACB /* MonoFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F9153201CC00CA5ACB /* MonoFwd.h */; };
 		2BE47434153201CC00CA5ACB /* OGLRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473FA153201CC00CA5ACB /* OGLRenderer.cpp */; };
 		2BE47435153201CC00CA5ACB /* OGLRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473FB153201CC00CA5ACB /* OGLRenderer.h */; };
@@ -152,6 +150,11 @@
 		2BE474B21532050F00CA5ACB /* MonoEngine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6872DC1531FEA800B8C2FB /* MonoEngine.dylib */; };
 		2BE969451541E1D700FE8B70 /* SysOpenGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE969441541E1D700FE8B70 /* SysOpenGL.cpp */; };
 		2BE969471541EC0A00FE8B70 /* MouseMotionEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE969461541EC0900FE8B70 /* MouseMotionEvent.h */; };
+		2BF8E3921545E8D900F46049 /* LuaInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BF8E38F1545E8D900F46049 /* LuaInterpreter.cpp */; };
+		2BF8E3931545E8D900F46049 /* LuaInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF8E3901545E8D900F46049 /* LuaInterpreter.h */; };
+		2BF8E3971545EDEF00F46049 /* LuaFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BF8E3941545E8FB00F46049 /* LuaFunctions.cpp */; };
+		2BF8E39A1545EE9C00F46049 /* LuaState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BF8E3981545EE9C00F46049 /* LuaState.cpp */; };
+		2BF8E39B1545EE9C00F46049 /* LuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF8E3991545EE9C00F46049 /* LuaState.h */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
@@ -386,8 +389,6 @@
 		2BE473F4153201CC00CA5ACB /* IUpdatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUpdatable.h; sourceTree = "<group>"; };
 		2BE473F5153201CC00CA5ACB /* IWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWindow.h; sourceTree = "<group>"; };
 		2BE473F6153201CC00CA5ACB /* IZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IZone.h; sourceTree = "<group>"; };
-		2BE473F7153201CC00CA5ACB /* LuaInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaInterpreter.cpp; sourceTree = "<group>"; };
-		2BE473F8153201CC00CA5ACB /* LuaInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaInterpreter.h; sourceTree = "<group>"; };
 		2BE473F9153201CC00CA5ACB /* MonoFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonoFwd.h; sourceTree = "<group>"; };
 		2BE473FA153201CC00CA5ACB /* OGLRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OGLRenderer.cpp; sourceTree = "<group>"; };
 		2BE473FB153201CC00CA5ACB /* OGLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLRenderer.h; sourceTree = "<group>"; };
@@ -418,6 +419,12 @@
 		2BE4748B1532038B00CA5ACB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2BE969441541E1D700FE8B70 /* SysOpenGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysOpenGL.cpp; sourceTree = "<group>"; };
 		2BE969461541EC0900FE8B70 /* MouseMotionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseMotionEvent.h; sourceTree = "<group>"; };
+		2BF8E38F1545E8D900F46049 /* LuaInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaInterpreter.cpp; path = Lua/LuaInterpreter.cpp; sourceTree = "<group>"; };
+		2BF8E3901545E8D900F46049 /* LuaInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuaInterpreter.h; path = Lua/LuaInterpreter.h; sourceTree = "<group>"; };
+		2BF8E3941545E8FB00F46049 /* LuaFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaFunctions.cpp; path = Lua/LuaFunctions.cpp; sourceTree = "<group>"; };
+		2BF8E3951545E8FB00F46049 /* LuaFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; name = LuaFunctions.h; path = Lua/LuaFunctions.h; sourceTree = "<group>"; };
+		2BF8E3981545EE9C00F46049 /* LuaState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaState.cpp; path = Lua/LuaState.cpp; sourceTree = "<group>"; };
+		2BF8E3991545EE9C00F46049 /* LuaState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuaState.h; path = Lua/LuaState.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -640,6 +647,7 @@
 		2B6872DD1531FEA800B8C2FB /* MonoEngine */ = {
 			isa = PBXGroup;
 			children = (
+				2BF8E38D1545E83300F46049 /* Lua */,
 				2B2F385F15420C2900C44D55 /* Sprite */,
 				2B4B06A1153336BE006D0C75 /* Math */,
 				2BE474881532033C00CA5ACB /* Linked Frameworks */,
@@ -664,8 +672,6 @@
 				2BE473F4153201CC00CA5ACB /* IUpdatable.h */,
 				2BE473F5153201CC00CA5ACB /* IWindow.h */,
 				2BE473F6153201CC00CA5ACB /* IZone.h */,
-				2BE473F7153201CC00CA5ACB /* LuaInterpreter.cpp */,
-				2BE473F8153201CC00CA5ACB /* LuaInterpreter.h */,
 				2BE473F9153201CC00CA5ACB /* MonoFwd.h */,
 				2BE473FA153201CC00CA5ACB /* OGLRenderer.cpp */,
 				2BE473FB153201CC00CA5ACB /* OGLRenderer.h */,
@@ -851,6 +857,19 @@
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
 		};
+		2BF8E38D1545E83300F46049 /* Lua */ = {
+			isa = PBXGroup;
+			children = (
+				2BF8E38F1545E8D900F46049 /* LuaInterpreter.cpp */,
+				2BF8E3901545E8D900F46049 /* LuaInterpreter.h */,
+				2BF8E3941545E8FB00F46049 /* LuaFunctions.cpp */,
+				2BF8E3951545E8FB00F46049 /* LuaFunctions.h */,
+				2BF8E3981545EE9C00F46049 /* LuaState.cpp */,
+				2BF8E3991545EE9C00F46049 /* LuaState.h */,
+			);
+			name = Lua;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -876,7 +895,6 @@
 				2BE4742E153201CC00CA5ACB /* IUpdatable.h in Headers */,
 				2BE4742F153201CC00CA5ACB /* IWindow.h in Headers */,
 				2BE47430153201CC00CA5ACB /* IZone.h in Headers */,
-				2BE47432153201CC00CA5ACB /* LuaInterpreter.h in Headers */,
 				2BE47433153201CC00CA5ACB /* MonoFwd.h in Headers */,
 				2BE47435153201CC00CA5ACB /* OGLRenderer.h in Headers */,
 				2BE47438153201CC00CA5ACB /* IImage.h in Headers */,
@@ -900,6 +918,8 @@
 				2B2F386315420C4E00C44D55 /* AnimationSequence.h in Headers */,
 				2B2F386B15421EE700C44D55 /* Sprite.h in Headers */,
 				2B2F386F1542210B00C44D55 /* ZoneBase.h in Headers */,
+				2BF8E3931545E8D900F46049 /* LuaInterpreter.h in Headers */,
+				2BF8E39B1545EE9C00F46049 /* LuaState.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1074,7 +1094,6 @@
 				2BE4741D153201CC00CA5ACB /* EventHandler.cpp in Sources */,
 				2BE47424153201CC00CA5ACB /* GameController.cpp in Sources */,
 				2BE4742A153201CC00CA5ACB /* InputHandler.cpp in Sources */,
-				2BE47431153201CC00CA5ACB /* LuaInterpreter.cpp in Sources */,
 				2BE47434153201CC00CA5ACB /* OGLRenderer.cpp in Sources */,
 				2BE47439153201CC00CA5ACB /* ImageFactory.cpp in Sources */,
 				2BE4743B153201CC00CA5ACB /* PNGImage.cpp in Sources */,
@@ -1090,6 +1109,9 @@
 				2B2F386215420C4E00C44D55 /* AnimationSequence.cpp in Sources */,
 				2B2F386A15421EE700C44D55 /* Sprite.cpp in Sources */,
 				2B2F386E1542210B00C44D55 /* ZoneBase.cpp in Sources */,
+				2BF8E3921545E8D900F46049 /* LuaInterpreter.cpp in Sources */,
+				2BF8E3971545EDEF00F46049 /* LuaFunctions.cpp in Sources */,
+				2BF8E39A1545EE9C00F46049 /* LuaState.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

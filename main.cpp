@@ -27,9 +27,12 @@ int main()
     {
         Libs::Init();
                 
-        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 800, 480, false);
+        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 640, 400, false);
         mono::ICameraPtr camera(new BasicCamera);
         mono::Engine engine(60.0f, window, camera);
+        
+        
+        // Why go through the GameController? The engine is right there...
         
         // Do the zone initialization here.
         mono::GameControllerInstance().InsertZone(mono::IZonePtr(new game::TestZone));

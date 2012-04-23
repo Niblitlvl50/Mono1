@@ -8,6 +8,10 @@
 
 #include "gtest.h"
 #include "LuaInterpreter.h"
+#include "LuaState.h"
+#include "LuaFunctions.h"
+
+#include <stdexcept>
 
 namespace
 {
@@ -62,7 +66,52 @@ TEST(LuaTest, MemberFunction)
     const std::string luaScript = "io.write('Running script \\n') MemberFunc(1, 2, 3)";
     lua.ExecuteString(luaScript);
     
-    EXPECT_TRUE(foo.mFunctionCalled);
+    //EXPECT_TRUE(foo.mFunctionCalled);
 }
+
+TEST(LuaTest, LoadFileAndFetchData)
+{
+    const std::string file = "luaconfig.lua";
+    lua::LuaState config(file);
+    
+    const int width = lua::GetValue<int>(config, "width");
+    EXPECT_EQ(400, width);
+    
+    const double pi = lua::GetValue<double>(config, "pi");
+    EXPECT_DOUBLE_EQ(3.14, pi);
+    
+    const float gravity = lua::GetValue<float>(config, "gravity");
+    EXPECT_FLOAT_EQ(9.81f, gravity);
+    
+    const bool boolValue = lua::GetValue<bool>(config, "isThisTrue");
+    EXPECT_FALSE(boolValue);
+    
+    const std::string sprite = lua::GetValue<std::string>(config, "sprite");
+    EXPECT_STRCASEEQ("ryu.png", sprite.c_str());
+}
+
+TEST(LuaTest, GetWrongValue_ShouldThrow)
+{
+    const std::string file = "luaconfig.lua";
+    lua::LuaState config(file);
+    
+    try
+    {
+        lua::GetValue<bool>(config, "sprite");
+        ADD_FAILURE();
+    }
+    catch(const std::runtime_error& e)
+    {
+    
+    }
+    
+    //EXPECT_THROW(lua::GetValue<bool>(config, "sprite"), std::runtime_error);
+    //EXPECT_THROW(lua::GetValue<int>(config, "pi"), std::runtime_error);
+    //EXPECT_THROW(config.GetValue<std::string>("gravity"), std::runtime_error);
+    //EXPECT_THROW(config.GetValue<double>("width"), std::runtime_error);
+    //EXPECT_THROW(lua::GetValue<float>(config, "isThisTrue"), std::runtime_error);
+}
+
+
 
 

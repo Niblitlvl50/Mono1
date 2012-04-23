@@ -15,6 +15,7 @@
 #include <SDL_video.h>
 #include <SDL_opengl.h>
 
+#include <SDL_mouse.h>
 
 using namespace mono;
 
@@ -88,6 +89,8 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
     mContext = SDL_GL_CreateContext(mWindow);
     
     SDL_GL_SetSwapInterval(1);
+    
+    //SDL_ShowCursor(SDL_DISABLE);
     	        
     SetupOpenGL();
     SetProjection(width, height);
