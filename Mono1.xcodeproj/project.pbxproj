@@ -18,7 +18,6 @@
 		2B4B06A3153336E8006D0C75 /* Vector2f.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B4B06A2153336E8006D0C75 /* Vector2f.h */; };
 		2B6872D61531FB9600B8C2FB /* gtest_main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D41531FB9600B8C2FB /* gtest_main.cc */; };
 		2B6872D71531FB9600B8C2FB /* EngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D51531FB9600B8C2FB /* EngineTest.cpp */; };
-		2B6A74231531F9A7002CB834 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6A74221531F9A7002CB834 /* gtest.framework */; };
 		2BAA30E815435599003BF117 /* Explosion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BAA30E615435598003BF117 /* Explosion.cpp */; };
 		2BC214701535E4130063834F /* KeyDownEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC2146F1535E4130063834F /* KeyDownEvent.h */; };
 		2BC214721535E50A0063834F /* KeyUpEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC214711535E50A0063834F /* KeyUpEvent.h */; };
@@ -155,6 +154,13 @@
 		2BF8E3971545EDEF00F46049 /* LuaFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BF8E3941545E8FB00F46049 /* LuaFunctions.cpp */; };
 		2BF8E39A1545EE9C00F46049 /* LuaState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BF8E3981545EE9C00F46049 /* LuaState.cpp */; };
 		2BF8E39B1545EE9C00F46049 /* LuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF8E3991545EE9C00F46049 /* LuaState.h */; };
+		2BF8E39F1545FA9900F46049 /* luaconfig.lua in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BF8E39E1545FA8B00F46049 /* luaconfig.lua */; };
+		2BF8E3A11545FB4D00F46049 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF8E3A01545FB4D00F46049 /* gtest.framework */; };
+		2BF8E3A41545FBBB00F46049 /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF8E3A21545FBBB00F46049 /* explosion.png */; };
+		2BF8E3A51545FBBB00F46049 /* ryu.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF8E3A31545FBBB00F46049 /* ryu.png */; };
+		2BF8E3A61545FBD000F46049 /* explosion.png in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BF8E3A21545FBBB00F46049 /* explosion.png */; };
+		2BF8E3A71545FBD000F46049 /* ryu.png in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BF8E3A31545FBBB00F46049 /* ryu.png */; };
+		2BF8E3A81545FBD000F46049 /* small_craft.png in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BD1E63B1532113700A75171 /* small_craft.png */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
@@ -192,20 +198,24 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstSubfolderSpec = 16;
 			files = (
+				2BF8E3A61545FBD000F46049 /* explosion.png in Copy Frameworks into .app bundle */,
+				2BF8E3A71545FBD000F46049 /* ryu.png in Copy Frameworks into .app bundle */,
+				2BF8E3A81545FBD000F46049 /* small_craft.png in Copy Frameworks into .app bundle */,
 			);
 			name = "Copy Frameworks into .app bundle";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2B6A74151531F881002CB834 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				2BF8E39F1545FA9900F46049 /* luaconfig.lua in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -228,7 +238,6 @@
 		2B6872E01531FEA800B8C2FB /* MonoEngineProj.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MonoEngineProj.xcconfig; sourceTree = "<group>"; };
 		2B6872E11531FEA800B8C2FB /* MonoEngineTarget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MonoEngineTarget.xcconfig; sourceTree = "<group>"; };
 		2B6A74171531F881002CB834 /* UnitTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTests; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B6A74221531F9A7002CB834 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = Library/Frameworks/gtest.framework; sourceTree = SDKROOT; };
 		2BAA30E615435598003BF117 /* Explosion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Explosion.cpp; path = Game/Explosion.cpp; sourceTree = "<group>"; };
 		2BAA30E715435599003BF117 /* Explosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Explosion.h; path = Game/Explosion.h; sourceTree = "<group>"; };
 		2BC2146F1535E4130063834F /* KeyDownEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyDownEvent.h; sourceTree = "<group>"; };
@@ -422,9 +431,13 @@
 		2BF8E38F1545E8D900F46049 /* LuaInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaInterpreter.cpp; path = Lua/LuaInterpreter.cpp; sourceTree = "<group>"; };
 		2BF8E3901545E8D900F46049 /* LuaInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuaInterpreter.h; path = Lua/LuaInterpreter.h; sourceTree = "<group>"; };
 		2BF8E3941545E8FB00F46049 /* LuaFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaFunctions.cpp; path = Lua/LuaFunctions.cpp; sourceTree = "<group>"; };
-		2BF8E3951545E8FB00F46049 /* LuaFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; name = LuaFunctions.h; path = Lua/LuaFunctions.h; sourceTree = "<group>"; };
+		2BF8E3951545E8FB00F46049 /* LuaFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuaFunctions.h; path = Lua/LuaFunctions.h; sourceTree = "<group>"; };
 		2BF8E3981545EE9C00F46049 /* LuaState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaState.cpp; path = Lua/LuaState.cpp; sourceTree = "<group>"; };
 		2BF8E3991545EE9C00F46049 /* LuaState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuaState.h; path = Lua/LuaState.h; sourceTree = "<group>"; };
+		2BF8E39E1545FA8B00F46049 /* luaconfig.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = luaconfig.lua; path = TestFiles/luaconfig.lua; sourceTree = "<group>"; };
+		2BF8E3A01545FB4D00F46049 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = Library/Frameworks/gtest.framework; sourceTree = SDKROOT; };
+		2BF8E3A21545FBBB00F46049 /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = explosion.png; path = Game/res/explosion.png; sourceTree = "<group>"; };
+		2BF8E3A31545FBBB00F46049 /* ryu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ryu.png; path = Game/res/ryu.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -443,8 +456,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BF8E3A11545FB4D00F46049 /* gtest.framework in Frameworks */,
 				2BD1E63515320A3A00A75171 /* MonoEngine.dylib in Frameworks */,
-				2B6A74231531F9A7002CB834 /* gtest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +498,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2BF8E3A21545FBBB00F46049 /* explosion.png */,
+				2BF8E3A31545FBBB00F46049 /* ryu.png */,
 				2BD1E63A1532113700A75171 /* hal.png */,
 				2BD1E63B1532113700A75171 /* small_craft.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -694,6 +709,7 @@
 		2B6A74191531F881002CB834 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				2BF8E39D1545FA6700F46049 /* Test Files */,
 				2BD1E5671532065D00A75171 /* Linked Frameworks */,
 				2B6872D41531FB9600B8C2FB /* gtest_main.cc */,
 				2B6872D51531FB9600B8C2FB /* EngineTest.cpp */,
@@ -732,7 +748,7 @@
 		2BD1E5671532065D00A75171 /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2B6A74221531F9A7002CB834 /* gtest.framework */,
+				2BF8E3A01545FB4D00F46049 /* gtest.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -868,6 +884,14 @@
 				2BF8E3991545EE9C00F46049 /* LuaState.h */,
 			);
 			name = Lua;
+			sourceTree = "<group>";
+		};
+		2BF8E39D1545FA6700F46049 /* Test Files */ = {
+			isa = PBXGroup;
+			children = (
+				2BF8E39E1545FA8B00F46049 /* luaconfig.lua */,
+			);
+			name = "Test Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1016,6 +1040,8 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				2BD1E63C1532113700A75171 /* hal.png in Resources */,
 				2BD1E63D1532113700A75171 /* small_craft.png in Resources */,
+				2BF8E3A41545FBBB00F46049 /* explosion.png in Resources */,
+				2BF8E3A51545FBBB00F46049 /* ryu.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
