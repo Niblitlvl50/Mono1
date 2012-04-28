@@ -15,7 +15,7 @@
 using namespace game;
 
 SquareObject::SquareObject(float x, float y)
-    : mSprite("small_craft.png", 1.0f, 1.0f)
+    : mSprite("Invader.sprite")
 {
     mPosition.mX = x;
     mPosition.mY = y;

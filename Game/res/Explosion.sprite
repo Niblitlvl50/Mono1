@@ -1,0 +1,8 @@
+
+texture = "Explosion.png";
+rows = 7;
+columns = 1;
+hasAnimations = true;
+
+animations = { };
+animations[1] = { start=0, stop=6, durations={ 50, 50, 50, 50, 50, 50, 50 } };

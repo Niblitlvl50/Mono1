@@ -11,7 +11,6 @@
 
 #include "IEntity.h"
 #include "MonoFwd.h"
-
 #include "Vector2f.h"
 
 namespace mono

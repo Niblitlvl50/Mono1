@@ -23,6 +23,12 @@
 		2BC214721535E50A0063834F /* KeyUpEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC214711535E50A0063834F /* KeyUpEvent.h */; };
 		2BC214751535E6B40063834F /* AnimatedDudeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BC214731535E6B30063834F /* AnimatedDudeController.cpp */; };
 		2BC214771535F7430063834F /* MouseUpEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC214761535F7430063834F /* MouseUpEvent.h */; };
+		2BCDDCE0154BE92D005D8520 /* Invader.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BCDDCDF154BE92D005D8520 /* Invader.sprite */; };
+		2BCDDCE3154BEA2B005D8520 /* Explosion.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BCDDCE1154BEA2A005D8520 /* Explosion.sprite */; };
+		2BCDDCE4154BEA2B005D8520 /* Ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BCDDCE2154BEA2A005D8520 /* Ryu.sprite */; };
+		2BCDDCE5154BEA8A005D8520 /* Invader.sprite in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BCDDCDF154BE92D005D8520 /* Invader.sprite */; };
+		2BCDDCE6154BEA8A005D8520 /* Explosion.sprite in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BCDDCE1154BEA2A005D8520 /* Explosion.sprite */; };
+		2BCDDCE7154BEA8A005D8520 /* Ryu.sprite in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BCDDCE2154BEA2A005D8520 /* Ryu.sprite */; };
 		2BD1E5ED1532080500A75171 /* OscillatingLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E41532080500A75171 /* OscillatingLine.cpp */; };
 		2BD1E5EE1532080500A75171 /* SquareObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E61532080500A75171 /* SquareObject.cpp */; };
 		2BD1E5EF1532080500A75171 /* TestZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E81532080500A75171 /* TestZone.cpp */; };
@@ -93,7 +99,7 @@
 		2BD1E634153208E700A75171 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E0153207E600A75171 /* zutil.c */; };
 		2BD1E63515320A3A00A75171 /* MonoEngine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6872DC1531FEA800B8C2FB /* MonoEngine.dylib */; };
 		2BD1E63C1532113700A75171 /* hal.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD1E63A1532113700A75171 /* hal.png */; };
-		2BD1E63D1532113700A75171 /* small_craft.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD1E63B1532113700A75171 /* small_craft.png */; };
+		2BD1E63D1532113700A75171 /* Invader.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD1E63B1532113700A75171 /* Invader.png */; };
 		2BD1E6401532155500A75171 /* LuaTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E63E1532155500A75171 /* LuaTest.cpp */; };
 		2BE47419153201CC00CA5ACB /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473DB153201CC00CA5ACB /* Engine.cpp */; };
 		2BE4741A153201CC00CA5ACB /* Engine.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473DC153201CC00CA5ACB /* Engine.h */; };
@@ -160,7 +166,7 @@
 		2BF8E3A51545FBBB00F46049 /* ryu.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF8E3A31545FBBB00F46049 /* ryu.png */; };
 		2BF8E3A61545FBD000F46049 /* explosion.png in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BF8E3A21545FBBB00F46049 /* explosion.png */; };
 		2BF8E3A71545FBD000F46049 /* ryu.png in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BF8E3A31545FBBB00F46049 /* ryu.png */; };
-		2BF8E3A81545FBD000F46049 /* small_craft.png in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BD1E63B1532113700A75171 /* small_craft.png */; };
+		2BF8E3A81545FBD000F46049 /* Invader.png in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BD1E63B1532113700A75171 /* Invader.png */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
@@ -200,9 +206,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				2BCDDCE5154BEA8A005D8520 /* Invader.sprite in Copy Frameworks into .app bundle */,
+				2BCDDCE6154BEA8A005D8520 /* Explosion.sprite in Copy Frameworks into .app bundle */,
+				2BCDDCE7154BEA8A005D8520 /* Ryu.sprite in Copy Frameworks into .app bundle */,
 				2BF8E3A61545FBD000F46049 /* explosion.png in Copy Frameworks into .app bundle */,
 				2BF8E3A71545FBD000F46049 /* ryu.png in Copy Frameworks into .app bundle */,
-				2BF8E3A81545FBD000F46049 /* small_craft.png in Copy Frameworks into .app bundle */,
+				2BF8E3A81545FBD000F46049 /* Invader.png in Copy Frameworks into .app bundle */,
 			);
 			name = "Copy Frameworks into .app bundle";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -245,6 +254,9 @@
 		2BC214731535E6B30063834F /* AnimatedDudeController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimatedDudeController.cpp; path = Game/AnimatedDudeController.cpp; sourceTree = "<group>"; };
 		2BC214741535E6B40063834F /* AnimatedDudeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedDudeController.h; path = Game/AnimatedDudeController.h; sourceTree = "<group>"; };
 		2BC214761535F7430063834F /* MouseUpEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseUpEvent.h; sourceTree = "<group>"; };
+		2BCDDCDF154BE92D005D8520 /* Invader.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Invader.sprite; path = Game/res/Invader.sprite; sourceTree = "<group>"; };
+		2BCDDCE1154BEA2A005D8520 /* Explosion.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Explosion.sprite; path = Game/res/Explosion.sprite; sourceTree = "<group>"; };
+		2BCDDCE2154BEA2A005D8520 /* Ryu.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Ryu.sprite; path = Game/res/Ryu.sprite; sourceTree = "<group>"; };
 		2BD1E569153206F400A75171 /* ticpp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ticpp.cpp; path = "External Libs/ticpp/ticpp.cpp"; sourceTree = "<group>"; };
 		2BD1E56A153206F400A75171 /* ticpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ticpp.h; path = "External Libs/ticpp/ticpp.h"; sourceTree = "<group>"; };
 		2BD1E56B153206F400A75171 /* ticpprc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ticpprc.h; path = "External Libs/ticpp/ticpprc.h"; sourceTree = "<group>"; };
@@ -373,7 +385,7 @@
 		2BD1E5EB1532080500A75171 /* TriangleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TriangleObject.h; path = Game/TriangleObject.h; sourceTree = "<group>"; };
 		2BD1E5F11532081300A75171 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2BD1E63A1532113700A75171 /* hal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hal.png; path = Game/res/hal.png; sourceTree = "<group>"; };
-		2BD1E63B1532113700A75171 /* small_craft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = small_craft.png; path = Game/res/small_craft.png; sourceTree = "<group>"; };
+		2BD1E63B1532113700A75171 /* Invader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Invader.png; path = Game/res/Invader.png; sourceTree = "<group>"; };
 		2BD1E63E1532155500A75171 /* LuaTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaTest.cpp; sourceTree = "<group>"; };
 		2BE473DB153201CC00CA5ACB /* Engine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Engine.cpp; sourceTree = "<group>"; };
 		2BE473DC153201CC00CA5ACB /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
@@ -498,10 +510,13 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2BCDDCDF154BE92D005D8520 /* Invader.sprite */,
+				2BD1E63B1532113700A75171 /* Invader.png */,
+				2BCDDCE1154BEA2A005D8520 /* Explosion.sprite */,
 				2BF8E3A21545FBBB00F46049 /* explosion.png */,
+				2BCDDCE2154BEA2A005D8520 /* Ryu.sprite */,
 				2BF8E3A31545FBBB00F46049 /* ryu.png */,
 				2BD1E63A1532113700A75171 /* hal.png */,
-				2BD1E63B1532113700A75171 /* small_craft.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 			);
@@ -1039,9 +1054,12 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				2BD1E63C1532113700A75171 /* hal.png in Resources */,
-				2BD1E63D1532113700A75171 /* small_craft.png in Resources */,
+				2BD1E63D1532113700A75171 /* Invader.png in Resources */,
 				2BF8E3A41545FBBB00F46049 /* explosion.png in Resources */,
 				2BF8E3A51545FBBB00F46049 /* ryu.png in Resources */,
+				2BCDDCE0154BE92D005D8520 /* Invader.sprite in Resources */,
+				2BCDDCE3154BEA2B005D8520 /* Explosion.sprite in Resources */,
+				2BCDDCE4154BEA2B005D8520 /* Ryu.sprite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,7 +25,7 @@ namespace constants
 
 AnimatedDude::AnimatedDude(float x, float y)
     : mTarget(x, y),
-      mSprite("ryu.png", 3, 4),
+      mSprite("Ryu.sprite"),
       mController(*this)
 {
     mPosition = Math::Vector2f(x, y);

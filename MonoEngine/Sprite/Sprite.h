@@ -42,7 +42,6 @@ namespace mono
     public:
 
         Sprite(const std::string& file);
-        Sprite(const std::string& file, int rows, int columns);
 
         void Draw() const;
         void DefineAnimation(int id, unsigned int start, unsigned int end, const FrameDurations& durations);
@@ -51,9 +50,7 @@ namespace mono
         virtual void doUpdate(unsigned int delta);
 
     private:
-        
-        void Init(const std::string& file, int rows, int columns);
-        
+                
         int mActiveAnimationId;        
         ITexturePtr mTexture;
         

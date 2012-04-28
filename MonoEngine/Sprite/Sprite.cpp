@@ -10,8 +10,11 @@
 #include "ITexture.h"
 #include "TextureFactory.h"
 #include "SysOpenGL.h"
+#include "LuaState.h"
+#include "LuaFunctions.h"
 
 #include <stdexcept>
+
 
 using namespace mono;
 
@@ -55,21 +58,22 @@ namespace
 
 Sprite::Sprite(const std::string& file)
 {
-    Init(file, 1, 1);
-}
-
-Sprite::Sprite(const std::string& file, int rows, int columns)
-{
-    Init(file, rows, columns);
-}
-
-void Sprite::Init(const std::string& file, int rows, int columns)
-{
-    mTexture = mono::CreateTexture(file);
-    GenerateTextureCoordinates(rows, columns, mTextureCoordinates);
+    lua::LuaState config(file);
     
-    FrameDurations durations;
-    durations.push_back(-1);
+    const std::string texture = lua::GetValue<std::string>(config, "texture");
+    const int rows = lua::GetValue<int>(config, "rows");
+    const int columns = lua::GetValue<int>(config, "columns");
+    
+    mTexture = mono::CreateTexture(texture);
+    GenerateTextureCoordinates(rows, columns, mTextureCoordinates);
+
+    const bool hasAnimations = lua::GetValue<bool>(config, "hasAnimations");
+    if(hasAnimations)
+    {
+        // Do stuff here....
+    }
+    
+    FrameDurations durations(1, -1);
     DefineAnimation(DEFAULT_ANIMATION_ID, 0, 0, durations);
     mActiveAnimationId = DEFAULT_ANIMATION_ID;
 }

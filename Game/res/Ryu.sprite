@@ -1,0 +1,10 @@
+
+texture = "Ryu.png";
+rows = 3;
+columns = 4;
+hasAnimations = true;
+
+animations = { };
+animations[1] = { start=1, stop=3, durations={ 100, 100, 100 } };
+animations[2] = { start=4, stop=7, durations={ 100, 100, 100, 100 } };
+animations[3] = { start=8, stop=11, durations={ 100, 100, 100, 100 } };
