@@ -21,7 +21,7 @@ Explosion::Explosion()
     mPosition = Math::Vector2f(100.0f, 100.0f);
     mScale = 20.0f;
     
-    const mono::FrameDurations durations(7, 100);
+    const mono::FrameDurations durations(7, 50);
     mSprite.DefineAnimation(constants::EXPLODE, 0, 6, durations);
     mSprite.SetAnimation(constants::EXPLODE);
 }

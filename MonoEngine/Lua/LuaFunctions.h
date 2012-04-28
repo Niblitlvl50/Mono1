@@ -9,6 +9,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 
 namespace lua
@@ -21,6 +22,12 @@ namespace lua
     void Get(LuaState& L, bool& value);
     void Get(LuaState& L, std::string& value);
     
+    void GetTable(LuaState& L, std::vector<int>& values);
+    void GetTable(LuaState& L, std::vector<double>& values);
+    void GetTable(LuaState& L, std::vector<float>& values);
+    void GetTable(LuaState& L, std::vector<bool>& values);
+    void GetTable(LuaState& L, std::vector<std::string>& values);
+    
     void GetGlobal(LuaState& lua, const std::string& name);
 
     template <typename T>
@@ -30,7 +37,18 @@ namespace lua
         
         T value;
         lua::Get(lua, value);
+        
         return value;
-
+    }
+    
+    template <typename T>
+    std::vector<T> GetTable(LuaState& lua, const std::string& name)
+    {
+        lua::GetGlobal(lua, name);
+        
+        std::vector<T> values;
+        lua::GetTable(lua, values);
+        
+        return values;
     }
 }
