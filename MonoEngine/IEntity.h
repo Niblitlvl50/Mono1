@@ -11,6 +11,7 @@
 
 #include "IDrawable.h"
 #include "IUpdatable.h"
+#include "MonoFwd.h"
 
 namespace mono
 {
@@ -19,7 +20,7 @@ namespace mono
         virtual ~IEntity()
         { }
         
-        //virtual unsigned int GetId() const = 0;
+        virtual const Math::Vector2f& Position() const = 0;
     };
 }
 

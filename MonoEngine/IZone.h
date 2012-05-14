@@ -19,7 +19,8 @@ namespace mono
         { }
         
         virtual void Accept(IRenderer& renderer) = 0;
-        virtual bool IsDone() const = 0;
+        virtual void OnLoad(ICameraPtr camera) = 0;
+        virtual void OnUnload() = 0;        
     };
 
 }

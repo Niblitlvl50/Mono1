@@ -10,6 +10,7 @@
 
 namespace Math
 {
+    
     struct Vector2f
     {
         Vector2f()
@@ -24,6 +25,23 @@ namespace Math
         
         float mX;
         float mY;
-    };    
+    };
+    
+    inline Vector2f operator * (const Vector2f& left, float right)
+    {
+        return Vector2f(left.mX * right, left.mY * right);
+    }
+    
+    inline Vector2f operator - (const Vector2f& left, const Vector2f& right)
+    {
+        return Vector2f(left.mX - right.mX, left.mY - right.mY);
+    }
+        
+    inline void operator += (Vector2f& left, const Vector2f& right)
+    {
+        left.mX += right.mX;
+        left.mY += right.mY;
+    }
+
 }
 

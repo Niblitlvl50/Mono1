@@ -1,8 +1,7 @@
 
-texture = "Explosion.png";
-rows = 7;
-columns = 1;
-hasAnimations = true;
+texture = "Explosion.png"
+rows = 7
+columns = 1
 
-animations = { };
-animations[1] = { start=0, stop=6, durations={ 50, 50, 50, 50, 50, 50, 50 } };
+animations = { }
+animations[0] = { 0, 50, 1, 50, 2, 50, 3, 50, 4, 50, 5, 50, 6, 50 }

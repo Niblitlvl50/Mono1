@@ -57,11 +57,12 @@ void AnimatedDudeController::OnKeyDown(const Event::KeyDownEvent& event)
 void AnimatedDudeController::OnMouseUp(const Event::MouseUpEvent& event)
 {
     std::cout << "MouseUp at: x " << event.mX << " - y " << event.mY << std::endl;
+    mDude.mTarget = Math::Vector2f(event.mX, event.mY);
 }
 
 void AnimatedDudeController::OnMouseMotion(const Event::MouseMotionEvent& event)
 {
-    mDude.mTarget = Math::Vector2f(event.mX, event.mY);
+    //mDude.mTarget = Math::Vector2f(event.mX, event.mY);
 }
 
 

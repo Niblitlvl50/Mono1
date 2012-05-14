@@ -29,7 +29,9 @@ namespace mono
         };
         
         virtual void Accept(IRenderer& renderer);
+        
         void AddEntityToLayer(LayerId layer, IEntityPtr entity);
+        void RemoveEntity(IEntityPtr entity);
         
     private:
         

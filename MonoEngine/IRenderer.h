@@ -25,6 +25,8 @@ namespace mono
         virtual void AddEntity(IEntityPtr entity) = 0;
         virtual void AddDrawable(IDrawablePtr drawable) = 0;
         virtual void AddUpdatable(IUpdatablePtr updatable) = 0;
+        
+        virtual ICameraPtr Camera() = 0;
     };
 
 }

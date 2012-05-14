@@ -1,10 +1,10 @@
 
-texture = "Ryu.png";
-rows = 3;
-columns = 4;
-hasAnimations = true;
+texture = "Ryu.png"
+rows = 3
+columns = 4
 
-animations = { };
-animations[1] = { start=1, stop=3, durations={ 100, 100, 100 } };
-animations[2] = { start=4, stop=7, durations={ 100, 100, 100, 100 } };
-animations[3] = { start=8, stop=11, durations={ 100, 100, 100, 100 } };
+animations = { }
+animations[0] = { 0, -1, 0, -1 }
+animations[1] = { 1, 100, 2, 100, 3, 100 }
+animations[2] = { 4, 100, 5, 100, 6, 100, 7, 100 }
+animations[3] = { 8, 100, 9, 100, 10, 100, 11, 100 }

@@ -11,28 +11,27 @@
 #include "OscillatingLine.h"
 #include "AnimatedDude.h"
 #include "Explosion.h"
+#include "Monster.h"
+#include "ICamera.h"
 
-#include "SysTime.h"
 
 using namespace game;
 
-TestZone::TestZone()
-    : mStartTime(Time::GetMilliseconds())
+
+void TestZone::OnLoad(mono::ICameraPtr camera)
 {
+    mono::IEntityPtr dude(new AnimatedDude(100.0f, 50.0f));
+    
     AddEntityToLayer(BACKGROUND, mono::IEntityPtr(new TriangleObject));
     AddEntityToLayer(FOREGROUND, mono::IEntityPtr(new OscillatingLine));
-    AddEntityToLayer(MIDDLEGROUND, mono::IEntityPtr(new AnimatedDude(100.0f, 50.0f)));
+    AddEntityToLayer(MIDDLEGROUND, dude);
     AddEntityToLayer(FOREGROUND, mono::IEntityPtr(new Explosion));
+    
+    //AddEntityToLayer(BACKGROUND, mono::IEntityPtr(new Monster));
+    
+    camera->Follow(dude);
 }
 
-bool TestZone::IsDone() const
-{
-    return false;
-    
-    
-    const unsigned int elapsedTime = Time::GetMilliseconds() - mStartTime;
-    if(elapsedTime > 5000)
-        return true;
-    
-    return false;
-}
+void TestZone::OnUnload()
+{ }
+

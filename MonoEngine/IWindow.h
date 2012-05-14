@@ -22,9 +22,7 @@ namespace mono
         virtual void SurfaceChanged(int width, int height) = 0;
         virtual void Activated(bool activated) = 0;
         virtual void DrawFrame(IRenderer& renderer) const = 0;
-
-        virtual int GetWidth() const = 0;
-        virtual int GetHeight() const = 0;
+        virtual const Math::Vector2f& Size() const = 0;
     };
 
 }

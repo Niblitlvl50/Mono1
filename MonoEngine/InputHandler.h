@@ -10,12 +10,20 @@
 #pragma once
 
 #include "IInputHandler.h"
+#include <tr1/functional>
 
 namespace mono
 {
+    typedef std::tr1::function<void (int&, int&)> CoordinateFunc;
 
     class InputHandler : public IInputHandler
-    {		
+    {
+    public:
+        
+        InputHandler(const CoordinateFunc& func);
+        
+    private:
+        
         virtual void OnKeyDown(unsigned int key);
         virtual void OnKeyUp(unsigned int key);
         virtual void OnMouseDown(unsigned int button, int x, int y);
@@ -26,6 +34,8 @@ namespace mono
 
         virtual void OnSurfaceChanged(int width, int height);
         virtual void OnActivated(bool gain);
+        
+        const CoordinateFunc mScreenToWorldFunc;
     };
 
 }

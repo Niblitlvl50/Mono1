@@ -31,6 +31,7 @@ AnimatedDude::AnimatedDude(float x, float y)
     mPosition = Math::Vector2f(x, y);
     mScale = 40.0f;
     
+    /*
     const mono::FrameDurations runDurations(3, 100);
     mSprite.DefineAnimation(constants::RUNNING, 1, 3, runDurations);
     
@@ -39,6 +40,7 @@ AnimatedDude::AnimatedDude(float x, float y)
 
     const mono::FrameDurations fightDurations(4, 100);
     mSprite.DefineAnimation(constants::FIGHTING, 8, 11, fightDurations);
+     */
     
     //mSprite.SetAnimation(constants::FIGHTING);
 }

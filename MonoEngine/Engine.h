@@ -25,22 +25,25 @@ namespace mono
     class Engine
     {
     public:
-        Engine(float hz, IWindowPtr view, ICameraPtr camera);
+        Engine(float hz, IWindowPtr view, ICameraPtr camera, IZonePtr zone);
         ~Engine();
 		
         void Run();
 		
     private:
 		
+        void ScreenToWorld(int& x, int& y) const;
+
         void OnQuit(const Event::QuitEvent& event);
         void OnSurfaceChanged(const Event::SurfaceChangedEvent& event);
         void OnActivated(const Event::ActivatedEvent& event);
-		
+        
         bool mQuit;
         float mHz;
 		
         IWindowPtr mWindow;
         ICameraPtr mCamera;
+        IZonePtr mZone;
         IInputHandlerPtr mInputHandler;
 
         EventToken<Event::QuitEvent> mQuitToken;

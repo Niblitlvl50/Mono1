@@ -1,25 +1,15 @@
 
 
 
-#include "Engine.h"
-#include "WindowFactory.h"
 #include "SysLibs.h"
-
-#include "ICamera.h"
-#include "GameController.h"
-
+#include "WindowFactory.h"
 #include "TestZone.h"
+#include "TraceCamera.h"
+#include "Engine.h"
 
 #include <stdexcept>
 #include <iostream>
 
-namespace
-{        
-    struct BasicCamera : public mono::ICamera
-    {
-        // Dummy...
-    };
-}
 
 int main()
 {
@@ -27,16 +17,8 @@ int main()
     {
         Libs::Init();
                 
-        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 640, 400, false);
-        mono::ICameraPtr camera(new BasicCamera);
-        mono::Engine engine(60.0f, window, camera);
-        
-        
-        // Why go through the GameController? The engine is right there...
-        
-        // Do the zone initialization here.
-        mono::GameControllerInstance().InsertZone(mono::IZonePtr(new game::TestZone));
-
+        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 800, 600, false);
+        mono::Engine engine(60.0f, window, mono::ICameraPtr(new mono::TraceCamera(800, 600)), mono::IZonePtr(new game::TestZone));
         engine.Run();
     }
     catch(const std::runtime_error& e)

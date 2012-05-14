@@ -19,8 +19,13 @@ EntityBase::EntityBase()
 
 void EntityBase::doDraw() const
 {
-    glTranslatef(mPosition.mX, mPosition.mY, 0.0f);
-    glRotatef(mRotation, 0.0f, 0.0f, 1.0f);
+    const Math::Vector2f rotationPoint = mRotationCenter * mScale;
+    
+    // Im not so happy with this, two translations...
+    
+    glTranslatef(mPosition.mX + rotationPoint.mX, mPosition.mY + rotationPoint.mY, 0.0f);
+    glRotatef(mRotation, 0.0f, 0.0f, 1.0f);    
+    glTranslatef(-rotationPoint.mX, -rotationPoint.mY, 0.0f);
     glScalef(mScale, mScale, mScale);    
     
     for(IEntityCollection::const_iterator it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
@@ -43,6 +48,11 @@ void EntityBase::doUpdate(unsigned int delta)
     }
     
     Update(delta);
+}
+
+const Math::Vector2f& EntityBase::Position() const
+{
+    return mPosition;
 }
 
 void EntityBase::AddChild(IEntityPtr child)

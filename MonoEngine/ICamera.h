@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "MonoFwd.h"
+
 namespace mono
 {
     
@@ -16,6 +18,17 @@ namespace mono
     {
         virtual ~ICamera()
         { }
+        
+        virtual void Update(unsigned int delta) = 0;
+                
+        virtual void Follow(const mono::IEntityPtr entity) = 0;
+        virtual void Unfollow() = 0;
+        
+        virtual const Math::Vector2f& Position() const = 0;
+        virtual const Math::Vector2f& Size() const = 0;
+        
+        //virtual bool IsVisible(const Math::Quad& box) const = 0;
+        //virtual bool IsVisible(const Math::Vector2f& position, float radius) const = 0;
     };
     
 }

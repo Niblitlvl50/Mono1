@@ -9,12 +9,14 @@
 
 #include "SDLWindow.h"
 #include "IRenderer.h"
+#include "ICamera.h"
 #include "SysOpenGL.h"
+#include "Vector2f.h"
+
 #include <stdexcept>
 
 #include <SDL_video.h>
 #include <SDL_opengl.h>
-
 #include <SDL_mouse.h>
 
 using namespace mono;
@@ -39,26 +41,14 @@ namespace
         glEnable(GL_POLYGON_SMOOTH);
         
         glClearColor(0.0, 0.5, 0.9, 1.0);
-    }
-    
-    void SetProjection(int width, int height)
-    {
-        glViewport(0, 0, width, height);
-        
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        
-        glOrtho(0, width, 0, height, 0, 10);
-        
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-    }
+    }    
 }
 
 
 SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fullscreen)
-    : mWidth(width),
-      mHeight(height)
+    : mSize(width, height),
+      mWindow(0),
+      mContext(0)
 {
     const unsigned int screenflag = fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE;
     const unsigned int flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | screenflag;
@@ -87,13 +77,15 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
         throw std::runtime_error("Unable to create sdl window");
 
     mContext = SDL_GL_CreateContext(mWindow);
+    if(!mContext)
+        throw std::runtime_error("Unable to create OpenGL context");
     
     SDL_GL_SetSwapInterval(1);
     
     //SDL_ShowCursor(SDL_DISABLE);
     	        
     SetupOpenGL();
-    SetProjection(width, height);
+    glViewport(0, 0, width, height);
 }
 
 SDLWindow::~SDLWindow()
@@ -104,10 +96,8 @@ SDLWindow::~SDLWindow()
 
 void SDLWindow::SurfaceChanged(int width, int height)
 {
-    mWidth = width;
-    mHeight = height;
-    
-    SetProjection(width, height);
+    mSize = Math::Vector2f(width, height);
+    glViewport(0, 0, width, height);
 }
 
 void SDLWindow::Activated(bool activated)
@@ -117,22 +107,31 @@ void SDLWindow::Activated(bool activated)
 
 void SDLWindow::DrawFrame(IRenderer& renderer) const
 {
+    const mono::ICameraPtr camera = renderer.Camera();
+    const Math::Vector2f& size = camera->Size();
+    const Math::Vector2f& position = camera->Position();
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    
+    glOrtho(0, size.mX, 0, size.mY, 0, 10);
+    
+    glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    glTranslatef(-position.mX, -position.mY, 0.0f);
+    //glScalef(2.0f, 2.0f, 2.0f);
+    
     renderer.DrawFrame();
 
     SDL_GL_SwapWindow(mWindow);
 }
 
-int SDLWindow::GetWidth() const
+const Math::Vector2f& SDLWindow::Size() const
 {
-    return mWidth;
-}
-
-int SDLWindow::GetHeight() const
-{
-    return mHeight;
+    return mSize;
 }
 
 

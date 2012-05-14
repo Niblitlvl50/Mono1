@@ -23,17 +23,10 @@
 
 using namespace mono;
 
-namespace
-{
-    void WindowCoordinatesToOpenGL(int& x, int& y)
-    {
-        const Math::Vector2f& size = GameControllerInstance().GetWindowSize();
-        const int height = static_cast<int>(size.mY);
-        
-        y = height - y;
-    }
-}
 
+InputHandler::InputHandler(const CoordinateFunc& func)
+    : mScreenToWorldFunc(func)
+{ }
 
 void InputHandler::OnKeyDown(unsigned int key)
 {
@@ -63,14 +56,14 @@ void InputHandler::OnMouseDown(unsigned int button, int x, int y)
 
 void InputHandler::OnMouseUp(unsigned int button, int x, int y)
 {
-    WindowCoordinatesToOpenGL(x, y);
+    mScreenToWorldFunc(x, y);
     const Event::MouseUpEvent event(button, x, y);
     EventHandler::DispatchEvent(event);
 }
 
 void InputHandler::OnMouseMotion(int x, int y)
 {
-    WindowCoordinatesToOpenGL(x, y);
+    mScreenToWorldFunc(x, y);
     const Event::MouseMotionEvent event(x, y);
     EventHandler::DispatchEvent(event);
 }

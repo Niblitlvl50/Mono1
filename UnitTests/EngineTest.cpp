@@ -72,22 +72,26 @@ namespace
     {
         MocZone()
             : mAcceptCalled(false),
-              mIsDoneCalled(false)
+              mOnLoadCalled(false),
+              mOnUnloadCalled(false)
         { }
         
         virtual void Accept(mono::IRenderer& renderer)
         {
             mAcceptCalled = true;
         }
-        virtual bool IsDone() const
+        virtual void OnLoad()
         {
-            mIsDoneCalled = true;
-            
-            return false;
+            mOnLoadCalled = true;
+        }
+        virtual void OnUnload()
+        {
+            mOnUnloadCalled = true;
         }
         
         bool mAcceptCalled;
-        mutable bool mIsDoneCalled;
+        bool mOnLoadCalled;
+        bool mOnUnloadCalled;
     };
 }
 
@@ -97,20 +101,23 @@ TEST(EngineTest, Basic)
     mono::IWindowPtr window(mocWin);
     
     mono::ICameraPtr camera(new MocCamera);
-    mono::Engine engine(60.0f, window, camera);
     
     MocZone* mocZone = new MocZone;
     mono::IZonePtr zone(mocZone);
-    
-    mono::GameControllerInstance().InsertZone(zone);
 
-    EXPECT_NO_THROW(engine.Run());
+    {
+        mono::Engine engine(60.0f, window, camera);
+        engine.LoadZone(zone);
+
+        EXPECT_NO_THROW(engine.Run());
+    }
     
     EXPECT_TRUE(mocWin->mSurfaceChangedCalled);
     EXPECT_TRUE(mocWin->mActivatedCalled);
     EXPECT_TRUE(mocWin->mFrameDrawn);
     
     EXPECT_TRUE(mocZone->mAcceptCalled);
-    EXPECT_TRUE(mocZone->mIsDoneCalled);
+    EXPECT_TRUE(mocZone->mOnLoadCalled);
+    EXPECT_TRUE(mocZone->mOnUnloadCalled);
 }
 

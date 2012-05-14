@@ -45,3 +45,8 @@ void ZoneBase::AddEntityToLayer(LayerId layer, IEntityPtr entity)
     IEntityCollection& collection = layerIt->second;
     collection.push_back(entity);
 }
+
+void ZoneBase::RemoveEntity(IEntityPtr entity)
+{
+
+}

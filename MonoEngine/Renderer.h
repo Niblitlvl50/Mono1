@@ -14,11 +14,11 @@
 namespace mono
 {
 
-    class OGLRenderer : public IRenderer
+    class Renderer : public IRenderer
     {
     public:
         
-        OGLRenderer(ICameraPtr camera);
+        Renderer(ICameraPtr camera);
         
         virtual void DrawFrame() const;
         virtual void Update(unsigned int milliseconds);
@@ -26,6 +26,8 @@ namespace mono
         virtual void AddEntity(IEntityPtr entity);
         virtual void AddDrawable(IDrawablePtr drawable);
         virtual void AddUpdatable(IUpdatablePtr updatable);
+        
+        virtual ICameraPtr Camera();
 
     private:
 

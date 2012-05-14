@@ -7,17 +7,18 @@
  *
  */
 
-#include "OGLRenderer.h"
+#include "Renderer.h"
 #include "SysOpenGL.h"
 #include "IEntity.h"
+#include "ICamera.h"
 
 using namespace mono;
 
-OGLRenderer::OGLRenderer(ICameraPtr camera)
+Renderer::Renderer(ICameraPtr camera)
     : mCamera(camera)
 { }
 
-void OGLRenderer::DrawFrame() const
+void Renderer::DrawFrame() const
 {    
     for(IDrawableCollection::const_iterator it = mDrawables.begin(), end = mDrawables.end(); it != end; ++it)
     {
@@ -28,8 +29,10 @@ void OGLRenderer::DrawFrame() const
     }
 }
 
-void OGLRenderer::Update(unsigned int milliseconds)
+void Renderer::Update(unsigned int milliseconds)
 {
+    mCamera->Update(milliseconds);
+    
     for(IUpdatableCollection::iterator it = mUpdatables.begin(), end = mUpdatables.end(); it != end; ++it)
     {
         IUpdatablePtr updatable = *it;
@@ -37,19 +40,23 @@ void OGLRenderer::Update(unsigned int milliseconds)
     }
 }
 
-void OGLRenderer::AddEntity(IEntityPtr entity)
+void Renderer::AddEntity(IEntityPtr entity)
 {
     mDrawables.push_back(entity);
     mUpdatables.push_back(entity);
 }
-void OGLRenderer::AddDrawable(IDrawablePtr drawable)
+void Renderer::AddDrawable(IDrawablePtr drawable)
 {
     mDrawables.push_back(drawable);
 }
-void OGLRenderer::AddUpdatable(IUpdatablePtr updatable)
+void Renderer::AddUpdatable(IUpdatablePtr updatable)
 {
     mUpdatables.push_back(updatable);
 }
 
+ICameraPtr Renderer::Camera()
+{
+    return mCamera;
+}
 
 

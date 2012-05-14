@@ -32,7 +32,7 @@ LuaState::LuaState(const std::string& file)
 
     const bool failed = luaL_dofile(L, file.c_str());
     if(failed)
-        throw std::runtime_error("Unable to load file");
+        throw std::runtime_error("Unable to load file: " + file);
 }
 
 LuaState::~LuaState()

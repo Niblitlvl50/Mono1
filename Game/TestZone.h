@@ -16,16 +16,9 @@ namespace game
     class TestZone : public mono::ZoneBase
     {
     public:
-        
-        TestZone();
-    
-    private:
-        
-        virtual bool IsDone() const;
-        
-        mono::IEntityCollection mEntities;
-        
-        unsigned int mStartTime;
+                
+        virtual void OnLoad(mono::ICameraPtr camera);
+        virtual void OnUnload();        
     };
 }
 

@@ -12,6 +12,7 @@
 
 #include "IWindow.h"
 #include "MonoFwd.h"
+#include "Vector2f.h"
 
 struct SDL_Window;
 
@@ -27,15 +28,11 @@ namespace mono
         virtual void SurfaceChanged(int width, int height);
         virtual void Activated(bool activated);
         virtual void DrawFrame(IRenderer& renderer) const;
-
-        virtual int GetWidth() const;
-        virtual int GetHeight() const;
+        virtual const Math::Vector2f& Size() const;
 	
     private:
-        
-        int mWidth;
-        int mHeight;
-        
+                
+        Math::Vector2f mSize;
         SDL_Window* mWindow;
         void* mContext;
     };

@@ -15,7 +15,6 @@
 
 #include <stdexcept>
 
-
 using namespace mono;
 
 namespace
@@ -29,7 +28,7 @@ namespace
         
     static const unsigned short indices[] = { 0, 1, 2, 0, 2, 3 };
     
-    void GenerateTextureCoordinates(int rows, int columns, std::vector<SpriteTextureCoord>& coordinates)
+    void GenerateTextureCoordinates(int rows, int columns, std::vector<Math::Quad>& coordinates)
     {
         const float ystep = 1.0f / rows;
         const float xstep = 1.0f / columns;
@@ -40,16 +39,8 @@ namespace
             {
                 const float x = xstep * xindex;
                 const float y = ystep * (yindex -1);
-                const float u = xstep * (xindex +1);
-                const float v = ystep * yindex;
                 
-                SpriteTextureCoord coord;
-                coord.bl = Math::Vector2f(x, y);
-                coord.tl = Math::Vector2f(x, v);
-                coord.tr = Math::Vector2f(u, v);
-                coord.br = Math::Vector2f(u, y);
-                
-                coordinates.push_back(coord);
+                coordinates.push_back(Math::Quad(x, y, xstep, ystep));
             }
         }
     }
@@ -67,21 +58,33 @@ Sprite::Sprite(const std::string& file)
     mTexture = mono::CreateTexture(texture);
     GenerateTextureCoordinates(rows, columns, mTextureCoordinates);
 
-    const bool hasAnimations = lua::GetValue<bool>(config, "hasAnimations");
-    if(hasAnimations)
+    const lua::MapIntIntTable animations = lua::GetTableMap<int, int>(config, "animations");
+    for(lua::MapIntIntTable::const_iterator it = animations.begin(), end = animations.end(); it != end; ++it)
     {
-        // Do stuff here....
+        const int key = it->first;
+        const lua::IntTable& values = it->second;
+        DefineAnimation(key, values);
     }
     
-    FrameDurations durations(1, -1);
-    DefineAnimation(DEFAULT_ANIMATION_ID, 0, 0, durations);
+    std::vector<int> defaultDurations;
+    defaultDurations.push_back(0);
+    defaultDurations.push_back(-1);
+    defaultDurations.push_back(0);
+    defaultDurations.push_back(-1);
+    
+    //DefineAnimation(DEFAULT_ANIMATION_ID, defaultDurations);
     mActiveAnimationId = DEFAULT_ANIMATION_ID;
 }
 
 void Sprite::Draw() const
 {
     const AnimationSequence& anim = mDefinedAnimations.find(mActiveAnimationId)->second;
-    const SpriteTextureCoord& texcoords = mTextureCoordinates.at(anim.Frame());
+    const Math::Quad& quad = mTextureCoordinates.at(anim.Frame());
+    
+    const float coords[] = { quad.mX,           quad.mY,
+                             quad.mX,           quad.mY + quad.mH,
+                             quad.mX + quad.mW, quad.mY + quad.mH,
+                             quad.mX + quad.mW, quad.mY };
     
     mTexture->Use();
     
@@ -90,7 +93,7 @@ void Sprite::Draw() const
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     
-    glTexCoordPointer(2, GL_FLOAT, 0, &texcoords);
+    glTexCoordPointer(2, GL_FLOAT, 0, coords);
     glVertexPointer(2, GL_FLOAT, 0, vertices);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
 
@@ -109,8 +112,27 @@ void Sprite::SetAnimation(int id)
     mActiveAnimationId = id;
 }
 
-void Sprite::DefineAnimation(int id, unsigned int start, unsigned int end, const FrameDurations& durations)
+void Sprite::DefineAnimation(int id, const std::vector<int>& values)
 {
+    const bool even = (values.size() % 2) == 0;
+    if(!even)
+        throw std::runtime_error("Animation vector does not match up, not an even number of values");
+    
+    typedef std::vector<int> IntVector;
+    IntVector::const_iterator lastFrame = values.end();
+    --lastFrame;
+    --lastFrame;
+    
+    const int start = *values.begin();
+    const int end = *lastFrame;
+    
+    std::vector<unsigned int> durations;
+    for(IntVector::const_iterator it = values.begin(), end = values.end(); it != end; ++it)
+    {
+        ++it;
+        durations.push_back(*it);
+    }
+    
     const int diff = end - start;
     if(diff < 0)
         throw std::runtime_error("Animation definition's start and end does not match up");

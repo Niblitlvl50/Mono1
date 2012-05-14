@@ -52,6 +52,7 @@ namespace mono
 namespace Math
 {
     struct Vector2f;
+    struct Quad;
 }
 
 

@@ -11,8 +11,8 @@
 #include "InputHandler.h"
 
 #include "IWindow.h"
+#include "ICamera.h"
 #include "IZone.h"
-#include "IRenderer.h"
 
 #include "SysTime.h"
 #include "SysEvents.h"
@@ -22,26 +22,27 @@
 #include "SurfaceChangedEvent.h"
 #include "ActivatedEvent.h"
 
-#include "OGLRenderer.h"
+#include "Renderer.h"
 #include "GameController.h"
 
 #include "Vector2f.h"
+
+#include <stdexcept>
+
 
 
 using namespace mono;
 using namespace std::tr1::placeholders;
 
 
-Engine::Engine(float hz, IWindowPtr window, ICameraPtr camera)
-    : mHz(hz),
+Engine::Engine(float hz, IWindowPtr window, ICameraPtr camera, IZonePtr zone)
+    : mQuit(false),
+      mHz(hz),
       mWindow(window),
       mCamera(camera),
-      mQuit(false),
-      mInputHandler(new InputHandler)
+      mZone(zone),
+      mInputHandler(new InputHandler(std::tr1::bind(&Engine::ScreenToWorld, this, _1, _2)))
 {
-    const Math::Vector2f windowSize(window->GetWidth(), window->GetHeight());
-    GameControllerInstance().SetWindowSize(windowSize);
-
     const Event::QuitEventFunc quitFunc = std::tr1::bind(&Engine::OnQuit, this, _1);
     mQuitToken = EventHandler::AddListener(quitFunc);
 
@@ -61,6 +62,10 @@ Engine::~Engine()
 
 void Engine::Run()
 {
+    // Do i put this in a raii object so if there is an exception thrown 
+    // IZone::OnUnload is still called?  
+    mZone->OnLoad(mCamera);
+    
     const unsigned int timePerUpdate = 1000 / mHz;
     unsigned int lastTime = Time::GetMilliseconds();
     	
@@ -71,12 +76,8 @@ void Engine::Run()
 		
         Events::ProcessSystemEvents(mInputHandler);
 
-        // Rename this, its not really a renderer... it just collects what needs to be updated and drawn.
-        OGLRenderer renderer(mCamera);
-
-        // The current zone
-        IZonePtr zone = mono::GameControllerInstance().GetCurrentZone();
-        zone->Accept(renderer);
+        Renderer renderer(mCamera);
+        mZone->Accept(renderer);
 
         // Update the stuff, and then render the frame.
         renderer.Update(delta);
@@ -90,6 +91,26 @@ void Engine::Run()
         if(sleepTime > 0)
             Time::Sleep(sleepTime);
     }
+    
+    mZone->OnUnload();
+}
+
+void Engine::ScreenToWorld(int& x, int& y) const
+{
+    const Math::Vector2f& windowSize = mWindow->Size();
+    const Math::Vector2f& cameraSize = mCamera->Size();
+    const Math::Vector2f& cameraPosition = mCamera->Position();
+    
+    const Math::Vector2f scale = Math::Vector2f(cameraSize.mX / windowSize.mX, cameraSize.mY / windowSize.mY);
+    
+    const float screenX = x;
+    const float screenY = windowSize.mY - y;
+    
+    const float tempx = screenX * scale.mX;
+    const float tempy = screenY * scale.mY;
+    
+    x = tempx + cameraPosition.mX;
+    y = tempy + cameraPosition.mY;
 }
 
 void Engine::OnQuit(const Event::QuitEvent&)
@@ -100,9 +121,6 @@ void Engine::OnQuit(const Event::QuitEvent&)
 void Engine::OnSurfaceChanged(const Event::SurfaceChangedEvent& event)
 {
     mWindow->SurfaceChanged(event.width, event.height);
-
-    const Math::Vector2f windowSize(mWindow->GetWidth(), mWindow->GetHeight());
-    GameControllerInstance().SetWindowSize(windowSize);
 }
 
 void Engine::OnActivated(const Event::ActivatedEvent& event)

@@ -1,16 +1,20 @@
 
-width = 400;
-pi = 3.14;
-gravity = 9.81;
-isThisTrue = false;
-sprite = "ryu.png";
+width = 400
+pi = 3.14
+gravity = 9.81
+isThisTrue = false
+sprite = "ryu.png"
 
-intTable = { 10, 20, 30, 40, 50 };
-stringTable = { "hello", "im", "a", "table!" };
-boolTable = { true, false, true };
-floatTable = { 99.9, 45.2 };
-doubleTable = { 15.2, 129.0 };
+intTable = { 10, 20, 30, 40, 50 }
+stringTable = { "hello", "im", "a", "table!" }
+boolTable = { true, false, true }
+floatTable = { 99.9, 45.2 }
+doubleTable = { 15.2, 129.0 }
 
-definedAnimations = { };
-definedAnimations["Run"] = { 0, 1, 2, 3 };
-definedAnimations["Fight"] = { 4, 5, 6 };
+definedAnimations = { }
+definedAnimations["Run"] = { 0, 1, 2, 3 }
+definedAnimations["Fight"] = { 4, 5, 6 }
+
+anotherTable = { }
+anotherTable[7] = { 123, 321, 777 }
+anotherTable[34] = { 99, 66, 22, 00 }

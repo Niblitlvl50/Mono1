@@ -1,5 +1,7 @@
 
-texture = "Invader.png";
-rows = 1;
-columns = 1;
-hasAnimations = false;
+texture = "Invader.png"
+rows = 1
+columns = 1
+
+animations = { }
+animations[0] = { 0, -1, 0, -1 }

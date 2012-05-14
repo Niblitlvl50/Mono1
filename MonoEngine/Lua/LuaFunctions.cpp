@@ -53,6 +53,46 @@ namespace
         }
     }
     
+    template <typename T>
+    void GetLuaMap(lua::LuaState& L, std::map< std::string, std::vector<T> >& values)
+    {
+        const bool result = (lua_istable(L, -1) != 0);
+        if(!result)
+            throw std::runtime_error("Value is not a table");
+
+        lua_pushnil(L);
+        while(lua_next(L, -2) != 0)
+        {
+            const std::string key = lua_tostring(L, -2);
+            std::vector<T> table;
+            GetLuaTable(L, table);
+            
+            values[key] = table;
+            
+            lua_pop(L, 1);
+        }
+    }
+    
+    template <typename T>
+    void GetLuaIntMap(lua::LuaState& L, std::map<int, std::vector<T> >& values)
+    {
+        const bool result = (lua_istable(L, -1) != 0);
+        if(!result)
+            throw std::runtime_error("Value is not a table");
+        
+        lua_pushnil(L);
+        while(lua_next(L, -2) != 0)
+        {
+            const int key = lua_tointeger(L, -2);
+            std::vector<T> table;
+            GetLuaTable(L, table);
+            
+            values[key] = table;
+            
+            lua_pop(L, 1);
+        }    
+    }
+    
 }
 
 
@@ -101,25 +141,67 @@ void lua::Get(LuaState& L, std::string& value)
     value = lua_tostring(L, -1);
 }
 
-void lua::GetTable(LuaState& L, std::vector<int>& values)
+void lua::GetTable(LuaState& L, IntTable& values)
 {
     GetLuaTable(L, values);    
 }
-void lua::GetTable(LuaState& L, std::vector<double>& values)
+void lua::GetTable(LuaState& L, DoubleTable& values)
 {
     GetLuaTable(L, values);    
 }
-void lua::GetTable(LuaState& L, std::vector<float>& values)
+void lua::GetTable(LuaState& L, FloatTable& values)
 {
     GetLuaTable(L, values);    
 }
-void lua::GetTable(LuaState& L, std::vector<bool>& values)
+void lua::GetTable(LuaState& L, BoolTable& values)
 {
     GetLuaTable(L, values);    
 }
-void lua::GetTable(LuaState& L, std::vector<std::string>& values)
+void lua::GetTable(LuaState& L, StringTable& values)
 {
     GetLuaTable(L, values);    
+}
+
+void lua::GetMap(LuaState& L, MapIntTable& values)
+{
+    GetLuaMap(L, values);
+}
+void lua::GetMap(LuaState& L, MapDoubleTable& values)
+{
+    GetLuaMap(L, values);
+}
+void lua::GetMap(LuaState& L, MapFloatTable& values)
+{
+    GetLuaMap(L, values);
+}
+void lua::GetMap(LuaState& L, MapBoolTable& values)
+{
+    GetLuaMap(L, values);
+}
+void lua::GetMap(LuaState& L, MapStringTable& values)
+{
+    GetLuaMap(L, values);
+}
+
+void lua::GetMap(LuaState& L, MapIntIntTable& values)
+{
+    GetLuaIntMap(L, values);
+}
+void lua::GetMap(LuaState& L, MapIntDoubleTable& values)
+{
+    GetLuaIntMap(L, values);
+}
+void lua::GetMap(LuaState& L, MapIntFloatTable& values)
+{
+    GetLuaIntMap(L, values);
+}
+void lua::GetMap(LuaState& L, MapIntBoolTable& values)
+{
+    GetLuaIntMap(L, values);
+}
+void lua::GetMap(LuaState& L, MapIntStringTable& values)
+{
+    GetLuaIntMap(L, values);
 }
 
 
