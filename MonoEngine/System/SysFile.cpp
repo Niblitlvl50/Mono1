@@ -26,3 +26,12 @@ File::FilePtr File::OpenBinaryFile(const std::string& source)
     
     return File::FilePtr(file, CloseFileDeleter);
 }
+
+long File::FileSize(const FilePtr file)
+{
+    fseek(file.get(), 0, SEEK_END);
+	const long size = ftell(file.get());    
+    rewind(file.get());
+    
+    return size;
+}

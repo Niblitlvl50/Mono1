@@ -42,6 +42,11 @@ namespace Math
         left.mX += right.mX;
         left.mY += right.mY;
     }
+    
+    inline Vector2f operator + (const Vector2f& left, const Vector2f& right)
+    {
+        return Vector2f(left.mX + right.mX, left.mY + right.mY);
+    }
 
 }
 

@@ -22,15 +22,13 @@ namespace
             mScale = 1.0f;
         }
         
-        void Draw() const
+        void Draw(mono::IRenderer&) const
         {
             mSprite.Draw();
         }
         
         void Update(unsigned int delta)
-        {
-            
-        }
+        { }
         
         mono::Sprite mSprite;
     };
@@ -45,15 +43,13 @@ namespace
             mScale = 1.0f;
         }
         
-        void Draw() const
+        void Draw(mono::IRenderer&) const
         {
             mSprite.Draw();
         }
         
         void Update(unsigned int delta)
-        {
-            
-        }
+        { }
         
         mono::Sprite mSprite;
     };
@@ -67,15 +63,13 @@ namespace
             mScale = 1.0f;
         }
         
-        void Draw() const
+        void Draw(mono::IRenderer&) const
         {
             mSprite.Draw();
         }
         
         void Update(unsigned int delta)
-        {
-            
-        }
+        { }
         
         mono::Sprite mSprite;
     };    
@@ -94,7 +88,7 @@ Arm::Arm(float x, float y)
     //mScale = 0.8f;
 }
 
-void Arm::Draw() const
+void Arm::Draw(mono::IRenderer&) const
 { }
 
 void Arm::Update(unsigned int delta)

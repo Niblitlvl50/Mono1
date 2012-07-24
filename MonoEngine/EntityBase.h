@@ -20,7 +20,7 @@ namespace mono
     {
     public:
         
-        virtual void Draw() const = 0;
+        virtual void Draw(IRenderer& renderer) const = 0;
         virtual void Update(unsigned int delta) = 0;
         virtual const Math::Vector2f& Position() const;
 
@@ -31,7 +31,7 @@ namespace mono
         
         EntityBase();
 
-        virtual void doDraw() const;
+        virtual void doDraw(IRenderer& renderer) const;
         virtual void doUpdate(unsigned int delta);
 		
         Math::Vector2f mPosition;

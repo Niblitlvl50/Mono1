@@ -26,7 +26,7 @@ namespace
                                        1.0f,  1.0f,
                                        1.0f, -1.0f };
         
-    static const unsigned short indices[] = { 0, 1, 2, 0, 2, 3 };
+    static const unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };
     
     void GenerateTextureCoordinates(int rows, int columns, std::vector<Math::Quad>& coordinates)
     {
@@ -93,12 +93,12 @@ void Sprite::Draw() const
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     
-    glTexCoordPointer(2, GL_FLOAT, 0, coords);
     glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glTexCoordPointer(2, GL_FLOAT, 0, coords);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
 
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 void Sprite::doUpdate(unsigned int delta)

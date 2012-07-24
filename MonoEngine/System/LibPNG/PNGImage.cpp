@@ -10,6 +10,7 @@
 
 #include "png.h"
 #include "SysFile.h"
+#include "SysOpenGL.h"
 #include <stdexcept>
 #include <iostream>
 
@@ -107,7 +108,7 @@ void PNGImage::ReadSource()
     delete[] rowPtrs;
 }
 
-const byte* PNGImage::Data()
+const byte* PNGImage::Data() const
 {
     return mData.get();
 }
@@ -122,8 +123,28 @@ int PNGImage::Height() const
     return mHeight;
 }
 
+int PNGImage::ColorComponents() const
+{
+    if(mColorType & PNG_COLOR_TYPE_RGBA)
+        return 4;
+    else if(mColorType & PNG_COLOR_TYPE_RGB)
+        return 3;
+    else if(mColorType & PNG_COLOR_TYPE_GRAY_ALPHA)
+        return 2;
+    else if(mColorType & PNG_COLOR_TYPE_GRAY)
+        return 1;
+    
+    // This indicates error.
+    return 0;
+}
+
+unsigned int PNGImage::TargetFormat() const
+{
+    return GL_RGBA;
+}
+
 bool PNGImage::HasAlpha() const
 {
-    return (mColorType == PNG_COLOR_TYPE_RGBA);
+    return (mColorType == PNG_COLOR_MASK_ALPHA);
 }
 

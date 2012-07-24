@@ -32,7 +32,7 @@ Monster::Monster()
     mScale = 30.0f;
 }
 
-void Monster::Draw() const
+void Monster::Draw(mono::IRenderer&) const
 {
     mBody.Draw();
 }

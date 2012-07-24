@@ -25,7 +25,7 @@ namespace mono
     class Engine
     {
     public:
-        Engine(float hz, IWindowPtr view, ICameraPtr camera, IZonePtr zone);
+        Engine(unsigned int hz, IWindowPtr view, ICameraPtr camera, IZonePtr zone);
         ~Engine();
 		
         void Run();
@@ -39,7 +39,7 @@ namespace mono
         void OnActivated(const Event::ActivatedEvent& event);
         
         bool mQuit;
-        float mHz;
+        unsigned int mHz;
 		
         IWindowPtr mWindow;
         ICameraPtr mCamera;

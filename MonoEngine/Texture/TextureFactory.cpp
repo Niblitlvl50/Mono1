@@ -56,4 +56,10 @@ mono::ITexturePtr mono::CreateTexture(const std::string& source)
     return texture;
 }
 
+mono::ITexturePtr mono::CreateTexture(const byte* data, int width, int height, int colorComponents, unsigned int targetFormat)
+{
+    const mono::IImagePtr image = CreateImage(data, width, height, colorComponents, targetFormat);
+    return mono::ITexturePtr(new Texture(image));
+}
+
 

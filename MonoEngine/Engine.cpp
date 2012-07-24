@@ -28,6 +28,7 @@
 #include "Vector2f.h"
 
 #include <stdexcept>
+#include <sstream>
 
 
 
@@ -35,7 +36,7 @@ using namespace mono;
 using namespace std::tr1::placeholders;
 
 
-Engine::Engine(float hz, IWindowPtr window, ICameraPtr camera, IZonePtr zone)
+Engine::Engine(unsigned int hz, IWindowPtr window, ICameraPtr camera, IZonePtr zone)
     : mQuit(false),
       mHz(hz),
       mWindow(window),
@@ -68,21 +69,29 @@ void Engine::Run()
     
     const unsigned int timePerUpdate = 1000 / mHz;
     unsigned int lastTime = Time::GetMilliseconds();
+    
+    long frame = 0;
     	
     while(!mQuit)
     {
+        ++frame;
+        
         const unsigned int beforeTime = Time::GetMilliseconds();
         const unsigned int delta = beforeTime - lastTime;
 		
         Events::ProcessSystemEvents(mInputHandler);
 
-        Renderer renderer(mCamera);
+        Renderer renderer(mCamera, mWindow);
         mZone->Accept(renderer);
 
         // Update the stuff, and then render the frame.
         renderer.Update(delta);
-        mWindow->DrawFrame(renderer);
-
+        
+        std::stringstream stream;
+        stream << frame;
+        renderer.DrawText(stream.str(), mCamera->Position(), false);
+        renderer.DrawFrame();
+        
         lastTime = beforeTime;
 
         const int sleepTime = timePerUpdate - (Time::GetMilliseconds() - beforeTime);
@@ -95,6 +104,7 @@ void Engine::Run()
     mZone->OnUnload();
 }
 
+// This function is a little bit out of place but i guess this is where it has to be for now.
 void Engine::ScreenToWorld(int& x, int& y) const
 {
     const Math::Vector2f& windowSize = mWindow->Size();

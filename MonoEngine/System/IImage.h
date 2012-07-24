@@ -20,9 +20,11 @@ namespace mono
         virtual ~IImage()
         { }
         
-        virtual const byte* Data() = 0;
+        virtual const byte* Data() const = 0;
         virtual int Width() const = 0;
         virtual int Height() const = 0;
+        virtual int ColorComponents() const = 0;
+        virtual unsigned int TargetFormat() const = 0;
         virtual bool HasAlpha() const = 0;
     };
     

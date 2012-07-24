@@ -8,10 +8,7 @@
  */
 
 #include "SDLWindow.h"
-#include "IRenderer.h"
-#include "ICamera.h"
 #include "SysOpenGL.h"
-#include "Vector2f.h"
 
 #include <stdexcept>
 
@@ -101,31 +98,10 @@ void SDLWindow::SurfaceChanged(int width, int height)
 }
 
 void SDLWindow::Activated(bool activated)
+{ }
+
+void SDLWindow::SwapBuffers() const
 {
-
-}
-
-void SDLWindow::DrawFrame(IRenderer& renderer) const
-{
-    const mono::ICameraPtr camera = renderer.Camera();
-    const Math::Vector2f& size = camera->Size();
-    const Math::Vector2f& position = camera->Position();
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    
-    glOrtho(0, size.mX, 0, size.mY, 0, 10);
-    
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    glTranslatef(-position.mX, -position.mY, 0.0f);
-    //glScalef(2.0f, 2.0f, 2.0f);
-    
-    renderer.DrawFrame();
-
     SDL_GL_SwapWindow(mWindow);
 }
 

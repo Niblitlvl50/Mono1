@@ -20,7 +20,7 @@ namespace game
     public:
         
         Monster();
-        virtual void Draw() const;
+        virtual void Draw(mono::IRenderer&) const;
         virtual void Update(unsigned int delta);
         
     private:

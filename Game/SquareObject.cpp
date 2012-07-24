@@ -21,7 +21,7 @@ SquareObject::SquareObject(float x, float y)
     //mRotationCenter = Math::Vector2f(-1.0f, -1.0f);
 }
 
-void SquareObject::Draw() const
+void SquareObject::Draw(mono::IRenderer&) const
 {
     mSprite.Draw();
 }

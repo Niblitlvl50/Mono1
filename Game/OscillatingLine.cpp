@@ -21,7 +21,7 @@ OscillatingLine::OscillatingLine()
     mPosition = Math::Vector2f(400.0f, 100.0f);
 }
 
-void OscillatingLine::Draw() const
+void OscillatingLine::Draw(mono::IRenderer&) const
 {
     const float radius = 50.0f;
     const float deltasin = std::sin(mDelta) * radius;

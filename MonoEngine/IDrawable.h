@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "MonoFwd.h"
+
 namespace mono
 {
 
@@ -17,7 +19,7 @@ namespace mono
         virtual ~IDrawable()
         { }
 		
-        virtual void doDraw() const = 0;
+        virtual void doDraw(IRenderer& renderer) const = 0;
     };
 
 }

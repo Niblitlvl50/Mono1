@@ -15,7 +15,6 @@ using namespace mono;
 
 unsigned int mono::Texture::sBoundTexture = -1;
 
-
 Texture::Texture(IImagePtr image)
     : mTextureId(-1),
       mWidth(image->Width()),
@@ -24,7 +23,13 @@ Texture::Texture(IImagePtr image)
     glGenTextures(1, &mTextureId);
     glBindTexture(GL_TEXTURE_2D, mTextureId);
     
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->Width(), image->Height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image->Data());
+    const int components = image->ColorComponents();
+    const int width = image->Width();
+    const int height = image->Height();
+    const unsigned int format = image->TargetFormat();
+    const byte* data = image->Data();
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, components, width, height, 0, format, GL_UNSIGNED_BYTE, data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     

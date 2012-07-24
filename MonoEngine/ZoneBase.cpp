@@ -8,6 +8,7 @@
 
 #include "ZoneBase.h"
 #include "IRenderer.h"
+#include "Utils.h"
 
 using namespace mono;
 
@@ -48,5 +49,10 @@ void ZoneBase::AddEntityToLayer(LayerId layer, IEntityPtr entity)
 
 void ZoneBase::RemoveEntity(IEntityPtr entity)
 {
-
+    for(LayerMap::iterator it = mLayers.begin(), end = mLayers.end(); it != end; ++it)
+    {
+        const bool result = FindAndRemoveEntity(it->second, entity);
+        if(result)
+            return;
+    }
 }

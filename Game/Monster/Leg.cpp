@@ -19,7 +19,7 @@ Leg::Leg(float x, float y)
     mPosition = Math::Vector2f(x, y);
 }
 
-void Leg::Draw() const
+void Leg::Draw(mono::IRenderer&) const
 {
     mUpper.Draw();
     mLower.Draw();

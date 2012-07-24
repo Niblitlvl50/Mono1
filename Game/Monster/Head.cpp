@@ -19,7 +19,7 @@ Head::Head(float x, float y)
     mScale = 0.7f;
 }
 
-void Head::Draw() const
+void Head::Draw(mono::IRenderer&) const
 {
     mHead.Draw();
     

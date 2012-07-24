@@ -19,7 +19,7 @@ namespace game
     public:
     
         Head(float x, float y);
-        virtual void Draw() const;
+        virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
     
     private:

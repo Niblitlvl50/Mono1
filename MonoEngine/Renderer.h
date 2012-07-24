@@ -10,6 +10,9 @@
 #pragma once
 
 #include "IRenderer.h"
+#include "TextFwd.h"
+
+#include "TextFunctions.h"
 
 namespace mono
 {
@@ -18,22 +21,28 @@ namespace mono
     {
     public:
         
-        Renderer(ICameraPtr camera);
+        Renderer(ICameraPtr camera, IWindowPtr window);
         
-        virtual void DrawFrame() const;
+        virtual void DrawFrame();
         virtual void Update(unsigned int milliseconds);
 
         virtual void AddEntity(IEntityPtr entity);
         virtual void AddDrawable(IDrawablePtr drawable);
         virtual void AddUpdatable(IUpdatablePtr updatable);
         
-        virtual ICameraPtr Camera();
+        virtual void DrawText(const std::string& text, const Math::Vector2f& pos, bool center);
 
     private:
+        
+        void PrepareDraw() const;
+        void EndDraw() const;
 
         ICameraPtr mCamera;
+        IWindowPtr mWindow;
+        
         IDrawableCollection mDrawables;
         IUpdatableCollection mUpdatables;
+        TextDefCollection mTexts;
     };
 
 }

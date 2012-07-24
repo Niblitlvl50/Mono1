@@ -8,6 +8,7 @@
 
 #include "AnimatedDude.h"
 #include "SysTime.h"
+#include "IRenderer.h"
 
 using namespace game;
 
@@ -29,7 +30,7 @@ AnimatedDude::AnimatedDude(float x, float y)
       mController(*this)
 {
     mPosition = Math::Vector2f(x, y);
-    mScale = 40.0f;
+    mScale = 20.0f;
     
     /*
     const mono::FrameDurations runDurations(3, 100);
@@ -45,9 +46,13 @@ AnimatedDude::AnimatedDude(float x, float y)
     //mSprite.SetAnimation(constants::FIGHTING);
 }
 
-void AnimatedDude::Draw() const
+void AnimatedDude::Draw(mono::IRenderer& renderer) const
 {
     mSprite.Draw();
+    
+    const Math::Vector2f textPosition = mPosition + Math::Vector2f(0.0f, 25.0f);
+    //const Math::Vector2f textPosition(1.0f, 1.0f);
+    renderer.DrawText("Ryu Hayabusa", textPosition, true);
 }
 
 void AnimatedDude::Update(unsigned int delta)

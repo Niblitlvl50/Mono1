@@ -13,6 +13,8 @@
 #include <vector>
 #include <string>
 
+typedef unsigned char byte;
+
 namespace mono
 {
     struct IWindow;

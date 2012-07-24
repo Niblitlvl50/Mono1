@@ -15,4 +15,6 @@ namespace File
     typedef std::tr1::shared_ptr<FILE> FilePtr;
     
     FilePtr OpenBinaryFile(const std::string& source);
+
+    long FileSize(const FilePtr file);
 }

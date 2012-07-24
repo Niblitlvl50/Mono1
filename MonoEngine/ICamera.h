@@ -15,7 +15,7 @@ namespace mono
 {
     
     struct ICamera
-    {
+    {        
         virtual ~ICamera()
         { }
         
@@ -25,6 +25,8 @@ namespace mono
         virtual void Unfollow() = 0;
         
         virtual const Math::Vector2f& Position() const = 0;
+        virtual void SetPosition(const Math::Vector2f& position) = 0;
+        
         virtual const Math::Vector2f& Size() const = 0;
         
         //virtual bool IsVisible(const Math::Quad& box) const = 0;

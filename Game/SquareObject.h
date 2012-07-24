@@ -23,7 +23,7 @@ namespace game
 
     private:
 
-        virtual void Draw() const;
+        virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
 
         mono::Sprite mSprite;

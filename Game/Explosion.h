@@ -21,7 +21,7 @@ namespace game
         Explosion();
         
         virtual void Update(unsigned int delta);
-        virtual void Draw() const;
+        virtual void Draw(mono::IRenderer& renderer) const;
         
     private:
         

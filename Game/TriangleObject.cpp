@@ -23,7 +23,7 @@ TriangleObject::TriangleObject()
     AddChild(mono::IEntityPtr(new game::SquareObject(-1.0f, -1.0f)));
 }
 
-void TriangleObject::Draw() const
+void TriangleObject::Draw(mono::IRenderer&) const
 { }
 
 void TriangleObject::Update(unsigned int delta)

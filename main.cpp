@@ -6,6 +6,7 @@
 #include "TestZone.h"
 #include "TraceCamera.h"
 #include "Engine.h"
+#include "TextFunctions.h"
 
 #include <stdexcept>
 #include <iostream>
@@ -17,8 +18,10 @@ int main()
     {
         Libs::Init();
                 
-        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 800, 600, false);
-        mono::Engine engine(60.0f, window, mono::ICameraPtr(new mono::TraceCamera(800, 600)), mono::IZonePtr(new game::TestZone));
+        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 1280, 800, true);
+        mono::Engine engine(60, window, mono::ICameraPtr(new mono::TraceCamera(800, 500)), mono::IZonePtr(new game::TestZone));
+        mono::LoadFont("HelveticaLight.ttf", 14.0f);
+
         engine.Run();
     }
     catch(const std::runtime_error& e)

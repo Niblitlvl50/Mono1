@@ -14,4 +14,5 @@
 namespace mono
 {
     IImagePtr LoadImage(const std::string& source);
+    IImagePtr CreateImage(const byte* data, int width, int height, int colorComponents, unsigned int targetFormat);
 }

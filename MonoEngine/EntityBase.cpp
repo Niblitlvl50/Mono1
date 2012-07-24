@@ -9,6 +9,7 @@
 
 #include "EntityBase.h"
 #include "SysOpenGL.h"
+#include "Utils.h"
 
 using namespace mono;
 
@@ -17,7 +18,7 @@ EntityBase::EntityBase()
       mScale(1.0f)
 { }
 
-void EntityBase::doDraw() const
+void EntityBase::doDraw(IRenderer& renderer) const
 {
     const Math::Vector2f rotationPoint = mRotationCenter * mScale;
     
@@ -33,10 +34,10 @@ void EntityBase::doDraw() const
         const OGL::OGLPushPopMatrix raii;
         
         const IEntityPtr child = *it;
-        child->doDraw();
+        child->doDraw(renderer);
     }
     
-    Draw();
+    Draw(renderer);
 }
 
 void EntityBase::doUpdate(unsigned int delta)
@@ -60,28 +61,9 @@ void EntityBase::AddChild(IEntityPtr child)
     mChildren.push_back(child);
 }
 
-namespace 
-{
-    struct EntityFinder
-    {
-        EntityFinder(const IEntityPtr entity)
-            : mEntity(entity)
-        { }
-        
-        bool operator()(const IEntityPtr other) const
-        {
-            return mEntity == other;
-        }
-        
-        const IEntityPtr mEntity;
-    };
-}
-
 void EntityBase::RemoveChild(IEntityPtr child)
 {
-    EntityFinder removePredicate(child);
-    IEntityCollection::iterator newEnd = std::remove_if(mChildren.begin(), mChildren.end(), removePredicate);
-    mChildren.erase(newEnd, mChildren.end());
+    const bool result = FindAndRemoveEntity(mChildren, child);
 }
 
 

@@ -26,6 +26,8 @@ namespace mono
         virtual void Unfollow();
         
         virtual const Math::Vector2f& Position() const;
+        virtual void SetPosition(const Math::Vector2f& position);
+        
         virtual const Math::Vector2f& Size() const;
         
     private:

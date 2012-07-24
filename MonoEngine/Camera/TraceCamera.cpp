@@ -46,10 +46,16 @@ const Math::Vector2f& TraceCamera::Position() const
 {
     return mPosition;
 }
+void TraceCamera::SetPosition(const Math::Vector2f& position)
+{
+    mPosition = position - (mSize * 0.5f);
+}
 
 const Math::Vector2f& TraceCamera::Size() const
 {
     return mSize;
 }
+
+
 
 

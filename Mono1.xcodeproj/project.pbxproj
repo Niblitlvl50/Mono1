@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		002F3C0109D093BD00EBEB88 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F3C0009D093BD00EBEB88 /* OpenGL.framework */; };
+		2B069A67156ACD9F00190763 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B069A65156ACD9E00190763 /* Utils.cpp */; };
+		2B069A68156ACD9F00190763 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B069A66156ACD9E00190763 /* Utils.h */; };
 		2B2F386215420C4E00C44D55 /* AnimationSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B2F386015420C4E00C44D55 /* AnimationSequence.cpp */; };
 		2B2F386315420C4E00C44D55 /* AnimationSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386115420C4E00C44D55 /* AnimationSequence.h */; };
 		2B2F386A15421EE700C44D55 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B2F386815421EE700C44D55 /* Sprite.cpp */; };
@@ -18,6 +20,10 @@
 		2B4B06A3153336E8006D0C75 /* Vector2f.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B4B06A2153336E8006D0C75 /* Vector2f.h */; };
 		2B6872D61531FB9600B8C2FB /* gtest_main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D41531FB9600B8C2FB /* gtest_main.cc */; };
 		2B6872D71531FB9600B8C2FB /* EngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D51531FB9600B8C2FB /* EngineTest.cpp */; };
+		2B6BAF6D15A243EF00F64062 /* TextFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B6BAF6B15A243EF00F64062 /* TextFunctions.cpp */; };
+		2B6BAF6E15A243EF00F64062 /* TextFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B6BAF6C15A243EF00F64062 /* TextFunctions.h */; };
+		2B6BAF7015A248E500F64062 /* TextFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B6BAF6F15A248E500F64062 /* TextFwd.h */; };
+		2B76493815BC6A0C00718BBD /* stb_truetype.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B76493715BC6A0C00718BBD /* stb_truetype.h */; };
 		2B97209015503819006841E1 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B97208E15503819006841E1 /* Monster.cpp */; };
 		2B97209315503834006841E1 /* Leg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B97209115503834006841E1 /* Leg.cpp */; };
 		2B97209615503844006841E1 /* Arm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B97209415503844006841E1 /* Arm.cpp */; };
@@ -162,6 +168,7 @@
 		2BE671A4155DB27D0018E893 /* TraceCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE671A2155DB27D0018E893 /* TraceCamera.h */; };
 		2BE969451541E1D700FE8B70 /* SysOpenGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE969441541E1D700FE8B70 /* SysOpenGL.cpp */; };
 		2BE969471541EC0A00FE8B70 /* MouseMotionEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE969461541EC0900FE8B70 /* MouseMotionEvent.h */; };
+		2BF683A215BF3DDC00D0141A /* SysTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF683A115BF3DDC00D0141A /* SysTypes.h */; };
 		2BF8E3921545E8D900F46049 /* LuaInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BF8E38F1545E8D900F46049 /* LuaInterpreter.cpp */; };
 		2BF8E3931545E8D900F46049 /* LuaInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF8E3901545E8D900F46049 /* LuaInterpreter.h */; };
 		2BF8E3971545EDEF00F46049 /* LuaFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BF8E3941545E8FB00F46049 /* LuaFunctions.cpp */; };
@@ -238,6 +245,8 @@
 /* Begin PBXFileReference section */
 		002F3C0009D093BD00EBEB88 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2B069A65156ACD9E00190763 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
+		2B069A66156ACD9E00190763 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		2B2F386015420C4E00C44D55 /* AnimationSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimationSequence.cpp; path = Sprite/AnimationSequence.cpp; sourceTree = "<group>"; };
 		2B2F386115420C4E00C44D55 /* AnimationSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimationSequence.h; path = Sprite/AnimationSequence.h; sourceTree = "<group>"; };
 		2B2F386815421EE700C44D55 /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite.cpp; path = Sprite/Sprite.cpp; sourceTree = "<group>"; };
@@ -254,6 +263,10 @@
 		2B6872E01531FEA800B8C2FB /* MonoEngineProj.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MonoEngineProj.xcconfig; sourceTree = "<group>"; };
 		2B6872E11531FEA800B8C2FB /* MonoEngineTarget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MonoEngineTarget.xcconfig; sourceTree = "<group>"; };
 		2B6A74171531F881002CB834 /* UnitTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTests; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B6BAF6B15A243EF00F64062 /* TextFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextFunctions.cpp; path = Text/TextFunctions.cpp; sourceTree = "<group>"; };
+		2B6BAF6C15A243EF00F64062 /* TextFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFunctions.h; path = Text/TextFunctions.h; sourceTree = "<group>"; };
+		2B6BAF6F15A248E500F64062 /* TextFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFwd.h; path = Text/TextFwd.h; sourceTree = "<group>"; };
+		2B76493715BC6A0C00718BBD /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = "External Libs/stb_truetype/stb_truetype.h"; sourceTree = "<group>"; };
 		2B97208E15503819006841E1 /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Monster.cpp; path = Game/Monster/Monster.cpp; sourceTree = "<group>"; };
 		2B97208F15503819006841E1 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monster.h; path = Game/Monster/Monster.h; sourceTree = "<group>"; };
 		2B97209115503834006841E1 /* Leg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Leg.cpp; path = Game/Monster/Leg.cpp; sourceTree = "<group>"; };
@@ -458,6 +471,7 @@
 		2BE671A2155DB27D0018E893 /* TraceCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TraceCamera.h; path = Camera/TraceCamera.h; sourceTree = "<group>"; };
 		2BE969441541E1D700FE8B70 /* SysOpenGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysOpenGL.cpp; sourceTree = "<group>"; };
 		2BE969461541EC0900FE8B70 /* MouseMotionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseMotionEvent.h; sourceTree = "<group>"; };
+		2BF683A115BF3DDC00D0141A /* SysTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysTypes.h; sourceTree = "<group>"; };
 		2BF8E38F1545E8D900F46049 /* LuaInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaInterpreter.cpp; path = Lua/LuaInterpreter.cpp; sourceTree = "<group>"; };
 		2BF8E3901545E8D900F46049 /* LuaInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuaInterpreter.h; path = Lua/LuaInterpreter.h; sourceTree = "<group>"; };
 		2BF8E3941545E8FB00F46049 /* LuaFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaFunctions.cpp; path = Lua/LuaFunctions.cpp; sourceTree = "<group>"; };
@@ -696,6 +710,7 @@
 		2B6872DD1531FEA800B8C2FB /* MonoEngine */ = {
 			isa = PBXGroup;
 			children = (
+				2B6BAF6A15A2437C00F64062 /* Text */,
 				2BE671A0155DB2050018E893 /* Camera */,
 				2BF8E38D1545E83300F46049 /* Lua */,
 				2B2F385F15420C2900C44D55 /* Sprite */,
@@ -727,6 +742,8 @@
 				2BE473FB153201CC00CA5ACB /* Renderer.h */,
 				2B2F386C1542210A00C44D55 /* ZoneBase.cpp */,
 				2B2F386D1542210B00C44D55 /* ZoneBase.h */,
+				2B069A65156ACD9E00190763 /* Utils.cpp */,
+				2B069A66156ACD9E00190763 /* Utils.h */,
 			);
 			path = MonoEngine;
 			sourceTree = "<group>";
@@ -753,9 +770,28 @@
 			path = UnitTests;
 			sourceTree = "<group>";
 		};
+		2B6BAF6A15A2437C00F64062 /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				2B6BAF6B15A243EF00F64062 /* TextFunctions.cpp */,
+				2B6BAF6C15A243EF00F64062 /* TextFunctions.h */,
+				2B6BAF6F15A248E500F64062 /* TextFwd.h */,
+			);
+			name = Text;
+			sourceTree = "<group>";
+		};
+		2B76493615BC69D900718BBD /* stb_truetype */ = {
+			isa = PBXGroup;
+			children = (
+				2B76493715BC6A0C00718BBD /* stb_truetype.h */,
+			);
+			name = stb_truetype;
+			sourceTree = "<group>";
+		};
 		2B8FEB8C152F632B0041243F /* External Libs */ = {
 			isa = PBXGroup;
 			children = (
+				2B76493615BC69D900718BBD /* stb_truetype */,
 				2B8FEC3A1531CFE30041243F /* ticpp */,
 				2B52D16813049C500094C7EB /* Lua 5.1.4 */,
 				2B0D3FF414935EC600E15798 /* lpng156 */,
@@ -881,6 +917,7 @@
 				2BE47410153201CC00CA5ACB /* SysTime.h */,
 				2BE47411153201CC00CA5ACB /* WindowFactory.cpp */,
 				2BE47412153201CC00CA5ACB /* WindowFactory.h */,
+				2BF683A115BF3DDC00D0141A /* SysTypes.h */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -1006,6 +1043,11 @@
 				2BF8E39B1545EE9C00F46049 /* LuaState.h in Headers */,
 				2BDDD2D01551CCA500FA9767 /* Quad.h in Headers */,
 				2BE671A4155DB27D0018E893 /* TraceCamera.h in Headers */,
+				2B069A68156ACD9F00190763 /* Utils.h in Headers */,
+				2B6BAF6E15A243EF00F64062 /* TextFunctions.h in Headers */,
+				2B6BAF7015A248E500F64062 /* TextFwd.h in Headers */,
+				2B76493815BC6A0C00718BBD /* stb_truetype.h in Headers */,
+				2BF683A215BF3DDC00D0141A /* SysTypes.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1204,6 +1246,8 @@
 				2BF8E3971545EDEF00F46049 /* LuaFunctions.cpp in Sources */,
 				2BF8E39A1545EE9C00F46049 /* LuaState.cpp in Sources */,
 				2BE671A3155DB27D0018E893 /* TraceCamera.cpp in Sources */,
+				2B069A67156ACD9F00190763 /* Utils.cpp in Sources */,
+				2B6BAF6D15A243EF00F64062 /* TextFunctions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

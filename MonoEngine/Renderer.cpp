@@ -11,27 +11,65 @@
 #include "SysOpenGL.h"
 #include "IEntity.h"
 #include "ICamera.h"
+#include "IWindow.h"
+#include "Vector2f.h"
+
+#include "TextFunctions.h"
 
 using namespace mono;
 
-Renderer::Renderer(ICameraPtr camera)
-    : mCamera(camera)
+
+Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
+    : mCamera(camera),
+      mWindow(window)
 { }
 
-void Renderer::DrawFrame() const
-{    
+void Renderer::PrepareDraw() const
+{
+    const Math::Vector2f& size = mCamera->Size();
+    const Math::Vector2f& position = mCamera->Position();
+    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    
+    glOrtho(0, size.mX, 0, size.mY, 0, 10);
+    
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    glTranslatef(-position.mX, -position.mY, 0.0f);
+}
+
+void Renderer::EndDraw() const
+{
+    mWindow->SwapBuffers();
+}
+
+void Renderer::DrawFrame()
+{
+    PrepareDraw();
+    
     for(IDrawableCollection::const_iterator it = mDrawables.begin(), end = mDrawables.end(); it != end; ++it)
     {
         const OGL::OGLPushPopMatrix raii;
 
         const IDrawablePtr drawable = *it;
-        drawable->doDraw();
+        drawable->doDraw(*this);
     }
+    
+    // Draw all the texts after all the entities. 
+    DrawTextFromDefinitions(mTexts);
+    
+    EndDraw();
 }
 
 void Renderer::Update(unsigned int milliseconds)
 {
     mCamera->Update(milliseconds);
+    
+    // Should i do collision detection here or after the update?
     
     for(IUpdatableCollection::iterator it = mUpdatables.begin(), end = mUpdatables.end(); it != end; ++it)
     {
@@ -54,9 +92,17 @@ void Renderer::AddUpdatable(IUpdatablePtr updatable)
     mUpdatables.push_back(updatable);
 }
 
-ICameraPtr Renderer::Camera()
+void Renderer::DrawText(const std::string& text, const Math::Vector2f& pos, bool center)
 {
-    return mCamera;
+    TextDefinition def;
+
+    // Generate data for the text
+    def.vertices = GenerateVerticesFromString(text, pos, center);
+    def.texcoords = GenerateTextureCoordinates(text);
+    def.chars = text.length();
+    
+    // Save the text in the collection
+    mTexts.push_back(def);
 }
 
 
