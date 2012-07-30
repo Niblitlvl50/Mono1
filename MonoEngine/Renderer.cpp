@@ -27,10 +27,7 @@ Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
 void Renderer::PrepareDraw() const
 {
     const Math::Quad& viewport = mCamera->GetViewport();
-    
-    //const Math::Vector2f& size = mCamera->Size();
-    //const Math::Vector2f& position = mCamera->Position();
-    
+        
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     glMatrixMode(GL_PROJECTION);
@@ -58,7 +55,7 @@ void Renderer::DrawFrame()
         const OGL::OGLPushPopMatrix raii;
 
         const IDrawablePtr drawable = *it;
-        const bool visible = Math::QuadOverlaps(drawable->BoundingBox(), mCamera->GetViewport());
+        const bool visible = Math::QuadOverlaps(mCamera->GetViewport(), drawable->BoundingBox());
         if(visible)
            drawable->doDraw(*this);
     }
