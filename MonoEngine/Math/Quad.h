@@ -8,27 +8,21 @@
 
 #pragma once
 
+#include "Vector2f.h"
+
 namespace Math
 {
     struct Quad
     {
         Quad()
-            : mX(0.0f),
-              mY(0.0f),
-              mW(1.0f),
-              mH(1.0f)
         { }
-        
+                
         Quad(float x, float y, float w, float h)
-            : mX(x),
-              mY(y),
-              mW(w),
-              mH(h)
+            : mA(x, y),
+              mB(w, h)
         { }
-        
-        float mX;
-        float mY;
-        float mW;
-        float mH;
+                
+        Math::Vector2f mA;
+        Math::Vector2f mB;
     };
 }

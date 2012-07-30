@@ -51,8 +51,8 @@ void AnimatedDude::Draw(mono::IRenderer& renderer) const
     mSprite.Draw();
     
     const Math::Vector2f textPosition = mPosition + Math::Vector2f(0.0f, 25.0f);
-    //const Math::Vector2f textPosition(1.0f, 1.0f);
-    renderer.DrawText("Ryu Hayabusa", textPosition, true);
+    Color color = {0.5f, 1.0f, 0.0f, 1.0f};
+    renderer.DrawText("Ryu Hayabusa", textPosition, true, color);
 }
 
 void AnimatedDude::Update(unsigned int delta)

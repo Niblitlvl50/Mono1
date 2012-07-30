@@ -10,7 +10,6 @@
 #include "TriangleObject.h"
 #include "SysOpenGL.h"
 #include "SquareObject.h"
-#include "Texture.h"
 
 using namespace game;
 

@@ -12,8 +12,7 @@
 #include <tr1/memory>
 #include <vector>
 #include <string>
-
-typedef unsigned char byte;
+#include "SysTypes.h"
 
 namespace mono
 {
@@ -22,9 +21,6 @@ namespace mono
 
     struct ICamera;
     typedef std::tr1::shared_ptr<ICamera> ICameraPtr;
-
-    struct IOGLSetup;
-    typedef std::tr1::shared_ptr<IOGLSetup> IOGLSetupPtr;
 	
     struct IRenderer;
     typedef std::tr1::shared_ptr<IRenderer> IRendererPtr;

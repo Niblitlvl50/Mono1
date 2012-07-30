@@ -9,36 +9,34 @@
 /* Begin PBXBuildFile section */
 		002F3C0109D093BD00EBEB88 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F3C0009D093BD00EBEB88 /* OpenGL.framework */; };
 		2B069A67156ACD9F00190763 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B069A65156ACD9E00190763 /* Utils.cpp */; };
-		2B069A68156ACD9F00190763 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B069A66156ACD9E00190763 /* Utils.h */; };
+		2B069A68156ACD9F00190763 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B069A66156ACD9E00190763 /* Utils.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2B2F386215420C4E00C44D55 /* AnimationSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B2F386015420C4E00C44D55 /* AnimationSequence.cpp */; };
-		2B2F386315420C4E00C44D55 /* AnimationSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386115420C4E00C44D55 /* AnimationSequence.h */; };
+		2B2F386315420C4E00C44D55 /* AnimationSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386115420C4E00C44D55 /* AnimationSequence.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2B2F386A15421EE700C44D55 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B2F386815421EE700C44D55 /* Sprite.cpp */; };
-		2B2F386B15421EE700C44D55 /* Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386915421EE700C44D55 /* Sprite.h */; };
+		2B2F386B15421EE700C44D55 /* Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386915421EE700C44D55 /* Sprite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B2F386E1542210B00C44D55 /* ZoneBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B2F386C1542210A00C44D55 /* ZoneBase.cpp */; };
-		2B2F386F1542210B00C44D55 /* ZoneBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386D1542210B00C44D55 /* ZoneBase.h */; };
+		2B2F386F1542210B00C44D55 /* ZoneBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386D1542210B00C44D55 /* ZoneBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B4B06A015331F13006D0C75 /* AnimatedDude.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B4B069E15331F12006D0C75 /* AnimatedDude.cpp */; };
-		2B4B06A3153336E8006D0C75 /* Vector2f.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B4B06A2153336E8006D0C75 /* Vector2f.h */; };
+		2B4B06A3153336E8006D0C75 /* Vector2f.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B4B06A2153336E8006D0C75 /* Vector2f.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B4D2F5315C32A92003A9193 /* MathFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B4D2F5115C32A92003A9193 /* MathFunctions.cpp */; };
+		2B4D2F5415C32A92003A9193 /* MathFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B4D2F5215C32A92003A9193 /* MathFunctions.h */; };
 		2B6872D61531FB9600B8C2FB /* gtest_main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D41531FB9600B8C2FB /* gtest_main.cc */; };
 		2B6872D71531FB9600B8C2FB /* EngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D51531FB9600B8C2FB /* EngineTest.cpp */; };
 		2B6BAF6D15A243EF00F64062 /* TextFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B6BAF6B15A243EF00F64062 /* TextFunctions.cpp */; };
-		2B6BAF6E15A243EF00F64062 /* TextFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B6BAF6C15A243EF00F64062 /* TextFunctions.h */; };
-		2B6BAF7015A248E500F64062 /* TextFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B6BAF6F15A248E500F64062 /* TextFwd.h */; };
-		2B76493815BC6A0C00718BBD /* stb_truetype.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B76493715BC6A0C00718BBD /* stb_truetype.h */; };
+		2B6BAF6E15A243EF00F64062 /* TextFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B6BAF6C15A243EF00F64062 /* TextFunctions.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2B76493815BC6A0C00718BBD /* stb_truetype.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B76493715BC6A0C00718BBD /* stb_truetype.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2B97209015503819006841E1 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B97208E15503819006841E1 /* Monster.cpp */; };
 		2B97209315503834006841E1 /* Leg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B97209115503834006841E1 /* Leg.cpp */; };
 		2B97209615503844006841E1 /* Arm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B97209415503844006841E1 /* Arm.cpp */; };
 		2B97209915503854006841E1 /* Head.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B97209715503854006841E1 /* Head.cpp */; };
 		2BAA30E815435599003BF117 /* Explosion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BAA30E615435598003BF117 /* Explosion.cpp */; };
-		2BC214701535E4130063834F /* KeyDownEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC2146F1535E4130063834F /* KeyDownEvent.h */; };
-		2BC214721535E50A0063834F /* KeyUpEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC214711535E50A0063834F /* KeyUpEvent.h */; };
+		2BC214701535E4130063834F /* KeyDownEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC2146F1535E4130063834F /* KeyDownEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC214721535E50A0063834F /* KeyUpEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC214711535E50A0063834F /* KeyUpEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BC214751535E6B40063834F /* AnimatedDudeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BC214731535E6B30063834F /* AnimatedDudeController.cpp */; };
-		2BC214771535F7430063834F /* MouseUpEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC214761535F7430063834F /* MouseUpEvent.h */; };
+		2BC214771535F7430063834F /* MouseUpEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC214761535F7430063834F /* MouseUpEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BCDDCE0154BE92D005D8520 /* Invader.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BCDDCDF154BE92D005D8520 /* Invader.sprite */; };
 		2BCDDCE3154BEA2B005D8520 /* Explosion.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BCDDCE1154BEA2A005D8520 /* Explosion.sprite */; };
 		2BCDDCE4154BEA2B005D8520 /* Ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BCDDCE2154BEA2A005D8520 /* Ryu.sprite */; };
-		2BCDDCE5154BEA8A005D8520 /* Invader.sprite in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BCDDCDF154BE92D005D8520 /* Invader.sprite */; };
-		2BCDDCE6154BEA8A005D8520 /* Explosion.sprite in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BCDDCE1154BEA2A005D8520 /* Explosion.sprite */; };
-		2BCDDCE7154BEA8A005D8520 /* Ryu.sprite in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BCDDCE2154BEA2A005D8520 /* Ryu.sprite */; };
 		2BD1E5ED1532080500A75171 /* OscillatingLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E41532080500A75171 /* OscillatingLine.cpp */; };
 		2BD1E5EE1532080500A75171 /* SquareObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E61532080500A75171 /* SquareObject.cpp */; };
 		2BD1E5EF1532080500A75171 /* TestZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E81532080500A75171 /* TestZone.cpp */; };
@@ -111,76 +109,75 @@
 		2BD1E63C1532113700A75171 /* hal.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD1E63A1532113700A75171 /* hal.png */; };
 		2BD1E63D1532113700A75171 /* Invader.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD1E63B1532113700A75171 /* Invader.png */; };
 		2BD1E6401532155500A75171 /* LuaTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E63E1532155500A75171 /* LuaTest.cpp */; };
-		2BDDD2D01551CCA500FA9767 /* Quad.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BDDD2CF1551CCA500FA9767 /* Quad.h */; };
+		2BD656B215C1BCED00B7E4B9 /* Vector3f.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BD656B115C1BCED00B7E4B9 /* Vector3f.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BD656B415C1D57200B7E4B9 /* pixelette.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BD656B315C1D57200B7E4B9 /* pixelette.ttf */; };
+		2BDDD2D01551CCA500FA9767 /* Quad.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BDDD2CF1551CCA500FA9767 /* Quad.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE47419153201CC00CA5ACB /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473DB153201CC00CA5ACB /* Engine.cpp */; };
-		2BE4741A153201CC00CA5ACB /* Engine.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473DC153201CC00CA5ACB /* Engine.h */; };
+		2BE4741A153201CC00CA5ACB /* Engine.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473DC153201CC00CA5ACB /* Engine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE4741B153201CC00CA5ACB /* EntityBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473DD153201CC00CA5ACB /* EntityBase.cpp */; };
-		2BE4741C153201CC00CA5ACB /* EntityBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473DE153201CC00CA5ACB /* EntityBase.h */; };
+		2BE4741C153201CC00CA5ACB /* EntityBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473DE153201CC00CA5ACB /* EntityBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE4741D153201CC00CA5ACB /* EventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473E0153201CC00CA5ACB /* EventHandler.cpp */; };
-		2BE4741E153201CC00CA5ACB /* EventHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E1153201CC00CA5ACB /* EventHandler.h */; };
-		2BE4741F153201CC00CA5ACB /* EventToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E2153201CC00CA5ACB /* EventToken.h */; };
-		2BE47420153201CC00CA5ACB /* ActivatedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E4153201CC00CA5ACB /* ActivatedEvent.h */; };
-		2BE47421153201CC00CA5ACB /* EventFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E5153201CC00CA5ACB /* EventFwd.h */; };
-		2BE47422153201CC00CA5ACB /* QuitEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E7153201CC00CA5ACB /* QuitEvent.h */; };
-		2BE47423153201CC00CA5ACB /* SurfaceChangedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E8153201CC00CA5ACB /* SurfaceChangedEvent.h */; };
+		2BE4741E153201CC00CA5ACB /* EventHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E1153201CC00CA5ACB /* EventHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE4741F153201CC00CA5ACB /* EventToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E2153201CC00CA5ACB /* EventToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE47420153201CC00CA5ACB /* ActivatedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E4153201CC00CA5ACB /* ActivatedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE47421153201CC00CA5ACB /* EventFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E5153201CC00CA5ACB /* EventFwd.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE47422153201CC00CA5ACB /* QuitEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E7153201CC00CA5ACB /* QuitEvent.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2BE47423153201CC00CA5ACB /* SurfaceChangedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E8153201CC00CA5ACB /* SurfaceChangedEvent.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BE47424153201CC00CA5ACB /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473E9153201CC00CA5ACB /* GameController.cpp */; };
-		2BE47425153201CC00CA5ACB /* GameController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473EA153201CC00CA5ACB /* GameController.h */; };
-		2BE47426153201CC00CA5ACB /* ICamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473EB153201CC00CA5ACB /* ICamera.h */; };
-		2BE47427153201CC00CA5ACB /* IDrawable.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473EC153201CC00CA5ACB /* IDrawable.h */; };
-		2BE47428153201CC00CA5ACB /* IEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473ED153201CC00CA5ACB /* IEntity.h */; };
-		2BE47429153201CC00CA5ACB /* IInputHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473EE153201CC00CA5ACB /* IInputHandler.h */; };
+		2BE47425153201CC00CA5ACB /* GameController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473EA153201CC00CA5ACB /* GameController.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2BE47426153201CC00CA5ACB /* ICamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473EB153201CC00CA5ACB /* ICamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE47427153201CC00CA5ACB /* IDrawable.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473EC153201CC00CA5ACB /* IDrawable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE47428153201CC00CA5ACB /* IEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473ED153201CC00CA5ACB /* IEntity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE47429153201CC00CA5ACB /* IInputHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473EE153201CC00CA5ACB /* IInputHandler.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BE4742A153201CC00CA5ACB /* InputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473F0153201CC00CA5ACB /* InputHandler.cpp */; };
-		2BE4742B153201CC00CA5ACB /* InputHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F1153201CC00CA5ACB /* InputHandler.h */; };
-		2BE4742D153201CC00CA5ACB /* IRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F3153201CC00CA5ACB /* IRenderer.h */; };
-		2BE4742E153201CC00CA5ACB /* IUpdatable.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F4153201CC00CA5ACB /* IUpdatable.h */; };
-		2BE4742F153201CC00CA5ACB /* IWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F5153201CC00CA5ACB /* IWindow.h */; };
-		2BE47430153201CC00CA5ACB /* IZone.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F6153201CC00CA5ACB /* IZone.h */; };
-		2BE47433153201CC00CA5ACB /* MonoFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F9153201CC00CA5ACB /* MonoFwd.h */; };
+		2BE4742B153201CC00CA5ACB /* InputHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F1153201CC00CA5ACB /* InputHandler.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2BE4742D153201CC00CA5ACB /* IRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F3153201CC00CA5ACB /* IRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE4742E153201CC00CA5ACB /* IUpdatable.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F4153201CC00CA5ACB /* IUpdatable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE4742F153201CC00CA5ACB /* IWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F5153201CC00CA5ACB /* IWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE47430153201CC00CA5ACB /* IZone.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F6153201CC00CA5ACB /* IZone.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE47433153201CC00CA5ACB /* MonoFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473F9153201CC00CA5ACB /* MonoFwd.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE47434153201CC00CA5ACB /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473FA153201CC00CA5ACB /* Renderer.cpp */; };
-		2BE47435153201CC00CA5ACB /* Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473FB153201CC00CA5ACB /* Renderer.h */; };
-		2BE47438153201CC00CA5ACB /* IImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473FF153201CC00CA5ACB /* IImage.h */; };
+		2BE47435153201CC00CA5ACB /* Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473FB153201CC00CA5ACB /* Renderer.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2BE47438153201CC00CA5ACB /* IImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473FF153201CC00CA5ACB /* IImage.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BE47439153201CC00CA5ACB /* ImageFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE47400153201CC00CA5ACB /* ImageFactory.cpp */; };
-		2BE4743A153201CC00CA5ACB /* ImageFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47401153201CC00CA5ACB /* ImageFactory.h */; };
+		2BE4743A153201CC00CA5ACB /* ImageFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47401153201CC00CA5ACB /* ImageFactory.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BE4743B153201CC00CA5ACB /* PNGImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE47403153201CC00CA5ACB /* PNGImage.cpp */; };
-		2BE4743C153201CC00CA5ACB /* PNGImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47404153201CC00CA5ACB /* PNGImage.h */; };
+		2BE4743C153201CC00CA5ACB /* PNGImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47404153201CC00CA5ACB /* PNGImage.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BE4743D153201CC00CA5ACB /* SDLWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE47406153201CC00CA5ACB /* SDLWindow.cpp */; };
-		2BE4743E153201CC00CA5ACB /* SDLWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47407153201CC00CA5ACB /* SDLWindow.h */; };
+		2BE4743E153201CC00CA5ACB /* SDLWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47407153201CC00CA5ACB /* SDLWindow.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BE4743F153201CC00CA5ACB /* SysEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE47408153201CC00CA5ACB /* SysEvents.cpp */; };
-		2BE47440153201CC00CA5ACB /* SysEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47409153201CC00CA5ACB /* SysEvents.h */; };
+		2BE47440153201CC00CA5ACB /* SysEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47409153201CC00CA5ACB /* SysEvents.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BE47441153201CC00CA5ACB /* SysFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE4740A153201CC00CA5ACB /* SysFile.cpp */; };
-		2BE47442153201CC00CA5ACB /* SysFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE4740B153201CC00CA5ACB /* SysFile.h */; };
+		2BE47442153201CC00CA5ACB /* SysFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE4740B153201CC00CA5ACB /* SysFile.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BE47443153201CC00CA5ACB /* SysLibs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE4740C153201CC00CA5ACB /* SysLibs.cpp */; };
-		2BE47444153201CC00CA5ACB /* SysLibs.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE4740D153201CC00CA5ACB /* SysLibs.h */; };
-		2BE47445153201CC00CA5ACB /* SysOpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE4740E153201CC00CA5ACB /* SysOpenGL.h */; };
+		2BE47444153201CC00CA5ACB /* SysLibs.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE4740D153201CC00CA5ACB /* SysLibs.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE47445153201CC00CA5ACB /* SysOpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE4740E153201CC00CA5ACB /* SysOpenGL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE47446153201CC00CA5ACB /* SysTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE4740F153201CC00CA5ACB /* SysTime.cpp */; };
-		2BE47447153201CC00CA5ACB /* SysTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47410153201CC00CA5ACB /* SysTime.h */; };
+		2BE47447153201CC00CA5ACB /* SysTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47410153201CC00CA5ACB /* SysTime.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BE47448153201CC00CA5ACB /* WindowFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE47411153201CC00CA5ACB /* WindowFactory.cpp */; };
-		2BE47449153201CC00CA5ACB /* WindowFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47412153201CC00CA5ACB /* WindowFactory.h */; };
-		2BE4744A153201CC00CA5ACB /* ITexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47414153201CC00CA5ACB /* ITexture.h */; };
+		2BE47449153201CC00CA5ACB /* WindowFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47412153201CC00CA5ACB /* WindowFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BE4744A153201CC00CA5ACB /* ITexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47414153201CC00CA5ACB /* ITexture.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE4744B153201CC00CA5ACB /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE47415153201CC00CA5ACB /* Texture.cpp */; };
-		2BE4744C153201CC00CA5ACB /* Texture.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47416153201CC00CA5ACB /* Texture.h */; };
+		2BE4744C153201CC00CA5ACB /* Texture.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47416153201CC00CA5ACB /* Texture.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE4744D153201CC00CA5ACB /* TextureFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE47417153201CC00CA5ACB /* TextureFactory.cpp */; };
-		2BE4744E153201CC00CA5ACB /* TextureFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47418153201CC00CA5ACB /* TextureFactory.h */; };
+		2BE4744E153201CC00CA5ACB /* TextureFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47418153201CC00CA5ACB /* TextureFactory.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BE474871532032C00CA5ACB /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE474861532032C00CA5ACB /* SDL2.framework */; };
 		2BE4748C1532038B00CA5ACB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE4748B1532038B00CA5ACB /* OpenGL.framework */; };
 		2BE474B21532050F00CA5ACB /* MonoEngine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6872DC1531FEA800B8C2FB /* MonoEngine.dylib */; };
 		2BE671A3155DB27D0018E893 /* TraceCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE671A1155DB27D0018E893 /* TraceCamera.cpp */; };
-		2BE671A4155DB27D0018E893 /* TraceCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE671A2155DB27D0018E893 /* TraceCamera.h */; };
+		2BE671A4155DB27D0018E893 /* TraceCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE671A2155DB27D0018E893 /* TraceCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE969451541E1D700FE8B70 /* SysOpenGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE969441541E1D700FE8B70 /* SysOpenGL.cpp */; };
-		2BE969471541EC0A00FE8B70 /* MouseMotionEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE969461541EC0900FE8B70 /* MouseMotionEvent.h */; };
-		2BF683A215BF3DDC00D0141A /* SysTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF683A115BF3DDC00D0141A /* SysTypes.h */; };
+		2BE969471541EC0A00FE8B70 /* MouseMotionEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE969461541EC0900FE8B70 /* MouseMotionEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BF683A215BF3DDC00D0141A /* SysTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF683A115BF3DDC00D0141A /* SysTypes.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BF8E3921545E8D900F46049 /* LuaInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BF8E38F1545E8D900F46049 /* LuaInterpreter.cpp */; };
-		2BF8E3931545E8D900F46049 /* LuaInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF8E3901545E8D900F46049 /* LuaInterpreter.h */; };
+		2BF8E3931545E8D900F46049 /* LuaInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF8E3901545E8D900F46049 /* LuaInterpreter.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BF8E3971545EDEF00F46049 /* LuaFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BF8E3941545E8FB00F46049 /* LuaFunctions.cpp */; };
 		2BF8E39A1545EE9C00F46049 /* LuaState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BF8E3981545EE9C00F46049 /* LuaState.cpp */; };
-		2BF8E39B1545EE9C00F46049 /* LuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF8E3991545EE9C00F46049 /* LuaState.h */; };
+		2BF8E39B1545EE9C00F46049 /* LuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF8E3991545EE9C00F46049 /* LuaState.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BF8E39F1545FA9900F46049 /* luaconfig.lua in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BF8E39E1545FA8B00F46049 /* luaconfig.lua */; };
 		2BF8E3A11545FB4D00F46049 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF8E3A01545FB4D00F46049 /* gtest.framework */; };
 		2BF8E3A41545FBBB00F46049 /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF8E3A21545FBBB00F46049 /* explosion.png */; };
 		2BF8E3A51545FBBB00F46049 /* ryu.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF8E3A31545FBBB00F46049 /* ryu.png */; };
-		2BF8E3A61545FBD000F46049 /* explosion.png in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BF8E3A21545FBBB00F46049 /* explosion.png */; };
-		2BF8E3A71545FBD000F46049 /* ryu.png in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BF8E3A31545FBBB00F46049 /* ryu.png */; };
-		2BF8E3A81545FBD000F46049 /* Invader.png in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 2BD1E63B1532113700A75171 /* Invader.png */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
@@ -218,14 +215,8 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 16;
+			dstSubfolderSpec = 7;
 			files = (
-				2BCDDCE5154BEA8A005D8520 /* Invader.sprite in Copy Frameworks into .app bundle */,
-				2BCDDCE6154BEA8A005D8520 /* Explosion.sprite in Copy Frameworks into .app bundle */,
-				2BCDDCE7154BEA8A005D8520 /* Ryu.sprite in Copy Frameworks into .app bundle */,
-				2BF8E3A61545FBD000F46049 /* explosion.png in Copy Frameworks into .app bundle */,
-				2BF8E3A71545FBD000F46049 /* ryu.png in Copy Frameworks into .app bundle */,
-				2BF8E3A81545FBD000F46049 /* Invader.png in Copy Frameworks into .app bundle */,
 			);
 			name = "Copy Frameworks into .app bundle";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,6 +247,8 @@
 		2B4B069E15331F12006D0C75 /* AnimatedDude.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimatedDude.cpp; path = Game/AnimatedDude.cpp; sourceTree = "<group>"; };
 		2B4B069F15331F12006D0C75 /* AnimatedDude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedDude.h; path = Game/AnimatedDude.h; sourceTree = "<group>"; };
 		2B4B06A2153336E8006D0C75 /* Vector2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vector2f.h; path = Math/Vector2f.h; sourceTree = "<group>"; };
+		2B4D2F5115C32A92003A9193 /* MathFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MathFunctions.cpp; path = Math/MathFunctions.cpp; sourceTree = "<group>"; };
+		2B4D2F5215C32A92003A9193 /* MathFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MathFunctions.h; path = Math/MathFunctions.h; sourceTree = "<group>"; };
 		2B6872D41531FB9600B8C2FB /* gtest_main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gtest_main.cc; sourceTree = "<group>"; };
 		2B6872D51531FB9600B8C2FB /* EngineTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EngineTest.cpp; sourceTree = "<group>"; };
 		2B6872DC1531FEA800B8C2FB /* MonoEngine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = MonoEngine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -265,7 +258,6 @@
 		2B6A74171531F881002CB834 /* UnitTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B6BAF6B15A243EF00F64062 /* TextFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextFunctions.cpp; path = Text/TextFunctions.cpp; sourceTree = "<group>"; };
 		2B6BAF6C15A243EF00F64062 /* TextFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFunctions.h; path = Text/TextFunctions.h; sourceTree = "<group>"; };
-		2B6BAF6F15A248E500F64062 /* TextFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFwd.h; path = Text/TextFwd.h; sourceTree = "<group>"; };
 		2B76493715BC6A0C00718BBD /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = "External Libs/stb_truetype/stb_truetype.h"; sourceTree = "<group>"; };
 		2B97208E15503819006841E1 /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Monster.cpp; path = Game/Monster/Monster.cpp; sourceTree = "<group>"; };
 		2B97208F15503819006841E1 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monster.h; path = Game/Monster/Monster.h; sourceTree = "<group>"; };
@@ -415,6 +407,8 @@
 		2BD1E63A1532113700A75171 /* hal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hal.png; path = Game/res/hal.png; sourceTree = "<group>"; };
 		2BD1E63B1532113700A75171 /* Invader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Invader.png; path = Game/res/Invader.png; sourceTree = "<group>"; };
 		2BD1E63E1532155500A75171 /* LuaTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaTest.cpp; sourceTree = "<group>"; };
+		2BD656B115C1BCED00B7E4B9 /* Vector3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vector3f.h; path = Math/Vector3f.h; sourceTree = "<group>"; };
+		2BD656B315C1D57200B7E4B9 /* pixelette.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = pixelette.ttf; path = Game/res/pixelette.ttf; sourceTree = "<group>"; };
 		2BDDD2CF1551CCA500FA9767 /* Quad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Quad.h; path = Math/Quad.h; sourceTree = "<group>"; };
 		2BE473DB153201CC00CA5ACB /* Engine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Engine.cpp; sourceTree = "<group>"; };
 		2BE473DC153201CC00CA5ACB /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
@@ -542,6 +536,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2BD656B315C1D57200B7E4B9 /* pixelette.ttf */,
 				2BCDDCDF154BE92D005D8520 /* Invader.sprite */,
 				2BD1E63B1532113700A75171 /* Invader.png */,
 				2BCDDCE1154BEA2A005D8520 /* Explosion.sprite */,
@@ -641,6 +636,9 @@
 			children = (
 				2B4B06A2153336E8006D0C75 /* Vector2f.h */,
 				2BDDD2CF1551CCA500FA9767 /* Quad.h */,
+				2BD656B115C1BCED00B7E4B9 /* Vector3f.h */,
+				2B4D2F5115C32A92003A9193 /* MathFunctions.cpp */,
+				2B4D2F5215C32A92003A9193 /* MathFunctions.h */,
 			);
 			name = Math;
 			sourceTree = "<group>";
@@ -775,7 +773,6 @@
 			children = (
 				2B6BAF6B15A243EF00F64062 /* TextFunctions.cpp */,
 				2B6BAF6C15A243EF00F64062 /* TextFunctions.h */,
-				2B6BAF6F15A248E500F64062 /* TextFwd.h */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1002,52 +999,53 @@
 				2BE4741C153201CC00CA5ACB /* EntityBase.h in Headers */,
 				2BE4741E153201CC00CA5ACB /* EventHandler.h in Headers */,
 				2BE4741F153201CC00CA5ACB /* EventToken.h in Headers */,
-				2BE47420153201CC00CA5ACB /* ActivatedEvent.h in Headers */,
 				2BE47421153201CC00CA5ACB /* EventFwd.h in Headers */,
-				2BE47422153201CC00CA5ACB /* QuitEvent.h in Headers */,
-				2BE47423153201CC00CA5ACB /* SurfaceChangedEvent.h in Headers */,
-				2BE47425153201CC00CA5ACB /* GameController.h in Headers */,
+				2BE47420153201CC00CA5ACB /* ActivatedEvent.h in Headers */,
 				2BE47426153201CC00CA5ACB /* ICamera.h in Headers */,
 				2BE47427153201CC00CA5ACB /* IDrawable.h in Headers */,
 				2BE47428153201CC00CA5ACB /* IEntity.h in Headers */,
-				2BE47429153201CC00CA5ACB /* IInputHandler.h in Headers */,
-				2BE4742B153201CC00CA5ACB /* InputHandler.h in Headers */,
 				2BE4742D153201CC00CA5ACB /* IRenderer.h in Headers */,
 				2BE4742E153201CC00CA5ACB /* IUpdatable.h in Headers */,
 				2BE4742F153201CC00CA5ACB /* IWindow.h in Headers */,
-				2BE47430153201CC00CA5ACB /* IZone.h in Headers */,
 				2BE47433153201CC00CA5ACB /* MonoFwd.h in Headers */,
-				2BE47435153201CC00CA5ACB /* Renderer.h in Headers */,
-				2BE47438153201CC00CA5ACB /* IImage.h in Headers */,
-				2BE4743A153201CC00CA5ACB /* ImageFactory.h in Headers */,
-				2BE4743C153201CC00CA5ACB /* PNGImage.h in Headers */,
-				2BE4743E153201CC00CA5ACB /* SDLWindow.h in Headers */,
-				2BE47440153201CC00CA5ACB /* SysEvents.h in Headers */,
-				2BE47442153201CC00CA5ACB /* SysFile.h in Headers */,
+				2BE47430153201CC00CA5ACB /* IZone.h in Headers */,
 				2BE47444153201CC00CA5ACB /* SysLibs.h in Headers */,
 				2BE47445153201CC00CA5ACB /* SysOpenGL.h in Headers */,
-				2BE47447153201CC00CA5ACB /* SysTime.h in Headers */,
 				2BE47449153201CC00CA5ACB /* WindowFactory.h in Headers */,
 				2BE4744A153201CC00CA5ACB /* ITexture.h in Headers */,
 				2BE4744C153201CC00CA5ACB /* Texture.h in Headers */,
-				2BE4744E153201CC00CA5ACB /* TextureFactory.h in Headers */,
 				2B4B06A3153336E8006D0C75 /* Vector2f.h in Headers */,
 				2BC214701535E4130063834F /* KeyDownEvent.h in Headers */,
 				2BC214721535E50A0063834F /* KeyUpEvent.h in Headers */,
 				2BC214771535F7430063834F /* MouseUpEvent.h in Headers */,
 				2BE969471541EC0A00FE8B70 /* MouseMotionEvent.h in Headers */,
-				2B2F386315420C4E00C44D55 /* AnimationSequence.h in Headers */,
 				2B2F386B15421EE700C44D55 /* Sprite.h in Headers */,
 				2B2F386F1542210B00C44D55 /* ZoneBase.h in Headers */,
-				2BF8E3931545E8D900F46049 /* LuaInterpreter.h in Headers */,
-				2BF8E39B1545EE9C00F46049 /* LuaState.h in Headers */,
 				2BDDD2D01551CCA500FA9767 /* Quad.h in Headers */,
 				2BE671A4155DB27D0018E893 /* TraceCamera.h in Headers */,
+				2BD656B215C1BCED00B7E4B9 /* Vector3f.h in Headers */,
+				2BF683A215BF3DDC00D0141A /* SysTypes.h in Headers */,
+				2BE47423153201CC00CA5ACB /* SurfaceChangedEvent.h in Headers */,
+				2BE47422153201CC00CA5ACB /* QuitEvent.h in Headers */,
+				2BE47429153201CC00CA5ACB /* IInputHandler.h in Headers */,
+				2BE4742B153201CC00CA5ACB /* InputHandler.h in Headers */,
+				2BE47435153201CC00CA5ACB /* Renderer.h in Headers */,
+				2BE4743A153201CC00CA5ACB /* ImageFactory.h in Headers */,
+				2BE47425153201CC00CA5ACB /* GameController.h in Headers */,
+				2BE47438153201CC00CA5ACB /* IImage.h in Headers */,
+				2BE4743E153201CC00CA5ACB /* SDLWindow.h in Headers */,
+				2BE4743C153201CC00CA5ACB /* PNGImage.h in Headers */,
+				2BE47440153201CC00CA5ACB /* SysEvents.h in Headers */,
+				2BE47447153201CC00CA5ACB /* SysTime.h in Headers */,
+				2BE47442153201CC00CA5ACB /* SysFile.h in Headers */,
+				2BE4744E153201CC00CA5ACB /* TextureFactory.h in Headers */,
+				2B2F386315420C4E00C44D55 /* AnimationSequence.h in Headers */,
+				2BF8E3931545E8D900F46049 /* LuaInterpreter.h in Headers */,
+				2BF8E39B1545EE9C00F46049 /* LuaState.h in Headers */,
 				2B069A68156ACD9F00190763 /* Utils.h in Headers */,
 				2B6BAF6E15A243EF00F64062 /* TextFunctions.h in Headers */,
-				2B6BAF7015A248E500F64062 /* TextFwd.h in Headers */,
 				2B76493815BC6A0C00718BBD /* stb_truetype.h in Headers */,
-				2BF683A215BF3DDC00D0141A /* SysTypes.h in Headers */,
+				2B4D2F5415C32A92003A9193 /* MathFunctions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1149,6 +1147,7 @@
 				2BCDDCE0154BE92D005D8520 /* Invader.sprite in Resources */,
 				2BCDDCE3154BEA2B005D8520 /* Explosion.sprite in Resources */,
 				2BCDDCE4154BEA2B005D8520 /* Ryu.sprite in Resources */,
+				2BD656B415C1D57200B7E4B9 /* pixelette.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1248,6 +1247,7 @@
 				2BE671A3155DB27D0018E893 /* TraceCamera.cpp in Sources */,
 				2B069A67156ACD9F00190763 /* Utils.cpp in Sources */,
 				2B6BAF6D15A243EF00F64062 /* TextFunctions.cpp in Sources */,
+				2B4D2F5315C32A92003A9193 /* MathFunctions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1324,9 +1324,11 @@
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 			};
 			name = Debug;
 		};
@@ -1344,8 +1346,10 @@
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 			};
 			name = Release;
 		};

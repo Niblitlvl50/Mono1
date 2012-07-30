@@ -11,17 +11,16 @@
 #include <stdexcept>
 #include <iostream>
 
-
 int main()
 {
     try
     {
         Libs::Init();
                 
-        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 1280, 800, true);
-        mono::Engine engine(60, window, mono::ICameraPtr(new mono::TraceCamera(800, 500)), mono::IZonePtr(new game::TestZone));
-        mono::LoadFont("HelveticaLight.ttf", 14.0f);
+        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 800, 500, false);
+        mono::LoadFont("pixelette.ttf", 10.0f);
 
+        mono::Engine engine(60, window, mono::ICameraPtr(new mono::TraceCamera(400, 250)), mono::IZonePtr(new game::TestZone));
         engine.Run();
     }
     catch(const std::runtime_error& e)

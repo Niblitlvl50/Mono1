@@ -26,6 +26,7 @@
 #include "GameController.h"
 
 #include "Vector2f.h"
+#include "Quad.h"
 
 #include <stdexcept>
 #include <sstream>
@@ -74,11 +75,11 @@ void Engine::Run()
     	
     while(!mQuit)
     {
-        ++frame;
-        
         const unsigned int beforeTime = Time::GetMilliseconds();
         const unsigned int delta = beforeTime - lastTime;
 		
+        ++frame;        
+        
         Events::ProcessSystemEvents(mInputHandler);
 
         Renderer renderer(mCamera, mWindow);
@@ -88,8 +89,9 @@ void Engine::Run()
         renderer.Update(delta);
         
         std::stringstream stream;
-        stream << frame;
-        renderer.DrawText(stream.str(), mCamera->Position(), false);
+        stream << "Frame: " << frame;
+        Color color = {1.0f, 1.0f, 1.0f, 1.0f};
+        renderer.DrawText(stream.str(), mCamera->GetViewport().mA, false, color);
         renderer.DrawFrame();
         
         lastTime = beforeTime;
@@ -108,19 +110,18 @@ void Engine::Run()
 void Engine::ScreenToWorld(int& x, int& y) const
 {
     const Math::Vector2f& windowSize = mWindow->Size();
-    const Math::Vector2f& cameraSize = mCamera->Size();
-    const Math::Vector2f& cameraPosition = mCamera->Position();
+    const Math::Quad& viewport = mCamera->GetViewport();
     
-    const Math::Vector2f scale = Math::Vector2f(cameraSize.mX / windowSize.mX, cameraSize.mY / windowSize.mY);
-    
+    const Math::Vector2f scale = viewport.mB / windowSize;
+        
     const float screenX = x;
     const float screenY = windowSize.mY - y;
     
     const float tempx = screenX * scale.mX;
     const float tempy = screenY * scale.mY;
     
-    x = tempx + cameraPosition.mX;
-    y = tempy + cameraPosition.mY;
+    x = tempx + viewport.mA.mX;
+    y = tempy + viewport.mA.mY;
 }
 
 void Engine::OnQuit(const Event::QuitEvent&)

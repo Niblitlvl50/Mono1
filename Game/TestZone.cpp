@@ -19,6 +19,7 @@
 #include "Quad.h"
 #include "Texture.h"
 
+
 using namespace game;
 
 namespace
@@ -27,8 +28,7 @@ namespace
     {
         ZoneBounds(const Math::Quad& bounds)
             : mBounds(bounds)
-        { }
-        
+        { }        
         virtual void Draw(mono::IRenderer&) const
         {
             mono::Texture::Clear();
@@ -36,17 +36,22 @@ namespace
             glColor3f(1.0f, 0.0f, 0.0f);
             
             glBegin(GL_LINE_LOOP);
-            glVertex2f(mBounds.mX, mBounds.mY);
-            glVertex2f(mBounds.mX, mBounds.mY + mBounds.mH);
-            glVertex2f(mBounds.mX + mBounds.mW, mBounds.mY + mBounds.mH);
-            glVertex2f(mBounds.mX + mBounds.mW, mBounds.mY);
+            glVertex2f(mBounds.mA.mX, mBounds.mA.mY);
+            glVertex2f(mBounds.mA.mX, mBounds.mA.mY + mBounds.mB.mY);
+            glVertex2f(mBounds.mA.mX + mBounds.mB.mX, mBounds.mA.mY + mBounds.mB.mY);
+            glVertex2f(mBounds.mA.mX + mBounds.mB.mX, mBounds.mA.mY);
             glEnd();            
+        }
+        virtual Math::Quad BoundingBox() const
+        {
+            return mBounds;
         }
         virtual void Update(unsigned int delta)
         { }
         
         const Math::Quad mBounds;
     };
+    
 }
 
 void TestZone::OnLoad(mono::ICameraPtr camera)
@@ -58,7 +63,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddEntityToLayer(FOREGROUND, mono::IEntityPtr(new OscillatingLine));
     AddEntityToLayer(MIDDLEGROUND, dude);
     AddEntityToLayer(FOREGROUND, mono::IEntityPtr(new Explosion));
-    
+        
     //AddEntityToLayer(BACKGROUND, mono::IEntityPtr(new Monster));
     
     camera->SetPosition(dude->Position());

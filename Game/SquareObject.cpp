@@ -8,9 +8,6 @@
  */
 
 #include "SquareObject.h"
-#include "SysOpenGL.h"
-
-#include <string>
 
 using namespace game;
 
@@ -21,7 +18,7 @@ SquareObject::SquareObject(float x, float y)
     //mRotationCenter = Math::Vector2f(-1.0f, -1.0f);
 }
 
-void SquareObject::Draw(mono::IRenderer&) const
+void SquareObject::Draw(mono::IRenderer& renderer) const
 {
     mSprite.Draw();
 }

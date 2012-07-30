@@ -10,6 +10,7 @@
 #include "OscillatingLine.h"
 #include "SysOpenGL.h"
 #include "Texture.h"
+#include "IRenderer.h"
 
 #include <cmath>
 
@@ -21,7 +22,7 @@ OscillatingLine::OscillatingLine()
     mPosition = Math::Vector2f(400.0f, 100.0f);
 }
 
-void OscillatingLine::Draw(mono::IRenderer&) const
+void OscillatingLine::Draw(mono::IRenderer& renderer) const
 {
     const float radius = 50.0f;
     const float deltasin = std::sin(mDelta) * radius;
@@ -35,6 +36,10 @@ void OscillatingLine::Draw(mono::IRenderer&) const
     glBegin(GL_POINTS);
     glVertex2f(deltasin, deltacos);
     glEnd();
+    
+    const Math::Vector2f textpos = Math::Vector2f(deltasin, deltacos + 5.0f) + mPosition;
+    Color color = { 0.0f, 0.0f, 0.0f, 1.0f };
+    renderer.DrawText("dot...", textpos, true, color);
 }
 
 void OscillatingLine::Update(unsigned int delta)

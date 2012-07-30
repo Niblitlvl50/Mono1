@@ -20,6 +20,7 @@ namespace mono
         { }
 		
         virtual void doDraw(IRenderer& renderer) const = 0;
+        virtual Math::Quad BoundingBox() const = 0;
     };
 
 }

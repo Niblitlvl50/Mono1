@@ -23,6 +23,7 @@ namespace mono
         virtual void Draw(IRenderer& renderer) const = 0;
         virtual void Update(unsigned int delta) = 0;
         virtual const Math::Vector2f& Position() const;
+        virtual Math::Quad BoundingBox() const;
 
         void AddChild(IEntityPtr child);
         void RemoveChild(IEntityPtr child);

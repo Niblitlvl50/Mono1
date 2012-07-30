@@ -10,8 +10,6 @@
 #pragma once
 
 #include "IRenderer.h"
-#include "TextFwd.h"
-
 #include "TextFunctions.h"
 
 namespace mono
@@ -30,7 +28,7 @@ namespace mono
         virtual void AddDrawable(IDrawablePtr drawable);
         virtual void AddUpdatable(IUpdatablePtr updatable);
         
-        virtual void DrawText(const std::string& text, const Math::Vector2f& pos, bool center);
+        virtual void DrawText(const std::string& text, const Math::Vector2f& pos, bool center, Color color);
 
     private:
         

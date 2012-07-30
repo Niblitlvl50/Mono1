@@ -81,10 +81,10 @@ void Sprite::Draw() const
     const AnimationSequence& anim = mDefinedAnimations.find(mActiveAnimationId)->second;
     const Math::Quad& quad = mTextureCoordinates.at(anim.Frame());
     
-    const float coords[] = { quad.mX,           quad.mY,
-                             quad.mX,           quad.mY + quad.mH,
-                             quad.mX + quad.mW, quad.mY + quad.mH,
-                             quad.mX + quad.mW, quad.mY };
+    const float coords[] = { quad.mA.mX,           quad.mA.mY,
+                             quad.mA.mX,           quad.mA.mY + quad.mB.mY,
+                             quad.mA.mX + quad.mB.mX, quad.mA.mY + quad.mB.mY,
+                             quad.mA.mX + quad.mB.mX, quad.mA.mY };
     
     mTexture->Use();
     

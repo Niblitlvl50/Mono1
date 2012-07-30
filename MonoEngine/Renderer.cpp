@@ -13,8 +13,8 @@
 #include "ICamera.h"
 #include "IWindow.h"
 #include "Vector2f.h"
-
-#include "TextFunctions.h"
+#include "Quad.h"
+#include "MathFunctions.h"
 
 using namespace mono;
 
@@ -26,20 +26,22 @@ Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
 
 void Renderer::PrepareDraw() const
 {
-    const Math::Vector2f& size = mCamera->Size();
-    const Math::Vector2f& position = mCamera->Position();
+    const Math::Quad& viewport = mCamera->GetViewport();
+    
+    //const Math::Vector2f& size = mCamera->Size();
+    //const Math::Vector2f& position = mCamera->Position();
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     
-    glOrtho(0, size.mX, 0, size.mY, 0, 10);
+    glOrtho(0, viewport.mB.mX, 0, viewport.mB.mY, 0, 10);
     
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    glTranslatef(-position.mX, -position.mY, 0.0f);
+    glTranslatef(-viewport.mA.mX, -viewport.mA.mY, 0.0f);
 }
 
 void Renderer::EndDraw() const
@@ -56,7 +58,9 @@ void Renderer::DrawFrame()
         const OGL::OGLPushPopMatrix raii;
 
         const IDrawablePtr drawable = *it;
-        drawable->doDraw(*this);
+        const bool visible = Math::QuadOverlaps(drawable->BoundingBox(), mCamera->GetViewport());
+        if(visible)
+           drawable->doDraw(*this);
     }
     
     // Draw all the texts after all the entities. 
@@ -92,14 +96,13 @@ void Renderer::AddUpdatable(IUpdatablePtr updatable)
     mUpdatables.push_back(updatable);
 }
 
-void Renderer::DrawText(const std::string& text, const Math::Vector2f& pos, bool center)
+void Renderer::DrawText(const std::string& text, const Math::Vector2f& pos, bool center, Color color)
 {
-    TextDefinition def;
-
-    // Generate data for the text
-    def.vertices = GenerateVerticesFromString(text, pos, center);
-    def.texcoords = GenerateTextureCoordinates(text);
-    def.chars = text.length();
+    TextDefinition def = GenerateVertexDataFromString(text, pos, center);
+    def.color[0] = color[0];
+    def.color[1] = color[1];
+    def.color[2] = color[2];
+    def.color[3] = color[3];
     
     // Save the text in the collection
     mTexts.push_back(def);

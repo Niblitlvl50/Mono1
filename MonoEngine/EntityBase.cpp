@@ -10,6 +10,7 @@
 #include "EntityBase.h"
 #include "SysOpenGL.h"
 #include "Utils.h"
+#include "Quad.h"
 
 using namespace mono;
 
@@ -54,6 +55,11 @@ void EntityBase::doUpdate(unsigned int delta)
 const Math::Vector2f& EntityBase::Position() const
 {
     return mPosition;
+}
+
+Math::Quad EntityBase::BoundingBox() const
+{
+    return Math::Quad(mPosition.mX, mPosition.mY, mScale, mScale);
 }
 
 void EntityBase::AddChild(IEntityPtr child)

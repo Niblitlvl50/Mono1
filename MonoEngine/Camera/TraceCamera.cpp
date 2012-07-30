@@ -8,6 +8,7 @@
 
 #include "TraceCamera.h"
 #include "IEntity.h"
+#include "Vector2f.h"
 
 using namespace mono;
 
@@ -17,7 +18,7 @@ namespace constants
 }
 
 TraceCamera::TraceCamera(int width, int height)
-    : mSize(width, height)
+    : mViewport(0.0f, 0.0f, width, height)
 { }
 
 void TraceCamera::Update(unsigned int delta)
@@ -25,11 +26,12 @@ void TraceCamera::Update(unsigned int delta)
     if(!mEntity)
         return;
     
-    const Math::Vector2f& targetPosition = mEntity->Position() - (mSize * 0.5f);
-    const Math::Vector2f diff = targetPosition - mPosition;
+    //const Math::Vector2f size(mViewport.mW, mViewport.mH);
+    const Math::Vector2f targetPosition = mEntity->Position() - (mViewport.mB * 0.5f);
+    const Math::Vector2f diff = targetPosition - mViewport.mA;
     
     const Math::Vector2f move = diff * (delta * constants::SPEED);
-    mPosition += move;
+    mViewport.mA += move;
 }
 
 void TraceCamera::Follow(const mono::IEntityPtr entity)
@@ -42,20 +44,15 @@ void TraceCamera::Unfollow()
     mEntity.reset();
 }
 
-const Math::Vector2f& TraceCamera::Position() const
+const Math::Quad& TraceCamera::GetViewport() const
 {
-    return mPosition;
+    return mViewport;
 }
 void TraceCamera::SetPosition(const Math::Vector2f& position)
 {
-    mPosition = position - (mSize * 0.5f);
+    const Math::Vector2f xy = position - (mViewport.mB * 0.5f);
+    mViewport.mA = xy;
 }
-
-const Math::Vector2f& TraceCamera::Size() const
-{
-    return mSize;
-}
-
 
 
 

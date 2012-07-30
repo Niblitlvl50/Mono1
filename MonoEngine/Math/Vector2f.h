@@ -27,14 +27,24 @@ namespace Math
         float mY;
     };
     
+    inline Vector2f operator + (const Vector2f& left, const Vector2f& right)
+    {
+        return Vector2f(left.mX + right.mX, left.mY + right.mY);
+    }
+
+    inline Vector2f operator - (const Vector2f& left, const Vector2f& right)
+    {
+        return Vector2f(left.mX - right.mX, left.mY - right.mY);
+    }
+
     inline Vector2f operator * (const Vector2f& left, float right)
     {
         return Vector2f(left.mX * right, left.mY * right);
     }
     
-    inline Vector2f operator - (const Vector2f& left, const Vector2f& right)
+    inline Vector2f operator / (const Vector2f& left, const Vector2f& right)
     {
-        return Vector2f(left.mX - right.mX, left.mY - right.mY);
+        return Vector2f(left.mX / right.mX, left.mY / right.mY);
     }
         
     inline void operator += (Vector2f& left, const Vector2f& right)
@@ -43,10 +53,5 @@ namespace Math
         left.mY += right.mY;
     }
     
-    inline Vector2f operator + (const Vector2f& left, const Vector2f& right)
-    {
-        return Vector2f(left.mX + right.mX, left.mY + right.mY);
-    }
-
 }
 

@@ -10,7 +10,7 @@
 
 #include "ICamera.h"
 #include "MonoFwd.h"
-#include "Vector2f.h"
+#include "Quad.h"
 
 namespace mono
 {
@@ -25,15 +25,12 @@ namespace mono
         virtual void Follow(const mono::IEntityPtr entity);
         virtual void Unfollow();
         
-        virtual const Math::Vector2f& Position() const;
+        virtual const Math::Quad& GetViewport() const;
         virtual void SetPosition(const Math::Vector2f& position);
-        
-        virtual const Math::Vector2f& Size() const;
-        
+                        
     private:
         
         IEntityPtr mEntity;
-        Math::Vector2f mPosition;
-        Math::Vector2f mSize;
+        Math::Quad mViewport;
     };
 }
