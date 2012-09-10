@@ -12,6 +12,17 @@
 
 using namespace mono;
 
+namespace
+{
+    int NextPowerOfTwo(int x)
+    {
+        int val = 1;
+        while(val < x)
+            val *= 2;
+
+        return val;
+    }
+}
 
 unsigned int mono::Texture::sBoundTexture = -1;
 
@@ -24,8 +35,8 @@ Texture::Texture(IImagePtr image)
     glBindTexture(GL_TEXTURE_2D, mTextureId);
     
     const int internalFormat = image->ColorComponents();
-    const int width = image->Width();
-    const int height = image->Height();
+    const int width = NextPowerOfTwo(image->Width());
+    const int height = NextPowerOfTwo(image->Height());
     const unsigned int sourceFormat = image->TargetFormat();
     const byte* data = image->Data();
     
