@@ -36,7 +36,7 @@ namespace mono
         virtual void doUpdate(unsigned int delta);
 		
         Math::Vector2f mPosition;
-        Math::Vector2f mRotationCenter;
+        Math::Vector2f mBasePoint;
         float mScale;
         float mRotation;
         

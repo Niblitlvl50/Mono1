@@ -37,14 +37,19 @@ namespace Math
         return Vector2f(left.mX - right.mX, left.mY - right.mY);
     }
 
-    inline Vector2f operator * (const Vector2f& left, float right)
+    inline Vector2f operator * (const Vector2f& left, float value)
     {
-        return Vector2f(left.mX * right, left.mY * right);
+        return Vector2f(left.mX * value, left.mY * value);
     }
     
     inline Vector2f operator / (const Vector2f& left, const Vector2f& right)
     {
         return Vector2f(left.mX / right.mX, left.mY / right.mY);
+    }
+    
+    inline Vector2f operator / (const Vector2f& left, float value)
+    {
+        return Vector2f(left.mX / value, left.mY / value);
     }
         
     inline void operator += (Vector2f& left, const Vector2f& right)

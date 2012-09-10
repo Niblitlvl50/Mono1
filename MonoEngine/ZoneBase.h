@@ -37,7 +37,6 @@ namespace mono
         
         typedef std::map<LayerId, IEntityCollection> LayerMap;
         LayerMap mLayers;
-    
     };
     
 }

@@ -16,10 +16,11 @@
 #include "KeyUpEvent.h"
 #include "MouseUpEvent.h"
 #include "MouseMotionEvent.h"
-#include "GameController.h"
+#include "MouseWheelEvent.h"
 #include "Vector2f.h"
 
-#include <SDL_events.h>
+#include "SDL.h"
+//#include <SDL_events.h>
 
 using namespace mono;
 
@@ -65,6 +66,12 @@ void InputHandler::OnMouseMotion(int x, int y)
 {
     mScreenToWorldFunc(x, y);
     const Event::MouseMotionEvent event(x, y);
+    EventHandler::DispatchEvent(event);
+}
+
+void InputHandler::OnMouseWheel(int x, int y)
+{
+    const Event::MouseWheelEvent event(x, y);
     EventHandler::DispatchEvent(event);
 }
 

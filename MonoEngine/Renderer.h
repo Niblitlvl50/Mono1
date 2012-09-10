@@ -37,6 +37,7 @@ namespace mono
 
         ICameraPtr mCamera;
         IWindowPtr mWindow;
+        bool mDrawBB;
         
         IDrawableCollection mDrawables;
         IUpdatableCollection mUpdatables;

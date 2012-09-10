@@ -12,7 +12,7 @@ namespace Math
 {
     struct Vector3f
     {
-        float values[3];        
+        float data[3];        
     };
     
 }

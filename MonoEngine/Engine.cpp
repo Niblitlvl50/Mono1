@@ -23,7 +23,6 @@
 #include "ActivatedEvent.h"
 
 #include "Renderer.h"
-#include "GameController.h"
 
 #include "Vector2f.h"
 #include "Quad.h"

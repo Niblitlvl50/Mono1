@@ -8,7 +8,13 @@
 
 #pragma once
 
-#include <OpenGL/gl.h>
+
+#include "SDL.h"
+
+//#include "SDL_opengles.h"
+
+
+#include <SDL_opengl.h>
 
 
 namespace OGL

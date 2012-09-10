@@ -125,6 +125,8 @@ int PNGImage::Height() const
 
 int PNGImage::ColorComponents() const
 {
+    return GL_RGBA;
+    
     if(mColorType & PNG_COLOR_TYPE_RGBA)
         return 4;
     else if(mColorType & PNG_COLOR_TYPE_RGB)

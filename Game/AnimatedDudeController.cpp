@@ -12,8 +12,7 @@
 #include "KeyDownEvent.h"
 #include "MouseUpEvent.h"
 #include "MouseMotionEvent.h"
-
-#include "SDL_keycode.h"
+#include "SysKeycodes.h"
 
 #include <iostream>
 

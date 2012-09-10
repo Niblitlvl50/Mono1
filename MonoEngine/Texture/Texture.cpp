@@ -23,19 +23,19 @@ Texture::Texture(IImagePtr image)
     glGenTextures(1, &mTextureId);
     glBindTexture(GL_TEXTURE_2D, mTextureId);
     
-    const int components = image->ColorComponents();
+    const int internalFormat = image->ColorComponents();
     const int width = image->Width();
     const int height = image->Height();
-    const unsigned int format = image->TargetFormat();
+    const unsigned int sourceFormat = image->TargetFormat();
     const byte* data = image->Data();
     
-    glTexImage2D(GL_TEXTURE_2D, 0, components, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, sourceFormat, GL_UNSIGNED_BYTE, data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     
     const GLenum error = glGetError();
     if(error != GL_NO_ERROR)
-        std::cout << "Open GL error in Texture." << std::endl;
+        std::cout << "Open GL error in Texture. Error no: 0x" << std::hex << error << std::endl;
 }
 
 Texture::~Texture()

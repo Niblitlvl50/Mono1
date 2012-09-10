@@ -15,13 +15,36 @@
 #include "Vector2f.h"
 #include "Quad.h"
 #include "MathFunctions.h"
+#include "Texture.h"
 
 using namespace mono;
+
+namespace
+{
+    void DrawQuad(const Math::Quad& quad)
+    {
+        mono::Texture::Clear();
+        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+        
+        const float vertices[] = { quad.mA.mX, quad.mA.mY,
+                                   quad.mB.mX, quad.mA.mY, 
+                                   quad.mB.mX, quad.mB.mY,
+                                   quad.mA.mX, quad.mB.mY };
+        
+        glEnableClientState(GL_VERTEX_ARRAY);
+        
+        glVertexPointer(2, GL_FLOAT, 0, vertices);
+        glDrawArrays(GL_LINE_LOOP, 0, 4);
+
+        glDisableClientState(GL_VERTEX_ARRAY);        
+    }
+}
 
 
 Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
     : mCamera(camera),
-      mWindow(window)
+      mWindow(window),
+      mDrawBB(true)
 { }
 
 void Renderer::PrepareDraw() const
@@ -33,7 +56,8 @@ void Renderer::PrepareDraw() const
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     
-    glOrtho(0, viewport.mB.mX, 0, viewport.mB.mY, 0, 10);
+    glOrtho(0.0f, viewport.mB.mX, 0.0f, viewport.mB.mY, 0.0f, 10.0f);
+    //glOrthof(0.0f, viewport.mB.mX, 0.0f, viewport.mB.mY, 0.0f, 10.0f);
     
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -55,9 +79,16 @@ void Renderer::DrawFrame()
         const OGL::OGLPushPopMatrix raii;
 
         const IDrawablePtr drawable = *it;
-        const bool visible = Math::QuadOverlaps(mCamera->GetViewport(), drawable->BoundingBox());
+        const Math::Quad& bounds = drawable->BoundingBox();
+        
+        if(mDrawBB)
+            DrawQuad(bounds);
+        
+        const Math::Quad& viewport = mCamera->GetViewport();
+        const Math::Quad camQuad(viewport.mA, viewport.mA + viewport.mB);
+        const bool visible = Math::QuadOverlaps(camQuad, bounds);
         if(visible)
-           drawable->doDraw(*this);
+            drawable->doDraw(*this);
     }
     
     // Draw all the texts after all the entities. 

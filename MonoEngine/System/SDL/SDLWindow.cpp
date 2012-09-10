@@ -12,9 +12,11 @@
 
 #include <stdexcept>
 
-#include <SDL_video.h>
-#include <SDL_opengl.h>
-#include <SDL_mouse.h>
+#include "SDL.h"
+
+//#include <SDL_video.h>
+//#include <SDL_opengl.h>
+//#include <SDL_mouse.h>
 
 using namespace mono;
 
@@ -24,20 +26,17 @@ namespace
     {
         glFrontFace(GL_CCW);
         
-        //glDepthFunc(GL_LESS);
-        //glEnable(GL_DEPTH_TEST);
         glDisable(GL_DEPTH_TEST);
                 
         glEnable(GL_TEXTURE_2D);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        //glBlendFunc(GL_SRC_ALPHA, GL_ONE);
         
         glEnable(GL_POINT_SMOOTH);
         glEnable(GL_LINE_SMOOTH);
-        glEnable(GL_POLYGON_SMOOTH);
+        //glEnable(GL_POLYGON_SMOOTH);
         
-        glClearColor(0.0, 0.5, 0.9, 1.0);
+        glClearColor(0.9, 0.5, 0.3, 1.0);
     }    
 }
 
@@ -48,28 +47,38 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
       mContext(0)
 {
     const unsigned int screenflag = fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE;
-    const unsigned int flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | screenflag;
+    const unsigned int flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS | screenflag;
     
     /* Request opengl 2.1 context.
      * SDL doesn't have the ability to choose which profile at this time of writing,
      * but it should default to the core profile */
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+    
+    
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
+    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 1);
+    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+
     
     // Request double-buffered OpenGL
     // The fact that windows are double-buffered on Mac OS X has no effect
     // on OpenGL double buffering.
-    const int doubleBuffer = 1; // == true, in this case
-    if(SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, doubleBuffer) != 0)
-        throw std::runtime_error("Unable to set doubel buffer gl attribute");
+    //const int doubleBuffer = 1; // == true, in this case
+    //if(SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, doubleBuffer) != 0)
+      //  throw std::runtime_error("Unable to set doubel buffer gl attribute");
     
     // Request a 16-bit depth buffer (without this, there is no depth buffer)
-    const int depthValue = 16;
-    if(SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, depthValue) != 0)
-        throw std::runtime_error("Unable to set depth size gl attribute");
+    //const int depthValue = 16;
+    //if(SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, depthValue) != 0)
+      //  throw std::runtime_error("Unable to set depth size gl attribute");
 
     // Create our window centered and with the given resolution
-    mWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
+    mWindow = SDL_CreateWindow(title.c_str(), 0, 0, width, height, flags);
     if(!mWindow)
         throw std::runtime_error("Unable to create sdl window");
 
@@ -77,7 +86,7 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
     if(!mContext)
         throw std::runtime_error("Unable to create OpenGL context");
     
-    SDL_GL_SetSwapInterval(1);
+    //SDL_GL_SetSwapInterval(1);
     
     //SDL_ShowCursor(SDL_DISABLE);
     	        

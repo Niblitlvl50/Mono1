@@ -8,7 +8,9 @@
 
 #include "SysEvents.h"
 #include "IInputHandler.h"
-#include <SDL_events.h> 
+//#include <SDL_events.h> 
+
+#include "SDL.h"
 
 
 namespace
@@ -80,6 +82,10 @@ void Events::ProcessSystemEvents(mono::IInputHandlerPtr handler)
 
             case SDL_MOUSEMOTION:
                 handler->OnMouseMotion(event.motion.x, event.motion.y);
+                break;
+                
+            case SDL_MOUSEWHEEL:
+                handler->OnMouseWheel(event.wheel.x, event.wheel.y);
                 break;
 
             case SDL_USEREVENT:

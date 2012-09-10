@@ -11,6 +11,7 @@
 #include "ICamera.h"
 #include "MonoFwd.h"
 #include "Quad.h"
+#include "CameraController.h"
 
 namespace mono
 {
@@ -26,11 +27,17 @@ namespace mono
         virtual void Unfollow();
         
         virtual const Math::Quad& GetViewport() const;
+        virtual /* */ Math::Quad& GetViewport() /* */;
+        
+        virtual void SetTargetViewport(const Math::Quad& target);
         virtual void SetPosition(const Math::Vector2f& position);
                         
     private:
         
+        CameraController mController;
+        
         IEntityPtr mEntity;
         Math::Quad mViewport;
+        Math::Quad mTargetViewport;
     };
 }

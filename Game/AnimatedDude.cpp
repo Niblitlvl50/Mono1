@@ -30,7 +30,7 @@ AnimatedDude::AnimatedDude(float x, float y)
       mController(*this)
 {
     mPosition = Math::Vector2f(x, y);
-    mScale = 20.0f;
+    mScale = 30.0f;
     
     /*
     const mono::FrameDurations runDurations(3, 100);

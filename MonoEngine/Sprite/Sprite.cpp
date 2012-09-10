@@ -21,10 +21,10 @@ namespace
 {
     static const int DEFAULT_ANIMATION_ID = 0;
     
-    static const float vertices[] = { -1.0f, -1.0f,
-                                      -1.0f,  1.0f,
-                                       1.0f,  1.0f,
-                                       1.0f, -1.0f };
+    static const float vertices[] = { -0.5f, -0.5f,
+                                      -0.5f,  0.5f,
+                                       0.5f,  0.5f,
+                                       0.5f, -0.5f };
         
     static const unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };
     
@@ -40,7 +40,7 @@ namespace
                 const float x = xstep * xindex;
                 const float y = ystep * (yindex -1);
                 
-                coordinates.push_back(Math::Quad(x, y, xstep, ystep));
+                coordinates.push_back(Math::Quad(x, y, x + xstep, y + ystep));
             }
         }
     }
@@ -81,14 +81,14 @@ void Sprite::Draw() const
     const AnimationSequence& anim = mDefinedAnimations.find(mActiveAnimationId)->second;
     const Math::Quad& quad = mTextureCoordinates.at(anim.Frame());
     
-    const float coords[] = { quad.mA.mX,           quad.mA.mY,
-                             quad.mA.mX,           quad.mA.mY + quad.mB.mY,
-                             quad.mA.mX + quad.mB.mX, quad.mA.mY + quad.mB.mY,
-                             quad.mA.mX + quad.mB.mX, quad.mA.mY };
+    const float coords[] = { quad.mA.mX, quad.mA.mY,
+                             quad.mA.mX, quad.mB.mY,
+                             quad.mB.mX, quad.mB.mY,
+                             quad.mB.mX, quad.mA.mY };
     
     mTexture->Use();
     
-    glColor3f(1.0f, 1.0f, 1.0f);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);

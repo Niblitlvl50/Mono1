@@ -16,34 +16,43 @@
 
 using namespace game;
 
-OscillatingLine::OscillatingLine()
-    : mDelta(0.0f)
+namespace
 {
-    mPosition = Math::Vector2f(400.0f, 100.0f);
+    static const float vertex[] = { 0.0f, 0.0f };
+}
+
+OscillatingLine::OscillatingLine()
+    : mBase(400.0f, 100.0f),
+      mDelta(0.0f)
+{
+    mScale = 3.0f;
 }
 
 void OscillatingLine::Draw(mono::IRenderer& renderer) const
-{
-    const float radius = 50.0f;
-    const float deltasin = std::sin(mDelta) * radius;
-    const float deltacos = std::cos(mDelta) * radius;
-    
+{    
     mono::Texture::Clear();
         
-    glColor3f(0.0f, 0.0f, 0.0f);
+    glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
     glPointSize(4.0f);
-
-    glBegin(GL_POINTS);
-    glVertex2f(deltasin, deltacos);
-    glEnd();
     
-    const Math::Vector2f textpos = Math::Vector2f(deltasin, deltacos + 5.0f) + mPosition;
+    glEnableClientState(GL_VERTEX_ARRAY);
+
+    glVertexPointer(2, GL_FLOAT, 0, vertex);
+    glDrawArrays(GL_POINTS, 0, 1);
+    
+    glDisableClientState(GL_VERTEX_ARRAY);
+    
     Color color = { 0.0f, 0.0f, 0.0f, 1.0f };
-    renderer.DrawText("dot...", textpos, true, color);
+    renderer.DrawText("dot...", mPosition + Math::Vector2f(0.0f, 5.0f), true, color);
 }
 
 void OscillatingLine::Update(unsigned int delta)
 {
     mDelta += (delta * 0.001f);
+
+    const float deltasin = std::sin(mDelta) * 50.0f;
+    const float deltacos = std::cos(mDelta) * 50.0f;
+    
+    mPosition = mBase + Math::Vector2f(deltasin, deltacos);
 }
 

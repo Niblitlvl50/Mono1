@@ -32,5 +32,8 @@ namespace Event
     
     struct MouseMotionEvent;
     typedef std::tr1::function<void (const MouseMotionEvent&)> MouseMotionEventFunc;
+    
+    struct MouseWheelEvent;
+    typedef std::tr1::function<void (const MouseWheelEvent&)> MouseWheelEventFunc;
 }
 

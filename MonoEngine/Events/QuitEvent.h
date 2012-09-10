@@ -11,6 +11,9 @@
 namespace Event
 {
     struct QuitEvent
-    { };
+    {
+        QuitEvent()
+        { }
+    };
 }
 
