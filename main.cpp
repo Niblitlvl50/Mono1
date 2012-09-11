@@ -1,5 +1,5 @@
 
-
+#include "SDL.h"
 
 #include "SysLibs.h"
 #include "WindowFactory.h"
@@ -11,16 +11,16 @@
 #include <stdexcept>
 #include <iostream>
 
-int main()
+int main(int argc, char *argv[])
 {
     try
     {
         Libs::Init();
                 
-        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 800, 500, false);
+        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 1024, 768, false);
         mono::LoadFont("pixelette.ttf", 10.0f);
 
-        mono::Engine engine(60, window, mono::ICameraPtr(new mono::TraceCamera(400, 250)), mono::IZonePtr(new game::TestZone));
+        mono::Engine engine(60, window, mono::ICameraPtr(new mono::TraceCamera(512, 384)), mono::IZonePtr(new game::TestZone));
         engine.Run();
     }
     catch(const std::runtime_error& e)

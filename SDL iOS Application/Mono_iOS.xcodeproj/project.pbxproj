@@ -132,11 +132,11 @@
 		2B26DBBE15FD3410001E9748 /* Invader.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB815FD340F001E9748 /* Invader.sprite */; };
 		2B26DBBF15FD3410001E9748 /* Ryu.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB915FD3410001E9748 /* Ryu.png */; };
 		2B26DBC015FD3410001E9748 /* Ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBBA15FD3410001E9748 /* Ryu.sprite */; };
+		2BB7067C15FFDB06009792B7 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BB7067B15FFDB06009792B7 /* main.cpp */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
 		FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07C0E26BD8C00F39101 /* Icon.png */; };
 		FD77A07F0E26BDA900F39101 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07E0E26BDA900F39101 /* Default.png */; };
 		FD77A0850E26BDB800F39101 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD77A0840E26BDB800F39101 /* AudioToolbox.framework */; };
-		FD77A09D0E26BDE500F39101 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD77A09C0E26BDE500F39101 /* main.cpp */; };
 		FDB8BFC60E5A0F6A00980157 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB8BFC50E5A0F6A00980157 /* CoreGraphics.framework */; };
 /* End PBXBuildFile section */
 
@@ -465,12 +465,12 @@
 		2B26DBB815FD340F001E9748 /* Invader.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = Invader.sprite; path = ../Game/res/Invader.sprite; sourceTree = "<group>"; };
 		2B26DBB915FD3410001E9748 /* Ryu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Ryu.png; path = ../Game/res/Ryu.png; sourceTree = "<group>"; };
 		2B26DBBA15FD3410001E9748 /* Ryu.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = Ryu.sprite; path = ../Game/res/Ryu.sprite; sourceTree = "<group>"; };
+		2BB7067B15FFDB06009792B7 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD779EDD0E26BA1200F39101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		FD77A07C0E26BD8C00F39101 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		FD77A07E0E26BDA900F39101 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		FD77A0840E26BDB800F39101 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		FD77A09C0E26BDE500F39101 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		FDB8BFC50E5A0F6A00980157 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -590,7 +590,7 @@
 				2B26DB3D15FD3280001E9748 /* Game */,
 				2B26D72715FD2BD8001E9748 /* External Libs */,
 				2B26D69C15FD2BB5001E9748 /* MonoEngine */,
-				29B97315FDCFA39411CA2CEA /* Sources */,
+				29B97315FDCFA39411CA2CEA /* Main */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				0097E29812F70C4D00724AC5 /* SDL */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -599,12 +599,12 @@
 			name = CustomTemplate;
 			sourceTree = "<group>";
 		};
-		29B97315FDCFA39411CA2CEA /* Sources */ = {
+		29B97315FDCFA39411CA2CEA /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				FD77A09C0E26BDE500F39101 /* main.cpp */,
+				2BB7067B15FFDB06009792B7 /* main.cpp */,
 			);
-			name = Sources;
+			name = Main;
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
@@ -1165,7 +1165,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD77A09D0E26BDE500F39101 /* main.cpp in Sources */,
 				2B26D70715FD2BB5001E9748 /* CameraController.cpp in Sources */,
 				2B26D70815FD2BB5001E9748 /* TraceCamera.cpp in Sources */,
 				2B26D70915FD2BB5001E9748 /* Engine.cpp in Sources */,
@@ -1272,6 +1271,7 @@
 				2B26DBB215FD3282001E9748 /* SquareObject.cpp in Sources */,
 				2B26DBB315FD3282001E9748 /* TestZone.cpp in Sources */,
 				2B26DBB415FD3282001E9748 /* TriangleObject.cpp in Sources */,
+				2BB7067C15FFDB06009792B7 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

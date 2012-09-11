@@ -47,7 +47,7 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
       mContext(0)
 {
     const unsigned int screenflag = fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE;
-    const unsigned int flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS | screenflag;
+    const unsigned int flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS; // | screenflag;
     
     /* Request opengl 2.1 context.
      * SDL doesn't have the ability to choose which profile at this time of writing,
@@ -78,7 +78,7 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
       //  throw std::runtime_error("Unable to set depth size gl attribute");
 
     // Create our window centered and with the given resolution
-    mWindow = SDL_CreateWindow(title.c_str(), 0, 0, width, height, flags);
+    mWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
     if(!mWindow)
         throw std::runtime_error("Unable to create sdl window");
 
