@@ -17,6 +17,7 @@
 #include "MouseUpEvent.h"
 #include "MouseMotionEvent.h"
 #include "MouseWheelEvent.h"
+#include "MultiGestureEvent.h"
 #include "Vector2f.h"
 
 #include "SDL.h"
@@ -72,6 +73,12 @@ void InputHandler::OnMouseMotion(int x, int y)
 void InputHandler::OnMouseWheel(int x, int y)
 {
     const Event::MouseWheelEvent event(x, y);
+    EventHandler::DispatchEvent(event);
+}
+
+void InputHandler::OnMultiGesture(int x, int y, float theta, float distance)
+{
+    const Event::MultiGestureEvent event(x, y, theta, distance);
     EventHandler::DispatchEvent(event);
 }
 

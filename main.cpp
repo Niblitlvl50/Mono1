@@ -2,6 +2,7 @@
 #include "SDL.h"
 
 #include "SysLibs.h"
+#include "SysVideo.h"
 #include "WindowFactory.h"
 #include "TestZone.h"
 #include "TraceCamera.h"
@@ -11,12 +12,14 @@
 #include <stdexcept>
 #include <iostream>
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     try
     {
         Libs::Init();
-                
+        
+        const Math::Vector2f size = Video::GetCurrentWindowSize();
+                        
         mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 1024, 768, false);
         mono::LoadFont("pixelette.ttf", 10.0f);
 

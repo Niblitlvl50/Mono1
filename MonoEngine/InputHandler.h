@@ -30,6 +30,7 @@ namespace mono
         virtual void OnMouseUp(unsigned int button, int x, int y);
         virtual void OnMouseMotion(int x, int y);
         virtual void OnMouseWheel(int x, int y);
+        virtual void OnMultiGesture(int x, int y, float theta, float distance);
         virtual void OnUserEvent(int code, void* data1, void* data2);
         virtual void OnQuit();
 

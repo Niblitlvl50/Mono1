@@ -87,6 +87,10 @@ void Events::ProcessSystemEvents(mono::IInputHandlerPtr handler)
             case SDL_MOUSEWHEEL:
                 handler->OnMouseWheel(event.wheel.x, event.wheel.y);
                 break;
+                
+            case SDL_MULTIGESTURE:
+                handler->OnMultiGesture(event.mgesture.x, event.mgesture.y, event.mgesture.dTheta, event.mgesture.dDist);
+                break;
 
             case SDL_USEREVENT:
                 handler->OnUserEvent(event.user.code, event.user.data1, event.user.data2);

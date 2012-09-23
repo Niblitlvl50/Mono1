@@ -23,7 +23,10 @@ namespace mono
         ~CameraController();
         
         void OnMouseWheel(const Event::MouseWheelEvent& event);
+        void OnMultiGesture(const Event::MultiGestureEvent& event);
+        
         mono::EventToken<Event::MouseWheelEvent> mMouseWheelToken;
+        mono::EventToken<Event::MultiGestureEvent> mMultiGestureToken; 
 
         ICamera* mCam;
     };

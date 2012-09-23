@@ -27,6 +27,8 @@
 #include "Vector2f.h"
 #include "Quad.h"
 
+#include "Utils.h"
+
 #include <stdexcept>
 #include <sstream>
 
@@ -66,18 +68,14 @@ void Engine::Run()
     // Do i put this in a raii object so if there is an exception thrown 
     // IZone::OnUnload is still called?  
     mZone->OnLoad(mCamera);
-    
-    const unsigned int timePerUpdate = 1000 / mHz;
+        
+    FPSCounter counter;
     unsigned int lastTime = Time::GetMilliseconds();
-    
-    long frame = 0;
     	
     while(!mQuit)
     {
         const unsigned int beforeTime = Time::GetMilliseconds();
         const unsigned int delta = beforeTime - lastTime;
-		
-        ++frame;        
         
         Events::ProcessSystemEvents(mInputHandler);
 
@@ -88,18 +86,15 @@ void Engine::Run()
         renderer.Update(delta);
         
         std::stringstream stream;
-        stream << "Frame: " << frame;
+        stream << "FPS: " << counter.fps() << " Frame: " << counter.frames();
         Color color = {1.0f, 1.0f, 1.0f, 1.0f};
         renderer.DrawText(stream.str(), mCamera->GetViewport().mA, false, color);
         renderer.DrawFrame();
         
         lastTime = beforeTime;
 
-        const int sleepTime = timePerUpdate - (Time::GetMilliseconds() - beforeTime);
-		
-        // Sleep with the time left here
-        if(sleepTime > 0)
-            Time::Sleep(sleepTime);
+        //Time::Sleep(1);        
+        counter++;
     }
     
     mZone->OnUnload();

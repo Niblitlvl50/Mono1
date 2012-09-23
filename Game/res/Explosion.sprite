@@ -1,6 +1,6 @@
 
 texture = "Explosion.png"
-rows = 7
+rows = 8
 columns = 1
 
 animations = { }

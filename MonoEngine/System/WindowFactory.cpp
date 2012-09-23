@@ -8,6 +8,7 @@
 
 #include "WindowFactory.h"
 #include "SDLWindow.h"
+#include "Vector2f.h"
 
 mono::IWindowPtr mono::CreateOpenGLWindow(const std::string& title, int width, int height, bool fullscreen)
 {

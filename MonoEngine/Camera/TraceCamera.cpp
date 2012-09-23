@@ -26,19 +26,23 @@ TraceCamera::TraceCamera(int width, int height)
 
 void TraceCamera::Update(unsigned int delta)
 {
-    // Add functionallity for smoth zoom here.
-    const float change = (mTargetViewport.mB.mX - mViewport.mB.mX) * 0.1f;
-    const float aspect = mViewport.mB.mX / mViewport.mB.mY;
-    Math::ResizeQuad(mViewport, change, aspect);
+    const float change = (mTargetViewport.mB.mX - mViewport.mB.mX);
+    const float xzero = std::floor(std::abs(change));
+
+    if(xzero != 0.0f)
+    {
+        const float aspect = mViewport.mB.mX / mViewport.mB.mY;
+        Math::ResizeQuad(mViewport, change * 0.1f, aspect);
+    }
     
-    if(!mEntity)
-        return;
+    if(mEntity)
+    {
+        const Math::Vector2f targetPosition = mEntity->Position() - (mViewport.mB * 0.5f);
+        const Math::Vector2f diff = targetPosition - mViewport.mA;
     
-    const Math::Vector2f targetPosition = mEntity->Position() - (mViewport.mB * 0.5f);
-    const Math::Vector2f diff = targetPosition - mViewport.mA;
-    
-    const Math::Vector2f move = diff * (delta * constants::SPEED);
-    mViewport.mA += move;
+        const Math::Vector2f move = diff * (delta * constants::SPEED);
+        mViewport.mA += move;
+    }
 }
 
 void TraceCamera::Follow(const mono::IEntityPtr entity)

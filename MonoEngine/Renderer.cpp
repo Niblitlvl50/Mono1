@@ -56,8 +56,7 @@ void Renderer::PrepareDraw() const
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     
-    //glOrtho(0.0f, viewport.mB.mX, 0.0f, viewport.mB.mY, 0.0f, 10.0f);
-    glOrthof(0.0f, viewport.mB.mX, 0.0f, viewport.mB.mY, 0.0f, 10.0f);
+    OGL::glOrtho(0.0f, viewport.mB.mX, 0.0f, viewport.mB.mY, 0.0f, 10.0f);
     
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

@@ -11,8 +11,11 @@
 
 #include "SDL.h"
 
+#ifdef __IPHONEOS__
 #include "SDL_opengles.h"
-//#include <SDL_opengl.h>
+#else
+#include "SDL_opengl.h"
+#endif
 
 
 namespace OGL
@@ -22,4 +25,6 @@ namespace OGL
         OGLPushPopMatrix();
         ~OGLPushPopMatrix();
     };
+    
+    void glOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
 }
