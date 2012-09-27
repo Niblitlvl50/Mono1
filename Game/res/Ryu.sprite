@@ -3,6 +3,11 @@ texture = "Ryu.png"
 rows = 3
 columns = 4
 
+x = 0.0
+y = 0.0
+u = 1.0
+v = 1.0
+
 animations = { }
 animations[0] = { 0, -1, 0, -1 }
 animations[1] = { 1, 100, 2, 100, 3, 100 }

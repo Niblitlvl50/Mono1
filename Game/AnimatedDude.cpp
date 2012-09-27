@@ -18,7 +18,8 @@ namespace constants
     
     enum
     {
-        RUNNING = 1,
+        IDLE = 0,
+        RUNNING,
         JUMPING,
         FIGHTING
     };
@@ -31,19 +32,8 @@ AnimatedDude::AnimatedDude(float x, float y)
 {
     mPosition = Math::Vector2f(x, y);
     mScale = 30.0f;
-    
-    /*
-    const mono::FrameDurations runDurations(3, 100);
-    mSprite.DefineAnimation(constants::RUNNING, 1, 3, runDurations);
-    
-    const mono::FrameDurations jumpDurations(4, 100);
-    mSprite.DefineAnimation(constants::JUMPING, 4, 7, jumpDurations);
-
-    const mono::FrameDurations fightDurations(4, 100);
-    mSprite.DefineAnimation(constants::FIGHTING, 8, 11, fightDurations);
-     */
-    
-    //mSprite.SetAnimation(constants::FIGHTING);
+        
+    mSprite.SetAnimation(constants::RUNNING);
 }
 
 void AnimatedDude::Draw(mono::IRenderer& renderer) const

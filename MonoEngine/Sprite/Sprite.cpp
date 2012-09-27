@@ -28,17 +28,19 @@ namespace
         
     static const unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };
     
-    void GenerateTextureCoordinates(int rows, int columns, std::vector<Math::Quad>& coordinates)
+    void GenerateTextureCoordinates(int rows, int columns, const Math::Quad& coords, std::vector<Math::Quad>& coordinates)
     {
-        const float ystep = 1.0f / rows;
-        const float xstep = 1.0f / columns;
+        const Math::Vector2f size = coords.mB - coords.mA;
+
+        const float xstep = size.mX / columns;
+        const float ystep = size.mY / rows;
         
         for(int yindex = rows; yindex > 0; --yindex)
         {
             for(int xindex = 0; xindex < columns; ++xindex)
             {
-                const float x = xstep * xindex;
-                const float y = ystep * (yindex -1);
+                const float x = xstep * xindex + coords.mA.mX;
+                const float y = ystep * yindex + coords.mA.mY;
                 
                 coordinates.push_back(Math::Quad(x, y, x + xstep, y + ystep));
             }
@@ -55,8 +57,14 @@ Sprite::Sprite(const std::string& file)
     const int rows = lua::GetValue<int>(config, "rows");
     const int columns = lua::GetValue<int>(config, "columns");
     
+    Math::Quad coords;
+    coords.mA.mX = lua::GetValue<float>(config, "x");
+    coords.mA.mY = lua::GetValue<float>(config, "y");
+    coords.mB.mX = lua::GetValue<float>(config, "u");
+    coords.mB.mY = lua::GetValue<float>(config, "v");
+    
     mTexture = mono::CreateTexture(texture);
-    GenerateTextureCoordinates(rows, columns, mTextureCoordinates);
+    GenerateTextureCoordinates(rows, columns, coords, mTextureCoordinates);
 
     const lua::MapIntIntTable animations = lua::GetTableMap<int, int>(config, "animations");
     for(lua::MapIntIntTable::const_iterator it = animations.begin(), end = animations.end(); it != end; ++it)
@@ -66,13 +74,6 @@ Sprite::Sprite(const std::string& file)
         DefineAnimation(key, values);
     }
     
-    std::vector<int> defaultDurations;
-    defaultDurations.push_back(0);
-    defaultDurations.push_back(-1);
-    defaultDurations.push_back(0);
-    defaultDurations.push_back(-1);
-    
-    //DefineAnimation(DEFAULT_ANIMATION_ID, defaultDurations);
     mActiveAnimationId = DEFAULT_ANIMATION_ID;
 }
 
