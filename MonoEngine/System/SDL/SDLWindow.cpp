@@ -11,12 +11,7 @@
 #include "SysOpenGL.h"
 
 #include <stdexcept>
-
 #include "SDL.h"
-
-//#include <SDL_video.h>
-//#include <SDL_opengl.h>
-//#include <SDL_mouse.h>
 
 using namespace mono;
 

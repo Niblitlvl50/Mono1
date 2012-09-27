@@ -6,10 +6,10 @@ columns = 4
 x = 0.0
 y = 0.0
 u = 1.0
-v = 1.0
+v = 0.75
 
 animations = { }
-animations[0] = { 0, -1, 0, -1 }
+animations[0] = { 0, -1 }
 animations[1] = { 1, 100, 2, 100, 3, 100 }
 animations[2] = { 4, 100, 5, 100, 6, 100, 7, 100 }
 animations[3] = { 8, 100, 9, 100, 10, 100, 11, 100 }
