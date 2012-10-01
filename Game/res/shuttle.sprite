@@ -1,12 +1,13 @@
 
 texture = "sheet.png"
 rows = 1
-columns = 1
+columns = 3
 
-x = 167
-y = 60
-u = 182
-v = 75
+x = 136
+y = 1
+u = 216
+v = 33
 
 animations = { }
 animations[0] = { 0, -1 }
+animations[1] = { 1, 50, 2, 50 }

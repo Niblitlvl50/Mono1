@@ -6,6 +6,24 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
+//! This is an example of a sprite file that you pass to this sprite class
+
+//! 
+//! texture = "sheet.png"
+//! rows = 3
+//! columns = 4
+//!
+//! x = 1
+//! y = 1
+//! u = 128
+//! v = 98
+//!
+//! animations = { }
+//! animations[0] = { 0, -1 }
+//! animations[1] = { 1, 100, 2, 100, 3, 100 }
+//! animations[2] = { 4, 100, 5, 100, 6, 100, 7, 100 }
+//! animations[3] = { 8, 100, 9, 100, 10, 100, 11, 100 }
+//!
 
 //!
 //! An image with 2 rows and 5 columns and their indices. 
@@ -14,7 +32,6 @@
 //!  - - - - - 
 //! |5|6|7|8|9|
 //!  - - - - -
-//!
 //!
 
 

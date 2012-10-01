@@ -33,7 +33,10 @@ AnimatedDude::AnimatedDude(float x, float y)
     mPosition = Math::Vector2f(x, y);
     mScale = 30.0f;
         
-    mSprite.SetAnimation(constants::RUNNING);
+    mSprite.SetAnimation(constants::IDLE);
+    //mSprite.SetAnimation(constants::RUNNING);
+    //mSprite.SetAnimation(constants::JUMPING);
+    //mSprite.SetAnimation(constants::FIGHTING);
 }
 
 void AnimatedDude::Draw(mono::IRenderer& renderer) const
@@ -49,10 +52,10 @@ void AnimatedDude::Update(unsigned int delta)
 {
     const float value = (delta * constants::SPEED);
     
-    const float xzero = std::floor(std::abs(mPosition.mX - mTarget.mX));
-    const float yzero = std::floor(std::abs(mPosition.mY - mTarget.mY));
+    const bool xzero = (std::floor(std::abs(mPosition.mX - mTarget.mX)) == 0.0f);
+    const bool yzero = (std::floor(std::abs(mPosition.mY - mTarget.mY)) == 0.0f);
         
-    if(xzero != 0.0f)
+    if(!xzero)
     {
         if(mPosition.mX > mTarget.mX)
             mPosition.mX -= value;
@@ -60,13 +63,19 @@ void AnimatedDude::Update(unsigned int delta)
             mPosition.mX += value;
     }
     
-    if(yzero != 0.0f)
+    if(!yzero)
     {
         if(mPosition.mY > mTarget.mY)
             mPosition.mY -= value;
         else if(mPosition.mY < mTarget.mY)
             mPosition.mY += value;
     }
+    
+    if(xzero && yzero)
+        mSprite.SetAnimation(constants::IDLE);
+    else
+        mSprite.SetAnimation(constants::RUNNING);
+    
     
     mSprite.doUpdate(delta);
 }

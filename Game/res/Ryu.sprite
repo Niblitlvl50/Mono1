@@ -1,12 +1,12 @@
 
-texture = "Ryu.png"
+texture = "sheet.png"
 rows = 3
 columns = 4
 
-x = 0.0
-y = 0.0
-u = 1.0
-v = 0.75
+x = 1
+y = 1
+u = 128
+v = 98
 
 animations = { }
 animations[0] = { 0, -1 }

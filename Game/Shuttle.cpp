@@ -13,9 +13,18 @@
 
 using namespace game;
 
+namespace constants
+{    
+    enum
+    {
+        IDLE = 0,
+        THRUSTING
+    };
+}
+
 
 Shuttle::Shuttle(float x, float y)
-    : mSprite("Invader.sprite")
+    : mSprite("shuttle.sprite")
 {
     mPosition = Math::Vector2f(x, y);
     mScale = 20.0f;
@@ -24,9 +33,10 @@ Shuttle::Shuttle(float x, float y)
     cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, 5.0f, Math::Vector2f(0.0f, 0.0f), false);
     shape->SetElasticity(0.9f);
     
-    mPhysicsObject.shapes.push_back(shape);
-    
+    mPhysicsObject.shapes.push_back(shape);    
     mPhysicsObject.body->SetPosition(mPosition);
+    
+    mSprite.SetAnimation(constants::THRUSTING);
 }
 
 void Shuttle::Draw(mono::IRenderer&) const
@@ -36,6 +46,8 @@ void Shuttle::Draw(mono::IRenderer&) const
 
 void Shuttle::Update(unsigned int delta)
 {
+    mSprite.doUpdate(delta);
+
     mPosition = mPhysicsObject.body->GetPosition();
     mRotation = mPhysicsObject.body->GetAngle();
 }

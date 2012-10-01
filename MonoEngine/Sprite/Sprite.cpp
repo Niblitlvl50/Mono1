@@ -28,21 +28,40 @@ namespace
         
     static const unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };
     
-    void GenerateTextureCoordinates(int rows, int columns, const Math::Quad& coords, std::vector<Math::Quad>& coordinates)
+    
+    struct TextureData
     {
-        const Math::Vector2f size = coords.mB - coords.mA;
-
-        const float xstep = size.mX / columns;
-        const float ystep = size.mY / rows;
+        int rows;
+        int columns;
+        int x;
+        int y;
+        int u;
+        int v;
+        int textureSizeX;
+        int textureSizeY;
+    };
+    
+    void GenerateTextureCoordinates(const TextureData& data, std::vector<Math::Quad>& coordinates)
+    {
+        // +1 because the textures coordinates is zero indexed
+        const float x1 = float(data.x +1) / float(data.textureSizeX);
+        const float y1 = float(data.textureSizeY - data.v) / float(data.textureSizeY);
+        const float x2 = float(data.u +1) / float(data.textureSizeX);
+        const float y2 = float(data.textureSizeY - data.y) / float(data.textureSizeY);
+        const float sizex = x2 - x1;
+        const float sizey = y2 - y1;
         
-        for(int yindex = rows; yindex > 0; --yindex)
+        const float xstep = sizex / data.columns;
+        const float ystep = sizey / data.rows;
+        
+        for(int yindex = data.rows; yindex > 0; --yindex)
         {
-            for(int xindex = 0; xindex < columns; ++xindex)
+            for(int xindex = 0; xindex < data.columns; ++xindex)
             {
-                const float x = xstep * xindex + coords.mA.mX;
-                const float y = ystep * yindex + coords.mA.mY;
+                const float x = xstep * xindex + x1;
+                const float y = ystep * yindex + y1;
                 
-                coordinates.push_back(Math::Quad(x, y, x + xstep, y + ystep));
+                coordinates.push_back(Math::Quad(x, y - ystep, x + xstep, y));
             }
         }
     }
@@ -52,19 +71,23 @@ namespace
 Sprite::Sprite(const std::string& file)
 {
     lua::LuaState config(file);
-    
+
     const std::string texture = lua::GetValue<std::string>(config, "texture");
-    const int rows = lua::GetValue<int>(config, "rows");
-    const int columns = lua::GetValue<int>(config, "columns");
     
-    Math::Quad coords;
-    coords.mA.mX = lua::GetValue<float>(config, "x");
-    coords.mA.mY = lua::GetValue<float>(config, "y");
-    coords.mB.mX = lua::GetValue<float>(config, "u");
-    coords.mB.mY = lua::GetValue<float>(config, "v");
+    TextureData data;
+    data.rows = lua::GetValue<int>(config, "rows");
+    data.columns = lua::GetValue<int>(config, "columns");
+    data.x = lua::GetValue<int>(config, "x");
+    data.y = lua::GetValue<int>(config, "y");
+    data.u = lua::GetValue<int>(config, "u");
+    data.v = lua::GetValue<int>(config, "v");
     
     mTexture = mono::CreateTexture(texture);
-    GenerateTextureCoordinates(rows, columns, coords, mTextureCoordinates);
+    
+    data.textureSizeX = mTexture->Width();
+    data.textureSizeY = mTexture->Height();
+    
+    GenerateTextureCoordinates(data, mTextureCoordinates);    
 
     const lua::MapIntIntTable animations = lua::GetTableMap<int, int>(config, "animations");
     for(lua::MapIntIntTable::const_iterator it = animations.begin(), end = animations.end(); it != end; ++it)

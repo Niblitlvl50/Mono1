@@ -118,12 +118,15 @@
 		2B26DBB215FD3282001E9748 /* SquareObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7B15FD3281001E9748 /* SquareObject.cpp */; };
 		2B26DBB315FD3282001E9748 /* TestZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7D15FD3281001E9748 /* TestZone.cpp */; };
 		2B26DBB415FD3282001E9748 /* TriangleObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7F15FD3281001E9748 /* TriangleObject.cpp */; };
-		2B26DBBB15FD3410001E9748 /* Explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB515FD340F001E9748 /* Explosion.png */; };
 		2B26DBBC15FD3410001E9748 /* Explosion.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB615FD340F001E9748 /* Explosion.sprite */; };
-		2B26DBBD15FD3410001E9748 /* Invader.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB715FD340F001E9748 /* Invader.png */; };
 		2B26DBBE15FD3410001E9748 /* Invader.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB815FD340F001E9748 /* Invader.sprite */; };
-		2B26DBBF15FD3410001E9748 /* Ryu.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB915FD3410001E9748 /* Ryu.png */; };
-		2B26DBC015FD3410001E9748 /* Ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBBA15FD3410001E9748 /* Ryu.sprite */; };
+		2BA8E1061618BE5E00C17873 /* sheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E1041618BE5E00C17873 /* sheet.png */; };
+		2BA8E1071618BE5E00C17873 /* sheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E1041618BE5E00C17873 /* sheet.png */; };
+		2BA8E1081618BE5E00C17873 /* shuttle.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E1051618BE5E00C17873 /* shuttle.sprite */; };
+		2BA8E1091618BE5E00C17873 /* shuttle.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E1051618BE5E00C17873 /* shuttle.sprite */; };
+		2BA8E10B1618BF2E00C17873 /* Explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB515FD340F001E9748 /* Explosion.png */; };
+		2BA8E10D1618BFBE00C17873 /* ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E10C1618BFBE00C17873 /* ryu.sprite */; };
+		2BA8E10E1618BFBE00C17873 /* ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E10C1618BFBE00C17873 /* ryu.sprite */; };
 		2BB7067C15FFDB06009792B7 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BB7067B15FFDB06009792B7 /* main.cpp */; };
 		2BBA5A3D1607B56800D8D38E /* SysVideo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A3C1607B56800D8D38E /* SysVideo.cpp */; };
 		2BBA5ABE160A5EDA00D8D38E /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A9E160A5EDA00D8D38E /* chipmunk.c */; };
@@ -162,7 +165,6 @@
 		2BD3CBA6160BB2B30043156E /* Invader.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB715FD340F001E9748 /* Invader.png */; };
 		2BD3CBA7160BB2B30043156E /* Invader.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB815FD340F001E9748 /* Invader.sprite */; };
 		2BD3CBA8160BB2B30043156E /* Ryu.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB915FD3410001E9748 /* Ryu.png */; };
-		2BD3CBA9160BB2B30043156E /* Ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBBA15FD3410001E9748 /* Ryu.sprite */; };
 		2BD3CBAA160BB2B30043156E /* pixelette.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DB3B15FD3165001E9748 /* pixelette.ttf */; };
 		2BD3CBAB160BB2B30043156E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07C0E26BD8C00F39101 /* Icon.png */; };
 		2BD3CBAC160BB2B30043156E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07E0E26BDA900F39101 /* Default.png */; };
@@ -641,7 +643,9 @@
 		2B26DBB715FD340F001E9748 /* Invader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Invader.png; path = ../Game/res/Invader.png; sourceTree = "<group>"; };
 		2B26DBB815FD340F001E9748 /* Invader.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = Invader.sprite; path = ../Game/res/Invader.sprite; sourceTree = "<group>"; };
 		2B26DBB915FD3410001E9748 /* Ryu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Ryu.png; path = ../Game/res/Ryu.png; sourceTree = "<group>"; };
-		2B26DBBA15FD3410001E9748 /* Ryu.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = Ryu.sprite; path = ../Game/res/Ryu.sprite; sourceTree = "<group>"; };
+		2BA8E1041618BE5E00C17873 /* sheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sheet.png; path = ../Game/res/sheet.png; sourceTree = "<group>"; };
+		2BA8E1051618BE5E00C17873 /* shuttle.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = shuttle.sprite; path = ../Game/res/shuttle.sprite; sourceTree = "<group>"; };
+		2BA8E10C1618BFBE00C17873 /* ryu.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ryu.sprite; path = ../Game/res/ryu.sprite; sourceTree = "<group>"; };
 		2BB7067B15FFDB06009792B7 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = "<group>"; };
 		2BBA5A3B1607A59300D8D38E /* MultiGestureEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiGestureEvent.h; sourceTree = "<group>"; };
 		2BBA5A3C1607B56800D8D38E /* SysVideo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysVideo.cpp; sourceTree = "<group>"; };
@@ -842,12 +846,14 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2BA8E10C1618BFBE00C17873 /* ryu.sprite */,
+				2BA8E1041618BE5E00C17873 /* sheet.png */,
+				2BA8E1051618BE5E00C17873 /* shuttle.sprite */,
 				2B26DBB615FD340F001E9748 /* Explosion.sprite */,
 				2B26DBB515FD340F001E9748 /* Explosion.png */,
 				2B26DBB715FD340F001E9748 /* Invader.png */,
 				2B26DBB815FD340F001E9748 /* Invader.sprite */,
 				2B26DBB915FD3410001E9748 /* Ryu.png */,
-				2B26DBBA15FD3410001E9748 /* Ryu.sprite */,
 				2B26DB3B15FD3165001E9748 /* pixelette.ttf */,
 				FD77A07E0E26BDA900F39101 /* Default.png */,
 				FD77A07C0E26BD8C00F39101 /* Icon.png */,
@@ -1434,16 +1440,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B26DBBB15FD3410001E9748 /* Explosion.png in Resources */,
 				2B26DBBC15FD3410001E9748 /* Explosion.sprite in Resources */,
-				2B26DBBD15FD3410001E9748 /* Invader.png in Resources */,
 				2B26DBBE15FD3410001E9748 /* Invader.sprite in Resources */,
-				2B26DBBF15FD3410001E9748 /* Ryu.png in Resources */,
-				2B26DBC015FD3410001E9748 /* Ryu.sprite in Resources */,
 				2B26DB3C15FD31D9001E9748 /* pixelette.ttf in Resources */,
 				FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */,
 				FD77A07F0E26BDA900F39101 /* Default.png in Resources */,
 				2BBA5ABF160A5EDA00D8D38E /* CMakeLists.txt in Resources */,
+				2BA8E10B1618BF2E00C17873 /* Explosion.png in Resources */,
+				2BA8E1061618BE5E00C17873 /* sheet.png in Resources */,
+				2BA8E1081618BE5E00C17873 /* shuttle.sprite in Resources */,
+				2BA8E10D1618BFBE00C17873 /* ryu.sprite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1456,11 +1462,13 @@
 				2BD3CBA6160BB2B30043156E /* Invader.png in Resources */,
 				2BD3CBA7160BB2B30043156E /* Invader.sprite in Resources */,
 				2BD3CBA8160BB2B30043156E /* Ryu.png in Resources */,
-				2BD3CBA9160BB2B30043156E /* Ryu.sprite in Resources */,
 				2BD3CBAA160BB2B30043156E /* pixelette.ttf in Resources */,
 				2BD3CBAB160BB2B30043156E /* Icon.png in Resources */,
 				2BD3CBAC160BB2B30043156E /* Default.png in Resources */,
 				2BD3CBAD160BB2B30043156E /* CMakeLists.txt in Resources */,
+				2BA8E1071618BE5E00C17873 /* sheet.png in Resources */,
+				2BA8E1091618BE5E00C17873 /* shuttle.sprite in Resources */,
+				2BA8E10E1618BFBE00C17873 /* ryu.sprite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
