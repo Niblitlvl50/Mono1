@@ -16,7 +16,7 @@ namespace constants
 }
 
 Explosion::Explosion()
-    : mSprite("Explosion.sprite")
+    : mSprite("explosion.sprite")
 {
     mPosition = Math::Vector2f(100.0f, 350.0f);
     mScale = 20.0f;

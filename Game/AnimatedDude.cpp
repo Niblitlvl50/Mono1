@@ -27,7 +27,7 @@ namespace constants
 
 AnimatedDude::AnimatedDude(float x, float y)
     : mTarget(x, y),
-      mSprite("Ryu.sprite"),
+      mSprite("ryu.sprite"),
       mController(*this)
 {
     mPosition = Math::Vector2f(x, y);
@@ -71,10 +71,12 @@ void AnimatedDude::Update(unsigned int delta)
             mPosition.mY += value;
     }
     
+    /*
     if(xzero && yzero)
         mSprite.SetAnimation(constants::IDLE);
     else
         mSprite.SetAnimation(constants::RUNNING);
+    */
     
     
     mSprite.doUpdate(delta);

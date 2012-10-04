@@ -12,7 +12,7 @@
 using namespace game;
 
 SquareObject::SquareObject(float x, float y)
-    : mSprite("Invader.sprite")
+    : mSprite("invader.sprite")
 {
     mPosition = Math::Vector2f(x, y);
     //mRotationCenter = Math::Vector2f(-1.0f, -1.0f);

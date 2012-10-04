@@ -62,5 +62,7 @@ for(index = 0; index < document.layers.length; ++index)
 
 var exportFile = new File(outputPath + textureName)
 var exportOptions = new ExportOptionsSaveForWeb()
+exportOptions.format = SaveDocumentType.PNG
+exportOptions.PNG8 = false
 document.exportDocument(exportFile, ExportType.SAVEFORWEB, exportOptions)
 
