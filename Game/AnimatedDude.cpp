@@ -71,13 +71,10 @@ void AnimatedDude::Update(unsigned int delta)
             mPosition.mY += value;
     }
     
-    /*
     if(xzero && yzero)
         mSprite.SetAnimation(constants::IDLE);
     else
-        mSprite.SetAnimation(constants::RUNNING);
-    */
-    
+        mSprite.SetAnimation(constants::RUNNING);    
     
     mSprite.doUpdate(delta);
 }

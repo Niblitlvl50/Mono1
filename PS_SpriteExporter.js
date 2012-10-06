@@ -8,61 +8,102 @@
 //! I've only tested this on CS3.
 //!
 
-var outputPath = "/Users/Niblit/Desktop/"
+var checkCurrentFileForAnimations = function(filename)
+{	
+	var file = new File(filename)
+	file.open('r')
 
-var document = app.activeDocument
-
-var dotPsdIndex = document.name.search(".psd")
-var textureName = document.name.substr(0, dotPsdIndex) + ".png"
-
-var animationsText = "animations = { }"
-var defaultAnimationText = "animations[0] = { 0, -1 }"
-
-for(index = 0; index < document.layers.length; ++index)
-{
-	var layer = document.layers[index]
-	var bounds = layer.bounds
-	
-	var properties = layer.name.split(" ")
-	var spriteName = null
-	var rows = null
-	var columns = null
-	
-	for(propIndex = 0; propIndex < properties.length; ++propIndex)
+	var animations = new Array()
+	while(!file.eof)
 	{
-		var propString = properties[propIndex]
-		var equalsIndex = propString.search("=")
-		var type = propString.substr(0, equalsIndex)
-		var value = propString.substr(equalsIndex +1)
-		
-		if(type == "name")
-			spriteName = value
-		else if(type == "rows")
-			rows = value
-		else if(type == "columns")
-			columns = value
+		var line = file.readln()
+		var index = line.search("animations")
+		if(index != -1)
+			animations.push(line)
 	}
-			
-	var file = new File(outputPath + spriteName + ".sprite")
-	file.open('w')
 	
-	file.writeln("")
-	file.writeln("texture = \"" + textureName + "\"")
-	file.writeln("rows = " + rows)
-	file.writeln("columns = " + columns)
-	file.writeln("x = " + (bounds[0].value +1))
-	file.writeln("y = " + (bounds[1].value +1))
-	file.writeln("u = " + (bounds[2].value -2))
-	file.writeln("v = " + (bounds[3].value -2))
-	file.writeln(animationsText)
-	file.writeln(defaultAnimationText)
-		
-	file.close()	
+	file.close()
+	
+	return animations
 }
 
-var exportFile = new File(outputPath + textureName)
-var exportOptions = new ExportOptionsSaveForWeb()
-exportOptions.format = SaveDocumentType.PNG
-exportOptions.PNG8 = false
-document.exportDocument(exportFile, ExportType.SAVEFORWEB, exportOptions)
+var createSpriteFilesFromLayers = function(layers)
+{
+	var animationsText = "animations = { }"
+	var defaultAnimationText = "animations[0] = { 0, -1 }"
+	
+	var localLayers = layers
+	
+	for(index = 0; index < localLayers.length; ++index)
+	{
+		var layer = localLayers[index]
+		var bounds = layer.bounds
 
+		var properties = layer.name.split(" ")
+		var spriteName = null
+		var rows = null
+		var columns = null
+
+		for(propIndex = 0; propIndex < properties.length; ++propIndex)
+		{
+			var propString = properties[propIndex]
+			var equalsIndex = propString.search("=")
+			var type = propString.substr(0, equalsIndex)
+			var value = propString.substr(equalsIndex +1)
+
+			if(type == "name")
+				spriteName = value
+			else if(type == "rows")
+				rows = value
+			else if(type == "columns")
+				columns = value
+		}
+
+		var filename = outputPath + spriteName + ".sprite"
+		var animations = checkCurrentFileForAnimations(filename)
+
+		var file = new File(filename)
+		file.open('w')
+
+		file.writeln("")
+		file.writeln("texture = \"" + textureName + "\"")
+		file.writeln("rows = " + rows)
+		file.writeln("columns = " + columns)
+		file.writeln("x = " + (bounds[0].value +1))
+		file.writeln("y = " + (bounds[1].value +1))
+		file.writeln("u = " + (bounds[2].value -2))
+		file.writeln("v = " + (bounds[3].value -2))
+
+		if(animations.length == 0)
+		{
+			file.writeln(animationsText)
+			file.writeln(defaultAnimationText)			
+		}
+		else
+		{
+			for(animIndex = 0; animIndex < animations.length; ++animIndex)
+				file.writeln(animations[animIndex])
+		}
+
+		file.close()	
+	}
+}
+
+var exportDocumentToPNG = function(document)
+{
+	var exportFile = new File(outputPath + textureName)
+	var exportOptions = new ExportOptionsSaveForWeb()
+	exportOptions.format = SaveDocumentType.PNG
+	exportOptions.PNG8 = false
+	document.exportDocument(exportFile, ExportType.SAVEFORWEB, exportOptions)	
+}
+
+var outputPath = "/Users/Niblit/Desktop/"
+
+var localDocument = app.activeDocument
+var dotPsdIndex = localDocument.name.search(".psd")
+var textureName = localDocument.name.substr(0, dotPsdIndex) + ".png"
+
+createSpriteFilesFromLayers(localDocument.layers)
+exportDocumentToPNG(localDocument)
+ 

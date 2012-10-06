@@ -36,7 +36,7 @@ Shuttle::Shuttle(float x, float y)
     mPhysicsObject.shapes.push_back(shape);    
     mPhysicsObject.body->SetPosition(mPosition);
     
-    mSprite.SetAnimation(constants::IDLE);
+    mSprite.SetAnimation(constants::THRUSTING);
 }
 
 void Shuttle::Draw(mono::IRenderer&) const

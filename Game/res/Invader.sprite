@@ -1,12 +1,1 @@
-
-texture = "sheet.png"
-rows = 1
-columns = 1
-
-x = 167
-y = 60
-u = 182
-v = 75
-
-animations = { }
-animations[0] = { 0, -1 }
+texture = "spritesheet.png"rows = 1columns = 1x = 26y = 145u = 41v = 160animations = { }animations[0] = { 0, -1 }
