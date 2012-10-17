@@ -10,6 +10,8 @@
 		002F3C0109D093BD00EBEB88 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F3C0009D093BD00EBEB88 /* OpenGL.framework */; };
 		2B069A67156ACD9F00190763 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B069A65156ACD9E00190763 /* Utils.cpp */; };
 		2B069A68156ACD9F00190763 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B069A66156ACD9E00190763 /* Utils.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2B0BEEDF162183C300A96003 /* ShuttleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B0BEEDE162183C300A96003 /* ShuttleController.cpp */; };
+		2B0BEEE31621955B00A96003 /* Moon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B0BEEE21621955A00A96003 /* Moon.cpp */; };
 		2B2C80A515EC033A00D65E01 /* MouseWheelEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2C80A415EC033A00D65E01 /* MouseWheelEvent.h */; };
 		2B2F386215420C4E00C44D55 /* AnimationSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B2F386015420C4E00C44D55 /* AnimationSequence.cpp */; };
 		2B2F386315420C4E00C44D55 /* AnimationSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386115420C4E00C44D55 /* AnimationSequence.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -105,6 +107,7 @@
 		2BC214721535E50A0063834F /* KeyUpEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC214711535E50A0063834F /* KeyUpEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BC214751535E6B40063834F /* AnimatedDudeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BC214731535E6B30063834F /* AnimatedDudeController.cpp */; };
 		2BC214771535F7430063834F /* MouseUpEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC214761535F7430063834F /* MouseUpEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC6B834162C96700093C0B3 /* MouseDownEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BC6B833162C96700093C0B3 /* MouseDownEvent.h */; };
 		2BC7B6FB16163E070016644B /* sheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BC7B6FA16163E070016644B /* sheet.png */; };
 		2BCDDCE0154BE92D005D8520 /* Invader.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BCDDCDF154BE92D005D8520 /* Invader.sprite */; };
 		2BCDDCE3154BEA2B005D8520 /* Explosion.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BCDDCE1154BEA2A005D8520 /* Explosion.sprite */; };
@@ -308,6 +311,10 @@
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2B069A65156ACD9E00190763 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		2B069A66156ACD9E00190763 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		2B0BEEDE162183C300A96003 /* ShuttleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShuttleController.cpp; path = Game/ShuttleController.cpp; sourceTree = "<group>"; };
+		2B0BEEE0162183D500A96003 /* ShuttleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShuttleController.h; path = Game/ShuttleController.h; sourceTree = "<group>"; };
+		2B0BEEE11621954C00A96003 /* Moon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Moon.h; path = Game/Moon.h; sourceTree = "<group>"; };
+		2B0BEEE21621955A00A96003 /* Moon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Moon.cpp; path = Game/Moon.cpp; sourceTree = "<group>"; };
 		2B2C80A415EC033A00D65E01 /* MouseWheelEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseWheelEvent.h; sourceTree = "<group>"; };
 		2B2F386015420C4E00C44D55 /* AnimationSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimationSequence.cpp; path = Sprite/AnimationSequence.cpp; sourceTree = "<group>"; };
 		2B2F386115420C4E00C44D55 /* AnimationSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimationSequence.h; path = Sprite/AnimationSequence.h; sourceTree = "<group>"; };
@@ -415,6 +422,7 @@
 		2BC214731535E6B30063834F /* AnimatedDudeController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimatedDudeController.cpp; path = Game/AnimatedDudeController.cpp; sourceTree = "<group>"; };
 		2BC214741535E6B40063834F /* AnimatedDudeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedDudeController.h; path = Game/AnimatedDudeController.h; sourceTree = "<group>"; };
 		2BC214761535F7430063834F /* MouseUpEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseUpEvent.h; sourceTree = "<group>"; };
+		2BC6B833162C96700093C0B3 /* MouseDownEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseDownEvent.h; sourceTree = "<group>"; };
 		2BC7B6FA16163E070016644B /* sheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sheet.png; path = Game/res/sheet.png; sourceTree = "<group>"; };
 		2BCDDCDF154BE92D005D8520 /* Invader.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Invader.sprite; path = Game/res/Invader.sprite; sourceTree = "<group>"; };
 		2BCDDCE1154BEA2A005D8520 /* Explosion.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Explosion.sprite; path = Game/res/Explosion.sprite; sourceTree = "<group>"; };
@@ -1133,6 +1141,10 @@
 				2BAA30E715435599003BF117 /* Explosion.h */,
 				2BD392D115E8DE1400C010B7 /* Shuttle.cpp */,
 				2BD392D215E8DE1400C010B7 /* Shuttle.h */,
+				2B0BEEDE162183C300A96003 /* ShuttleController.cpp */,
+				2B0BEEE0162183D500A96003 /* ShuttleController.h */,
+				2B0BEEE11621954C00A96003 /* Moon.h */,
+				2B0BEEE21621955A00A96003 /* Moon.cpp */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -1160,6 +1172,7 @@
 				2BC214761535F7430063834F /* MouseUpEvent.h */,
 				2BE969461541EC0900FE8B70 /* MouseMotionEvent.h */,
 				2B2C80A415EC033A00D65E01 /* MouseWheelEvent.h */,
+				2BC6B833162C96700093C0B3 /* MouseDownEvent.h */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -1358,6 +1371,7 @@
 				2BBA5A85160A578100D8D38E /* prime.h in Headers */,
 				2BBA5A87160A57D100D8D38E /* MultiGestureEvent.h in Headers */,
 				2BBA5A97160A5D7900D8D38E /* SysVideo.h in Headers */,
+				2BC6B834162C96700093C0B3 /* MouseDownEvent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1625,6 +1639,8 @@
 				2B97209615503844006841E1 /* Arm.cpp in Sources */,
 				2B97209915503854006841E1 /* Head.cpp in Sources */,
 				2BD392D315E8DE1500C010B7 /* Shuttle.cpp in Sources */,
+				2B0BEEDF162183C300A96003 /* ShuttleController.cpp in Sources */,
+				2B0BEEE31621955B00A96003 /* Moon.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

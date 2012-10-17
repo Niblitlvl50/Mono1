@@ -27,12 +27,15 @@ namespace cm
         virtual void ApplyForce(const Math::Vector2f& force, const Math::Vector2f& offset) = 0;
         virtual void ApplyImpulse(const Math::Vector2f& impulse, const Math::Vector2f& offset) = 0;
         
+        virtual void ResetForces() = 0;
+
+        virtual cpBody* Body() = 0;
+        
     private:
         
         friend class Factory;
         friend class Space;
         
-        virtual cpBody* Body() = 0;
     };
 }
 

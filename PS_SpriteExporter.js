@@ -11,7 +11,9 @@
 var checkCurrentFileForAnimations = function(filename)
 {	
 	var file = new File(filename)
-	file.open('r')
+	var success = file.open('r')
+	if(!success)
+		return null
 
 	var animations = new Array()
 	while(!file.eof)
@@ -34,7 +36,7 @@ var createSpriteFilesFromLayers = function(layers)
 	
 	var localLayers = layers
 	
-	for(index = 0; index < localLayers.length; ++index)
+	for(var index = 0; index < localLayers.length; ++index)
 	{
 		var layer = localLayers[index]
 		var bounds = layer.bounds
@@ -44,7 +46,7 @@ var createSpriteFilesFromLayers = function(layers)
 		var rows = null
 		var columns = null
 
-		for(propIndex = 0; propIndex < properties.length; ++propIndex)
+		for(var propIndex = 0; propIndex < properties.length; ++propIndex)
 		{
 			var propString = properties[propIndex]
 			var equalsIndex = propString.search("=")
@@ -74,14 +76,14 @@ var createSpriteFilesFromLayers = function(layers)
 		file.writeln("u = " + (bounds[2].value -2))
 		file.writeln("v = " + (bounds[3].value -2))
 
-		if(animations.length == 0)
+		if(animations == null)
 		{
 			file.writeln(animationsText)
 			file.writeln(defaultAnimationText)			
 		}
 		else
 		{
-			for(animIndex = 0; animIndex < animations.length; ++animIndex)
+			for(var animIndex = 0; animIndex < animations.length; ++animIndex)
 				file.writeln(animations[animIndex])
 		}
 

@@ -56,3 +56,9 @@ void PhysicsZone::AddPhysicsObject(cm::Object& object, bool addBody)
     for(cm::IShapeCollection::iterator it = object.shapes.begin(), end = object.shapes.end(); it != end; ++it)
         AddShape(*it);
 }
+
+void PhysicsZone::ForEachBody(const cm::BodyFunc& func)
+{
+    mPhysics->mSpace.ForEachBody(func);
+}
+

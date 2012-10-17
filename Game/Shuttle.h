@@ -11,6 +11,7 @@
 #include "EntityBase.h"
 #include "Sprite.h"
 #include "CMObject.h"
+#include "ShuttleController.h"
 
 namespace game
 {
@@ -24,11 +25,14 @@ namespace game
         cm::Object mPhysicsObject;
 
     private:
+
+        friend class ShuttleController;
         
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
         
         mono::Sprite mSprite;
+        ShuttleController mController;
     };
     
 }

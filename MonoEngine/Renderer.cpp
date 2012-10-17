@@ -44,7 +44,7 @@ namespace
 Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
     : mCamera(camera),
       mWindow(window),
-      mDrawBB(true)
+      mDrawBB(false)
 { }
 
 void Renderer::PrepareDraw() const

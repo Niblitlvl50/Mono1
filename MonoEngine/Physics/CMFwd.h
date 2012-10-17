@@ -10,6 +10,7 @@
 #pragma once
 
 #include <tr1/memory>
+#include <tr1/functional>
 #include <vector>
 
 struct cpSpace;
@@ -33,4 +34,6 @@ namespace cm
     typedef std::tr1::shared_ptr<IShape> IShapePtr;
     
     typedef std::vector<IShapePtr> IShapeCollection;
+    
+    typedef std::tr1::function<void (IBodyPtr body)> BodyFunc;
 }

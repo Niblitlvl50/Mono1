@@ -24,6 +24,21 @@ namespace
         }
         const mono::IEntityPtr mEntity;
     };
+    
+    /*
+    template <typename T>
+    struct ObjectFinder
+    {
+        ObjectFinder(const std::tr1::shared_ptr<T> object)
+            : mObject(object)
+        { }
+        bool operator()(const std::tr1::shared_ptr<T> other) const
+        {
+            return mObject == other;
+        }
+        const std::tr1::shared_ptr<T> mObject;
+    };
+     */
 }
 
 bool mono::FindAndRemoveEntity(IEntityCollection& collection, IEntityPtr entity)
@@ -38,6 +53,24 @@ bool mono::FindAndRemoveEntity(IEntityCollection& collection, IEntityPtr entity)
     
     return false;
 }
+
+/*
+template <typename T>
+bool mono::FindAndRemove(std::vector<std::tr1::shared_ptr<T> >& collection, std::tr1::shared_ptr<T> object)
+{
+    typedef typename std::vector<std::tr1::shared_ptr<T> >::iterator TypeIterator;
+    const ObjectFinder<T> finder(object);
+    const TypeIterator newEnd = std::remove_if(collection.begin(), collection.end(), finder);
+    if(newEnd != collection.end())
+    {
+        collection.erase(newEnd);
+        return true;
+    }
+    
+    return false;
+}
+ */
+
 
 using namespace mono;
 

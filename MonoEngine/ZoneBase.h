@@ -33,10 +33,14 @@ namespace mono
         void AddEntityToLayer(LayerId layer, IEntityPtr entity);
         void RemoveEntity(IEntityPtr entity);
         
+        void AddUpdatable(IUpdatablePtr updatable);
+        void RemoveUpdatable(IUpdatablePtr updatable);
+        
     private:
         
         typedef std::map<LayerId, IEntityCollection> LayerMap;
         LayerMap mLayers;
+        IUpdatableCollection mUpdatables;
     };
     
 }

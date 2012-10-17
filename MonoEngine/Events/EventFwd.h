@@ -27,6 +27,9 @@ namespace Event
     struct KeyUpEvent;
     typedef std::tr1::function<void (const KeyUpEvent&)> KeyUpEventFunc;
     
+    struct MouseDownEvent;
+    typedef std::tr1::function<void (const MouseDownEvent&)> MouseDownEventFunc;
+    
     struct MouseUpEvent;
     typedef std::tr1::function<void (const MouseUpEvent&)> MouseUpEventFunc;
     

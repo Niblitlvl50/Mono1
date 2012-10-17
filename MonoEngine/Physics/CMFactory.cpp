@@ -56,6 +56,10 @@ namespace
         {
             cpBodyApplyImpulse(mBody, cpv(impulse.mX, impulse.mY), cpv(offset.mX, offset.mY));
         }
+        void ResetForces()
+        {
+            cpBodyResetForces(mBody);
+        }
         cpBody* Body()
         {
             return mBody;

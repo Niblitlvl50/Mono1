@@ -12,14 +12,20 @@
 #include "AnimatedDude.h"
 #include "Explosion.h"
 #include "Shuttle.h"
+#include "Moon.h"
 #include "ICamera.h"
 #include "EntityBase.h"
 #include "Quad.h"
 #include "CMObject.h"
 #include "CMFactory.h"
 #include "CMIShape.h"
+#include "CMIBody.h"
+
+#include "Texture.h"
+#include "SysOpenGL.h"
 
 #include <algorithm>
+#include <cmath>
 
 
 using namespace game;
@@ -61,7 +67,23 @@ namespace
             std::for_each(mPhysics.shapes.begin(), mPhysics.shapes.end(), SetElasticity(0.9f));
         }
         virtual void Draw(mono::IRenderer&) const
-        { }
+        {
+            mono::Texture::Clear();
+            glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+            
+            const float vertices[] = { mBounds.mA.mX, mBounds.mA.mY,
+                mBounds.mB.mX, mBounds.mA.mY, 
+                mBounds.mB.mX, mBounds.mB.mY,
+                mBounds.mA.mX, mBounds.mB.mY };
+            
+            glEnableClientState(GL_VERTEX_ARRAY);
+            
+            glVertexPointer(2, GL_FLOAT, 0, vertices);
+            glDrawArrays(GL_LINE_LOOP, 0, 4);
+            
+            glDisableClientState(GL_VERTEX_ARRAY);        
+        
+        }
         virtual Math::Quad BoundingBox() const
         {
             return mBounds;
@@ -73,10 +95,67 @@ namespace
         cm::Object mPhysics;
     };
     
+    struct GravityUpdater : mono::IUpdatable
+    {
+        GravityUpdater(mono::PhysicsZone& zone, std::tr1::shared_ptr<Moon> moon1, std::tr1::shared_ptr<Moon> moon2)
+            : mZone(zone),
+              mMoon1(moon1),
+              mMoon2(moon2),
+              mElapsedTime(0)
+        { }
+        virtual void doUpdate(unsigned int delta)
+        {
+            mElapsedTime += delta;
+            if(mElapsedTime < 10)
+                return;
+            
+            using namespace std::tr1::placeholders;
+            mZone.ForEachBody(std::tr1::bind(&GravityUpdater::GravityBodyFunc, this, _1));
+            mElapsedTime = 0;
+        }
+        void GravityBodyFunc(cm::IBodyPtr body)
+        {
+            Math::Vector2f impulse;
+            
+            Math::Vector2f newPos = body->GetPosition() - mMoon1->Position();
+            const float distance = Math::Length(newPos);
+            if(distance < 300.0f)
+            {
+                const float gravity = 2e4f;
+                const float value = -gravity / (distance * sqrtf(distance));
+            
+                Math::Normalize(newPos);
+                newPos *= value;
+                
+                impulse += newPos;
+            }
+            
+            Math::Vector2f newPos2 = body->GetPosition() - mMoon2->Position();
+            const float distance2 = Math::Length(newPos2);
+            if(distance2 < 200.0f)
+            {
+                const float gravity = 2e4f;
+                const float value = -gravity / (distance2 * sqrtf(distance2));
+                
+                Math::Normalize(newPos2);
+                newPos2 *= value;
+                
+                impulse += newPos2;
+            }
+            
+            body->ApplyImpulse(impulse, Math::Vector2f(0.0, 0.0));
+        }
+        
+        mono::PhysicsZone& mZone;
+        std::tr1::shared_ptr<Moon> mMoon1;
+        std::tr1::shared_ptr<Moon> mMoon2;
+        unsigned int mElapsedTime;
+    };
+    
 }
 
 TestZone::TestZone()
-    : PhysicsZone(Math::Vector2f(-1.0f, -5.0f))
+    : PhysicsZone(Math::Vector2f(0.0f, 0.0f))
 { }
 
 void TestZone::OnLoad(mono::ICameraPtr camera)
@@ -84,20 +163,33 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     mono::IEntityPtr dude(new AnimatedDude(100.0f, 50.0f));
     AddEntityToLayer(MIDDLEGROUND, dude);
     
-    std::tr1::shared_ptr<ZoneBounds> bounds(new ZoneBounds(Math::Quad(0.0f, 0.0f, 800.0f, 500.0f)));
+    std::tr1::shared_ptr<ZoneBounds> bounds(new ZoneBounds(Math::Quad(0.0f, 0.0f, 1000.0f, 600.0f)));
     AddPhysicsObject(bounds->mPhysics, false);
     AddEntityToLayer(BACKGROUND, bounds);
         
     std::tr1::shared_ptr<Shuttle> shuttle(new Shuttle(100.0f, 100.0f));
     AddPhysicsObject(shuttle->mPhysicsObject, true);
     AddEntityToLayer(FOREGROUND, shuttle);
-        
+
+    std::tr1::shared_ptr<Moon> moon1(new Moon(550.0f, 300.0f, 100.0f));
+    AddPhysicsObject(moon1->mPhysicsObject, false);
+    AddEntityToLayer(BACKGROUND, moon1);
+    
+    std::tr1::shared_ptr<Moon> moon2(new Moon(200.0f, 400.0f, 50.0f));
+    AddPhysicsObject(moon2->mPhysicsObject, false);
+    AddEntityToLayer(BACKGROUND, moon2);
+    
     AddEntityToLayer(BACKGROUND, mono::IEntityPtr(new TriangleObject));
     AddEntityToLayer(FOREGROUND, mono::IEntityPtr(new OscillatingLine));
     AddEntityToLayer(FOREGROUND, mono::IEntityPtr(new Explosion));
     
-    camera->SetPosition(dude->Position());
-    camera->Follow(dude);
+    AddUpdatable(mono::IUpdatablePtr(new GravityUpdater(*this, moon1, moon2)));
+        
+    camera->SetPosition(shuttle->Position());
+    camera->Follow(shuttle);
+    
+    //camera->SetPosition(dude->Position());
+    //camera->Follow(dude);
 }
 
 void TestZone::OnUnload()

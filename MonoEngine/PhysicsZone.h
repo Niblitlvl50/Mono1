@@ -16,6 +16,10 @@ namespace mono
 {
     class PhysicsZone : public ZoneBase
     {
+    public:
+
+        void ForEachBody(const cm::BodyFunc& func);
+
     protected:
         
         PhysicsZone(const Math::Vector2f& gravity);
@@ -24,7 +28,7 @@ namespace mono
         void AddBody(cm::IBodyPtr body);
         void AddShape(cm::IShapePtr shape);
         void AddPhysicsObject(cm::Object& object, bool addBody);
-        
+                
     private:
         
         struct PhysicsImpl;

@@ -7,6 +7,7 @@
 //
 
 #pragma once
+#include <cmath>
 
 namespace Math
 {
@@ -42,6 +43,12 @@ namespace Math
         return Vector2f(left.mX * value, left.mY * value);
     }
     
+    inline void operator *= (Vector2f& left, float value)
+    {
+        left.mX *= value;
+        left.mY *= value;
+    }
+    
     inline Vector2f operator / (const Vector2f& left, const Vector2f& right)
     {
         return Vector2f(left.mX / right.mX, left.mY / right.mY);
@@ -57,6 +64,19 @@ namespace Math
         left.mX += right.mX;
         left.mY += right.mY;
     }
+    
+    inline float Length(const Vector2f& vector)
+    {
+        return std::sqrt(vector.mX * vector.mX + vector.mY * vector.mY);
+    }
+    
+    inline void Normalize(Vector2f& vector)
+    {
+        const float length = Length(vector);
+        vector.mX /= length;
+        vector.mY /= length;
+    }
+
     
 }
 

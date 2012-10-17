@@ -1,1 +1,1 @@
-texture = "spritesheet.png"rows = 7columns = 1x = 204y = 5u = 235v = 225animations = { }animations[0] = { 0, 50, 1, 50, 2, 50, 3, 50, 4, 50, 5, 50, 6, 50 }
+texture = "spritesheet.png"rows = 7columns = 1x = 219y = 4u = 250v = 224animations = { }animations[0] = { 0, 50, 1, 50, 2, 50, 3, 50, 4, 50, 5, 50, 6, 50 }

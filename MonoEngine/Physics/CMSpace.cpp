@@ -11,10 +11,29 @@
 #include "CMIBody.h"
 #include "CMIShape.h"
 #include "Vector2f.h"
+#include "Utils.h"
 
 #include "chipmunk.h"
 
+#include <stdexcept>
+
 using namespace cm;
+
+namespace
+{
+    BodyFunc bodyFunction;
+    std::vector<IBodyPtr>* bodyCollection;
+    
+    void CMBodyFunction(cpBody* body, void* data)
+    {
+        for(std::vector<IBodyPtr>::iterator it = bodyCollection->begin(), end = bodyCollection->end(); it != end; ++it)
+        {
+            IBodyPtr bodyPtr = *it;
+            if(body == bodyPtr->Body())
+                bodyFunction(bodyPtr);
+        }
+    }
+}
 
 Space::Space(const Math::Vector2f& gravity)
 {
@@ -35,10 +54,14 @@ void Space::Tick(float delta)
 void Space::AddBody(IBodyPtr body)
 {
     cpSpaceAddBody(mSpace, body->Body());
+    mBodies.push_back(body);
 }
 void Space::RemoveBody(IBodyPtr body)
 {
     cpSpaceRemoveBody(mSpace, body->Body());
+    const bool result = mono::FindAndRemove(mBodies, body);
+    if(!result)
+        throw std::runtime_error("Unable to remove body from collection");
 }
 
 void Space::AddShape(IShapePtr shape)
@@ -56,5 +79,12 @@ void Space::RemoveShape(IShapePtr shape)
         cpSpaceRemoveShape(mSpace, shape->Shape());
 }
 
+void Space::ForEachBody(const BodyFunc& func)
+{
+    bodyFunction = func;
+    bodyCollection = &mBodies;
+    
+    cpSpaceEachBody(mSpace, CMBodyFunction, 0);
+}
 
 

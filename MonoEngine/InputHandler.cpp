@@ -14,6 +14,7 @@
 #include "ActivatedEvent.h"
 #include "KeyDownEvent.h"
 #include "KeyUpEvent.h"
+#include "MouseDownEvent.h"
 #include "MouseUpEvent.h"
 #include "MouseMotionEvent.h"
 #include "MouseWheelEvent.h"
@@ -54,7 +55,11 @@ void InputHandler::OnKeyUp(unsigned int key)
 }
 
 void InputHandler::OnMouseDown(unsigned int button, int x, int y)
-{ }
+{
+    mScreenToWorldFunc(x, y);
+    const Event::MouseDownEvent event(button, x, y);
+    EventHandler::DispatchEvent(event);
+}
 
 void InputHandler::OnMouseUp(unsigned int button, int x, int y)
 {

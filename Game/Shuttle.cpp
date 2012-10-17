@@ -24,7 +24,8 @@ namespace constants
 
 
 Shuttle::Shuttle(float x, float y)
-    : mSprite("shuttle.sprite")
+    : mSprite("shuttle.sprite"),
+      mController(this)
 {
     mPosition = Math::Vector2f(x, y);
     mScale = 20.0f;

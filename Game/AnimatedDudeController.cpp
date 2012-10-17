@@ -26,18 +26,18 @@ AnimatedDudeController::AnimatedDudeController(AnimatedDude& dude)
     const Event::KeyDownEventFunc keyDownFunc = std::tr1::bind(&AnimatedDudeController::OnKeyDown, this, _1);
     mKeyDownToken = mono::EventHandler::AddListener(keyDownFunc);
     
-    const Event::MouseUpEventFunc mouseUpFunc = std::tr1::bind(&AnimatedDudeController::OnMouseUp, this, _1);
-    mMouseUpToken = mono::EventHandler::AddListener(mouseUpFunc);
+    //const Event::MouseUpEventFunc mouseUpFunc = std::tr1::bind(&AnimatedDudeController::OnMouseUp, this, _1);
+    //mMouseUpToken = mono::EventHandler::AddListener(mouseUpFunc);
     
-    const Event::MouseMotionEventFunc mouseMotionFunc = std::tr1::bind(&AnimatedDudeController::OnMouseMotion, this, _1);
-    mMouseMotionToken = mono::EventHandler::AddListener(mouseMotionFunc);
+    //const Event::MouseMotionEventFunc mouseMotionFunc = std::tr1::bind(&AnimatedDudeController::OnMouseMotion, this, _1);
+    //mMouseMotionToken = mono::EventHandler::AddListener(mouseMotionFunc);
 }
 
 AnimatedDudeController::~AnimatedDudeController()
 {
     mono::EventHandler::RemoveListener(mKeyDownToken);
-    mono::EventHandler::RemoveListener(mMouseUpToken);
-    mono::EventHandler::RemoveListener(mMouseMotionToken);
+    //mono::EventHandler::RemoveListener(mMouseUpToken);
+    //mono::EventHandler::RemoveListener(mMouseMotionToken);
 }
 
 void AnimatedDudeController::OnKeyDown(const Event::KeyDownEvent& event)

@@ -118,19 +118,19 @@
 		2B26DBB215FD3282001E9748 /* SquareObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7B15FD3281001E9748 /* SquareObject.cpp */; };
 		2B26DBB315FD3282001E9748 /* TestZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7D15FD3281001E9748 /* TestZone.cpp */; };
 		2B26DBB415FD3282001E9748 /* TriangleObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7F15FD3281001E9748 /* TriangleObject.cpp */; };
-		2B26DBBC15FD3410001E9748 /* Explosion.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB615FD340F001E9748 /* Explosion.sprite */; };
-		2B26DBBE15FD3410001E9748 /* Invader.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB815FD340F001E9748 /* Invader.sprite */; };
-		2BA8E1061618BE5E00C17873 /* sheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E1041618BE5E00C17873 /* sheet.png */; };
-		2BA8E1071618BE5E00C17873 /* sheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E1041618BE5E00C17873 /* sheet.png */; };
+		2B95CF20162F37C6006769BF /* Moon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B95CF1C162F37C6006769BF /* Moon.cpp */; };
+		2B95CF21162F37C6006769BF /* ShuttleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B95CF1E162F37C6006769BF /* ShuttleController.cpp */; };
+		2B95CF24162F3857006769BF /* moon.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B95CF22162F3857006769BF /* moon.sprite */; };
+		2B95CF25162F3857006769BF /* spritesheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B95CF23162F3857006769BF /* spritesheet.png */; };
+		2B95CF28162F38AA006769BF /* explosion.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B95CF26162F38AA006769BF /* explosion.sprite */; };
+		2B95CF29162F38AA006769BF /* invader.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B95CF27162F38AA006769BF /* invader.sprite */; };
 		2BA8E1081618BE5E00C17873 /* shuttle.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E1051618BE5E00C17873 /* shuttle.sprite */; };
 		2BA8E1091618BE5E00C17873 /* shuttle.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E1051618BE5E00C17873 /* shuttle.sprite */; };
-		2BA8E10B1618BF2E00C17873 /* Explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB515FD340F001E9748 /* Explosion.png */; };
 		2BA8E10D1618BFBE00C17873 /* ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E10C1618BFBE00C17873 /* ryu.sprite */; };
 		2BA8E10E1618BFBE00C17873 /* ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E10C1618BFBE00C17873 /* ryu.sprite */; };
 		2BB7067C15FFDB06009792B7 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BB7067B15FFDB06009792B7 /* main.cpp */; };
 		2BBA5A3D1607B56800D8D38E /* SysVideo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A3C1607B56800D8D38E /* SysVideo.cpp */; };
 		2BBA5ABE160A5EDA00D8D38E /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A9E160A5EDA00D8D38E /* chipmunk.c */; };
-		2BBA5ABF160A5EDA00D8D38E /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA5A9F160A5EDA00D8D38E /* CMakeLists.txt */; };
 		2BBA5AC0160A5EDA00D8D38E /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA1160A5EDA00D8D38E /* cpConstraint.c */; };
 		2BBA5AC1160A5EDA00D8D38E /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA2160A5EDA00D8D38E /* cpDampedRotarySpring.c */; };
 		2BBA5AC2160A5EDA00D8D38E /* cpDampedSpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA3160A5EDA00D8D38E /* cpDampedSpring.c */; };
@@ -160,11 +160,6 @@
 		2BBA5ADA160A5EDA00D8D38E /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5ABB160A5EDA00D8D38E /* cpSweep1D.c */; };
 		2BBA5ADB160A5EDA00D8D38E /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5ABC160A5EDA00D8D38E /* cpVect.c */; };
 		2BD3CBA1160BB1DF0043156E /* libSDL2_ios_device.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD3CB9E160BB1AA0043156E /* libSDL2_ios_device.a */; };
-		2BD3CBA4160BB2B30043156E /* Explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB515FD340F001E9748 /* Explosion.png */; };
-		2BD3CBA5160BB2B30043156E /* Explosion.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB615FD340F001E9748 /* Explosion.sprite */; };
-		2BD3CBA6160BB2B30043156E /* Invader.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB715FD340F001E9748 /* Invader.png */; };
-		2BD3CBA7160BB2B30043156E /* Invader.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB815FD340F001E9748 /* Invader.sprite */; };
-		2BD3CBA8160BB2B30043156E /* Ryu.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DBB915FD3410001E9748 /* Ryu.png */; };
 		2BD3CBAA160BB2B30043156E /* pixelette.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DB3B15FD3165001E9748 /* pixelette.ttf */; };
 		2BD3CBAB160BB2B30043156E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07C0E26BD8C00F39101 /* Icon.png */; };
 		2BD3CBAC160BB2B30043156E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07E0E26BDA900F39101 /* Default.png */; };
@@ -638,12 +633,15 @@
 		2B26DB7E15FD3281001E9748 /* TestZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestZone.h; sourceTree = "<group>"; };
 		2B26DB7F15FD3281001E9748 /* TriangleObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriangleObject.cpp; sourceTree = "<group>"; };
 		2B26DB8015FD3281001E9748 /* TriangleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriangleObject.h; sourceTree = "<group>"; };
-		2B26DBB515FD340F001E9748 /* Explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Explosion.png; path = ../Game/res/Explosion.png; sourceTree = "<group>"; };
-		2B26DBB615FD340F001E9748 /* Explosion.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = Explosion.sprite; path = ../Game/res/Explosion.sprite; sourceTree = "<group>"; };
-		2B26DBB715FD340F001E9748 /* Invader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Invader.png; path = ../Game/res/Invader.png; sourceTree = "<group>"; };
-		2B26DBB815FD340F001E9748 /* Invader.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = Invader.sprite; path = ../Game/res/Invader.sprite; sourceTree = "<group>"; };
-		2B26DBB915FD3410001E9748 /* Ryu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Ryu.png; path = ../Game/res/Ryu.png; sourceTree = "<group>"; };
-		2BA8E1041618BE5E00C17873 /* sheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sheet.png; path = ../Game/res/sheet.png; sourceTree = "<group>"; };
+		2B95CF1A162F3790006769BF /* MouseDownEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseDownEvent.h; sourceTree = "<group>"; };
+		2B95CF1C162F37C6006769BF /* Moon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Moon.cpp; sourceTree = "<group>"; };
+		2B95CF1D162F37C6006769BF /* Moon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Moon.h; sourceTree = "<group>"; };
+		2B95CF1E162F37C6006769BF /* ShuttleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShuttleController.cpp; sourceTree = "<group>"; };
+		2B95CF1F162F37C6006769BF /* ShuttleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShuttleController.h; sourceTree = "<group>"; };
+		2B95CF22162F3857006769BF /* moon.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = moon.sprite; path = ../Game/res/moon.sprite; sourceTree = "<group>"; };
+		2B95CF23162F3857006769BF /* spritesheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spritesheet.png; path = ../Game/res/spritesheet.png; sourceTree = "<group>"; };
+		2B95CF26162F38AA006769BF /* explosion.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = explosion.sprite; path = ../Game/res/explosion.sprite; sourceTree = "<group>"; };
+		2B95CF27162F38AA006769BF /* invader.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = invader.sprite; path = ../Game/res/invader.sprite; sourceTree = "<group>"; };
 		2BA8E1051618BE5E00C17873 /* shuttle.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = shuttle.sprite; path = ../Game/res/shuttle.sprite; sourceTree = "<group>"; };
 		2BA8E10C1618BFBE00C17873 /* ryu.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ryu.sprite; path = ../Game/res/ryu.sprite; sourceTree = "<group>"; };
 		2BB7067B15FFDB06009792B7 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = "<group>"; };
@@ -846,14 +844,12 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2B95CF26162F38AA006769BF /* explosion.sprite */,
+				2B95CF27162F38AA006769BF /* invader.sprite */,
+				2B95CF22162F3857006769BF /* moon.sprite */,
+				2B95CF23162F3857006769BF /* spritesheet.png */,
 				2BA8E10C1618BFBE00C17873 /* ryu.sprite */,
-				2BA8E1041618BE5E00C17873 /* sheet.png */,
 				2BA8E1051618BE5E00C17873 /* shuttle.sprite */,
-				2B26DBB615FD340F001E9748 /* Explosion.sprite */,
-				2B26DBB515FD340F001E9748 /* Explosion.png */,
-				2B26DBB715FD340F001E9748 /* Invader.png */,
-				2B26DBB815FD340F001E9748 /* Invader.sprite */,
-				2B26DBB915FD3410001E9748 /* Ryu.png */,
 				2B26DB3B15FD3165001E9748 /* pixelette.ttf */,
 				FD77A07E0E26BDA900F39101 /* Default.png */,
 				FD77A07C0E26BD8C00F39101 /* Icon.png */,
@@ -944,6 +940,7 @@
 		2B26D6AA15FD2BB5001E9748 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				2B95CF1A162F3790006769BF /* MouseDownEvent.h */,
 				2B26D6AB15FD2BB5001E9748 /* ActivatedEvent.h */,
 				2B26D6AC15FD2BB5001E9748 /* EventFwd.h */,
 				2B26D6AE15FD2BB5001E9748 /* KeyDownEvent.h */,
@@ -1303,6 +1300,10 @@
 		2B26DB3D15FD3280001E9748 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				2B95CF1C162F37C6006769BF /* Moon.cpp */,
+				2B95CF1D162F37C6006769BF /* Moon.h */,
+				2B95CF1E162F37C6006769BF /* ShuttleController.cpp */,
+				2B95CF1F162F37C6006769BF /* ShuttleController.h */,
 				2B26DB3E15FD3280001E9748 /* AnimatedDude.cpp */,
 				2B26DB3F15FD3280001E9748 /* AnimatedDude.h */,
 				2B26DB4015FD3280001E9748 /* AnimatedDudeController.cpp */,
@@ -1440,16 +1441,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B26DBBC15FD3410001E9748 /* Explosion.sprite in Resources */,
-				2B26DBBE15FD3410001E9748 /* Invader.sprite in Resources */,
 				2B26DB3C15FD31D9001E9748 /* pixelette.ttf in Resources */,
 				FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */,
 				FD77A07F0E26BDA900F39101 /* Default.png in Resources */,
-				2BBA5ABF160A5EDA00D8D38E /* CMakeLists.txt in Resources */,
-				2BA8E10B1618BF2E00C17873 /* Explosion.png in Resources */,
-				2BA8E1061618BE5E00C17873 /* sheet.png in Resources */,
 				2BA8E1081618BE5E00C17873 /* shuttle.sprite in Resources */,
 				2BA8E10D1618BFBE00C17873 /* ryu.sprite in Resources */,
+				2B95CF24162F3857006769BF /* moon.sprite in Resources */,
+				2B95CF25162F3857006769BF /* spritesheet.png in Resources */,
+				2B95CF28162F38AA006769BF /* explosion.sprite in Resources */,
+				2B95CF29162F38AA006769BF /* invader.sprite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1457,16 +1457,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BD3CBA4160BB2B30043156E /* Explosion.png in Resources */,
-				2BD3CBA5160BB2B30043156E /* Explosion.sprite in Resources */,
-				2BD3CBA6160BB2B30043156E /* Invader.png in Resources */,
-				2BD3CBA7160BB2B30043156E /* Invader.sprite in Resources */,
-				2BD3CBA8160BB2B30043156E /* Ryu.png in Resources */,
 				2BD3CBAA160BB2B30043156E /* pixelette.ttf in Resources */,
 				2BD3CBAB160BB2B30043156E /* Icon.png in Resources */,
 				2BD3CBAC160BB2B30043156E /* Default.png in Resources */,
 				2BD3CBAD160BB2B30043156E /* CMakeLists.txt in Resources */,
-				2BA8E1071618BE5E00C17873 /* sheet.png in Resources */,
 				2BA8E1091618BE5E00C17873 /* shuttle.sprite in Resources */,
 				2BA8E10E1618BFBE00C17873 /* ryu.sprite in Resources */,
 			);
@@ -1616,6 +1610,8 @@
 				2BBA5AD9160A5EDA00D8D38E /* cpSpatialIndex.c in Sources */,
 				2BBA5ADA160A5EDA00D8D38E /* cpSweep1D.c in Sources */,
 				2BBA5ADB160A5EDA00D8D38E /* cpVect.c in Sources */,
+				2B95CF20162F37C6006769BF /* Moon.cpp in Sources */,
+				2B95CF21162F37C6006769BF /* ShuttleController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

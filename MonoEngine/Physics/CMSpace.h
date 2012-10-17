@@ -13,7 +13,6 @@
 
 namespace cm
 {
-
     class Space
     {
     public:
@@ -29,9 +28,12 @@ namespace cm
         void AddShape(IShapePtr shape);
         void RemoveShape(IShapePtr shape);
         
+        void ForEachBody(const BodyFunc& func);
+        
     private:
         
         cpSpace* mSpace;
+        std::vector<IBodyPtr> mBodies;
     };
     
 }
