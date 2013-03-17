@@ -28,6 +28,8 @@ namespace game
 
         friend class ShuttleController;
         
+        void Fire();
+        
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
         

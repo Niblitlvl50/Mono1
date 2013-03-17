@@ -13,6 +13,10 @@
 #include "MouseDownEvent.h"
 #include "CMIBody.h"
 
+#include "MathFunctions.h"
+
+#include "PauseEvent.h"
+
 using namespace game;
 
 ShuttleController::ShuttleController(game::Shuttle* shuttle)
@@ -35,6 +39,10 @@ ShuttleController::~ShuttleController()
 
 void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
 {
+    const bool result1 = Math::PointInsideQuad(Math::Vector2f(event.mX, event.mY), mShuttle->BoundingBox());
+    if(result1)
+        HandleOnShuttlePress();
+        
     Math::Vector2f result = mShuttle->Position() - Math::Vector2f(event.mX, event.mY);
     Math::Normalize(result);
     
@@ -44,4 +52,10 @@ void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
 void ShuttleController::OnMouseUp(const Event::MouseUpEvent& event)
 {
     mShuttle->mPhysicsObject.body->ResetForces();
+}
+
+void ShuttleController::HandleOnShuttlePress()
+{
+    mono::EventHandler::DispatchEvent(Event::PauseEvent());
+    //mShuttle->Fire();
 }

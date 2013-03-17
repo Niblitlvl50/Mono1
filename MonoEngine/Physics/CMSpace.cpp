@@ -33,12 +33,22 @@ namespace
                 bodyFunction(bodyPtr);
         }
     }
+    
+    std::tr1::function<bool (cpArbiter*, void*)> beginFunc;
+    cpBool CMCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
+    {
+        return beginFunc(arb, data);
+    }
 }
 
 Space::Space(const Math::Vector2f& gravity)
 {
     mSpace = cpSpaceNew();
     cpSpaceSetGravity(mSpace, cpv(gravity.mX, gravity.mY));
+    
+    using namespace std::tr1::placeholders;
+    beginFunc = std::tr1::bind(&Space::OnCollision, this, _1, _2);
+    cpSpaceAddCollisionHandler(mSpace, 0, 0, CMCollisionBegin, 0, 0, 0, 0);
 }
 
 Space::~Space()
@@ -87,4 +97,33 @@ void Space::ForEachBody(const BodyFunc& func)
     cpSpaceEachBody(mSpace, CMBodyFunction, 0);
 }
 
+bool Space::OnCollision(cpArbiter* arb, void* data)
+{
+    cpBody* b1 = 0;
+    cpBody* b2 = 0;
+    cpArbiterGetBodies(arb, &b1, &b2);
+    
+    IBodyPtr first;
+    IBodyPtr second;
+    
+    for(std::vector<IBodyPtr>::iterator it = mBodies.begin(), end = mBodies.end(); it != end; ++it)
+    {
+        IBodyPtr body = *it;
+        if(body->Body() == b1)
+            first = body;
+        else if(body->Body() == b2)
+            second = body;
+        
+        if(first && second)
+            break;
+    }
+    
+    if(first && second)
+    {
+        first->OnCollideWith(second);
+        second->OnCollideWith(first);
+    }
+    
+    return true;
+}
 

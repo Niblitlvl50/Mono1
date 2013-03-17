@@ -28,6 +28,8 @@ namespace cm
         virtual void ApplyImpulse(const Math::Vector2f& impulse, const Math::Vector2f& offset) = 0;
         
         virtual void ResetForces() = 0;
+        
+        virtual void OnCollideWith(IBodyPtr body) = 0;
 
         virtual cpBody* Body() = 0;
         
@@ -35,7 +37,6 @@ namespace cm
         
         friend class Factory;
         friend class Space;
-        
     };
 }
 

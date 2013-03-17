@@ -16,30 +16,9 @@
 #include "Quad.h"
 #include "MathFunctions.h"
 #include "Texture.h"
+#include "RenderUtils.h"
 
 using namespace mono;
-
-namespace
-{
-    void DrawQuad(const Math::Quad& quad)
-    {
-        mono::Texture::Clear();
-        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-        
-        const float vertices[] = { quad.mA.mX, quad.mA.mY,
-                                   quad.mB.mX, quad.mA.mY, 
-                                   quad.mB.mX, quad.mB.mY,
-                                   quad.mA.mX, quad.mB.mY };
-        
-        glEnableClientState(GL_VERTEX_ARRAY);
-        
-        glVertexPointer(2, GL_FLOAT, 0, vertices);
-        glDrawArrays(GL_LINE_LOOP, 0, 4);
-
-        glDisableClientState(GL_VERTEX_ARRAY);        
-    }
-}
-
 
 Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
     : mCamera(camera),

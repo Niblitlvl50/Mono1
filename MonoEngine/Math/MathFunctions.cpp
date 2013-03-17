@@ -7,7 +7,19 @@
 //
 
 #include "MathFunctions.h"
+#include "Vector2f.h"
 #include "Quad.h"
+
+bool Math::PointInsideQuad(const Math::Vector2f& point, const Math::Quad& quad)
+{
+    if(point.mX > quad.mA.mX &&
+       point.mX < quad.mB.mX &&
+       point.mY > quad.mA.mY &&
+       point.mY < quad.mB.mY)
+        return true;
+    
+    return false;
+}
 
 bool Math::QuadOverlaps(const Math::Quad& left, const Math::Quad& right)
 {

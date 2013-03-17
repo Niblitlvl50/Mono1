@@ -18,6 +18,7 @@
 #include "SysEvents.h"
 
 #include "EventHandler.h"
+#include "PauseEvent.h"
 #include "QuitEvent.h"
 #include "SurfaceChangedEvent.h"
 #include "ActivatedEvent.h"
@@ -39,13 +40,17 @@ using namespace std::tr1::placeholders;
 
 
 Engine::Engine(unsigned int hz, IWindowPtr window, ICameraPtr camera, IZonePtr zone)
-    : mQuit(false),
+    : mPause(false),
+      mQuit(false),
       mHz(hz),
       mWindow(window),
       mCamera(camera),
       mZone(zone),
       mInputHandler(new InputHandler(std::tr1::bind(&Engine::ScreenToWorld, this, _1, _2)))
 {
+    const Event::PauseEventFunc pauseFunc = std::tr1::bind(&Engine::OnPause, this, _1);
+    mPauseToken = EventHandler::AddListener(pauseFunc);
+    
     const Event::QuitEventFunc quitFunc = std::tr1::bind(&Engine::OnQuit, this, _1);
     mQuitToken = EventHandler::AddListener(quitFunc);
 
@@ -78,18 +83,20 @@ void Engine::Run()
         const unsigned int delta = beforeTime - lastTime;
         
         Events::ProcessSystemEvents(mInputHandler);
+        if(!mPause)
+        {
+            Renderer renderer(mCamera, mWindow);
+            mZone->Accept(renderer);
 
-        Renderer renderer(mCamera, mWindow);
-        mZone->Accept(renderer);
-
-        // Update the stuff, and then render the frame.
-        renderer.Update(delta);
+            // Update the stuff, and then render the frame.
+            renderer.Update(delta);
         
-        std::stringstream stream;
-        stream << "FPS: " << counter.fps() << " Frame: " << counter.frames();
-        Color color = {1.0f, 1.0f, 1.0f, 1.0f};
-        renderer.DrawText(stream.str(), mCamera->GetViewport().mA, false, color);
-        renderer.DrawFrame();
+            std::stringstream stream;
+            stream << "FPS: " << counter.Fps() << " Frame: " << counter.Frames();
+            Color color = {1.0f, 1.0f, 1.0f, 1.0f};
+            renderer.DrawText(stream.str(), mCamera->GetViewport().mA, false, color);
+            renderer.DrawFrame();
+        }
         
         lastTime = beforeTime;
 
@@ -116,6 +123,11 @@ void Engine::ScreenToWorld(int& x, int& y) const
     
     x = tempx + viewport.mA.mX;
     y = tempy + viewport.mA.mY;
+}
+
+void Engine::OnPause(const Event::PauseEvent& event)
+{
+    mPause = !mPause;
 }
 
 void Engine::OnQuit(const Event::QuitEvent&)

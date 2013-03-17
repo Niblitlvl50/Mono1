@@ -11,6 +11,11 @@
 #include "CMIShape.h"
 #include "CMFactory.h"
 
+#include "Meteor.h"
+#include "EventHandler.h"
+#include "SpawnEntityEvent.h"
+#include "SpawnPhysicsEntityEvent.h"
+
 using namespace game;
 
 namespace constants
@@ -52,5 +57,18 @@ void Shuttle::Update(unsigned int delta)
     mPosition = mPhysicsObject.body->GetPosition();
     mRotation = mPhysicsObject.body->GetAngle();
 }
+
+void Shuttle::Fire()
+{
+    //const game::SpawnEntityEvent event(mono::IEntityPtr(new Meteor(mPosition.mX, mPosition.mY)));
+
+    std::tr1::shared_ptr<Meteor> entity(new Meteor(mPosition.mX, mPosition.mY));
+    const game::SpawnPhysicsEntityEvent event(entity, entity->mPhysicsObject);  
+    
+    entity->mPhysicsObject.body->ApplyForce(Math::Vector2f(200.0f, 200.0f), Math::Vector2f(0.0, 0.0));
+    
+    mono::EventHandler::DispatchEvent(event);
+}
+
 
 

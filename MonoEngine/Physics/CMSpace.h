@@ -11,6 +11,8 @@
 
 #include "CMFwd.h"
 
+struct cpArbiter;
+
 namespace cm
 {
     class Space
@@ -31,6 +33,8 @@ namespace cm
         void ForEachBody(const BodyFunc& func);
         
     private:
+        
+        bool OnCollision(cpArbiter* arb, void* data);
         
         cpSpace* mSpace;
         std::vector<IBodyPtr> mBodies;

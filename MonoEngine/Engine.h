@@ -34,10 +34,12 @@ namespace mono
 		
         void ScreenToWorld(int& x, int& y) const;
 
+        void OnPause(const Event::PauseEvent& event);
         void OnQuit(const Event::QuitEvent& event);
         void OnSurfaceChanged(const Event::SurfaceChangedEvent& event);
         void OnActivated(const Event::ActivatedEvent& event);
         
+        bool mPause;
         bool mQuit;
         unsigned int mHz;
 		
@@ -46,6 +48,7 @@ namespace mono
         IZonePtr mZone;
         IInputHandlerPtr mInputHandler;
 
+        EventToken<Event::PauseEvent> mPauseToken;
         EventToken<Event::QuitEvent> mQuitToken;
         EventToken<Event::SurfaceChangedEvent> mSurfaceChangedToken;
         EventToken<Event::ActivatedEvent> mActivatedToken;

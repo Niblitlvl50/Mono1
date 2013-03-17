@@ -53,8 +53,8 @@ namespace mono
 
         void operator ++ (int i);
         
-        unsigned int fps() const;
-        unsigned int frames() const;
+        unsigned int Fps() const;
+        unsigned int Frames() const;
         
     private:
         

@@ -12,6 +12,9 @@
 
 namespace Event
 {
+    struct PauseEvent;
+    typedef std::tr1::function<void (const PauseEvent&)> PauseEventFunc;
+    
     struct QuitEvent;
     typedef std::tr1::function<void (const QuitEvent&)> QuitEventFunc;
     

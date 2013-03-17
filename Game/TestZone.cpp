@@ -20,9 +20,11 @@
 #include "CMFactory.h"
 #include "CMIShape.h"
 #include "CMIBody.h"
+#include "RenderUtils.h"
 
-#include "Texture.h"
-#include "SysOpenGL.h"
+#include "EventHandler.h"
+#include "SpawnEntityEvent.h"
+#include "SpawnPhysicsEntityEvent.h"
 
 #include <algorithm>
 #include <cmath>
@@ -32,19 +34,6 @@ using namespace game;
 
 namespace
 {
-    struct SetElasticity
-    {
-        SetElasticity(float value)
-            : mValue(value)
-        { }
-        void operator()(cm::IShapePtr shape) const
-        {
-            shape->SetElasticity(mValue);
-        }
-        const float mValue;
-    };
-    
-    
     struct ZoneBounds : mono::EntityBase
     {
         ZoneBounds(const Math::Quad& bounds)
@@ -64,25 +53,12 @@ namespace
             mPhysics.shapes.push_back(cm::Factory::CreateShape(mPhysics.body, third, fourth, radius, true));
             mPhysics.shapes.push_back(cm::Factory::CreateShape(mPhysics.body, fourth, first, radius, true));
             
-            std::for_each(mPhysics.shapes.begin(), mPhysics.shapes.end(), SetElasticity(0.9f));
+            using namespace std::tr1::placeholders;
+            std::for_each(mPhysics.shapes.begin(), mPhysics.shapes.end(), std::tr1::bind(&cm::IShape::SetElasticity, _1, 0.9f));
         }
         virtual void Draw(mono::IRenderer&) const
         {
-            mono::Texture::Clear();
-            glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-            
-            const float vertices[] = { mBounds.mA.mX, mBounds.mA.mY,
-                mBounds.mB.mX, mBounds.mA.mY, 
-                mBounds.mB.mX, mBounds.mB.mY,
-                mBounds.mA.mX, mBounds.mB.mY };
-            
-            glEnableClientState(GL_VERTEX_ARRAY);
-            
-            glVertexPointer(2, GL_FLOAT, 0, vertices);
-            glDrawArrays(GL_LINE_LOOP, 0, 4);
-            
-            glDisableClientState(GL_VERTEX_ARRAY);        
-        
+            mono::DrawQuad(mBounds);
         }
         virtual Math::Quad BoundingBox() const
         {
@@ -121,7 +97,7 @@ namespace
             const float distance = Math::Length(newPos);
             if(distance < 300.0f)
             {
-                const float gravity = 2e4f;
+                const float gravity = 1e4f;
                 const float value = -gravity / (distance * sqrtf(distance));
             
                 Math::Normalize(newPos);
@@ -134,7 +110,7 @@ namespace
             const float distance2 = Math::Length(newPos2);
             if(distance2 < 200.0f)
             {
-                const float gravity = 2e4f;
+                const float gravity = 1e4f;
                 const float value = -gravity / (distance2 * sqrtf(distance2));
                 
                 Math::Normalize(newPos2);
@@ -156,7 +132,21 @@ namespace
 
 TestZone::TestZone()
     : PhysicsZone(Math::Vector2f(0.0f, 0.0f))
-{ }
+{
+    using namespace std::tr1::placeholders;
+    
+    const game::SpawnEntityEventFunc spawnEntityFunc = std::tr1::bind(&TestZone::SpawnEntity, this, _1);
+    mSpawnEntityToken = mono::EventHandler::AddListener(spawnEntityFunc);
+    
+    const game::SpawnPhysicsEntityFunc spawnPhysicsFunc = std::tr1::bind(&TestZone::SpawnPhysicsEntity, this, _1);
+    mSpawnPhysicsEntityToken = mono::EventHandler::AddListener(spawnPhysicsFunc);
+}
+
+TestZone::~TestZone()
+{
+    mono::EventHandler::RemoveListener(mSpawnEntityToken);
+    mono::EventHandler::RemoveListener(mSpawnPhysicsEntityToken);
+}
 
 void TestZone::OnLoad(mono::ICameraPtr camera)
 {    
@@ -187,11 +177,18 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
         
     camera->SetPosition(shuttle->Position());
     camera->Follow(shuttle);
-    
-    //camera->SetPosition(dude->Position());
-    //camera->Follow(dude);
 }
 
 void TestZone::OnUnload()
 { }
 
+void TestZone::SpawnEntity(const game::SpawnEntityEvent& event)
+{
+    AddEntityToLayer(FOREGROUND, event.mEntity);
+}
+
+void TestZone::SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event)
+{
+    AddEntityToLayer(FOREGROUND, event.mEntity);
+    AddPhysicsObject(event.mPhysics, true);
+}

@@ -96,12 +96,12 @@ void FPSCounter::operator ++ (int i)
     }    
 }
 
-unsigned int FPSCounter::fps() const
+unsigned int FPSCounter::Fps() const
 {
     return mFps;
 }
 
-unsigned int FPSCounter::frames() const
+unsigned int FPSCounter::Frames() const
 {
     return mTotalFrames;
 }

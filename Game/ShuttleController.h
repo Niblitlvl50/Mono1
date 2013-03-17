@@ -27,6 +27,8 @@ namespace game
         
     private:
         
+        void HandleOnShuttlePress();
+        
         Shuttle* mShuttle;
         mono::EventToken<Event::MouseDownEvent> mMouseDownToken;
         mono::EventToken<Event::MouseUpEvent> mMouseUpToken;

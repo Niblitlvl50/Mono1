@@ -12,6 +12,9 @@
 		2B069A68156ACD9F00190763 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B069A66156ACD9E00190763 /* Utils.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2B0BEEDF162183C300A96003 /* ShuttleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B0BEEDE162183C300A96003 /* ShuttleController.cpp */; };
 		2B0BEEE31621955B00A96003 /* Moon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B0BEEE21621955A00A96003 /* Moon.cpp */; };
+		2B0F7C3A16F5C187005A395B /* PauseEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B0F7C3916F5C187005A395B /* PauseEvent.h */; };
+		2B0F7C3C16F5C3CA005A395B /* RenderUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B0F7C3B16F5C3C9005A395B /* RenderUtils.h */; };
+		2B0F7C3E16F5C400005A395B /* RenderUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B0F7C3D16F5C3FF005A395B /* RenderUtils.cpp */; };
 		2B2C80A515EC033A00D65E01 /* MouseWheelEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2C80A415EC033A00D65E01 /* MouseWheelEvent.h */; };
 		2B2F386215420C4E00C44D55 /* AnimationSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B2F386015420C4E00C44D55 /* AnimationSequence.cpp */; };
 		2B2F386315420C4E00C44D55 /* AnimationSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B2F386115420C4E00C44D55 /* AnimationSequence.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -60,6 +63,7 @@
 		2B6872D71531FB9600B8C2FB /* EngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B6872D51531FB9600B8C2FB /* EngineTest.cpp */; };
 		2B6BAF6D15A243EF00F64062 /* TextFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B6BAF6B15A243EF00F64062 /* TextFunctions.cpp */; };
 		2B6BAF6E15A243EF00F64062 /* TextFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B6BAF6C15A243EF00F64062 /* TextFunctions.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2B75E94316B52A4100B84A26 /* Meteor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B75E94216B52A4100B84A26 /* Meteor.cpp */; };
 		2B76493815BC6A0C00718BBD /* stb_truetype.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B76493715BC6A0C00718BBD /* stb_truetype.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2B96337115EA2A5D009E88EC /* CameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B96336F15EA2A5D009E88EC /* CameraController.cpp */; };
 		2B96337215EA2A5D009E88EC /* CameraController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B96337015EA2A5D009E88EC /* CameraController.h */; };
@@ -315,6 +319,9 @@
 		2B0BEEE0162183D500A96003 /* ShuttleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShuttleController.h; path = Game/ShuttleController.h; sourceTree = "<group>"; };
 		2B0BEEE11621954C00A96003 /* Moon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Moon.h; path = Game/Moon.h; sourceTree = "<group>"; };
 		2B0BEEE21621955A00A96003 /* Moon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Moon.cpp; path = Game/Moon.cpp; sourceTree = "<group>"; };
+		2B0F7C3916F5C187005A395B /* PauseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseEvent.h; sourceTree = "<group>"; };
+		2B0F7C3B16F5C3C9005A395B /* RenderUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderUtils.h; sourceTree = "<group>"; };
+		2B0F7C3D16F5C3FF005A395B /* RenderUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderUtils.cpp; sourceTree = "<group>"; };
 		2B2C80A415EC033A00D65E01 /* MouseWheelEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseWheelEvent.h; sourceTree = "<group>"; };
 		2B2F386015420C4E00C44D55 /* AnimationSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimationSequence.cpp; path = Sprite/AnimationSequence.cpp; sourceTree = "<group>"; };
 		2B2F386115420C4E00C44D55 /* AnimationSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimationSequence.h; path = Sprite/AnimationSequence.h; sourceTree = "<group>"; };
@@ -369,7 +376,11 @@
 		2B6A74171531F881002CB834 /* UnitTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B6BAF6B15A243EF00F64062 /* TextFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextFunctions.cpp; path = Text/TextFunctions.cpp; sourceTree = "<group>"; };
 		2B6BAF6C15A243EF00F64062 /* TextFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFunctions.h; path = Text/TextFunctions.h; sourceTree = "<group>"; };
+		2B75E94216B52A4100B84A26 /* Meteor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Meteor.cpp; path = Game/Meteor.cpp; sourceTree = "<group>"; };
+		2B75E94416B52A5200B84A26 /* Meteor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Meteor.h; path = Game/Meteor.h; sourceTree = "<group>"; };
+		2B75E94616B5536B00B84A26 /* SpawnEntityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpawnEntityEvent.h; path = Game/Events/SpawnEntityEvent.h; sourceTree = "<group>"; };
 		2B76493715BC6A0C00718BBD /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = "External Libs/stb_truetype/stb_truetype.h"; sourceTree = "<group>"; };
+		2B8EB4EA16B56101008C9117 /* SpawnPhysicsEntityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpawnPhysicsEntityEvent.h; path = Game/Events/SpawnPhysicsEntityEvent.h; sourceTree = "<group>"; };
 		2B96336F15EA2A5D009E88EC /* CameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraController.cpp; path = Camera/CameraController.cpp; sourceTree = "<group>"; };
 		2B96337015EA2A5D009E88EC /* CameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraController.h; path = Camera/CameraController.h; sourceTree = "<group>"; };
 		2B96337315EA2BF0009E88EC /* SysKeycodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysKeycodes.h; sourceTree = "<group>"; };
@@ -969,6 +980,8 @@
 				2B069A66156ACD9E00190763 /* Utils.h */,
 				2B4A337B15E68A5000390B94 /* PhysicsZone.cpp */,
 				2B4A337C15E68A5000390B94 /* PhysicsZone.h */,
+				2B0F7C3B16F5C3C9005A395B /* RenderUtils.h */,
+				2B0F7C3D16F5C3FF005A395B /* RenderUtils.cpp */,
 			);
 			path = MonoEngine;
 			sourceTree = "<group>";
@@ -1003,6 +1016,15 @@
 				2B6BAF6C15A243EF00F64062 /* TextFunctions.h */,
 			);
 			name = Text;
+			sourceTree = "<group>";
+		};
+		2B75E94516B5534100B84A26 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				2B75E94616B5536B00B84A26 /* SpawnEntityEvent.h */,
+				2B8EB4EA16B56101008C9117 /* SpawnPhysicsEntityEvent.h */,
+			);
+			name = Events;
 			sourceTree = "<group>";
 		};
 		2B76493615BC69D900718BBD /* stb_truetype */ = {
@@ -1121,6 +1143,7 @@
 		2BD728AE152B95B60048435D /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				2B75E94516B5534100B84A26 /* Events */,
 				2B97208D155037E7006841E1 /* Monster */,
 				2BD1E5681532068600A75171 /* Linked Frameworks */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -1145,6 +1168,8 @@
 				2B0BEEE0162183D500A96003 /* ShuttleController.h */,
 				2B0BEEE11621954C00A96003 /* Moon.h */,
 				2B0BEEE21621955A00A96003 /* Moon.cpp */,
+				2B75E94216B52A4100B84A26 /* Meteor.cpp */,
+				2B75E94416B52A5200B84A26 /* Meteor.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -1173,6 +1198,7 @@
 				2BE969461541EC0900FE8B70 /* MouseMotionEvent.h */,
 				2B2C80A415EC033A00D65E01 /* MouseWheelEvent.h */,
 				2BC6B833162C96700093C0B3 /* MouseDownEvent.h */,
+				2B0F7C3916F5C187005A395B /* PauseEvent.h */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -1372,6 +1398,8 @@
 				2BBA5A87160A57D100D8D38E /* MultiGestureEvent.h in Headers */,
 				2BBA5A97160A5D7900D8D38E /* SysVideo.h in Headers */,
 				2BC6B834162C96700093C0B3 /* MouseDownEvent.h in Headers */,
+				2B0F7C3A16F5C187005A395B /* PauseEvent.h in Headers */,
+				2B0F7C3C16F5C3CA005A395B /* RenderUtils.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1608,6 +1636,7 @@
 				2BBA5A83160A578100D8D38E /* cpSweep1D.c in Sources */,
 				2BBA5A84160A578100D8D38E /* cpVect.c in Sources */,
 				2BBA5A96160A5D7900D8D38E /* SysVideo.cpp in Sources */,
+				2B0F7C3E16F5C400005A395B /* RenderUtils.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1641,6 +1670,7 @@
 				2BD392D315E8DE1500C010B7 /* Shuttle.cpp in Sources */,
 				2B0BEEDF162183C300A96003 /* ShuttleController.cpp in Sources */,
 				2B0BEEE31621955B00A96003 /* Moon.cpp in Sources */,
+				2B75E94316B52A4100B84A26 /* Meteor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1676,8 +1706,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1710,9 +1742,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1740,8 +1774,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1765,9 +1801,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1785,11 +1823,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					/Library/Frameworks,
 					"$(FRAMEWORK_SEARCH_PATHS)",
 				);
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1810,10 +1851,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				FRAMEWORK_SEARCH_PATHS = (
 					/Library/Frameworks,
 					"$(FRAMEWORK_SEARCH_PATHS)",
 				);
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (

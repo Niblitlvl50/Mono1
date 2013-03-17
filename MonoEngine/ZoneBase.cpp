@@ -16,14 +16,17 @@ using namespace mono;
 
 namespace
 {
-    void RenderLayer(const IEntityCollection& collection, mono::IRenderer& renderer)
+    struct AddEntityFunctor
     {
-        for(IEntityCollection::const_iterator it = collection.begin(), end = collection.end(); it != end; ++it)
+        AddEntityFunctor(IRenderer& renderer)
+            : mRenderer(renderer)
+        { }
+        void operator () (IEntityPtr entity)
         {
-            mono::IEntityPtr entity = *it;
-            renderer.AddEntity(entity);            
+            mRenderer.AddEntity(entity);
         }
-    }
+        IRenderer& mRenderer;
+    };
     
     struct AddUppdatableFunctor
     {
@@ -49,9 +52,9 @@ ZoneBase::ZoneBase()
 
 void ZoneBase::Accept(IRenderer& renderer)
 {    
-    RenderLayer(mLayers[BACKGROUND], renderer);
-    RenderLayer(mLayers[MIDDLEGROUND], renderer);
-    RenderLayer(mLayers[FOREGROUND], renderer);
+    std::for_each(mLayers[BACKGROUND].begin(), mLayers[BACKGROUND].end(), AddEntityFunctor(renderer));
+    std::for_each(mLayers[MIDDLEGROUND].begin(), mLayers[MIDDLEGROUND].end(), AddEntityFunctor(renderer));
+    std::for_each(mLayers[FOREGROUND].begin(), mLayers[FOREGROUND].end(), AddEntityFunctor(renderer));
     
     std::for_each(mUpdatables.begin(), mUpdatables.end(), AddUppdatableFunctor(renderer));
 }
@@ -65,12 +68,16 @@ void ZoneBase::AddEntityToLayer(LayerId layer, IEntityPtr entity)
 
 void ZoneBase::RemoveEntity(IEntityPtr entity)
 {
+    bool result = false;
     for(LayerMap::iterator it = mLayers.begin(), end = mLayers.end(); it != end; ++it)
     {
-        const bool result = FindAndRemove(it->second, entity);
+        result = FindAndRemove(it->second, entity);
         if(result)
-            return;
+            break;
     }
+    
+    if(!result)
+        throw std::runtime_error("Unable to remove entity");
 }
 
 void ZoneBase::AddUpdatable(IUpdatablePtr updatable)

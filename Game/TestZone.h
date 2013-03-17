@@ -9,19 +9,31 @@
 
 #pragma once
 
-//#include "ZoneBase.h"
 #include "PhysicsZone.h"
+#include "EventToken.h"
 
 namespace game
 {
+    struct SpawnEntityEvent;
+    struct SpawnPhysicsEntityEvent;
+    
     class TestZone : public mono::PhysicsZone
     {
     public:
         
         TestZone();
+        ~TestZone();
                 
         virtual void OnLoad(mono::ICameraPtr camera);
-        virtual void OnUnload();        
+        virtual void OnUnload();
+        
+        void SpawnEntity(const game::SpawnEntityEvent& event);
+        void SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event);
+
+    private:
+        
+        mono::EventToken<game::SpawnEntityEvent> mSpawnEntityToken;
+        mono::EventToken<game::SpawnPhysicsEntityEvent> mSpawnPhysicsEntityToken;
     };
 }
 

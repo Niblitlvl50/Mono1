@@ -60,6 +60,10 @@ namespace
         {
             cpBodyResetForces(mBody);
         }
+        void OnCollideWith(cm::IBodyPtr body)
+        {
+            
+        }
         cpBody* Body()
         {
             return mBody;
