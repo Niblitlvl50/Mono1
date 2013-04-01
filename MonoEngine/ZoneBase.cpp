@@ -59,7 +59,7 @@ void ZoneBase::Accept(IRenderer& renderer)
     std::for_each(mUpdatables.begin(), mUpdatables.end(), AddUppdatableFunctor(renderer));
 }
 
-void ZoneBase::AddEntityToLayer(LayerId layer, IEntityPtr entity)
+void ZoneBase::AddEntityToLayer(IEntityPtr entity, LayerId layer)
 {
     LayerMap::iterator layerIt = mLayers.find(layer);    
     IEntityCollection& collection = layerIt->second;

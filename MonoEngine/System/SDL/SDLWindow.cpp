@@ -59,19 +59,6 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
     SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 1);
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
-    
-    // Request double-buffered OpenGL
-    // The fact that windows are double-buffered on Mac OS X has no effect
-    // on OpenGL double buffering.
-    //const int doubleBuffer = 1; // == true, in this case
-    //if(SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, doubleBuffer) != 0)
-      //  throw std::runtime_error("Unable to set doubel buffer gl attribute");
-    
-    // Request a 16-bit depth buffer (without this, there is no depth buffer)
-    //const int depthValue = 16;
-    //if(SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, depthValue) != 0)
-      //  throw std::runtime_error("Unable to set depth size gl attribute");
-
     // Create our window centered and with the given resolution
     mWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
     if(!mWindow)
@@ -81,8 +68,7 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
     if(!mContext)
         throw std::runtime_error("Unable to create OpenGL context");
     
-    //SDL_GL_SetSwapInterval(1);
-    
+    //SDL_GL_SetSwapInterval(1);    
     //SDL_ShowCursor(SDL_DISABLE);
     	        
     SetupOpenGL();
@@ -97,7 +83,7 @@ SDLWindow::~SDLWindow()
 
 void SDLWindow::SurfaceChanged(int width, int height)
 {
-    mSize = Math::Vector2f(width, height);
+    mSize = math::Vector2f(width, height);
     glViewport(0, 0, width, height);
 }
 
@@ -109,7 +95,7 @@ void SDLWindow::SwapBuffers() const
     SDL_GL_SwapWindow(mWindow);
 }
 
-const Math::Vector2f& SDLWindow::Size() const
+const math::Vector2f& SDLWindow::Size() const
 {
     return mSize;
 }

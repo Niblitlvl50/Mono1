@@ -8,19 +8,16 @@
 
 #pragma once
 
-#include "EntityBase.h"
+#include "PhysicsEntityBase.h"
 #include "Sprite.h"
-#include "CMObject.h"
 
 namespace game
 {
-    class Meteor : public mono::EntityBase
+    class Meteor : public mono::PhysicsEntityBase
     {
     public:
         Meteor(float x, float y);
     
-        cm::Object mPhysicsObject;
-
     private:
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
@@ -28,3 +25,4 @@ namespace game
         mono::Sprite mSprite;
     };
 }
+

@@ -14,7 +14,6 @@
 
 namespace mono
 {
-
     class Renderer : public IRenderer
     {
     public:
@@ -28,7 +27,8 @@ namespace mono
         virtual void AddDrawable(IDrawablePtr drawable);
         virtual void AddUpdatable(IUpdatablePtr updatable);
         
-        virtual void DrawText(const std::string& text, const Math::Vector2f& pos, bool center, Color color);
+        virtual void DrawSprite(const Sprite& sprite) const;
+        virtual void DrawText(const std::string& text, const math::Vector2f& pos, bool center, Color color);
 
     private:
         

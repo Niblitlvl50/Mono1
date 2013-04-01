@@ -7,7 +7,7 @@
 //
 
 #include "Leg.h"
-
+#include "IRenderer.h"
 
 using namespace game;
 
@@ -16,14 +16,14 @@ Leg::Leg(float x, float y)
       mLower("Monster/leg_right.lua"),
       mFoot("Monster/foot_right.lua")
 {
-    mPosition = Math::Vector2f(x, y);
+    mPosition = math::Vector2f(x, y);
 }
 
-void Leg::Draw(mono::IRenderer&) const
+void Leg::Draw(mono::IRenderer& renderer) const
 {
-    mUpper.Draw();
-    mLower.Draw();
-    mFoot.Draw();
+    renderer.DrawSprite(mUpper);
+    renderer.DrawSprite(mLower);
+    renderer.DrawSprite(mFoot);
 }
 
 void Leg::Update(unsigned int delta)

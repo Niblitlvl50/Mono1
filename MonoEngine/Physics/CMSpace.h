@@ -10,7 +10,9 @@
 #pragma once
 
 #include "CMFwd.h"
+#include "MathFwd.h"
 
+struct cpSpace;
 struct cpArbiter;
 
 namespace cm
@@ -19,7 +21,7 @@ namespace cm
     {
     public:
         
-        Space(const Math::Vector2f& gravity);
+        Space(const math::Vector2f& gravity);
         ~Space();
         
         void Tick(float delta);

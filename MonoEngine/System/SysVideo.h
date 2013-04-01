@@ -8,12 +8,12 @@
 
 #pragma once
 
-namespace Math
+namespace math
 {
     struct Vector2f;
 }
 
 namespace Video
 {
-    Math::Vector2f GetCurrentWindowSize();
+    math::Vector2f GetCurrentWindowSize();
 }

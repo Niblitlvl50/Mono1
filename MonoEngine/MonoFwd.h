@@ -32,6 +32,9 @@ namespace mono
     struct IEntity;
     typedef std::tr1::shared_ptr<IEntity> IEntityPtr;
     typedef std::vector<IEntityPtr> IEntityCollection;
+    
+    struct IPhysicsEntity;
+    typedef std::tr1::shared_ptr<IPhysicsEntity> IPhysicsEntityPtr;
 
     struct IUpdatable;
     typedef std::tr1::shared_ptr<IUpdatable> IUpdatablePtr;
@@ -46,11 +49,3 @@ namespace mono
     struct ITexture;
     typedef std::tr1::shared_ptr<ITexture> ITexturePtr;
 }
-
-namespace Math
-{
-    struct Vector2f;
-    struct Quad;
-}
-
-

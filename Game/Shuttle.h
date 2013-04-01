@@ -8,30 +8,30 @@
 
 #pragma once
 
-#include "EntityBase.h"
+#include "PhysicsEntityBase.h"
 #include "Sprite.h"
-#include "CMObject.h"
 #include "ShuttleController.h"
+#include "CMIBody.h"
 
 namespace game
 {
 
-    class Shuttle : public mono::EntityBase
+    class Shuttle : public mono::PhysicsEntityBase, public cm::ICollisionHandler
     {
+        friend class ShuttleController;
+
     public:
         
         Shuttle(float x, float y);
-        
-        cm::Object mPhysicsObject;
 
     private:
 
-        friend class ShuttleController;
-        
         void Fire();
         
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
+        
+        virtual void OnCollideWith(cm::IBodyPtr body);
         
         mono::Sprite mSprite;
         ShuttleController mController;

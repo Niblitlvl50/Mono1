@@ -7,6 +7,7 @@
 //
 
 #include "Sprite.h"
+#include "SpriteAttributes.h"
 #include "ITexture.h"
 #include "TextureFactory.h"
 #include "SysOpenGL.h"
@@ -20,15 +21,8 @@ using namespace mono;
 namespace
 {
     static const int DEFAULT_ANIMATION_ID = 0;
-    
-    static const float vertices[] = { -0.5f, -0.5f,
-                                      -0.5f,  0.5f,
-                                       0.5f,  0.5f,
-                                       0.5f, -0.5f };
+    static const math::Quad nullQuad(0, 0, 0, 0);
         
-    static const unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };
-    
-    
     struct TextureData
     {
         int rows;
@@ -41,7 +35,7 @@ namespace
         int textureSizeY;
     };
     
-    void GenerateTextureCoordinates(const TextureData& data, std::vector<Math::Quad>& coordinates)
+    void GenerateTextureCoordinates(const TextureData& data, std::vector<math::Quad>& coordinates)
     {
         // +1 because the textures coordinates is zero indexed
         const float x1 = float(data.x +1) / float(data.textureSizeX);
@@ -58,10 +52,10 @@ namespace
         {
             for(int xindex = 0; xindex < data.columns; ++xindex)
             {
-                const float x = xstep * xindex + x1;
-                const float y = ystep * yindex + y1;
+                const float x = xstep * float(xindex) + x1;
+                const float y = ystep * float(yindex) + y1;
                 
-                coordinates.push_back(Math::Quad(x, y - ystep, x + xstep, y));
+                coordinates.push_back(math::Quad(x, y - ystep, x + xstep, y));
             }
         }
     }
@@ -73,6 +67,7 @@ Sprite::Sprite(const std::string& file)
     lua::LuaState config(file);
 
     const std::string texture = lua::GetValue<std::string>(config, "texture");
+    mTexture = mono::CreateTexture(texture);
     
     TextureData data;
     data.rows = lua::GetValue<int>(config, "rows");
@@ -80,9 +75,7 @@ Sprite::Sprite(const std::string& file)
     data.x = lua::GetValue<int>(config, "x");
     data.y = lua::GetValue<int>(config, "y");
     data.u = lua::GetValue<int>(config, "u");
-    data.v = lua::GetValue<int>(config, "v");
-    
-    mTexture = mono::CreateTexture(texture);
+    data.v = lua::GetValue<int>(config, "v");    
     
     data.textureSizeX = mTexture->Width();
     data.textureSizeY = mTexture->Height();
@@ -90,45 +83,41 @@ Sprite::Sprite(const std::string& file)
     GenerateTextureCoordinates(data, mTextureCoordinates);    
 
     const lua::MapIntIntTable animations = lua::GetTableMap<int, int>(config, "animations");
+    const lua::MapIntStringTable attributes = lua::GetTableMap<int, std::string>(config, "attributes");
+    
     for(lua::MapIntIntTable::const_iterator it = animations.begin(), end = animations.end(); it != end; ++it)
     {
         const int key = it->first;
         const lua::IntTable& values = it->second;
-        DefineAnimation(key, values);
+        
+        lua::MapIntStringTable::const_iterator attr = attributes.find(key);
+        if(attr == attributes.end())
+           DefineAnimation(key, values, true);
+        else
+           DefineAnimation(key, values, attr->second);
     }
     
     mActiveAnimationId = DEFAULT_ANIMATION_ID;
 }
 
-void Sprite::Draw() const
+ITexturePtr Sprite::GetTexture() const
+{
+    return mTexture;
+}
+
+const math::Quad& Sprite::GetTextureCoords() const
 {
     const AnimationSequence& anim = mDefinedAnimations.find(mActiveAnimationId)->second;
-    const Math::Quad& quad = mTextureCoordinates.at(anim.Frame());
-    
-    const float coords[] = { quad.mA.mX, quad.mA.mY,
-                             quad.mA.mX, quad.mB.mY,
-                             quad.mB.mX, quad.mB.mY,
-                             quad.mB.mX, quad.mA.mY };
-    
-    mTexture->Use();
-    
-    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    
-    glVertexPointer(2, GL_FLOAT, 0, vertices);
-    glTexCoordPointer(2, GL_FLOAT, 0, coords);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    return anim.Finished() ? nullQuad : mTextureCoordinates.at(anim.Frame());
 }
 
 void Sprite::doUpdate(unsigned int delta)
 {
-    AnimationSequence& anim = mDefinedAnimations[mActiveAnimationId];
+    AnimationSequence& anim = mDefinedAnimations.find(mActiveAnimationId)->second;
     anim.Tick(delta);
+
+    if(anim.Finished())
+        mCallbackFunction();
 }
 
 void Sprite::SetAnimation(int id)
@@ -136,22 +125,27 @@ void Sprite::SetAnimation(int id)
     mActiveAnimationId = id;
 }
 
-void Sprite::DefineAnimation(int id, const std::vector<int>& values)
+void Sprite::SetAnimation(int id, std::tr1::function<void ()> func)
 {
-    const bool even = (values.size() % 2) == 0;
+    mActiveAnimationId = id;
+    mCallbackFunction = func;
+}
+
+void Sprite::DefineAnimation(int id, const std::vector<int>& frames, bool loop)
+{
+    const bool even = (frames.size() % 2) == 0;
     if(!even)
         throw std::runtime_error("Animation vector does not match up, not an even number of values");
     
-    typedef std::vector<int> IntVector;
-    IntVector::const_iterator lastFrame = values.end();
+    std::vector<int>::const_iterator lastFrame = frames.end();
     --lastFrame;
     --lastFrame;
     
-    const int start = *values.begin();
+    const int start = *frames.begin();
     const int end = *lastFrame;
     
     std::vector<unsigned int> durations;
-    for(IntVector::const_iterator it = values.begin(), end = values.end(); it != end; ++it)
+    for(std::vector<int>::const_iterator it = frames.begin(), end = frames.end(); it != end; ++it)
     {
         ++it;
         durations.push_back(*it);
@@ -160,8 +154,14 @@ void Sprite::DefineAnimation(int id, const std::vector<int>& values)
     const int diff = end - start;
     if(diff < 0)
         throw std::runtime_error("Animation definition's start and end does not match up");
-                                 
-    mDefinedAnimations[id] = AnimationSequence(start, end, durations);
+    
+    mDefinedAnimations.insert(std::make_pair(id, AnimationSequence(start, end, loop, durations)));
+}
+
+void Sprite::DefineAnimation(int id, const std::vector<int>& frames, const std::vector<std::string>& attributes)
+{
+    const bool noloop = std::find_if(attributes.begin(), attributes.end(), FindNoLoopAttribute()) != attributes.end();
+    DefineAnimation(id, frames, !noloop);
 }
 
 

@@ -39,14 +39,17 @@ ShuttleController::~ShuttleController()
 
 void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
 {
-    const bool result1 = Math::PointInsideQuad(Math::Vector2f(event.mX, event.mY), mShuttle->BoundingBox());
-    if(result1)
+    const bool result = math::PointInsideQuad(math::Vector2f(event.mX, event.mY), mShuttle->BoundingBox());
+    if(result)
+    {
         HandleOnShuttlePress();
-        
-    Math::Vector2f result = mShuttle->Position() - Math::Vector2f(event.mX, event.mY);
-    Math::Normalize(result);
+        return;
+    }
     
-    mShuttle->mPhysicsObject.body->ApplyForce(result * 200.0f, result);    
+    math::Vector2f forceVector = mShuttle->Position() - math::Vector2f(event.mX, event.mY);
+    math::Normalize(forceVector);
+    
+    mShuttle->mPhysicsObject.body->ApplyForce(forceVector * 200.0f, forceVector);    
 }
 
 void ShuttleController::OnMouseUp(const Event::MouseUpEvent& event)
@@ -56,6 +59,6 @@ void ShuttleController::OnMouseUp(const Event::MouseUpEvent& event)
 
 void ShuttleController::HandleOnShuttlePress()
 {
-    mono::EventHandler::DispatchEvent(Event::PauseEvent());
-    //mShuttle->Fire();
+    //mono::EventHandler::DispatchEvent(Event::PauseEvent());
+    mShuttle->Fire();
 }

@@ -24,7 +24,7 @@ namespace game
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
         
-        Math::Vector2f mBase;
+        math::Vector2f mBase;
         float mDelta;
     };
 }

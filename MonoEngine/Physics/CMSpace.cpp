@@ -41,7 +41,7 @@ namespace
     }
 }
 
-Space::Space(const Math::Vector2f& gravity)
+Space::Space(const math::Vector2f& gravity)
 {
     mSpace = cpSpaceNew();
     cpSpaceSetGravity(mSpace, cpv(gravity.mX, gravity.mY));
@@ -63,12 +63,15 @@ void Space::Tick(float delta)
 
 void Space::AddBody(IBodyPtr body)
 {
-    cpSpaceAddBody(mSpace, body->Body());
+    if(!body->IsStatic())
+        cpSpaceAddBody(mSpace, body->Body());
     mBodies.push_back(body);
 }
 void Space::RemoveBody(IBodyPtr body)
 {
-    cpSpaceRemoveBody(mSpace, body->Body());
+    if(!body->IsStatic())
+        cpSpaceRemoveBody(mSpace, body->Body());
+    
     const bool result = mono::FindAndRemove(mBodies, body);
     if(!result)
         throw std::runtime_error("Unable to remove body from collection");
@@ -76,17 +79,11 @@ void Space::RemoveBody(IBodyPtr body)
 
 void Space::AddShape(IShapePtr shape)
 {
-    if(shape->IsStatic())
-        cpSpaceAddStaticShape(mSpace, shape->Shape());
-    else
-        cpSpaceAddShape(mSpace, shape->Shape());
+    cpSpaceAddShape(mSpace, shape->Shape());
 }
 void Space::RemoveShape(IShapePtr shape)
 {
-    if(shape->IsStatic())
-        cpSpaceRemoveStaticShape(mSpace, shape->Shape());
-    else
-        cpSpaceRemoveShape(mSpace, shape->Shape());
+    cpSpaceRemoveShape(mSpace, shape->Shape());
 }
 
 void Space::ForEachBody(const BodyFunc& func)

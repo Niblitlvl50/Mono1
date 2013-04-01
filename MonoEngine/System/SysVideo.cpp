@@ -10,10 +10,10 @@
 #include "SDL.h"
 #include "Vector2f.h"
 
-Math::Vector2f Video::GetCurrentWindowSize()
+math::Vector2f Video::GetCurrentWindowSize()
 {
     SDL_DisplayMode mode;
     SDL_GetCurrentDisplayMode(0, &mode);
     
-    return Math::Vector2f(mode.w, mode.h);
+    return math::Vector2f(mode.w, mode.h);
 }

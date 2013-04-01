@@ -8,6 +8,7 @@
 
 #include "Head.h"
 #include "SysOpenGL.h"
+#include "IRenderer.h"
 
 using namespace game;
 
@@ -15,16 +16,16 @@ Head::Head(float x, float y)
     : mHead("Monster/head.lua"),
       mJaw("Monster/jaw.lua")
 {
-    mPosition = Math::Vector2f(x, y);
+    mPosition = math::Vector2f(x, y);
     mScale = 0.7f;
 }
 
-void Head::Draw(mono::IRenderer&) const
+void Head::Draw(mono::IRenderer& renderer) const
 {
-    mHead.Draw();
+    renderer.DrawSprite(mHead);
     
     glTranslatef(0.0f, -0.8f, 0.0f);
-    mJaw.Draw();
+    renderer.DrawSprite(mJaw);
 }
 
 void Head::Update(unsigned int delta)

@@ -22,6 +22,8 @@ namespace game
         
         virtual void Update(unsigned int delta);
         virtual void Draw(mono::IRenderer& renderer) const;
+
+        void OnFinished();
         
     private:
         

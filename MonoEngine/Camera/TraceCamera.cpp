@@ -32,15 +32,15 @@ void TraceCamera::Update(unsigned int delta)
     if(xzero != 0.0f)
     {
         const float aspect = mViewport.mB.mX / mViewport.mB.mY;
-        Math::ResizeQuad(mViewport, change * 0.1f, aspect);
+        math::ResizeQuad(mViewport, change * 0.1f, aspect);
     }
     
     if(mEntity)
     {
-        const Math::Vector2f targetPosition = mEntity->Position() - (mViewport.mB * 0.5f);
-        const Math::Vector2f diff = targetPosition - mViewport.mA;
+        const math::Vector2f targetPosition = mEntity->Position() - (mViewport.mB * 0.5f);
+        const math::Vector2f diff = targetPosition - mViewport.mA;
     
-        const Math::Vector2f move = diff * (delta * constants::SPEED);
+        const math::Vector2f move = diff * (delta * constants::SPEED);
         mViewport.mA += move;
     }
 }
@@ -55,24 +55,24 @@ void TraceCamera::Unfollow()
     mEntity.reset();
 }
 
-const Math::Quad& TraceCamera::GetViewport() const
+const math::Quad& TraceCamera::GetViewport() const
 {
     return mViewport;
 }
 
-Math::Quad& TraceCamera::GetViewport()
+math::Quad& TraceCamera::GetViewport()
 {
     return mViewport;
 }
 
-void TraceCamera::SetTargetViewport(const Math::Quad& target)
+void TraceCamera::SetTargetViewport(const math::Quad& target)
 {
     mTargetViewport = target;
 }
 
-void TraceCamera::SetPosition(const Math::Vector2f& position)
+void TraceCamera::SetPosition(const math::Vector2f& position)
 {
-    const Math::Vector2f xy = position - (mViewport.mB * 0.5f);
+    const math::Vector2f xy = position - (mViewport.mB * 0.5f);
     mViewport.mA = xy;
 }
 

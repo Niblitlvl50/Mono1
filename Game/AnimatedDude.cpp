@@ -28,9 +28,9 @@ namespace constants
 AnimatedDude::AnimatedDude(float x, float y)
     : mTarget(x, y),
       mSprite("ryu.sprite"),
-      mController(*this)
+      mController(this)
 {
-    mPosition = Math::Vector2f(x, y);
+    mPosition = math::Vector2f(x, y);
     mScale = 30.0f;
         
     mSprite.SetAnimation(constants::IDLE);
@@ -41,9 +41,9 @@ AnimatedDude::AnimatedDude(float x, float y)
 
 void AnimatedDude::Draw(mono::IRenderer& renderer) const
 {
-    mSprite.Draw();
+    renderer.DrawSprite(mSprite);
     
-    const Math::Vector2f textPosition = mPosition + Math::Vector2f(0.0f, 25.0f);
+    const math::Vector2f textPosition = mPosition + math::Vector2f(0.0f, 25.0f);
     Color color = {0.5f, 1.0f, 0.0f, 1.0f};
     renderer.DrawText("Ryu Hayabusa", textPosition, true, color);
 }

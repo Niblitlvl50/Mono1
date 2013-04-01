@@ -8,7 +8,7 @@
 
 #pragma once
 
-namespace Math
+namespace math
 {
     struct Vector3f
     {

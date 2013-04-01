@@ -9,20 +9,15 @@
 #pragma once
 
 #include "MonoFwd.h"
-#include "CMFwd.h"
-#include <tr1/functional>
 
 namespace game
 {
     struct SpawnPhysicsEntityEvent
     {
-        SpawnPhysicsEntityEvent(mono::IEntityPtr entity, cm::Object& physics)
-            : mEntity(entity),
-              mPhysics(physics)
+        SpawnPhysicsEntityEvent(mono::IPhysicsEntityPtr entity)
+            : mEntity(entity)
         { }
-        
-        mono::IEntityPtr mEntity;
-        cm::Object& mPhysics;
+        mono::IPhysicsEntityPtr mEntity;
     };
     
     typedef std::tr1::function<void (const game::SpawnPhysicsEntityEvent& event)> SpawnPhysicsEntityFunc;

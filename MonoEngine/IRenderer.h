@@ -10,10 +10,12 @@
 #pragma once
 
 #include "MonoFwd.h"
+#include "MathFwd.h"
 
 namespace mono
 {
-
+    class Sprite;
+    
     struct IRenderer
     {
         virtual ~IRenderer()
@@ -23,7 +25,8 @@ namespace mono
         virtual void AddDrawable(IDrawablePtr drawable) = 0;
         virtual void AddUpdatable(IUpdatablePtr updatable) = 0;
         
-        virtual void DrawText(const std::string& text, const Math::Vector2f& pos, bool center, Color color) = 0;
+        virtual void DrawSprite(const Sprite& sprite) const = 0;
+        virtual void DrawText(const std::string& text, const math::Vector2f& pos, bool center, Color color) = 0;
     };
 
 }

@@ -9,9 +9,7 @@
 #pragma once
 
 #include "CMFwd.h"
-#include <limits>
-
-static const float INF = std::numeric_limits<float>::infinity();
+#include "MathFwd.h"
 
 namespace cm
 {            
@@ -19,20 +17,23 @@ namespace cm
     {
     public:
         
+        //! Static Body
+        static IBodyPtr CreateStaticBody();
+
         //! Body
         static IBodyPtr CreateBody(float mass, float inertia);
         
         //! Circle shape
-        static IShapePtr CreateShape(IBodyPtr body, float radius, const Math::Vector2f& offset, bool staticShape);    
+        static IShapePtr CreateShape(IBodyPtr body, float radius, const math::Vector2f& offset);    
         
         //! Box shape
-        static IShapePtr CreateShape(IBodyPtr body, float width, float height, bool staticShape);
+        static IShapePtr CreateShape(IBodyPtr body, float width, float height);
 
         //! Segment shape
-        static IShapePtr CreateShape(IBodyPtr body, const Math::Vector2f& first, const Math::Vector2f& second, float radius, bool staticShape);
+        static IShapePtr CreateShape(IBodyPtr body, const math::Vector2f& first, const math::Vector2f& second, float radius);
         
         //! Polygon shape
-        static IShapePtr CreateShape(IBodyPtr body, const Vector2fCollection& vertices, const Math::Vector2f& offset, bool staticShape);
+        static IShapePtr CreateShape(IBodyPtr body, const Vector2fCollection& vertices, const math::Vector2f& offset);
     };
 }
 

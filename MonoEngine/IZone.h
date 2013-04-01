@@ -12,7 +12,6 @@
 
 namespace mono
 {
-    
     struct IZone
     {
         virtual ~IZone()
@@ -22,6 +21,5 @@ namespace mono
         virtual void OnLoad(ICameraPtr camera) = 0;
         virtual void OnUnload() = 0;        
     };
-
 }
 

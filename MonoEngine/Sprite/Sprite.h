@@ -43,7 +43,7 @@
 #include "Quad.h"
 
 #include <map>
-
+#include <tr1/functional>
 
 namespace mono
 {    
@@ -51,20 +51,48 @@ namespace mono
     {
     public:
 
+        //! Constructs a sprite object.
+        //! @param[in] file The .sprite file to use.
         Sprite(const std::string& file);
+        
+        //! Gets the sprites texture
+        //! @return ITexturePtr A shared pointer to the texture.
+        ITexturePtr GetTexture() const;
+        
+        //! Gets the quad representing the texture coordinates
+        //! @return Math::Quad A reference to the texture coords.
+        const math::Quad& GetTextureCoords() const;
+        
+        //! Define an animation sequence by giving pairs of frame and duration.
+        //! @param[in] id Id of the animation.
+        //! @param[in] frames A collection of frame and duration pairs. 
+        //! @param[in] loop If the animation should loop or not.
+        void DefineAnimation(int id, const std::vector<int>& frames, bool loop);
 
-        void Draw() const;
-        void DefineAnimation(int id, const std::vector<int>& values);
+        //! Define an animation sequence by giving pairs of frame and duration, also with attributes.
+        //! @param[in] id Id of the animation.
+        //! @param[in] frames A collection of frame and duration pairs.
+        //! @param[in] attributes A collection of attributes for this animation.
+        void DefineAnimation(int id, const std::vector<int>& frames, const std::vector<std::string>& attributes);
+        
+        //! Tell the sprite to run a specific animation.
+        //! @param[in] id The animation to run.
         void SetAnimation(int id);
+        
+        //! Tell the sprite to run a specific animation, and get a callback when finished
+        //! @param[in] id The animation to run.
+        //! @param[in] func A callback function.
+        void SetAnimation(int id, std::tr1::function<void ()> func);
         
         virtual void doUpdate(unsigned int delta);
 
     private:
                 
-        int mActiveAnimationId;        
+        int mActiveAnimationId;
+        std::tr1::function<void ()> mCallbackFunction;
         ITexturePtr mTexture;
         
-        std::vector<Math::Quad> mTextureCoordinates;
+        std::vector<math::Quad> mTextureCoordinates;
         std::map<int, AnimationSequence> mDefinedAnimations;
     };
 }

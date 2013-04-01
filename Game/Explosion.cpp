@@ -7,6 +7,8 @@
 //
 
 #include "Explosion.h"
+#include "IRenderer.h"
+#include <tr1/functional>
 
 using namespace game;
 
@@ -18,8 +20,10 @@ namespace constants
 Explosion::Explosion()
     : mSprite("explosion.sprite")
 {
-    mPosition = Math::Vector2f(100.0f, 350.0f);
+    mPosition = math::Vector2f(100.0f, 150.0f);
     mScale = 20.0f;
+    
+    mSprite.SetAnimation(0, std::tr1::bind(&Explosion::OnFinished, this));
 }
 
 void Explosion::Update(unsigned int delta)
@@ -27,7 +31,10 @@ void Explosion::Update(unsigned int delta)
     mSprite.doUpdate(delta);
 }
 
-void Explosion::Draw(mono::IRenderer&) const
+void Explosion::Draw(mono::IRenderer& renderer) const
 {
-    mSprite.Draw();
+    renderer.DrawSprite(mSprite);
 }
+
+void Explosion::OnFinished()
+{ }

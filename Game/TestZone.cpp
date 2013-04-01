@@ -25,55 +25,58 @@
 #include "EventHandler.h"
 #include "SpawnEntityEvent.h"
 #include "SpawnPhysicsEntityEvent.h"
+#include "RemoveEntityEvent.h"
+#include "RemovePhysicsEntityEvent.h"
+#include "MathFwd.h"
 
 #include <algorithm>
 #include <cmath>
 
 
 using namespace game;
+using namespace std::tr1::placeholders;
+
 
 namespace
 {
-    struct ZoneBounds : mono::EntityBase
+    struct ZoneBounds : mono::PhysicsEntityBase
     {
-        ZoneBounds(const Math::Quad& bounds)
+        ZoneBounds(const math::Quad& bounds)
             : mBounds(bounds)
         {
-            mPhysics.body = cm::Factory::CreateBody(INFINITY, INFINITY);
+            mPhysicsObject.body = cm::Factory::CreateStaticBody();
             
             const float radius = 2.0f;
             
-            const Math::Vector2f first = mBounds.mA;
-            const Math::Vector2f second = Math::Vector2f(mBounds.mA.mX, mBounds.mB.mY);
-            const Math::Vector2f third = mBounds.mB;
-            const Math::Vector2f fourth = Math::Vector2f(mBounds.mB.mX, mBounds.mA.mY);
+            const math::Vector2f first = mBounds.mA;
+            const math::Vector2f second = math::Vector2f(mBounds.mA.mX, mBounds.mB.mY);
+            const math::Vector2f third = mBounds.mB;
+            const math::Vector2f fourth = math::Vector2f(mBounds.mB.mX, mBounds.mA.mY);
             
-            mPhysics.shapes.push_back(cm::Factory::CreateShape(mPhysics.body, first, second, radius, true));
-            mPhysics.shapes.push_back(cm::Factory::CreateShape(mPhysics.body, second, third, radius, true));
-            mPhysics.shapes.push_back(cm::Factory::CreateShape(mPhysics.body, third, fourth, radius, true));
-            mPhysics.shapes.push_back(cm::Factory::CreateShape(mPhysics.body, fourth, first, radius, true));
+            mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, first, second, radius));
+            mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, second, third, radius));
+            mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, third, fourth, radius));
+            mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, fourth, first, radius));
             
-            using namespace std::tr1::placeholders;
-            std::for_each(mPhysics.shapes.begin(), mPhysics.shapes.end(), std::tr1::bind(&cm::IShape::SetElasticity, _1, 0.9f));
+            std::for_each(mPhysicsObject.shapes.begin(), mPhysicsObject.shapes.end(), std::tr1::bind(&cm::IShape::SetElasticity, _1, 0.9f));
         }
         virtual void Draw(mono::IRenderer&) const
         {
             mono::DrawQuad(mBounds);
         }
-        virtual Math::Quad BoundingBox() const
+        virtual math::Quad BoundingBox() const
         {
             return mBounds;
         }
         virtual void Update(unsigned int delta)
         { }
         
-        const Math::Quad mBounds;
-        cm::Object mPhysics;
+        const math::Quad mBounds;
     };
     
     struct GravityUpdater : mono::IUpdatable
     {
-        GravityUpdater(mono::PhysicsZone& zone, std::tr1::shared_ptr<Moon> moon1, std::tr1::shared_ptr<Moon> moon2)
+        GravityUpdater(mono::PhysicsZone* zone, mono::IEntityPtr moon1, mono::IEntityPtr moon2)
             : mZone(zone),
               mMoon1(moon1),
               mMoon2(moon2),
@@ -82,98 +85,98 @@ namespace
         virtual void doUpdate(unsigned int delta)
         {
             mElapsedTime += delta;
-            if(mElapsedTime < 10)
+            if(mElapsedTime < 16)
                 return;
             
-            using namespace std::tr1::placeholders;
-            mZone.ForEachBody(std::tr1::bind(&GravityUpdater::GravityBodyFunc, this, _1));
+            mZone->ForEachBody(std::tr1::bind(&GravityUpdater::GravityBodyFunc, this, _1));
             mElapsedTime = 0;
         }
         void GravityBodyFunc(cm::IBodyPtr body)
         {
-            Math::Vector2f impulse;
+            math::Vector2f impulse;
             
-            Math::Vector2f newPos = body->GetPosition() - mMoon1->Position();
-            const float distance = Math::Length(newPos);
+            math::Vector2f newPos = body->GetPosition() - mMoon1->Position();
+            const float distance = math::Length(newPos);
             if(distance < 300.0f)
             {
                 const float gravity = 1e4f;
                 const float value = -gravity / (distance * sqrtf(distance));
             
-                Math::Normalize(newPos);
+                math::Normalize(newPos);
                 newPos *= value;
                 
                 impulse += newPos;
             }
             
-            Math::Vector2f newPos2 = body->GetPosition() - mMoon2->Position();
-            const float distance2 = Math::Length(newPos2);
+            math::Vector2f newPos2 = body->GetPosition() - mMoon2->Position();
+            const float distance2 = math::Length(newPos2);
             if(distance2 < 200.0f)
             {
                 const float gravity = 1e4f;
                 const float value = -gravity / (distance2 * sqrtf(distance2));
                 
-                Math::Normalize(newPos2);
+                math::Normalize(newPos2);
                 newPos2 *= value;
                 
                 impulse += newPos2;
             }
             
-            body->ApplyImpulse(impulse, Math::Vector2f(0.0, 0.0));
+            body->ApplyImpulse(impulse, math::Vector2f(0.0, 0.0));
         }
         
-        mono::PhysicsZone& mZone;
-        std::tr1::shared_ptr<Moon> mMoon1;
-        std::tr1::shared_ptr<Moon> mMoon2;
+        mono::PhysicsZone* mZone;
+        mono::IEntityPtr mMoon1;
+        mono::IEntityPtr mMoon2;
         unsigned int mElapsedTime;
     };
     
 }
 
 TestZone::TestZone()
-    : PhysicsZone(Math::Vector2f(0.0f, 0.0f))
-{
-    using namespace std::tr1::placeholders;
-    
-    const game::SpawnEntityEventFunc spawnEntityFunc = std::tr1::bind(&TestZone::SpawnEntity, this, _1);
+    : PhysicsZone(math::Vector2f(0.0f, 0.0f))
+{    
+    const game::SpawnEntityFunc spawnEntityFunc = std::tr1::bind(&TestZone::SpawnEntity, this, _1);
     mSpawnEntityToken = mono::EventHandler::AddListener(spawnEntityFunc);
     
     const game::SpawnPhysicsEntityFunc spawnPhysicsFunc = std::tr1::bind(&TestZone::SpawnPhysicsEntity, this, _1);
     mSpawnPhysicsEntityToken = mono::EventHandler::AddListener(spawnPhysicsFunc);
+    
+    const game::RemoveEntityFunc removeEntityFunc = std::tr1::bind(&TestZone::RemoveEntity, this, _1);
+    mRemoveEntityToken = mono::EventHandler::AddListener(removeEntityFunc);
+    
+    const game::RemovePhysicsEntityFunc removePhysicsFunc = std::tr1::bind(&TestZone::RemovePhysicsEntity, this, _1);
+    mRemovePhysicsEntityToken = mono::EventHandler::AddListener(removePhysicsFunc);
 }
 
 TestZone::~TestZone()
 {
     mono::EventHandler::RemoveListener(mSpawnEntityToken);
     mono::EventHandler::RemoveListener(mSpawnPhysicsEntityToken);
+    mono::EventHandler::RemoveListener(mRemoveEntityToken);
+    mono::EventHandler::RemoveListener(mRemovePhysicsEntityToken);
 }
 
 void TestZone::OnLoad(mono::ICameraPtr camera)
 {    
-    mono::IEntityPtr dude(new AnimatedDude(100.0f, 50.0f));
-    AddEntityToLayer(MIDDLEGROUND, dude);
+    AddEntityToLayer(mono::IEntityPtr(new AnimatedDude(100.0f, 50.0f)), MIDDLEGROUND);
     
-    std::tr1::shared_ptr<ZoneBounds> bounds(new ZoneBounds(Math::Quad(0.0f, 0.0f, 1000.0f, 600.0f)));
-    AddPhysicsObject(bounds->mPhysics, false);
-    AddEntityToLayer(BACKGROUND, bounds);
+    std::tr1::shared_ptr<ZoneBounds> bounds(new ZoneBounds(math::Quad(0.0f, 0.0f, 1000.0f, 600.0f)));
+    AddPhysicsEntityToLayer(bounds, BACKGROUND);
         
     std::tr1::shared_ptr<Shuttle> shuttle(new Shuttle(100.0f, 100.0f));
-    AddPhysicsObject(shuttle->mPhysicsObject, true);
-    AddEntityToLayer(FOREGROUND, shuttle);
+    AddPhysicsEntityToLayer(shuttle, FOREGROUND);
 
     std::tr1::shared_ptr<Moon> moon1(new Moon(550.0f, 300.0f, 100.0f));
-    AddPhysicsObject(moon1->mPhysicsObject, false);
-    AddEntityToLayer(BACKGROUND, moon1);
+    AddPhysicsEntityToLayer(moon1, FOREGROUND);
     
     std::tr1::shared_ptr<Moon> moon2(new Moon(200.0f, 400.0f, 50.0f));
-    AddPhysicsObject(moon2->mPhysicsObject, false);
-    AddEntityToLayer(BACKGROUND, moon2);
+    AddPhysicsEntityToLayer(moon2, FOREGROUND);
     
-    AddEntityToLayer(BACKGROUND, mono::IEntityPtr(new TriangleObject));
-    AddEntityToLayer(FOREGROUND, mono::IEntityPtr(new OscillatingLine));
-    AddEntityToLayer(FOREGROUND, mono::IEntityPtr(new Explosion));
+    AddEntityToLayer(mono::IEntityPtr(new TriangleObject), BACKGROUND);
+    AddEntityToLayer(mono::IEntityPtr(new OscillatingLine), FOREGROUND);
+    AddEntityToLayer(mono::IEntityPtr(new Explosion), FOREGROUND);
     
-    AddUpdatable(mono::IUpdatablePtr(new GravityUpdater(*this, moon1, moon2)));
+    AddUpdatable(mono::IUpdatablePtr(new GravityUpdater(this, moon1, moon2)));
         
     camera->SetPosition(shuttle->Position());
     camera->Follow(shuttle);
@@ -184,11 +187,23 @@ void TestZone::OnUnload()
 
 void TestZone::SpawnEntity(const game::SpawnEntityEvent& event)
 {
-    AddEntityToLayer(FOREGROUND, event.mEntity);
+    AddEntityToLayer(event.mEntity, FOREGROUND);
 }
 
 void TestZone::SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event)
 {
-    AddEntityToLayer(FOREGROUND, event.mEntity);
-    AddPhysicsObject(event.mPhysics, true);
+    AddPhysicsEntityToLayer(event.mEntity, FOREGROUND);
 }
+
+void TestZone::RemoveEntity(const game::RemoveEntityEvent& event)
+{
+    RemoveEntity(event.mEntity);
+}
+
+void TestZone::RemovePhysicsEntity(const game::RemovePhysicsEntityEvent& event)
+{
+    RemovePhysicsEntity(event.mEntity);
+}
+
+
+

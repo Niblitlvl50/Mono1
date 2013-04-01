@@ -9,30 +9,22 @@
 
 #pragma once
 
+#include <vector>
 #include <tr1/memory>
 #include <tr1/functional>
-#include <vector>
 
-struct cpSpace;
 struct cpBody;
 struct cpShape;
-
-namespace Math
-{
-    struct Vector2f;
-}
-
-typedef std::vector<Math::Vector2f> Vector2fCollection;
 
 namespace cm
 {
     struct Object;
+    
     struct IBody;
-    struct IShape;
-    
     typedef std::tr1::shared_ptr<IBody> IBodyPtr;
+
+    struct IShape;
     typedef std::tr1::shared_ptr<IShape> IShapePtr;
-    
     typedef std::vector<IShapePtr> IShapeCollection;
     
     typedef std::tr1::function<void (IBodyPtr body)> BodyFunc;

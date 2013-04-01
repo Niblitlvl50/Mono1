@@ -10,7 +10,7 @@
 #include "Vector2f.h"
 #include "Quad.h"
 
-bool Math::PointInsideQuad(const Math::Vector2f& point, const Math::Quad& quad)
+bool math::PointInsideQuad(const math::Vector2f& point, const math::Quad& quad)
 {
     if(point.mX > quad.mA.mX &&
        point.mX < quad.mB.mX &&
@@ -21,7 +21,7 @@ bool Math::PointInsideQuad(const Math::Vector2f& point, const Math::Quad& quad)
     return false;
 }
 
-bool Math::QuadOverlaps(const Math::Quad& left, const Math::Quad& right)
+bool math::QuadOverlaps(const math::Quad& left, const math::Quad& right)
 {
     const Vector2f& left1 = left.mA;
     const Vector2f& left2 = left.mB;
@@ -36,7 +36,7 @@ bool Math::QuadOverlaps(const Math::Quad& left, const Math::Quad& right)
     return false;
 }
 
-void Math::ResizeQuad(Math::Quad& quad, float value, float aspect)
+void math::ResizeQuad(math::Quad& quad, float value, float aspect)
 {
     const float resizeX = value * aspect;
     const float resizeY = value;
@@ -47,4 +47,15 @@ void Math::ResizeQuad(Math::Quad& quad, float value, float aspect)
     quad.mB.mX += resizeX;
     quad.mB.mY += resizeY;
 }
+
+float math::RadToDeg(float radians)
+{
+    return radians * 180.0f / math::PI;
+}
+
+float math::DegToRad(float degrees)
+{
+    return degrees * math::PI / 180.0f;
+}
+
 

@@ -17,18 +17,18 @@ namespace game
 {
     class AnimatedDude : public mono::EntityBase
     {
+        friend class AnimatedDudeController;
+
     public:
 
         AnimatedDude(float x, float y);
         
     private:
         
-        friend class AnimatedDudeController;
-
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
         
-        Math::Vector2f mTarget;
+        math::Vector2f mTarget;
         mono::Sprite mSprite;
         AnimatedDudeController mController;        
     };

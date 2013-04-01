@@ -10,6 +10,7 @@
 #pragma once
 
 #include "ZoneBase.h"
+#include "MathFwd.h"
 #include "CMFwd.h"
 
 namespace mono
@@ -22,18 +23,16 @@ namespace mono
 
     protected:
         
-        PhysicsZone(const Math::Vector2f& gravity);
+        PhysicsZone(const math::Vector2f& gravity);
         virtual void Accept(IRenderer& renderer);
+                        
+        void AddPhysicsEntityToLayer(mono::IPhysicsEntityPtr entity, LayerId layer);
+        void RemovePhysicsEntity(mono::IPhysicsEntityPtr entity);
         
-        void AddBody(cm::IBodyPtr body);
-        void AddShape(cm::IShapePtr shape);
-        void AddPhysicsObject(cm::Object& object, bool addBody);
-                
     private:
         
         struct PhysicsImpl;
         std::tr1::shared_ptr<PhysicsImpl> mPhysics;
     };
-
 }
 

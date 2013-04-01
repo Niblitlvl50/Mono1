@@ -11,13 +11,15 @@
 #include "IUpdatable.h"
 #include "CMSpace.h"
 #include "CMObject.h"
+#include "CMIShape.h"
 #include "Vector2f.h"
+#include "IEntity.h"
 
 using namespace mono;
 
 struct PhysicsZone::PhysicsImpl : IUpdatable
 {
-    PhysicsImpl(const Math::Vector2f& gravity)
+    PhysicsImpl(const math::Vector2f& gravity)
         : mSpace(gravity)
     { }
     void doUpdate(unsigned int delta)
@@ -25,11 +27,10 @@ struct PhysicsZone::PhysicsImpl : IUpdatable
         const float floatDelta = delta;
         mSpace.Tick(floatDelta / 1000.0f);
     }
-
     cm::Space mSpace;
 };
 
-PhysicsZone::PhysicsZone(const Math::Vector2f& gravity)
+PhysicsZone::PhysicsZone(const math::Vector2f& gravity)
     : mPhysics(new PhysicsImpl(gravity))
 { }
 
@@ -39,26 +40,32 @@ void PhysicsZone::Accept(IRenderer& renderer)
     ZoneBase::Accept(renderer);
 }
 
-void PhysicsZone::AddBody(cm::IBodyPtr body)
-{
-    mPhysics->mSpace.AddBody(body);
-}
-void PhysicsZone::AddShape(cm::IShapePtr shape)
-{
-    mPhysics->mSpace.AddShape(shape);
-}
-
-void PhysicsZone::AddPhysicsObject(cm::Object& object, bool addBody)
-{
-    if(addBody)
-        AddBody(object.body);
-    
-    for(cm::IShapeCollection::iterator it = object.shapes.begin(), end = object.shapes.end(); it != end; ++it)
-        AddShape(*it);
-}
-
 void PhysicsZone::ForEachBody(const cm::BodyFunc& func)
 {
     mPhysics->mSpace.ForEachBody(func);
 }
+
+void PhysicsZone::AddPhysicsEntityToLayer(mono::IPhysicsEntityPtr entity, LayerId layer)
+{
+    cm::Object& object = entity->GetPhysics();
+    mPhysics->mSpace.AddBody(object.body);
+    
+    for(cm::IShapeCollection::iterator it = object.shapes.begin(), end = object.shapes.end(); it != end; ++it)
+        mPhysics->mSpace.AddShape(*it);
+    
+    AddEntityToLayer(entity, layer);
+}
+
+void PhysicsZone::RemovePhysicsEntity(mono::IPhysicsEntityPtr entity)
+{
+    cm::Object& object = entity->GetPhysics();
+    mPhysics->mSpace.RemoveBody(object.body);
+    
+    for(cm::IShapeCollection::iterator it = object.shapes.begin(), end = object.shapes.end(); it != end; ++it)
+        mPhysics->mSpace.RemoveShape(*it);
+    
+    RemoveEntity(entity);
+}
+
+
 

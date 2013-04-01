@@ -11,6 +11,7 @@
 #include "CMIBody.h"
 #include "CMIShape.h"
 #include "CMFactory.h"
+#include "IRenderer.h"
 
 using namespace game;
 
@@ -18,24 +19,22 @@ using namespace game;
 Moon::Moon(float x, float y, float radius)
     : mSprite("moon.sprite")
 {
-    mPosition = Math::Vector2f(x, y);
+    mPosition = math::Vector2f(x, y);
     mScale = radius * 2.0f;
     
-    mPhysicsObject.body = cm::Factory::CreateBody(150000.0f, 1.0f);
+    mPhysicsObject.body = cm::Factory::CreateStaticBody();
     mPhysicsObject.body->SetPosition(mPosition);
 
-    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, radius, Math::Vector2f(0.0f, 0.0f), true);
+    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, radius, math::Vector2f(0.0f, 0.0f));
     shape->SetElasticity(0.9f);
     
     mPhysicsObject.shapes.push_back(shape);
 }
 
-void Moon::Draw(mono::IRenderer&) const
+void Moon::Draw(mono::IRenderer& renderer) const
 {
-    mSprite.Draw();
+    renderer.DrawSprite(mSprite);
 }
 
 void Moon::Update(unsigned int delta)
-{
-    //mSprite.doUpdate(delta);
-}
+{ }

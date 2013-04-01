@@ -63,6 +63,7 @@ Engine::Engine(unsigned int hz, IWindowPtr window, ICameraPtr camera, IZonePtr z
 
 Engine::~Engine()
 {
+    EventHandler::RemoveListener(mPauseToken);
     EventHandler::RemoveListener(mQuitToken);
     EventHandler::RemoveListener(mSurfaceChangedToken);
     EventHandler::RemoveListener(mActivatedToken);
@@ -90,7 +91,7 @@ void Engine::Run()
 
             // Update the stuff, and then render the frame.
             renderer.Update(delta);
-        
+                    
             std::stringstream stream;
             stream << "FPS: " << counter.Fps() << " Frame: " << counter.Frames();
             Color color = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -110,10 +111,10 @@ void Engine::Run()
 // This function is a little bit out of place but i guess this is where it has to be for now.
 void Engine::ScreenToWorld(int& x, int& y) const
 {
-    const Math::Vector2f& windowSize = mWindow->Size();
-    const Math::Quad& viewport = mCamera->GetViewport();
+    const math::Vector2f& windowSize = mWindow->Size();
+    const math::Quad& viewport = mCamera->GetViewport();
     
-    const Math::Vector2f scale = viewport.mB / windowSize;
+    const math::Vector2f scale = viewport.mB / windowSize;
         
     const float screenX = x;
     const float screenY = windowSize.mY - y;

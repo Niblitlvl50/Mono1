@@ -8,12 +8,14 @@
 
 #pragma once
 
-namespace Math
-{
-    struct Vector2f;
-    struct Quad;
+#include "MathFwd.h"
+
+namespace math
+{    
+    bool PointInsideQuad(const math::Vector2f& point, const math::Quad& quad);
+    bool QuadOverlaps(const math::Quad& left, const math::Quad& right);
+    void ResizeQuad(math::Quad& quad, float value, float aspect = 1.0f);
     
-    bool PointInsideQuad(const Math::Vector2f& point, const Math::Quad& quad);
-    bool QuadOverlaps(const Math::Quad& left, const Math::Quad& right);
-    void ResizeQuad(Math::Quad& quad, float value, float aspect = 1.0f);
+    float RadToDeg(float radians);
+    float DegToRad(float degrees);
 }

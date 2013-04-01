@@ -8,19 +8,20 @@
  */
 
 #include "SquareObject.h"
+#include "IRenderer.h"
 
 using namespace game;
 
 SquareObject::SquareObject(float x, float y)
     : mSprite("invader.sprite")
 {
-    mPosition = Math::Vector2f(x, y);
+    mPosition = math::Vector2f(x, y);
     //mRotationCenter = Math::Vector2f(-1.0f, -1.0f);
 }
 
 void SquareObject::Draw(mono::IRenderer& renderer) const
 {
-    mSprite.Draw();
+    renderer.DrawSprite(mSprite);
 }
 
 void SquareObject::Update(unsigned int delta)

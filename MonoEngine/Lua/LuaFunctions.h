@@ -87,9 +87,14 @@ namespace lua
     std::map<K, std::vector<T> > GetTableMap(LuaState& lua, const std::string& name)
     {
         lua::GetGlobal(lua, name);
-        
         std::map<K, std::vector<T> > values;
-        lua::GetMap(lua, values);
+
+        try
+        {
+            lua::GetMap(lua, values);
+        }
+        catch(...)
+        { }
         
         return values;
     }

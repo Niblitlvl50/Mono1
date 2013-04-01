@@ -15,7 +15,6 @@
 #include "Vector2f.h"
 #include "Quad.h"
 #include "MathFunctions.h"
-#include "Texture.h"
 #include "RenderUtils.h"
 
 using namespace mono;
@@ -28,7 +27,7 @@ Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
 
 void Renderer::PrepareDraw() const
 {
-    const Math::Quad& viewport = mCamera->GetViewport();
+    const math::Quad& viewport = mCamera->GetViewport();
         
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -57,14 +56,14 @@ void Renderer::DrawFrame()
         const OGL::OGLPushPopMatrix raii;
 
         const IDrawablePtr drawable = *it;
-        const Math::Quad& bounds = drawable->BoundingBox();
+        const math::Quad& bounds = drawable->BoundingBox();
         
         if(mDrawBB)
             DrawQuad(bounds);
         
-        const Math::Quad& viewport = mCamera->GetViewport();
-        const Math::Quad camQuad(viewport.mA, viewport.mA + viewport.mB);
-        const bool visible = Math::QuadOverlaps(camQuad, bounds);
+        const math::Quad& viewport = mCamera->GetViewport();
+        const math::Quad camQuad(viewport.mA, viewport.mA + viewport.mB);
+        const bool visible = math::QuadOverlaps(camQuad, bounds);
         if(visible)
             drawable->doDraw(*this);
     }
@@ -93,16 +92,23 @@ void Renderer::AddEntity(IEntityPtr entity)
     mDrawables.push_back(entity);
     mUpdatables.push_back(entity);
 }
+
 void Renderer::AddDrawable(IDrawablePtr drawable)
 {
     mDrawables.push_back(drawable);
 }
+
 void Renderer::AddUpdatable(IUpdatablePtr updatable)
 {
     mUpdatables.push_back(updatable);
 }
 
-void Renderer::DrawText(const std::string& text, const Math::Vector2f& pos, bool center, Color color)
+void Renderer::DrawSprite(const Sprite& sprite) const
+{
+    ::DrawSprite(sprite);
+}
+
+void Renderer::DrawText(const std::string& text, const math::Vector2f& pos, bool center, Color color)
 {
     TextDefinition def = GenerateVertexDataFromString(text, pos, center);
     def.color[0] = color[0];

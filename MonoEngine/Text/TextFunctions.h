@@ -10,6 +10,7 @@
 
 #include "SysTypes.h"
 #include "MonoFwd.h"
+#include "MathFwd.h"
 #include <string>
 
 namespace mono
@@ -33,7 +34,7 @@ namespace mono
     //! @param pos The position...
     //! @param center If the text should be horizontally centered to the position
     //! @return TextDefinition
-    TextDefinition GenerateVertexDataFromString(const std::string& text, const Math::Vector2f& pos, bool center);
+    TextDefinition GenerateVertexDataFromString(const std::string& text, const math::Vector2f& pos, bool center);
     
     //! Draw all the texts defined at once
     //! @param collection A collection of text definitions

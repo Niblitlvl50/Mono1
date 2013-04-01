@@ -10,23 +10,21 @@
 
 using namespace mono;
 
-AnimationSequence::AnimationSequence()
-    : mStart(0),
-      mEnd(0),
-      mFrame(0),
-      mElapsedTime(0)
-{ }
-
-AnimationSequence::AnimationSequence(unsigned int start, unsigned int end, const FrameDurations& durations)
+AnimationSequence::AnimationSequence(unsigned int start, unsigned int end, bool loop, const FrameDurations& durations)
     : mStart(start),
       mEnd(end),
       mFrame(start),
       mElapsedTime(0),
+      mLoopSequence(loop),
+      mDone(false),
       mDurations(durations)
 { }
 
 void AnimationSequence::Tick(unsigned int delta)
 {
+    if(mDone)
+        return;
+    
     mElapsedTime += delta;
     if(mElapsedTime > mDurations.at(mFrame - mStart))
     {
@@ -34,7 +32,12 @@ void AnimationSequence::Tick(unsigned int delta)
         mFrame++;
         
         if(mFrame > mEnd)
-            mFrame = mStart;
+        {
+            if(mLoopSequence)
+                mFrame = mStart;
+            else
+                mDone = true;
+        }
     }
 }
 
@@ -42,4 +45,10 @@ unsigned int AnimationSequence::Frame() const
 {
     return mFrame;
 }
+
+bool AnimationSequence::Finished() const
+{
+    return mDone;
+}
+
 

@@ -43,7 +43,7 @@ void OscillatingLine::Draw(mono::IRenderer& renderer) const
     glDisableClientState(GL_VERTEX_ARRAY);
     
     Color color = { 0.0f, 0.0f, 0.0f, 1.0f };
-    renderer.DrawText("dot...", mPosition + Math::Vector2f(0.0f, 5.0f), true, color);
+    renderer.DrawText("dot...", mPosition + math::Vector2f(0.0f, 5.0f), true, color);
 }
 
 void OscillatingLine::Update(unsigned int delta)
@@ -53,6 +53,6 @@ void OscillatingLine::Update(unsigned int delta)
     const float deltasin = std::sin(mDelta) * 50.0f;
     const float deltacos = std::cos(mDelta) * 50.0f;
     
-    mPosition = mBase + Math::Vector2f(deltasin, deltacos);
+    mPosition = mBase + math::Vector2f(deltasin, deltacos);
 }
 

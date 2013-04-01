@@ -8,18 +8,15 @@
 
 #pragma once
 
-#include "EntityBase.h"
+#include "PhysicsEntityBase.h"
 #include "Sprite.h"
-#include "CMObject.h"
 
 namespace game
 {
-    class Moon : public mono::EntityBase
+    class Moon : public mono::PhysicsEntityBase
     {
     public:
         Moon(float x, float y, float radius);
-
-        cm::Object mPhysicsObject;
 
     private:
         virtual void Draw(mono::IRenderer& renderer) const;

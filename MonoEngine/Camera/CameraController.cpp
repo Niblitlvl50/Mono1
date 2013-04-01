@@ -40,12 +40,12 @@ void CameraController::OnMouseWheel(const Event::MouseWheelEvent& event)
     const float multiplier = (event.mY < 0) ? -1.0f : 1.0f;
     const float resizeValue = 50.0f * multiplier;
     
-    Math::Quad quad = mCam->GetViewport();
+    math::Quad quad = mCam->GetViewport();
     const float width = quad.mB.mX - quad.mA.mX;
     const float height = quad.mB.mY - quad.mA.mY;
     
     const float aspect = width / height;
-    Math::ResizeQuad(quad, resizeValue, aspect);
+    math::ResizeQuad(quad, resizeValue, aspect);
     
     mCam->SetTargetViewport(quad);
 }
@@ -55,12 +55,12 @@ void CameraController::OnMultiGesture(const Event::MultiGestureEvent& event)
     const float multiplier = (event.mDistance < 0.0f) ? 1.0f : -1.0f;
     const float resizeValue = 50.0f * multiplier;
     
-    Math::Quad quad = mCam->GetViewport();
+    math::Quad quad = mCam->GetViewport();
     const float width = quad.mB.mX - quad.mA.mX;
     const float height = quad.mB.mY - quad.mA.mY;
     
     const float aspect = width / height;
-    Math::ResizeQuad(quad, resizeValue, aspect);
+    math::ResizeQuad(quad, resizeValue, aspect);
     
     mCam->SetTargetViewport(quad);
 }

@@ -18,7 +18,7 @@
 
 using namespace game;
 
-AnimatedDudeController::AnimatedDudeController(AnimatedDude& dude)
+AnimatedDudeController::AnimatedDudeController(AnimatedDude* dude)
     : mDude(dude)
 {
     using namespace std::tr1::placeholders;
@@ -43,20 +43,20 @@ AnimatedDudeController::~AnimatedDudeController()
 void AnimatedDudeController::OnKeyDown(const Event::KeyDownEvent& event)
 {
     if(event.mKey == SDLK_RIGHT)
-        mDude.mTarget.mX += 20.0f;
+        mDude->mTarget.mX += 20.0f;
     else if(event.mKey == SDLK_LEFT)
-        mDude.mTarget.mX -= 20.0f;    
+        mDude->mTarget.mX -= 20.0f;    
     
     if(event.mKey == SDLK_UP)
-        mDude.mTarget.mY += 20.0f;
+        mDude->mTarget.mY += 20.0f;
     else if(event.mKey == SDLK_DOWN)
-        mDude.mTarget.mY -= 20.0f;
+        mDude->mTarget.mY -= 20.0f;
 }
 
 void AnimatedDudeController::OnMouseUp(const Event::MouseUpEvent& event)
 {
     std::cout << "MouseUp at: x " << event.mX << " - y " << event.mY << std::endl;
-    mDude.mTarget = Math::Vector2f(event.mX, event.mY);
+    mDude->mTarget = math::Vector2f(event.mX, event.mY);
 }
 
 void AnimatedDudeController::OnMouseMotion(const Event::MouseMotionEvent& event)

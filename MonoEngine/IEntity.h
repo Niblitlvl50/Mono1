@@ -12,6 +12,7 @@
 #include "IDrawable.h"
 #include "IUpdatable.h"
 #include "MonoFwd.h"
+#include "CMFwd.h"
 
 namespace mono
 {
@@ -20,7 +21,15 @@ namespace mono
         virtual ~IEntity()
         { }
         
-        virtual const Math::Vector2f& Position() const = 0;
+        virtual const math::Vector2f& Position() const = 0;
+    };
+    
+    struct IPhysicsEntity : public IEntity
+    {
+        virtual ~IPhysicsEntity()
+        { }
+        
+        virtual cm::Object& GetPhysics() = 0;
     };
 }
 

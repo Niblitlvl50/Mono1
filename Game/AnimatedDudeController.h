@@ -21,7 +21,7 @@ namespace game
         
     public:
         
-        AnimatedDudeController(AnimatedDude& dude);
+        AnimatedDudeController(AnimatedDude* dude);
         ~AnimatedDudeController();
         
         void OnKeyDown(const Event::KeyDownEvent& event);
@@ -30,7 +30,7 @@ namespace game
         
     private:
         
-        AnimatedDude& mDude;
+        AnimatedDude* mDude;
         mono::EventToken<Event::KeyDownEvent> mKeyDownToken;
         mono::EventToken<Event::MouseUpEvent> mMouseUpToken;
         mono::EventToken<Event::MouseMotionEvent> mMouseMotionToken;

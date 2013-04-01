@@ -10,6 +10,7 @@
 #pragma once
 
 #include "MonoFwd.h"
+#include "MathFwd.h"
 
 namespace mono
 {
@@ -20,7 +21,7 @@ namespace mono
         { }
 		
         virtual void doDraw(IRenderer& renderer) const = 0;
-        virtual Math::Quad BoundingBox() const = 0;
+        virtual math::Quad BoundingBox() const = 0;
     };
 
 }

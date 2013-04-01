@@ -17,15 +17,15 @@ namespace cm
         virtual ~IShape()
         { }
         
+        //! How bouncy this shape is. 
         virtual void SetElasticity(float value) = 0;
+        
+        //! How much friction this shape has. 
         virtual void SetFriction(float value) = 0;
-        
-        virtual bool IsStatic() const = 0;
-        
+                
     private:
         
         friend class Space;
-        
         virtual cpShape* Shape() = 0;
     };
 }

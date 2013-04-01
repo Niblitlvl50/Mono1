@@ -7,7 +7,7 @@
 //
 
 #include "Arm.h"
-#include "SysOpenGL.h"
+#include "IRenderer.h"
 
 using namespace game;
 
@@ -18,18 +18,15 @@ namespace
         UpperArm()
             : mSprite("Monster/arm_upper_left.lua")
         {
-            mPosition = Math::Vector2f(0.0f, 0.0f);
+            mPosition = math::Vector2f(0.0f, 0.0f);
             mScale = 1.0f;
         }
-        
-        void Draw(mono::IRenderer&) const
+        void Draw(mono::IRenderer& renderer) const
         {
-            mSprite.Draw();
-        }
-        
+            renderer.DrawSprite(mSprite);
+        }        
         void Update(unsigned int delta)
         { }
-        
         mono::Sprite mSprite;
     };
     
@@ -38,19 +35,16 @@ namespace
         LowerArm()
             : mSprite("Monster/arm_left.lua")
         {
-            mPosition = Math::Vector2f(0.0f, -1.0f);
+            mPosition = math::Vector2f(0.0f, -1.0f);
             mRotation = 90.0f;
             mScale = 1.0f;
         }
-        
-        void Draw(mono::IRenderer&) const
+        void Draw(mono::IRenderer& renderer) const
         {
-            mSprite.Draw();
+            renderer.DrawSprite(mSprite);
         }
-        
         void Update(unsigned int delta)
-        { }
-        
+        { }        
         mono::Sprite mSprite;
     };
     
@@ -59,18 +53,15 @@ namespace
         Hand()
         : mSprite("Monster/hand_left.lua")
         {
-            mPosition = Math::Vector2f(0.0f, -2.0f);
+            mPosition = math::Vector2f(0.0f, -2.0f);
             mScale = 1.0f;
         }
-        
-        void Draw(mono::IRenderer&) const
+        void Draw(mono::IRenderer& renderer) const
         {
-            mSprite.Draw();
+            renderer.DrawSprite(mSprite);
         }
-        
         void Update(unsigned int delta)
         { }
-        
         mono::Sprite mSprite;
     };    
 }
@@ -84,7 +75,7 @@ Arm::Arm(float x, float y)
     AddChild(mLower);
     AddChild(mHand);
     
-    mPosition = Math::Vector2f(x, y);
+    mPosition = math::Vector2f(x, y);
     //mScale = 0.8f;
 }
 

@@ -9,21 +9,18 @@
 #pragma once
 #include <cmath>
 
-namespace Math
+namespace math
 {
-    
     struct Vector2f
     {
         Vector2f()
             : mX(0.0f),
               mY(0.0f)
         { }
-        
         Vector2f(float x, float y)
             : mX(x),
               mY(y)
         { }
-        
         float mX;
         float mY;
     };
@@ -76,7 +73,5 @@ namespace Math
         vector.mX /= length;
         vector.mY /= length;
     }
-
-    
 }
 

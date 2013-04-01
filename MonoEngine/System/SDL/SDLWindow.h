@@ -28,11 +28,11 @@ namespace mono
         virtual void SurfaceChanged(int width, int height);
         virtual void Activated(bool activated);
         virtual void SwapBuffers() const;
-        virtual const Math::Vector2f& Size() const;
+        virtual const math::Vector2f& Size() const;
 	
     private:
                 
-        Math::Vector2f mSize;
+        math::Vector2f mSize;
         SDL_Window* mWindow;
         void* mContext;
     };

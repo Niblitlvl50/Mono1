@@ -8,14 +8,16 @@
 
 #pragma once
 
-namespace Math
-{
-    struct Quad;
-}
+#include "MathFwd.h"
 
 namespace mono
 {
+    class Sprite;
+    
     // Draws a quad with the current color. 
-    void DrawQuad(const Math::Quad& quad);
+    void DrawQuad(const math::Quad& quad);
+    
+    //! Draws a sprite
+    void DrawSprite(const Sprite& sprite);
 }
 

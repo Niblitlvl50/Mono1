@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     {
         Libs::Init();
         
-        const Math::Vector2f size = Video::GetCurrentWindowSize();
+        const math::Vector2f size = Video::GetCurrentWindowSize();
                         
         mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", 1024, 768, false);
         mono::LoadFont("pixelette.ttf", 10.0f);

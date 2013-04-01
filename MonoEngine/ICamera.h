@@ -10,6 +10,7 @@
 #pragma once
 
 #include "MonoFwd.h"
+#include "MathFwd.h"
 
 namespace mono
 {
@@ -24,11 +25,11 @@ namespace mono
         virtual void Follow(const mono::IEntityPtr entity) = 0;
         virtual void Unfollow() = 0;
         
-        virtual const Math::Quad& GetViewport() const = 0;
-        virtual /* */ Math::Quad& GetViewport() /* */ = 0;
+        virtual const math::Quad& GetViewport() const = 0;
+        virtual /* */ math::Quad& GetViewport() /* */ = 0;
         
-        virtual void SetTargetViewport(const Math::Quad& target) = 0;
-        virtual void SetPosition(const Math::Vector2f& position) = 0;
+        virtual void SetTargetViewport(const math::Quad& target) = 0;
+        virtual void SetPosition(const math::Vector2f& position) = 0;
     };
     
 }

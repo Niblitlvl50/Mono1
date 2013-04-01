@@ -11,6 +11,8 @@
 #include "Arm.h"
 #include "Leg.h"
 
+#include "IRenderer.h"
+
 
 using namespace game;
 
@@ -28,13 +30,13 @@ Monster::Monster()
     //AddChild(mRightLeg);
     //AddChild(mLeftLeg);
     
-    mPosition = Math::Vector2f(200.0f, 100.0f);
+    mPosition = math::Vector2f(200.0f, 100.0f);
     mScale = 30.0f;
 }
 
-void Monster::Draw(mono::IRenderer&) const
+void Monster::Draw(mono::IRenderer& renderer) const
 {
-    mBody.Draw();
+    renderer.DrawSprite(mBody);
 }
 
 void Monster::Update(unsigned int delta)

@@ -24,7 +24,7 @@ EntityBase::EntityBase()
 
 void EntityBase::doDraw(IRenderer& renderer) const
 {
-    const Math::Vector2f rotationPoint = mBasePoint * mScale;
+    const math::Vector2f rotationPoint = mBasePoint * mScale;
     
     // Im not so happy with this, two translations...
     
@@ -55,21 +55,21 @@ void EntityBase::doUpdate(unsigned int delta)
     Update(delta);
 }
 
-const Math::Vector2f& EntityBase::Position() const
+const math::Vector2f& EntityBase::Position() const
 {
     return mPosition;
 }
 
-Math::Quad EntityBase::BoundingBox() const
+math::Quad EntityBase::BoundingBox() const
 {
     const float x = mPosition.mX - (mScale / 2.0f);
     const float y = mPosition.mY - (mScale / 2.0f);
-    Math::Quad thisbb(x, y, x + mScale, y + mScale);
+    math::Quad thisbb(x, y, x + mScale, y + mScale);
         
     for(IEntityCollection::const_iterator it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
     {
         const IEntityPtr child = *it;
-        Math::Quad childbb = (child->BoundingBox() * mScale);
+        math::Quad childbb = (child->BoundingBox() * mScale);
         childbb.mA += mPosition;
         childbb.mB += mPosition;
         thisbb |= childbb;

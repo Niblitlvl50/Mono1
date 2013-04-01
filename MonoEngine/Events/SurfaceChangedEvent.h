@@ -11,14 +11,13 @@
 
 namespace Event
 {
-
     struct SurfaceChangedEvent
     {
         SurfaceChangedEvent(int w, int h)
             : width(w),
               height(h)
         { }
-    
+        
         const int width;
         const int height;
     };

@@ -42,9 +42,9 @@ namespace
     typedef std::map<char, CharData> CharDataMap;
     static CharDataMap charMap;
 
-    Math::Vector2f MeasureString(const std::string& text)
+    math::Vector2f MeasureString(const std::string& text)
     {
-        Math::Vector2f size;
+        math::Vector2f size;
         
         for(std::string::const_iterator it = text.begin(), end = text.end(); it != end; ++it)
         {
@@ -111,7 +111,7 @@ void mono::LoadFont(const std::string& font, float size, float scale)
     }
 }
 
-mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text, const Math::Vector2f& pos, bool center)
+mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text, const math::Vector2f& pos, bool center)
 {
     mono::TextDefinition textDef;
     textDef.chars = text.length();

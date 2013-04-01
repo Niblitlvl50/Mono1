@@ -30,7 +30,7 @@ namespace mono
         
         virtual void Accept(IRenderer& renderer);
         
-        void AddEntityToLayer(LayerId layer, IEntityPtr entity);
+        void AddEntityToLayer(IEntityPtr entity, LayerId layer);
         void RemoveEntity(IEntityPtr entity);
         
         void AddUpdatable(IUpdatablePtr updatable);

@@ -17,11 +17,11 @@ namespace mono
 
     struct AnimationSequence
     {
-        AnimationSequence();
-        AnimationSequence(unsigned int start, unsigned int end, const FrameDurations& durations);        
+        AnimationSequence(unsigned int start, unsigned int end, bool loop, const FrameDurations& durations);        
 
         void Tick(unsigned int delta);
         unsigned int Frame() const;
+        bool Finished() const;
         
     private:
         
@@ -29,6 +29,8 @@ namespace mono
         unsigned int mEnd;
         unsigned int mFrame;
         unsigned int mElapsedTime;
+        bool mLoopSequence;
+        bool mDone;
         FrameDurations mDurations;
     };
 }

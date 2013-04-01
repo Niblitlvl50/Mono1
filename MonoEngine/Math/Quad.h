@@ -11,25 +11,22 @@
 #include "Vector2f.h"
 #include <algorithm>
 
-namespace Math
+namespace math
 {
     struct Quad
     {
         Quad()
         { }
-        
         Quad(float x, float y, float w, float h)
             : mA(x, y),
               mB(w, h)
         { }
-        
         Quad(const Vector2f& a, const Vector2f& b)
             : mA(a),
               mB(b)
         { }
-                
-        Math::Vector2f mA;
-        Math::Vector2f mB;
+        Vector2f mA;
+        Vector2f mB;
     };
     
     inline Quad operator * (const Quad& left, float value)

@@ -26,18 +26,18 @@ namespace mono
         virtual void Follow(const mono::IEntityPtr entity);
         virtual void Unfollow();
         
-        virtual const Math::Quad& GetViewport() const;
-        virtual /* */ Math::Quad& GetViewport() /* */;
+        virtual const math::Quad& GetViewport() const;
+        virtual /* */ math::Quad& GetViewport() /* */;
         
-        virtual void SetTargetViewport(const Math::Quad& target);
-        virtual void SetPosition(const Math::Vector2f& position);
+        virtual void SetTargetViewport(const math::Quad& target);
+        virtual void SetPosition(const math::Vector2f& position);
                         
     private:
         
         CameraController mController;
         
         IEntityPtr mEntity;
-        Math::Quad mViewport;
-        Math::Quad mTargetViewport;
+        math::Quad mViewport;
+        math::Quad mTargetViewport;
     };
 }
