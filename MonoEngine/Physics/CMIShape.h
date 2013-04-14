@@ -22,6 +22,9 @@ namespace cm
         
         //! How much friction this shape has. 
         virtual void SetFriction(float value) = 0;
+        
+        //! Get the calculated inertia value.
+        virtual float GetInertiaValue() const = 0;
                 
     private:
         

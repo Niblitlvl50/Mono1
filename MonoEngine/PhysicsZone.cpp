@@ -15,7 +15,18 @@
 #include "Vector2f.h"
 #include "IEntity.h"
 
+#include "Utils.h"
+
+
 using namespace mono;
+
+namespace
+{
+    bool RemoveIfDead(mono::IPhysicsEntityPtr entity)
+    {
+        return entity->RemoveMe();
+    }
+}
 
 struct PhysicsZone::PhysicsImpl : IUpdatable
 {
@@ -40,6 +51,29 @@ void PhysicsZone::Accept(IRenderer& renderer)
     ZoneBase::Accept(renderer);
 }
 
+void PhysicsZone::DoPreAccept()
+{
+    for(std::vector<mono::IPhysicsEntityPtr>::iterator it = mPhysicsEntities.begin(), end = mPhysicsEntities.end(); it != end; ++it)
+    {
+        mono::IPhysicsEntityPtr entity = *it;
+        if(entity->RemoveMe())
+        {
+            cm::Object& object = entity->GetPhysics();
+        
+            for(cm::IShapeCollection::iterator shapeIt = object.shapes.begin(), shapeEnd = object.shapes.end(); shapeIt != shapeEnd; ++shapeIt)
+                mPhysics->mSpace.RemoveShape(*shapeIt);            
+        
+            mPhysics->mSpace.RemoveBody(object.body);        
+        }
+    }
+        
+    std::vector<mono::IPhysicsEntityPtr>::iterator it = std::remove_if(mPhysicsEntities.begin(), mPhysicsEntities.end(), RemoveIfDead);
+    if(it != mPhysicsEntities.end())
+        mPhysicsEntities.erase(it, mPhysicsEntities.end());
+    
+    ZoneBase::DoPreAccept();
+}
+
 void PhysicsZone::ForEachBody(const cm::BodyFunc& func)
 {
     mPhysics->mSpace.ForEachBody(func);
@@ -47,6 +81,8 @@ void PhysicsZone::ForEachBody(const cm::BodyFunc& func)
 
 void PhysicsZone::AddPhysicsEntityToLayer(mono::IPhysicsEntityPtr entity, LayerId layer)
 {
+    mPhysicsEntities.push_back(entity);
+    
     cm::Object& object = entity->GetPhysics();
     mPhysics->mSpace.AddBody(object.body);
     
@@ -58,12 +94,15 @@ void PhysicsZone::AddPhysicsEntityToLayer(mono::IPhysicsEntityPtr entity, LayerI
 
 void PhysicsZone::RemovePhysicsEntity(mono::IPhysicsEntityPtr entity)
 {
+    const bool result = FindAndRemove(mPhysicsEntities, entity);
+    
     cm::Object& object = entity->GetPhysics();
-    mPhysics->mSpace.RemoveBody(object.body);
     
     for(cm::IShapeCollection::iterator it = object.shapes.begin(), end = object.shapes.end(); it != end; ++it)
         mPhysics->mSpace.RemoveShape(*it);
     
+    mPhysics->mSpace.RemoveBody(object.body);
+
     RemoveEntity(entity);
 }
 

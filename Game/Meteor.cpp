@@ -11,7 +11,6 @@
 #include "CMIBody.h"
 #include "CMIShape.h"
 #include "CMFactory.h"
-#include "IRenderer.h"
 
 using namespace game;
 
@@ -26,6 +25,8 @@ Meteor::Meteor(float x, float y)
 
     cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, 10.0f, 10.0f);
     shape->SetElasticity(0.9f);
+    
+    mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
     
     mPhysicsObject.shapes.push_back(shape);    
 }

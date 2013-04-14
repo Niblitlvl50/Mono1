@@ -25,7 +25,7 @@ Moon::Moon(float x, float y, float radius)
     mPhysicsObject.body = cm::Factory::CreateStaticBody();
     mPhysicsObject.body->SetPosition(mPosition);
 
-    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, radius, math::Vector2f(0.0f, 0.0f));
+    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, radius, math::zeroVec);
     shape->SetElasticity(0.9f);
     
     mPhysicsObject.shapes.push_back(shape);

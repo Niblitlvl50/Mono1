@@ -32,6 +32,7 @@ namespace game
         virtual void Update(unsigned int delta);
         
         virtual void OnCollideWith(cm::IBodyPtr body);
+        virtual void OnPostStep();
         
         mono::Sprite mSprite;
         ShuttleController mController;

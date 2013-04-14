@@ -22,6 +22,7 @@ namespace mono
     
         virtual const math::Vector2f& Position() const;
         virtual math::Quad BoundingBox() const;
+        virtual bool RemoveMe() const;
         
         void AddChild(IEntityPtr child);
         void RemoveChild(IEntityPtr child);

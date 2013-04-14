@@ -21,6 +21,7 @@ namespace mono
         virtual const math::Vector2f& Position() const;
         virtual math::Quad BoundingBox() const;
         virtual cm::Object& GetPhysics();
+        virtual bool RemoveMe() const;
         
     protected:
         

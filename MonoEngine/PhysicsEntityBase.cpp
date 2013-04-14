@@ -35,6 +35,11 @@ cm::Object& PhysicsEntityBase::GetPhysics()
     return mPhysicsObject;
 }
 
+bool PhysicsEntityBase::RemoveMe() const
+{
+    return false;
+}
+
 void PhysicsEntityBase::doDraw(IRenderer& renderer) const
 {
     glTranslatef(mPosition.mX, mPosition.mY, 0.0f);

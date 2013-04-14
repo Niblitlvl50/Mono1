@@ -21,7 +21,7 @@ namespace cm
     {
     public:
         
-        Space(const math::Vector2f& gravity);
+        Space(const math::Vector2f& gravity, float damping = 1.0f);
         ~Space();
         
         void Tick(float delta);
@@ -37,6 +37,7 @@ namespace cm
     private:
         
         bool OnCollision(cpArbiter* arb, void* data);
+        void OnPostStep(void* object, void* data);
         
         cpSpace* mSpace;
         std::vector<IBodyPtr> mBodies;

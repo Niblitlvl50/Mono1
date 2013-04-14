@@ -12,17 +12,12 @@
 
 using namespace game;
 
-namespace constants
+Explosion::Explosion(const math::Vector2f& position)
+    : mSprite("explosion.sprite"),
+      mRemoveMe(false)
 {
-    const int EXPLODE = 1;
-}
-
-Explosion::Explosion()
-    : mSprite("explosion.sprite")
-{
-    mPosition = math::Vector2f(100.0f, 150.0f);
+    mPosition = position;
     mScale = 20.0f;
-    
     mSprite.SetAnimation(0, std::tr1::bind(&Explosion::OnFinished, this));
 }
 
@@ -36,5 +31,12 @@ void Explosion::Draw(mono::IRenderer& renderer) const
     renderer.DrawSprite(mSprite);
 }
 
+bool Explosion::RemoveMe() const
+{
+    return mRemoveMe;
+}
+
 void Explosion::OnFinished()
-{ }
+{
+    mRemoveMe = true;
+}

@@ -10,8 +10,6 @@
 
 #include "CMFwd.h"
 
-#include <tr1/memory>
-
 namespace cm
 {
     struct ICollisionHandler
@@ -20,10 +18,9 @@ namespace cm
         { }
         
         virtual void OnCollideWith(cm::IBodyPtr body) = 0;
+        virtual void OnPostStep() = 0;
     };
-    
-    //std::tr1::shared_ptr<ICollisionHandler> ICollisionHandlerPtr;
-    
+        
     struct IBody
     {
         virtual ~IBody()
@@ -75,12 +72,22 @@ namespace cm
         //! @param offset From where to apply it
         virtual void ApplyImpulse(const math::Vector2f& impulse, const math::Vector2f& offset) = 0;
         
+        //! Sets a velocity to the body
+        //! @param velocity A velocity vector
+        virtual void SetVelocity(const math::Vector2f& velocity) = 0;
+
         //! Resets all the forces that are working on the body
         virtual void ResetForces() = 0;
         
+        //! Sets a collision handler to the body
+        //! @param handler A pointer to a collision handler
         virtual void SetCollisionHandler(cm::ICollisionHandler* handler) = 0;
         
+        //! Called by the framework when a collision occures
+        //! @param body The other body of the collision
         virtual void OnCollideWith(IBodyPtr body) = 0;
+        
+        virtual void OnPostStep() = 0;
         
         //! Gets the underlying cpBody object, dont use this one
         //! @return cpBody* A pointer to a cpBody struct

@@ -22,6 +22,7 @@ namespace mono
         { }
         
         virtual const math::Vector2f& Position() const = 0;
+        virtual bool RemoveMe() const = 0;
     };
     
     struct IPhysicsEntity : public IEntity

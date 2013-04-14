@@ -7,13 +7,13 @@
 //
 
 #include "TestZone.h"
+#include "ICamera.h"
+
 #include "TriangleObject.h"
 #include "OscillatingLine.h"
 #include "AnimatedDude.h"
-#include "Explosion.h"
 #include "Shuttle.h"
 #include "Moon.h"
-#include "ICamera.h"
 #include "EntityBase.h"
 #include "Quad.h"
 #include "CMObject.h"
@@ -121,7 +121,7 @@ namespace
                 impulse += newPos2;
             }
             
-            body->ApplyImpulse(impulse, math::Vector2f(0.0, 0.0));
+            body->ApplyImpulse(impulse, math::zeroVec);
         }
         
         mono::PhysicsZone* mZone;
@@ -174,7 +174,6 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     
     AddEntityToLayer(mono::IEntityPtr(new TriangleObject), BACKGROUND);
     AddEntityToLayer(mono::IEntityPtr(new OscillatingLine), FOREGROUND);
-    AddEntityToLayer(mono::IEntityPtr(new Explosion), FOREGROUND);
     
     AddUpdatable(mono::IUpdatablePtr(new GravityUpdater(this, moon1, moon2)));
         

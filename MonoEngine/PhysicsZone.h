@@ -25,6 +25,7 @@ namespace mono
         
         PhysicsZone(const math::Vector2f& gravity);
         virtual void Accept(IRenderer& renderer);
+        virtual void DoPreAccept();
                         
         void AddPhysicsEntityToLayer(mono::IPhysicsEntityPtr entity, LayerId layer);
         void RemovePhysicsEntity(mono::IPhysicsEntityPtr entity);
@@ -33,6 +34,7 @@ namespace mono
         
         struct PhysicsImpl;
         std::tr1::shared_ptr<PhysicsImpl> mPhysics;
+        std::vector<mono::IPhysicsEntityPtr> mPhysicsEntities;
     };
 }
 

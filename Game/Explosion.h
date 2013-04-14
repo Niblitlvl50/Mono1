@@ -18,15 +18,17 @@ namespace game
     {
     public:
         
-        Explosion();
+        Explosion(const math::Vector2f& position);
         
         virtual void Update(unsigned int delta);
         virtual void Draw(mono::IRenderer& renderer) const;
+        virtual bool RemoveMe() const;
+        
+    private:
 
         void OnFinished();
         
-    private:
-        
         mono::Sprite mSprite;
+        bool mRemoveMe;
     };
 }

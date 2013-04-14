@@ -28,7 +28,7 @@ namespace
         }
         ~CMBody()
         {
-            cpBodyDestroy(mBody);
+            cpBodyFree(mBody);
         }
         bool IsStatic() const
         {
@@ -74,6 +74,10 @@ namespace
         {
             cpBodyApplyImpulse(mBody, cpv(impulse.mX, impulse.mY), cpv(offset.mX, offset.mY));
         }
+        void SetVelocity(const math::Vector2f& velocity)
+        {
+            cpBodySetVel(mBody, cpv(velocity.mX, velocity.mY));
+        }
         void ResetForces()
         {
             cpBodyResetForces(mBody);
@@ -86,6 +90,11 @@ namespace
         {
             if(mHandler)
                 mHandler->OnCollideWith(body);
+        }
+        void OnPostStep()
+        {
+            if(mHandler)
+                mHandler->OnPostStep();
         }
         cpBody* Body()
         {
@@ -101,14 +110,17 @@ namespace
         CMShape(cm::IBodyPtr body, float radius, const math::Vector2f& offset)
         {
             mShape = cpCircleShapeNew(body->Body(), radius, cpv(offset.mX, offset.mY));
+            mInertiaValue = cpMomentForCircle(body->GetMass(), 0.0f, radius, cpv(offset.mX, offset.mY));
         }
         CMShape(cm::IBodyPtr body, float width, float height)
         {
             mShape = cpBoxShapeNew(body->Body(), width, height);
+            mInertiaValue = cpMomentForBox(body->GetMass(), width, height);
         }
         CMShape(cm::IBodyPtr body, const math::Vector2f& first, const math::Vector2f& second, float radius)
         {
             mShape = cpSegmentShapeNew(body->Body(), cpv(first.mX, first.mY), cpv(second.mX, second.mY), radius);
+            mInertiaValue = cpMomentForSegment(body->GetMass(), cpv(first.mX, first.mY), cpv(second.mX, second.mY));
         }
         CMShape(cm::IBodyPtr body, const Vector2fCollection& vertices, const math::Vector2f& offset)
         {
@@ -119,11 +131,12 @@ namespace
                 vects.push_back(cpv(vect2f.mX, vect2f.mY));
             }
             
-            mShape = cpPolyShapeNew(body->Body(), vertices.size(), &vects.front(), cpv(offset.mX, offset.mY));
+            mShape = cpPolyShapeNew(body->Body(), vects.size(), &vects.front(), cpv(offset.mX, offset.mY));
+            mInertiaValue = cpMomentForPoly(body->GetMass(), vects.size(), &vects.front(), cpv(offset.mX, offset.mY));
         }
         ~CMShape()
         {
-            cpShapeDestroy(mShape);
+            cpShapeFree(mShape);
         }
         void SetElasticity(float value)
         {
@@ -133,12 +146,17 @@ namespace
         {
             cpShapeSetFriction(mShape, value);
         }
+        float GetInertiaValue() const
+        {
+            return mInertiaValue;
+        }
         cpShape* Shape()
         {
             return mShape;
         }
         
-        cpShape* mShape;    
+        cpShape* mShape;
+        float mInertiaValue;
     };
 }
 

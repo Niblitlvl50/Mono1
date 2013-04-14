@@ -39,15 +39,25 @@ namespace
     {
         return beginFunc(arb, data);
     }
+    
+    std::tr1::function<void (void*, void*)> postStepFunc;
+    void CMCollisionPostStep(cpSpace* space, void* obj, void* data)
+    {
+        postStepFunc(obj, data);
+    }
+    
 }
 
-Space::Space(const math::Vector2f& gravity)
+Space::Space(const math::Vector2f& gravity, float damping)
 {
     mSpace = cpSpaceNew();
     cpSpaceSetGravity(mSpace, cpv(gravity.mX, gravity.mY));
+    cpSpaceSetDamping(mSpace, damping);
     
     using namespace std::tr1::placeholders;
     beginFunc = std::tr1::bind(&Space::OnCollision, this, _1, _2);
+    postStepFunc = std::tr1::bind(&Space::OnPostStep, this, _1, _2);
+    
     cpSpaceAddCollisionHandler(mSpace, 0, 0, CMCollisionBegin, 0, 0, 0, 0);
 }
 
@@ -119,8 +129,24 @@ bool Space::OnCollision(cpArbiter* arb, void* data)
     {
         first->OnCollideWith(second);
         second->OnCollideWith(first);
+
+        //cpSpaceAddPostStepCallback(mSpace, CMCollisionPostStep, first->Body(), 0);
+        //cpSpaceAddPostStepCallback(mSpace, CMCollisionPostStep, second->Body(), 0);
     }
     
     return true;
 }
+
+void Space::OnPostStep(void* object, void* data)
+{
+    for(std::vector<IBodyPtr>::iterator it = mBodies.begin(), end = mBodies.end(); it != end; ++it)
+    {
+        IBodyPtr body = *it;
+        if(object == body->Body())
+            body->OnPostStep();
+    }
+}
+
+
+
 

@@ -43,9 +43,10 @@ Shuttle::Shuttle(float x, float y)
     mPhysicsObject.body->SetPosition(mPosition);
     mPhysicsObject.body->SetCollisionHandler(this);
 
-    //cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, 5.0f, math::Vector2f(0.0f, 0.0f), false);
     cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, mScale, mScale);
     shape->SetElasticity(0.1f);
+    
+    mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
     
     mPhysicsObject.shapes.push_back(shape);    
     
@@ -63,20 +64,19 @@ void Shuttle::Update(unsigned int delta)
 }
 
 void Shuttle::OnCollideWith(cm::IBodyPtr body)
-{
+{ }
 
-}
+void Shuttle::OnPostStep()
+{ }
 
 void Shuttle::Fire()
 {
     const math::Vector2f unit(-std::sin(math::DegToRad(mRotation)), std::cos(math::DegToRad(mRotation)));
-    const math::Vector2f position = mPosition + (unit * 15.0f);
-    const math::Vector2f speed = unit * 200.0f;
-    const game::SpawnEntityEvent event(mono::IEntityPtr(new FireBullet(position, mRotation, speed)));
-
-    //std::tr1::shared_ptr<Meteor> entity(new Meteor(mPosition.mX, mPosition.mY));
-    //const game::SpawnPhysicsEntityEvent event(entity);  
-    //entity->mPhysicsObject.body->ApplyForce(math::Vector2f(200.0f, 200.0f), math::Vector2f(0.0, 0.0));
+    const math::Vector2f position = mPosition + (unit * 20.0f);
+    const math::Vector2f impulse = unit * 500.0f;
+    
+    const game::SpawnPhysicsEntityEvent event(mono::IPhysicsEntityPtr(new FireBullet(position, mRotation)));  
+    event.mEntity->GetPhysics().body->ApplyImpulse(impulse, math::zeroVec);
     
     mono::EventHandler::DispatchEvent(event);
 }

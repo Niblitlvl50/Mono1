@@ -8,23 +8,29 @@
 
 #pragma once
 
-#include "EntityBase.h"
+#include "PhysicsEntityBase.h"
 #include "Sprite.h"
+#include "CMIBody.h"
 
 namespace game
 {
-    class FireBullet : public mono::EntityBase
+    class FireBullet : public mono::PhysicsEntityBase, public cm::ICollisionHandler
     {
     public:
         
-        FireBullet(const math::Vector2f& start, float rotation, const math::Vector2f& speed);
+        FireBullet(const math::Vector2f& start, float rotation);
         void Update(unsigned int delta);
         void Draw(mono::IRenderer& renderer) const;
         
+        virtual void OnCollideWith(cm::IBodyPtr body);
+        virtual void OnPostStep();
+        
+        virtual bool RemoveMe() const;
+
     private:
         
         mono::Sprite mSprite;
-        const math::Vector2f mSpeed;
+        bool mRemoveMe;
     };
 }
 

@@ -78,6 +78,11 @@ math::Quad EntityBase::BoundingBox() const
     return thisbb;
 }
 
+bool EntityBase::RemoveMe() const
+{
+    return false;
+}
+
 void EntityBase::AddChild(IEntityPtr child)
 {
     mChildren.push_back(child);

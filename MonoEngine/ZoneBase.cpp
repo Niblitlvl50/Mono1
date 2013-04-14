@@ -8,6 +8,7 @@
 
 #include "ZoneBase.h"
 #include "IRenderer.h"
+#include "IEntity.h"
 #include "Utils.h"
 
 #include <stdexcept>
@@ -39,6 +40,12 @@ namespace
         }
         IRenderer& mRenderer;
     };
+    
+
+    bool RemoveIfDead(IEntityPtr entity)
+    {
+        return entity->RemoveMe();
+    }
 }
 
 ZoneBase::ZoneBase()
@@ -51,12 +58,25 @@ ZoneBase::ZoneBase()
 }
 
 void ZoneBase::Accept(IRenderer& renderer)
-{    
+{
+    DoPreAccept();
+                   
     std::for_each(mLayers[BACKGROUND].begin(), mLayers[BACKGROUND].end(), AddEntityFunctor(renderer));
     std::for_each(mLayers[MIDDLEGROUND].begin(), mLayers[MIDDLEGROUND].end(), AddEntityFunctor(renderer));
     std::for_each(mLayers[FOREGROUND].begin(), mLayers[FOREGROUND].end(), AddEntityFunctor(renderer));
     
     std::for_each(mUpdatables.begin(), mUpdatables.end(), AddUppdatableFunctor(renderer));
+}
+
+void ZoneBase::DoPreAccept()
+{
+    for(LayerMap::iterator it = mLayers.begin(), end = mLayers.end(); it != end; ++it)
+    {
+        IEntityCollection& collection = it->second;
+        IEntityCollection::iterator removeIt = std::remove_if(collection.begin(), collection.end(), RemoveIfDead);
+        if(removeIt != collection.end())
+            collection.erase(removeIt);
+    }    
 }
 
 void ZoneBase::AddEntityToLayer(IEntityPtr entity, LayerId layer)

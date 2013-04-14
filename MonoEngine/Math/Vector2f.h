@@ -73,5 +73,7 @@ namespace math
         vector.mX /= length;
         vector.mY /= length;
     }
+    
+    static const Vector2f zeroVec = math::Vector2f(0.0f, 0.0f);
 }
 
