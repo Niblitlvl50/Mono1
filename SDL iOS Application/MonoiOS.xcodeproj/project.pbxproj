@@ -309,6 +309,18 @@
 		2BD3CC3E160BB2B30043156E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD77A0840E26BDB800F39101 /* AudioToolbox.framework */; };
 		2BD3CC3F160BB2B30043156E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB8BFC50E5A0F6A00980157 /* CoreGraphics.framework */; };
 		2BD3CC47160BB2C20043156E /* libSDL2_ios_simulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD3CB9F160BB1AA0043156E /* libSDL2_ios_simulator.a */; };
+		2BDD2C8F171C9F540041CB18 /* PhysicsEntityBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C8B171C9F540041CB18 /* PhysicsEntityBase.cpp */; };
+		2BDD2C90171C9F540041CB18 /* PhysicsEntityBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C8B171C9F540041CB18 /* PhysicsEntityBase.cpp */; };
+		2BDD2C91171C9F540041CB18 /* RenderUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C8D171C9F540041CB18 /* RenderUtils.cpp */; };
+		2BDD2C92171C9F540041CB18 /* RenderUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C8D171C9F540041CB18 /* RenderUtils.cpp */; };
+		2BDD2C9C171C9FBE0041CB18 /* FireBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C98171C9FBE0041CB18 /* FireBullet.cpp */; };
+		2BDD2C9D171C9FBE0041CB18 /* FireBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C98171C9FBE0041CB18 /* FireBullet.cpp */; };
+		2BDD2C9E171C9FBE0041CB18 /* Meteor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C9A171C9FBE0041CB18 /* Meteor.cpp */; };
+		2BDD2C9F171C9FBE0041CB18 /* Meteor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C9A171C9FBE0041CB18 /* Meteor.cpp */; };
+		2BDD2CA2171CA01F0041CB18 /* firebullet.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA0171CA01F0041CB18 /* firebullet.sprite */; };
+		2BDD2CA3171CA01F0041CB18 /* firebullet.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA0171CA01F0041CB18 /* firebullet.sprite */; };
+		2BDD2CA4171CA01F0041CB18 /* meteorite.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA1171CA01F0041CB18 /* meteorite.sprite */; };
+		2BDD2CA5171CA01F0041CB18 /* meteorite.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA1171CA01F0041CB18 /* meteorite.sprite */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
 		FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07C0E26BD8C00F39101 /* Icon.png */; };
 		FD77A07F0E26BDA900F39101 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07E0E26BDA900F39101 /* Default.png */; };
@@ -683,6 +695,22 @@
 		2BD3CB9F160BB1AA0043156E /* libSDL2_ios_simulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSDL2_ios_simulator.a; sourceTree = "<group>"; };
 		2BD3CC44160BB2B30043156E /* MonoiOS Simulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MonoiOS Simulator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD3CC46160BB2B30043156E /* MonoiOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MonoiOS copy-Info.plist"; path = "/Users/Niblit/Xcode_Projects/Mono1/SDL iOS Application/MonoiOS copy-Info.plist"; sourceTree = "<absolute>"; };
+		2BDD2C88171C9E4B0041CB18 /* MathFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathFwd.h; sourceTree = "<group>"; };
+		2BDD2C8A171C9EB10041CB18 /* PauseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseEvent.h; sourceTree = "<group>"; };
+		2BDD2C8B171C9F540041CB18 /* PhysicsEntityBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsEntityBase.cpp; sourceTree = "<group>"; };
+		2BDD2C8C171C9F540041CB18 /* PhysicsEntityBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsEntityBase.h; sourceTree = "<group>"; };
+		2BDD2C8D171C9F540041CB18 /* RenderUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderUtils.cpp; sourceTree = "<group>"; };
+		2BDD2C8E171C9F540041CB18 /* RenderUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderUtils.h; sourceTree = "<group>"; };
+		2BDD2C94171C9F970041CB18 /* RemoveEntityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemoveEntityEvent.h; path = Events/RemoveEntityEvent.h; sourceTree = "<group>"; };
+		2BDD2C95171C9F970041CB18 /* RemovePhysicsEntityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemovePhysicsEntityEvent.h; path = Events/RemovePhysicsEntityEvent.h; sourceTree = "<group>"; };
+		2BDD2C96171C9F970041CB18 /* SpawnEntityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpawnEntityEvent.h; path = Events/SpawnEntityEvent.h; sourceTree = "<group>"; };
+		2BDD2C97171C9F970041CB18 /* SpawnPhysicsEntityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpawnPhysicsEntityEvent.h; path = Events/SpawnPhysicsEntityEvent.h; sourceTree = "<group>"; };
+		2BDD2C98171C9FBE0041CB18 /* FireBullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FireBullet.cpp; sourceTree = "<group>"; };
+		2BDD2C99171C9FBE0041CB18 /* FireBullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireBullet.h; sourceTree = "<group>"; };
+		2BDD2C9A171C9FBE0041CB18 /* Meteor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Meteor.cpp; sourceTree = "<group>"; };
+		2BDD2C9B171C9FBE0041CB18 /* Meteor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Meteor.h; sourceTree = "<group>"; };
+		2BDD2CA0171CA01F0041CB18 /* firebullet.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = firebullet.sprite; path = ../Game/res/firebullet.sprite; sourceTree = "<group>"; };
+		2BDD2CA1171CA01F0041CB18 /* meteorite.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = meteorite.sprite; path = ../Game/res/meteorite.sprite; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD779EDD0E26BA1200F39101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		FD77A07C0E26BD8C00F39101 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -844,6 +872,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2BDD2CA0171CA01F0041CB18 /* firebullet.sprite */,
+				2BDD2CA1171CA01F0041CB18 /* meteorite.sprite */,
 				2B95CF26162F38AA006769BF /* explosion.sprite */,
 				2B95CF27162F38AA006769BF /* invader.sprite */,
 				2B95CF22162F3857006769BF /* moon.sprite */,
@@ -875,6 +905,10 @@
 		2B26D69C15FD2BB5001E9748 /* MonoEngine */ = {
 			isa = PBXGroup;
 			children = (
+				2BDD2C8B171C9F540041CB18 /* PhysicsEntityBase.cpp */,
+				2BDD2C8C171C9F540041CB18 /* PhysicsEntityBase.h */,
+				2BDD2C8D171C9F540041CB18 /* RenderUtils.cpp */,
+				2BDD2C8E171C9F540041CB18 /* RenderUtils.h */,
 				2B26D69D15FD2BB5001E9748 /* Camera */,
 				2B26D6A615FD2BB5001E9748 /* EventHandler */,
 				2B26D6AA15FD2BB5001E9748 /* Events */,
@@ -940,6 +974,7 @@
 		2B26D6AA15FD2BB5001E9748 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				2BDD2C8A171C9EB10041CB18 /* PauseEvent.h */,
 				2B95CF1A162F3790006769BF /* MouseDownEvent.h */,
 				2B26D6AB15FD2BB5001E9748 /* ActivatedEvent.h */,
 				2B26D6AC15FD2BB5001E9748 /* EventFwd.h */,
@@ -971,6 +1006,7 @@
 		2B26D6C615FD2BB5001E9748 /* Math */ = {
 			isa = PBXGroup;
 			children = (
+				2BDD2C88171C9E4B0041CB18 /* MathFwd.h */,
 				2B26D6C715FD2BB5001E9748 /* MathFunctions.cpp */,
 				2B26D6C815FD2BB5001E9748 /* MathFunctions.h */,
 				2B26D6C915FD2BB5001E9748 /* Quad.h */,
@@ -1300,6 +1336,11 @@
 		2B26DB3D15FD3280001E9748 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				2BDD2C98171C9FBE0041CB18 /* FireBullet.cpp */,
+				2BDD2C99171C9FBE0041CB18 /* FireBullet.h */,
+				2BDD2C9A171C9FBE0041CB18 /* Meteor.cpp */,
+				2BDD2C9B171C9FBE0041CB18 /* Meteor.h */,
+				2BDD2C93171C9F7F0041CB18 /* Events */,
 				2B95CF1C162F37C6006769BF /* Moon.cpp */,
 				2B95CF1D162F37C6006769BF /* Moon.h */,
 				2B95CF1E162F37C6006769BF /* ShuttleController.cpp */,
@@ -1369,6 +1410,17 @@
 				2BBA5AAB160A5EDA00D8D38E /* cpSlideJoint.c */,
 			);
 			path = constraints;
+			sourceTree = "<group>";
+		};
+		2BDD2C93171C9F7F0041CB18 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				2BDD2C94171C9F970041CB18 /* RemoveEntityEvent.h */,
+				2BDD2C95171C9F970041CB18 /* RemovePhysicsEntityEvent.h */,
+				2BDD2C96171C9F970041CB18 /* SpawnEntityEvent.h */,
+				2BDD2C97171C9F970041CB18 /* SpawnPhysicsEntityEvent.h */,
+			);
+			name = Events;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1450,6 +1502,8 @@
 				2B95CF25162F3857006769BF /* spritesheet.png in Resources */,
 				2B95CF28162F38AA006769BF /* explosion.sprite in Resources */,
 				2B95CF29162F38AA006769BF /* invader.sprite in Resources */,
+				2BDD2CA2171CA01F0041CB18 /* firebullet.sprite in Resources */,
+				2BDD2CA4171CA01F0041CB18 /* meteorite.sprite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1463,6 +1517,8 @@
 				2BD3CBAD160BB2B30043156E /* CMakeLists.txt in Resources */,
 				2BA8E1091618BE5E00C17873 /* shuttle.sprite in Resources */,
 				2BA8E10E1618BFBE00C17873 /* ryu.sprite in Resources */,
+				2BDD2CA3171CA01F0041CB18 /* firebullet.sprite in Resources */,
+				2BDD2CA5171CA01F0041CB18 /* meteorite.sprite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1612,6 +1668,10 @@
 				2BBA5ADB160A5EDA00D8D38E /* cpVect.c in Sources */,
 				2B95CF20162F37C6006769BF /* Moon.cpp in Sources */,
 				2B95CF21162F37C6006769BF /* ShuttleController.cpp in Sources */,
+				2BDD2C8F171C9F540041CB18 /* PhysicsEntityBase.cpp in Sources */,
+				2BDD2C91171C9F540041CB18 /* RenderUtils.cpp in Sources */,
+				2BDD2C9C171C9FBE0041CB18 /* FireBullet.cpp in Sources */,
+				2BDD2C9E171C9FBE0041CB18 /* Meteor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1756,6 +1816,10 @@
 				2BD3CC35160BB2B30043156E /* cpSpatialIndex.c in Sources */,
 				2BD3CC36160BB2B30043156E /* cpSweep1D.c in Sources */,
 				2BD3CC37160BB2B30043156E /* cpVect.c in Sources */,
+				2BDD2C90171C9F540041CB18 /* PhysicsEntityBase.cpp in Sources */,
+				2BDD2C92171C9F540041CB18 /* RenderUtils.cpp in Sources */,
+				2BDD2C9D171C9FBE0041CB18 /* FireBullet.cpp in Sources */,
+				2BDD2C9F171C9FBE0041CB18 /* Meteor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

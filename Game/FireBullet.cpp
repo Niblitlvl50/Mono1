@@ -21,7 +21,7 @@
 using namespace game;
 
 FireBullet::FireBullet(const math::Vector2f& start, float rotation)
-    : mSprite("FireBullet.sprite"),
+    : mSprite("firebullet.sprite"),
       mRemoveMe(false)
 {
     mScale = 15.0f;
