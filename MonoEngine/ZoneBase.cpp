@@ -75,7 +75,7 @@ void ZoneBase::DoPreAccept()
         IEntityCollection& collection = it->second;
         IEntityCollection::iterator removeIt = std::remove_if(collection.begin(), collection.end(), RemoveIfDead);
         if(removeIt != collection.end())
-            collection.erase(removeIt);
+            collection.erase(removeIt, collection.end());
     }    
 }
 

@@ -43,7 +43,7 @@
 #include "Quad.h"
 
 #include <map>
-#include <tr1/functional>
+#include <functional>
 
 namespace mono
 {    
@@ -82,14 +82,14 @@ namespace mono
         //! Tell the sprite to run a specific animation, and get a callback when finished
         //! @param[in] id The animation to run.
         //! @param[in] func A callback function.
-        void SetAnimation(int id, std::tr1::function<void ()> func);
+        void SetAnimation(int id, std::function<void ()> func);
         
         virtual void doUpdate(unsigned int delta);
 
     private:
                 
         int mActiveAnimationId;
-        std::tr1::function<void ()> mCallbackFunction;
+        std::function<void ()> mCallbackFunction;
         ITexturePtr mTexture;
         
         std::vector<math::Quad> mTextureCoordinates;

@@ -20,5 +20,5 @@ namespace game
         mono::IPhysicsEntityPtr mEntity;
     };
     
-    typedef std::tr1::function<void (const game::SpawnPhysicsEntityEvent& event)> SpawnPhysicsEntityFunc;
+    typedef std::function<void (const game::SpawnPhysicsEntityEvent& event)> SpawnPhysicsEntityFunc;
 }

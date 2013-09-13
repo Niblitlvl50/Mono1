@@ -53,21 +53,21 @@ void PhysicsZone::Accept(IRenderer& renderer)
 
 void PhysicsZone::DoPreAccept()
 {
-    for(std::vector<mono::IPhysicsEntityPtr>::iterator it = mPhysicsEntities.begin(), end = mPhysicsEntities.end(); it != end; ++it)
+    for(auto it = mPhysicsEntities.begin(), end = mPhysicsEntities.end(); it != end; ++it)
     {
         mono::IPhysicsEntityPtr entity = *it;
         if(entity->RemoveMe())
         {
             cm::Object& object = entity->GetPhysics();
         
-            for(cm::IShapeCollection::iterator shapeIt = object.shapes.begin(), shapeEnd = object.shapes.end(); shapeIt != shapeEnd; ++shapeIt)
+            for(auto shapeIt = object.shapes.begin(), shapeEnd = object.shapes.end(); shapeIt != shapeEnd; ++shapeIt)
                 mPhysics->mSpace.RemoveShape(*shapeIt);            
         
             mPhysics->mSpace.RemoveBody(object.body);        
         }
     }
         
-    std::vector<mono::IPhysicsEntityPtr>::iterator it = std::remove_if(mPhysicsEntities.begin(), mPhysicsEntities.end(), RemoveIfDead);
+    auto it = std::remove_if(mPhysicsEntities.begin(), mPhysicsEntities.end(), RemoveIfDead);
     if(it != mPhysicsEntities.end())
         mPhysicsEntities.erase(it, mPhysicsEntities.end());
     
@@ -86,7 +86,7 @@ void PhysicsZone::AddPhysicsEntityToLayer(mono::IPhysicsEntityPtr entity, LayerI
     cm::Object& object = entity->GetPhysics();
     mPhysics->mSpace.AddBody(object.body);
     
-    for(cm::IShapeCollection::iterator it = object.shapes.begin(), end = object.shapes.end(); it != end; ++it)
+    for(auto it = object.shapes.begin(), end = object.shapes.end(); it != end; ++it)
         mPhysics->mSpace.AddShape(*it);
     
     AddEntityToLayer(entity, layer);
@@ -98,7 +98,7 @@ void PhysicsZone::RemovePhysicsEntity(mono::IPhysicsEntityPtr entity)
     
     cm::Object& object = entity->GetPhysics();
     
-    for(cm::IShapeCollection::iterator it = object.shapes.begin(), end = object.shapes.end(); it != end; ++it)
+    for(auto it = object.shapes.begin(), end = object.shapes.end(); it != end; ++it)
         mPhysics->mSpace.RemoveShape(*it);
     
     mPhysics->mSpace.RemoveBody(object.body);

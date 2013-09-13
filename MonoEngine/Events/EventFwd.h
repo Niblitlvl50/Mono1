@@ -8,41 +8,41 @@
 
 #pragma once
 
-#include <tr1/functional>
+#include <functional>
 
 namespace Event
 {
     struct PauseEvent;
-    typedef std::tr1::function<void (const PauseEvent&)> PauseEventFunc;
+    typedef std::function<void (const PauseEvent&)> PauseEventFunc;
     
     struct QuitEvent;
-    typedef std::tr1::function<void (const QuitEvent&)> QuitEventFunc;
+    typedef std::function<void (const QuitEvent&)> QuitEventFunc;
     
     struct SurfaceChangedEvent;
-    typedef std::tr1::function<void (const SurfaceChangedEvent&)> SurfaceChangedEventFunc;
+    typedef std::function<void (const SurfaceChangedEvent&)> SurfaceChangedEventFunc;
     
     struct ActivatedEvent;
-    typedef std::tr1::function<void (const ActivatedEvent&)> ActivatedEventFunc;
+    typedef std::function<void (const ActivatedEvent&)> ActivatedEventFunc;
     
     struct KeyDownEvent;
-    typedef std::tr1::function<void (const KeyDownEvent&)> KeyDownEventFunc;
+    typedef std::function<void (const KeyDownEvent&)> KeyDownEventFunc;
 
     struct KeyUpEvent;
-    typedef std::tr1::function<void (const KeyUpEvent&)> KeyUpEventFunc;
+    typedef std::function<void (const KeyUpEvent&)> KeyUpEventFunc;
     
     struct MouseDownEvent;
-    typedef std::tr1::function<void (const MouseDownEvent&)> MouseDownEventFunc;
+    typedef std::function<void (const MouseDownEvent&)> MouseDownEventFunc;
     
     struct MouseUpEvent;
-    typedef std::tr1::function<void (const MouseUpEvent&)> MouseUpEventFunc;
+    typedef std::function<void (const MouseUpEvent&)> MouseUpEventFunc;
     
     struct MouseMotionEvent;
-    typedef std::tr1::function<void (const MouseMotionEvent&)> MouseMotionEventFunc;
+    typedef std::function<void (const MouseMotionEvent&)> MouseMotionEventFunc;
     
     struct MouseWheelEvent;
-    typedef std::tr1::function<void (const MouseWheelEvent&)> MouseWheelEventFunc;
+    typedef std::function<void (const MouseWheelEvent&)> MouseWheelEventFunc;
     
     struct MultiGestureEvent;
-    typedef std::tr1::function<void (const MultiGestureEvent&)> MultiGestureEventFunc;
+    typedef std::function<void (const MultiGestureEvent&)> MultiGestureEventFunc;
 }
 

@@ -91,13 +91,13 @@ void PNGImage::ReadSource()
     
     //A little for-loop here to set all the row pointers to the starting
     //Adresses for every row in the buffer
-    for(size_t i = 0; i < mHeight; ++i)
+    for(unsigned int i = 0; i < mHeight; ++i)
     {
         //Set the pointer to the data pointer + i times the row stride.
         //Notice that the row order is reversed with q.
         //This is how at least OpenGL expects it,
         //and how many other image loaders present the data.
-        unsigned int q = (mHeight- i - 1) * stride;
+        unsigned int q = (mHeight - i - 1) * stride;
         rowPtrs[i] = (png_bytep)data + q;
     }
 

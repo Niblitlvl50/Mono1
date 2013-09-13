@@ -8,7 +8,7 @@
 
 #include "Explosion.h"
 #include "IRenderer.h"
-#include <tr1/functional>
+#include <functional>
 
 using namespace game;
 
@@ -18,7 +18,7 @@ Explosion::Explosion(const math::Vector2f& position)
 {
     mPosition = position;
     mScale = 20.0f;
-    mSprite.SetAnimation(0, std::tr1::bind(&Explosion::OnFinished, this));
+    mSprite.SetAnimation(0, std::bind(&Explosion::OnFinished, this));
 }
 
 void Explosion::Update(unsigned int delta)

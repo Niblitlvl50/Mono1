@@ -21,9 +21,9 @@ using namespace game;
 AnimatedDudeController::AnimatedDudeController(AnimatedDude* dude)
     : mDude(dude)
 {
-    using namespace std::tr1::placeholders;
+    using namespace std::placeholders;
     
-    const Event::KeyDownEventFunc keyDownFunc = std::tr1::bind(&AnimatedDudeController::OnKeyDown, this, _1);
+    const Event::KeyDownEventFunc keyDownFunc = std::bind(&AnimatedDudeController::OnKeyDown, this, _1);
     mKeyDownToken = mono::EventHandler::AddListener(keyDownFunc);
     
     //const Event::MouseUpEventFunc mouseUpFunc = std::tr1::bind(&AnimatedDudeController::OnMouseUp, this, _1);

@@ -34,13 +34,13 @@ namespace
         }
     }
     
-    std::tr1::function<bool (cpArbiter*, void*)> beginFunc;
+    std::function<bool (cpArbiter*, void*)> beginFunc;
     cpBool CMCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
     {
         return beginFunc(arb, data);
     }
     
-    std::tr1::function<void (void*, void*)> postStepFunc;
+    std::function<void (void*, void*)> postStepFunc;
     void CMCollisionPostStep(cpSpace* space, void* obj, void* data)
     {
         postStepFunc(obj, data);
@@ -54,9 +54,9 @@ Space::Space(const math::Vector2f& gravity, float damping)
     cpSpaceSetGravity(mSpace, cpv(gravity.mX, gravity.mY));
     cpSpaceSetDamping(mSpace, damping);
     
-    using namespace std::tr1::placeholders;
-    beginFunc = std::tr1::bind(&Space::OnCollision, this, _1, _2);
-    postStepFunc = std::tr1::bind(&Space::OnPostStep, this, _1, _2);
+    using namespace std::placeholders;
+    beginFunc = std::bind(&Space::OnCollision, this, _1, _2);
+    postStepFunc = std::bind(&Space::OnPostStep, this, _1, _2);
     
     cpSpaceAddCollisionHandler(mSpace, 0, 0, CMCollisionBegin, 0, 0, 0, 0);
 }

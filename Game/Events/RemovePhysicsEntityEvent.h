@@ -20,6 +20,6 @@ namespace game
         mono::IPhysicsEntityPtr mEntity;
     };
     
-    typedef std::tr1::function<void (const game::RemovePhysicsEntityEvent& event)> RemovePhysicsEntityFunc;
+    typedef std::function<void (const game::RemovePhysicsEntityEvent& event)> RemovePhysicsEntityFunc;
 }
 

@@ -41,7 +41,7 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
       mWindow(0),
       mContext(0)
 {
-    const unsigned int screenflag = fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE;
+    //const unsigned int screenflag = fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE;
     const unsigned int flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS; // | screenflag;
     
     /* Request opengl 2.1 context.

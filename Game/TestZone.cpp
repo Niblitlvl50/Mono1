@@ -34,7 +34,7 @@
 
 
 using namespace game;
-using namespace std::tr1::placeholders;
+using namespace std::placeholders;
 
 
 namespace
@@ -58,7 +58,7 @@ namespace
             mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, third, fourth, radius));
             mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, fourth, first, radius));
             
-            std::for_each(mPhysicsObject.shapes.begin(), mPhysicsObject.shapes.end(), std::tr1::bind(&cm::IShape::SetElasticity, _1, 0.9f));
+            std::for_each(mPhysicsObject.shapes.begin(), mPhysicsObject.shapes.end(), std::bind(&cm::IShape::SetElasticity, _1, 0.9f));
         }
         virtual void Draw(mono::IRenderer&) const
         {
@@ -88,7 +88,7 @@ namespace
             if(mElapsedTime < 16)
                 return;
             
-            mZone->ForEachBody(std::tr1::bind(&GravityUpdater::GravityBodyFunc, this, _1));
+            mZone->ForEachBody(std::bind(&GravityUpdater::GravityBodyFunc, this, _1));
             mElapsedTime = 0;
         }
         void GravityBodyFunc(cm::IBodyPtr body)
@@ -135,16 +135,16 @@ namespace
 TestZone::TestZone()
     : PhysicsZone(math::Vector2f(0.0f, 0.0f))
 {    
-    const game::SpawnEntityFunc spawnEntityFunc = std::tr1::bind(&TestZone::SpawnEntity, this, _1);
+    const game::SpawnEntityFunc spawnEntityFunc = std::bind(&TestZone::SpawnEntity, this, _1);
     mSpawnEntityToken = mono::EventHandler::AddListener(spawnEntityFunc);
     
-    const game::SpawnPhysicsEntityFunc spawnPhysicsFunc = std::tr1::bind(&TestZone::SpawnPhysicsEntity, this, _1);
+    const game::SpawnPhysicsEntityFunc spawnPhysicsFunc = std::bind(&TestZone::SpawnPhysicsEntity, this, _1);
     mSpawnPhysicsEntityToken = mono::EventHandler::AddListener(spawnPhysicsFunc);
     
-    const game::RemoveEntityFunc removeEntityFunc = std::tr1::bind(&TestZone::RemoveEntity, this, _1);
+    const game::RemoveEntityFunc removeEntityFunc = std::bind(&TestZone::RemoveEntity, this, _1);
     mRemoveEntityToken = mono::EventHandler::AddListener(removeEntityFunc);
     
-    const game::RemovePhysicsEntityFunc removePhysicsFunc = std::tr1::bind(&TestZone::RemovePhysicsEntity, this, _1);
+    const game::RemovePhysicsEntityFunc removePhysicsFunc = std::bind(&TestZone::RemovePhysicsEntity, this, _1);
     mRemovePhysicsEntityToken = mono::EventHandler::AddListener(removePhysicsFunc);
 }
 
@@ -160,16 +160,16 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
 {    
     AddEntityToLayer(mono::IEntityPtr(new AnimatedDude(100.0f, 50.0f)), MIDDLEGROUND);
     
-    std::tr1::shared_ptr<ZoneBounds> bounds(new ZoneBounds(math::Quad(0.0f, 0.0f, 1000.0f, 600.0f)));
+    std::shared_ptr<ZoneBounds> bounds(new ZoneBounds(math::Quad(0.0f, 0.0f, 1000.0f, 600.0f)));
     AddPhysicsEntityToLayer(bounds, BACKGROUND);
         
-    std::tr1::shared_ptr<Shuttle> shuttle(new Shuttle(100.0f, 100.0f));
+    std::shared_ptr<Shuttle> shuttle(new Shuttle(100.0f, 100.0f));
     AddPhysicsEntityToLayer(shuttle, FOREGROUND);
 
-    std::tr1::shared_ptr<Moon> moon1(new Moon(550.0f, 300.0f, 100.0f));
+    std::shared_ptr<Moon> moon1(new Moon(550.0f, 300.0f, 100.0f));
     AddPhysicsEntityToLayer(moon1, FOREGROUND);
     
-    std::tr1::shared_ptr<Moon> moon2(new Moon(200.0f, 400.0f, 50.0f));
+    std::shared_ptr<Moon> moon2(new Moon(200.0f, 400.0f, 50.0f));
     AddPhysicsEntityToLayer(moon2, FOREGROUND);
     
     AddEntityToLayer(mono::IEntityPtr(new TriangleObject), BACKGROUND);

@@ -10,11 +10,11 @@
 #pragma once
 
 #include "IInputHandler.h"
-#include <tr1/functional>
+#include <functional>
 
 namespace mono
 {
-    typedef std::tr1::function<void (int&, int&)> CoordinateFunc;
+    typedef std::function<void (int&, int&)> CoordinateFunc;
 
     class InputHandler : public IInputHandler
     {

@@ -15,14 +15,14 @@ namespace
     template <typename T>
     struct ObjectFinder
     {
-        ObjectFinder(const std::tr1::shared_ptr<T> object)
+        ObjectFinder(const std::shared_ptr<T> object)
             : mObject(object)
         { }
-        bool operator()(const std::tr1::shared_ptr<T> other) const
+        bool operator()(const std::shared_ptr<T> other) const
         {
             return mObject == other;
         }
-        const std::tr1::shared_ptr<T> mObject;
+        const std::shared_ptr<T> mObject;
     };
 }
 
@@ -31,9 +31,9 @@ namespace mono
     bool FindAndRemoveEntity(IEntityCollection& collection, IEntityPtr entity);
     
     template <typename T>
-    bool FindAndRemove(std::vector<std::tr1::shared_ptr<T> >& collection, std::tr1::shared_ptr<T> object)
+    bool FindAndRemove(std::vector<std::shared_ptr<T> >& collection, std::shared_ptr<T> object)
     {
-        typedef typename std::vector<std::tr1::shared_ptr<T> >::iterator TypeIterator;
+        typedef typename std::vector<std::shared_ptr<T> >::iterator TypeIterator;
         const ObjectFinder<T> finder(object);
         const TypeIterator newEnd = std::remove_if(collection.begin(), collection.end(), finder);
         if(newEnd != collection.end())

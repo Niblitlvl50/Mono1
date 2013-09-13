@@ -22,12 +22,12 @@ using namespace game;
 ShuttleController::ShuttleController(game::Shuttle* shuttle)
     : mShuttle(shuttle)
 {
-    using namespace std::tr1::placeholders;
+    using namespace std::placeholders;
 
-    const Event::MouseUpEventFunc mouseUpFunc = std::tr1::bind(&ShuttleController::OnMouseUp, this, _1);
+    const Event::MouseUpEventFunc mouseUpFunc = std::bind(&ShuttleController::OnMouseUp, this, _1);
     mMouseUpToken = mono::EventHandler::AddListener(mouseUpFunc);
 
-    const Event::MouseDownEventFunc mouseDownFunc = std::tr1::bind(&ShuttleController::OnMouseDown, this, _1);
+    const Event::MouseDownEventFunc mouseDownFunc = std::bind(&ShuttleController::OnMouseDown, this, _1);
     mMouseDownToken = mono::EventHandler::AddListener(mouseDownFunc);
 }
 

@@ -36,7 +36,7 @@
 
 
 using namespace mono;
-using namespace std::tr1::placeholders;
+using namespace std::placeholders;
 
 
 Engine::Engine(unsigned int hz, IWindowPtr window, ICameraPtr camera, IZonePtr zone)
@@ -46,18 +46,18 @@ Engine::Engine(unsigned int hz, IWindowPtr window, ICameraPtr camera, IZonePtr z
       mWindow(window),
       mCamera(camera),
       mZone(zone),
-      mInputHandler(new InputHandler(std::tr1::bind(&Engine::ScreenToWorld, this, _1, _2)))
+      mInputHandler(new InputHandler(std::bind(&Engine::ScreenToWorld, this, _1, _2)))
 {
-    const Event::PauseEventFunc pauseFunc = std::tr1::bind(&Engine::OnPause, this, _1);
+    const Event::PauseEventFunc pauseFunc = std::bind(&Engine::OnPause, this, _1);
     mPauseToken = EventHandler::AddListener(pauseFunc);
     
-    const Event::QuitEventFunc quitFunc = std::tr1::bind(&Engine::OnQuit, this, _1);
+    const Event::QuitEventFunc quitFunc = std::bind(&Engine::OnQuit, this, _1);
     mQuitToken = EventHandler::AddListener(quitFunc);
 
-    const Event::SurfaceChangedEventFunc surfaceChangedFunc = std::tr1::bind(&Engine::OnSurfaceChanged, this, _1);
+    const Event::SurfaceChangedEventFunc surfaceChangedFunc = std::bind(&Engine::OnSurfaceChanged, this, _1);
     mSurfaceChangedToken = EventHandler::AddListener(surfaceChangedFunc);
 	
-    const Event::ActivatedEventFunc activatedFunc = std::tr1::bind(&Engine::OnActivated, this, _1);
+    const Event::ActivatedEventFunc activatedFunc = std::bind(&Engine::OnActivated, this, _1);
     mActivatedToken = EventHandler::AddListener(activatedFunc);
 }
 

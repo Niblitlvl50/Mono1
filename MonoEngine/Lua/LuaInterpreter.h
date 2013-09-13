@@ -10,13 +10,13 @@
 #pragma once
 
 #include <string>
-#include <tr1/functional>
+#include <functional>
 
 class lua_State;
 
 namespace mono
 {
-    typedef std::tr1::function<int (lua_State*)> LuaFunction;
+    typedef std::function<int (lua_State*)> LuaFunction;
 
     class LuaInterpreter
     {

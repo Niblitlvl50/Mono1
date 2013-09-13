@@ -20,5 +20,5 @@ namespace game
         const mono::IEntityPtr mEntity;
     };
     
-    typedef std::tr1::function<void (const game::RemoveEntityEvent& event)> RemoveEntityFunc;
+    typedef std::function<void (const game::RemoveEntityEvent& event)> RemoveEntityFunc;
 }

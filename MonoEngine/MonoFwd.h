@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include <tr1/memory>
+#include <memory>
 #include <vector>
 #include <string>
 #include "SysTypes.h"
@@ -17,35 +17,35 @@
 namespace mono
 {
     struct IWindow;
-    typedef std::tr1::shared_ptr<IWindow> IWindowPtr;
+    typedef std::shared_ptr<IWindow> IWindowPtr;
 
     struct ICamera;
-    typedef std::tr1::shared_ptr<ICamera> ICameraPtr;
+    typedef std::shared_ptr<ICamera> ICameraPtr;
 	
     struct IRenderer;
-    typedef std::tr1::shared_ptr<IRenderer> IRendererPtr;
+    typedef std::shared_ptr<IRenderer> IRendererPtr;
 	
     struct IDrawable;
-    typedef std::tr1::shared_ptr<IDrawable> IDrawablePtr;
+    typedef std::shared_ptr<IDrawable> IDrawablePtr;
     typedef std::vector<IDrawablePtr> IDrawableCollection;
 
     struct IEntity;
-    typedef std::tr1::shared_ptr<IEntity> IEntityPtr;
+    typedef std::shared_ptr<IEntity> IEntityPtr;
     typedef std::vector<IEntityPtr> IEntityCollection;
     
     struct IPhysicsEntity;
-    typedef std::tr1::shared_ptr<IPhysicsEntity> IPhysicsEntityPtr;
+    typedef std::shared_ptr<IPhysicsEntity> IPhysicsEntityPtr;
 
     struct IUpdatable;
-    typedef std::tr1::shared_ptr<IUpdatable> IUpdatablePtr;
+    typedef std::shared_ptr<IUpdatable> IUpdatablePtr;
     typedef std::vector<IUpdatablePtr> IUpdatableCollection;
 
     struct IInputHandler;
-    typedef std::tr1::shared_ptr<IInputHandler> IInputHandlerPtr;
+    typedef std::shared_ptr<IInputHandler> IInputHandlerPtr;
 
     struct IZone;
-    typedef std::tr1::shared_ptr<IZone> IZonePtr;
+    typedef std::shared_ptr<IZone> IZonePtr;
 
     struct ITexture;
-    typedef std::tr1::shared_ptr<ITexture> ITexturePtr;
+    typedef std::shared_ptr<ITexture> ITexturePtr;
 }

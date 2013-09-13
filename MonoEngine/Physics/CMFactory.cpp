@@ -131,8 +131,8 @@ namespace
                 vects.push_back(cpv(vect2f.mX, vect2f.mY));
             }
             
-            mShape = cpPolyShapeNew(body->Body(), vects.size(), &vects.front(), cpv(offset.mX, offset.mY));
-            mInertiaValue = cpMomentForPoly(body->GetMass(), vects.size(), &vects.front(), cpv(offset.mX, offset.mY));
+            mShape = cpPolyShapeNew(body->Body(), int(vects.size()), &vects.front(), cpv(offset.mX, offset.mY));
+            mInertiaValue = cpMomentForPoly(body->GetMass(), int(vects.size()), &vects.front(), cpv(offset.mX, offset.mY));
         }
         ~CMShape()
         {

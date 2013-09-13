@@ -12,8 +12,8 @@
 #include <typeinfo>
 #include <map>
 #include <string>
-#include <tr1/functional>
-#include <tr1/memory>
+#include <functional>
+#include <memory>
 #include "EventToken.h"
 
 
@@ -22,7 +22,7 @@ namespace mono
     template<typename Event>
     struct EventListeners
     {
-        typedef std::tr1::function< void (const Event& event) > ListenerCallback;
+        typedef std::function< void (const Event& event) > ListenerCallback;
         typedef typename std::map< EventToken<Event>, ListenerCallback >::iterator Iterator;
         std::map<EventToken<Event>, ListenerCallback> mListeners;
 
@@ -50,19 +50,19 @@ namespace mono
 
     class EventHandler
     {
-        typedef std::tr1::shared_ptr<void> voidPtr;
+        typedef std::shared_ptr<void> voidPtr;
         typedef std::map<std::string, voidPtr> EventCollection;
         static EventCollection events;
 
     public:
 
         template<typename Event>
-        static EventToken<Event> AddListener(std::tr1::function< void (const Event& event) > listener)
+        static EventToken<Event> AddListener(std::function< void (const Event& event) > listener)
         {
             const char* name = typeid(Event).name();
             const std::string eventName(name);
 
-            typedef std::tr1::shared_ptr< EventListeners<Event> > EventListenersPtr;
+            typedef std::shared_ptr< EventListeners<Event> > EventListenersPtr;
 
             EventCollection::const_iterator it = events.find(eventName);
             if(it == events.end())
@@ -72,7 +72,7 @@ namespace mono
             }
 
             it = events.find(eventName);
-            return std::tr1::static_pointer_cast< EventListeners<Event> >(it->second)->AddListener(listener);
+            return std::static_pointer_cast< EventListeners<Event> >(it->second)->AddListener(listener);
         }
 
         template<class Event>
@@ -84,8 +84,8 @@ namespace mono
             EventCollection::iterator it = events.find(eventName);
             if(it != events.end())
             {
-                typedef std::tr1::shared_ptr< EventListeners<Event> > EventListenersPtr;
-                EventListenersPtr listener = std::tr1::static_pointer_cast< EventListeners<Event> >(it->second);
+                typedef std::shared_ptr< EventListeners<Event> > EventListenersPtr;
+                EventListenersPtr listener = std::static_pointer_cast< EventListeners<Event> >(it->second);
                 listener->RemoveListener(token);
             }
         }
@@ -99,8 +99,8 @@ namespace mono
             EventCollection::iterator it = events.find(eventName);
             if(it != events.end())
             {
-                typedef std::tr1::shared_ptr< EventListeners<Event> > EventListenersPtr;
-                EventListenersPtr listener = std::tr1::static_pointer_cast< EventListeners<Event> >(it->second);
+                typedef std::shared_ptr< EventListeners<Event> > EventListenersPtr;
+                EventListenersPtr listener = std::static_pointer_cast< EventListeners<Event> >(it->second);
                 listener->DispatchEvent(event);
             }	
         }

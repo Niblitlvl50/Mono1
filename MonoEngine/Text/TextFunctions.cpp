@@ -114,7 +114,7 @@ void mono::LoadFont(const std::string& font, float size, float scale)
 mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text, const math::Vector2f& pos, bool center)
 {
     mono::TextDefinition textDef;
-    textDef.chars = text.length();
+    textDef.chars = int(text.length());
     textDef.color[0] = 1.0f;
     textDef.color[1] = 1.0f;
     textDef.color[2] = 1.0f;

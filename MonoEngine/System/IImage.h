@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <tr1/memory>
+#include <memory>
 
 typedef unsigned char byte;
 
@@ -28,7 +28,7 @@ namespace mono
         virtual bool HasAlpha() const = 0;
     };
     
-    typedef std::tr1::shared_ptr<IImage> IImagePtr;
+    typedef std::shared_ptr<IImage> IImagePtr;
 
 }
 

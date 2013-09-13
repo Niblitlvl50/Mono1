@@ -35,7 +35,7 @@ namespace libpng
         unsigned char mBitDepth;
         unsigned char mChannels;
         
-        std::tr1::shared_ptr<byte> mData;
+        std::shared_ptr<byte> mData;
     };
 }
 

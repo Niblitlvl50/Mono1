@@ -189,7 +189,7 @@
 		2BD1E632153208E700A75171 /* trees.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5D9153207E600A75171 /* trees.c */; };
 		2BD1E633153208E700A75171 /* uncompr.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5DB153207E600A75171 /* uncompr.c */; };
 		2BD1E634153208E700A75171 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E0153207E600A75171 /* zutil.c */; };
-		2BD1E63515320A3A00A75171 /* MonoEngine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6872DC1531FEA800B8C2FB /* MonoEngine.dylib */; };
+		2BD1E63515320A3A00A75171 /* MonoEngine.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6872DC1531FEA800B8C2FB /* MonoEngine.lib */; };
 		2BD1E6401532155500A75171 /* LuaTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E63E1532155500A75171 /* LuaTest.cpp */; };
 		2BD392D315E8DE1500C010B7 /* Shuttle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD392D115E8DE1400C010B7 /* Shuttle.cpp */; };
 		2BD656B215C1BCED00B7E4B9 /* Vector3f.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BD656B115C1BCED00B7E4B9 /* Vector3f.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -242,9 +242,7 @@
 		2BE4744C153201CC00CA5ACB /* Texture.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47416153201CC00CA5ACB /* Texture.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE4744D153201CC00CA5ACB /* TextureFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE47417153201CC00CA5ACB /* TextureFactory.cpp */; };
 		2BE4744E153201CC00CA5ACB /* TextureFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47418153201CC00CA5ACB /* TextureFactory.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		2BE474871532032C00CA5ACB /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE474861532032C00CA5ACB /* SDL2.framework */; };
 		2BE4748C1532038B00CA5ACB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE4748B1532038B00CA5ACB /* OpenGL.framework */; };
-		2BE474B21532050F00CA5ACB /* MonoEngine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6872DC1531FEA800B8C2FB /* MonoEngine.dylib */; };
 		2BE671A3155DB27D0018E893 /* TraceCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE671A1155DB27D0018E893 /* TraceCamera.cpp */; };
 		2BE671A4155DB27D0018E893 /* TraceCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE671A2155DB27D0018E893 /* TraceCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE969451541E1D700FE8B70 /* SysOpenGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE969441541E1D700FE8B70 /* SysOpenGL.cpp */; };
@@ -264,6 +262,24 @@
 		2BFF89761707622600499D08 /* spritesheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BFF89721707622500499D08 /* spritesheet.png */; };
 		2BFF8979170762BB00499D08 /* FireBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BFF8978170762B900499D08 /* FireBullet.cpp */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		91B63F7D17D3C545004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F7C17D3C545004F1868 /* libSDL2.a */; };
+		91B63F7F17D3C881004F1868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F7E17D3C881004F1868 /* Cocoa.framework */; };
+		91B63F8117D3C8A6004F1868 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8017D3C8A6004F1868 /* CoreAudio.framework */; };
+		91B63F8317D3C8BC004F1868 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8217D3C8BC004F1868 /* AudioToolbox.framework */; };
+		91B63F8517D3C8C0004F1868 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8417D3C8C0004F1868 /* AudioUnit.framework */; };
+		91B63F8717D3C8D5004F1868 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8617D3C8D5004F1868 /* IOKit.framework */; };
+		91B63F8917D3C8E2004F1868 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8817D3C8E2004F1868 /* CoreFoundation.framework */; };
+		91B63F8B17D3C8F2004F1868 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8A17D3C8F2004F1868 /* ForceFeedback.framework */; };
+		91B63F8D17D3C8FF004F1868 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8C17D3C8FF004F1868 /* Carbon.framework */; };
+		91B63F8E17D3CB40004F1868 /* MonoEngine.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6872DC1531FEA800B8C2FB /* MonoEngine.lib */; };
+		91B63F8F17D3CB6B004F1868 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8C17D3C8FF004F1868 /* Carbon.framework */; };
+		91B63F9017D3CB72004F1868 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8A17D3C8F2004F1868 /* ForceFeedback.framework */; };
+		91B63F9117D3CB7B004F1868 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8817D3C8E2004F1868 /* CoreFoundation.framework */; };
+		91B63F9217D3CB81004F1868 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8617D3C8D5004F1868 /* IOKit.framework */; };
+		91B63F9317D3CB89004F1868 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8417D3C8C0004F1868 /* AudioUnit.framework */; };
+		91B63F9417D3CB8E004F1868 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8217D3C8BC004F1868 /* AudioToolbox.framework */; };
+		91B63F9517D3CB96004F1868 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8017D3C8A6004F1868 /* CoreAudio.framework */; };
+		91B63F9617D3CB9C004F1868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F7E17D3C881004F1868 /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -378,7 +394,7 @@
 		2B604D1F17099D5E00726F0A /* MathFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MathFwd.h; path = Math/MathFwd.h; sourceTree = "<group>"; };
 		2B6872D41531FB9600B8C2FB /* gtest_main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gtest_main.cc; sourceTree = "<group>"; };
 		2B6872D51531FB9600B8C2FB /* EngineTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EngineTest.cpp; sourceTree = "<group>"; };
-		2B6872DC1531FEA800B8C2FB /* MonoEngine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = MonoEngine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B6872DC1531FEA800B8C2FB /* MonoEngine.lib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = MonoEngine.lib; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B6872DF1531FEA800B8C2FB /* MonoEngine-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MonoEngine-Prefix.pch"; sourceTree = "<group>"; };
 		2B6872E01531FEA800B8C2FB /* MonoEngineProj.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MonoEngineProj.xcconfig; sourceTree = "<group>"; };
 		2B6872E11531FEA800B8C2FB /* MonoEngineTarget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MonoEngineTarget.xcconfig; sourceTree = "<group>"; };
@@ -632,7 +648,6 @@
 		2BE47416153201CC00CA5ACB /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
 		2BE47417153201CC00CA5ACB /* TextureFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureFactory.cpp; sourceTree = "<group>"; };
 		2BE47418153201CC00CA5ACB /* TextureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureFactory.h; sourceTree = "<group>"; };
-		2BE474861532032C00CA5ACB /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = Library/Frameworks/SDL2.framework; sourceTree = SDKROOT; };
 		2BE4748B1532038B00CA5ACB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2BE671A1155DB27D0018E893 /* TraceCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TraceCamera.cpp; path = Camera/TraceCamera.cpp; sourceTree = "<group>"; };
 		2BE671A2155DB27D0018E893 /* TraceCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TraceCamera.h; path = Camera/TraceCamera.h; sourceTree = "<group>"; };
@@ -657,6 +672,16 @@
 		2BFF8978170762B900499D08 /* FireBullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FireBullet.cpp; path = Game/FireBullet.cpp; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9138E038173C30DE00DCAC7D /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = System/Library/Frameworks/SDL2.framework; sourceTree = SDKROOT; };
+		91B63F7C17D3C545004F1868 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = "External Libs/SDL2/osx/debug/libSDL2.a"; sourceTree = "<group>"; };
+		91B63F7E17D3C881004F1868 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		91B63F8017D3C8A6004F1868 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		91B63F8217D3C8BC004F1868 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		91B63F8417D3C8C0004F1868 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		91B63F8617D3C8D5004F1868 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		91B63F8817D3C8E2004F1868 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		91B63F8A17D3C8F2004F1868 /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = System/Library/Frameworks/ForceFeedback.framework; sourceTree = SDKROOT; };
+		91B63F8C17D3C8FF004F1868 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -664,8 +689,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91B63F8D17D3C8FF004F1868 /* Carbon.framework in Frameworks */,
+				91B63F8B17D3C8F2004F1868 /* ForceFeedback.framework in Frameworks */,
+				91B63F8917D3C8E2004F1868 /* CoreFoundation.framework in Frameworks */,
+				91B63F8717D3C8D5004F1868 /* IOKit.framework in Frameworks */,
+				91B63F8517D3C8C0004F1868 /* AudioUnit.framework in Frameworks */,
+				91B63F8317D3C8BC004F1868 /* AudioToolbox.framework in Frameworks */,
+				91B63F8117D3C8A6004F1868 /* CoreAudio.framework in Frameworks */,
+				91B63F7F17D3C881004F1868 /* Cocoa.framework in Frameworks */,
+				91B63F7D17D3C545004F1868 /* libSDL2.a in Frameworks */,
 				2BE4748C1532038B00CA5ACB /* OpenGL.framework in Frameworks */,
-				2BE474871532032C00CA5ACB /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,7 +707,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BF8E3A11545FB4D00F46049 /* gtest.framework in Frameworks */,
-				2BD1E63515320A3A00A75171 /* MonoEngine.dylib in Frameworks */,
+				2BD1E63515320A3A00A75171 /* MonoEngine.lib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -682,7 +715,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BE474B21532050F00CA5ACB /* MonoEngine.dylib in Frameworks */,
+				91B63F9617D3CB9C004F1868 /* Cocoa.framework in Frameworks */,
+				91B63F9517D3CB96004F1868 /* CoreAudio.framework in Frameworks */,
+				91B63F9417D3CB8E004F1868 /* AudioToolbox.framework in Frameworks */,
+				91B63F9317D3CB89004F1868 /* AudioUnit.framework in Frameworks */,
+				91B63F9217D3CB81004F1868 /* IOKit.framework in Frameworks */,
+				91B63F9117D3CB7B004F1868 /* CoreFoundation.framework in Frameworks */,
+				91B63F9017D3CB72004F1868 /* ForceFeedback.framework in Frameworks */,
+				91B63F8F17D3CB6B004F1868 /* Carbon.framework in Frameworks */,
+				91B63F8E17D3CB40004F1868 /* MonoEngine.lib in Frameworks */,
 				002F3C0109D093BD00EBEB88 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -702,12 +743,21 @@
 		29B97314FDCFA39411CA2CEA /* Monolith1 */ = {
 			isa = PBXGroup;
 			children = (
+				91B63F8C17D3C8FF004F1868 /* Carbon.framework */,
+				91B63F8A17D3C8F2004F1868 /* ForceFeedback.framework */,
+				91B63F8817D3C8E2004F1868 /* CoreFoundation.framework */,
+				91B63F8617D3C8D5004F1868 /* IOKit.framework */,
+				91B63F8417D3C8C0004F1868 /* AudioUnit.framework */,
+				91B63F8217D3C8BC004F1868 /* AudioToolbox.framework */,
+				91B63F8017D3C8A6004F1868 /* CoreAudio.framework */,
+				91B63F7E17D3C881004F1868 /* Cocoa.framework */,
+				91B63F7C17D3C545004F1868 /* libSDL2.a */,
 				2B8FEB8C152F632B0041243F /* External Libs */,
 				2BD728AE152B95B60048435D /* Game */,
 				2B6A74191531F881002CB834 /* UnitTests */,
 				2B6872DD1531FEA800B8C2FB /* MonoEngine */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				2B6872DC1531FEA800B8C2FB /* MonoEngine.dylib */,
+				2B6872DC1531FEA800B8C2FB /* MonoEngine.lib */,
 			);
 			name = Monolith1;
 			sourceTree = "<group>";
@@ -1288,8 +1338,8 @@
 		2BE474881532033C00CA5ACB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9138E038173C30DE00DCAC7D /* SDL2.framework */,
 				2BE4748B1532038B00CA5ACB /* OpenGL.framework */,
-				2BE474861532032C00CA5ACB /* SDL2.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -1447,7 +1497,7 @@
 			);
 			name = MonoEngine;
 			productName = MonoEngine;
-			productReference = 2B6872DC1531FEA800B8C2FB /* MonoEngine.dylib */;
+			productReference = 2B6872DC1531FEA800B8C2FB /* MonoEngine.lib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		2B6A74161531F881002CB834 /* UnitTests */ = {
@@ -1737,10 +1787,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
+				EXECUTABLE_EXTENSION = lib;
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -1754,18 +1805,20 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/External Libs/chipmunk-6.1.1/include/chipmunk\"",
-					/Library/Frameworks/SDL2.framework/Headers,
 					"$(HEADER_SEARCH_PATHS)",
+					"\"$(SRCROOT)/External Libs/SDL2/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/External Libs/chipmunk-6.1.1/include\"",
+					"\"$(SRCROOT)/External Libs/SDL2/osx/debug\"",
 				);
-				MACH_O_TYPE = mh_dylib;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -1773,11 +1826,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EXECUTABLE_EXTENSION = lib;
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1787,17 +1841,19 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/External Libs/chipmunk-6.1.1/include/chipmunk\"",
-					/Library/Frameworks/SDL2.framework/Headers,
 					"$(HEADER_SEARCH_PATHS)",
+					"\"$(SRCROOT)/External Libs/SDL2/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/External Libs/chipmunk-6.1.1/include\"",
+					"\"$(SRCROOT)/External Libs/SDL2/osx/debug\"",
 				);
-				MACH_O_TYPE = mh_dylib;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
@@ -1854,9 +1910,9 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					/Library/Frameworks,
@@ -1867,12 +1923,12 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
-					/Library/Frameworks/SDL2.framework/Headers,
+					/System/Library/Frameworks/SDL2.framework/Headers,
 					"$(HEADER_SEARCH_PATHS)",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = Game;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -1882,9 +1938,9 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				FRAMEWORK_SEARCH_PATHS = (
 					/Library/Frameworks,
 					"$(FRAMEWORK_SEARCH_PATHS)",
@@ -1893,12 +1949,12 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (
-					/Library/Frameworks/SDL2.framework/Headers,
+					/System/Library/Frameworks/SDL2.framework/Headers,
 					"$(HEADER_SEARCH_PATHS)",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = Game;
 				WRAPPER_EXTENSION = app;
 			};

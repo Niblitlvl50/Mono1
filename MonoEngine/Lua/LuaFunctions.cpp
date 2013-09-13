@@ -83,7 +83,7 @@ namespace
         lua_pushnil(L);
         while(lua_next(L, -2) != 0)
         {
-            const int key = lua_tointeger(L, -2);
+            const int key = int(lua_tointeger(L, -2));
             std::vector<T> table;
             GetLuaTable(L, table);
             
@@ -102,7 +102,7 @@ void lua::Get(LuaState& L, int& value)
     if(!result)
         throw std::runtime_error("Value is not a integer");
     
-    value = lua_tointeger(L, -1);
+    value = int(lua_tointeger(L, -1));
 }
 
 void lua::Get(LuaState& L, double& value)

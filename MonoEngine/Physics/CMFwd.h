@@ -10,8 +10,8 @@
 #pragma once
 
 #include <vector>
-#include <tr1/memory>
-#include <tr1/functional>
+#include <memory>
+#include <functional>
 
 struct cpBody;
 struct cpShape;
@@ -21,11 +21,11 @@ namespace cm
     struct Object;
     
     struct IBody;
-    typedef std::tr1::shared_ptr<IBody> IBodyPtr;
+    typedef std::shared_ptr<IBody> IBodyPtr;
 
     struct IShape;
-    typedef std::tr1::shared_ptr<IShape> IShapePtr;
+    typedef std::shared_ptr<IShape> IShapePtr;
     typedef std::vector<IShapePtr> IShapeCollection;
     
-    typedef std::tr1::function<void (IBodyPtr body)> BodyFunc;
+    typedef std::function<void (IBodyPtr body)> BodyFunc;
 }

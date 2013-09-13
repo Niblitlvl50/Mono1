@@ -20,6 +20,6 @@ namespace game
         const mono::IEntityPtr mEntity;
     };
     
-    typedef std::tr1::function<void (const game::SpawnEntityEvent& event)> SpawnEntityFunc;
+    typedef std::function<void (const game::SpawnEntityEvent& event)> SpawnEntityFunc;
 }
 

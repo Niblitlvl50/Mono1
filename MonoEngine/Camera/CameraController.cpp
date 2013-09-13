@@ -15,19 +15,21 @@
 #include "MathFunctions.h"
 #include "Quad.h"
 
+#include <functional>
+
 using namespace mono;
 
 
 CameraController::CameraController(ICamera* cam)
     : mCam(cam)
 {
-    using namespace std::tr1::placeholders;
+    using namespace std::placeholders;
     
-    const Event::MouseWheelEventFunc mouseWheelFunc = std::tr1::bind(&CameraController::OnMouseWheel, this, _1);
-    mMouseWheelToken = mono::EventHandler::AddListener(mouseWheelFunc);
+    //const Event::MouseWheelEventFunc mouseWheelFunc = std::bind(&CameraController::OnMouseWheel, this, _1);
+    //mMouseWheelToken = mono::EventHandler::AddListener(mouseWheelFunc);
     
-    const Event::MultiGestureEventFunc multiGestureFunc = std::tr1::bind(&CameraController::OnMultiGesture, this, _1);
-    mMultiGestureToken = mono::EventHandler::AddListener(multiGestureFunc);
+    //const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&CameraController::OnMultiGesture, this, _1);
+    //mMultiGestureToken = mono::EventHandler::AddListener(multiGestureFunc);
 }
 CameraController::~CameraController()
 {

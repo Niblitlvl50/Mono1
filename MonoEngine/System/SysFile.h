@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include <tr1/memory>
+#include <memory>
 
 namespace File
 {
-    typedef std::tr1::shared_ptr<FILE> FilePtr;
+    typedef std::shared_ptr<FILE> FilePtr;
     
     FilePtr OpenBinaryFile(const std::string& source);
     long FileSize(const FilePtr file);
