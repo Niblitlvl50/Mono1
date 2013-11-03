@@ -5,6 +5,10 @@
 
 #include "gzguts.h"
 
+// Disable the implicit-function-declaration warning for this file
+#pragma clang diagnostic ignored "-Wimplicit-function-declaration"
+
+
 /* Local functions */
 local int gz_load OF((gz_statep, unsigned char *, unsigned, unsigned *));
 local int gz_avail OF((gz_statep));

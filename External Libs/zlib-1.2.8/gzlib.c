@@ -5,6 +5,9 @@
 
 #include "gzguts.h"
 
+// Disable the implicit-function-declaration warning for this file
+#pragma clang diagnostic ignored "-Wimplicit-function-declaration"
+
 #if defined(_WIN32) && !defined(__BORLANDC__)
 #  define LSEEK _lseeki64
 #else
