@@ -124,7 +124,6 @@
 		2BD1E5EE1532080500A75171 /* SquareObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E61532080500A75171 /* SquareObject.cpp */; };
 		2BD1E5EF1532080500A75171 /* TestZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E81532080500A75171 /* TestZone.cpp */; };
 		2BD1E5F01532080500A75171 /* TriangleObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5EA1532080500A75171 /* TriangleObject.cpp */; };
-		2BD1E5F21532081300A75171 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5F11532081300A75171 /* main.cpp */; };
 		2BD1E5F31532089200A75171 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5721532072000A75171 /* lapi.c */; };
 		2BD1E5F41532089200A75171 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5741532072000A75171 /* lauxlib.c */; };
 		2BD1E5F51532089200A75171 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5761532072000A75171 /* lbaselib.c */; };
@@ -245,6 +244,7 @@
 		2BFF89761707622600499D08 /* spritesheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BFF89721707622500499D08 /* spritesheet.png */; };
 		2BFF8979170762BB00499D08 /* FireBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BFF8978170762B900499D08 /* FireBullet.cpp */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		9141B7031826E5BA003B4BDD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9141B7021826E5BA003B4BDD /* main.cpp */; };
 		9163C0AE1826DCCB00832128 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0AA1826DCCB00832128 /* MathFwd.cpp */; };
 		9163C0AF1826DCCB00832128 /* MathFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0AB1826DCCB00832128 /* MathFwd.h */; };
 		9163C0B01826DCCB00832128 /* Quad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0AC1826DCCB00832128 /* Quad.cpp */; };
@@ -568,7 +568,6 @@
 		2BD1E5E91532080500A75171 /* TestZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestZone.h; path = Game/TestZone.h; sourceTree = "<group>"; };
 		2BD1E5EA1532080500A75171 /* TriangleObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TriangleObject.cpp; path = Game/TriangleObject.cpp; sourceTree = "<group>"; };
 		2BD1E5EB1532080500A75171 /* TriangleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TriangleObject.h; path = Game/TriangleObject.h; sourceTree = "<group>"; };
-		2BD1E5F11532081300A75171 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2BD1E63E1532155500A75171 /* LuaTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaTest.cpp; sourceTree = "<group>"; };
 		2BD392D115E8DE1400C010B7 /* Shuttle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shuttle.cpp; path = Game/Shuttle.cpp; sourceTree = "<group>"; };
 		2BD392D215E8DE1400C010B7 /* Shuttle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shuttle.h; path = Game/Shuttle.h; sourceTree = "<group>"; };
@@ -647,6 +646,7 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9138E038173C30DE00DCAC7D /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = System/Library/Frameworks/SDL2.framework; sourceTree = SDKROOT; };
+		9141B7021826E5BA003B4BDD /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = Game/main.cpp; sourceTree = "<group>"; };
 		9163C0AA1826DCCB00832128 /* MathFwd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MathFwd.cpp; path = Math/MathFwd.cpp; sourceTree = "<group>"; };
 		9163C0AB1826DCCB00832128 /* MathFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MathFwd.h; path = Math/MathFwd.h; sourceTree = "<group>"; };
 		9163C0AC1826DCCB00832128 /* Quad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Quad.cpp; path = Math/Quad.cpp; sourceTree = "<group>"; };
@@ -1161,11 +1161,11 @@
 		2BD728AE152B95B60048435D /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				9141B7021826E5BA003B4BDD /* main.cpp */,
 				2B75E94516B5534100B84A26 /* Events */,
 				2B97208D155037E7006841E1 /* Monster */,
 				2BD1E5681532068600A75171 /* Linked Frameworks */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
-				2BD1E5F11532081300A75171 /* main.cpp */,
 				2BD1E5E41532080500A75171 /* OscillatingLine.cpp */,
 				2BD1E5E51532080500A75171 /* OscillatingLine.h */,
 				2BD1E5E61532080500A75171 /* SquareObject.cpp */,
@@ -1749,8 +1749,8 @@
 				2BD1E5EE1532080500A75171 /* SquareObject.cpp in Sources */,
 				2BD1E5EF1532080500A75171 /* TestZone.cpp in Sources */,
 				2BD1E5F01532080500A75171 /* TriangleObject.cpp in Sources */,
-				2BD1E5F21532081300A75171 /* main.cpp in Sources */,
 				2B4B06A015331F13006D0C75 /* AnimatedDude.cpp in Sources */,
+				9141B7031826E5BA003B4BDD /* main.cpp in Sources */,
 				2BC214751535E6B40063834F /* AnimatedDudeController.cpp in Sources */,
 				2BAA30E815435599003BF117 /* Explosion.cpp in Sources */,
 				2B97209015503819006841E1 /* Monster.cpp in Sources */,
