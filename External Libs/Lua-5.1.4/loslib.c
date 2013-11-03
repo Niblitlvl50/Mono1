@@ -19,6 +19,9 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
+// Disable the deprecated warning for this file only
+#pragma clang diagnostic ignored "-Wdeprecated"
+
 
 static int os_pushresult (lua_State *L, int i, const char *filename) {
   int en = errno;  /* calls to Lua API may change this value */
