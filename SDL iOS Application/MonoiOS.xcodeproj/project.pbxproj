@@ -271,8 +271,6 @@
 		2BDD2CA3171CA01F0041CB18 /* firebullet.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA0171CA01F0041CB18 /* firebullet.sprite */; };
 		2BDD2CA4171CA01F0041CB18 /* meteorite.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA1171CA01F0041CB18 /* meteorite.sprite */; };
 		2BDD2CA5171CA01F0041CB18 /* meteorite.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA1171CA01F0041CB18 /* meteorite.sprite */; };
-		91282D171826725400B80892 /* Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91282D161826725400B80892 /* Math.cpp */; };
-		91282D181826725400B80892 /* Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91282D161826725400B80892 /* Math.cpp */; };
 		91282D1A1826759E00B80892 /* Quad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91282D191826759E00B80892 /* Quad.cpp */; };
 		91282D1B1826759E00B80892 /* Quad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91282D191826759E00B80892 /* Quad.cpp */; };
 		91282D1D1826764500B80892 /* Vector2f.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91282D1C1826764500B80892 /* Vector2f.cpp */; };
@@ -322,6 +320,8 @@
 		9199F60A17E3AA0F0001FE28 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5E717E3AA0F0001FE28 /* zutil.c */; };
 		91B63FA217D3D2FE004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63FA117D3D2FE004F1868 /* libSDL2.a */; };
 		91B63FA317DC9F7E004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63FA117D3D2FE004F1868 /* libSDL2.a */; };
+		91C41E491826E2A50035E778 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91C41E471826E2A50035E778 /* MathFwd.cpp */; };
+		91C41E4A1826E2A50035E778 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91C41E471826E2A50035E778 /* MathFwd.cpp */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
 		FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07C0E26BD8C00F39101 /* Icon.png */; };
 		FD77A07F0E26BDA900F39101 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07E0E26BDA900F39101 /* Default.png */; };
@@ -607,7 +607,6 @@
 		2BBA5ABC160A5EDA00D8D38E /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		2BBA5ABD160A5EDA00D8D38E /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
 		2BD3CC44160BB2B30043156E /* MonoiOS Simulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MonoiOS Simulator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BDD2C88171C9E4B0041CB18 /* Math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Math.h; sourceTree = "<group>"; };
 		2BDD2C8A171C9EB10041CB18 /* PauseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseEvent.h; sourceTree = "<group>"; };
 		2BDD2C8B171C9F540041CB18 /* PhysicsEntityBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsEntityBase.cpp; sourceTree = "<group>"; };
 		2BDD2C8C171C9F540041CB18 /* PhysicsEntityBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsEntityBase.h; sourceTree = "<group>"; };
@@ -625,7 +624,6 @@
 		2BDD2CA1171CA01F0041CB18 /* meteorite.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = meteorite.sprite; path = ../Game/res/meteorite.sprite; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		911BFF5717FA07DB002EE7ED /* TouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchEvent.h; sourceTree = "<group>"; };
-		91282D161826725400B80892 /* Math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Math.cpp; sourceTree = "<group>"; };
 		91282D191826759E00B80892 /* Quad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quad.cpp; sourceTree = "<group>"; };
 		91282D1C1826764500B80892 /* Vector2f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector2f.cpp; sourceTree = "<group>"; };
 		9199F5CA17DCDB6B0001FE28 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -658,6 +656,8 @@
 		9199F5E717E3AA0F0001FE28 /* zutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zutil.c; path = "zlib-1.2.8/zutil.c"; sourceTree = "<group>"; };
 		9199F5E817E3AA0F0001FE28 /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zutil.h; path = "zlib-1.2.8/zutil.h"; sourceTree = "<group>"; };
 		91B63FA117D3D2FE004F1868 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = SDL2/ios/debug/libSDL2.a; sourceTree = "<group>"; };
+		91C41E471826E2A50035E778 /* MathFwd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathFwd.cpp; sourceTree = "<group>"; };
+		91C41E481826E2A50035E778 /* MathFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathFwd.h; sourceTree = "<group>"; };
 		FD779EDD0E26BA1200F39101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		FD77A07C0E26BD8C00F39101 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		FD77A07E0E26BDA900F39101 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -869,13 +869,13 @@
 		2B26D6C615FD2BB5001E9748 /* Math */ = {
 			isa = PBXGroup;
 			children = (
-				2BDD2C88171C9E4B0041CB18 /* Math.h */,
+				91C41E471826E2A50035E778 /* MathFwd.cpp */,
+				91C41E481826E2A50035E778 /* MathFwd.h */,
 				2B26D6C715FD2BB5001E9748 /* MathFunctions.cpp */,
 				2B26D6C815FD2BB5001E9748 /* MathFunctions.h */,
 				2B26D6C915FD2BB5001E9748 /* Quad.h */,
 				2B26D6CA15FD2BB5001E9748 /* Vector2f.h */,
 				2B26D6CB15FD2BB5001E9748 /* Vector3f.h */,
-				91282D161826725400B80892 /* Math.cpp */,
 				91282D191826759E00B80892 /* Quad.cpp */,
 				91282D1C1826764500B80892 /* Vector2f.cpp */,
 			);
@@ -1495,7 +1495,7 @@
 				2BBA5AC2160A5EDA00D8D38E /* cpDampedSpring.c in Sources */,
 				2BBA5AC3160A5EDA00D8D38E /* cpGearJoint.c in Sources */,
 				2BBA5AC4160A5EDA00D8D38E /* cpGrooveJoint.c in Sources */,
-				91282D171826725400B80892 /* Math.cpp in Sources */,
+				91C41E491826E2A50035E778 /* MathFwd.cpp in Sources */,
 				2BBA5AC5160A5EDA00D8D38E /* cpPinJoint.c in Sources */,
 				2BBA5AC6160A5EDA00D8D38E /* cpPivotJoint.c in Sources */,
 				2BBA5AC7160A5EDA00D8D38E /* cpRatchetJoint.c in Sources */,
@@ -1581,7 +1581,6 @@
 				91282D1E1826764500B80892 /* Vector2f.cpp in Sources */,
 				2BD3CBCE160BB2B30043156E /* png.c in Sources */,
 				2BD3CBCF160BB2B30043156E /* pngerror.c in Sources */,
-				91282D181826725400B80892 /* Math.cpp in Sources */,
 				2BD3CBD0160BB2B30043156E /* pngget.c in Sources */,
 				2BD3CBD1160BB2B30043156E /* pngmem.c in Sources */,
 				2BD3CBD2160BB2B30043156E /* pngpread.c in Sources */,
@@ -1644,6 +1643,7 @@
 				2BD3CC1E160BB2B30043156E /* cpDampedSpring.c in Sources */,
 				2BD3CC1F160BB2B30043156E /* cpGearJoint.c in Sources */,
 				2BD3CC20160BB2B30043156E /* cpGrooveJoint.c in Sources */,
+				91C41E4A1826E2A50035E778 /* MathFwd.cpp in Sources */,
 				2BD3CC21160BB2B30043156E /* cpPinJoint.c in Sources */,
 				2BD3CC22160BB2B30043156E /* cpPivotJoint.c in Sources */,
 				2BD3CC23160BB2B30043156E /* cpRatchetJoint.c in Sources */,

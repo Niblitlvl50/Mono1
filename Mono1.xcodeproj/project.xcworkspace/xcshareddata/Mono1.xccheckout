@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>640D03BD-D877-4D66-8F70-777846966EE8</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Mono1</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>FC914D37-977B-450C-B1B0-DF358A004788</key>
+		<string>ssh://github.com/Niblitlvl50/Mono1.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Mono1.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>FC914D37-977B-450C-B1B0-DF358A004788</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/Niblitlvl50/Mono1.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>FC914D37-977B-450C-B1B0-DF358A004788</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FC914D37-977B-450C-B1B0-DF358A004788</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Mono1</string>
+		</dict>
+	</array>
+</dict>
+</plist>

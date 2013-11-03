@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2B6872DB1531FEA800B8C2FB"
-               BuildableName = "MonoEngine.dylib"
+               BuildableName = "MonoEngine.lib"
                BlueprintName = "MonoEngine"
                ReferencedContainer = "container:Mono1.xcodeproj">
             </BuildableReference>
