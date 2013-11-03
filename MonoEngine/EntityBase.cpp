@@ -87,7 +87,7 @@ void EntityBase::AddChild(IEntityPtr child)
 
 void EntityBase::RemoveChild(IEntityPtr child)
 {
-    FindAndRemoveEntity(mChildren, child);
+    FindAndRemove(mChildren, child);
 }
 
 

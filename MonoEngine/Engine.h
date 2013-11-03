@@ -13,12 +13,6 @@
 #include "EventFwd.h"
 #include "EventToken.h"
 
-/* The classes below are exported */
-#pragma GCC visibility push(default)
-
-/* The classes below are not exported */
-//#pragma GCC visibility push(hidden)
-
 namespace mono
 {
 
@@ -55,6 +49,4 @@ namespace mono
     };
 
 }
-
-#pragma GCC visibility pop
 
