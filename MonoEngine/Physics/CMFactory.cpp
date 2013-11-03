@@ -122,10 +122,10 @@ namespace
             mShape = cpSegmentShapeNew(body->Body(), cpv(first.mX, first.mY), cpv(second.mX, second.mY), radius);
             mInertiaValue = cpMomentForSegment(body->GetMass(), cpv(first.mX, first.mY), cpv(second.mX, second.mY));
         }
-        CMShape(cm::IBodyPtr body, const Vector2fCollection& vertices, const math::Vector2f& offset)
+        CMShape(cm::IBodyPtr body, const std::vector<math::Vector2f>& vertices, const math::Vector2f& offset)
         {
             std::vector<cpVect> vects;
-            for(Vector2fCollection::const_iterator it = vertices.begin(), end = vertices.end(); it != end; ++it)
+            for(auto it = vertices.begin(), end = vertices.end(); it != end; ++it)
             {
                 const math::Vector2f& vect2f = *it;
                 vects.push_back(cpv(vect2f.mX, vect2f.mY));
@@ -185,7 +185,7 @@ cm::IShapePtr cm::Factory::CreateShape(cm::IBodyPtr body, const math::Vector2f& 
     return IShapePtr(new CMShape(body, first, second, radius));
 }
 
-cm::IShapePtr cm::Factory::CreateShape(cm::IBodyPtr body, const Vector2fCollection& vertices, const math::Vector2f& offset)
+cm::IShapePtr cm::Factory::CreateShape(cm::IBodyPtr body, const std::vector<math::Vector2f>& vertices, const math::Vector2f& offset)
 {
     return IShapePtr(new CMShape(body, vertices, offset));
 }

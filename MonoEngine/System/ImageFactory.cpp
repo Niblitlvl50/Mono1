@@ -69,7 +69,7 @@ mono::IImagePtr mono::LoadImage(const std::string& source)
     
     IImagePtr image;
     
-    if(extension.compare("png") == 0)
+    if(extension == "png")
         image.reset(new libpng::PNGImage(source));
     else
         throw std::runtime_error("Unsupported image");

@@ -11,6 +11,8 @@
 #include "Vector2f.h"
 #include "MathFunctions.h"
 
+#include <cmath>
+
 using namespace mono;
 
 namespace constants

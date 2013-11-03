@@ -12,6 +12,7 @@
 #include "IEntity.h"
 #include "MonoFwd.h"
 #include "Vector2f.h"
+#include <vector>
 
 namespace mono
 {
@@ -42,7 +43,7 @@ namespace mono
         float mScale;
         float mRotation;
         
-        IEntityCollection mChildren;
+        std::vector<IEntityPtr> mChildren;
     };
     
 }

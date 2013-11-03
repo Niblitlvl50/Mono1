@@ -39,9 +39,9 @@ namespace mono
         IWindowPtr mWindow;
         bool mDrawBB;
         
-        IDrawableCollection mDrawables;
-        IUpdatableCollection mUpdatables;
-        TextDefCollection mTexts;
+        std::vector<IDrawablePtr> mDrawables;
+        std::vector<IUpdatablePtr> mUpdatables;
+        std::vector<TextDefinition> mTexts;
     };
 
 }

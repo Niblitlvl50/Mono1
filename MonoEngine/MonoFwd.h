@@ -10,8 +10,6 @@
 #pragma once
 
 #include <memory>
-#include <vector>
-#include <string>
 #include "SysTypes.h"
 
 namespace mono
@@ -27,18 +25,15 @@ namespace mono
 	
     struct IDrawable;
     typedef std::shared_ptr<IDrawable> IDrawablePtr;
-    typedef std::vector<IDrawablePtr> IDrawableCollection;
 
     struct IEntity;
     typedef std::shared_ptr<IEntity> IEntityPtr;
-    typedef std::vector<IEntityPtr> IEntityCollection;
     
     struct IPhysicsEntity;
     typedef std::shared_ptr<IPhysicsEntity> IPhysicsEntityPtr;
 
     struct IUpdatable;
     typedef std::shared_ptr<IUpdatable> IUpdatablePtr;
-    typedef std::vector<IUpdatablePtr> IUpdatableCollection;
 
     struct IInputHandler;
     typedef std::shared_ptr<IInputHandler> IInputHandlerPtr;

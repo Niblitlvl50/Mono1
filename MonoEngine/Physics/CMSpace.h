@@ -10,7 +10,9 @@
 #pragma once
 
 #include "CMFwd.h"
-#include "MathFwd.h"
+#include "Math.h"
+#include <vector>
+#include <functional>
 
 struct cpSpace;
 struct cpArbiter;
@@ -32,7 +34,7 @@ namespace cm
         void AddShape(IShapePtr shape);
         void RemoveShape(IShapePtr shape);
         
-        void ForEachBody(const BodyFunc& func);
+        void ForEachBody(const std::function<void (IBodyPtr)>& func);
         
     private:
         

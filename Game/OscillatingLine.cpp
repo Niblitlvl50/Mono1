@@ -12,6 +12,7 @@
 #include "Texture.h"
 #include "IRenderer.h"
 
+#include <string>
 #include <cmath>
 
 using namespace game;

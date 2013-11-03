@@ -16,7 +16,7 @@
 #include "CMIShape.h"
 #include "CMFactory.h"
 
-#include "MathFwd.h"
+#include "Math.h"
 
 using namespace game;
 

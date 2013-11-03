@@ -10,8 +10,10 @@
 #pragma once
 
 #include "ZoneBase.h"
-#include "MathFwd.h"
+#include "Math.h"
 #include "CMFwd.h"
+
+#include <functional>
 
 namespace mono
 {
@@ -19,7 +21,7 @@ namespace mono
     {
     public:
 
-        void ForEachBody(const cm::BodyFunc& func);
+        void ForEachBody(const std::function<void (cm::IBodyPtr)>& func);
 
     protected:
         

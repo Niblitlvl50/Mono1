@@ -9,6 +9,7 @@
 #pragma once
 
 #include "MonoFwd.h"
+#include <vector>
 
 namespace
 {
@@ -28,14 +29,13 @@ namespace
 
 namespace mono
 {    
-    bool FindAndRemoveEntity(IEntityCollection& collection, IEntityPtr entity);
+    bool FindAndRemoveEntity(std::vector<IEntityPtr>& collection, IEntityPtr entity);
     
     template <typename T>
     bool FindAndRemove(std::vector<std::shared_ptr<T> >& collection, std::shared_ptr<T> object)
     {
-        typedef typename std::vector<std::shared_ptr<T> >::iterator TypeIterator;
         const ObjectFinder<T> finder(object);
-        const TypeIterator newEnd = std::remove_if(collection.begin(), collection.end(), finder);
+        const auto newEnd = std::remove_if(collection.begin(), collection.end(), finder);
         if(newEnd != collection.end())
         {
             collection.erase(newEnd);

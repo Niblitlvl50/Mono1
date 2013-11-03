@@ -41,10 +41,10 @@ namespace
      */
 }
 
-bool mono::FindAndRemoveEntity(IEntityCollection& collection, IEntityPtr entity)
+bool mono::FindAndRemoveEntity(std::vector<IEntityPtr>& collection, IEntityPtr entity)
 {
     const EntityFinder finder(entity);
-    const IEntityCollection::iterator newEnd = std::remove_if(collection.begin(), collection.end(), finder);
+    const auto newEnd = std::remove_if(collection.begin(), collection.end(), finder);
     if(newEnd != collection.end())
     {
         collection.erase(newEnd, collection.end());

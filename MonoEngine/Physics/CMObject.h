@@ -9,13 +9,14 @@
 #pragma once
 
 #include "CMFwd.h"
+#include <vector>
 
 namespace cm
 {
     struct Object
     {
         IBodyPtr body;
-        IShapeCollection shapes;
+        std::vector<IShapePtr> shapes;
     };
 }
 

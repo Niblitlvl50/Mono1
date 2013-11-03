@@ -52,9 +52,9 @@ ZoneBase::ZoneBase()
 {
     // Make sure the three layers exists.
     
-    mLayers[BACKGROUND] = IEntityCollection();
-    mLayers[MIDDLEGROUND] = IEntityCollection();
-    mLayers[FOREGROUND] = IEntityCollection();
+    mLayers[BACKGROUND]   = std::vector<IEntityPtr>();
+    mLayers[MIDDLEGROUND] = std::vector<IEntityPtr>();
+    mLayers[FOREGROUND]   = std::vector<IEntityPtr>();
 }
 
 void ZoneBase::Accept(IRenderer& renderer)
@@ -70,10 +70,10 @@ void ZoneBase::Accept(IRenderer& renderer)
 
 void ZoneBase::DoPreAccept()
 {
-    for(LayerMap::iterator it = mLayers.begin(), end = mLayers.end(); it != end; ++it)
+    for(auto it = mLayers.begin(), end = mLayers.end(); it != end; ++it)
     {
-        IEntityCollection& collection = it->second;
-        IEntityCollection::iterator removeIt = std::remove_if(collection.begin(), collection.end(), RemoveIfDead);
+        std::vector<IEntityPtr>& collection = it->second;
+        auto removeIt = std::remove_if(collection.begin(), collection.end(), RemoveIfDead);
         if(removeIt != collection.end())
             collection.erase(removeIt, collection.end());
     }    
@@ -81,15 +81,15 @@ void ZoneBase::DoPreAccept()
 
 void ZoneBase::AddEntityToLayer(IEntityPtr entity, LayerId layer)
 {
-    LayerMap::iterator layerIt = mLayers.find(layer);    
-    IEntityCollection& collection = layerIt->second;
+    auto layerIt = mLayers.find(layer);
+    std::vector<IEntityPtr>& collection = layerIt->second;
     collection.push_back(entity);
 }
 
 void ZoneBase::RemoveEntity(IEntityPtr entity)
 {
     bool result = false;
-    for(LayerMap::iterator it = mLayers.begin(), end = mLayers.end(); it != end; ++it)
+    for(auto it = mLayers.begin(), end = mLayers.end(); it != end; ++it)
     {
         result = FindAndRemove(it->second, entity);
         if(result)

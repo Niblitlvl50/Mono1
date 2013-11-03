@@ -8,10 +8,7 @@
 
 #pragma once
 
-namespace math
-{
-    struct Vector2f;
-}
+#include "Math.h"
 
 namespace Video
 {

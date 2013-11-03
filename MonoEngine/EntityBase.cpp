@@ -12,9 +12,6 @@
 #include "Utils.h"
 #include "Quad.h"
 
-#include <iostream>
-
-
 using namespace mono;
 
 EntityBase::EntityBase()
@@ -33,7 +30,7 @@ void EntityBase::doDraw(IRenderer& renderer) const
     glTranslatef(-rotationPoint.mX, -rotationPoint.mY, 0.0f);    
     glScalef(mScale, mScale, mScale);    
 
-    for(IEntityCollection::const_iterator it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
+    for(auto it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
     {
         const OGL::OGLPushPopMatrix raii;
         
@@ -46,7 +43,7 @@ void EntityBase::doDraw(IRenderer& renderer) const
 
 void EntityBase::doUpdate(unsigned int delta)
 {
-    for(IEntityCollection::const_iterator it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
+    for(auto it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
     {
         const IEntityPtr child = *it;
         child->doUpdate(delta);
@@ -66,7 +63,7 @@ math::Quad EntityBase::BoundingBox() const
     const float y = mPosition.mY - (mScale / 2.0f);
     math::Quad thisbb(x, y, x + mScale, y + mScale);
         
-    for(IEntityCollection::const_iterator it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
+    for(auto it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
     {
         const IEntityPtr child = *it;
         math::Quad childbb = (child->BoundingBox() * mScale);

@@ -70,7 +70,7 @@ void mono::LoadFont(const std::string& font, float size, float scale)
     File::FilePtr fontfile = File::OpenBinaryFile(font);
     const long filesize = File::FileSize(fontfile);
     
-    ByteVector fontbuffer(filesize, 0);
+    std::vector<byte> fontbuffer(filesize, 0);
     fread(&fontbuffer.front(), 1, filesize, fontfile.get());
     
     const int width = 512;
@@ -182,7 +182,7 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text,
     return textDef;
 }
 
-void mono::DrawTextFromDefinitions(const TextDefCollection& collection)
+void mono::DrawTextFromDefinitions(const std::vector<TextDefinition>& collection)
 {
     if(collection.empty())
         return;
@@ -192,7 +192,7 @@ void mono::DrawTextFromDefinitions(const TextDefCollection& collection)
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         
-    for(TextDefCollection::const_iterator it = collection.begin(), end = collection.end(); it != end; ++it)
+    for(auto it = collection.begin(), end = collection.end(); it != end; ++it)
     {
         const TextDefinition& def = *it;
                         

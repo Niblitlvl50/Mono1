@@ -42,6 +42,7 @@
 #include "AnimationSequence.h"
 #include "Quad.h"
 
+#include <string>
 #include <map>
 #include <functional>
 

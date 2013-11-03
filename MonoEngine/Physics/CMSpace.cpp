@@ -21,7 +21,7 @@ using namespace cm;
 
 namespace
 {
-    BodyFunc bodyFunction;
+    std::function<void (cm::IBodyPtr)> bodyFunction;
     std::vector<IBodyPtr>* bodyCollection;
     
     void CMBodyFunction(cpBody* body, void* data)
@@ -96,7 +96,7 @@ void Space::RemoveShape(IShapePtr shape)
     cpSpaceRemoveShape(mSpace, shape->Shape());
 }
 
-void Space::ForEachBody(const BodyFunc& func)
+void Space::ForEachBody(const std::function<void (IBodyPtr)>& func)
 {
     bodyFunction = func;
     bodyCollection = &mBodies;

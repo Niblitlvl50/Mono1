@@ -9,8 +9,7 @@
 #pragma once
 
 #include <memory>
-
-typedef unsigned char byte;
+#include "SysTypes.h"
 
 namespace mono
 {

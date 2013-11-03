@@ -74,7 +74,7 @@ void PhysicsZone::DoPreAccept()
     ZoneBase::DoPreAccept();
 }
 
-void PhysicsZone::ForEachBody(const cm::BodyFunc& func)
+void PhysicsZone::ForEachBody(const std::function<void (cm::IBodyPtr)>& func)
 {
     mPhysics->mSpace.ForEachBody(func);
 }
@@ -95,6 +95,8 @@ void PhysicsZone::AddPhysicsEntityToLayer(mono::IPhysicsEntityPtr entity, LayerI
 void PhysicsZone::RemovePhysicsEntity(mono::IPhysicsEntityPtr entity)
 {
     const bool result = FindAndRemove(mPhysicsEntities, entity);
+    if(!result)
+        return;
     
     cm::Object& object = entity->GetPhysics();
     

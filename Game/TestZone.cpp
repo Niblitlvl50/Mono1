@@ -27,7 +27,7 @@
 #include "SpawnPhysicsEntityEvent.h"
 #include "RemoveEntityEvent.h"
 #include "RemovePhysicsEntityEvent.h"
-#include "MathFwd.h"
+#include "Math.h"
 
 #include <algorithm>
 #include <cmath>

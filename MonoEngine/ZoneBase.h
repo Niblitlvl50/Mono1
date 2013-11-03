@@ -10,6 +10,7 @@
 
 #include "IZone.h"
 #include <map>
+#include <vector>
 
 namespace mono
 {
@@ -39,9 +40,8 @@ namespace mono
         
     private:
         
-        typedef std::map<LayerId, IEntityCollection> LayerMap;
-        LayerMap mLayers;
-        IUpdatableCollection mUpdatables;
+        std::map<LayerId, std::vector<IEntityPtr>> mLayers;
+        std::vector<IUpdatablePtr> mUpdatables;
     };
     
 }

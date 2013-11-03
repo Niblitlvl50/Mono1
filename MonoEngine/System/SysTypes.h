@@ -8,12 +8,7 @@
 
 #pragma once
 
-#include <vector>
-
 typedef unsigned int uint;
 typedef unsigned char byte;
-
-typedef std::vector<byte> ByteVector;
-typedef std::vector<float> FloatVector;
 
 typedef float Color[4];

@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <string>
+
 namespace mono
 {
     struct FindNoLoopAttribute

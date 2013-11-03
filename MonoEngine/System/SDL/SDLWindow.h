@@ -12,6 +12,7 @@
 
 #include "IWindow.h"
 #include "Vector2f.h"
+#include <string>
 
 struct SDL_Window;
 

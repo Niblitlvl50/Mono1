@@ -9,21 +9,19 @@
 #pragma once
 
 #include "SysTypes.h"
-#include "MonoFwd.h"
-#include "MathFwd.h"
+#include "Math.h"
 #include <string>
+#include <vector>
 
 namespace mono
 {
     struct TextDefinition
     {
-        FloatVector vertices;
-        FloatVector texcoords;
+        std::vector<float> vertices;
+        std::vector<float> texcoords;
         Color color;
         int chars;
     };
-
-    typedef std::vector<TextDefinition> TextDefCollection;
     
     //! @param font Font file to use
     //! @param size Size of the font on the generated bitmap
@@ -38,6 +36,6 @@ namespace mono
     
     //! Draw all the texts defined at once
     //! @param collection A collection of text definitions
-    void DrawTextFromDefinitions(const TextDefCollection& collection);
+    void DrawTextFromDefinitions(const std::vector<TextDefinition>& collection);
 }
 

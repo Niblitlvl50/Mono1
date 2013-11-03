@@ -9,7 +9,8 @@
 #pragma once
 
 #include "CMFwd.h"
-#include "MathFwd.h"
+#include "Math.h"
+#include <vector>
 
 namespace cm
 {            
@@ -33,7 +34,7 @@ namespace cm
         static IShapePtr CreateShape(IBodyPtr body, const math::Vector2f& first, const math::Vector2f& second, float radius);
         
         //! Polygon shape
-        static IShapePtr CreateShape(IBodyPtr body, const Vector2fCollection& vertices, const math::Vector2f& offset);
+        static IShapePtr CreateShape(IBodyPtr body, const std::vector<math::Vector2f>& vertices, const math::Vector2f& offset);
     };
 }
 

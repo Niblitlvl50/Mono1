@@ -9,6 +9,7 @@
 #include "AnimatedDude.h"
 #include "SysTime.h"
 #include "IRenderer.h"
+#include <cmath>
 
 using namespace game;
 

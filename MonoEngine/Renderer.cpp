@@ -51,7 +51,7 @@ void Renderer::DrawFrame()
 {
     PrepareDraw();
     
-    for(IDrawableCollection::const_iterator it = mDrawables.begin(), end = mDrawables.end(); it != end; ++it)
+    for(auto it = mDrawables.begin(), end = mDrawables.end(); it != end; ++it)
     {
         const OGL::OGLPushPopMatrix raii;
 
@@ -80,7 +80,7 @@ void Renderer::Update(unsigned int milliseconds)
     
     // Should i do collision detection here or after the update?
     
-    for(IUpdatableCollection::iterator it = mUpdatables.begin(), end = mUpdatables.end(); it != end; ++it)
+    for(auto it = mUpdatables.begin(), end = mUpdatables.end(); it != end; ++it)
     {
         IUpdatablePtr updatable = *it;
         updatable->doUpdate(milliseconds);

@@ -11,6 +11,7 @@
 #include "SysOpenGL.h"
 
 #include <stdexcept>
+#include <string>
 #include "SDL.h"
 
 using namespace mono;

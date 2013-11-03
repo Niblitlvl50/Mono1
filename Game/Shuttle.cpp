@@ -19,6 +19,7 @@
 #include "IRenderer.h"
 
 #include "MathFunctions.h"
+#include <cmath>
 
 using namespace game;
 

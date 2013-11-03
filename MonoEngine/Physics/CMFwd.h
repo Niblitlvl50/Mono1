@@ -9,9 +9,7 @@
 
 #pragma once
 
-#include <vector>
 #include <memory>
-#include <functional>
 
 struct cpBody;
 struct cpShape;
@@ -25,7 +23,4 @@ namespace cm
 
     struct IShape;
     typedef std::shared_ptr<IShape> IShapePtr;
-    typedef std::vector<IShapePtr> IShapeCollection;
-    
-    typedef std::function<void (IBodyPtr body)> BodyFunc;
 }
