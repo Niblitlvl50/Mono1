@@ -26,8 +26,6 @@ namespace mono
 		
     private:
 		
-        void ScreenToWorld(int& x, int& y) const;
-
         void OnPause(const Event::PauseEvent& event);
         void OnQuit(const Event::QuitEvent& event);
         void OnSurfaceChanged(const Event::SurfaceChangedEvent& event);

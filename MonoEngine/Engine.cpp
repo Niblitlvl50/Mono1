@@ -33,9 +33,28 @@
 #include <sstream>
 
 
-
 using namespace mono;
 using namespace std::placeholders;
+
+namespace Func
+{
+    void ScreenToWorld(int& x, int& y, IWindowPtr window, ICameraPtr camera)
+    {
+        const math::Vector2f& windowSize = window->Size();
+        const math::Quad& viewport = camera->GetViewport();
+        
+        const math::Vector2f scale = viewport.mB / windowSize;
+        
+        const float screenX = x;
+        const float screenY = windowSize.mY - y;
+        
+        const float tempx = screenX * scale.mX;
+        const float tempy = screenY * scale.mY;
+        
+        x = tempx + viewport.mA.mX;
+        y = tempy + viewport.mA.mY;
+    }
+}
 
 
 Engine::Engine(unsigned int hz, IWindowPtr window, ICameraPtr camera, IZonePtr zone)
@@ -45,7 +64,7 @@ Engine::Engine(unsigned int hz, IWindowPtr window, ICameraPtr camera, IZonePtr z
       mWindow(window),
       mCamera(camera),
       mZone(zone),
-      mInputHandler(new InputHandler(std::bind(&Engine::ScreenToWorld, this, _1, _2)))
+      mInputHandler(new InputHandler(std::bind(Func::ScreenToWorld, _1, _2, mWindow, mCamera)))
 {
     const Event::PauseEventFunc pauseFunc = std::bind(&Engine::OnPause, this, _1);
     mPauseToken = EventHandler::AddListener(pauseFunc);
@@ -105,24 +124,6 @@ void Engine::Run()
     }
     
     mZone->OnUnload();
-}
-
-// This function is a little bit out of place but i guess this is where it has to be for now.
-void Engine::ScreenToWorld(int& x, int& y) const
-{
-    const math::Vector2f& windowSize = mWindow->Size();
-    const math::Quad& viewport = mCamera->GetViewport();
-    
-    const math::Vector2f scale = viewport.mB / windowSize;
-        
-    const float screenX = x;
-    const float screenY = windowSize.mY - y;
-    
-    const float tempx = screenX * scale.mX;
-    const float tempy = screenY * scale.mY;
-    
-    x = tempx + viewport.mA.mX;
-    y = tempy + viewport.mA.mY;
 }
 
 void Engine::OnPause(const Event::PauseEvent& event)
