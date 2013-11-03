@@ -89,11 +89,6 @@
 		2B26DA5D15FD2BD9001E9748 /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D85A15FD2BD8001E9748 /* lvm.c */; };
 		2B26DA5E15FD2BD9001E9748 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D85C15FD2BD8001E9748 /* lzio.c */; };
 		2B26DA5F15FD2BD9001E9748 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D85E15FD2BD8001E9748 /* print.c */; };
-		2B26DA6615FD2BD9001E9748 /* ticpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D86B15FD2BD8001E9748 /* ticpp.cpp */; };
-		2B26DA6915FD2BD9001E9748 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D87015FD2BD8001E9748 /* tinystr.cpp */; };
-		2B26DA6A15FD2BD9001E9748 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D87215FD2BD8001E9748 /* tinyxml.cpp */; };
-		2B26DA6B15FD2BD9001E9748 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D87415FD2BD8001E9748 /* tinyxmlerror.cpp */; };
-		2B26DA6C15FD2BD9001E9748 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D87515FD2BD8001E9748 /* tinyxmlparser.cpp */; };
 		2B26DB3C15FD31D9001E9748 /* pixelette.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DB3B15FD3165001E9748 /* pixelette.ttf */; };
 		2B26DB8115FD3281001E9748 /* AnimatedDude.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB3E15FD3280001E9748 /* AnimatedDude.cpp */; };
 		2B26DB8215FD3281001E9748 /* AnimatedDudeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB4015FD3280001E9748 /* AnimatedDudeController.cpp */; };
@@ -323,9 +318,7 @@
 		9199F60217E3AA0F0001FE28 /* trees.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5E017E3AA0F0001FE28 /* trees.c */; };
 		9199F60317E3AA0F0001FE28 /* uncompr.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5E217E3AA0F0001FE28 /* uncompr.c */; };
 		9199F60417E3AA0F0001FE28 /* uncompr.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5E217E3AA0F0001FE28 /* uncompr.c */; };
-		9199F60517E3AA0F0001FE28 /* zconf.h.in in Resources */ = {isa = PBXBuildFile; fileRef = 9199F5E417E3AA0F0001FE28 /* zconf.h.in */; };
 		9199F60617E3AA0F0001FE28 /* zconf.h.in in Resources */ = {isa = PBXBuildFile; fileRef = 9199F5E417E3AA0F0001FE28 /* zconf.h.in */; };
-		9199F60717E3AA0F0001FE28 /* zlib.pc.in in Resources */ = {isa = PBXBuildFile; fileRef = 9199F5E617E3AA0F0001FE28 /* zlib.pc.in */; };
 		9199F60817E3AA0F0001FE28 /* zlib.pc.in in Resources */ = {isa = PBXBuildFile; fileRef = 9199F5E617E3AA0F0001FE28 /* zlib.pc.in */; };
 		9199F60917E3AA0F0001FE28 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5E717E3AA0F0001FE28 /* zutil.c */; };
 		9199F60A17E3AA0F0001FE28 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5E717E3AA0F0001FE28 /* zutil.c */; };
@@ -1383,8 +1376,6 @@
 				2BDD2CA2171CA01F0041CB18 /* firebullet.sprite in Resources */,
 				2BDD2CA4171CA01F0041CB18 /* meteorite.sprite in Resources */,
 				9199F5CB17DCDB6B0001FE28 /* Default-568h@2x.png in Resources */,
-				9199F60517E3AA0F0001FE28 /* zconf.h.in in Resources */,
-				9199F60717E3AA0F0001FE28 /* zlib.pc.in in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1491,11 +1482,6 @@
 				2B26DA5D15FD2BD9001E9748 /* lvm.c in Sources */,
 				2B26DA5E15FD2BD9001E9748 /* lzio.c in Sources */,
 				2B26DA5F15FD2BD9001E9748 /* print.c in Sources */,
-				2B26DA6615FD2BD9001E9748 /* ticpp.cpp in Sources */,
-				2B26DA6915FD2BD9001E9748 /* tinystr.cpp in Sources */,
-				2B26DA6A15FD2BD9001E9748 /* tinyxml.cpp in Sources */,
-				2B26DA6B15FD2BD9001E9748 /* tinyxmlerror.cpp in Sources */,
-				2B26DA6C15FD2BD9001E9748 /* tinyxmlparser.cpp in Sources */,
 				2B26DB8115FD3281001E9748 /* AnimatedDude.cpp in Sources */,
 				91282D1A1826759E00B80892 /* Quad.cpp in Sources */,
 				2B26DB8215FD3281001E9748 /* AnimatedDudeController.cpp in Sources */,
