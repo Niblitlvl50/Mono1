@@ -11,6 +11,7 @@
 #include "EventHandler.h"
 #include "MouseUpEvent.h"
 #include "MouseDownEvent.h"
+#include "MouseMotionEvent.h"
 #include "CMIBody.h"
 
 #include "MathFunctions.h"
@@ -20,7 +21,8 @@
 using namespace game;
 
 ShuttleController::ShuttleController(game::Shuttle* shuttle)
-    : mShuttle(shuttle)
+    : mShuttle(shuttle),
+      mMouseDown(false)
 {
     using namespace std::placeholders;
 
@@ -29,6 +31,9 @@ ShuttleController::ShuttleController(game::Shuttle* shuttle)
 
     const Event::MouseDownEventFunc mouseDownFunc = std::bind(&ShuttleController::OnMouseDown, this, _1);
     mMouseDownToken = mono::EventHandler::AddListener(mouseDownFunc);
+    
+    const Event::MouseMotionEventFunc mouseMotionFunc = std::bind(&ShuttleController::OnMouseMotion, this, _1);
+    mMouseMotionToken = mono::EventHandler::AddListener(mouseMotionFunc);
 }
 
 ShuttleController::~ShuttleController()
@@ -46,6 +51,8 @@ void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
         return;
     }
     
+    mMouseDown = true;
+    
     math::Vector2f forceVector = mShuttle->Position() - math::Vector2f(event.mX, event.mY);
     math::Normalize(forceVector);
     
@@ -55,6 +62,17 @@ void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
 void ShuttleController::OnMouseUp(const Event::MouseUpEvent& event)
 {
     mShuttle->mPhysicsObject.body->ResetForces();
+    mMouseDown = false;
+}
+
+void ShuttleController::OnMouseMotion(const Event::MouseMotionEvent& event)
+{
+    mShuttle->mPhysicsObject.body->ResetForces();    
+    
+    math::Vector2f forceVector = mShuttle->Position() - math::Vector2f(event.mX, event.mY);
+    math::Normalize(forceVector);
+    
+    mShuttle->mPhysicsObject.body->ApplyForce(forceVector * 200.0f, forceVector);
 }
 
 void ShuttleController::HandleOnShuttlePress()

@@ -18,6 +18,7 @@
 #include "MouseUpEvent.h"
 #include "MouseMotionEvent.h"
 #include "MouseWheelEvent.h"
+#include "TouchEvent.h"
 #include "MultiGestureEvent.h"
 #include "Vector2f.h"
 
@@ -78,6 +79,24 @@ void InputHandler::OnMouseMotion(int x, int y)
 void InputHandler::OnMouseWheel(int x, int y)
 {
     const Event::MouseWheelEvent event(x, y);
+    EventHandler::DispatchEvent(event);
+}
+
+void InputHandler::OnTouchDown(float x, float y, float dx, float dy)
+{
+    const Event::TouchEvent event(Event::DOWN, x, y, dx, dy);
+    EventHandler::DispatchEvent(event);
+}
+
+void InputHandler::OnTouchUp(float x, float y, float dx, float dy)
+{
+    const Event::TouchEvent event(Event::UP, x, y, dx, dy);
+    EventHandler::DispatchEvent(event);
+}
+
+void InputHandler::OnTouchMotion(float x, float y, float dx, float dy)
+{
+    const Event::TouchEvent event(Event::MOTION, x, y, dx, dy);
     EventHandler::DispatchEvent(event);
 }
 

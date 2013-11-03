@@ -88,6 +88,18 @@ void Events::ProcessSystemEvents(mono::IInputHandlerPtr handler)
                 handler->OnMouseWheel(event.wheel.x, event.wheel.y);
                 break;
                 
+            case SDL_FINGERDOWN:
+                handler->OnTouchDown(event.tfinger.x, event.tfinger.y, event.tfinger.dx, event.tfinger.dy);
+                break;
+            
+            case SDL_FINGERUP:
+                handler->OnTouchUp(event.tfinger.x, event.tfinger.y, event.tfinger.dx, event.tfinger.dy);
+                break;
+                
+            case SDL_FINGERMOTION:
+                handler->OnTouchMotion(event.tfinger.x, event.tfinger.y, event.tfinger.dx, event.tfinger.dy);
+                break;
+                
             case SDL_MULTIGESTURE:
                 handler->OnMultiGesture(event.mgesture.x, event.mgesture.y, event.mgesture.dTheta, event.mgesture.dDist);
                 break;

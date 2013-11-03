@@ -24,6 +24,7 @@ namespace game
         
         void OnMouseDown(const Event::MouseDownEvent& even);
         void OnMouseUp(const Event::MouseUpEvent& event);
+        void OnMouseMotion(const Event::MouseMotionEvent& event);
         
     private:
         
@@ -32,5 +33,8 @@ namespace game
         Shuttle* mShuttle;
         mono::EventToken<Event::MouseDownEvent> mMouseDownToken;
         mono::EventToken<Event::MouseUpEvent> mMouseUpToken;
+        mono::EventToken<Event::MouseMotionEvent> mMouseMotionToken;
+        
+        bool mMouseDown;
     };
 }

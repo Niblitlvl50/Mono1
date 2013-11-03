@@ -28,8 +28,8 @@ CameraController::CameraController(ICamera* cam)
     //const Event::MouseWheelEventFunc mouseWheelFunc = std::bind(&CameraController::OnMouseWheel, this, _1);
     //mMouseWheelToken = mono::EventHandler::AddListener(mouseWheelFunc);
     
-    //const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&CameraController::OnMultiGesture, this, _1);
-    //mMultiGestureToken = mono::EventHandler::AddListener(multiGestureFunc);
+    const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&CameraController::OnMultiGesture, this, _1);
+    mMultiGestureToken = mono::EventHandler::AddListener(multiGestureFunc);
 }
 CameraController::~CameraController()
 {
