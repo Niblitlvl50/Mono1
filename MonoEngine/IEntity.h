@@ -11,7 +11,6 @@
 
 #include "IDrawable.h"
 #include "IUpdatable.h"
-#include "MonoFwd.h"
 #include "CMFwd.h"
 
 namespace mono
