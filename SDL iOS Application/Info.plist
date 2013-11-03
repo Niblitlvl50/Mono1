@@ -24,11 +24,11 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<false/>
 	<key>UIStatusBarHidden</key>
-	<false/>
-	<key>UIStatusBarHidden~ipad</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
@@ -38,5 +38,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>
