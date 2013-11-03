@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "Math.h"
+#include "MathFwd.h"
 
 namespace math
 {    

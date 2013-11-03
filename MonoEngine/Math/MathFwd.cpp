@@ -6,7 +6,7 @@
 //
 //
 
-#include "Math.h"
+#include "MathFwd.h"
 #include <limits>
 
 const float math::PI = 3.14159265358979f;

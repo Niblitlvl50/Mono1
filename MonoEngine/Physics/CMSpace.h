@@ -10,7 +10,7 @@
 #pragma once
 
 #include "CMFwd.h"
-#include "Math.h"
+#include "MathFwd.h"
 #include <vector>
 #include <functional>
 

@@ -9,7 +9,7 @@
 #pragma once
 
 #include "SysTypes.h"
-#include "Math.h"
+#include "MathFwd.h"
 #include <string>
 #include <vector>
 

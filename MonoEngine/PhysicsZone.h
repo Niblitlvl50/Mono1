@@ -10,7 +10,7 @@
 #pragma once
 
 #include "ZoneBase.h"
-#include "Math.h"
+#include "MathFwd.h"
 #include "CMFwd.h"
 
 #include <functional>
