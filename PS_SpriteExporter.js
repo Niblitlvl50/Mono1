@@ -71,10 +71,10 @@ var createSpriteFilesFromLayers = function(layers)
 		file.writeln("texture = \"" + textureName + "\"")
 		file.writeln("rows = " + rows)
 		file.writeln("columns = " + columns)
-		file.writeln("x = " + (bounds[0].value +2))
-		file.writeln("y = " + (bounds[1].value +2))
-		file.writeln("u = " + (bounds[2].value -3))
-		file.writeln("v = " + (bounds[3].value -3))
+		file.writeln("x = " + (bounds[0].value -1)) // +2))
+		file.writeln("y = " + (bounds[1].value -1)) // +2))
+		file.writeln("u = " + (bounds[2].value)) // -3))
+		file.writeln("v = " + (bounds[3].value)) // -3))
 
 		if(animations == null)
 		{
@@ -100,7 +100,7 @@ var exportDocumentToPNG = function(document)
 	document.exportDocument(exportFile, ExportType.SAVEFORWEB, exportOptions)	
 }
 
-var outputPath = "/Users/Niblit/Desktop/"
+var outputPath = "/Users/niklasdamberg/Desktop/"
 
 var localDocument = app.activeDocument
 var dotPsdIndex = localDocument.name.search(".psd")
