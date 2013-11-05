@@ -17,7 +17,7 @@ Explosion::Explosion(const math::Vector2f& position)
       mRemoveMe(false)
 {
     mPosition = position;
-    mScale = 20.0f;
+    mScale = math::Vector2f(20.0f, 20.0f);
     mSprite.SetAnimation(0, std::bind(&Explosion::OnFinished, this));
 }
 

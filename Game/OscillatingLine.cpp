@@ -26,7 +26,7 @@ OscillatingLine::OscillatingLine()
     : mBase(400.0f, 100.0f),
       mDelta(0.0f)
 {
-    mScale = 3.0f;
+    mScale = math::Vector2f(3.0f, 3.0f);
 }
 
 void OscillatingLine::Draw(mono::IRenderer& renderer) const

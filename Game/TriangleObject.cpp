@@ -22,7 +22,7 @@ namespace
 TriangleObject::TriangleObject()
 {
     mPosition = math::Vector2f(400.0f, 300.0f);
-    mScale = 20.0f;
+    mScale = math::Vector2f(20.0f, 20.0f);
     
     AddChild(mono::IEntityPtr(new game::SquareObject(-1.0f, -1.0f)));
     AddChild(mono::IEntityPtr(new game::SquareObject(1.0f, 1.0f)));

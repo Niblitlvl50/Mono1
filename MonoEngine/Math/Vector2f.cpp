@@ -24,6 +24,11 @@ math::Vector2f math::operator * (const math::Vector2f& left, float value)
     return Vector2f(left.mX * value, left.mY * value);
 }
 
+math::Vector2f math::operator * (const math::Vector2f& left, const math::Vector2f& right)
+{
+    return math::Vector2f(left.mX * right.mX, left.mY * right.mY);
+}
+
 math::Vector2f math::operator / (const math::Vector2f& left, const math::Vector2f& right)
 {
     return Vector2f(left.mX / right.mX, left.mY / right.mY);

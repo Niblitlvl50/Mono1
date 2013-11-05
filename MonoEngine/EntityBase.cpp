@@ -16,7 +16,7 @@ using namespace mono;
 
 EntityBase::EntityBase()
     : mRotation(0.0f),
-      mScale(1.0f)
+      mScale(1.0f, 1.0f)
 { }
 
 void EntityBase::doDraw(IRenderer& renderer) const
@@ -28,7 +28,7 @@ void EntityBase::doDraw(IRenderer& renderer) const
     glTranslatef(mPosition.mX + rotationPoint.mX, mPosition.mY + rotationPoint.mY, 0.0f);
     glRotatef(mRotation, 0.0f, 0.0f, 1.0f);    
     glTranslatef(-rotationPoint.mX, -rotationPoint.mY, 0.0f);    
-    glScalef(mScale, mScale, mScale);    
+    glScalef(mScale.mX, mScale.mY, 1.0f);
 
     for(auto it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
     {
@@ -59,9 +59,9 @@ const math::Vector2f& EntityBase::Position() const
 
 math::Quad EntityBase::BoundingBox() const
 {
-    const float x = mPosition.mX - (mScale / 2.0f);
-    const float y = mPosition.mY - (mScale / 2.0f);
-    math::Quad thisbb(x, y, x + mScale, y + mScale);
+    const float x = mPosition.mX - (mScale.mX / 2.0f);
+    const float y = mPosition.mY - (mScale.mY / 2.0f);
+    math::Quad thisbb(x, y, x + mScale.mX, y + mScale.mY);
         
     for(auto it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
     {

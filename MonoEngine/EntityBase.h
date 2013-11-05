@@ -32,7 +32,7 @@ namespace mono
         
         EntityBase();
 
-        virtual void Draw(IRenderer& renderer) const = 0;
+        virtual void Draw(mono::IRenderer& renderer) const = 0;
         virtual void Update(unsigned int delta) = 0;
 
         virtual void doDraw(IRenderer& renderer) const;
@@ -40,7 +40,7 @@ namespace mono
 		
         math::Vector2f mPosition;
         math::Vector2f mBasePoint;
-        float mScale;
+        math::Vector2f mScale;
         float mRotation;
         
         std::vector<IEntityPtr> mChildren;

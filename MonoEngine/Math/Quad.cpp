@@ -15,6 +15,11 @@ math::Quad math::operator * (const math::Quad& left, float value)
     return math::Quad(left.mA * value, left.mB * value);
 }
 
+math::Quad math::operator * (const math::Quad& left, const math::Vector2f& right)
+{
+    return math::Quad(left.mA * right, left.mB * right);
+}
+
 void math::operator |= (math::Quad& left, const math::Quad& right)
 {
     left.mA.mX = std::min(left.mA.mX, right.mA.mX);

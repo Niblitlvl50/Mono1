@@ -19,7 +19,6 @@ namespace
             : mSprite("Monster/arm_upper_left.lua")
         {
             mPosition = math::Vector2f(0.0f, 0.0f);
-            mScale = 1.0f;
         }
         void Draw(mono::IRenderer& renderer) const
         {
@@ -37,7 +36,6 @@ namespace
         {
             mPosition = math::Vector2f(0.0f, -1.0f);
             mRotation = 90.0f;
-            mScale = 1.0f;
         }
         void Draw(mono::IRenderer& renderer) const
         {
@@ -54,7 +52,6 @@ namespace
         : mSprite("Monster/hand_left.lua")
         {
             mPosition = math::Vector2f(0.0f, -2.0f);
-            mScale = 1.0f;
         }
         void Draw(mono::IRenderer& renderer) const
         {

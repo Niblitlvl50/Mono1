@@ -17,7 +17,7 @@ Head::Head(float x, float y)
       mJaw("Monster/jaw.lua")
 {
     mPosition = math::Vector2f(x, y);
-    mScale = 0.7f;
+    mScale = math::Vector2f(0.7f, 0.7f);
 }
 
 void Head::Draw(mono::IRenderer& renderer) const

@@ -31,7 +31,7 @@ Monster::Monster()
     //AddChild(mLeftLeg);
     
     mPosition = math::Vector2f(200.0f, 100.0f);
-    mScale = 30.0f;
+    mScale = math::Vector2f(30.0f, 30.0f);
 }
 
 void Monster::Draw(mono::IRenderer& renderer) const

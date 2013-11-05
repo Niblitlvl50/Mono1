@@ -29,6 +29,7 @@ namespace math
     };
     
     Quad operator * (const Quad& left, float value);
+    Quad operator * (const Quad& left, const Vector2f& right);
     
     //!
     //! Be aware that this only checks for max/min values.

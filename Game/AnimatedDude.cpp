@@ -32,7 +32,7 @@ AnimatedDude::AnimatedDude(float x, float y)
       mController(this)
 {
     mPosition = math::Vector2f(x, y);
-    mScale = 30.0f;
+    mScale = math::Vector2f(30.0f, 30.0f);
         
     mSprite.SetAnimation(constants::IDLE);
     //mSprite.SetAnimation(constants::RUNNING);

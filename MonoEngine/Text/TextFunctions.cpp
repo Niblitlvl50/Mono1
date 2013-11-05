@@ -184,7 +184,7 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text,
 
 void mono::DrawTextFromDefinitions(const std::vector<TextDefinition>& collection)
 {
-    if(collection.empty())
+    if(collection.empty() || !fontTexture)
         return;
     
     fontTexture->Use();
