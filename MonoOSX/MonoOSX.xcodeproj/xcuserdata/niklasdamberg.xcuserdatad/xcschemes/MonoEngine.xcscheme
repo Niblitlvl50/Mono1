@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2B6A74161531F881002CB834"
-               BuildableName = "UnitTests"
-               BlueprintName = "UnitTests"
-               ReferencedContainer = "container:Mono1.xcodeproj">
+               BlueprintIdentifier = "2B6872DB1531FEA800B8C2FB"
+               BuildableName = "MonoEngine.lib"
+               BlueprintName = "MonoEngine"
+               ReferencedContainer = "container:MonoOSX.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,15 +29,6 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2B6A74161531F881002CB834"
-            BuildableName = "UnitTests"
-            BlueprintName = "UnitTests"
-            ReferencedContainer = "container:Mono1.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -48,15 +39,6 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2B6A74161531F881002CB834"
-            BuildableName = "UnitTests"
-            BlueprintName = "UnitTests"
-            ReferencedContainer = "container:Mono1.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -66,15 +48,6 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2B6A74161531F881002CB834"
-            BuildableName = "UnitTests"
-            BlueprintName = "UnitTests"
-            ReferencedContainer = "container:Mono1.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

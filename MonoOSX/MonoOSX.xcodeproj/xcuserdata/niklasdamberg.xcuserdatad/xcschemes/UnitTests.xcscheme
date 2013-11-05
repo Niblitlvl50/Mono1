@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8D1107260486CEB800E47090"
-               BuildableName = "Game.app"
-               BlueprintName = "Game"
-               ReferencedContainer = "container:Mono1.xcodeproj">
+               BlueprintIdentifier = "2B6A74161531F881002CB834"
+               BuildableName = "UnitTests"
+               BlueprintName = "UnitTests"
+               ReferencedContainer = "container:MonoOSX.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8D1107260486CEB800E47090"
-            BuildableName = "Game.app"
-            BlueprintName = "Game"
-            ReferencedContainer = "container:Mono1.xcodeproj">
+            BlueprintIdentifier = "2B6A74161531F881002CB834"
+            BuildableName = "UnitTests"
+            BlueprintName = "UnitTests"
+            ReferencedContainer = "container:MonoOSX.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -51,10 +51,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8D1107260486CEB800E47090"
-            BuildableName = "Game.app"
-            BlueprintName = "Game"
-            ReferencedContainer = "container:Mono1.xcodeproj">
+            BlueprintIdentifier = "2B6A74161531F881002CB834"
+            BuildableName = "UnitTests"
+            BlueprintName = "UnitTests"
+            ReferencedContainer = "container:MonoOSX.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -69,10 +69,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8D1107260486CEB800E47090"
-            BuildableName = "Game.app"
-            BlueprintName = "Game"
-            ReferencedContainer = "container:Mono1.xcodeproj">
+            BlueprintIdentifier = "2B6A74161531F881002CB834"
+            BuildableName = "UnitTests"
+            BlueprintName = "UnitTests"
+            ReferencedContainer = "container:MonoOSX.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
