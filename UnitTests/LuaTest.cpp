@@ -6,12 +6,13 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#include "gtest.h"
+#include "gtest/gtest.h"
 #include "LuaInterpreter.h"
 #include "LuaState.h"
 #include "LuaFunctions.h"
 
 #include <stdexcept>
+#include <functional>
 
 namespace
 {
@@ -58,12 +59,12 @@ namespace
 
 TEST(LuaTest, MemberFunction)
 {
-    using namespace std::tr1::placeholders;
+    using namespace std::placeholders;
     
     Object foo;
     
     mono::LuaInterpreter lua;
-    lua.RegisterFunction("MemberFunc", std::tr1::bind(&Object::Function, foo, _1));
+    //lua.RegisterFunction("MemberFunc", std::bind(&Object::Function, &foo, _1));
     
     const std::string luaScript = "io.write('Running script \\n') MemberFunc(1, 2, 3)";
     lua.ExecuteString(luaScript);

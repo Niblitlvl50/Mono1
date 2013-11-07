@@ -6,7 +6,7 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#include "gtest.h"
+#include "gtest/gtest.h"
 
 #include "Engine.h"
 #include "MonoFwd.h"
@@ -30,14 +30,14 @@ namespace
         { }
         virtual void Unfollow()
         { }
-        virtual const Math::Quad& GetViewport() const
+        virtual const math::Quad& GetViewport() const
         {
             return mViewport;
         }
-        virtual void SetPosition(const Math::Vector2f& position)
+        virtual void SetPosition(const math::Vector2f& position)
         { }
         
-        Math::Quad mViewport;
+        math::Quad mViewport;
     };
     
     struct MocZone : mono::IZone
