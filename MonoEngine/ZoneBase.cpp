@@ -112,5 +112,11 @@ void ZoneBase::RemoveUpdatable(IUpdatablePtr updatable)
         throw std::runtime_error("Unable to remove updatable");
 }
 
+void ZoneBase::ClearEntities()
+{
+    for(auto& entities : mLayers)
+        entities.second.clear();
+}
+
 
 

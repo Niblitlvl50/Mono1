@@ -8,8 +8,9 @@
 
 #pragma once
 
-#include "SysTypes.h"
+//#include "SysTypes.h"
 #include "MathFwd.h"
+#include "Color.h"
 #include <string>
 #include <vector>
 
@@ -19,21 +20,28 @@ namespace mono
     {
         std::vector<float> vertices;
         std::vector<float> texcoords;
-        Color color;
+        mono::Color color;
         int chars;
     };
     
+    //! Loads a font
     //! @param font Font file to use
     //! @param size Size of the font on the generated bitmap
     //! @param scale Scale of font when drawing with opengl (small font sizes can produce bad quality)
     void LoadFont(const std::string& font, float size, float scale = 1.0f);
 
+    //! Generates a text definition
     //! @param text The text...
     //! @param pos The position...
     //! @param center If the text should be horizontally centered to the position
     //! @return TextDefinition
     TextDefinition GenerateVertexDataFromString(const std::string& text, const math::Vector2f& pos, bool center);
     
+    //! Measures a string
+    //! @param text The text to measure
+    //! @return Size of the string
+    math::Vector2f MeasureString(const std::string& text);
+
     //! Draw all the texts defined at once
     //! @param collection A collection of text definitions
     void DrawTextFromDefinitions(const std::vector<TextDefinition>& collection);

@@ -29,6 +29,8 @@ namespace mono
         virtual void Accept(IRenderer& renderer);
         virtual void DoPreAccept();
                         
+        virtual void ClearEntities();
+
         void AddPhysicsEntityToLayer(mono::IPhysicsEntityPtr entity, LayerId layer);
         void RemovePhysicsEntity(mono::IPhysicsEntityPtr entity);
         

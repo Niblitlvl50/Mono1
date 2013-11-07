@@ -27,7 +27,7 @@
 
 #include "Vector2f.h"
 #include "Quad.h"
-
+#include "Color.h"
 #include "Utils.h"
 
 #include <sstream>
@@ -112,7 +112,7 @@ void Engine::Run()
                     
             std::stringstream stream;
             stream << "FPS: " << counter.Fps() << " Frame: " << counter.Frames();
-            Color color = {1.0f, 1.0f, 1.0f, 1.0f};
+            const mono::Color color = {1.0f, 1.0f, 1.0f, 1.0f};
             renderer.DrawText(stream.str(), mCamera->GetViewport().mA, false, color);
             renderer.DrawFrame();
         }

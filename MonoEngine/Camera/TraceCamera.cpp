@@ -54,7 +54,7 @@ void TraceCamera::Follow(const mono::IEntityPtr entity)
 
 void TraceCamera::Unfollow()
 {
-    mEntity.reset();
+    mEntity = nullptr;
 }
 
 const math::Quad& TraceCamera::GetViewport() const

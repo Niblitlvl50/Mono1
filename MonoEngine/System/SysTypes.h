@@ -10,5 +10,3 @@
 
 typedef unsigned int uint;
 typedef unsigned char byte;
-
-typedef float Color[4];

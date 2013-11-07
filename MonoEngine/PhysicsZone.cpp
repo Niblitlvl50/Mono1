@@ -108,5 +108,11 @@ void PhysicsZone::RemovePhysicsEntity(mono::IPhysicsEntityPtr entity)
     RemoveEntity(entity);
 }
 
+void PhysicsZone::ClearEntities()
+{
+    mPhysicsEntities.clear();
+    ZoneBase::ClearEntities();
+}
+
 
 

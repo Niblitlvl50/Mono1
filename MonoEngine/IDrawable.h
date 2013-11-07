@@ -14,16 +14,14 @@
 
 namespace mono
 {
-
     struct IDrawable
     {
         virtual ~IDrawable()
         { }
 		
-        virtual void doDraw(IRenderer& renderer) const = 0;
+        virtual void doDraw(mono::IRenderer& renderer) const = 0;
         virtual math::Quad BoundingBox() const = 0;
     };
-
 }
 
 

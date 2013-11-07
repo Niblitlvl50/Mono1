@@ -108,13 +108,10 @@ void Renderer::DrawSprite(const Sprite& sprite) const
     ::DrawSprite(sprite);
 }
 
-void Renderer::DrawText(const std::string& text, const math::Vector2f& pos, bool center, Color color)
+void Renderer::DrawText(const std::string& text, const math::Vector2f& pos, bool center, const mono::Color& color)
 {
     TextDefinition def = GenerateVertexDataFromString(text, pos, center);
-    def.color[0] = color[0];
-    def.color[1] = color[1];
-    def.color[2] = color[2];
-    def.color[3] = color[3];
+    def.color = color;
     
     // Save the text in the collection
     mTexts.push_back(def);

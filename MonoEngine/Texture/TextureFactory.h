@@ -9,6 +9,7 @@
 #pragma once
 
 #include "MonoFwd.h"
+#include "SysTypes.h"
 
 namespace mono
 {

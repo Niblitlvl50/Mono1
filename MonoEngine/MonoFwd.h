@@ -10,7 +10,6 @@
 #pragma once
 
 #include <memory>
-#include "SysTypes.h"
 
 namespace mono
 {
@@ -43,4 +42,6 @@ namespace mono
 
     struct ITexture;
     typedef std::shared_ptr<ITexture> ITexturePtr;
+    
+    struct Color;
 }

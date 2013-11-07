@@ -9,6 +9,7 @@
 #include "TextFunctions.h"
 #include "SysOpenGL.h"
 #include "SysFile.h"
+#include "SysTypes.h"
 #include "ITexture.h"
 #include "TextureFactory.h"
 #include "Vector2f.h"
@@ -17,8 +18,6 @@
 #include "stb_truetype.h"
 
 #include <map>
-#include <iostream>
-#include <cmath>
 
 
 namespace
@@ -38,31 +37,7 @@ namespace
     };
 
     static mono::ITexturePtr fontTexture;
-    
-    typedef std::map<char, CharData> CharDataMap;
-    static CharDataMap charMap;
-
-    math::Vector2f MeasureString(const std::string& text)
-    {
-        math::Vector2f size;
-        
-        for(std::string::const_iterator it = text.begin(), end = text.end(); it != end; ++it)
-        {
-            const char currentChar = *it;
-            
-            // Look up char in map.
-            const CharDataMap::const_iterator foundChar = charMap.find(currentChar);
-            if(foundChar == charMap.end())
-                continue;
-            
-            const CharData& data = foundChar->second;
-            size.mX += data.xadvance;
-            size.mY = std::max(data.height, size.mY);
-        }
-        
-        return size;
-    }
-    
+    static std::map<char, CharData> charMap;
 }
 
 void mono::LoadFont(const std::string& font, float size, float scale)
@@ -115,11 +90,7 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text,
 {
     mono::TextDefinition textDef;
     textDef.chars = int(text.length());
-    textDef.color[0] = 1.0f;
-    textDef.color[1] = 1.0f;
-    textDef.color[2] = 1.0f;
-    textDef.color[3] = 1.0f;
-
+    textDef.color = mono::Color(1.0f, 1.0f, 1.0f, 1.0f);
     
     float xposition = pos.mX;
     float yposition = pos.mY;
@@ -132,7 +103,7 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text,
         const char currentChar = *it;
         
         // Look up char in map.
-        const CharDataMap::const_iterator foundChar = charMap.find(currentChar);
+        const auto foundChar = charMap.find(currentChar);
         if(foundChar == charMap.end())
             continue;
         
@@ -182,6 +153,27 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text,
     return textDef;
 }
 
+math::Vector2f mono::MeasureString(const std::string& text)
+{
+    math::Vector2f size;
+    
+    for(std::string::const_iterator it = text.begin(), end = text.end(); it != end; ++it)
+    {
+        const char currentChar = *it;
+        
+        // Look up char in map.
+        const auto foundChar = charMap.find(currentChar);
+        if(foundChar == charMap.end())
+            continue;
+        
+        const CharData& data = foundChar->second;
+        size.mX += data.xadvance;
+        size.mY = std::max(data.height, size.mY);
+    }
+    
+    return size;
+}
+
 void mono::DrawTextFromDefinitions(const std::vector<TextDefinition>& collection)
 {
     if(collection.empty() || !fontTexture)
@@ -196,7 +188,7 @@ void mono::DrawTextFromDefinitions(const std::vector<TextDefinition>& collection
     {
         const TextDefinition& def = *it;
                         
-        glColor4f(def.color[0], def.color[1], def.color[2], def.color[3]);
+        glColor4f(def.color.red, def.color.green, def.color.blue, def.color.alpha);
         glVertexPointer(2, GL_FLOAT, 0, &def.vertices.front());
         glTexCoordPointer(2, GL_FLOAT, 0, &def.texcoords.front());
         
