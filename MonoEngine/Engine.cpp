@@ -18,6 +18,7 @@
 #include "SysEvents.h"
 
 #include "EventHandler.h"
+#include "EventFuncFwd.h"
 #include "PauseEvent.h"
 #include "QuitEvent.h"
 #include "SurfaceChangedEvent.h"

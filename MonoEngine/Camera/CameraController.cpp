@@ -8,6 +8,7 @@
 
 #include "CameraController.h"
 #include "EventHandler.h"
+#include "EventFuncFwd.h"
 #include "MultiGestureEvent.h"
 #include "ICamera.h"
 #include "MathFunctions.h"
