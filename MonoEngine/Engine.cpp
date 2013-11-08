@@ -112,14 +112,14 @@ void Engine::Run()
                     
             std::stringstream stream;
             stream << "FPS: " << counter.Fps() << " Frame: " << counter.Frames();
-            const mono::Color color = {1.0f, 1.0f, 1.0f, 1.0f};
+            const mono::Color color(1.0f, 1.0f, 1.0f, 1.0f);
             renderer.DrawText(stream.str(), mCamera->GetViewport().mA, false, color);
             renderer.DrawFrame();
         }
         
         lastTime = beforeTime;
 
-        //Time::Sleep(1);        
+        Time::Sleep(1);        
         counter++;
     }
     

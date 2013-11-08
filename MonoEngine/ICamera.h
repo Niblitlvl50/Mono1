@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "MonoFwd.h"
+#include "MonoPtrFwd.h"
 #include "MathFwd.h"
 
 namespace mono

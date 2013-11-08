@@ -10,7 +10,7 @@
 #pragma once
 
 #include "IEntity.h"
-#include "MonoFwd.h"
+#include "MonoPtrFwd.h"
 #include "Vector2f.h"
 #include <vector>
 

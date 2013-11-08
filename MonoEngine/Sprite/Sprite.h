@@ -37,7 +37,7 @@
 
 #pragma once
 
-#include "MonoFwd.h"
+#include "MonoPtrFwd.h"
 #include "IUpdatable.h"
 #include "AnimationSequence.h"
 #include "Quad.h"

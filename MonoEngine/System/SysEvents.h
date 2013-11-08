@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "MonoFwd.h"
+#include "MonoPtrFwd.h"
 
 namespace Events
 {
