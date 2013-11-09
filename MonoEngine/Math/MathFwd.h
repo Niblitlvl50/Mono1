@@ -15,4 +15,5 @@ namespace math
 
     struct Vector2f;
     struct Quad;
+    struct Point;
 }
