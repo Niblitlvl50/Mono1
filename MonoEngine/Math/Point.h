@@ -6,9 +6,21 @@
 //
 //
 
-#ifndef King_worksample_OSX_Point_h
-#define King_worksample_OSX_Point_h
+#pragma once
 
-
-
-#endif
+namespace math
+{
+    struct Point
+    {
+        Point()
+            : mX(0),
+              mY(0)
+        { }
+        Point(int x, int y)
+            : mX(x),
+              mY(y)
+        { }
+        int mX;
+        int mY;
+    };
+}
