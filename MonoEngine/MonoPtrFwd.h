@@ -23,4 +23,5 @@ namespace mono
     typedef std::shared_ptr<IInputHandler> IInputHandlerPtr;
     typedef std::shared_ptr<IZone> IZonePtr;
     typedef std::shared_ptr<ITexture> ITexturePtr;
+    typedef std::shared_ptr<IAction> IActionPtr;
 }

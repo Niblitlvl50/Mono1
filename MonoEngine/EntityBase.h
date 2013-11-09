@@ -27,6 +27,8 @@ namespace mono
         
         void AddChild(IEntityPtr child);
         void RemoveChild(IEntityPtr child);
+        
+        void AddAction(IActionPtr action);
     
     protected:
         
@@ -44,6 +46,7 @@ namespace mono
         float mRotation;
         
         std::vector<IEntityPtr> mChildren;
+        std::vector<IActionPtr> mActions;
     };
     
 }

@@ -21,6 +21,7 @@ namespace mono
     struct IInputHandler;
     struct IZone;
     struct ITexture;
+    struct IAction;
     
     struct Color;
 }

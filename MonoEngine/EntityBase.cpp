@@ -11,6 +11,9 @@
 #include "SysOpenGL.h"
 #include "Utils.h"
 #include "Quad.h"
+#include "IAction.h"
+
+#include <functional>
 
 using namespace mono;
 
@@ -43,12 +46,22 @@ void EntityBase::doDraw(IRenderer& renderer) const
 
 void EntityBase::doUpdate(unsigned int delta)
 {
+    // Updadate children
     for(auto it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
-    {
-        const IEntityPtr child = *it;
-        child->doUpdate(delta);
-    }
+        (*it)->doUpdate(delta);
     
+    // Update actions
+    for(auto it = mActions.begin(), end = mActions.end(); it != end; ++it)
+        (*it)->Update(delta);
+    
+    // Check if any actions has finished and remove them if that is the case
+    using namespace std::placeholders;
+    const auto removeFunc = std::bind(&IAction::Finished, _1);
+    const auto it = std::remove_if(mActions.begin(), mActions.end(), removeFunc);
+    if(it != mActions.end())
+        mActions.erase(it, mActions.end());
+    
+    // Update this object
     Update(delta);
 }
 
@@ -90,4 +103,8 @@ void EntityBase::RemoveChild(IEntityPtr child)
     FindAndRemove(mChildren, child);
 }
 
+void EntityBase::AddAction(IActionPtr action)
+{
+    mActions.push_back(action);
+}
 
