@@ -22,6 +22,7 @@ namespace mono
     public:
     
         virtual const math::Vector2f& Position() const;
+        virtual void SetPosition(const math::Vector2f& position);
         virtual math::Quad BoundingBox() const;
         virtual bool RemoveMe() const;
         

@@ -70,6 +70,11 @@ const math::Vector2f& EntityBase::Position() const
     return mPosition;
 }
 
+void EntityBase::SetPosition(const math::Vector2f& position)
+{
+    mPosition = position;
+}
+
 math::Quad EntityBase::BoundingBox() const
 {
     const float x = mPosition.mX - (mScale.mX / 2.0f);

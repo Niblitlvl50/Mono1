@@ -21,6 +21,7 @@ namespace mono
         { }
         
         virtual const math::Vector2f& Position() const = 0;
+        virtual void SetPosition(const math::Vector2f& position) = 0;
         virtual bool RemoveMe() const = 0;
     };
     
