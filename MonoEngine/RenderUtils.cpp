@@ -12,16 +12,18 @@
 #include "Sprite.h"
 #include "SysOpenGL.h"
 
+#include <cmath>
+
 void mono::DrawQuad(const math::Quad& quad, const mono::Color& color)
 {
-    mono::Texture::Clear();
-    glColor4f(color.red, color.green, color.blue, color.alpha);
-    
     const float vertices[] = { quad.mA.mX, quad.mA.mY,
                                quad.mB.mX, quad.mA.mY,
                                quad.mB.mX, quad.mB.mY,
                                quad.mA.mX, quad.mB.mY };
     
+    mono::Texture::Clear();
+    glColor4f(color.red, color.green, color.blue, color.alpha);
+
     glEnableClientState(GL_VERTEX_ARRAY);
     
     glVertexPointer(2, GL_FLOAT, 0, vertices);
@@ -30,14 +32,39 @@ void mono::DrawQuad(const math::Quad& quad, const mono::Color& color)
     glDisableClientState(GL_VERTEX_ARRAY);        
 }
 
+void mono::DrawCircle(const math::Vector2f& position, float radie, int segments, const mono::Color& color)
+{
+    std::vector<float> vertices;
+    const float coef = 2.0f * math::PI / float(segments);
+    
+	for(int index = 0; index < segments; ++index)
+	{
+		const float radians = index * coef;
+		const float x = radie * std::cos(radians) + position.mX;
+		const float y = radie * std::sin(radians) + position.mY;
+        
+        vertices.push_back(x);
+        vertices.push_back(y);
+	}
+    
+    mono::Texture::Clear();
+    glColor4f(color.red, color.green, color.blue, color.alpha);
+ 
+    glEnableClientState(GL_VERTEX_ARRAY);
+    
+    glVertexPointer(2, GL_FLOAT, 0, vertices.data());
+    glDrawArrays(GL_LINE_LOOP, 0, segments);
+    
+    glDisableClientState(GL_VERTEX_ARRAY);
+}
+
 void mono::DrawSprite(const mono::Sprite& sprite)
 {
     static const float vertices[] = { -0.5f, -0.5f,
                                       -0.5f,  0.5f,
                                        0.5f,  0.5f,
                                        0.5f, -0.5f };
-    
-    static const unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };    
+    static const unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };
 
     sprite.GetTexture()->Use();
     const math::Quad& quad = sprite.GetTextureCoords();
