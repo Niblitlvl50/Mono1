@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "IEntity.h"
+#include "IPhysicsEntity.h"
 #include "Vector2f.h"
 #include "CMObject.h"
 

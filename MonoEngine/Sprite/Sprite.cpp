@@ -111,6 +111,16 @@ const math::Quad& Sprite::GetTextureCoords() const
     return anim.Finished() ? nullQuad : mTextureCoordinates.at(anim.Frame());
 }
 
+const Color& Sprite::GetShade() const
+{
+    return mColor;
+}
+
+void Sprite::SetShade(const mono::Color& color)
+{
+    mColor = color;
+}
+
 void Sprite::doUpdate(unsigned int delta)
 {
     AnimationSequence& anim = mDefinedAnimations.find(mActiveAnimationId)->second;

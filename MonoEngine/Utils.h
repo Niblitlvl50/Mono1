@@ -8,7 +8,6 @@
 
 #pragma once
 
-#include "MonoFwd.h"
 #include <vector>
 
 namespace mono

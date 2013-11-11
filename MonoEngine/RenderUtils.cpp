@@ -12,15 +12,15 @@
 #include "Sprite.h"
 #include "SysOpenGL.h"
 
-void mono::DrawQuad(const math::Quad& quad)
+void mono::DrawQuad(const math::Quad& quad, const mono::Color& color)
 {
     mono::Texture::Clear();
-    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    glColor4f(color.red, color.green, color.blue, color.alpha);
     
     const float vertices[] = { quad.mA.mX, quad.mA.mY,
-        quad.mB.mX, quad.mA.mY, 
-        quad.mB.mX, quad.mB.mY,
-        quad.mA.mX, quad.mB.mY };
+                               quad.mB.mX, quad.mA.mY,
+                               quad.mB.mX, quad.mB.mY,
+                               quad.mA.mX, quad.mB.mY };
     
     glEnableClientState(GL_VERTEX_ARRAY);
     
@@ -42,11 +42,12 @@ void mono::DrawSprite(const mono::Sprite& sprite)
     sprite.GetTexture()->Use();
     const math::Quad& quad = sprite.GetTextureCoords();
     const float coords[] = { quad.mA.mX, quad.mA.mY,
-        quad.mA.mX, quad.mB.mY,
-        quad.mB.mX, quad.mB.mY,
-        quad.mB.mX, quad.mA.mY };
+                             quad.mA.mX, quad.mB.mY,
+                             quad.mB.mX, quad.mB.mY,
+                             quad.mB.mX, quad.mA.mY };
     
-    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    const mono::Color& color = sprite.GetShade();
+    glColor4f(color.red, color.green, color.blue, color.alpha);
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);

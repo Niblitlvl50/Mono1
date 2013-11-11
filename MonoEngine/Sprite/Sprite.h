@@ -41,6 +41,7 @@
 #include "IUpdatable.h"
 #include "AnimationSequence.h"
 #include "Quad.h"
+#include "Color.h"
 
 #include <string>
 #include <map>
@@ -63,6 +64,14 @@ namespace mono
         //! Gets the quad representing the texture coordinates
         //! @return Math::Quad A reference to the texture coords.
         const math::Quad& GetTextureCoords() const;
+        
+        //! Gets the color shade of the sprite
+        //! @return Color A reference to the color shading.
+        const Color& GetShade() const;
+        
+        //! Sets the color shade of the sprite
+        //! @param[in] color The color shading
+        void SetShade(const mono::Color& color);
         
         //! Define an animation sequence by giving pairs of frame and duration.
         //! @param[in] id Id of the animation.
@@ -95,6 +104,8 @@ namespace mono
         
         std::vector<math::Quad> mTextureCoordinates;
         std::map<int, AnimationSequence> mDefinedAnimations;
+
+        Color mColor;
     };
 }
 

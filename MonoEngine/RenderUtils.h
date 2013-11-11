@@ -13,9 +13,10 @@
 namespace mono
 {
     class Sprite;
+    class Color;
     
     // Draws a quad with the current color. 
-    void DrawQuad(const math::Quad& quad);
+    void DrawQuad(const math::Quad& quad, const mono::Color& color);
     
     //! Draws a sprite
     void DrawSprite(const Sprite& sprite);

@@ -13,20 +13,11 @@
 #include "CMObject.h"
 #include "CMIShape.h"
 #include "Vector2f.h"
-#include "IEntity.h"
+#include "IPhysicsEntity.h"
 
 #include "Utils.h"
 
-
 using namespace mono;
-
-namespace
-{
-    bool RemoveIfDead(mono::IPhysicsEntityPtr entity)
-    {
-        return entity->RemoveMe();
-    }
-}
 
 struct PhysicsZone::PhysicsImpl : IUpdatable
 {
@@ -66,8 +57,12 @@ void PhysicsZone::DoPreAccept()
             mPhysics->mSpace.RemoveBody(object.body);        
         }
     }
-        
-    auto it = std::remove_if(mPhysicsEntities.begin(), mPhysicsEntities.end(), RemoveIfDead);
+    
+    const auto removeFunc = [](mono::IPhysicsEntityPtr entity) {
+        return entity->RemoveMe();
+    };
+    
+    auto it = std::remove_if(mPhysicsEntities.begin(), mPhysicsEntities.end(), removeFunc);
     if(it != mPhysicsEntities.end())
         mPhysicsEntities.erase(it, mPhysicsEntities.end());
     

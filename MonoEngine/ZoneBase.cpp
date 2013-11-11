@@ -15,39 +15,6 @@
 
 using namespace mono;
 
-namespace
-{
-    struct AddEntityFunctor
-    {
-        AddEntityFunctor(IRenderer& renderer)
-            : mRenderer(renderer)
-        { }
-        void operator () (IEntityPtr entity)
-        {
-            mRenderer.AddEntity(entity);
-        }
-        IRenderer& mRenderer;
-    };
-    
-    struct AddUppdatableFunctor
-    {
-        AddUppdatableFunctor(IRenderer& renderer)
-            : mRenderer(renderer)
-        { }
-        void operator () (IUpdatablePtr updatable)
-        {
-            mRenderer.AddUpdatable(updatable);
-        }
-        IRenderer& mRenderer;
-    };
-    
-
-    bool RemoveIfDead(IEntityPtr entity)
-    {
-        return entity->RemoveMe();
-    }
-}
-
 ZoneBase::ZoneBase()
 {
     // Make sure the three layers exists.
@@ -60,20 +27,32 @@ ZoneBase::ZoneBase()
 void ZoneBase::Accept(IRenderer& renderer)
 {
     DoPreAccept();
-                   
-    std::for_each(mLayers[BACKGROUND].begin(), mLayers[BACKGROUND].end(), AddEntityFunctor(renderer));
-    std::for_each(mLayers[MIDDLEGROUND].begin(), mLayers[MIDDLEGROUND].end(), AddEntityFunctor(renderer));
-    std::for_each(mLayers[FOREGROUND].begin(), mLayers[FOREGROUND].end(), AddEntityFunctor(renderer));
     
-    std::for_each(mUpdatables.begin(), mUpdatables.end(), AddUppdatableFunctor(renderer));
+    const auto addEntityFunc = [&renderer](IEntityPtr entity) {
+        renderer.AddEntity(entity);
+    };
+    
+    const auto addUpdatableFunc = [&renderer](IUpdatablePtr updatable) {
+        renderer.AddUpdatable(updatable);
+    };
+    
+    std::for_each(mLayers[BACKGROUND].begin(), mLayers[BACKGROUND].end(), addEntityFunc);
+    std::for_each(mLayers[MIDDLEGROUND].begin(), mLayers[MIDDLEGROUND].end(), addEntityFunc);
+    std::for_each(mLayers[FOREGROUND].begin(), mLayers[FOREGROUND].end(), addEntityFunc);
+    
+    std::for_each(mUpdatables.begin(), mUpdatables.end(), addUpdatableFunc);
 }
 
 void ZoneBase::DoPreAccept()
 {
+    const auto removeIfDeadFunc = [](IEntityPtr entity) {
+        return entity->RemoveMe();
+    };
+    
     for(auto it = mLayers.begin(), end = mLayers.end(); it != end; ++it)
     {
         std::vector<IEntityPtr>& collection = it->second;
-        auto removeIt = std::remove_if(collection.begin(), collection.end(), RemoveIfDead);
+        auto removeIt = std::remove_if(collection.begin(), collection.end(), removeIfDeadFunc);
         if(removeIt != collection.end())
             collection.erase(removeIt, collection.end());
     }    

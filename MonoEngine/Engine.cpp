@@ -110,11 +110,14 @@ void Engine::Run()
 
             // Update the stuff, and then render the frame.
             renderer.Update(delta);
-                    
+            
+            /*
             std::stringstream stream;
             stream << "FPS: " << counter.Fps() << " Frame: " << counter.Frames();
             const mono::Color color(1.0f, 1.0f, 1.0f, 1.0f);
             renderer.DrawText(stream.str(), mCamera->GetViewport().mA, false, color);
+            */
+            
             renderer.DrawFrame();
         }
         
