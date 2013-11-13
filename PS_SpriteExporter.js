@@ -66,8 +66,10 @@ var createSpriteFilesFromLayers = function(layers)
 
 		var file = new File(filename)
 		file.open('w')
-
 		file.writeln("")
+		file.writeln("-- This sprite is exported from " + localDocument.name)
+		file.writeln("")
+
 		file.writeln("texture = \"" + textureName + "\"")
 		file.writeln("rows = " + rows)
 		file.writeln("columns = " + columns)
@@ -91,6 +93,38 @@ var createSpriteFilesFromLayers = function(layers)
 	}
 }
 
+var createPathFiles = function(pathItems)
+{
+	var localPathItems = pathItems
+	for(var index = 0; index < localPathItems.length; ++index)
+	{
+		var pathItem = localPathItems[index]
+		var filename = outputPath + pathItem.name + ".path"
+
+		// Create the file
+		var file = new File(filename)
+		file.open('w')
+		file.writeln("")
+		file.writeln("-- This path is exported from " + localDocument.name)
+		file.writeln("-- The path variable contains a collection of x and y pairs")
+		file.writeln("")
+		file.writeln("path = { }")
+
+		for(var subIndex = 0; subIndex < pathItem.subPathItems.length; ++subIndex)
+		{
+			var subItem = pathItem.subPathItems[subIndex]
+			var points = subItem.pathPoints
+			for(var pointIndex = 0; pointIndex < points.length; ++pointIndex)
+			{
+				var point = points[pointIndex]
+				file.writeln("path[" + pointIndex + "] = { " + point.anchor[0] + ", " + point.anchor[1] + " }")
+			}
+		}
+
+		file.close()
+	}
+}
+
 var exportDocumentToPNG = function(document)
 {
 	var exportFile = new File(outputPath + textureName)
@@ -107,5 +141,6 @@ var dotPsdIndex = localDocument.name.search(".psd")
 var textureName = localDocument.name.substr(0, dotPsdIndex) + ".png"
 
 createSpriteFilesFromLayers(localDocument.layers)
+createPathFiles(localDocument.pathItems)
 exportDocumentToPNG(localDocument)
  
