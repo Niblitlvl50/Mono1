@@ -9,6 +9,7 @@
 
 #include "InputHandler.h"
 #include "EventHandler.h"
+
 #include "QuitEvent.h"
 #include "SurfaceChangedEvent.h"
 #include "ActivatedEvent.h"
@@ -20,10 +21,8 @@
 #include "MouseWheelEvent.h"
 #include "TouchEvent.h"
 #include "MultiGestureEvent.h"
-#include "Vector2f.h"
 
 #include "SDL.h"
-//#include <SDL_events.h>
 
 using namespace mono;
 
@@ -34,8 +33,8 @@ InputHandler::InputHandler(const CoordinateFunc& func)
 
 void InputHandler::OnKeyDown(unsigned int key)
 {
-    if(key == SDLK_ESCAPE)
-        return;
+    //if(key == SDLK_ESCAPE)
+      //  return;
 
     const Event::KeyDownEvent event(key);
     EventHandler::DispatchEvent(event);
@@ -43,6 +42,7 @@ void InputHandler::OnKeyDown(unsigned int key)
 
 void InputHandler::OnKeyUp(unsigned int key)
 {
+    /*
     if(key == SDLK_ESCAPE)
     {
         SDL_Event event;
@@ -50,6 +50,7 @@ void InputHandler::OnKeyUp(unsigned int key)
         SDL_PushEvent(&event);
         return;
     }
+     */
 
     const Event::KeyUpEvent event(key);
     EventHandler::DispatchEvent(event);
@@ -114,11 +115,13 @@ void InputHandler::OnQuit()
     const Event::QuitEvent event;
     EventHandler::DispatchEvent(event);
 }
+
 void InputHandler::OnSurfaceChanged(int width, int height)
 {
     const Event::SurfaceChangedEvent event(width, height);
     EventHandler::DispatchEvent(event);
 }
+
 void InputHandler::OnActivated(bool gain)
 {
     const Event::ActivatedEvent event(gain);
