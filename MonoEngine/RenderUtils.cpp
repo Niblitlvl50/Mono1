@@ -14,7 +14,7 @@
 
 #include <cmath>
 
-void mono::DrawQuad(const math::Quad& quad, const mono::Color& color)
+void mono::DrawQuad(const math::Quad& quad, const mono::Color& color, bool filled)
 {
     const float vertices[] = { quad.mA.mX, quad.mA.mY,
                                quad.mB.mX, quad.mA.mY,
@@ -26,8 +26,9 @@ void mono::DrawQuad(const math::Quad& quad, const mono::Color& color)
 
     glEnableClientState(GL_VERTEX_ARRAY);
     
+    const GLenum primitive = filled ? GL_POLYGON : GL_LINE_LOOP;
     glVertexPointer(2, GL_FLOAT, 0, vertices);
-    glDrawArrays(GL_LINE_LOOP, 0, 4);
+    glDrawArrays(primitive, 0, 4);
     
     glDisableClientState(GL_VERTEX_ARRAY);        
 }

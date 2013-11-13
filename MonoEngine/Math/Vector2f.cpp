@@ -51,6 +51,12 @@ void math::operator += (math::Vector2f& left, const math::Vector2f& right)
     left.mY += right.mY;
 }
 
+void math::operator -= (math::Vector2f& left, const math::Vector2f& right)
+{
+    left.mX -= right.mX;
+    left.mY -= right.mY;
+}
+
 float math::Length(const math::Vector2f& vector)
 {
     return std::sqrt(vector.mX * vector.mX + vector.mY * vector.mY);

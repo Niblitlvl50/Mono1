@@ -59,7 +59,7 @@ void Renderer::DrawFrame()
         const math::Quad& bounds = drawable->BoundingBox();
         
         if(mDrawBB)
-            DrawQuad(bounds, mono::Color(1, 1, 1, 1));
+            DrawQuad(bounds, mono::Color(1, 1, 1, 1), false);
         
         const math::Quad& viewport = mCamera->GetViewport();
         const math::Quad camQuad(viewport.mA, viewport.mA + viewport.mB);

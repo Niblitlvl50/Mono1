@@ -32,6 +32,7 @@ namespace math
     Vector2f operator / (const Vector2f& left, float value);
     void operator *= (Vector2f& left, float value);
     void operator += (Vector2f& left, const Vector2f& right);
+    void operator -= (Vector2f& left, const Vector2f& right);
     
     float Length(const Vector2f& vector);
     void Normalize(Vector2f& vector);
