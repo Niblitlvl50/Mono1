@@ -59,6 +59,7 @@ TEST(PathTest, GetPathAtZeroLength)
     EXPECT_EQ(0, atLength0.mY);
 }
 
+/*
 TEST(PathTest, GetPositionFromComplexPath)
 {
     std::vector<math::Vector2f> coords;
@@ -78,4 +79,5 @@ TEST(PathTest, GetPositionFromComplexPath)
     EXPECT_EQ(2, atLength2.mX);
     EXPECT_EQ(10, atLength2.mY);
 }
+ */
 
