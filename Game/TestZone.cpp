@@ -62,7 +62,7 @@ namespace
         }
         virtual void Draw(mono::IRenderer&) const
         {
-            mono::DrawQuad(mBounds);
+            mono::DrawQuad(mBounds, mono::Color(1, 1, 1, 1), false);
         }
         virtual math::Quad BoundingBox() const
         {
@@ -158,22 +158,22 @@ TestZone::~TestZone()
 
 void TestZone::OnLoad(mono::ICameraPtr camera)
 {    
-    AddEntityToLayer(mono::IEntityPtr(new AnimatedDude(100.0f, 50.0f)), MIDDLEGROUND);
+    AddEntity(mono::IEntityPtr(new AnimatedDude(100.0f, 50.0f)), MIDDLEGROUND);
     
     std::shared_ptr<ZoneBounds> bounds(new ZoneBounds(math::Quad(0.0f, 0.0f, 1000.0f, 600.0f)));
-    AddPhysicsEntityToLayer(bounds, BACKGROUND);
+    AddPhysicsEntity(bounds, BACKGROUND);
         
     std::shared_ptr<Shuttle> shuttle(new Shuttle(100.0f, 100.0f));
-    AddPhysicsEntityToLayer(shuttle, FOREGROUND);
+    AddPhysicsEntity(shuttle, FOREGROUND);
 
     std::shared_ptr<Moon> moon1(new Moon(550.0f, 300.0f, 100.0f));
-    AddPhysicsEntityToLayer(moon1, FOREGROUND);
+    AddPhysicsEntity(moon1, FOREGROUND);
     
     std::shared_ptr<Moon> moon2(new Moon(200.0f, 400.0f, 50.0f));
-    AddPhysicsEntityToLayer(moon2, FOREGROUND);
+    AddPhysicsEntity(moon2, FOREGROUND);
     
-    AddEntityToLayer(mono::IEntityPtr(new TriangleObject), BACKGROUND);
-    AddEntityToLayer(mono::IEntityPtr(new OscillatingLine), FOREGROUND);
+    AddEntity(mono::IEntityPtr(new TriangleObject), BACKGROUND);
+    AddEntity(mono::IEntityPtr(new OscillatingLine), FOREGROUND);
     
     AddUpdatable(mono::IUpdatablePtr(new GravityUpdater(this, moon1, moon2)));
         
@@ -186,12 +186,12 @@ void TestZone::OnUnload()
 
 void TestZone::SpawnEntity(const game::SpawnEntityEvent& event)
 {
-    AddEntityToLayer(event.mEntity, FOREGROUND);
+    AddEntity(event.mEntity, FOREGROUND);
 }
 
 void TestZone::SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event)
 {
-    AddPhysicsEntityToLayer(event.mEntity, FOREGROUND);
+    AddPhysicsEntity(event.mEntity, FOREGROUND);
 }
 
 void TestZone::RemoveEntity(const game::RemoveEntityEvent& event)

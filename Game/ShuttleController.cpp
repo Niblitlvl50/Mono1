@@ -9,6 +9,7 @@
 #include "ShuttleController.h"
 #include "Shuttle.h"
 #include "EventHandler.h"
+#include "EventFuncFwd.h"
 #include "MouseUpEvent.h"
 #include "MouseDownEvent.h"
 #include "MouseMotionEvent.h"

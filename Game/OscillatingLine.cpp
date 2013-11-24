@@ -11,6 +11,7 @@
 #include "SysOpenGL.h"
 #include "Texture.h"
 #include "IRenderer.h"
+#include "Color.h"
 
 #include <string>
 #include <cmath>
@@ -43,7 +44,7 @@ void OscillatingLine::Draw(mono::IRenderer& renderer) const
     
     glDisableClientState(GL_VERTEX_ARRAY);
     
-    Color color = { 0.0f, 0.0f, 0.0f, 1.0f };
+    mono::Color color = { 0.0f, 0.0f, 0.0f, 1.0f };
     renderer.DrawText("dot...", mPosition + math::Vector2f(0.0f, 5.0f), true, color);
 }
 

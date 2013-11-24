@@ -9,6 +9,7 @@
 #include "AnimatedDudeController.h"
 #include "AnimatedDude.h"
 #include "EventHandler.h"
+#include "EventFuncFwd.h"
 #include "KeyDownEvent.h"
 #include "MouseUpEvent.h"
 #include "MouseMotionEvent.h"
