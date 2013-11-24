@@ -8,7 +8,6 @@
 
 #pragma once
 
-//#include "SysTypes.h"
 #include "MathFwd.h"
 #include "Color.h"
 #include <string>

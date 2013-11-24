@@ -189,8 +189,8 @@ void mono::DrawTextFromDefinitions(const std::vector<TextDefinition>& collection
         const TextDefinition& def = *it;
                         
         glColor4f(def.color.red, def.color.green, def.color.blue, def.color.alpha);
-        glVertexPointer(2, GL_FLOAT, 0, &def.vertices.front());
-        glTexCoordPointer(2, GL_FLOAT, 0, &def.texcoords.front());
+        glVertexPointer(2, GL_FLOAT, 0, def.vertices.data());
+        glTexCoordPointer(2, GL_FLOAT, 0, def.texcoords.data());
         
         // Number of chars in the text, times 3 since each triangle contains 3 vertices,
         // times 2 since each char containts two triangles.
