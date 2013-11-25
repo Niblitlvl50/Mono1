@@ -33,8 +33,8 @@ InputHandler::InputHandler(const CoordinateFunc& func)
 
 void InputHandler::OnKeyDown(unsigned int key)
 {
-    //if(key == SDLK_ESCAPE)
-      //  return;
+    if(key == SDLK_ESCAPE)
+        return;
 
     const Event::KeyDownEvent event(key);
     EventHandler::DispatchEvent(event);
@@ -42,7 +42,6 @@ void InputHandler::OnKeyDown(unsigned int key)
 
 void InputHandler::OnKeyUp(unsigned int key)
 {
-    /*
     if(key == SDLK_ESCAPE)
     {
         SDL_Event event;
@@ -50,7 +49,6 @@ void InputHandler::OnKeyUp(unsigned int key)
         SDL_PushEvent(&event);
         return;
     }
-     */
 
     const Event::KeyUpEvent event(key);
     EventHandler::DispatchEvent(event);
