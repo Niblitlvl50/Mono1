@@ -23,7 +23,6 @@ namespace mono
         virtual void DrawFrame();
         virtual void Update(unsigned int milliseconds);
 
-        virtual void AddEntity(IEntityPtr entity);
         virtual void AddDrawable(IDrawablePtr drawable);
         virtual void AddUpdatable(IUpdatablePtr updatable);
         

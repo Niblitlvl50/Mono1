@@ -15,34 +15,32 @@
 namespace mono
 {
 
-    struct ZoneBase : public IZone
+    class ZoneBase : public IZone
     {
-    
     protected:
         
         ZoneBase();
         
-        enum LayerId
-        {
-            BACKGROUND,
-            MIDDLEGROUND,
-            FOREGROUND
-        };
         
         virtual void Accept(IRenderer& renderer);
         virtual void DoPreAccept();
         
+        virtual void AddEntity(IEntityPtr entity, int layer);
+        virtual void RemoveEntity(IEntityPtr entity);
+        
+        virtual void AddUpdatable(IUpdatablePtr updatable);
+        virtual void RemoveUpdatable(IUpdatablePtr updatable);
+        
+        virtual void AddDrawable(IDrawablePtr drawable, int layer);
+        virtual void RemoveDrawable(IDrawablePtr drawable);
+        
         virtual void ClearEntities();
 
-        void AddEntityToLayer(IEntityPtr entity, LayerId layer);
-        void RemoveEntity(IEntityPtr entity);
-        
-        void AddUpdatable(IUpdatablePtr updatable);
-        void RemoveUpdatable(IUpdatablePtr updatable);
-        
     private:
         
-        std::map<LayerId, std::vector<IEntityPtr>> mLayers;
+        std::map<int, std::vector<IDrawablePtr>> mLayersDrawables;
+        std::map<int, std::vector<IEntityPtr>> mLayersEntities;
+        //std::vector<IEntityPtr> mEntities;
         std::vector<IUpdatablePtr> mUpdatables;
     };
     

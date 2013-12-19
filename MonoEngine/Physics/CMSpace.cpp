@@ -19,46 +19,17 @@
 
 using namespace cm;
 
-namespace
-{
-    std::function<void (cm::IBodyPtr)> bodyFunction;
-    std::vector<IBodyPtr>* bodyCollection;
-    
-    void CMBodyFunction(cpBody* body, void* data)
-    {
-        for(std::vector<IBodyPtr>::iterator it = bodyCollection->begin(), end = bodyCollection->end(); it != end; ++it)
-        {
-            IBodyPtr bodyPtr = *it;
-            if(body == bodyPtr->Body())
-                bodyFunction(bodyPtr);
-        }
-    }
-    
-    std::function<bool (cpArbiter*, void*)> beginFunc;
-    cpBool CMCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
-    {
-        return beginFunc(arb, data);
-    }
-    
-    std::function<void (void*, void*)> postStepFunc;
-    void CMCollisionPostStep(cpSpace* space, void* obj, void* data)
-    {
-        postStepFunc(obj, data);
-    }
-    
-}
 
 Space::Space(const math::Vector2f& gravity, float damping)
 {
+    const auto beginFunc = [](cpArbiter* arb, cpSpace* space, void* data) -> cpBool {
+        return static_cast<Space*>(data)->OnCollision(arb);
+    };
+
     mSpace = cpSpaceNew();
     cpSpaceSetGravity(mSpace, cpv(gravity.mX, gravity.mY));
     cpSpaceSetDamping(mSpace, damping);
-    
-    using namespace std::placeholders;
-    beginFunc = std::bind(&Space::OnCollision, this, _1, _2);
-    postStepFunc = std::bind(&Space::OnPostStep, this, _1, _2);
-    
-    cpSpaceAddCollisionHandler(mSpace, 0, 0, CMCollisionBegin, 0, 0, 0, 0);
+    cpSpaceAddCollisionHandler(mSpace, 0, 0, beginFunc, 0, 0, 0, this);
 }
 
 Space::~Space()
@@ -98,24 +69,40 @@ void Space::RemoveShape(IShapePtr shape)
 
 void Space::ForEachBody(const std::function<void (IBodyPtr)>& func)
 {
-    bodyFunction = func;
-    bodyCollection = &mBodies;
+    const auto forEachBody = [](cpBody* body, void* data) {
+        static_cast<Space*>(data)->DoForEachFuncOnBody(body);
+    };
     
-    cpSpaceEachBody(mSpace, CMBodyFunction, 0);
+    mForEachFunc = func;
+    cpSpaceEachBody(mSpace, forEachBody, this);
+    
+    // Null the function, so it wont be used by misstake after this point
+    mForEachFunc = nullptr;
 }
 
-bool Space::OnCollision(cpArbiter* arb, void* data)
+void Space::DoForEachFuncOnBody(cpBody* body)
 {
-    cpBody* b1 = 0;
-    cpBody* b2 = 0;
+    for(auto& bodyPtr : mBodies)
+    {
+        if(body == bodyPtr->Body())
+        {
+            mForEachFunc(bodyPtr);
+            break;
+        }
+    }
+}
+
+bool Space::OnCollision(cpArbiter* arb)
+{
+    cpBody* b1 = nullptr;
+    cpBody* b2 = nullptr;
     cpArbiterGetBodies(arb, &b1, &b2);
     
-    IBodyPtr first;
-    IBodyPtr second;
+    IBodyPtr first = nullptr;
+    IBodyPtr second = nullptr;
     
-    for(std::vector<IBodyPtr>::iterator it = mBodies.begin(), end = mBodies.end(); it != end; ++it)
+    for(auto& body : mBodies)
     {
-        IBodyPtr body = *it;
         if(body->Body() == b1)
             first = body;
         else if(body->Body() == b2)
@@ -129,9 +116,6 @@ bool Space::OnCollision(cpArbiter* arb, void* data)
     {
         first->OnCollideWith(second);
         second->OnCollideWith(first);
-
-        //cpSpaceAddPostStepCallback(mSpace, CMCollisionPostStep, first->Body(), 0);
-        //cpSpaceAddPostStepCallback(mSpace, CMCollisionPostStep, second->Body(), 0);
     }
     
     return true;
@@ -139,11 +123,13 @@ bool Space::OnCollision(cpArbiter* arb, void* data)
 
 void Space::OnPostStep(void* object, void* data)
 {
-    for(std::vector<IBodyPtr>::iterator it = mBodies.begin(), end = mBodies.end(); it != end; ++it)
+    for(auto& body : mBodies)
     {
-        IBodyPtr body = *it;
         if(object == body->Body())
+        {
             body->OnPostStep();
+            break;
+        }
     }
 }
 

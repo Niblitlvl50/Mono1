@@ -19,26 +19,40 @@ ZoneBase::ZoneBase()
 {
     // Make sure the three layers exists.
     
-    mLayers[BACKGROUND]   = std::vector<IEntityPtr>();
-    mLayers[MIDDLEGROUND] = std::vector<IEntityPtr>();
-    mLayers[FOREGROUND]   = std::vector<IEntityPtr>();
+    mLayersDrawables[BACKGROUND]   = std::vector<IDrawablePtr>();
+    mLayersDrawables[MIDDLEGROUND] = std::vector<IDrawablePtr>();
+    mLayersDrawables[FOREGROUND]   = std::vector<IDrawablePtr>();
+    
+    mLayersEntities[BACKGROUND]   = std::vector<IEntityPtr>();
+    mLayersEntities[MIDDLEGROUND] = std::vector<IEntityPtr>();
+    mLayersEntities[FOREGROUND]   = std::vector<IEntityPtr>();
 }
 
 void ZoneBase::Accept(IRenderer& renderer)
 {
     DoPreAccept();
     
+    const auto addDrawableFunc = [&renderer](IDrawablePtr drawable) {
+        renderer.AddDrawable(drawable);
+    };
+    
     const auto addEntityFunc = [&renderer](IEntityPtr entity) {
-        renderer.AddEntity(entity);
+        renderer.AddDrawable(entity);
+        renderer.AddUpdatable(entity);
     };
     
     const auto addUpdatableFunc = [&renderer](IUpdatablePtr updatable) {
         renderer.AddUpdatable(updatable);
     };
     
-    std::for_each(mLayers[BACKGROUND].begin(), mLayers[BACKGROUND].end(), addEntityFunc);
-    std::for_each(mLayers[MIDDLEGROUND].begin(), mLayers[MIDDLEGROUND].end(), addEntityFunc);
-    std::for_each(mLayers[FOREGROUND].begin(), mLayers[FOREGROUND].end(), addEntityFunc);
+    std::for_each(mLayersDrawables[BACKGROUND].begin(), mLayersDrawables[BACKGROUND].end(), addDrawableFunc);
+    std::for_each(mLayersEntities[BACKGROUND].begin(),  mLayersEntities[BACKGROUND].end(),  addEntityFunc);
+    
+    std::for_each(mLayersDrawables[MIDDLEGROUND].begin(), mLayersDrawables[MIDDLEGROUND].end(), addDrawableFunc);
+    std::for_each(mLayersEntities[MIDDLEGROUND].begin(),  mLayersEntities[MIDDLEGROUND].end(),  addEntityFunc);
+
+    std::for_each(mLayersDrawables[FOREGROUND].begin(), mLayersDrawables[FOREGROUND].end(), addDrawableFunc);
+    std::for_each(mLayersEntities[FOREGROUND].begin(),  mLayersEntities[FOREGROUND].end(),  addEntityFunc);
     
     std::for_each(mUpdatables.begin(), mUpdatables.end(), addUpdatableFunc);
 }
@@ -49,26 +63,51 @@ void ZoneBase::DoPreAccept()
         return entity->RemoveMe();
     };
     
-    for(auto it = mLayers.begin(), end = mLayers.end(); it != end; ++it)
+    for(auto& layer : mLayersEntities)
     {
-        std::vector<IEntityPtr>& collection = it->second;
-        auto removeIt = std::remove_if(collection.begin(), collection.end(), removeIfDeadFunc);
-        if(removeIt != collection.end())
-            collection.erase(removeIt, collection.end());
-    }    
+        std::vector<IEntityPtr>& entities = layer.second;
+        const auto removeIt = std::remove_if(entities.begin(), entities.end(), removeIfDeadFunc);
+        if(removeIt != entities.end())
+            entities.erase(removeIt, entities.end());
+    }
+    
+    /*
+    const auto removeIt = std::remove_if(mEntities.begin(), mEntities.end(), removeIfDeadFunc);
+    if(removeIt != mEntities.end())
+    {
+        for(auto it = removeIt; it != mEntities.end(); ++it)
+        {
+            mono::IEntityPtr entity = *it;
+            RemoveEntity(entity);
+        }
+        
+        mEntities.erase(removeIt, mEntities.end());
+    }
+     */
 }
 
-void ZoneBase::AddEntityToLayer(IEntityPtr entity, LayerId layer)
+void ZoneBase::AddEntity(IEntityPtr entity, int layer)
 {
-    auto layerIt = mLayers.find(layer);
-    std::vector<IEntityPtr>& collection = layerIt->second;
-    collection.push_back(entity);
+    //AddDrawable(entity, layer);
+    //AddUpdatable(entity);
+    
+    
+    auto layerIt = mLayersEntities.find(layer);
+    if(layerIt == mLayersEntities.end())
+        throw std::runtime_error("ZoneBase - Adding entity to missing layer");
+    
+    layerIt->second.push_back(entity);
+    
+    //mEntities.push_back(entity);
 }
 
 void ZoneBase::RemoveEntity(IEntityPtr entity)
 {
+    //RemoveDrawable(entity);
+    //RemoveUpdatable(entity);
+    
     bool result = false;
-    for(auto it = mLayers.begin(), end = mLayers.end(); it != end; ++it)
+    for(auto it = mLayersEntities.begin(), end = mLayersEntities.end(); it != end; ++it)
     {
         result = FindAndRemove(it->second, entity);
         if(result)
@@ -76,7 +115,11 @@ void ZoneBase::RemoveEntity(IEntityPtr entity)
     }
     
     if(!result)
-        throw std::runtime_error("Unable to remove entity");
+        throw std::runtime_error("ZoneBase - Unable to remove entity");
+
+    //const bool result = mono::FindAndRemove(mEntities, entity);
+    //if(!result)
+      //  throw std::runtime_error("ZoneBase - Unable to remove Entity");
 }
 
 void ZoneBase::AddUpdatable(IUpdatablePtr updatable)
@@ -88,13 +131,36 @@ void ZoneBase::RemoveUpdatable(IUpdatablePtr updatable)
 {
     const bool result = mono::FindAndRemove(mUpdatables, updatable);
     if(!result)
-        throw std::runtime_error("Unable to remove updatable");
+        throw std::runtime_error("ZoneBase - Unable to remove updatable");
+}
+
+void ZoneBase::AddDrawable(IDrawablePtr drawable, int layer)
+{
+    auto layerIt = mLayersDrawables.find(layer);
+    if(layerIt == mLayersDrawables.end())
+        throw std::runtime_error("ZoneBase - Adding drawable to missing layer");
+    
+    layerIt->second.push_back(drawable);
+}
+
+void ZoneBase::RemoveDrawable(IDrawablePtr drawable)
+{
+    bool result = false;
+    for(auto it = mLayersDrawables.begin(), end = mLayersDrawables.end(); it != end; ++it)
+    {
+        result = FindAndRemove(it->second, drawable);
+        if(result)
+            break;
+    }
+    
+    if(!result)
+        throw std::runtime_error("ZoneBase - Unable to remove drawable");
 }
 
 void ZoneBase::ClearEntities()
 {
-    for(auto& entities : mLayers)
-        entities.second.clear();
+    for(auto& drawables : mLayersDrawables)
+        drawables.second.clear();
 }
 
 

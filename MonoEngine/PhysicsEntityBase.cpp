@@ -23,6 +23,12 @@ const math::Vector2f& PhysicsEntityBase::Position() const
     return mPosition;
 }
 
+void PhysicsEntityBase::SetPosition(const math::Vector2f& position)
+{
+    mPosition = position;
+    mPhysicsObject.body->SetPosition(position);
+}
+
 math::Quad PhysicsEntityBase::BoundingBox() const
 {
     const float x = mPosition.mX - (mScale / 2.0f);

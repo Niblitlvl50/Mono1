@@ -26,7 +26,8 @@ void mono::DrawQuad(const math::Quad& quad, const mono::Color& color, bool fille
 
     glEnableClientState(GL_VERTEX_ARRAY);
     
-    const GLenum primitive = filled ? GL_POLYGON : GL_LINE_LOOP;
+    //const GLenum primitive = filled ? GL_POLYGON : GL_LINE_LOOP;
+    const GLenum primitive = GL_LINE_LOOP;
     glVertexPointer(2, GL_FLOAT, 0, vertices);
     glDrawArrays(primitive, 0, 4);
     

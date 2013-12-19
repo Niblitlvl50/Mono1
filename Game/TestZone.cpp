@@ -76,7 +76,7 @@ namespace
     
     struct GravityUpdater : mono::IUpdatable
     {
-        GravityUpdater(mono::PhysicsZone* zone, mono::IEntityPtr moon1, mono::IEntityPtr moon2)
+        GravityUpdater(mono::IPhysicsZone* zone, mono::IEntityPtr moon1, mono::IEntityPtr moon2)
             : mZone(zone),
               mMoon1(moon1),
               mMoon2(moon2),
@@ -124,7 +124,7 @@ namespace
             body->ApplyImpulse(impulse, math::zeroVec);
         }
         
-        mono::PhysicsZone* mZone;
+        mono::IPhysicsZone* mZone;
         mono::IEntityPtr mMoon1;
         mono::IEntityPtr mMoon2;
         unsigned int mElapsedTime;
@@ -158,22 +158,22 @@ TestZone::~TestZone()
 
 void TestZone::OnLoad(mono::ICameraPtr camera)
 {    
-    AddEntity(mono::IEntityPtr(new AnimatedDude(100.0f, 50.0f)), MIDDLEGROUND);
+    AddEntity(mono::IEntityPtr(new AnimatedDude(100.0f, 50.0f)), mono::MIDDLEGROUND);
     
     std::shared_ptr<ZoneBounds> bounds(new ZoneBounds(math::Quad(0.0f, 0.0f, 1000.0f, 600.0f)));
-    AddPhysicsEntity(bounds, BACKGROUND);
+    AddPhysicsEntity(bounds, mono::BACKGROUND);
         
     std::shared_ptr<Shuttle> shuttle(new Shuttle(100.0f, 100.0f));
-    AddPhysicsEntity(shuttle, FOREGROUND);
+    AddPhysicsEntity(shuttle, mono::FOREGROUND);
 
     std::shared_ptr<Moon> moon1(new Moon(550.0f, 300.0f, 100.0f));
-    AddPhysicsEntity(moon1, FOREGROUND);
+    AddPhysicsEntity(moon1, mono::FOREGROUND);
     
     std::shared_ptr<Moon> moon2(new Moon(200.0f, 400.0f, 50.0f));
-    AddPhysicsEntity(moon2, FOREGROUND);
+    AddPhysicsEntity(moon2, mono::FOREGROUND);
     
-    AddEntity(mono::IEntityPtr(new TriangleObject), BACKGROUND);
-    AddEntity(mono::IEntityPtr(new OscillatingLine), FOREGROUND);
+    AddEntity(mono::IEntityPtr(new TriangleObject), mono::BACKGROUND);
+    AddEntity(mono::IEntityPtr(new OscillatingLine), mono::FOREGROUND);
     
     AddUpdatable(mono::IUpdatablePtr(new GravityUpdater(this, moon1, moon2)));
         
@@ -186,12 +186,12 @@ void TestZone::OnUnload()
 
 void TestZone::SpawnEntity(const game::SpawnEntityEvent& event)
 {
-    AddEntity(event.mEntity, FOREGROUND);
+    AddEntity(event.mEntity, mono::FOREGROUND);
 }
 
 void TestZone::SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event)
 {
-    AddPhysicsEntity(event.mEntity, FOREGROUND);
+    AddPhysicsEntity(event.mEntity, mono::FOREGROUND);
 }
 
 void TestZone::RemoveEntity(const game::RemoveEntityEvent& event)

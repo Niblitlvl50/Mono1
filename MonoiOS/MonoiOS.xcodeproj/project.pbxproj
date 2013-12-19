@@ -626,6 +626,11 @@
 		91282D191826759E00B80892 /* Quad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quad.cpp; sourceTree = "<group>"; };
 		91282D1C1826764500B80892 /* Vector2f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector2f.cpp; sourceTree = "<group>"; };
 		918157241826E5E600C66F2B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		9181E51F183A8D1600678586 /* EventFuncFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFuncFwd.h; sourceTree = "<group>"; };
+		9181E520183A8D2900678586 /* MonoPtrFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonoPtrFwd.h; sourceTree = "<group>"; };
+		9181E521183A8D3800678586 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
+		9181E522183BD54700678586 /* IPhysicsEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPhysicsEntity.h; sourceTree = "<group>"; };
+		9181E523183BD64900678586 /* IPhysicsZone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPhysicsZone.h; sourceTree = "<group>"; };
 		9199F5CA17DCDB6B0001FE28 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9199F5CD17E3AA0F0001FE28 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = "zlib-1.2.8/adler32.c"; sourceTree = "<group>"; };
 		9199F5CE17E3AA0F0001FE28 /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = compress.c; path = "zlib-1.2.8/compress.c"; sourceTree = "<group>"; };
@@ -758,6 +763,9 @@
 		2B26D69C15FD2BB5001E9748 /* MonoEngine */ = {
 			isa = PBXGroup;
 			children = (
+				9181E522183BD54700678586 /* IPhysicsEntity.h */,
+				9181E521183A8D3800678586 /* Color.h */,
+				9181E520183A8D2900678586 /* MonoPtrFwd.h */,
 				2B26D69D15FD2BB5001E9748 /* Camera */,
 				2B26D6A215FD2BB5001E9748 /* Engine.cpp */,
 				2B26D6A315FD2BB5001E9748 /* Engine.h */,
@@ -798,6 +806,7 @@
 				2B26D70415FD2BB5001E9748 /* Utils.h */,
 				2B26D70515FD2BB5001E9748 /* ZoneBase.cpp */,
 				2B26D70615FD2BB5001E9748 /* ZoneBase.h */,
+				9181E523183BD64900678586 /* IPhysicsZone.h */,
 			);
 			name = MonoEngine;
 			path = ../MonoEngine;
@@ -827,6 +836,7 @@
 		2B26D6AA15FD2BB5001E9748 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				9181E51F183A8D1600678586 /* EventFuncFwd.h */,
 				2BDD2C8A171C9EB10041CB18 /* PauseEvent.h */,
 				2B95CF1A162F3790006769BF /* MouseDownEvent.h */,
 				2B26D6AB15FD2BB5001E9748 /* ActivatedEvent.h */,

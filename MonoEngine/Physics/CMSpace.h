@@ -38,11 +38,14 @@ namespace cm
         
     private:
         
-        bool OnCollision(cpArbiter* arb, void* data);
+        bool OnCollision(cpArbiter* arb);
         void OnPostStep(void* object, void* data);
         
+        void DoForEachFuncOnBody(cpBody* body);
+        std::function<void (IBodyPtr)> mForEachFunc;
+        
         cpSpace* mSpace;
-        std::vector<IBodyPtr> mBodies;
+        std::vector<IBodyPtr> mBodies;        
     };
     
 }

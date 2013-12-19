@@ -51,11 +51,9 @@ void Renderer::DrawFrame()
 {
     PrepareDraw();
     
-    for(auto it = mDrawables.begin(), end = mDrawables.end(); it != end; ++it)
+    for(auto& drawable : mDrawables)
     {
         const OGL::OGLPushPopMatrix raii;
-
-        const IDrawablePtr drawable = *it;
         const math::Quad& bounds = drawable->BoundingBox();
         
         if(mDrawBB)
@@ -78,19 +76,8 @@ void Renderer::Update(unsigned int milliseconds)
 {
     mCamera->Update(milliseconds);
     
-    // Should i do collision detection here or after the update?
-    
-    for(auto it = mUpdatables.begin(), end = mUpdatables.end(); it != end; ++it)
-    {
-        IUpdatablePtr updatable = *it;
+    for(auto& updatable : mUpdatables)
         updatable->doUpdate(milliseconds);
-    }
-}
-
-void Renderer::AddEntity(IEntityPtr entity)
-{
-    mDrawables.push_back(entity);
-    mUpdatables.push_back(entity);
 }
 
 void Renderer::AddDrawable(IDrawablePtr drawable)

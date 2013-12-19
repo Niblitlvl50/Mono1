@@ -9,36 +9,48 @@
 
 #pragma once
 
-#include "ZoneBase.h"
+#include "IPhysicsZone.h"
 #include "MathFwd.h"
 #include "CMFwd.h"
 
-#include <functional>
+#include <map>
+#include <vector>
 
 namespace mono
 {
-    class PhysicsZone : public ZoneBase
+    class PhysicsZone : public IPhysicsZone
     {
-    public:
-
-        void ForEachBody(const std::function<void (cm::IBodyPtr)>& func);
-
     protected:
         
         PhysicsZone(const math::Vector2f& gravity);
         virtual void Accept(IRenderer& renderer);
-        virtual void DoPreAccept();
-                        
-        virtual void ClearEntities();
+        
+        virtual void ForEachBody(const std::function<void (cm::IBodyPtr)>& func);
 
-        void AddPhysicsEntityToLayer(mono::IPhysicsEntityPtr entity, LayerId layer);
-        void RemovePhysicsEntity(mono::IPhysicsEntityPtr entity);
+        virtual void AddPhysicsEntity(mono::IPhysicsEntityPtr entity, int layer);
+        virtual void RemovePhysicsEntity(mono::IPhysicsEntityPtr entity);
+        
+        virtual void AddEntity(mono::IEntityPtr entity, int layer);
+        virtual void RemoveEntity(mono::IEntityPtr entity);
+        
+        virtual void AddDrawable(mono::IDrawablePtr drawable, int layer);
+        virtual void RemoveDrawable(mono::IDrawablePtr drawable);
+        
+        virtual void AddUpdatable(mono::IUpdatablePtr updatable);
+        virtual void RemoveUpdatable(mono::IUpdatablePtr updatable);
         
     private:
         
+        void DoPreAccept();
+        
         struct PhysicsImpl;
         std::shared_ptr<PhysicsImpl> mPhysics;
-        std::vector<mono::IPhysicsEntityPtr> mPhysicsEntities;
+        
+        std::vector<IPhysicsEntityPtr> mPhysicsEntities;
+        std::vector<IEntityPtr>        mEntities;
+        
+        std::map<int, std::vector<IDrawablePtr>> mDrawables;
+        std::vector<IUpdatablePtr>               mUpdatables;
     };
 }
 

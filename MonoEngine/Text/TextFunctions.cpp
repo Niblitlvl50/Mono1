@@ -98,10 +98,8 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text,
     if(center)
         xposition -= MeasureString(text).mX / 2.0f;
 
-    for(auto it = text.begin(), end = text.end(); it != end; ++it)
+    for(const char currentChar : text)
     {
-        const char currentChar = *it;
-        
         // Look up char in map.
         const auto foundChar = charMap.find(currentChar);
         if(foundChar == charMap.end())
@@ -157,10 +155,8 @@ math::Vector2f mono::MeasureString(const std::string& text)
 {
     math::Vector2f size;
     
-    for(auto it = text.begin(), end = text.end(); it != end; ++it)
+    for(const char currentChar : text)
     {
-        const char currentChar = *it;
-        
         // Look up char in map.
         const auto foundChar = charMap.find(currentChar);
         if(foundChar == charMap.end())
@@ -184,17 +180,15 @@ void mono::DrawTextFromDefinitions(const std::vector<TextDefinition>& collection
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         
-    for(auto it = collection.begin(), end = collection.end(); it != end; ++it)
+    for(const auto& text : collection)
     {
-        const TextDefinition& def = *it;
-                        
-        glColor4f(def.color.red, def.color.green, def.color.blue, def.color.alpha);
-        glVertexPointer(2, GL_FLOAT, 0, def.vertices.data());
-        glTexCoordPointer(2, GL_FLOAT, 0, def.texcoords.data());
+        glColor4f(text.color.red, text.color.green, text.color.blue, text.color.alpha);
+        glVertexPointer(2, GL_FLOAT, 0, text.vertices.data());
+        glTexCoordPointer(2, GL_FLOAT, 0, text.texcoords.data());
         
         // Number of chars in the text, times 3 since each triangle contains 3 vertices,
         // times 2 since each char containts two triangles.
-        const int verticesToDraw = def.chars * 3 * 2;
+        const int verticesToDraw = text.chars * 3 * 2;
         
         glDrawArrays(GL_TRIANGLES, 0, verticesToDraw);
     }

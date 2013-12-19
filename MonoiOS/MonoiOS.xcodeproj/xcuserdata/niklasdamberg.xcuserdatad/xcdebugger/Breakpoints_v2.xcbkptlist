@@ -2,4 +2,98 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Game/TestZone.cpp"
+            timestampString = "406898304.729634"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
+            landmarkName = "TestZone::RemoveEntity(const game::RemoveEntityEvent&amp; event)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "game::TestZone::RemoveEntity(game::RemoveEntityEvent const&amp;)"
+                  moduleName = "MonoiOS"
+                  urlString = "file:///Users/niklasdamberg/Documents/Programming/Xcode_Projects/Mono1/Game/TestZone.cpp"
+                  timestampString = "406915024.346794"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "199"
+                  endingLineNumber = "199"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "game::TestZone::RemoveEntity(game::RemoveEntityEvent const&amp;)"
+                  moduleName = "MonoiOS"
+                  urlString = "file:///Users/niklasdamberg/Documents/Programming/Xcode_Projects/Mono1/Game/TestZone.cpp"
+                  timestampString = "406915024.347108"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "199"
+                  endingLineNumber = "199"
+                  offsetFromSymbolStart = "158">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Game/TestZone.cpp"
+            timestampString = "406898306.184179"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
+            landmarkName = "TestZone::RemovePhysicsEntity(const game::RemovePhysicsEntityEvent&amp; event)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "game::TestZone::RemovePhysicsEntity(game::RemovePhysicsEntityEvent const&amp;)"
+                  moduleName = "MonoiOS"
+                  urlString = "file:///Users/niklasdamberg/Documents/Programming/Xcode_Projects/Mono1/Game/TestZone.cpp"
+                  timestampString = "406915024.347444"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "204"
+                  endingLineNumber = "204"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "game::TestZone::RemovePhysicsEntity(game::RemovePhysicsEntityEvent const&amp;)"
+                  moduleName = "MonoiOS"
+                  urlString = "file:///Users/niklasdamberg/Documents/Programming/Xcode_Projects/Mono1/Game/TestZone.cpp"
+                  timestampString = "406915024.347706"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "204"
+                  endingLineNumber = "204"
+                  offsetFromSymbolStart = "158">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
