@@ -33,11 +33,9 @@ void EntityBase::doDraw(IRenderer& renderer) const
     glTranslatef(-rotationPoint.mX, -rotationPoint.mY, 0.0f);    
     glScalef(mScale.mX, mScale.mY, 1.0f);
 
-    for(auto it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
+    for(auto& child : mChildren)
     {
         const OGL::OGLPushPopMatrix raii;
-        
-        const IEntityPtr child = *it;
         child->doDraw(renderer);
     }
         
@@ -47,12 +45,12 @@ void EntityBase::doDraw(IRenderer& renderer) const
 void EntityBase::doUpdate(unsigned int delta)
 {
     // Updadate children
-    for(auto it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
-        (*it)->doUpdate(delta);
+    for(auto& child : mChildren)
+        child->doUpdate(delta);
     
     // Update actions
-    for(auto it = mActions.begin(), end = mActions.end(); it != end; ++it)
-        (*it)->Update(delta);
+    for(auto& action : mActions)
+        action->Update(delta);
     
     // Check if any actions has finished and remove them if that is the case
     using namespace std::placeholders;
@@ -80,10 +78,9 @@ math::Quad EntityBase::BoundingBox() const
     const float x = mPosition.mX - (mScale.mX / 2.0f);
     const float y = mPosition.mY - (mScale.mY / 2.0f);
     math::Quad thisbb(x, y, x + mScale.mX, y + mScale.mY);
-        
-    for(auto it = mChildren.begin(), end = mChildren.end(); it != end; ++it)
+
+    for(auto& child : mChildren)
     {
-        const IEntityPtr child = *it;
         math::Quad childbb = (child->BoundingBox() * mScale);
         childbb.mA += mPosition;
         childbb.mB += mPosition;
