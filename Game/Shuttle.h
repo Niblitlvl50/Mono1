@@ -15,18 +15,19 @@
 
 namespace game
 {
-
     class Shuttle : public mono::PhysicsEntityBase, public cm::ICollisionHandler
     {
         friend class ShuttleController;
 
     public:
         
-        Shuttle(float x, float y);
+        Shuttle(float x, float y, mono::EventHandler& eventHandler);
 
     private:
 
         void Fire();
+        void StartThrusting();
+        void StopThrusting();
         
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
@@ -36,7 +37,7 @@ namespace game
         
         mono::Sprite mSprite;
         ShuttleController mController;
+        mono::EventHandler& mEventHandler;
     };
-    
 }
 

@@ -26,10 +26,10 @@ namespace constants
     };
 }
 
-AnimatedDude::AnimatedDude(float x, float y)
+AnimatedDude::AnimatedDude(float x, float y, mono::EventHandler& eventHandler)
     : mTarget(x, y),
       mSprite("ryu.sprite"),
-      mController(this)
+      mController(this, eventHandler)
 {
     mPosition = math::Vector2f(x, y);
     mScale = math::Vector2f(30.0f, 30.0f);

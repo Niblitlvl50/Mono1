@@ -25,12 +25,12 @@ CameraController::CameraController(ICamera* cam)
 {
     using namespace std::placeholders;
     
-    const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&CameraController::OnMultiGesture, this, _1);
-    mMultiGestureToken = mono::EventHandler::AddListener(multiGestureFunc);
+    //const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&CameraController::OnMultiGesture, this, _1);
+    //mMultiGestureToken = mono::EventHandler::AddListener(multiGestureFunc);
 }
 CameraController::~CameraController()
 {
-    mono::EventHandler::RemoveListener(mMultiGestureToken);
+    //mono::EventHandler::RemoveListener(mMultiGestureToken);
 }
 
 void CameraController::OnMultiGesture(const Event::MultiGestureEvent& event)

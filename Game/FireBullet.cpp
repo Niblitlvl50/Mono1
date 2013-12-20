@@ -20,8 +20,9 @@
 
 using namespace game;
 
-FireBullet::FireBullet(const math::Vector2f& start, float rotation)
+FireBullet::FireBullet(const math::Vector2f& start, float rotation, mono::EventHandler& eventHandler)
     : mSprite("firebullet.sprite"),
+      mEventHandler(eventHandler),
       mRemoveMe(false)
 {
     mScale = 15.0f;
@@ -54,8 +55,8 @@ bool FireBullet::RemoveMe() const
 
 void FireBullet::OnCollideWith(cm::IBodyPtr body)
 {
-    const game::SpawnEntityEvent event(mono::IEntityPtr(new Explosion(mPosition)));
-    mono::EventHandler::DispatchEvent(event);
+    const game::SpawnEntityEvent event(std::make_shared<Explosion>(mPosition));
+    mEventHandler.DispatchEvent(event);
 
     mRemoveMe = true;
 }

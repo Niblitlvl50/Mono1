@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "MonoFwd.h"
 #include "EventFwd.h"
 #include "EventToken.h"
 
@@ -19,7 +20,7 @@ namespace game
     {
     public:
         
-        ShuttleController(game::Shuttle* shuttle);
+        ShuttleController(game::Shuttle* shuttle, mono::EventHandler& eventHandler);
         ~ShuttleController();
         
         void OnMouseDown(const Event::MouseDownEvent& even);
@@ -31,6 +32,8 @@ namespace game
         void HandleOnShuttlePress();
         
         Shuttle* mShuttle;
+        mono::EventHandler& mEventHandler;
+        
         mono::EventToken<Event::MouseDownEvent> mMouseDownToken;
         mono::EventToken<Event::MouseUpEvent> mMouseUpToken;
         mono::EventToken<Event::MouseMotionEvent> mMouseMotionToken;

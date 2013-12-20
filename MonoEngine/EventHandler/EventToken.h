@@ -22,14 +22,9 @@ namespace mono
             : mId(++currentId)
         { }
 
-        unsigned int GetId() const
-        {
-            return mId;
-        }
-
         bool operator < (const EventToken<Event>& other) const
         {
-            return mId < other.GetId();
+            return mId < other.mId;
         }
 
     private:

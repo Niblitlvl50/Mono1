@@ -24,4 +24,5 @@ namespace mono
     struct IAction;
     
     struct Color;
+    class EventHandler;
 }

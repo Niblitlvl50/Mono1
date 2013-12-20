@@ -13,9 +13,10 @@
 #include "EventFwd.h"
 #include "EventToken.h"
 
+#include "EventHandler.h"
+
 namespace mono
 {
-
     class Engine
     {
     public:
@@ -31,6 +32,10 @@ namespace mono
         void OnSurfaceChanged(const Event::SurfaceChangedEvent& event);
         void OnActivated(const Event::ActivatedEvent& event);
         
+        // This needs to be up top so it will be destroyed after everything else.
+        // Its not very good actually. To depend on destruction order like this. 
+        EventHandler mEventHandler;
+
         bool mPause;
         bool mQuit;
         unsigned int mHz;
@@ -45,6 +50,5 @@ namespace mono
         EventToken<Event::SurfaceChangedEvent> mSurfaceChangedToken;
         EventToken<Event::ActivatedEvent> mActivatedToken;
     };
-
 }
 

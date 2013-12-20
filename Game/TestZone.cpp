@@ -134,55 +134,63 @@ namespace
 
 TestZone::TestZone()
     : PhysicsZone(math::Vector2f(0.0f, 0.0f))
-{    
+{ }
+
+void TestZone::AddEventListeners()
+{
     const game::SpawnEntityFunc spawnEntityFunc = std::bind(&TestZone::SpawnEntity, this, _1);
-    mSpawnEntityToken = mono::EventHandler::AddListener(spawnEntityFunc);
+    mSpawnEntityToken = mEventHandler->AddListener(spawnEntityFunc);
     
     const game::SpawnPhysicsEntityFunc spawnPhysicsFunc = std::bind(&TestZone::SpawnPhysicsEntity, this, _1);
-    mSpawnPhysicsEntityToken = mono::EventHandler::AddListener(spawnPhysicsFunc);
+    mSpawnPhysicsEntityToken = mEventHandler->AddListener(spawnPhysicsFunc);
     
     const game::RemoveEntityFunc removeEntityFunc = std::bind(&TestZone::RemoveEntity, this, _1);
-    mRemoveEntityToken = mono::EventHandler::AddListener(removeEntityFunc);
+    mRemoveEntityToken = mEventHandler->AddListener(removeEntityFunc);
     
     const game::RemovePhysicsEntityFunc removePhysicsFunc = std::bind(&TestZone::RemovePhysicsEntity, this, _1);
-    mRemovePhysicsEntityToken = mono::EventHandler::AddListener(removePhysicsFunc);
+    mRemovePhysicsEntityToken = mEventHandler->AddListener(removePhysicsFunc);
 }
 
-TestZone::~TestZone()
+void TestZone::RemoveEventListeners()
 {
-    mono::EventHandler::RemoveListener(mSpawnEntityToken);
-    mono::EventHandler::RemoveListener(mSpawnPhysicsEntityToken);
-    mono::EventHandler::RemoveListener(mRemoveEntityToken);
-    mono::EventHandler::RemoveListener(mRemovePhysicsEntityToken);
+    mEventHandler->RemoveListener(mSpawnEntityToken);
+    mEventHandler->RemoveListener(mSpawnPhysicsEntityToken);
+    mEventHandler->RemoveListener(mRemoveEntityToken);
+    mEventHandler->RemoveListener(mRemovePhysicsEntityToken);
 }
 
-void TestZone::OnLoad(mono::ICameraPtr camera)
-{    
-    AddEntity(mono::IEntityPtr(new AnimatedDude(100.0f, 50.0f)), mono::MIDDLEGROUND);
+void TestZone::OnLoad(mono::ICameraPtr camera, mono::EventHandler& eventHandler)
+{
+    mEventHandler = &eventHandler;
+    AddEventListeners();
     
-    std::shared_ptr<ZoneBounds> bounds(new ZoneBounds(math::Quad(0.0f, 0.0f, 1000.0f, 600.0f)));
+    AddEntity(std::make_shared<AnimatedDude>(100.0f, 50.0f, eventHandler), mono::MIDDLEGROUND);
+    
+    std::shared_ptr<ZoneBounds> bounds = std::make_shared<ZoneBounds>(math::Quad(0.0f, 0.0f, 1000.0f, 600.0f));
     AddPhysicsEntity(bounds, mono::BACKGROUND);
         
-    std::shared_ptr<Shuttle> shuttle(new Shuttle(100.0f, 100.0f));
+    std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(100.0f, 100.0f, eventHandler);
     AddPhysicsEntity(shuttle, mono::FOREGROUND);
 
-    std::shared_ptr<Moon> moon1(new Moon(550.0f, 300.0f, 100.0f));
+    std::shared_ptr<Moon> moon1 = std::make_shared<Moon>(550.0f, 300.0f, 100.0f);
     AddPhysicsEntity(moon1, mono::FOREGROUND);
     
-    std::shared_ptr<Moon> moon2(new Moon(200.0f, 400.0f, 50.0f));
+    std::shared_ptr<Moon> moon2 = std::make_shared<Moon>(200.0f, 400.0f, 50.0f);
     AddPhysicsEntity(moon2, mono::FOREGROUND);
     
-    AddEntity(mono::IEntityPtr(new TriangleObject), mono::BACKGROUND);
-    AddEntity(mono::IEntityPtr(new OscillatingLine), mono::FOREGROUND);
+    AddEntity(std::make_shared<TriangleObject>(), mono::BACKGROUND);
+    AddEntity(std::make_shared<OscillatingLine>(), mono::FOREGROUND);
     
-    AddUpdatable(mono::IUpdatablePtr(new GravityUpdater(this, moon1, moon2)));
+    AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
         
     camera->SetPosition(shuttle->Position());
     camera->Follow(shuttle);
 }
 
 void TestZone::OnUnload()
-{ }
+{
+    RemoveEventListeners();
+}
 
 void TestZone::SpawnEntity(const game::SpawnEntityEvent& event)
 {

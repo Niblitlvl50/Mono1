@@ -18,7 +18,7 @@ namespace game
     {
     public:
         
-        FireBullet(const math::Vector2f& start, float rotation);
+        FireBullet(const math::Vector2f& start, float rotation, mono::EventHandler& eventHandler);
         void Update(unsigned int delta);
         void Draw(mono::IRenderer& renderer) const;
         
@@ -30,6 +30,7 @@ namespace game
     private:
         
         mono::Sprite mSprite;
+        mono::EventHandler& mEventHandler;
         bool mRemoveMe;
     };
 }

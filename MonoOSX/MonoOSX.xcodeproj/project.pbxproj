@@ -174,7 +174,6 @@
 		2BE4741A153201CC00CA5ACB /* Engine.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473DC153201CC00CA5ACB /* Engine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE4741B153201CC00CA5ACB /* EntityBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473DD153201CC00CA5ACB /* EntityBase.cpp */; };
 		2BE4741C153201CC00CA5ACB /* EntityBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473DE153201CC00CA5ACB /* EntityBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2BE4741D153201CC00CA5ACB /* EventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE473E0153201CC00CA5ACB /* EventHandler.cpp */; };
 		2BE4741E153201CC00CA5ACB /* EventHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E1153201CC00CA5ACB /* EventHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE4741F153201CC00CA5ACB /* EventToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E2153201CC00CA5ACB /* EventToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BE47420153201CC00CA5ACB /* ActivatedEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE473E4153201CC00CA5ACB /* ActivatedEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -229,6 +228,7 @@
 		2BF8E39B1545EE9C00F46049 /* LuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF8E3991545EE9C00F46049 /* LuaState.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BFC221C16FA56CF00EBEAFB /* SpriteAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BFC221B16FA56CF00EBEAFB /* SpriteAttributes.h */; };
 		2BFF8979170762BB00499D08 /* FireBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BFF8978170762B900499D08 /* FireBullet.cpp */; };
+		91035EC718649D58009BEE6C /* EventHandlerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91035EC518649D58009BEE6C /* EventHandlerTest.cpp */; };
 		9141B7031826E5BA003B4BDD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9141B7021826E5BA003B4BDD /* main.cpp */; };
 		9163C0AE1826DCCB00832128 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0AA1826DCCB00832128 /* MathFwd.cpp */; };
 		9163C0AF1826DCCB00832128 /* MathFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0AB1826DCCB00832128 /* MathFwd.h */; };
@@ -575,7 +575,6 @@
 		2BE473DC153201CC00CA5ACB /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Engine.h; path = ../MonoEngine/Engine.h; sourceTree = SOURCE_ROOT; };
 		2BE473DD153201CC00CA5ACB /* EntityBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EntityBase.cpp; path = ../MonoEngine/EntityBase.cpp; sourceTree = SOURCE_ROOT; };
 		2BE473DE153201CC00CA5ACB /* EntityBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EntityBase.h; path = ../MonoEngine/EntityBase.h; sourceTree = SOURCE_ROOT; };
-		2BE473E0153201CC00CA5ACB /* EventHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventHandler.cpp; path = ../MonoEngine/EventHandler/EventHandler.cpp; sourceTree = SOURCE_ROOT; };
 		2BE473E1153201CC00CA5ACB /* EventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventHandler.h; path = ../MonoEngine/EventHandler/EventHandler.h; sourceTree = SOURCE_ROOT; };
 		2BE473E2153201CC00CA5ACB /* EventToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventToken.h; path = ../MonoEngine/EventHandler/EventToken.h; sourceTree = SOURCE_ROOT; };
 		2BE473E4153201CC00CA5ACB /* ActivatedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivatedEvent.h; path = ../MonoEngine/Events/ActivatedEvent.h; sourceTree = SOURCE_ROOT; };
@@ -640,6 +639,7 @@
 		2BFF8978170762B900499D08 /* FireBullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FireBullet.cpp; path = ../Game/FireBullet.cpp; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		91035EC518649D58009BEE6C /* EventHandlerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventHandlerTest.cpp; path = ../UnitTests/EventHandlerTest.cpp; sourceTree = SOURCE_ROOT; };
 		91203C301826F02900C5B323 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = "../External Libs/stb_truetype/stb_truetype.h"; sourceTree = "<group>"; };
 		91203C321826F8D100C5B323 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9138E038173C30DE00DCAC7D /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = System/Library/Frameworks/SDL2.framework; sourceTree = SDKROOT; };
@@ -1079,6 +1079,7 @@
 				9181E559184167F300678586 /* PathTest.cpp */,
 				2BD1E63E1532155500A75171 /* LuaTest.cpp */,
 				2B594F0F15D7F454008E650B /* MathTest.cpp */,
+				91035EC518649D58009BEE6C /* EventHandlerTest.cpp */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -1232,7 +1233,6 @@
 		2BE473DF153201CC00CA5ACB /* EventHandler */ = {
 			isa = PBXGroup;
 			children = (
-				2BE473E0153201CC00CA5ACB /* EventHandler.cpp */,
 				2BE473E1153201CC00CA5ACB /* EventHandler.h */,
 				2BE473E2153201CC00CA5ACB /* EventToken.h */,
 			);
@@ -1761,7 +1761,6 @@
 				2BE47419153201CC00CA5ACB /* Engine.cpp in Sources */,
 				2BE4741B153201CC00CA5ACB /* EntityBase.cpp in Sources */,
 				9163C0E71826DE4C00832128 /* zutil.c in Sources */,
-				2BE4741D153201CC00CA5ACB /* EventHandler.cpp in Sources */,
 				9163C0D91826DE4C00832128 /* gzwrite.c in Sources */,
 				2BE4742A153201CC00CA5ACB /* InputHandler.cpp in Sources */,
 				2BE47434153201CC00CA5ACB /* Renderer.cpp in Sources */,
@@ -1841,6 +1840,7 @@
 				9181E55618411D8200678586 /* gtest-all.cc in Sources */,
 				2B6872D61531FB9600B8C2FB /* gtest_main.cc in Sources */,
 				9181E55A184167F300678586 /* PathTest.cpp in Sources */,
+				91035EC718649D58009BEE6C /* EventHandlerTest.cpp in Sources */,
 				2B6872D71531FB9600B8C2FB /* EngineTest.cpp in Sources */,
 				2BD1E6401532155500A75171 /* LuaTest.cpp in Sources */,
 				2B594F1115D7F454008E650B /* MathTest.cpp in Sources */,
@@ -1972,8 +1972,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1998,8 +1998,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";

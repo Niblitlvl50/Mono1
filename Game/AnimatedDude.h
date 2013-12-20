@@ -21,7 +21,7 @@ namespace game
 
     public:
 
-        AnimatedDude(float x, float y);
+        AnimatedDude(float x, float y, mono::EventHandler& eventHandler);
         
     private:
         

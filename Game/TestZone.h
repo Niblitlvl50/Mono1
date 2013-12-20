@@ -24,9 +24,8 @@ namespace game
     public:
         
         TestZone();
-        ~TestZone();
                 
-        virtual void OnLoad(mono::ICameraPtr camera);
+        virtual void OnLoad(mono::ICameraPtr camera, mono::EventHandler& eventHandler);
         virtual void OnUnload();
         
         void SpawnEntity(const game::SpawnEntityEvent& event);
@@ -36,10 +35,15 @@ namespace game
 
     private:
         
+        void AddEventListeners();
+        void RemoveEventListeners();
+        
         mono::EventToken<game::SpawnEntityEvent> mSpawnEntityToken;
         mono::EventToken<game::SpawnPhysicsEntityEvent> mSpawnPhysicsEntityToken;
         mono::EventToken<game::RemoveEntityEvent> mRemoveEntityToken;
         mono::EventToken<game::RemovePhysicsEntityEvent> mRemovePhysicsEntityToken;
+        
+        mono::EventHandler* mEventHandler;
     };
 }
 

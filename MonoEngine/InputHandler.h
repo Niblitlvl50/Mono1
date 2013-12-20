@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "MonoFwd.h"
 #include "IInputHandler.h"
 #include <functional>
 
@@ -20,7 +21,7 @@ namespace mono
     {
     public:
         
-        InputHandler(const CoordinateFunc& func);
+        InputHandler(const CoordinateFunc& func, EventHandler& eventHandler);
         
     private:
         
@@ -41,7 +42,7 @@ namespace mono
         virtual void OnActivated(bool gain);
         
         const CoordinateFunc mScreenToWorldFunc;
+        EventHandler& mEventHandler;
     };
-
 }
 

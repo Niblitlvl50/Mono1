@@ -35,7 +35,6 @@
 
 
 using namespace mono;
-using namespace std::placeholders;
 
 namespace Func
 {
@@ -64,35 +63,38 @@ Engine::Engine(unsigned int hz, IWindowPtr window, ICameraPtr camera, IZonePtr z
       mHz(hz),
       mWindow(window),
       mCamera(camera),
-      mZone(zone),
-      mInputHandler(new InputHandler(std::bind(Func::ScreenToWorld, _1, _2, mWindow, mCamera)))
+      mZone(zone)
 {
+    using namespace std::placeholders;
+    const auto func = std::bind(Func::ScreenToWorld, _1, _2, mWindow, mCamera);
+    mInputHandler = std::make_shared<InputHandler>(func, mEventHandler);
+    
     const Event::PauseEventFunc pauseFunc = std::bind(&Engine::OnPause, this, _1);
-    mPauseToken = EventHandler::AddListener(pauseFunc);
+    mPauseToken = mEventHandler.AddListener(pauseFunc);
     
     const Event::QuitEventFunc quitFunc = std::bind(&Engine::OnQuit, this, _1);
-    mQuitToken = EventHandler::AddListener(quitFunc);
+    mQuitToken = mEventHandler.AddListener(quitFunc);
 
     const Event::SurfaceChangedEventFunc surfaceChangedFunc = std::bind(&Engine::OnSurfaceChanged, this, _1);
-    mSurfaceChangedToken = EventHandler::AddListener(surfaceChangedFunc);
+    mSurfaceChangedToken = mEventHandler.AddListener(surfaceChangedFunc);
 	
     const Event::ActivatedEventFunc activatedFunc = std::bind(&Engine::OnActivated, this, _1);
-    mActivatedToken = EventHandler::AddListener(activatedFunc);
+    mActivatedToken = mEventHandler.AddListener(activatedFunc);
 }
 
 Engine::~Engine()
 {
-    EventHandler::RemoveListener(mPauseToken);
-    EventHandler::RemoveListener(mQuitToken);
-    EventHandler::RemoveListener(mSurfaceChangedToken);
-    EventHandler::RemoveListener(mActivatedToken);
+    mEventHandler.RemoveListener(mPauseToken);
+    mEventHandler.RemoveListener(mQuitToken);
+    mEventHandler.RemoveListener(mSurfaceChangedToken);
+    mEventHandler.RemoveListener(mActivatedToken);
 }
 
 void Engine::Run()
 {
     // Do i put this in a raii object so if there is an exception thrown 
     // IZone::OnUnload is still called?  
-    mZone->OnLoad(mCamera);
+    mZone->OnLoad(mCamera, mEventHandler);
         
     FPSCounter counter;
     unsigned int lastTime = Time::GetMilliseconds();
@@ -124,6 +126,9 @@ void Engine::Run()
         Time::Sleep(1);        
         counter++;
     }
+    
+    // Remove possible folow entity
+    mCamera->Unfollow();
     
     mZone->OnUnload();
 }

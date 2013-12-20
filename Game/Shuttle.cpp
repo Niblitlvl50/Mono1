@@ -33,9 +33,10 @@ namespace constants
 }
 
 
-Shuttle::Shuttle(float x, float y)
+Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     : mSprite("shuttle.sprite"),
-      mController(this)
+      mController(this, eventHandler),
+      mEventHandler(eventHandler)
 {
     mPosition = math::Vector2f(x, y);
     mScale = 20.0f;
@@ -48,10 +49,9 @@ Shuttle::Shuttle(float x, float y)
     shape->SetElasticity(0.1f);
     
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
-    
     mPhysicsObject.shapes.push_back(shape);    
     
-    mSprite.SetAnimation(constants::THRUSTING);
+    mSprite.SetAnimation(constants::IDLE);
 }
 
 void Shuttle::Draw(mono::IRenderer& renderer) const
@@ -76,10 +76,20 @@ void Shuttle::Fire()
     const math::Vector2f position = mPosition + (unit * 20.0f);
     const math::Vector2f impulse = unit * 500.0f;
     
-    const game::SpawnPhysicsEntityEvent event(mono::IPhysicsEntityPtr(new FireBullet(position, mRotation)));  
+    const game::SpawnPhysicsEntityEvent event(std::make_shared<FireBullet>(position, mRotation, mEventHandler));
     event.mEntity->GetPhysics().body->ApplyImpulse(impulse, math::zeroVec);
     
-    mono::EventHandler::DispatchEvent(event);
+    mEventHandler.DispatchEvent(event);
+}
+
+void Shuttle::StartThrusting()
+{
+    mSprite.SetAnimation(constants::THRUSTING);
+}
+
+void Shuttle::StopThrusting()
+{
+    mSprite.SetAnimation(constants::IDLE);
 }
 
 
