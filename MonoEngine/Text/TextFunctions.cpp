@@ -43,10 +43,9 @@ namespace
 void mono::LoadFont(const std::string& font, float size, float scale)
 {
     File::FilePtr fontfile = File::OpenBinaryFile(font);
-    const long filesize = File::FileSize(fontfile);
     
-    std::vector<byte> fontbuffer(filesize, 0);
-    fread(&fontbuffer.front(), 1, filesize, fontfile.get());
+    std::vector<byte> fontbuffer;
+    File::FileRead(fontfile, fontbuffer);
     
     const int width = 512;
     const int height = 512;

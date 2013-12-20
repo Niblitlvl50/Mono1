@@ -124,15 +124,15 @@ namespace
         }
         CMShape(cm::IBodyPtr body, const std::vector<math::Vector2f>& vertices, const math::Vector2f& offset)
         {
-            std::vector<cpVect> vects;
-            for(auto it = vertices.begin(), end = vertices.end(); it != end; ++it)
-            {
-                const math::Vector2f& vect2f = *it;
-                vects.push_back(cpv(vect2f.mX, vect2f.mY));
-            }
+            const auto transformFunc = [](const math::Vector2f& position) {
+                return cpv(position.mX, position.mY);
+            };
             
-            mShape = cpPolyShapeNew(body->Body(), int(vects.size()), &vects.front(), cpv(offset.mX, offset.mY));
-            mInertiaValue = cpMomentForPoly(body->GetMass(), int(vects.size()), &vects.front(), cpv(offset.mX, offset.mY));
+            std::vector<cpVect> vects(vertices.size());
+            std::transform(vertices.begin(), vertices.end(), vects.begin(), transformFunc);
+            
+            mShape = cpPolyShapeNew(body->Body(), int(vects.size()), vects.data(), cpv(offset.mX, offset.mY));
+            mInertiaValue = cpMomentForPoly(body->GetMass(), int(vects.size()), vects.data(), cpv(offset.mX, offset.mY));
         }
         ~CMShape()
         {
