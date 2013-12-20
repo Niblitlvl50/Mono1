@@ -162,30 +162,30 @@ namespace
 
 cm::IBodyPtr cm::Factory::CreateStaticBody()
 {
-    return IBodyPtr(new CMBody);
+    return std::make_shared<CMBody>();
 }
 
 cm::IBodyPtr cm::Factory::CreateBody(float mass, float inertia)
 {
-    return IBodyPtr(new CMBody(mass, inertia));
+    return std::make_shared<CMBody>(mass, inertia);
 }
 
 cm::IShapePtr cm::Factory::CreateShape(cm::IBodyPtr body, float radius, const math::Vector2f& offset)
 {
-    return IShapePtr(new CMShape(body, radius, offset));
+    return std::make_shared<CMShape>(body, radius, offset);
 }
 
 cm::IShapePtr cm::Factory::CreateShape(cm::IBodyPtr body, float width, float height)
 {
-    return IShapePtr(new CMShape(body, width, height));
+    return std::make_shared<CMShape>(body, width, height);
 }
 
 cm::IShapePtr cm::Factory::CreateShape(cm::IBodyPtr body, const math::Vector2f& first, const math::Vector2f& second, float radius)
 {
-    return IShapePtr(new CMShape(body, first, second, radius));
+    return std::make_shared<CMShape>(body, first, second, radius);
 }
 
 cm::IShapePtr cm::Factory::CreateShape(cm::IBodyPtr body, const std::vector<math::Vector2f>& vertices, const math::Vector2f& offset)
 {
-    return IShapePtr(new CMShape(body, vertices, offset));
+    return std::make_shared<CMShape>(body, vertices, offset);
 }
