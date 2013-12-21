@@ -127,7 +127,7 @@ void Engine::Run()
         counter++;
     }
     
-    // Remove possible folow entity
+    // Remove possible follow entity
     mCamera->Unfollow();
     
     mZone->OnUnload();

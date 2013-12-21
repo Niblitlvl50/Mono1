@@ -68,6 +68,11 @@ const math::Vector2f& EntityBase::Position() const
     return mPosition;
 }
 
+float EntityBase::Rotation() const
+{
+    return mRotation;
+}
+
 void EntityBase::SetPosition(const math::Vector2f& position)
 {
     mPosition = position;

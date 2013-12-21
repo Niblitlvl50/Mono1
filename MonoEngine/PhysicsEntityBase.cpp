@@ -23,6 +23,11 @@ const math::Vector2f& PhysicsEntityBase::Position() const
     return mPosition;
 }
 
+float PhysicsEntityBase::Rotation() const
+{
+    return mRotation;
+}
+
 void PhysicsEntityBase::SetPosition(const math::Vector2f& position)
 {
     mPosition = position;
