@@ -35,7 +35,7 @@ namespace
         virtual void SwapBuffers() const
         {
             mSwapBuffersCalled = true;
-            mono::EventHandler::DispatchEvent(Event::QuitEvent());
+            //mono::EventHandler::DispatchEvent(Event::QuitEvent());
         }
         virtual const math::Vector2f& Size() const
         {

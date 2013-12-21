@@ -230,6 +230,7 @@
 		2BFF8979170762BB00499D08 /* FireBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BFF8978170762B900499D08 /* FireBullet.cpp */; };
 		91035EC718649D58009BEE6C /* EventHandlerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91035EC518649D58009BEE6C /* EventHandlerTest.cpp */; };
 		9141B7031826E5BA003B4BDD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9141B7021826E5BA003B4BDD /* main.cpp */; };
+		915E1845186645420000681D /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 915E1843186645420000681D /* PathPoint.cpp */; };
 		9163C0AE1826DCCB00832128 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0AA1826DCCB00832128 /* MathFwd.cpp */; };
 		9163C0AF1826DCCB00832128 /* MathFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0AB1826DCCB00832128 /* MathFwd.h */; };
 		9163C0B01826DCCB00832128 /* Quad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0AC1826DCCB00832128 /* Quad.cpp */; };
@@ -644,6 +645,8 @@
 		91203C321826F8D100C5B323 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9138E038173C30DE00DCAC7D /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = System/Library/Frameworks/SDL2.framework; sourceTree = SDKROOT; };
 		9141B7021826E5BA003B4BDD /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../Game/main.cpp; sourceTree = "<group>"; };
+		915E1843186645420000681D /* PathPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathPoint.cpp; path = ../Game/PathPoint.cpp; sourceTree = "<group>"; };
+		915E1844186645420000681D /* PathPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathPoint.h; path = ../Game/PathPoint.h; sourceTree = "<group>"; };
 		9163C0AA1826DCCB00832128 /* MathFwd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MathFwd.cpp; path = ../MonoEngine/Math/MathFwd.cpp; sourceTree = SOURCE_ROOT; };
 		9163C0AB1826DCCB00832128 /* MathFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MathFwd.h; path = ../MonoEngine/Math/MathFwd.h; sourceTree = SOURCE_ROOT; };
 		9163C0AC1826DCCB00832128 /* Quad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Quad.cpp; path = ../MonoEngine/Math/Quad.cpp; sourceTree = SOURCE_ROOT; };
@@ -1226,6 +1229,8 @@
 				2B75E94416B52A5200B84A26 /* Meteor.h */,
 				2BFF89771707624B00499D08 /* FireBullet.h */,
 				2BFF8978170762B900499D08 /* FireBullet.cpp */,
+				915E1843186645420000681D /* PathPoint.cpp */,
+				915E1844186645420000681D /* PathPoint.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -1864,6 +1869,7 @@
 				2B97209615503844006841E1 /* Arm.cpp in Sources */,
 				2B97209915503854006841E1 /* Head.cpp in Sources */,
 				2BD392D315E8DE1500C010B7 /* Shuttle.cpp in Sources */,
+				915E1845186645420000681D /* PathPoint.cpp in Sources */,
 				2B0BEEDF162183C300A96003 /* ShuttleController.cpp in Sources */,
 				2B0BEEE31621955B00A96003 /* Moon.cpp in Sources */,
 				2B75E94316B52A4100B84A26 /* Meteor.cpp in Sources */,

@@ -21,12 +21,13 @@ namespace
             : mPath(coords),
               mLength(0)
         {
-            math::Vector2f current = coords.front();
+            math::Vector2f last = coords.front();
             
-            for(auto it = coords.begin(), end = coords.end(); it != end; ++it)
+            for(auto& point : coords)
             {
-                const math::Vector2f diff = current - *it;
+                const math::Vector2f diff = last - point;
                 mLength += math::Length(diff);
+                last = point;
             }
         }
 
@@ -42,12 +43,10 @@ namespace
             if(length == 0)
                 return last;
             
-            for(auto it = mPath.begin(), end = mPath.end(); it != end; ++it)
+            for(auto& point : mPath)
             {
-                const math::Vector2f& current = *it;
-                
                 // Do something...
-                const math::Vector2f diff = current - last;
+                const math::Vector2f diff = point - last;
                 const float diffLength = math::Length(diff);
                 lengthCounter += diffLength;
                 
@@ -61,7 +60,7 @@ namespace
                     return pos;
                 }
                 
-                last = current;
+                last = point;
             }
             
             return math::Vector2f();
@@ -78,9 +77,9 @@ std::shared_ptr<mono::IPath> mono::CreatePath(const std::string& pathFile)
     const lua::MapIntFloatTable table = lua::GetTableMap<int, float>(config, "path");
 
     std::vector<math::Vector2f> coords;
-    for(auto it = table.begin(), end = table.end(); it != end; ++it)
+    for(auto& pair : table)
     {
-        const std::vector<float>& item = it->second;
+        const std::vector<float>& item = pair.second;
         coords.push_back(math::Vector2f(item.at(0), item.at(1)));
     }
     

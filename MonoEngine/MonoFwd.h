@@ -22,6 +22,7 @@ namespace mono
     struct IZone;
     struct ITexture;
     struct IAction;
+    struct IPath;
     
     struct Color;
     class EventHandler;

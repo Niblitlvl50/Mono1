@@ -12,15 +12,16 @@
 #include "Vector2f.h"
 #include <vector>
 
-TEST(PathTest, CreatePath)
+TEST(PathTest, CreatePathAndVerifyLength)
 {
     std::vector<math::Vector2f> coords;
     coords.push_back(math::Vector2f(0, 0));
     coords.push_back(math::Vector2f(10, 0));
+    coords.push_back(math::Vector2f(10, 10));
 
-    std::shared_ptr<mono::IPath> path = mono::CreatePath(coords);
+    const std::shared_ptr<mono::IPath> path = mono::CreatePath(coords);
     const float length = path->Length();
-    EXPECT_EQ(10, length);
+    EXPECT_EQ(20, length);
 }
 
 TEST(PathTest, GetPathAtFullLength)
@@ -59,7 +60,6 @@ TEST(PathTest, GetPathAtZeroLength)
     EXPECT_EQ(0, atLength0.mY);
 }
 
-/*
 TEST(PathTest, GetPositionFromComplexPath)
 {
     std::vector<math::Vector2f> coords;
@@ -79,5 +79,4 @@ TEST(PathTest, GetPositionFromComplexPath)
     EXPECT_EQ(2, atLength2.mX);
     EXPECT_EQ(10, atLength2.mY);
 }
- */
 

@@ -45,7 +45,7 @@ TEST(EventHandlerTest, RegisterListener)
     std::function<void (const TestEvent1&)> func1 = std::bind(&TestClass::OnEventFunc, &object, _1);
     std::function<void (const TestEvent2&)> func2 = std::bind(&TestClass::OnAnohterEvent, &object, _1);
 
-    mono::MyEventHandler handler;
+    mono::EventHandler handler;
     handler.AddListener(func1);
     handler.AddListener(func2);
     

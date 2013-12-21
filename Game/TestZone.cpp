@@ -14,6 +14,7 @@
 #include "AnimatedDude.h"
 #include "Shuttle.h"
 #include "Moon.h"
+#include "PathPoint.h"
 #include "EntityBase.h"
 #include "Quad.h"
 #include "CMObject.h"
@@ -180,6 +181,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera, mono::EventHandler& eventHandler)
     
     AddEntity(std::make_shared<TriangleObject>(), mono::BACKGROUND);
     AddEntity(std::make_shared<OscillatingLine>(), mono::FOREGROUND);
+    AddEntity(std::make_shared<PathPoint>(), mono::BACKGROUND);
     
     AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
         
