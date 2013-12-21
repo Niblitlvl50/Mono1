@@ -16,7 +16,7 @@ using namespace game;
 
 
 PathPoint::PathPoint()
-    : mElapsedTime(0.00001)
+    : mElapsedTime(0)
 {
     std::vector<math::Vector2f> points;
     points.push_back(math::Vector2f(0, 0));
