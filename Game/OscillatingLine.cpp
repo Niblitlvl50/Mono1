@@ -18,11 +18,6 @@
 
 using namespace game;
 
-namespace
-{
-    static const float vertex[] = { 0.0f, 0.0f };
-}
-
 OscillatingLine::OscillatingLine()
     : mBase(400.0f, 100.0f),
       mDelta(0.0f)
@@ -33,7 +28,9 @@ OscillatingLine::OscillatingLine()
 void OscillatingLine::Draw(mono::IRenderer& renderer) const
 {    
     mono::Texture::Clear();
-        
+    
+    const float vertex[] = { 0.0f, 0.0f };
+    
     glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
     glPointSize(4.0f);
     

@@ -38,7 +38,7 @@ using namespace mono;
 
 namespace Func
 {
-    void ScreenToWorld(int& x, int& y, IWindowPtr window, ICameraPtr camera)
+    void ScreenToWorld(float& x, float& y, IWindowPtr window, ICameraPtr camera)
     {
         const math::Vector2f& windowSize = window->Size();
         const math::Quad& viewport = camera->GetViewport();

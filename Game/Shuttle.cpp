@@ -41,7 +41,7 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     mPosition = math::Vector2f(x, y);
     mScale = 20.0f;
     
-    mPhysicsObject.body = cm::Factory::CreateBody(15.0f, 1.0f);
+    mPhysicsObject.body = cm::Factory::CreateBody(10.0f, 1.0f);
     mPhysicsObject.body->SetPosition(mPosition);
     mPhysicsObject.body->SetCollisionHandler(this);
 
@@ -65,21 +65,44 @@ void Shuttle::Update(unsigned int delta)
 }
 
 void Shuttle::OnCollideWith(cm::IBodyPtr body)
-{ }
+{
+    body->IsStatic();
+    mPhysicsObject.body->GetMoment();
+}
 
 void Shuttle::OnPostStep()
 { }
 
+void Shuttle::ApplyRotationForce(float force)
+{
+    const math::Vector2f forceVector(force, 0.0);
+
+    // First apply the rotational force at an offset of 20 in y axis, then negate the vector
+    // and apply it to zero to counter the movement when we only want rotation.
+    mPhysicsObject.body->ApplyForce(forceVector, math::Vector2f(0, 20));
+    mPhysicsObject.body->ApplyForce(forceVector * -1, math::zeroVec);
+}
+
+void Shuttle::ApplyThrustForce(float force)
+{
+    const float rotation = Rotation();
+    const math::Vector2f unit(-std::sin(math::DegToRad(rotation)),
+                               std::cos(math::DegToRad(rotation)));
+
+    mPhysicsObject.body->ApplyForce(unit * force, math::zeroVec);
+}
+
 void Shuttle::Fire()
 {
-    const math::Vector2f unit(-std::sin(math::DegToRad(mRotation)), std::cos(math::DegToRad(mRotation)));
-    const math::Vector2f position = mPosition + (unit * 20.0f);
-    const math::Vector2f impulse = unit * 500.0f;
+    const math::Vector2f unit(-std::sin(math::DegToRad(mRotation)),
+                               std::cos(math::DegToRad(mRotation)));
+    const math::Vector2f& position = mPosition + (unit * 20.0f);
+    const math::Vector2f& impulse = unit * 500.0f;
     
-    const game::SpawnPhysicsEntityEvent event(std::make_shared<FireBullet>(position, mRotation, mEventHandler));
-    event.mEntity->GetPhysics().body->ApplyImpulse(impulse, math::zeroVec);
-    
-    mEventHandler.DispatchEvent(event);
+    auto bullet = std::make_shared<FireBullet>(position, mRotation, mEventHandler);
+    bullet->GetPhysics().body->ApplyImpulse(impulse, math::zeroVec);
+
+    mEventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
 }
 
 void Shuttle::StartThrusting()

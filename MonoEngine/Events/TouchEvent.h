@@ -10,7 +10,7 @@
 
 namespace Event
 {
-    enum TouchType
+    enum class TouchType
     {
         DOWN,
         UP,

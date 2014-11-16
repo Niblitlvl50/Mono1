@@ -1,6 +1,6 @@
 //
 //  IPhysicsEntity.h
-//  King_worksample_OSX
+//  Worksample_2
 //
 //  Created by Niklas Damberg on 11/11/13.
 //

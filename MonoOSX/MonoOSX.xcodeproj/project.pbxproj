@@ -299,6 +299,8 @@
 		91B63F9417D3CB8E004F1868 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8217D3C8BC004F1868 /* AudioToolbox.framework */; };
 		91B63F9517D3CB96004F1868 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8017D3C8A6004F1868 /* CoreAudio.framework */; };
 		91B63F9617D3CB9C004F1868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F7E17D3C881004F1868 /* Cocoa.framework */; };
+		91C8A2221882CA4B00283CD7 /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91C8A2201882CA4B00283CD7 /* Point.cpp */; };
+		91C8A2231882CA4B00283CD7 /* Point.h in Headers */ = {isa = PBXBuildFile; fileRef = 91C8A2211882CA4B00283CD7 /* Point.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -731,6 +733,8 @@
 		91B63F8817D3C8E2004F1868 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		91B63F8A17D3C8F2004F1868 /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = System/Library/Frameworks/ForceFeedback.framework; sourceTree = SDKROOT; };
 		91B63F8C17D3C8FF004F1868 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		91C8A2201882CA4B00283CD7 /* Point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Point.cpp; path = ../MonoEngine/Math/Point.cpp; sourceTree = SOURCE_ROOT; };
+		91C8A2211882CA4B00283CD7 /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Point.h; path = ../MonoEngine/Math/Point.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -938,12 +942,14 @@
 		2B4B06A1153336BE006D0C75 /* Math */ = {
 			isa = PBXGroup;
 			children = (
+				91C8A2201882CA4B00283CD7 /* Point.cpp */,
+				91C8A2211882CA4B00283CD7 /* Point.h */,
 				9163C0AA1826DCCB00832128 /* MathFwd.cpp */,
 				9163C0AB1826DCCB00832128 /* MathFwd.h */,
 				9163C0AC1826DCCB00832128 /* Quad.cpp */,
+				2BDDD2CF1551CCA500FA9767 /* Quad.h */,
 				9163C0AD1826DCCB00832128 /* Vector2f.cpp */,
 				2B4B06A2153336E8006D0C75 /* Vector2f.h */,
-				2BDDD2CF1551CCA500FA9767 /* Quad.h */,
 				2B4D2F5115C32A92003A9193 /* MathFunctions.cpp */,
 				2B4D2F5215C32A92003A9193 /* MathFunctions.h */,
 			);
@@ -1558,6 +1564,7 @@
 				2B6BAF6E15A243EF00F64062 /* TextFunctions.h in Headers */,
 				2B4D2F5415C32A92003A9193 /* MathFunctions.h in Headers */,
 				2B4A336115E687CA00390B94 /* chipmunk.h in Headers */,
+				91C8A2231882CA4B00283CD7 /* Point.h in Headers */,
 				2B4A336215E687CA00390B94 /* chipmunk_ffi.h in Headers */,
 				2B4A336315E687CA00390B94 /* chipmunk_private.h in Headers */,
 				2B4A336415E687CA00390B94 /* chipmunk_types.h in Headers */,
@@ -1680,7 +1687,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MonoOSX" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1712,6 +1719,7 @@
 				2BD1E614153208E500A75171 /* pngerror.c in Sources */,
 				9163C0DE1826DE4C00832128 /* inflate.c in Sources */,
 				2BD1E615153208E500A75171 /* pngget.c in Sources */,
+				91C8A2221882CA4B00283CD7 /* Point.cpp in Sources */,
 				2BD1E616153208E500A75171 /* pngmem.c in Sources */,
 				2BD1E617153208E500A75171 /* pngpread.c in Sources */,
 				2BD1E618153208E500A75171 /* pngread.c in Sources */,
@@ -1910,6 +1918,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				EXECUTABLE_EXTENSION = lib;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -1947,6 +1956,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXECUTABLE_EXTENSION = lib;

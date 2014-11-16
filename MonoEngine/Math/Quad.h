@@ -37,4 +37,6 @@ namespace math
     //! will not do what you think. 
     //!
     void operator |= (Quad& left, const Quad& right);
+    
+    extern const Quad zeroQuad;
 }

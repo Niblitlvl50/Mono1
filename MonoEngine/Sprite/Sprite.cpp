@@ -20,8 +20,8 @@ using namespace mono;
 
 namespace
 {
-    static const int DEFAULT_ANIMATION_ID = 0;
-    static const math::Quad nullQuad(0, 0, 0, 0);
+    constexpr int DEFAULT_ANIMATION_ID = 0;
+    const math::Quad nullQuad(0, 0, 0, 0);
         
     struct TextureData
     {
@@ -37,6 +37,8 @@ namespace
     
     void GenerateTextureCoordinates(const TextureData& data, std::vector<math::Quad>& coordinates)
     {
+        coordinates.reserve(data.rows * data.columns);
+
         // +1 because the textures coordinates is zero indexed
         const float x1 = float(data.x +1) / float(data.textureSizeX);
         const float y1 = float(data.textureSizeY - data.v) / float(data.textureSizeY);
@@ -54,8 +56,8 @@ namespace
             {
                 const float x = xstep * float(xindex) + x1;
                 const float y = ystep * float(yindex) + y1;
-                
-                coordinates.push_back(math::Quad(x, y - ystep, x + xstep, y));
+
+                coordinates.emplace_back(x, y - ystep, x + xstep, y);
             }
         }
     }
@@ -85,16 +87,16 @@ Sprite::Sprite(const std::string& file)
     const lua::MapIntIntTable animations = lua::GetTableMap<int, int>(config, "animations");
     const lua::MapIntStringTable attributes = lua::GetTableMap<int, std::string>(config, "attributes");
     
-    for(lua::MapIntIntTable::const_iterator it = animations.begin(), end = animations.end(); it != end; ++it)
+    for(const auto& animation : animations)
     {
-        const int key = it->first;
-        const lua::IntTable& values = it->second;
+        const int key = animation.first;
+        const lua::IntTable& values = animation.second;
         
-        lua::MapIntStringTable::const_iterator attr = attributes.find(key);
-        if(attr == attributes.end())
+        auto attribute = attributes.find(key);
+        if(attribute == attributes.end())
            DefineAnimation(key, values, true);
         else
-           DefineAnimation(key, values, attr->second);
+           DefineAnimation(key, values, attribute->second);
     }
     
     mActiveAnimationId = DEFAULT_ANIMATION_ID;
@@ -155,7 +157,7 @@ void Sprite::DefineAnimation(int id, const std::vector<int>& frames, bool loop)
     const int end = *lastFrame;
     
     std::vector<unsigned int> durations;
-    for(std::vector<int>::const_iterator it = frames.begin(), end = frames.end(); it != end; ++it)
+    for(auto it = frames.begin(), end = frames.end(); it != end; ++it)
     {
         ++it;
         durations.push_back(*it);

@@ -13,12 +13,16 @@ namespace Event
 {
     struct MouseMotionEvent
     {
-        MouseMotionEvent(int x, int y)
-            : mX(x),
-              mY(y)
+        MouseMotionEvent(int x, int y, float worldX, float worldY)
+            : screenX(x),
+              screenY(y),
+              worldX(worldX),
+              worldY(worldY)
         { }
         
-        const int mX;
-        const int mY;
+        const int screenX;
+        const int screenY;
+        const float worldX;
+        const float worldY;
     };
 }

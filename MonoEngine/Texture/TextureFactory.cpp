@@ -18,8 +18,7 @@
 namespace
 {
     typedef std::weak_ptr<mono::ITexture> ITextureWeakPtr; 
-    typedef std::map<std::string, ITextureWeakPtr> TextureStoreMap;
-    TextureStoreMap textureStore;
+    std::map<std::string, ITextureWeakPtr> textureStorage;
 
     struct TextureDeleter
     {
@@ -29,7 +28,7 @@ namespace
     
         void operator()(mono::ITexture* tex) const
         {
-            textureStore.erase(mSource);
+            textureStorage.erase(mSource);
             delete tex;
         }
         
@@ -39,8 +38,8 @@ namespace
 
 mono::ITexturePtr mono::CreateTexture(const std::string& source)
 {
-    TextureStoreMap::iterator it = textureStore.find(source);
-    if(it != textureStore.end())
+    auto it = textureStorage.find(source);
+    if(it != textureStorage.end())
     {
         mono::ITexturePtr texture = it->second.lock();
         if(texture)
@@ -51,7 +50,7 @@ mono::ITexturePtr mono::CreateTexture(const std::string& source)
     
     const mono::IImagePtr image = LoadImage(source);
     mono::ITexturePtr texture(new Texture(image), TextureDeleter(source));
-    textureStore[source] = texture;
+    textureStorage[source] = texture;
     
     return texture;
 }
@@ -59,7 +58,7 @@ mono::ITexturePtr mono::CreateTexture(const std::string& source)
 mono::ITexturePtr mono::CreateTexture(const byte* data, int width, int height, int colorComponents, unsigned int targetFormat)
 {
     const mono::IImagePtr image = CreateImage(data, width, height, colorComponents, targetFormat);
-    return mono::ITexturePtr(new Texture(image));
+    return std::make_shared<Texture>(image);
 }
 
 

@@ -16,7 +16,6 @@ SquareObject::SquareObject(float x, float y)
     : mSprite("invader.sprite")
 {
     mPosition = math::Vector2f(x, y);
-    //mRotationCenter = Math::Vector2f(-1.0f, -1.0f);
 }
 
 void SquareObject::Draw(mono::IRenderer& renderer) const

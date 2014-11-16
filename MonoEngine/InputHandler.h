@@ -15,7 +15,7 @@
 
 namespace mono
 {
-    typedef std::function<void (int&, int&)> CoordinateFunc;
+    typedef std::function<void (float&, float&)> CoordinateFunc;
 
     class InputHandler : public IInputHandler
     {

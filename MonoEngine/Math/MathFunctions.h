@@ -16,6 +16,8 @@ namespace math
     bool QuadOverlaps(const math::Quad& left, const math::Quad& right);
     void ResizeQuad(math::Quad& quad, float value, float aspect = 1.0f);
     
+    float AngleBetweenPoints(const math::Vector2f& first, const math::Vector2f& second);
+    
     float RadToDeg(float radians);
     float DegToRad(float degrees);
 }

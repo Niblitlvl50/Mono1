@@ -20,7 +20,7 @@ namespace mono
         std::vector<float> vertices;
         std::vector<float> texcoords;
         mono::Color color;
-        int chars;
+        unsigned int chars;
     };
     
     //! Loads a font
@@ -28,6 +28,9 @@ namespace mono
     //! @param size Size of the font on the generated bitmap
     //! @param scale Scale of font when drawing with opengl (small font sizes can produce bad quality)
     void LoadFont(const std::string& font, float size, float scale = 1.0f);
+
+    //! Clear the loaded font
+    void UnloadFont();
 
     //! Generates a text definition
     //! @param text The text...

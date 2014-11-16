@@ -17,13 +17,16 @@ namespace game
 {
     class Shuttle : public mono::PhysicsEntityBase, public cm::ICollisionHandler
     {
-        friend class ShuttleController;
-
     public:
         
         Shuttle(float x, float y, mono::EventHandler& eventHandler);
 
     private:
+
+        friend class ShuttleController;
+        
+        void ApplyRotationForce(float force);
+        void ApplyThrustForce(float force);
 
         void Fire();
         void StartThrusting();

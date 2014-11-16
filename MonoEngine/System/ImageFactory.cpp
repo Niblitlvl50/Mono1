@@ -66,18 +66,14 @@ mono::IImagePtr mono::LoadImage(const std::string& source)
         throw std::runtime_error("Unable to determine extension");
     
     const std::string extension = source.substr(dotpos +1);
-    
-    IImagePtr image;
-    
     if(extension == "png")
-        image.reset(new libpng::PNGImage(source));
-    else
-        throw std::runtime_error("Unsupported image");
-    
-    return image;
+        return std::make_shared<libpng::PNGImage>(source);
+
+    // If we end up here, the image is unsupported.
+    throw std::runtime_error("Unsupported image");
 }
 
 mono::IImagePtr mono::CreateImage(const byte* data, int width, int height, int colorComponents, unsigned int targetFormat)
 {
-    return IImagePtr(new Bitmap(data, width, height, colorComponents, targetFormat));
+    return std::make_shared<Bitmap>(data, width, height, colorComponents, targetFormat);
 }

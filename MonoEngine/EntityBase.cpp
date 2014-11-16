@@ -24,7 +24,7 @@ EntityBase::EntityBase()
 
 void EntityBase::doDraw(IRenderer& renderer) const
 {
-    const math::Vector2f rotationPoint = mBasePoint * mScale;
+    const math::Vector2f& rotationPoint = mBasePoint * mScale;
     
     // Im not so happy with this, two translations...
     
@@ -33,7 +33,7 @@ void EntityBase::doDraw(IRenderer& renderer) const
     glTranslatef(-rotationPoint.mX, -rotationPoint.mY, 0.0f);    
     glScalef(mScale.mX, mScale.mY, 1.0f);
 
-    for(auto& child : mChildren)
+    for(const auto& child : mChildren)
     {
         const OGL::OGLPushPopMatrix raii;
         child->doDraw(renderer);
@@ -84,7 +84,7 @@ math::Quad EntityBase::BoundingBox() const
     const float y = mPosition.mY - (mScale.mY / 2.0f);
     math::Quad thisbb(x, y, x + mScale.mX, y + mScale.mY);
 
-    for(auto& child : mChildren)
+    for(const auto& child : mChildren)
     {
         math::Quad childbb = (child->BoundingBox() * mScale);
         childbb.mA += mPosition;

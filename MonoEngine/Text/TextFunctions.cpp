@@ -85,11 +85,19 @@ void mono::LoadFont(const std::string& font, float size, float scale)
     }
 }
 
+void mono::UnloadFont()
+{
+    fontTexture = nullptr;
+    charMap.clear();
+}
+
 mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text, const math::Vector2f& pos, bool center)
 {
     mono::TextDefinition textDef;
-    textDef.chars = int(text.length());
+    textDef.chars = static_cast<unsigned int>(text.length());
     textDef.color = mono::Color(1.0f, 1.0f, 1.0f, 1.0f);
+    textDef.vertices.reserve(textDef.chars * 12);
+    textDef.texcoords.reserve(textDef.chars * 12);
     
     float xposition = pos.mX;
     float yposition = pos.mY;
@@ -97,7 +105,7 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text,
     if(center)
         xposition -= MeasureString(text).mX / 2.0f;
 
-    for(const char currentChar : text)
+    for(const char& currentChar : text)
     {
         // Look up char in map.
         const auto foundChar = charMap.find(currentChar);
@@ -112,36 +120,36 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text,
         const float y1 = y0 + data.height;
 
         // First triangle
-        textDef.vertices.push_back(x0);
-        textDef.vertices.push_back(y0);
-        textDef.texcoords.push_back(data.texCoordX0);
-        textDef.texcoords.push_back(data.texCoordY0);
+        textDef.vertices.emplace_back(x0);
+        textDef.vertices.emplace_back(y0);
+        textDef.texcoords.emplace_back(data.texCoordX0);
+        textDef.texcoords.emplace_back(data.texCoordY0);
         
-        textDef.vertices.push_back(x1);
-        textDef.vertices.push_back(y1);
-        textDef.texcoords.push_back(data.texCoordX1);
-        textDef.texcoords.push_back(data.texCoordY1);
+        textDef.vertices.emplace_back(x1);
+        textDef.vertices.emplace_back(y1);
+        textDef.texcoords.emplace_back(data.texCoordX1);
+        textDef.texcoords.emplace_back(data.texCoordY1);
         
-        textDef.vertices.push_back(x0);
-        textDef.vertices.push_back(y1);
-        textDef.texcoords.push_back(data.texCoordX0);
-        textDef.texcoords.push_back(data.texCoordY1);
+        textDef.vertices.emplace_back(x0);
+        textDef.vertices.emplace_back(y1);
+        textDef.texcoords.emplace_back(data.texCoordX0);
+        textDef.texcoords.emplace_back(data.texCoordY1);
         
         // Second triangle
-        textDef.vertices.push_back(x0);
-        textDef.vertices.push_back(y0);
-        textDef.texcoords.push_back(data.texCoordX0);
-        textDef.texcoords.push_back(data.texCoordY0);
+        textDef.vertices.emplace_back(x0);
+        textDef.vertices.emplace_back(y0);
+        textDef.texcoords.emplace_back(data.texCoordX0);
+        textDef.texcoords.emplace_back(data.texCoordY0);
         
-        textDef.vertices.push_back(x1);
-        textDef.vertices.push_back(y0);
-        textDef.texcoords.push_back(data.texCoordX1);
-        textDef.texcoords.push_back(data.texCoordY0);
+        textDef.vertices.emplace_back(x1);
+        textDef.vertices.emplace_back(y0);
+        textDef.texcoords.emplace_back(data.texCoordX1);
+        textDef.texcoords.emplace_back(data.texCoordY0);
         
-        textDef.vertices.push_back(x1);
-        textDef.vertices.push_back(y1);
-        textDef.texcoords.push_back(data.texCoordX1);
-        textDef.texcoords.push_back(data.texCoordY1);
+        textDef.vertices.emplace_back(x1);
+        textDef.vertices.emplace_back(y1);
+        textDef.texcoords.emplace_back(data.texCoordX1);
+        textDef.texcoords.emplace_back(data.texCoordY1);
         
         // Add x size of char so that the next char is placed a little bit to the right.
         xposition += data.xadvance;
@@ -154,7 +162,7 @@ math::Vector2f mono::MeasureString(const std::string& text)
 {
     math::Vector2f size;
     
-    for(const char currentChar : text)
+    for(const char& currentChar : text)
     {
         // Look up char in map.
         const auto foundChar = charMap.find(currentChar);

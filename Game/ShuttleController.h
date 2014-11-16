@@ -11,6 +11,7 @@
 #include "MonoFwd.h"
 #include "EventFwd.h"
 #include "EventToken.h"
+#include "Vector2f.h"
 
 namespace game
 {
@@ -39,5 +40,6 @@ namespace game
         mono::EventToken<Event::MouseMotionEvent> mMouseMotionToken;
         
         bool mMouseDown;
+        math::Vector2f mMouseDownPosition;
     };
 }

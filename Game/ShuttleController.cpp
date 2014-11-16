@@ -17,6 +17,9 @@
 
 #include "MathFunctions.h"
 
+#include <cmath>
+
+
 using namespace game;
 
 ShuttleController::ShuttleController(game::Shuttle* shuttle, mono::EventHandler& eventHandler)
@@ -45,7 +48,7 @@ ShuttleController::~ShuttleController()
 
 void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
 {
-    const bool result = math::PointInsideQuad(math::Vector2f(event.mX, event.mY), mShuttle->BoundingBox());
+    const bool result = math::PointInsideQuad(math::Vector2f(event.worldX, event.worldY), mShuttle->BoundingBox());
     if(result)
     {
         HandleOnShuttlePress();
@@ -53,11 +56,7 @@ void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
     }
     
     mMouseDown = true;
-    
-    math::Vector2f forceVector = mShuttle->Position() - math::Vector2f(event.mX, event.mY);
-    math::Normalize(forceVector);
-    
-    mShuttle->mPhysicsObject.body->ApplyForce(forceVector * 200.0f, forceVector);
+    mMouseDownPosition = math::Vector2f(event.screenX, event.screenY);
     mShuttle->StartThrusting();
 }
 
@@ -73,12 +72,26 @@ void ShuttleController::OnMouseMotion(const Event::MouseMotionEvent& event)
     if(!mMouseDown)
         return;
     
-    mShuttle->mPhysicsObject.body->ResetForces();    
+    // Reset forces first.
+    mShuttle->mPhysicsObject.body->ResetForces();
+
+    const math::Vector2f current(event.screenX, event.screenY);
+    //const float angle = std::abs(math::AngleBetweenPoints(mMouseDownPosition, current));
+
+    //const bool hzSwipe = (angle < 5 || angle > 175);
+    //const bool vtSwipe = (85 < angle && angle < 95);
     
-    math::Vector2f forceVector = mShuttle->Position() - math::Vector2f(event.mX, event.mY);
-    math::Normalize(forceVector);
-    
-    mShuttle->mPhysicsObject.body->ApplyForce(forceVector * 200.0f, forceVector);
+    const math::Vector2f& force = mMouseDownPosition - current;
+
+    /*
+    if(hzSwipe)
+        mShuttle->ApplyRotationForce(force.mX);
+    else if(vtSwipe)
+        mShuttle->ApplyThrustForce(force.mY);
+    */
+
+    mShuttle->ApplyRotationForce(force.mX);
+    mShuttle->ApplyThrustForce(force.mY);
 }
 
 void ShuttleController::HandleOnShuttlePress()

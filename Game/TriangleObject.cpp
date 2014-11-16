@@ -14,23 +14,20 @@
 
 using namespace game;
 
-namespace
-{
-    static const float vertex[] = { 0.0f, 0.0f }; 
-}
-
 TriangleObject::TriangleObject()
 {
     mPosition = math::Vector2f(400.0f, 300.0f);
     mScale = math::Vector2f(20.0f, 20.0f);
     
-    AddChild(mono::IEntityPtr(new game::SquareObject(-1.0f, -1.0f)));
-    AddChild(mono::IEntityPtr(new game::SquareObject(1.0f, 1.0f)));
+    AddChild(std::make_shared<SquareObject>(-1, -1));
+    AddChild(std::make_shared<SquareObject>(1, 1));
 }
 
 void TriangleObject::Draw(mono::IRenderer&) const
 {
     mono::Texture::Clear();
+    
+    const float vertex[] = { 0.0f, 0.0f };
     
     glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
     glPointSize(5.0f);

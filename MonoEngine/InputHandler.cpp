@@ -56,22 +56,28 @@ void InputHandler::OnKeyUp(unsigned int key)
 
 void InputHandler::OnMouseDown(unsigned int button, int x, int y)
 {
-    mScreenToWorldFunc(x, y);
-    const Event::MouseDownEvent event(button, x, y);
+    float worldX = x;
+    float worldY = y;
+    mScreenToWorldFunc(worldX, worldY);
+    const Event::MouseDownEvent event(button, x, y, worldX, worldY);
     mEventHandler.DispatchEvent(event);
 }
 
 void InputHandler::OnMouseUp(unsigned int button, int x, int y)
 {
-    mScreenToWorldFunc(x, y);
-    const Event::MouseUpEvent event(button, x, y);
+    float worldX = x;
+    float worldY = y;
+    mScreenToWorldFunc(worldX, worldY);
+    const Event::MouseUpEvent event(button, x, y, worldX, worldY);
     mEventHandler.DispatchEvent(event);
 }
 
 void InputHandler::OnMouseMotion(int x, int y)
 {
-    mScreenToWorldFunc(x, y);
-    const Event::MouseMotionEvent event(x, y);
+    float worldX = x;
+    float worldY = y;
+    mScreenToWorldFunc(worldX, worldY);
+    const Event::MouseMotionEvent event(x, y, worldX, worldY);
     mEventHandler.DispatchEvent(event);
 }
 
@@ -83,19 +89,19 @@ void InputHandler::OnMouseWheel(int x, int y)
 
 void InputHandler::OnTouchDown(float x, float y, float dx, float dy)
 {
-    const Event::TouchEvent event(Event::DOWN, x, y, dx, dy);
+    const Event::TouchEvent event(Event::TouchType::DOWN, x, y, dx, dy);
     mEventHandler.DispatchEvent(event);
 }
 
 void InputHandler::OnTouchUp(float x, float y, float dx, float dy)
 {
-    const Event::TouchEvent event(Event::UP, x, y, dx, dy);
+    const Event::TouchEvent event(Event::TouchType::UP, x, y, dx, dy);
     mEventHandler.DispatchEvent(event);
 }
 
 void InputHandler::OnTouchMotion(float x, float y, float dx, float dy)
 {
-    const Event::TouchEvent event(Event::MOTION, x, y, dx, dy);
+    const Event::TouchEvent event(Event::TouchType::MOTION, x, y, dx, dy);
     mEventHandler.DispatchEvent(event);
 }
 

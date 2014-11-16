@@ -167,7 +167,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera, mono::EventHandler& eventHandler)
     
     AddEntity(std::make_shared<AnimatedDude>(100.0f, 50.0f, eventHandler), mono::MIDDLEGROUND);
     
-    std::shared_ptr<ZoneBounds> bounds = std::make_shared<ZoneBounds>(math::Quad(0.0f, 0.0f, 1000.0f, 600.0f));
+    std::shared_ptr<ZoneBounds> bounds = std::make_shared<ZoneBounds>(math::Quad(-1000.0f, -1000.0f, 1000.0f, 1000.0f));
     AddPhysicsEntity(bounds, mono::BACKGROUND);
         
     std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(100.0f, 100.0f, eventHandler);

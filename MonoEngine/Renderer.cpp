@@ -51,11 +51,9 @@ void Renderer::DrawFrame()
 {
     PrepareDraw();
     
-    for(auto& drawable : mDrawables)
+    for(const auto& drawable : mDrawables)
     {
-        const OGL::OGLPushPopMatrix raii;
         const math::Quad& bounds = drawable->BoundingBox();
-        
         if(mDrawBB)
             DrawQuad(bounds, mono::Color(1, 1, 1, 1), false);
         
@@ -63,7 +61,10 @@ void Renderer::DrawFrame()
         const math::Quad camQuad(viewport.mA, viewport.mA + viewport.mB);
         const bool visible = math::QuadOverlaps(camQuad, bounds);
         if(visible)
+        {
+            const OGL::OGLPushPopMatrix raii;
             drawable->doDraw(*this);
+        }
     }
     
     // Draw all the texts after all the entities. 

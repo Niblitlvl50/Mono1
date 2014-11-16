@@ -1,6 +1,6 @@
 //
 //  Point.cpp
-//  King_worksample_OSX
+//  Worksample_2
 //
 //  Created by Niklas Damberg on 09/11/13.
 //

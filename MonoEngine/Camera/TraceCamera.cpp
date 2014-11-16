@@ -17,7 +17,7 @@ using namespace mono;
 
 namespace constants
 {
-    const float SPEED = 0.01f;
+    constexpr float SPEED = 0.01f;
 }
 
 TraceCamera::TraceCamera(int width, int height)
@@ -39,10 +39,10 @@ void TraceCamera::Update(unsigned int delta)
     
     if(mEntity)
     {
-        const math::Vector2f targetPosition = mEntity->Position() - (mViewport.mB * 0.5f);
-        const math::Vector2f diff = targetPosition - mViewport.mA;
+        const math::Vector2f& targetPosition = mEntity->Position() - (mViewport.mB * 0.5f);
+        const math::Vector2f& diff = targetPosition - mViewport.mA;
     
-        const math::Vector2f move = diff * (delta * constants::SPEED);
+        const math::Vector2f& move = diff * (delta * constants::SPEED);
         mViewport.mA += move;
     }
 }
@@ -74,7 +74,7 @@ void TraceCamera::SetTargetViewport(const math::Quad& target)
 
 void TraceCamera::SetPosition(const math::Vector2f& position)
 {
-    const math::Vector2f xy = position - (mViewport.mB * 0.5f);
+    const math::Vector2f& xy = position - (mViewport.mB * 0.5f);
     mViewport.mA = xy;
 }
 

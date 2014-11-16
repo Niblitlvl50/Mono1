@@ -13,15 +13,19 @@ namespace Event
 {
     struct MouseUpEvent
     {
-        MouseUpEvent(unsigned int key, int x, int y)
+        MouseUpEvent(unsigned int key, int screenX, int screenY, float worldX, float worldY)
             : mKey(key),
-              mX(x),
-              mY(y)
+              screenX(screenX),
+              screenY(screenY),
+              worldX(worldX),
+              worldY(worldY)
         { }
         
         const unsigned int mKey;
-        const int mX;
-        const int mY;
+        const int screenX;
+        const int screenY;
+        const float worldX;
+        const float worldY;
     };
 }
 

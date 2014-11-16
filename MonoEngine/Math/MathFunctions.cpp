@@ -10,6 +10,8 @@
 #include "Vector2f.h"
 #include "Quad.h"
 
+#include <cmath>
+
 bool math::PointInsideQuad(const math::Vector2f& point, const math::Quad& quad)
 {
     if(point.mX > quad.mA.mX &&
@@ -46,6 +48,12 @@ void math::ResizeQuad(math::Quad& quad, float value, float aspect)
 
     quad.mB.mX += resizeX;
     quad.mB.mY += resizeY;
+}
+
+float math::AngleBetweenPoints(const math::Vector2f& first, const math::Vector2f& second)
+{
+    const float angle = std::atan2(second.mY - first.mY, second.mX - first.mX);
+    return RadToDeg(angle);
 }
 
 float math::RadToDeg(float radians)

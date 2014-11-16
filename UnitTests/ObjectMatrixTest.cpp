@@ -1,6 +1,6 @@
 //
 //  ObjectMatrixTest.cpp
-//  King_worksample_OSX
+//  Worksample_2
 //
 //  Created by Niklas Damberg on 05/11/13.
 //

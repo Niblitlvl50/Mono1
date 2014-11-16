@@ -18,14 +18,17 @@ int main(int argc, char* argv[])
     {
         Libs::Init();
         
-        const math::Vector2f size = Video::GetCurrentWindowSize();
+        const math::Vector2f size = Video::GetCurrentWindowSize() / 2;
         
         mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", size.mX, size.mY, false);
-        mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.mX / 2.0, size.mY / 2.0);
+        //mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.mX / 2.0, size.mY / 2.0);
+        mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.mX, size.mY);
         mono::LoadFont("pixelette.ttf", 10.0f);
 
         mono::Engine engine(60, window, camera, std::make_shared<game::TestZone>());
         engine.Run();
+
+        mono::UnloadFont();
     }
     catch(const std::runtime_error& e)
     {

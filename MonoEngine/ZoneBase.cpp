@@ -70,56 +70,29 @@ void ZoneBase::DoPreAccept()
         if(removeIt != entities.end())
             entities.erase(removeIt, entities.end());
     }
-    
-    /*
-    const auto removeIt = std::remove_if(mEntities.begin(), mEntities.end(), removeIfDeadFunc);
-    if(removeIt != mEntities.end())
-    {
-        for(auto it = removeIt; it != mEntities.end(); ++it)
-        {
-            mono::IEntityPtr entity = *it;
-            RemoveEntity(entity);
-        }
-        
-        mEntities.erase(removeIt, mEntities.end());
-    }
-     */
 }
 
 void ZoneBase::AddEntity(IEntityPtr entity, int layer)
 {
-    //AddDrawable(entity, layer);
-    //AddUpdatable(entity);
-    
-    
     auto layerIt = mLayersEntities.find(layer);
     if(layerIt == mLayersEntities.end())
         throw std::runtime_error("ZoneBase - Adding entity to missing layer");
     
     layerIt->second.push_back(entity);
-    
-    //mEntities.push_back(entity);
 }
 
 void ZoneBase::RemoveEntity(IEntityPtr entity)
 {
-    //RemoveDrawable(entity);
-    //RemoveUpdatable(entity);
-    
     bool result = false;
-    for(auto it = mLayersEntities.begin(), end = mLayersEntities.end(); it != end; ++it)
+    for(auto& layer : mLayersEntities)
     {
-        result = FindAndRemove(it->second, entity);
+        result = mono::FindAndRemove(layer.second, entity);
         if(result)
             break;
     }
     
     if(!result)
         throw std::runtime_error("ZoneBase - Unable to remove entity");
-
-    //const bool result = mono::FindAndRemove(mEntities, entity);
-    //if(!result)
-      //  throw std::runtime_error("ZoneBase - Unable to remove Entity");
 }
 
 void ZoneBase::AddUpdatable(IUpdatablePtr updatable)
@@ -146,9 +119,9 @@ void ZoneBase::AddDrawable(IDrawablePtr drawable, int layer)
 void ZoneBase::RemoveDrawable(IDrawablePtr drawable)
 {
     bool result = false;
-    for(auto it = mLayersDrawables.begin(), end = mLayersDrawables.end(); it != end; ++it)
+    for(auto& layer : mLayersDrawables)
     {
-        result = FindAndRemove(it->second, drawable);
+        result = mono::FindAndRemove(layer.second, drawable);
         if(result)
             break;
     }

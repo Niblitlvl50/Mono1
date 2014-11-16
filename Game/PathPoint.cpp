@@ -18,14 +18,12 @@ using namespace game;
 PathPoint::PathPoint()
     : mElapsedTime(0)
 {
-    std::vector<math::Vector2f> points;
-    points.push_back(math::Vector2f(0, 0));
-    points.push_back(math::Vector2f(0, 100));
-    points.push_back(math::Vector2f(50, 100));
-    points.push_back(math::Vector2f(250, 200));
-    points.push_back(math::Vector2f(30, 30));
-    points.push_back(math::Vector2f(0, 0));
-    
+    const std::vector<math::Vector2f> points = { math::Vector2f(0, 0),
+                                                 math::Vector2f(0, 100),
+                                                 math::Vector2f(50, 100),
+                                                 math::Vector2f(250, 200),
+                                                 math::Vector2f(30, 30),
+                                                 math::Vector2f(0, 0) };
     mPath = mono::CreatePath(points);
 }
 
@@ -51,13 +49,14 @@ void PathPoint::Update(unsigned int delta)
     mElapsedTime += delta;
     
     // 5000 == 5 seconds
-    const float time = mElapsedTime / 5000;
+    const float duration = 10000;
+    const float time = mElapsedTime / duration;
     const float position = mPath->Length() * time;
     
     mPosition = mPath->GetPositionByLength(position);
 
     // Restart the path
-    if(time >= 1.0f)
+    if(mElapsedTime > duration)
         mElapsedTime = 0;
 }
 

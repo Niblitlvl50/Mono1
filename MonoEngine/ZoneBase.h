@@ -40,7 +40,6 @@ namespace mono
         
         std::map<int, std::vector<IDrawablePtr>> mLayersDrawables;
         std::map<int, std::vector<IEntityPtr>> mLayersEntities;
-        //std::vector<IEntityPtr> mEntities;
         std::vector<IUpdatablePtr> mUpdatables;
     };
     

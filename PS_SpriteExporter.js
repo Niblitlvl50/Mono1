@@ -114,10 +114,16 @@ var createPathFiles = function(pathItems)
 		{
 			var subItem = pathItem.subPathItems[subIndex]
 			var points = subItem.pathPoints
+
+			// Let this be the base for the local path coordinate system
+			var basePoint = points[0];
+
 			for(var pointIndex = 0; pointIndex < points.length; ++pointIndex)
 			{
 				var point = points[pointIndex]
-				file.writeln("path[" + pointIndex + "] = { " + point.anchor[0] + ", " + point.anchor[1] + " }")
+				var x = point.anchor[0] - basePoint.anchor[0]
+				var y = point.anchor[1] - basePoint.anchor[1]
+				file.writeln("path[" + pointIndex + "] = { " + x + ", " + y + " }")
 			}
 		}
 
@@ -134,12 +140,14 @@ var exportDocumentToPNG = function(document)
 	document.exportDocument(exportFile, ExportType.SAVEFORWEB, exportOptions)	
 }
 
+// Output directory
 var outputPath = "/Users/niklasdamberg/Desktop/"
 
 var localDocument = app.activeDocument
 var dotPsdIndex = localDocument.name.search(".psd")
 var textureName = localDocument.name.substr(0, dotPsdIndex) + ".png"
 
+// Start exporting
 createSpriteFilesFromLayers(localDocument.layers)
 createPathFiles(localDocument.pathItems)
 exportDocumentToPNG(localDocument)

@@ -15,7 +15,6 @@
 		2B26D70815FD2BB5001E9748 /* TraceCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A015FD2BB5001E9748 /* TraceCamera.cpp */; };
 		2B26D70915FD2BB5001E9748 /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A215FD2BB5001E9748 /* Engine.cpp */; };
 		2B26D70A15FD2BB5001E9748 /* EntityBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A415FD2BB5001E9748 /* EntityBase.cpp */; };
-		2B26D70B15FD2BB5001E9748 /* EventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A715FD2BB5001E9748 /* EventHandler.cpp */; };
 		2B26D70C15FD2BB5001E9748 /* InputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6B915FD2BB5001E9748 /* InputHandler.cpp */; };
 		2B26D70D15FD2BB5001E9748 /* LuaFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6C015FD2BB5001E9748 /* LuaFunctions.cpp */; };
 		2B26D70E15FD2BB5001E9748 /* LuaInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6C215FD2BB5001E9748 /* LuaInterpreter.cpp */; };
@@ -146,7 +145,6 @@
 		2BD3CBB0160BB2B30043156E /* TraceCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A015FD2BB5001E9748 /* TraceCamera.cpp */; };
 		2BD3CBB1160BB2B30043156E /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A215FD2BB5001E9748 /* Engine.cpp */; };
 		2BD3CBB2160BB2B30043156E /* EntityBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A415FD2BB5001E9748 /* EntityBase.cpp */; };
-		2BD3CBB3160BB2B30043156E /* EventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A715FD2BB5001E9748 /* EventHandler.cpp */; };
 		2BD3CBB4160BB2B30043156E /* InputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6B915FD2BB5001E9748 /* InputHandler.cpp */; };
 		2BD3CBB5160BB2B30043156E /* LuaFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6C015FD2BB5001E9748 /* LuaFunctions.cpp */; };
 		2BD3CBB6160BB2B30043156E /* LuaInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6C215FD2BB5001E9748 /* LuaInterpreter.cpp */; };
@@ -322,6 +320,10 @@
 		91B63FA317DC9F7E004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63FA117D3D2FE004F1868 /* libSDL2.a */; };
 		91C41E491826E2A50035E778 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91C41E471826E2A50035E778 /* MathFwd.cpp */; };
 		91C41E4A1826E2A50035E778 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91C41E471826E2A50035E778 /* MathFwd.cpp */; };
+		91D6465C186F2D0D00FA6CB5 /* PathFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465A186F2D0D00FA6CB5 /* PathFactory.cpp */; };
+		91D6465D186F2D0D00FA6CB5 /* PathFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465A186F2D0D00FA6CB5 /* PathFactory.cpp */; };
+		91D64660186F2D2C00FA6CB5 /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */; };
+		91D64661186F2D2C00FA6CB5 /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
 		FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07C0E26BD8C00F39101 /* Icon.png */; };
 		FD77A07F0E26BDA900F39101 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07E0E26BDA900F39101 /* Default.png */; };
@@ -343,7 +345,6 @@
 		2B26D6A315FD2BB5001E9748 /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
 		2B26D6A415FD2BB5001E9748 /* EntityBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EntityBase.cpp; sourceTree = "<group>"; };
 		2B26D6A515FD2BB5001E9748 /* EntityBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityBase.h; sourceTree = "<group>"; };
-		2B26D6A715FD2BB5001E9748 /* EventHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventHandler.cpp; sourceTree = "<group>"; };
 		2B26D6A815FD2BB5001E9748 /* EventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventHandler.h; sourceTree = "<group>"; };
 		2B26D6A915FD2BB5001E9748 /* EventToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventToken.h; sourceTree = "<group>"; };
 		2B26D6AB15FD2BB5001E9748 /* ActivatedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivatedEvent.h; sourceTree = "<group>"; };
@@ -375,7 +376,6 @@
 		2B26D6C815FD2BB5001E9748 /* MathFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathFunctions.h; sourceTree = "<group>"; };
 		2B26D6C915FD2BB5001E9748 /* Quad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quad.h; sourceTree = "<group>"; };
 		2B26D6CA15FD2BB5001E9748 /* Vector2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector2f.h; sourceTree = "<group>"; };
-		2B26D6CB15FD2BB5001E9748 /* Vector3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3f.h; sourceTree = "<group>"; };
 		2B26D6CC15FD2BB5001E9748 /* MonoEngine-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MonoEngine-Prefix.pch"; sourceTree = "<group>"; };
 		2B26D6CD15FD2BB5001E9748 /* MonoEngineProj.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MonoEngineProj.xcconfig; sourceTree = "<group>"; };
 		2B26D6CE15FD2BB5001E9748 /* MonoEngineTarget.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MonoEngineTarget.xcconfig; sourceTree = "<group>"; };
@@ -663,6 +663,11 @@
 		91B63FA117D3D2FE004F1868 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = SDL2/ios/debug/libSDL2.a; sourceTree = "<group>"; };
 		91C41E471826E2A50035E778 /* MathFwd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathFwd.cpp; sourceTree = "<group>"; };
 		91C41E481826E2A50035E778 /* MathFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathFwd.h; sourceTree = "<group>"; };
+		91D64659186F2D0D00FA6CB5 /* IPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPath.h; path = Paths/IPath.h; sourceTree = "<group>"; };
+		91D6465A186F2D0D00FA6CB5 /* PathFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathFactory.cpp; path = Paths/PathFactory.cpp; sourceTree = "<group>"; };
+		91D6465B186F2D0D00FA6CB5 /* PathFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathFactory.h; path = Paths/PathFactory.h; sourceTree = "<group>"; };
+		91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PathPoint.cpp; sourceTree = "<group>"; };
+		91D6465F186F2D2C00FA6CB5 /* PathPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathPoint.h; sourceTree = "<group>"; };
 		FD779EDD0E26BA1200F39101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		FD77A07C0E26BD8C00F39101 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		FD77A07E0E26BDA900F39101 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -763,6 +768,7 @@
 		2B26D69C15FD2BB5001E9748 /* MonoEngine */ = {
 			isa = PBXGroup;
 			children = (
+				91D64658186F2CF900FA6CB5 /* Paths */,
 				9181E522183BD54700678586 /* IPhysicsEntity.h */,
 				9181E521183A8D3800678586 /* Color.h */,
 				9181E520183A8D2900678586 /* MonoPtrFwd.h */,
@@ -826,7 +832,6 @@
 		2B26D6A615FD2BB5001E9748 /* EventHandler */ = {
 			isa = PBXGroup;
 			children = (
-				2B26D6A715FD2BB5001E9748 /* EventHandler.cpp */,
 				2B26D6A815FD2BB5001E9748 /* EventHandler.h */,
 				2B26D6A915FD2BB5001E9748 /* EventToken.h */,
 			);
@@ -876,7 +881,6 @@
 				2B26D6C815FD2BB5001E9748 /* MathFunctions.h */,
 				2B26D6C915FD2BB5001E9748 /* Quad.h */,
 				2B26D6CA15FD2BB5001E9748 /* Vector2f.h */,
-				2B26D6CB15FD2BB5001E9748 /* Vector3f.h */,
 				91282D191826759E00B80892 /* Quad.cpp */,
 				91282D1C1826764500B80892 /* Vector2f.cpp */,
 			);
@@ -1169,6 +1173,8 @@
 		2B26DB3D15FD3280001E9748 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */,
+				91D6465F186F2D2C00FA6CB5 /* PathPoint.h */,
 				918157241826E5E600C66F2B /* main.cpp */,
 				2BDD2C93171C9F7F0041CB18 /* Events */,
 				2B26DB3E15FD3280001E9748 /* AnimatedDude.cpp */,
@@ -1292,6 +1298,16 @@
 			name = "zlib-1.2.8";
 			sourceTree = "<group>";
 		};
+		91D64658186F2CF900FA6CB5 /* Paths */ = {
+			isa = PBXGroup;
+			children = (
+				91D64659186F2D0D00FA6CB5 /* IPath.h */,
+				91D6465A186F2D0D00FA6CB5 /* PathFactory.cpp */,
+				91D6465B186F2D0D00FA6CB5 /* PathFactory.h */,
+			);
+			name = Paths;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1405,7 +1421,6 @@
 				2B26D70815FD2BB5001E9748 /* TraceCamera.cpp in Sources */,
 				2B26D70915FD2BB5001E9748 /* Engine.cpp in Sources */,
 				2B26D70A15FD2BB5001E9748 /* EntityBase.cpp in Sources */,
-				2B26D70B15FD2BB5001E9748 /* EventHandler.cpp in Sources */,
 				2B26D70C15FD2BB5001E9748 /* InputHandler.cpp in Sources */,
 				2B26D70D15FD2BB5001E9748 /* LuaFunctions.cpp in Sources */,
 				2B26D70E15FD2BB5001E9748 /* LuaInterpreter.cpp in Sources */,
@@ -1415,6 +1430,7 @@
 				2B26D71415FD2BB5001E9748 /* CMSpace.cpp in Sources */,
 				2B26D71515FD2BB5001E9748 /* PhysicsZone.cpp in Sources */,
 				2B26D71615FD2BB5001E9748 /* Renderer.cpp in Sources */,
+				91D64660186F2D2C00FA6CB5 /* PathPoint.cpp in Sources */,
 				2B26D71715FD2BB5001E9748 /* AnimationSequence.cpp in Sources */,
 				2B26D71815FD2BB5001E9748 /* Sprite.cpp in Sources */,
 				2B26D71915FD2BB5001E9748 /* ImageFactory.cpp in Sources */,
@@ -1513,6 +1529,7 @@
 				2BBA5AD1160A5EDA00D8D38E /* cpHashSet.c in Sources */,
 				2BBA5AD2160A5EDA00D8D38E /* cpPolyShape.c in Sources */,
 				2BBA5AD3160A5EDA00D8D38E /* cpShape.c in Sources */,
+				91D6465C186F2D0D00FA6CB5 /* PathFactory.cpp in Sources */,
 				2BBA5AD4160A5EDA00D8D38E /* cpSpace.c in Sources */,
 				2BBA5AD5160A5EDA00D8D38E /* cpSpaceComponent.c in Sources */,
 				2BBA5AD6160A5EDA00D8D38E /* cpSpaceHash.c in Sources */,
@@ -1553,7 +1570,6 @@
 				2BD3CBB0160BB2B30043156E /* TraceCamera.cpp in Sources */,
 				2BD3CBB1160BB2B30043156E /* Engine.cpp in Sources */,
 				2BD3CBB2160BB2B30043156E /* EntityBase.cpp in Sources */,
-				2BD3CBB3160BB2B30043156E /* EventHandler.cpp in Sources */,
 				2BD3CBB4160BB2B30043156E /* InputHandler.cpp in Sources */,
 				2BD3CBB5160BB2B30043156E /* LuaFunctions.cpp in Sources */,
 				2BD3CBB6160BB2B30043156E /* LuaInterpreter.cpp in Sources */,
@@ -1563,6 +1579,7 @@
 				2BD3CBBA160BB2B30043156E /* CMSpace.cpp in Sources */,
 				2BD3CBBB160BB2B30043156E /* PhysicsZone.cpp in Sources */,
 				2BD3CBBC160BB2B30043156E /* Renderer.cpp in Sources */,
+				91D64661186F2D2C00FA6CB5 /* PathPoint.cpp in Sources */,
 				2BD3CBBD160BB2B30043156E /* AnimationSequence.cpp in Sources */,
 				2BD3CBBE160BB2B30043156E /* Sprite.cpp in Sources */,
 				2BD3CBBF160BB2B30043156E /* ImageFactory.cpp in Sources */,
@@ -1661,6 +1678,7 @@
 				2BD3CC2C160BB2B30043156E /* cpCollision.c in Sources */,
 				2BD3CC2D160BB2B30043156E /* cpHashSet.c in Sources */,
 				2BD3CC2E160BB2B30043156E /* cpPolyShape.c in Sources */,
+				91D6465D186F2D0D00FA6CB5 /* PathFactory.cpp in Sources */,
 				2BD3CC2F160BB2B30043156E /* cpShape.c in Sources */,
 				91791D2B18269CB9007A705A /* Moon.cpp in Sources */,
 				2BD3CC30160BB2B30043156E /* cpSpace.c in Sources */,
