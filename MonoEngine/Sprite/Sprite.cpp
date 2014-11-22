@@ -21,8 +21,7 @@ using namespace mono;
 namespace
 {
     constexpr int DEFAULT_ANIMATION_ID = 0;
-    const math::Quad nullQuad(0, 0, 0, 0);
-        
+
     struct TextureData
     {
         int rows;
@@ -110,7 +109,7 @@ ITexturePtr Sprite::GetTexture() const
 const math::Quad& Sprite::GetTextureCoords() const
 {
     const AnimationSequence& anim = mDefinedAnimations.find(mActiveAnimationId)->second;
-    return anim.Finished() ? nullQuad : mTextureCoordinates.at(anim.Frame());
+    return anim.Finished() ? math::zeroQuad : mTextureCoordinates.at(anim.Frame());
 }
 
 const Color& Sprite::GetShade() const

@@ -15,39 +15,41 @@
 #include "Quad.h"
 
 #include <functional>
+#include <cmath>
 
 using namespace mono;
 
 
-CameraController::CameraController(ICamera* cam)
+CameraController::CameraController(ICamera* cam, EventHandler& eventHandler)
     : mCam(cam),
-      mEnabled(false)
+      mEventHandler(eventHandler),
+      mEnabled(true)
 {
     using namespace std::placeholders;
     
-    //const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&CameraController::OnMultiGesture, this, _1);
-    //mMultiGestureToken = mono::EventHandler::AddListener(multiGestureFunc);
+    const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&CameraController::OnMultiGesture, this, _1);
+    mMultiGestureToken = mEventHandler.AddListener(multiGestureFunc);
 }
 CameraController::~CameraController()
 {
-    //mono::EventHandler::RemoveListener(mMultiGestureToken);
+    mEventHandler.RemoveListener(mMultiGestureToken);
 }
 
 void CameraController::OnMultiGesture(const Event::MultiGestureEvent& event)
 {
     if(!mEnabled)
         return;
-    
-    const float multiplier = (event.mDistance < 0.0f) ? 1.0f : -1.0f;
-    const float resizeValue = 50.0f * multiplier;
-    
+
+    if(std::fabs(event.mDistance) < 1e-3)
+        return;
+
     math::Quad quad = mCam->GetViewport();
-    const float width = quad.mB.mX - quad.mA.mX;
-    const float height = quad.mB.mY - quad.mA.mY;
-    
-    const float aspect = width / height;
+
+    const float multiplier = (event.mDistance < 0.0f) ? 1.0f : -1.0f;
+    const float resizeValue = quad.mB.mX * 0.15 * multiplier;
+    const float aspect = quad.mB.mX / quad.mB.mY;
     math::ResizeQuad(quad, resizeValue, aspect);
-    
+
     mCam->SetTargetViewport(quad);
 }
 

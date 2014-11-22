@@ -27,6 +27,7 @@ namespace game
         
         void ApplyRotationForce(float force);
         void ApplyThrustForce(float force);
+        void ApplyImpulse(const math::Vector2f& force);
 
         void Fire();
         void StartThrusting();

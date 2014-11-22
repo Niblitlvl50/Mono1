@@ -19,7 +19,7 @@ namespace mono
     {
     public:
         
-        CameraController(ICamera* cam);
+        CameraController(ICamera* cam, EventHandler& eventHandler);
         ~CameraController();
         
     private:
@@ -27,6 +27,7 @@ namespace mono
         void OnMultiGesture(const Event::MultiGestureEvent& event);
         
         ICamera* mCam;
+        EventHandler& mEventHandler;
         bool mEnabled;
         
         mono::EventToken<Event::MultiGestureEvent> mMultiGestureToken;

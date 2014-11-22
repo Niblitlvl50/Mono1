@@ -18,6 +18,7 @@ namespace game
     struct SpawnPhysicsEntityEvent;
     struct RemoveEntityEvent;
     struct RemovePhysicsEntityEvent;
+    struct ShockwaveEvent;
     
     class TestZone : public mono::PhysicsZone
     {
@@ -32,6 +33,7 @@ namespace game
         void SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event);
         void RemoveEntity(const game::RemoveEntityEvent& event);
         void RemovePhysicsEntity(const game::RemovePhysicsEntityEvent& event);
+        void OnShockwaveEvent(const game::ShockwaveEvent& event);
 
     private:
         
@@ -42,6 +44,7 @@ namespace game
         mono::EventToken<game::SpawnPhysicsEntityEvent> mSpawnPhysicsEntityToken;
         mono::EventToken<game::RemoveEntityEvent> mRemoveEntityToken;
         mono::EventToken<game::RemovePhysicsEntityEvent> mRemovePhysicsEntityToken;
+        mono::EventToken<game::ShockwaveEvent> mShockwaveEventToken;
         
         mono::EventHandler* mEventHandler;
     };

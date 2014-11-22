@@ -13,6 +13,7 @@
 
 #include "Meteor.h"
 #include "FireBullet.h"
+#include "Rocket.h"
 #include "EventHandler.h"
 #include "SpawnEntityEvent.h"
 #include "SpawnPhysicsEntityEvent.h"
@@ -43,6 +44,7 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     
     mPhysicsObject.body = cm::Factory::CreateBody(10.0f, 1.0f);
     mPhysicsObject.body->SetPosition(mPosition);
+    mPhysicsObject.body->SetAngle(45);
     mPhysicsObject.body->SetCollisionHandler(this);
 
     cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, mScale, mScale);
@@ -92,6 +94,11 @@ void Shuttle::ApplyThrustForce(float force)
     mPhysicsObject.body->ApplyForce(unit * force, math::zeroVec);
 }
 
+void Shuttle::ApplyImpulse(const math::Vector2f& force)
+{
+    mPhysicsObject.body->ApplyImpulse(force, math::zeroVec);
+}
+
 void Shuttle::Fire()
 {
     const math::Vector2f unit(-std::sin(math::DegToRad(mRotation)),
@@ -99,7 +106,8 @@ void Shuttle::Fire()
     const math::Vector2f& position = mPosition + (unit * 20.0f);
     const math::Vector2f& impulse = unit * 500.0f;
     
-    auto bullet = std::make_shared<FireBullet>(position, mRotation, mEventHandler);
+    //auto bullet = std::make_shared<FireBullet>(position, mRotation, mEventHandler);
+    auto bullet = std::make_shared<Rocket>(position, mRotation, mEventHandler);
     bullet->GetPhysics().body->ApplyImpulse(impulse, math::zeroVec);
 
     mEventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));

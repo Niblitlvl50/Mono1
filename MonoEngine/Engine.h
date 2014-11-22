@@ -13,17 +13,15 @@
 #include "EventFwd.h"
 #include "EventToken.h"
 
-#include "EventHandler.h"
-
 namespace mono
 {
     class Engine
     {
     public:
-        Engine(unsigned int hz, IWindowPtr view, ICameraPtr camera, IZonePtr zone);
+        Engine(unsigned int hz, IWindowPtr view, ICameraPtr camera, EventHandler& eventHandler);
         ~Engine();
 		
-        void Run();
+        void Run(IZonePtr zone);
 		
     private:
 		
@@ -32,9 +30,6 @@ namespace mono
         void OnSurfaceChanged(const Event::SurfaceChangedEvent& event);
         void OnActivated(const Event::ActivatedEvent& event);
         
-        // This needs to be up top so it will be destroyed after everything else.
-        // Its not very good actually. To depend on destruction order like this. 
-        EventHandler mEventHandler;
 
         bool mPause;
         bool mQuit;
@@ -42,7 +37,7 @@ namespace mono
 		
         IWindowPtr mWindow;
         ICameraPtr mCamera;
-        IZonePtr mZone;
+        EventHandler& mEventHandler;
         IInputHandlerPtr mInputHandler;
 
         EventToken<Event::PauseEvent> mPauseToken;

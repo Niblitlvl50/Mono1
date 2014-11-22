@@ -19,7 +19,7 @@ namespace mono
     {
     public:
         
-        TraceCamera(int width, int height);
+        TraceCamera(int width, int height, EventHandler& eventHandler);
         
         virtual void Update(unsigned int delta);
         
@@ -33,7 +33,7 @@ namespace mono
         virtual void SetPosition(const math::Vector2f& position);
                         
     private:
-        
+
         CameraController mController;
         
         IEntityPtr mEntity;

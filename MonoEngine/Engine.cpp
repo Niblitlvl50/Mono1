@@ -43,7 +43,7 @@ namespace Func
         const math::Vector2f& windowSize = window->Size();
         const math::Quad& viewport = camera->GetViewport();
         
-        const math::Vector2f scale = viewport.mB / windowSize;
+        const math::Vector2f& scale = viewport.mB / windowSize;
         
         const float screenX = x;
         const float screenY = windowSize.mY - y;
@@ -57,13 +57,13 @@ namespace Func
 }
 
 
-Engine::Engine(unsigned int hz, IWindowPtr window, ICameraPtr camera, IZonePtr zone)
+Engine::Engine(unsigned int hz, IWindowPtr window, ICameraPtr camera, EventHandler& eventHandler)
     : mPause(false),
       mQuit(false),
       mHz(hz),
       mWindow(window),
       mCamera(camera),
-      mZone(zone)
+      mEventHandler(eventHandler)
 {
     using namespace std::placeholders;
     const auto func = std::bind(Func::ScreenToWorld, _1, _2, mWindow, mCamera);
@@ -90,11 +90,11 @@ Engine::~Engine()
     mEventHandler.RemoveListener(mActivatedToken);
 }
 
-void Engine::Run()
+void Engine::Run(IZonePtr zone)
 {
     // Do i put this in a raii object so if there is an exception thrown 
     // IZone::OnUnload is still called?  
-    mZone->OnLoad(mCamera, mEventHandler);
+    zone->OnLoad(mCamera, mEventHandler);
         
     FPSCounter counter;
     unsigned int lastTime = Time::GetMilliseconds();
@@ -108,7 +108,7 @@ void Engine::Run()
         if(!mPause)
         {
             Renderer renderer(mCamera, mWindow);
-            mZone->Accept(renderer);
+            zone->Accept(renderer);
 
             // Update the stuff, and then render the frame.
             renderer.Update(delta);
@@ -130,7 +130,7 @@ void Engine::Run()
     // Remove possible follow entity
     mCamera->Unfollow();
     
-    mZone->OnUnload();
+    zone->OnUnload();
 }
 
 void Engine::OnPause(const Event::PauseEvent& event)

@@ -11,6 +11,12 @@
 #include "Vector2f.h"
 #include "MathFunctions.h"
 
+TEST(MathTest, QuadZero)
+{
+    EXPECT_EQ(math::zeroQuad.mA, math::zeroVec);
+    EXPECT_EQ(math::zeroQuad.mB, math::zeroVec);
+}
+
 TEST(MathTest, QuadOverlap)
 {
     math::Quad first(0.0f, 0.0f, 5.0f, 4.0f);

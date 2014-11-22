@@ -89,4 +89,15 @@ void mono::DrawSprite(const mono::Sprite& sprite)
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
+void mono::DrawLines(const std::vector<math::Vector2f>& vertices)
+{
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glVertexPointer(2, GL_FLOAT, 0, vertices.data());
+    glDrawArrays(GL_LINES, 0, static_cast<int>(vertices.size()));
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
 

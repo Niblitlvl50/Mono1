@@ -9,6 +9,8 @@
 #include "Engine.h"
 #include "TextFunctions.h"
 
+#include "EventHandler.h"
+
 #include <stdexcept>
 #include <iostream>
 
@@ -17,16 +19,19 @@ int main(int argc, char* argv[])
     try
     {
         Libs::Init();
-        
+
+        // The "global" event handler used throughout the game
+        mono::EventHandler eventHandler;
+
         const math::Vector2f size = Video::GetCurrentWindowSize() / 2;
         
         mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", size.mX, size.mY, false);
         //mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.mX / 2.0, size.mY / 2.0);
-        mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.mX, size.mY);
+        mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.mX, size.mY, eventHandler);
         mono::LoadFont("pixelette.ttf", 10.0f);
 
-        mono::Engine engine(60, window, camera, std::make_shared<game::TestZone>());
-        engine.Run();
+        mono::Engine engine(60, window, camera, eventHandler);
+        engine.Run(std::make_shared<game::TestZone>());
 
         mono::UnloadFont();
     }

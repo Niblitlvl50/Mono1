@@ -9,6 +9,7 @@
 #pragma once
 
 #include "MathFwd.h"
+#include <vector>
 
 namespace mono
 {
@@ -23,5 +24,8 @@ namespace mono
     
     //! Draws a sprite
     void DrawSprite(const Sprite& sprite);
+
+    //! Draws lines, not connected to each other
+    void DrawLines(const std::vector<math::Vector2f>& vertices);
 }
 

@@ -29,10 +29,10 @@ namespace mono
         
         PhysicsEntityBase();
         
-        virtual void doDraw(IRenderer& renderer) const;
+        virtual void doDraw(mono::IRenderer& renderer) const;
         virtual void doUpdate(unsigned int delta);
         
-        virtual void Draw(IRenderer& renderer) const = 0;
+        virtual void Draw(mono::IRenderer& renderer) const = 0;
         virtual void Update(unsigned int delta) = 0;
         
         math::Vector2f mPosition;

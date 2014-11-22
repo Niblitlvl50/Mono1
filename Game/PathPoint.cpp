@@ -31,7 +31,7 @@ void PathPoint::Draw(mono::IRenderer& renderer) const
 {
     mono::Texture::Clear();
     
-    const float vertex[] = { 0.0f, 0.0f };
+    constexpr float vertex[] = { 0.0f, 0.0f };
     
     glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
     glPointSize(10.0f);

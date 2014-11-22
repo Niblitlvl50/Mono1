@@ -9,28 +9,23 @@
 #include "TestZone.h"
 #include "ICamera.h"
 
+#include "PhysicsGrid.h"
 #include "TriangleObject.h"
 #include "OscillatingLine.h"
 #include "AnimatedDude.h"
 #include "Shuttle.h"
 #include "Moon.h"
 #include "PathPoint.h"
-#include "EntityBase.h"
+
 #include "Quad.h"
-#include "CMObject.h"
-#include "CMFactory.h"
-#include "CMIShape.h"
-#include "CMIBody.h"
-#include "RenderUtils.h"
 
 #include "EventHandler.h"
 #include "SpawnEntityEvent.h"
 #include "SpawnPhysicsEntityEvent.h"
 #include "RemoveEntityEvent.h"
 #include "RemovePhysicsEntityEvent.h"
-#include "Math.h"
+#include "ShockwaveEvent.h"
 
-#include <algorithm>
 #include <cmath>
 
 
@@ -40,41 +35,6 @@ using namespace std::placeholders;
 
 namespace
 {
-    struct ZoneBounds : mono::PhysicsEntityBase
-    {
-        ZoneBounds(const math::Quad& bounds)
-            : mBounds(bounds)
-        {
-            mPhysicsObject.body = cm::Factory::CreateStaticBody();
-            
-            const float radius = 2.0f;
-            
-            const math::Vector2f first = mBounds.mA;
-            const math::Vector2f second = math::Vector2f(mBounds.mA.mX, mBounds.mB.mY);
-            const math::Vector2f third = mBounds.mB;
-            const math::Vector2f fourth = math::Vector2f(mBounds.mB.mX, mBounds.mA.mY);
-            
-            mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, first, second, radius));
-            mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, second, third, radius));
-            mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, third, fourth, radius));
-            mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, fourth, first, radius));
-            
-            std::for_each(mPhysicsObject.shapes.begin(), mPhysicsObject.shapes.end(), std::bind(&cm::IShape::SetElasticity, _1, 0.9f));
-        }
-        virtual void Draw(mono::IRenderer&) const
-        {
-            mono::DrawQuad(mBounds, mono::Color(1, 1, 1, 1), false);
-        }
-        virtual math::Quad BoundingBox() const
-        {
-            return mBounds;
-        }
-        virtual void Update(unsigned int delta)
-        { }
-        
-        const math::Quad mBounds;
-    };
-    
     struct GravityUpdater : mono::IUpdatable
     {
         GravityUpdater(mono::IPhysicsZone* zone, mono::IEntityPtr moon1, mono::IEntityPtr moon2)
@@ -101,7 +61,7 @@ namespace
             if(distance < 300.0f)
             {
                 const float gravity = 1e4f;
-                const float value = -gravity / (distance * sqrtf(distance));
+                const float value = -gravity / (distance * std::sqrtf(distance));
             
                 math::Normalize(newPos);
                 newPos *= value;
@@ -114,7 +74,7 @@ namespace
             if(distance2 < 200.0f)
             {
                 const float gravity = 1e4f;
-                const float value = -gravity / (distance2 * sqrtf(distance2));
+                const float value = -gravity / (distance2 * std::sqrtf(distance2));
                 
                 math::Normalize(newPos2);
                 newPos2 *= value;
@@ -130,6 +90,15 @@ namespace
         mono::IEntityPtr mMoon2;
         unsigned int mElapsedTime;
     };
+
+    void ApplyShockwave(cm::IBodyPtr body, const math::Vector2f& position, float magnitude)
+    {
+        math::Vector2f unit = body->GetPosition() - position;
+        math::Normalize(unit);
+        
+        const math::Vector2f& impulse = unit * magnitude;
+        body->ApplyImpulse(impulse, math::zeroVec);
+    }
     
 }
 
@@ -150,6 +119,9 @@ void TestZone::AddEventListeners()
     
     const game::RemovePhysicsEntityFunc removePhysicsFunc = std::bind(&TestZone::RemovePhysicsEntity, this, _1);
     mRemovePhysicsEntityToken = mEventHandler->AddListener(removePhysicsFunc);
+
+    const game::ShockwaveEventFunc shockwaveFunc = std::bind(&TestZone::OnShockwaveEvent, this, _1);
+    mShockwaveEventToken = mEventHandler->AddListener(shockwaveFunc);
 }
 
 void TestZone::RemoveEventListeners()
@@ -167,10 +139,10 @@ void TestZone::OnLoad(mono::ICameraPtr camera, mono::EventHandler& eventHandler)
     
     AddEntity(std::make_shared<AnimatedDude>(100.0f, 50.0f, eventHandler), mono::MIDDLEGROUND);
     
-    std::shared_ptr<ZoneBounds> bounds = std::make_shared<ZoneBounds>(math::Quad(-1000.0f, -1000.0f, 1000.0f, 1000.0f));
+    std::shared_ptr<PhysicsGrid> bounds = std::make_shared<PhysicsGrid>(math::Quad(-1000.0f, -1000.0f, 1000.0f, 1000.0f));
     AddPhysicsEntity(bounds, mono::BACKGROUND);
         
-    std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(100.0f, 100.0f, eventHandler);
+    std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(-100.0f, 950.0f, eventHandler);
     AddPhysicsEntity(shuttle, mono::FOREGROUND);
 
     std::shared_ptr<Moon> moon1 = std::make_shared<Moon>(550.0f, 300.0f, 100.0f);
@@ -212,6 +184,12 @@ void TestZone::RemoveEntity(const game::RemoveEntityEvent& event)
 void TestZone::RemovePhysicsEntity(const game::RemovePhysicsEntityEvent& event)
 {
     RemovePhysicsEntity(event.mEntity);
+}
+
+void TestZone::OnShockwaveEvent(const game::ShockwaveEvent& event)
+{
+    const auto func = std::bind(ApplyShockwave, _1, event.mPosition, event.mMagnitude);
+    this->ForEachBody(func);
 }
 
 

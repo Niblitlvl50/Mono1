@@ -38,6 +38,8 @@ namespace math
     void operator += (Vector2f& left, const Vector2f& right);
     void operator -= (Vector2f& left, const Vector2f& right);
 
+    bool operator == (const Vector2f& left, const Vector2f& right);
+
     // Calculates the length of a vector
     float Length(const Vector2f& vector);
 

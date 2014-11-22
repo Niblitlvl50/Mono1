@@ -71,27 +71,15 @@ void ShuttleController::OnMouseMotion(const Event::MouseMotionEvent& event)
 {
     if(!mMouseDown)
         return;
-    
+
     // Reset forces first.
     mShuttle->mPhysicsObject.body->ResetForces();
 
-    const math::Vector2f current(event.screenX, event.screenY);
-    //const float angle = std::abs(math::AngleBetweenPoints(mMouseDownPosition, current));
+    const math::Vector2f current(event.worldX, event.worldY);
+    math::Vector2f force = current - mShuttle->mPosition;
+    math::Normalize(force);
 
-    //const bool hzSwipe = (angle < 5 || angle > 175);
-    //const bool vtSwipe = (85 < angle && angle < 95);
-    
-    const math::Vector2f& force = mMouseDownPosition - current;
-
-    /*
-    if(hzSwipe)
-        mShuttle->ApplyRotationForce(force.mX);
-    else if(vtSwipe)
-        mShuttle->ApplyThrustForce(force.mY);
-    */
-
-    mShuttle->ApplyRotationForce(force.mX);
-    mShuttle->ApplyThrustForce(force.mY);
+    mShuttle->ApplyImpulse(force * 100);
 }
 
 void ShuttleController::HandleOnShuttlePress()

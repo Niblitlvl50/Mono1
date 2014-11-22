@@ -28,4 +28,4 @@ void math::operator |= (math::Quad& left, const math::Quad& right)
     left.mB.mY = std::max(left.mB.mY, right.mB.mY);
 }
 
-const math::Quad zeroQuad = math::Quad(math::zeroVec, math::zeroVec);
+const math::Quad math::zeroQuad = math::Quad(math::zeroVec, math::zeroVec);

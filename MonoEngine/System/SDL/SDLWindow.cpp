@@ -32,8 +32,8 @@ namespace
         glEnable(GL_LINE_SMOOTH);
         //glEnable(GL_POLYGON_SMOOTH);
         
-        glClearColor(0.3, 0.3, 0.3, 1.0);
-    }    
+        glClearColor(0.6, 0.6, 0.6, 1.0);
+    }
 }
 
 
