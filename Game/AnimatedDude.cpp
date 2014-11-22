@@ -44,8 +44,8 @@ void AnimatedDude::Draw(mono::IRenderer& renderer) const
 {
     renderer.DrawSprite(mSprite);
     
-    const math::Vector2f textPosition = mPosition + math::Vector2f(0.0f, 25.0f);
-    mono::Color color = {0.5f, 1.0f, 0.0f, 1.0f};
+    const math::Vector2f& textPosition = mPosition + math::Vector2f(0.0f, 25.0f);
+    const mono::Color color(0.5f, 1.0f, 0.0f, 1.0f);
     renderer.DrawText("Ryu Hayabusa", textPosition, true, color);
 }
 

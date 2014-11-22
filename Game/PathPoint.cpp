@@ -10,7 +10,8 @@
 #include "PathFactory.h"
 #include "IPath.h"
 #include "Texture.h"
-#include "SysOpenGL.h"
+#include "RenderUtils.h"
+#include "Color.h"
 
 using namespace game;
 
@@ -18,6 +19,7 @@ using namespace game;
 PathPoint::PathPoint()
     : mElapsedTime(0)
 {
+    mScale = math::Vector2f(10, 10);
     const std::vector<math::Vector2f> points = { math::Vector2f(0, 0),
                                                  math::Vector2f(0, 100),
                                                  math::Vector2f(50, 100),
@@ -31,17 +33,10 @@ void PathPoint::Draw(mono::IRenderer& renderer) const
 {
     mono::Texture::Clear();
     
-    constexpr float vertex[] = { 0.0f, 0.0f };
-    
-    glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-    glPointSize(10.0f);
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    
-    glVertexPointer(2, GL_FLOAT, 0, vertex);
-    glDrawArrays(GL_POINTS, 0, 1);
-    
-    glDisableClientState(GL_VERTEX_ARRAY);
+    const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
+    const mono::Color color(0.7, 0.0, 0.0, 1.0);
+    const float size = 4.0f;
+    mono::DrawPoints(points, color, size);
 }
 
 void PathPoint::Update(unsigned int delta)

@@ -94,7 +94,7 @@ void Engine::Run(IZonePtr zone)
 {
     // Do i put this in a raii object so if there is an exception thrown 
     // IZone::OnUnload is still called?  
-    zone->OnLoad(mCamera, mEventHandler);
+    zone->OnLoad(mCamera);
         
     FPSCounter counter;
     unsigned int lastTime = Time::GetMilliseconds();

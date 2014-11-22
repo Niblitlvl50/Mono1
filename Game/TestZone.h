@@ -24,9 +24,10 @@ namespace game
     {
     public:
         
-        TestZone();
+        TestZone(mono::EventHandler& eventHandler);
+        ~TestZone();
                 
-        virtual void OnLoad(mono::ICameraPtr camera, mono::EventHandler& eventHandler);
+        virtual void OnLoad(mono::ICameraPtr camera);
         virtual void OnUnload();
         
         void SpawnEntity(const game::SpawnEntityEvent& event);
@@ -36,17 +37,14 @@ namespace game
         void OnShockwaveEvent(const game::ShockwaveEvent& event);
 
     private:
-        
-        void AddEventListeners();
-        void RemoveEventListeners();
-        
+                
         mono::EventToken<game::SpawnEntityEvent> mSpawnEntityToken;
         mono::EventToken<game::SpawnPhysicsEntityEvent> mSpawnPhysicsEntityToken;
         mono::EventToken<game::RemoveEntityEvent> mRemoveEntityToken;
         mono::EventToken<game::RemovePhysicsEntityEvent> mRemovePhysicsEntityToken;
         mono::EventToken<game::ShockwaveEvent> mShockwaveEventToken;
         
-        mono::EventHandler* mEventHandler;
+        mono::EventHandler& mEventHandler;
     };
 }
 

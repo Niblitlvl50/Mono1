@@ -12,7 +12,6 @@
 #include "IRenderer.h"
 #include "Color.h"
 #include "RenderUtils.h"
-#include "SysOpenGL.h"
 
 #include <functional>
 
@@ -80,12 +79,12 @@ PhysicsGrid::PhysicsGrid(const math::Quad& bounds)
 
 void PhysicsGrid::Draw(mono::IRenderer& renderer) const
 {
-    glLineWidth(2.0f);
-    mono::DrawQuad(mBounds, mono::Color(1, 1, 1, 1), true);
+    const float quadWidth = 2.0f;
+    mono::DrawQuad(mBounds, mono::Color(1, 1, 1, 1), quadWidth);
 
-    glLineWidth(1.0f);
-    glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
-    mono::DrawLines(mGridVertices);
+    const mono::Color color(1.0f, 1.0f, 1.0f, 0.2f);
+    const float lineWidth = 1.0f;
+    mono::DrawLines(mGridVertices, color, lineWidth);
 }
 
 void PhysicsGrid::Update(unsigned int delta)

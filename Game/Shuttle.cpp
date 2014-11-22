@@ -68,8 +68,8 @@ void Shuttle::Update(unsigned int delta)
 
 void Shuttle::OnCollideWith(cm::IBodyPtr body)
 {
-    body->IsStatic();
-    mPhysicsObject.body->GetMoment();
+    //body->IsStatic();
+    //mPhysicsObject.body->GetMoment();
 }
 
 void Shuttle::OnPostStep()

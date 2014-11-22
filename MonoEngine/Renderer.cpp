@@ -22,7 +22,7 @@ using namespace mono;
 Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
     : mCamera(camera),
       mWindow(window),
-      mDrawBB(false)
+      mDrawBB(true)
 { }
 
 void Renderer::PrepareDraw() const
@@ -55,7 +55,7 @@ void Renderer::DrawFrame()
     {
         const math::Quad& bounds = drawable->BoundingBox();
         if(mDrawBB)
-            DrawQuad(bounds, mono::Color(1, 1, 1, 1), false);
+            DrawQuad(bounds, mono::Color(1, 1, 1, 1), 1.0f);
         
         const math::Quad& viewport = mCamera->GetViewport();
         const math::Quad camQuad(viewport.mA, viewport.mA + viewport.mB);

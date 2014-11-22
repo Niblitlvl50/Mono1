@@ -13,6 +13,7 @@
 #include "MouseUpEvent.h"
 #include "MouseDownEvent.h"
 #include "MouseMotionEvent.h"
+#include "MultiGestureEvent.h"
 #include "CMIBody.h"
 
 #include "MathFunctions.h"
@@ -37,6 +38,9 @@ ShuttleController::ShuttleController(game::Shuttle* shuttle, mono::EventHandler&
     
     const Event::MouseMotionEventFunc mouseMotionFunc = std::bind(&ShuttleController::OnMouseMotion, this, _1);
     mMouseMotionToken = mEventHandler.AddListener(mouseMotionFunc);
+
+    //const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&ShuttleController::OnMultiGesture, this, _1);
+    //mMultiGestureToken = mEventHandler.AddListener(multiGestureFunc);
 }
 
 ShuttleController::~ShuttleController()
@@ -44,6 +48,7 @@ ShuttleController::~ShuttleController()
     mEventHandler.RemoveListener(mMouseUpToken);
     mEventHandler.RemoveListener(mMouseDownToken);
     mEventHandler.RemoveListener(mMouseMotionToken);
+    //mEventHandler.RemoveListener(mMultiGestureToken);
 }
 
 void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
@@ -80,6 +85,12 @@ void ShuttleController::OnMouseMotion(const Event::MouseMotionEvent& event)
     math::Normalize(force);
 
     mShuttle->ApplyImpulse(force * 100);
+}
+
+void ShuttleController::OnMultiGesture(const Event::MultiGestureEvent& event)
+{
+    const float force = event.mTheta * 1000;
+    mShuttle->ApplyRotationForce(force);
 }
 
 void ShuttleController::HandleOnShuttlePress()

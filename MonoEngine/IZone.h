@@ -25,7 +25,7 @@ namespace mono
         { }
         
         virtual void Accept(mono::IRenderer& renderer) = 0;
-        virtual void OnLoad(mono::ICameraPtr camera, mono::EventHandler& handler) = 0;
+        virtual void OnLoad(mono::ICameraPtr camera) = 0;
         virtual void OnUnload() = 0;
         
         //virtual void CreateLayer(int layer) = 0;

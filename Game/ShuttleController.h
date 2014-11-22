@@ -27,6 +27,7 @@ namespace game
         void OnMouseDown(const Event::MouseDownEvent& even);
         void OnMouseUp(const Event::MouseUpEvent& event);
         void OnMouseMotion(const Event::MouseMotionEvent& event);
+        void OnMultiGesture(const Event::MultiGestureEvent& event);
         
     private:
         
@@ -38,7 +39,8 @@ namespace game
         mono::EventToken<Event::MouseDownEvent> mMouseDownToken;
         mono::EventToken<Event::MouseUpEvent> mMouseUpToken;
         mono::EventToken<Event::MouseMotionEvent> mMouseMotionToken;
-        
+        mono::EventToken<Event::MultiGestureEvent> mMultiGestureToken;
+
         bool mMouseDown;
         math::Vector2f mMouseDownPosition;
     };

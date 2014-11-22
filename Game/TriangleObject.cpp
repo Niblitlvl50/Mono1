@@ -9,14 +9,14 @@
 
 #include "TriangleObject.h"
 #include "SquareObject.h"
-#include "SysOpenGL.h"
 #include "Texture.h"
+#include "RenderUtils.h"
 
 using namespace game;
 
 TriangleObject::TriangleObject()
 {
-    mPosition = math::Vector2f(400.0f, 300.0f);
+    mPosition = math::Vector2f(0.0f, -300.0f);
     mScale = math::Vector2f(20.0f, 20.0f);
     
     AddChild(std::make_shared<SquareObject>(-1, -1));
@@ -25,19 +25,12 @@ TriangleObject::TriangleObject()
 
 void TriangleObject::Draw(mono::IRenderer&) const
 {
+    const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
+    const mono::Color color(0.0, 0.0, 0.0, 1.0);
+    const float size = 5.0f;
+
     mono::Texture::Clear();
-    
-    const float vertex[] = { 0.0f, 0.0f };
-    
-    glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
-    glPointSize(5.0f);
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    
-    glVertexPointer(2, GL_FLOAT, 0, vertex);
-    glDrawArrays(GL_POINTS, 0, 1);
-    
-    glDisableClientState(GL_VERTEX_ARRAY);
+    mono::DrawPoints(points, color, size);    
 }
 
 void TriangleObject::Update(unsigned int delta)

@@ -15,6 +15,7 @@
 #include "AnimatedDude.h"
 #include "Shuttle.h"
 #include "Moon.h"
+#include "Meteor.h"
 #include "PathPoint.h"
 
 #include "Quad.h"
@@ -99,50 +100,51 @@ namespace
         const math::Vector2f& impulse = unit * magnitude;
         body->ApplyImpulse(impulse, math::zeroVec);
     }
-    
+
+    void AddMeteorCluster(mono::IPhysicsZone* zone)
+    {
+        for(int index = 0; index < 20; ++index)
+            zone->AddPhysicsEntity(std::make_shared<Meteor>(-900, -900), mono::FOREGROUND);
+    }
+
 }
 
-TestZone::TestZone()
-    : PhysicsZone(math::Vector2f(0.0f, 0.0f))
-{ }
-
-void TestZone::AddEventListeners()
+TestZone::TestZone(mono::EventHandler& eventHandler)
+    : PhysicsZone(math::Vector2f(0.0f, 0.0f)),
+      mEventHandler(eventHandler)
 {
     const game::SpawnEntityFunc spawnEntityFunc = std::bind(&TestZone::SpawnEntity, this, _1);
-    mSpawnEntityToken = mEventHandler->AddListener(spawnEntityFunc);
+    mSpawnEntityToken = mEventHandler.AddListener(spawnEntityFunc);
     
     const game::SpawnPhysicsEntityFunc spawnPhysicsFunc = std::bind(&TestZone::SpawnPhysicsEntity, this, _1);
-    mSpawnPhysicsEntityToken = mEventHandler->AddListener(spawnPhysicsFunc);
+    mSpawnPhysicsEntityToken = mEventHandler.AddListener(spawnPhysicsFunc);
     
     const game::RemoveEntityFunc removeEntityFunc = std::bind(&TestZone::RemoveEntity, this, _1);
-    mRemoveEntityToken = mEventHandler->AddListener(removeEntityFunc);
+    mRemoveEntityToken = mEventHandler.AddListener(removeEntityFunc);
     
     const game::RemovePhysicsEntityFunc removePhysicsFunc = std::bind(&TestZone::RemovePhysicsEntity, this, _1);
-    mRemovePhysicsEntityToken = mEventHandler->AddListener(removePhysicsFunc);
+    mRemovePhysicsEntityToken = mEventHandler.AddListener(removePhysicsFunc);
 
     const game::ShockwaveEventFunc shockwaveFunc = std::bind(&TestZone::OnShockwaveEvent, this, _1);
-    mShockwaveEventToken = mEventHandler->AddListener(shockwaveFunc);
+    mShockwaveEventToken = mEventHandler.AddListener(shockwaveFunc);
 }
 
-void TestZone::RemoveEventListeners()
+TestZone::~TestZone()
 {
-    mEventHandler->RemoveListener(mSpawnEntityToken);
-    mEventHandler->RemoveListener(mSpawnPhysicsEntityToken);
-    mEventHandler->RemoveListener(mRemoveEntityToken);
-    mEventHandler->RemoveListener(mRemovePhysicsEntityToken);
+    mEventHandler.RemoveListener(mSpawnEntityToken);
+    mEventHandler.RemoveListener(mSpawnPhysicsEntityToken);
+    mEventHandler.RemoveListener(mRemoveEntityToken);
+    mEventHandler.RemoveListener(mRemovePhysicsEntityToken);
 }
 
-void TestZone::OnLoad(mono::ICameraPtr camera, mono::EventHandler& eventHandler)
+void TestZone::OnLoad(mono::ICameraPtr camera)
 {
-    mEventHandler = &eventHandler;
-    AddEventListeners();
-    
-    AddEntity(std::make_shared<AnimatedDude>(100.0f, 50.0f, eventHandler), mono::MIDDLEGROUND);
+    AddEntity(std::make_shared<AnimatedDude>(100.0f, 50.0f, mEventHandler), mono::MIDDLEGROUND);
     
     std::shared_ptr<PhysicsGrid> bounds = std::make_shared<PhysicsGrid>(math::Quad(-1000.0f, -1000.0f, 1000.0f, 1000.0f));
     AddPhysicsEntity(bounds, mono::BACKGROUND);
         
-    std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(-100.0f, 950.0f, eventHandler);
+    std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(-100.0f, 0.0f, mEventHandler);
     AddPhysicsEntity(shuttle, mono::FOREGROUND);
 
     std::shared_ptr<Moon> moon1 = std::make_shared<Moon>(550.0f, 300.0f, 100.0f);
@@ -156,15 +158,15 @@ void TestZone::OnLoad(mono::ICameraPtr camera, mono::EventHandler& eventHandler)
     AddEntity(std::make_shared<PathPoint>(), mono::BACKGROUND);
     
     AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
+
+    AddMeteorCluster(this);
         
     camera->SetPosition(shuttle->Position());
     camera->Follow(shuttle);
 }
 
 void TestZone::OnUnload()
-{
-    RemoveEventListeners();
-}
+{ }
 
 void TestZone::SpawnEntity(const game::SpawnEntityEvent& event)
 {

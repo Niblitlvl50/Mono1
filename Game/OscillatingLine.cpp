@@ -8,10 +8,10 @@
 
 
 #include "OscillatingLine.h"
-#include "SysOpenGL.h"
 #include "Texture.h"
 #include "IRenderer.h"
 #include "Color.h"
+#include "RenderUtils.h"
 
 #include <string>
 #include <cmath>
@@ -26,22 +26,13 @@ OscillatingLine::OscillatingLine()
 }
 
 void OscillatingLine::Draw(mono::IRenderer& renderer) const
-{    
-    mono::Texture::Clear();
-    
-    const float vertex[] = { 0.0f, 0.0f };
-    
-    glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
-    glPointSize(4.0f);
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
+{
+    const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
+    const mono::Color color(0.0, 0.0, 0.0, 1.0);
+    const float size = 4.0f;
 
-    glVertexPointer(2, GL_FLOAT, 0, vertex);
-    glDrawArrays(GL_POINTS, 0, 1);
-    
-    glDisableClientState(GL_VERTEX_ARRAY);
-    
-    mono::Color color = { 0.0f, 0.0f, 0.0f, 1.0f };
+    mono::Texture::Clear();
+    mono::DrawPoints(points, color, size);
     renderer.DrawText("dot...", mPosition + math::Vector2f(0.0f, 5.0f), true, color);
 }
 

@@ -10,7 +10,6 @@
 #include "SpriteAttributes.h"
 #include "ITexture.h"
 #include "TextureFactory.h"
-#include "SysOpenGL.h"
 #include "LuaState.h"
 #include "LuaFunctions.h"
 

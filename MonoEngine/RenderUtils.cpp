@@ -14,7 +14,7 @@
 
 #include <cmath>
 
-void mono::DrawQuad(const math::Quad& quad, const mono::Color& color, bool filled)
+void mono::DrawQuad(const math::Quad& quad, const mono::Color& color, float width)
 {
     const float vertices[] = { quad.mA.mX, quad.mA.mY,
                                quad.mB.mX, quad.mA.mY,
@@ -22,14 +22,13 @@ void mono::DrawQuad(const math::Quad& quad, const mono::Color& color, bool fille
                                quad.mA.mX, quad.mB.mY };
     
     mono::Texture::Clear();
+    glLineWidth(width);
     glColor4f(color.red, color.green, color.blue, color.alpha);
 
     glEnableClientState(GL_VERTEX_ARRAY);
     
-    //const GLenum primitive = filled ? GL_POLYGON : GL_LINE_LOOP;
-    const GLenum primitive = GL_LINE_LOOP;
     glVertexPointer(2, GL_FLOAT, 0, vertices);
-    glDrawArrays(primitive, 0, 4);
+    glDrawArrays(GL_LINE_LOOP, 0, 4);
     
     glDisableClientState(GL_VERTEX_ARRAY);        
 }
@@ -89,15 +88,30 @@ void mono::DrawSprite(const mono::Sprite& sprite)
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
-void mono::DrawLines(const std::vector<math::Vector2f>& vertices)
+void mono::DrawLines(const std::vector<math::Vector2f>& vertices, const mono::Color& color, float width)
 {
+    glColor4f(color.red, color.green, color.blue, color.alpha);
+    glLineWidth(width);
+
     glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
     glVertexPointer(2, GL_FLOAT, 0, vertices.data());
     glDrawArrays(GL_LINES, 0, static_cast<int>(vertices.size()));
 
     glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
+
+void mono::DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color& color, float size)
+{
+    glColor4f(color.red, color.green, color.blue, color.alpha);
+    glPointSize(size);
+    
+    glEnableClientState(GL_VERTEX_ARRAY);
+
+    glVertexPointer(2, GL_FLOAT, 0, points.data());
+    glDrawArrays(GL_POINTS, 0, static_cast<int>(points.size()));
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+}
+
 
