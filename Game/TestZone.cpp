@@ -49,10 +49,10 @@ namespace
             if(mElapsedTime < 16)
                 return;
             
-            mZone->ForEachBody(std::bind(&GravityUpdater::GravityBodyFunc, this, _1));
+            mZone->ForEachBody(std::bind(&GravityUpdater::GravityFunc, this, _1));
             mElapsedTime = 0;
         }
-        void GravityBodyFunc(cm::IBodyPtr body)
+        void GravityFunc(cm::IBodyPtr body)
         {
             math::Vector2f impulse;
             

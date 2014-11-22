@@ -13,6 +13,6 @@
 
 namespace mono
 {
-    IWindowPtr CreateOpenGLWindow(const std::string& title, int width, int height, bool fullscreen);
+    IWindowPtr CreateWindow(const std::string& title, int width, int height, bool fullscreen);
 }
 

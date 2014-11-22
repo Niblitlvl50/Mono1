@@ -30,6 +30,5 @@ namespace mono
     private:
         unsigned int mId;
     };
-
 }
 

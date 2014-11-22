@@ -24,9 +24,8 @@ int main(int argc, char* argv[])
         mono::EventHandler eventHandler;
 
         const math::Vector2f size = Video::GetCurrentWindowSize() / 2;
-        
-        mono::IWindowPtr window = mono::CreateOpenGLWindow("Mono1", size.mX, size.mY, false);
-        //mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.mX / 2.0, size.mY / 2.0);
+        mono::IWindowPtr window = mono::CreateWindow("Mono1", size.mX, size.mY, false);
+
         mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.mX, size.mY, eventHandler);
         mono::LoadFont("pixelette.ttf", 10.0f);
 
