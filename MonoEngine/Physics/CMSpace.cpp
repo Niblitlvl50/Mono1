@@ -48,6 +48,7 @@ void Space::AddBody(IBodyPtr body)
         cpSpaceAddBody(mSpace, body->Body());
     mBodies.push_back(body);
 }
+
 void Space::RemoveBody(IBodyPtr body)
 {
     if(!body->IsStatic())
@@ -62,6 +63,7 @@ void Space::AddShape(IShapePtr shape)
 {
     cpSpaceAddShape(mSpace, shape->Shape());
 }
+
 void Space::RemoveShape(IShapePtr shape)
 {
     cpSpaceRemoveShape(mSpace, shape->Shape());

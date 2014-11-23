@@ -27,6 +27,8 @@
 #include "RemovePhysicsEntityEvent.h"
 #include "ShockwaveEvent.h"
 
+#include "Utils.h"
+
 #include <cmath>
 
 
@@ -103,8 +105,24 @@ namespace
 
     void AddMeteorCluster(mono::IPhysicsZone* zone)
     {
-        for(int index = 0; index < 20; ++index)
-            zone->AddPhysicsEntity(std::make_shared<Meteor>(-900, -900), mono::FOREGROUND);
+        const float x = -400.0f;
+        const float y = 400.0f;
+
+        for(int index = 0; index < 10; ++index)
+        {
+            const float radius = mono::Random() * 50.0f + 80.0f;
+
+            const float sinex = std::sin(mono::Random() * math::PI * 2.0f);
+            const float cosiney = std::cos(mono::Random() * math::PI * 2.0f);
+
+            const float posx = sinex * radius + x;
+            const float posy = cosiney * radius + y;
+
+            auto entity = std::make_shared<Meteor>(posx, posy);
+            const math::Vector2f impulse;
+            entity->GetPhysics().body->ApplyImpulse(impulse, math::zeroVec);
+            zone->AddPhysicsEntity(entity, mono::FOREGROUND);
+        }
     }
 
 }
@@ -150,7 +168,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     std::shared_ptr<Moon> moon1 = std::make_shared<Moon>(550.0f, 300.0f, 100.0f);
     AddPhysicsEntity(moon1, mono::FOREGROUND);
     
-    std::shared_ptr<Moon> moon2 = std::make_shared<Moon>(200.0f, 400.0f, 50.0f);
+    std::shared_ptr<Moon> moon2 = std::make_shared<Moon>(-400.0f, 400.0f, 50.0f);
     AddPhysicsEntity(moon2, mono::FOREGROUND);
     
     AddEntity(std::make_shared<TriangleObject>(), mono::BACKGROUND);

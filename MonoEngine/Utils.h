@@ -46,5 +46,9 @@ namespace mono
         unsigned int mFrames;
         unsigned int mTotalFrames;
         unsigned int mFps;
-    };    
+    };
+
+    //! Generates a random float between 0.0 and 1.0
+    //! @return float
+    float Random();
 }

@@ -18,7 +18,6 @@ struct SDL_Window;
 
 namespace mono
 {
-
     class SDLWindow : public mono::IWindow
     {
     public:
@@ -28,7 +27,9 @@ namespace mono
 
         virtual void SurfaceChanged(int width, int height);
         virtual void Activated(bool activated);
+        virtual void MakeCurrent();
         virtual void SwapBuffers() const;
+        virtual void SetBackgroundColor(const mono::Color& color);
         virtual const math::Vector2f& Size() const;
 	
     private:

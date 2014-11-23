@@ -44,7 +44,6 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     
     mPhysicsObject.body = cm::Factory::CreateBody(10.0f, 1.0f);
     mPhysicsObject.body->SetPosition(mPosition);
-    mPhysicsObject.body->SetAngle(45);
     mPhysicsObject.body->SetCollisionHandler(this);
 
     cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, mScale, mScale);

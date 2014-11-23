@@ -31,8 +31,6 @@
 #include "Color.h"
 #include "Utils.h"
 
-#include <sstream>
-
 
 using namespace mono;
 
@@ -92,7 +90,7 @@ Engine::~Engine()
 
 void Engine::Run(IZonePtr zone)
 {
-    // Do i put this in a raii object so if there is an exception thrown 
+    // Do i put this in a raii object so if there is an exception thrown
     // IZone::OnUnload is still called?  
     zone->OnLoad(mCamera);
         
@@ -112,12 +110,15 @@ void Engine::Run(IZonePtr zone)
 
             // Update the stuff, and then render the frame.
             renderer.Update(delta);
-            
-            std::stringstream stream;
-            stream << "FPS: " << counter.Fps() << " Frame: " << counter.Frames();
+
+            // Draw fps and frame count
+            const unsigned int fps = counter.Fps();
+            const unsigned int frames = counter.Frames();
+            const std::string text = "FPS: " + std::to_string(fps) + " Frame: " + std::to_string(frames);
             const mono::Color color(1.0f, 1.0f, 1.0f, 1.0f);
-            renderer.DrawText(stream.str(), mCamera->GetViewport().mA, false, color);
-            
+            renderer.DrawText(text, mCamera->GetViewport().mA, false, color);
+
+            // Draw complete frame
             renderer.DrawFrame();
         }
         

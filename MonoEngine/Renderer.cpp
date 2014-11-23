@@ -22,11 +22,12 @@ using namespace mono;
 Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
     : mCamera(camera),
       mWindow(window),
-      mDrawBB(true)
+      mDrawBB(false)
 { }
 
 void Renderer::PrepareDraw() const
 {
+    mWindow->MakeCurrent();
     const math::Quad& viewport = mCamera->GetViewport();
         
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

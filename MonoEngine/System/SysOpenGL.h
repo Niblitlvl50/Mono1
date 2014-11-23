@@ -8,15 +8,11 @@
 
 #pragma once
 
-
-#include "SDL.h"
-
 #ifdef __IPHONEOS__
 #include "SDL_opengles.h"
 #else
 #include "SDL_opengl.h"
 #endif
-
 
 namespace OGL
 {

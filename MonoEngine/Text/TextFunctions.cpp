@@ -47,10 +47,10 @@ void mono::LoadFont(const std::string& font, float size, float scale)
     std::vector<byte> fontbuffer;
     File::FileRead(fontfile, fontbuffer);
     
-    const int width = 512;
-    const int height = 512;
-    const int base = 32;
-    const int chars = 224;
+    constexpr int width = 512;
+    constexpr int height = 512;
+    constexpr int base = 32;
+    constexpr int chars = 224;
 
     byte bitmap[width * height];
     stbtt_bakedchar chardata[chars];
