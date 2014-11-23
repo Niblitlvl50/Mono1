@@ -230,6 +230,7 @@
 		2BFF8979170762BB00499D08 /* FireBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BFF8978170762B900499D08 /* FireBullet.cpp */; };
 		91035EC718649D58009BEE6C /* EventHandlerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91035EC518649D58009BEE6C /* EventHandlerTest.cpp */; };
 		910C24C21A1A969600A79D1C /* PhysicsGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 910C24C01A1A969600A79D1C /* PhysicsGrid.cpp */; };
+		91157C2A1A2148610095CBE4 /* RandomTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91157C291A2148610095CBE4 /* RandomTest.cpp */; };
 		9141B7031826E5BA003B4BDD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9141B7021826E5BA003B4BDD /* main.cpp */; };
 		915E1845186645420000681D /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 915E1843186645420000681D /* PathPoint.cpp */; };
 		9163C0AE1826DCCB00832128 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0AA1826DCCB00832128 /* MathFwd.cpp */; };
@@ -647,6 +648,7 @@
 		91035EC518649D58009BEE6C /* EventHandlerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventHandlerTest.cpp; path = ../UnitTests/EventHandlerTest.cpp; sourceTree = SOURCE_ROOT; };
 		910C24C01A1A969600A79D1C /* PhysicsGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicsGrid.cpp; path = ../Game/PhysicsGrid.cpp; sourceTree = "<group>"; };
 		910C24C11A1A969600A79D1C /* PhysicsGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhysicsGrid.h; path = ../Game/PhysicsGrid.h; sourceTree = "<group>"; };
+		91157C291A2148610095CBE4 /* RandomTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RandomTest.cpp; path = ../UnitTests/RandomTest.cpp; sourceTree = SOURCE_ROOT; };
 		91203C301826F02900C5B323 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = "../External Libs/stb_truetype/stb_truetype.h"; sourceTree = "<group>"; };
 		91203C321826F8D100C5B323 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9138E038173C30DE00DCAC7D /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = System/Library/Frameworks/SDL2.framework; sourceTree = SDKROOT; };
@@ -1096,6 +1098,7 @@
 				2BD1E63E1532155500A75171 /* LuaTest.cpp */,
 				2B594F0F15D7F454008E650B /* MathTest.cpp */,
 				91035EC518649D58009BEE6C /* EventHandlerTest.cpp */,
+				91157C291A2148610095CBE4 /* RandomTest.cpp */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -1862,6 +1865,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91157C2A1A2148610095CBE4 /* RandomTest.cpp in Sources */,
 				9181E55618411D8200678586 /* gtest-all.cc in Sources */,
 				2B6872D61531FB9600B8C2FB /* gtest_main.cc in Sources */,
 				9181E55A184167F300678586 /* PathTest.cpp in Sources */,
