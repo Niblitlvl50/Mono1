@@ -152,3 +152,7 @@ createSpriteFilesFromLayers(localDocument.layers)
 createPathFiles(localDocument.pathItems)
 exportDocumentToPNG(localDocument)
  
+// Show alert for user that something has been done
+alert("Successfully exported sprite sheet!\nOutput folder: "  + outputPath)
+
+
