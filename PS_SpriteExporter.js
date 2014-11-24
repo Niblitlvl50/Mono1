@@ -3,30 +3,30 @@
 //! @author Niklas Damber
 //!
 //! This is a PhotoShop script for exporting layers as .sprite files 
-//! for using in my Mono1 game engine.
+//! and for using in my Mono1 game engine.
 //!
-//! I've only tested this on CS3.
+//! Tested on CS5.
 //!
 
-var checkCurrentFileForAnimations = function(filename)
-{	
+var checkFileForAttributes = function(filename, attribute)
+{
 	var file = new File(filename)
 	var success = file.open('r')
 	if(!success)
 		return null
 
-	var animations = new Array()
+	var attributes = new Array()
 	while(!file.eof)
 	{
 		var line = file.readln()
-		var index = line.search("animations")
+		var index = line.search(attribute)
 		if(index != -1)
-			animations.push(line)
+			attributes.push(line)
 	}
-	
+
 	file.close()
-	
-	return animations
+
+	return attributes
 }
 
 var createSpriteFilesFromLayers = function(layers)
@@ -62,10 +62,13 @@ var createSpriteFilesFromLayers = function(layers)
 		}
 
 		var filename = outputPath + spriteName + ".sprite"
-		var animations = checkCurrentFileForAnimations(filename)
+		var animations = checkFileForAttributes(filename, "animations")
+		var attributes = checkFileForAttributes(filename, "attributes")
 
 		var file = new File(filename)
+		file.lineFeed = "Macintosh";
 		file.open('w')
+		
 		file.writeln("")
 		file.writeln("-- This sprite is exported from " + localDocument.name)
 		file.writeln("")
@@ -73,20 +76,30 @@ var createSpriteFilesFromLayers = function(layers)
 		file.writeln("texture = \"" + textureName + "\"")
 		file.writeln("rows = " + rows)
 		file.writeln("columns = " + columns)
-		file.writeln("x = " + (bounds[0].value -1)) // +2))
-		file.writeln("y = " + (bounds[1].value -1)) // +2))
+		file.writeln("x = " + (bounds[0].value)) // +2))
+		file.writeln("y = " + (bounds[1].value)) // +2))
 		file.writeln("u = " + (bounds[2].value)) // -3))
 		file.writeln("v = " + (bounds[3].value)) // -3))
+		file.writeln("")
 
 		if(animations == null)
 		{
 			file.writeln(animationsText)
-			file.writeln(defaultAnimationText)			
+			file.writeln(defaultAnimationText)
 		}
 		else
 		{
 			for(var animIndex = 0; animIndex < animations.length; ++animIndex)
 				file.writeln(animations[animIndex])
+		}
+
+		// Write previous attributes if there were any
+		if(attributes != null)
+		{
+			file.writeln("")
+
+			for(var attribIndex = 0; attribIndex < attributes.length; ++attribIndex)
+				file.writeln(attributes[attribIndex])
 		}
 
 		file.close()	
@@ -103,7 +116,9 @@ var createPathFiles = function(pathItems)
 
 		// Create the file
 		var file = new File(filename)
+		file.lineFeed = "Macintosh";
 		file.open('w')
+
 		file.writeln("")
 		file.writeln("-- This path is exported from " + localDocument.name)
 		file.writeln("-- The path variable contains a collection of x and y pairs")
@@ -137,11 +152,11 @@ var exportDocumentToPNG = function(document)
 	var exportOptions = new ExportOptionsSaveForWeb()
 	exportOptions.format = SaveDocumentType.PNG
 	exportOptions.PNG8 = false
-	document.exportDocument(exportFile, ExportType.SAVEFORWEB, exportOptions)	
+	document.exportDocument(exportFile, ExportType.SAVEFORWEB, exportOptions)
 }
 
 // Output directory
-var outputPath = "/Users/niklasdamberg/Desktop/"
+var outputPath = "/Users/niklasdamberg/Desktop/work/"
 
 var localDocument = app.activeDocument
 var dotPsdIndex = localDocument.name.search(".psd")
