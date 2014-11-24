@@ -9,7 +9,6 @@
 
 #include "TriangleObject.h"
 #include "SquareObject.h"
-#include "Texture.h"
 #include "RenderUtils.h"
 
 using namespace game;
@@ -29,8 +28,7 @@ void TriangleObject::Draw(mono::IRenderer&) const
     const mono::Color color(0.0, 0.0, 0.0, 1.0);
     const float size = 5.0f;
 
-    mono::Texture::Clear();
-    mono::DrawPoints(points, color, size);    
+    mono::DrawPoints(points, color, size);
 }
 
 void TriangleObject::Update(unsigned int delta)

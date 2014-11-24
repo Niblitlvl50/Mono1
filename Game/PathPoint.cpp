@@ -9,7 +9,6 @@
 #include "PathPoint.h"
 #include "PathFactory.h"
 #include "IPath.h"
-#include "Texture.h"
 #include "RenderUtils.h"
 #include "Color.h"
 
@@ -31,8 +30,6 @@ PathPoint::PathPoint()
 
 void PathPoint::Draw(mono::IRenderer& renderer) const
 {
-    mono::Texture::Clear();
-    
     const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
     const mono::Color color(0.7, 0.0, 0.0, 1.0);
     const float size = 4.0f;
@@ -43,7 +40,7 @@ void PathPoint::Update(unsigned int delta)
 {
     mElapsedTime += delta;
     
-    // 5000 == 5 seconds
+    // 10000 == 10 seconds
     const float duration = 10000;
     const float time = mElapsedTime / duration;
     const float position = mPath->Length() * time;

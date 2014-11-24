@@ -8,7 +8,6 @@
 
 
 #include "OscillatingLine.h"
-#include "Texture.h"
 #include "IRenderer.h"
 #include "Color.h"
 #include "RenderUtils.h"
@@ -31,7 +30,6 @@ void OscillatingLine::Draw(mono::IRenderer& renderer) const
     const mono::Color color(0.0, 0.0, 0.0, 1.0);
     const float size = 4.0f;
 
-    mono::Texture::Clear();
     mono::DrawPoints(points, color, size);
     renderer.DrawText("dot...", mPosition + math::Vector2f(0.0f, 5.0f), true, color);
 }
