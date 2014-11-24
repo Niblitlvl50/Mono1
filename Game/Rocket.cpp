@@ -21,11 +21,11 @@
 using namespace game;
 
 Rocket::Rocket(const math::Vector2f& start, float rotation, mono::EventHandler& eventHandler)
-    : mSprite("invader.sprite"),
+    : mSprite("laser.sprite"),
       mEventHandler(eventHandler),
       mRemoveMe(false)
 {
-    mScale = 15.0f;
+    mScale = 25.0f;
 
     mPhysicsObject.body = cm::Factory::CreateBody(1.0f, 1.0f);
     mPhysicsObject.body->SetPosition(start);
