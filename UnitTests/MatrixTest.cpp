@@ -12,27 +12,27 @@
 
 TEST(MatrixTest, VerifyIdentityOnCreation)
 {
-    const math::Matrix matrix;
+    math::Matrix matrix;
 
-    EXPECT_EQ(1, matrix.m00);
-    EXPECT_EQ(0, matrix.m01);
-    EXPECT_EQ(0, matrix.m02);
-    EXPECT_EQ(0, matrix.m03);
+    EXPECT_EQ(1, matrix.data[0]);
+    EXPECT_EQ(0, matrix.data[1]);
+    EXPECT_EQ(0, matrix.data[2]);
+    EXPECT_EQ(0, matrix.data[3]);
 
-    EXPECT_EQ(0, matrix.m10);
-    EXPECT_EQ(1, matrix.m11);
-    EXPECT_EQ(0, matrix.m12);
-    EXPECT_EQ(0, matrix.m13);
+    EXPECT_EQ(0, matrix.data[4]);
+    EXPECT_EQ(1, matrix.data[5]);
+    EXPECT_EQ(0, matrix.data[6]);
+    EXPECT_EQ(0, matrix.data[7]);
 
-    EXPECT_EQ(0, matrix.m20);
-    EXPECT_EQ(0, matrix.m21);
-    EXPECT_EQ(1, matrix.m22);
-    EXPECT_EQ(0, matrix.m23);
+    EXPECT_EQ(0, matrix.data[8]);
+    EXPECT_EQ(0, matrix.data[9]);
+    EXPECT_EQ(1, matrix.data[10]);
+    EXPECT_EQ(0, matrix.data[11]);
 
-    EXPECT_EQ(0, matrix.m30);
-    EXPECT_EQ(0, matrix.m31);
-    EXPECT_EQ(0, matrix.m32);
-    EXPECT_EQ(1, matrix.m33);
+    EXPECT_EQ(0, matrix.data[12]);
+    EXPECT_EQ(0, matrix.data[13]);
+    EXPECT_EQ(0, matrix.data[14]);
+    EXPECT_EQ(1, matrix.data[15]);
 }
 
 TEST(MatrixTest, VerifyTranslateFunction)
@@ -40,25 +40,25 @@ TEST(MatrixTest, VerifyTranslateFunction)
     math::Matrix matrix;
     math::Translate(matrix, math::Vector2f(10, 22));
 
-    EXPECT_EQ(1, matrix.m00);
-    EXPECT_EQ(0, matrix.m01);
-    EXPECT_EQ(0, matrix.m02);
-    EXPECT_EQ(10, matrix.m03);
+    EXPECT_EQ(1, matrix.data[0]);
+    EXPECT_EQ(0, matrix.data[1]);
+    EXPECT_EQ(0, matrix.data[2]);
+    EXPECT_EQ(0, matrix.data[3]);
 
-    EXPECT_EQ(0, matrix.m10);
-    EXPECT_EQ(1, matrix.m11);
-    EXPECT_EQ(0, matrix.m12);
-    EXPECT_EQ(22, matrix.m13);
+    EXPECT_EQ(0, matrix.data[4]);
+    EXPECT_EQ(1, matrix.data[5]);
+    EXPECT_EQ(0, matrix.data[6]);
+    EXPECT_EQ(0, matrix.data[7]);
 
-    EXPECT_EQ(0, matrix.m20);
-    EXPECT_EQ(0, matrix.m21);
-    EXPECT_EQ(1, matrix.m22);
-    EXPECT_EQ(0, matrix.m23);
+    EXPECT_EQ(0, matrix.data[8]);
+    EXPECT_EQ(0, matrix.data[9]);
+    EXPECT_EQ(1, matrix.data[10]);
+    EXPECT_EQ(0, matrix.data[11]);
 
-    EXPECT_EQ(0, matrix.m30);
-    EXPECT_EQ(0, matrix.m31);
-    EXPECT_EQ(0, matrix.m32);
-    EXPECT_EQ(1, matrix.m33);
+    EXPECT_EQ(10, matrix.data[12]);
+    EXPECT_EQ(22, matrix.data[13]);
+    EXPECT_EQ(0, matrix.data[14]);
+    EXPECT_EQ(1, matrix.data[15]);
 }
 
 TEST(MatrixTest, VerifyPositionFunction)
@@ -68,25 +68,25 @@ TEST(MatrixTest, VerifyPositionFunction)
 
     math::Position(matrix, math::Vector2f(77.7, -32.1));
 
-    EXPECT_EQ(1, matrix.m00);
-    EXPECT_EQ(0, matrix.m01);
-    EXPECT_EQ(0, matrix.m02);
-    EXPECT_FLOAT_EQ(77.7, matrix.m03);
+    EXPECT_EQ(1, matrix.data[0]);
+    EXPECT_EQ(0, matrix.data[1]);
+    EXPECT_EQ(0, matrix.data[2]);
+    EXPECT_EQ(0, matrix.data[3]);
 
-    EXPECT_EQ(0, matrix.m10);
-    EXPECT_EQ(1, matrix.m11);
-    EXPECT_EQ(0, matrix.m12);
-    EXPECT_FLOAT_EQ(-32.1, matrix.m13);
+    EXPECT_EQ(0, matrix.data[4]);
+    EXPECT_EQ(1, matrix.data[5]);
+    EXPECT_EQ(0, matrix.data[6]);
+    EXPECT_EQ(0, matrix.data[7]);
 
-    EXPECT_EQ(0, matrix.m20);
-    EXPECT_EQ(0, matrix.m21);
-    EXPECT_EQ(1, matrix.m22);
-    EXPECT_EQ(0, matrix.m23);
+    EXPECT_EQ(0, matrix.data[8]);
+    EXPECT_EQ(0, matrix.data[9]);
+    EXPECT_EQ(1, matrix.data[10]);
+    EXPECT_EQ(0, matrix.data[11]);
 
-    EXPECT_EQ(0, matrix.m30);
-    EXPECT_EQ(0, matrix.m31);
-    EXPECT_EQ(0, matrix.m32);
-    EXPECT_EQ(1, matrix.m33);
+    EXPECT_FLOAT_EQ(77.7, matrix.data[12]);
+    EXPECT_FLOAT_EQ(-32.1, matrix.data[13]);
+    EXPECT_EQ(0, matrix.data[14]);
+    EXPECT_EQ(1, matrix.data[15]);
 }
 
 TEST(MatrixTest, VerifyRotationFunction)
@@ -94,25 +94,25 @@ TEST(MatrixTest, VerifyRotationFunction)
     math::Matrix matrix;
     math::RotateZ(matrix, math::PI());
 
-    EXPECT_EQ(-1, matrix.m00);
-    EXPECT_FLOAT_EQ(8.74228e-08, matrix.m01);
-    EXPECT_EQ(0, matrix.m02);
-    EXPECT_EQ(0, matrix.m03);
+    EXPECT_EQ(-1, matrix.data[0]);
+    EXPECT_FLOAT_EQ(-8.74228e-08, matrix.data[1]);
+    EXPECT_EQ(0, matrix.data[2]);
+    EXPECT_EQ(0, matrix.data[3]);
 
-    EXPECT_FLOAT_EQ(-8.74228e-08, matrix.m10);
-    EXPECT_EQ(-1, matrix.m11);
-    EXPECT_EQ(0, matrix.m12);
-    EXPECT_EQ(0, matrix.m13);
+    EXPECT_FLOAT_EQ(8.74228e-08, matrix.data[4]);
+    EXPECT_EQ(-1, matrix.data[5]);
+    EXPECT_EQ(0, matrix.data[6]);
+    EXPECT_EQ(0, matrix.data[7]);
 
-    EXPECT_EQ(0, matrix.m20);
-    EXPECT_EQ(0, matrix.m21);
-    EXPECT_EQ(1, matrix.m22);
-    EXPECT_EQ(0, matrix.m23);
+    EXPECT_EQ(0, matrix.data[8]);
+    EXPECT_EQ(0, matrix.data[9]);
+    EXPECT_EQ(1, matrix.data[10]);
+    EXPECT_EQ(0, matrix.data[11]);
 
-    EXPECT_EQ(0, matrix.m30);
-    EXPECT_EQ(0, matrix.m31);
-    EXPECT_EQ(0, matrix.m32);
-    EXPECT_EQ(1, matrix.m33);
+    EXPECT_EQ(0, matrix.data[12]);
+    EXPECT_EQ(0, matrix.data[13]);
+    EXPECT_EQ(0, matrix.data[14]);
+    EXPECT_EQ(1, matrix.data[15]);
 }
 
 
