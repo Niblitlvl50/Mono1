@@ -218,7 +218,6 @@
 		2BE4744E153201CC00CA5ACB /* TextureFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE47418153201CC00CA5ACB /* TextureFactory.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BE671A3155DB27D0018E893 /* TraceCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE671A1155DB27D0018E893 /* TraceCamera.cpp */; };
 		2BE671A4155DB27D0018E893 /* TraceCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE671A2155DB27D0018E893 /* TraceCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2BE969451541E1D700FE8B70 /* SysOpenGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BE969441541E1D700FE8B70 /* SysOpenGL.cpp */; };
 		2BE969471541EC0A00FE8B70 /* MouseMotionEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BE969461541EC0900FE8B70 /* MouseMotionEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BF683A215BF3DDC00D0141A /* SysTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF683A115BF3DDC00D0141A /* SysTypes.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2BF8E3921545E8D900F46049 /* LuaInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BF8E38F1545E8D900F46049 /* LuaInterpreter.cpp */; };
@@ -631,7 +630,6 @@
 		2BE4748B1532038B00CA5ACB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2BE671A1155DB27D0018E893 /* TraceCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TraceCamera.cpp; path = ../MonoEngine/Camera/TraceCamera.cpp; sourceTree = SOURCE_ROOT; };
 		2BE671A2155DB27D0018E893 /* TraceCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TraceCamera.h; path = ../MonoEngine/Camera/TraceCamera.h; sourceTree = SOURCE_ROOT; };
-		2BE969441541E1D700FE8B70 /* SysOpenGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SysOpenGL.cpp; path = ../MonoEngine/System/SysOpenGL.cpp; sourceTree = SOURCE_ROOT; };
 		2BE969461541EC0900FE8B70 /* MouseMotionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MouseMotionEvent.h; path = ../MonoEngine/Events/MouseMotionEvent.h; sourceTree = SOURCE_ROOT; };
 		2BF683A115BF3DDC00D0141A /* SysTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SysTypes.h; path = ../MonoEngine/System/SysTypes.h; sourceTree = SOURCE_ROOT; };
 		2BF8E38F1545E8D900F46049 /* LuaInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaInterpreter.cpp; path = ../MonoEngine/Lua/LuaInterpreter.cpp; sourceTree = SOURCE_ROOT; };
@@ -1316,7 +1314,6 @@
 				2BE4740C153201CC00CA5ACB /* SysLibs.cpp */,
 				2BE4740D153201CC00CA5ACB /* SysLibs.h */,
 				2BE4740E153201CC00CA5ACB /* SysOpenGL.h */,
-				2BE969441541E1D700FE8B70 /* SysOpenGL.cpp */,
 				2BE4740F153201CC00CA5ACB /* SysTime.cpp */,
 				2BE47410153201CC00CA5ACB /* SysTime.h */,
 				2BE47411153201CC00CA5ACB /* WindowFactory.cpp */,
@@ -1819,7 +1816,6 @@
 				91157C2F1A2641E30095CBE4 /* Matrix.cpp in Sources */,
 				2BE4744B153201CC00CA5ACB /* Texture.cpp in Sources */,
 				2BE4744D153201CC00CA5ACB /* TextureFactory.cpp in Sources */,
-				2BE969451541E1D700FE8B70 /* SysOpenGL.cpp in Sources */,
 				2B2F386215420C4E00C44D55 /* AnimationSequence.cpp in Sources */,
 				2B2F386A15421EE700C44D55 /* Sprite.cpp in Sources */,
 				2B2F386E1542210B00C44D55 /* ZoneBase.cpp in Sources */,
