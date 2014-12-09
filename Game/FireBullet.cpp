@@ -25,7 +25,7 @@ FireBullet::FireBullet(const math::Vector2f& start, float rotation, mono::EventH
       mEventHandler(eventHandler),
       mRemoveMe(false)
 {
-    mScale = 15.0f;
+    mScale = math::Vector2f(15.0f, 15.0f);
     
     mPhysicsObject.body = cm::Factory::CreateBody(1.0f, 1.0f);
     mPhysicsObject.body->SetPosition(start);  

@@ -13,14 +13,3 @@
 #else
 #include "SDL_opengl.h"
 #endif
-
-namespace OGL
-{
-    struct OGLPushPopMatrix
-    {
-        OGLPushPopMatrix();
-        ~OGLPushPopMatrix();
-    };
-    
-    void glOrtho(float left, float right, float bottom, float top, float zNear, float zFar);
-}

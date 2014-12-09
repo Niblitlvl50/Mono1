@@ -40,13 +40,13 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
       mEventHandler(eventHandler)
 {
     mPosition = math::Vector2f(x, y);
-    mScale = 20.0f;
+    mScale = math::Vector2f(20.0f, 20.0f);
     
     mPhysicsObject.body = cm::Factory::CreateBody(10.0f, 1.0f);
     mPhysicsObject.body->SetPosition(mPosition);
     mPhysicsObject.body->SetCollisionHandler(this);
 
-    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, mScale, mScale);
+    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, mScale.mX, mScale.mY);
     shape->SetElasticity(0.1f);
     
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
@@ -87,8 +87,8 @@ void Shuttle::ApplyRotationForce(float force)
 void Shuttle::ApplyThrustForce(float force)
 {
     const float rotation = Rotation();
-    const math::Vector2f unit(-std::sin(math::DegToRad(rotation)),
-                               std::cos(math::DegToRad(rotation)));
+    const math::Vector2f unit(-std::sin(math::ToRadians(rotation)),
+                               std::cos(math::ToRadians(rotation)));
 
     mPhysicsObject.body->ApplyForce(unit * force, math::zeroVec);
 }
@@ -100,8 +100,8 @@ void Shuttle::ApplyImpulse(const math::Vector2f& force)
 
 void Shuttle::Fire()
 {
-    const math::Vector2f unit(-std::sin(math::DegToRad(mRotation)),
-                               std::cos(math::DegToRad(mRotation)));
+    const math::Vector2f unit(-std::sin(math::ToRadians(mRotation)),
+                               std::cos(math::ToRadians(mRotation)));
     const math::Vector2f& position = mPosition + (unit * 20.0f);
     const math::Vector2f& impulse = unit * 500.0f;
     

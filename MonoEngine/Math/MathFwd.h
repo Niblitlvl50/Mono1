@@ -10,10 +10,10 @@
 
 namespace math
 {
-    extern const float PI;
     extern const float INF;
 
     struct Vector2f;
     struct Quad;
     struct Point;
+    struct Matrix;
 }

@@ -16,31 +16,33 @@
 #include "Quad.h"
 #include "MathFunctions.h"
 #include "RenderUtils.h"
+#include "Matrix.h"
 
 using namespace mono;
 
 Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
     : mCamera(camera),
       mWindow(window),
-      mDrawBB(false)
+      mDrawBB(true)
 { }
 
-void Renderer::PrepareDraw() const
+void Renderer::PrepareDraw(math::Matrix& modelview) const
 {
     mWindow->MakeCurrent();
+
     const math::Quad& viewport = mCamera->GetViewport();
-        
+    const math::Matrix& projection = math::Ortho(0.0f, viewport.mB.mX, 0.0f, viewport.mB.mY, 0.0f, 10.0f);
+
+    math::Translate(modelview, -viewport.mA);
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+
+    // Theese goes into shaders later on!
     glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    
-    OGL::glOrtho(0.0f, viewport.mB.mX, 0.0f, viewport.mB.mY, 0.0f, 10.0f);
-    
+    glLoadMatrixf(projection.data);
+
     glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    
-    glTranslatef(-viewport.mA.mX, -viewport.mA.mY, 0.0f);
+    glLoadMatrixf(modelview.data);
 }
 
 void Renderer::EndDraw() const
@@ -50,10 +52,14 @@ void Renderer::EndDraw() const
 
 void Renderer::DrawFrame()
 {
-    PrepareDraw();
+    math::Matrix modelview;
+    PrepareDraw(modelview);
     
     for(const auto& drawable : mDrawables)
     {
+        mCurrentTransform = modelview;
+        glLoadMatrixf(modelview.data);
+
         const math::Quad& bounds = drawable->BoundingBox();
         if(mDrawBB)
             DrawQuad(bounds, mono::Color(1, 1, 1, 1), 1.0f);
@@ -62,13 +68,11 @@ void Renderer::DrawFrame()
         const math::Quad camQuad(viewport.mA, viewport.mA + viewport.mB);
         const bool visible = math::QuadOverlaps(camQuad, bounds);
         if(visible)
-        {
-            const OGL::OGLPushPopMatrix raii;
             drawable->doDraw(*this);
-        }
     }
     
-    // Draw all the texts after all the entities. 
+    // Draw all the texts after all the entities.
+    glLoadMatrixf(modelview.data);
     DrawTextFromDefinitions(mTexts);
     
     EndDraw();
@@ -104,6 +108,17 @@ void Renderer::DrawText(const std::string& text, const math::Vector2f& pos, bool
     
     // Save the text in the collection
     mTexts.push_back(def);
+}
+
+void Renderer::PushNewTransform(const math::Matrix& transform)
+{
+    glLoadMatrixf(transform.data);
+    mCurrentTransform = transform;
+}
+
+const math::Matrix& Renderer::GetCurrentTransform() const
+{
+    return mCurrentTransform;
 }
 
 

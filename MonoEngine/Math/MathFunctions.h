@@ -18,6 +18,24 @@ namespace math
     
     float AngleBetweenPoints(const math::Vector2f& first, const math::Vector2f& second);
     
-    float RadToDeg(float radians);
-    float DegToRad(float degrees);
+
+    constexpr float PI()
+    {
+        return 3.14159265359f;
+    }
+
+    constexpr float PI_2()
+    {
+        return 1.57079632679f;
+    }
+
+    constexpr float ToRadians(float degrees)
+    {
+        return degrees * PI() / 180.0f;
+    }
+
+    constexpr float ToDegrees(float radians)
+    {
+        return radians * 180.0f / PI();
+    }
 }

@@ -8,14 +8,15 @@
 
 #include "PhysicsEntityBase.h"
 #include "Quad.h"
-#include "SysOpenGL.h"
+#include "Matrix.h"
 #include "CMIBody.h"
+#include "IRenderer.h"
 
 using namespace mono;
 
 PhysicsEntityBase::PhysicsEntityBase()
     : mRotation(0.0f),
-      mScale(1.0f)
+      mScale(1.0f, 1.0f)
 { }
 
 const math::Vector2f& PhysicsEntityBase::Position() const
@@ -36,9 +37,8 @@ void PhysicsEntityBase::SetPosition(const math::Vector2f& position)
 
 math::Quad PhysicsEntityBase::BoundingBox() const
 {
-    const float x = mPosition.mX - (mScale / 2.0f);
-    const float y = mPosition.mY - (mScale / 2.0f);
-    return math::Quad(x, y, x + mScale, y + mScale);
+    const math::Vector2f& halfScale = mScale / 2.0f;
+    return math::Quad(mPosition - halfScale, mPosition + halfScale);
 }
 
 cm::Object& PhysicsEntityBase::GetPhysics()
@@ -53,9 +53,22 @@ bool PhysicsEntityBase::RemoveMe() const
 
 void PhysicsEntityBase::doDraw(IRenderer& renderer) const
 {
-    glTranslatef(mPosition.mX, mPosition.mY, 0.0f);
-    glRotatef(mRotation, 0.0f, 0.0f, 1.0f);    
-    glScalef(mScale, mScale, mScale);    
+    math::Matrix transform = renderer.GetCurrentTransform();
+
+    math::Matrix translation;
+    math::Translate(translation, mPosition);
+
+    math::Matrix rotation;
+    math::RotateZ(rotation, math::ToRadians(mRotation));
+
+    math::Matrix scale;
+    math::ScaleXY(scale, mScale);
+
+    transform *= translation;
+    transform *= rotation;
+    transform *= scale;
+
+    renderer.PushNewTransform(transform);
 
     Draw(renderer);
 }

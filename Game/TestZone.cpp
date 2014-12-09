@@ -27,6 +27,7 @@
 #include "RemovePhysicsEntityEvent.h"
 #include "ShockwaveEvent.h"
 
+#include "MathFunctions.h"
 #include "Utils.h"
 
 #include <cmath>
@@ -112,8 +113,8 @@ namespace
         {
             const float radius = mono::Random() * 50.0f + 80.0f;
 
-            const float sinex = std::sin(mono::Random() * math::PI * 2.0f);
-            const float cosiney = std::cos(mono::Random() * math::PI * 2.0f);
+            const float sinex = std::sin(mono::Random() * math::PI() * 2.0f);
+            const float cosiney = std::cos(mono::Random() * math::PI() * 2.0f);
 
             const float posx = sinex * radius + x;
             const float posy = cosiney * radius + y;

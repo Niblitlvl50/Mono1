@@ -15,7 +15,7 @@ using namespace game;
 
 TriangleObject::TriangleObject()
 {
-    mPosition = math::Vector2f(0.0f, -300.0f);
+    mPosition = math::Vector2f(0.0f, -30.0f);
     mScale = math::Vector2f(20.0f, 20.0f);
     
     AddChild(std::make_shared<SquareObject>(-1, -1));

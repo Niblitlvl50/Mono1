@@ -18,7 +18,7 @@ Meteor::Meteor(float x, float y)
     : mSprite("meteorite.sprite")
 {
     mPosition = math::Vector2f(x, y);
-    mScale = 20.0f;
+    mScale = math::Vector2f(20.0f, 20.0f);
     
     mPhysicsObject.body = cm::Factory::CreateBody(15.0f, 1.0f);
     mPhysicsObject.body->SetPosition(mPosition);    

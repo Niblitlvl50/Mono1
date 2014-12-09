@@ -8,10 +8,11 @@
  */
 
 #include "EntityBase.h"
-#include "SysOpenGL.h"
 #include "Utils.h"
 #include "Quad.h"
+#include "Matrix.h"
 #include "IAction.h"
+#include "IRenderer.h"
 
 #include <functional>
 
@@ -25,21 +26,34 @@ EntityBase::EntityBase()
 void EntityBase::doDraw(IRenderer& renderer) const
 {
     const math::Vector2f& rotationPoint = mBasePoint * mScale;
-    
-    // Im not so happy with this, two translations...
-    
-    glTranslatef(mPosition.mX + rotationPoint.mX, mPosition.mY + rotationPoint.mY, 0.0f);
-    glRotatef(mRotation, 0.0f, 0.0f, 1.0f);    
-    glTranslatef(-rotationPoint.mX, -rotationPoint.mY, 0.0f);    
-    glScalef(mScale.mX, mScale.mY, 1.0f);
+    const math::Vector2f& translate = mPosition + rotationPoint;
+
+    math::Matrix matrix = renderer.GetCurrentTransform();
+
+    math::Matrix translation;
+    math::Translate(translation, translate);
+    matrix *= translation;
+
+    math::Matrix rotation;
+    math::RotateZ(rotation, math::ToRadians(mRotation));
+    matrix *= rotation;
+
+    math::Matrix translateRotation;
+    math::Translate(translateRotation, -rotationPoint);
+    matrix *= translateRotation;
+
+    math::Matrix scale;
+    math::ScaleXY(scale, mScale);
+    matrix *= scale;
 
     for(const auto& child : mChildren)
     {
-        const OGL::OGLPushPopMatrix raii;
+        renderer.PushNewTransform(matrix);
         child->doDraw(renderer);
     }
-        
-    Draw(renderer);    
+
+    renderer.PushNewTransform(matrix);
+    Draw(renderer);
 }
 
 void EntityBase::doUpdate(unsigned int delta)
@@ -80,9 +94,8 @@ void EntityBase::SetPosition(const math::Vector2f& position)
 
 math::Quad EntityBase::BoundingBox() const
 {
-    const float x = mPosition.mX - (mScale.mX / 2.0f);
-    const float y = mPosition.mY - (mScale.mY / 2.0f);
-    math::Quad thisbb(x, y, x + mScale.mX, y + mScale.mY);
+    const math::Vector2f& halfScale = mScale / 2.0f;
+    math::Quad thisbb(mPosition - halfScale, mPosition + halfScale);
 
     for(const auto& child : mChildren)
     {

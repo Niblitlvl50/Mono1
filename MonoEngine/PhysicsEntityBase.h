@@ -36,8 +36,8 @@ namespace mono
         virtual void Update(unsigned int delta) = 0;
         
         math::Vector2f mPosition;
+        math::Vector2f mScale;
         float mRotation;
-        float mScale;
         
         cm::Object mPhysicsObject;
     };

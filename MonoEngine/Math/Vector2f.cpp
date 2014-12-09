@@ -39,6 +39,11 @@ math::Vector2f math::operator / (const math::Vector2f& left, float value)
     return Vector2f(left.mX / value, left.mY / value);
 }
 
+math::Vector2f math::operator - (const math::Vector2f& vector)
+{
+    return Vector2f(-vector.mX, -vector.mY);
+}
+
 void math::operator *= (math::Vector2f& left, float value)
 {
     left.mX *= value;

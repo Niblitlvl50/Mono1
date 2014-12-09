@@ -20,7 +20,7 @@ Moon::Moon(float x, float y, float radius)
     : mSprite("moon.sprite")
 {
     mPosition = math::Vector2f(x, y);
-    mScale = radius * 2.0f;
+    mScale = math::Vector2f(radius, radius) * 2.0f;
     
     mPhysicsObject.body = cm::Factory::CreateStaticBody();
     mPhysicsObject.body->SetPosition(mPosition);

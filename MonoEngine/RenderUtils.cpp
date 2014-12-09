@@ -11,6 +11,7 @@
 #include "Texture.h"
 #include "Sprite.h"
 #include "SysOpenGL.h"
+#include "MathFunctions.h"
 
 #include <cmath>
 
@@ -36,7 +37,7 @@ void mono::DrawQuad(const math::Quad& quad, const mono::Color& color, float widt
 void mono::DrawCircle(const math::Vector2f& position, float radie, int segments, const mono::Color& color)
 {
     std::vector<float> vertices;
-    const float coef = 2.0f * math::PI / float(segments);
+    const float coef = 2.0f * math::PI() / float(segments);
     
 	for(int index = 0; index < segments; ++index)
 	{

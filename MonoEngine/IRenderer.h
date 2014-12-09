@@ -26,6 +26,9 @@ namespace mono
         
         virtual void DrawSprite(const Sprite& sprite) const = 0;
         virtual void DrawText(const std::string& text, const math::Vector2f& pos, bool center, const mono::Color& color) = 0;
+
+        virtual void PushNewTransform(const math::Matrix& transform) = 0;
+        virtual const math::Matrix& GetCurrentTransform() const = 0;
     };
 
 }

@@ -53,17 +53,8 @@ void math::ResizeQuad(math::Quad& quad, float value, float aspect)
 float math::AngleBetweenPoints(const math::Vector2f& first, const math::Vector2f& second)
 {
     const float angle = std::atan2(second.mY - first.mY, second.mX - first.mX);
-    return RadToDeg(angle);
+    return ToDegrees(angle);
 }
 
-float math::RadToDeg(float radians)
-{
-    return radians * 180.0f / math::PI;
-}
-
-float math::DegToRad(float degrees)
-{
-    return degrees * math::PI / 180.0f;
-}
 
 

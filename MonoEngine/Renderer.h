@@ -11,6 +11,7 @@
 
 #include "IRenderer.h"
 #include "TextFunctions.h"
+#include "Matrix.h"
 
 namespace mono
 {
@@ -29,9 +30,12 @@ namespace mono
         virtual void DrawSprite(const Sprite& sprite) const;
         virtual void DrawText(const std::string& text, const math::Vector2f& pos, bool center, const mono::Color& color);
 
+        virtual void PushNewTransform(const math::Matrix& transform);
+        virtual const math::Matrix& GetCurrentTransform() const;
+
     private:
         
-        void PrepareDraw() const;
+        void PrepareDraw(math::Matrix& modelview) const;
         void EndDraw() const;
 
         ICameraPtr mCamera;
@@ -41,6 +45,8 @@ namespace mono
         std::vector<IDrawablePtr> mDrawables;
         std::vector<IUpdatablePtr> mUpdatables;
         std::vector<TextDefinition> mTexts;
+
+        math::Matrix mCurrentTransform;
     };
 
 }

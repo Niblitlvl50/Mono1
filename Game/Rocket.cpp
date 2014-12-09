@@ -25,7 +25,7 @@ Rocket::Rocket(const math::Vector2f& start, float rotation, mono::EventHandler& 
       mEventHandler(eventHandler),
       mRemoveMe(false)
 {
-    mScale = 25.0f;
+    mScale = math::Vector2f(25.0f, 25.0f);
 
     mPhysicsObject.body = cm::Factory::CreateBody(1.0f, 1.0f);
     mPhysicsObject.body->SetPosition(start);
