@@ -13,15 +13,15 @@ namespace math
     struct Point
     {
         Point()
-            : mX(0),
-              mY(0)
         { }
+
         Point(int x, int y)
             : mX(x),
               mY(y)
         { }
-        int mX;
-        int mY;
+
+        int mX = 0;
+        int mY = 0;
     };
     
     Point operator + (const math::Point& left, const math::Point& right);

@@ -13,6 +13,9 @@
 #include "IWindow.h"
 #include "ICamera.h"
 #include "IZone.h"
+#include "IShaderFactory.h"
+#include "IColorShader.h"
+#include "ITextureShader.h"
 
 #include "Vector2f.h"
 #include "Quad.h"
@@ -24,8 +27,8 @@ namespace
 {
     struct MocWindow : mono::IWindow
     {
-        MocWindow()
-            : mSwapBuffersCalled(false),
+        MocWindow(mono::EventHandler& handler)
+            : mHandler(handler),
               mSize(640, 480)
         { }
         virtual void SurfaceChanged(int width, int height)
@@ -35,28 +38,41 @@ namespace
         virtual void SwapBuffers() const
         {
             mSwapBuffersCalled = true;
-            //mono::EventHandler::DispatchEvent(Event::QuitEvent());
+            mHandler.DispatchEvent(Event::QuitEvent());
         }
+        virtual void MakeCurrent()
+        {
+            mMakeCurrentCalled = true;
+        }
+        virtual void SetBackgroundColor(const mono::Color& color)
+        { }
         virtual const math::Vector2f& Size() const
         {
             return mSize;
         }
-        
-        mutable bool mSwapBuffersCalled;
+
+        mono::EventHandler& mHandler;
         math::Vector2f mSize;
+
+        bool mMakeCurrentCalled = false;
+        mutable bool mSwapBuffersCalled = false;
     };
-    
+
     struct MocCamera : mono::ICamera
     {
         MocCamera()
             : mViewport(0.0f, 0.0f, 100.0f, 50.0f)
         { }
         virtual void Update(unsigned int delta)
-        { }
+        {
+            mUpdateCalled = true;
+        }
         virtual void Follow(const mono::IEntityPtr entity)
         { }
         virtual void Unfollow()
-        { }
+        {
+            mUnfollowCalled = true;
+        }
         virtual const math::Quad& GetViewport() const
         {
             return mViewport;
@@ -71,14 +87,13 @@ namespace
         { }
         
         math::Quad mViewport;
+        bool mUpdateCalled = false;
+        bool mUnfollowCalled = false;
     };
     
     struct MocZone : mono::IZone
     {
         MocZone()
-            : mAcceptCalled(false),
-              mOnLoadCalled(false),
-              mOnUnloadCalled(false)
         { }
         virtual void Accept(mono::IRenderer& renderer)
         {
@@ -105,31 +120,105 @@ namespace
         virtual void RemoveUpdatable(mono::IUpdatablePtr updatable)
         { }
         
-        bool mAcceptCalled;
-        bool mOnLoadCalled;
-        bool mOnUnloadCalled;
+        bool mAcceptCalled = false;
+        bool mOnLoadCalled = false;
+        bool mOnUnloadCalled = false;
+    };
+
+    class NullColorShader : public mono::IColorShader
+    {
+    public:
+        
+        virtual void Use()
+        { }
+        virtual void Clear()
+        { }
+        virtual unsigned int GetShaderId() const
+        {
+            return 0;
+        }
+        virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview)
+        { }
+
+        virtual int GetPositionAttributeLocation() const
+        {
+            return 0;
+        }
+
+        virtual int GetColorAttributeLocation() const
+        {
+            return 0;
+        }
+    };
+
+    class NullTextureShader : public mono::ITextureShader
+    {
+    public:
+        virtual void Use()
+        { }
+        virtual void Clear()
+        { }
+        virtual unsigned int GetShaderId() const
+        {
+            return 0;
+        }
+        virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview)
+        { }
+
+        virtual int GetPositionAttributeLocation() const
+        {
+            return 0;
+        }
+
+        virtual int GetTextureAttributeLocation() const
+        {
+            return 0;
+        }
+
+        virtual void SetShade(const mono::Color& color)
+        { }
+        virtual void SetAlphaTexture(bool isAlpha)
+        { }
+    };
+
+    class NullFactory : public mono::IShaderFactory
+    {
+    public:
+        virtual std::shared_ptr<mono::ITextureShader> CreateTextureShader() const
+        {
+            return std::make_shared<NullTextureShader>();
+        }
+
+        virtual std::shared_ptr<mono::IColorShader> CreateColorShader() const
+        {
+            return std::make_shared<NullColorShader>();
+        }
     };
 }
 
-/*
 TEST(EngineTest, Basic)
 {
-    std::shared_ptr<MocWindow> window = std::make_shared<MocWindow>();
+    mono::EventHandler handler;
+    NullFactory factory;
+    shaderFactory = &factory;
+
+    std::shared_ptr<MocWindow> window = std::make_shared<MocWindow>(handler);
     std::shared_ptr<MocCamera> camera = std::make_shared<MocCamera>();
     std::shared_ptr<MocZone> zone = std::make_shared<MocZone>();
     
     {
-        mono::Engine engine(60.0f, window, camera, zone);
-        EXPECT_NO_THROW(engine.Run());
+        mono::Engine engine(60.0f, window, camera, handler);
+        EXPECT_NO_THROW(engine.Run(zone));
     }
-    
-    //EXPECT_TRUE(window->mSurfaceChangedCalled);
-    //EXPECT_TRUE(window->mActivatedCalled);
+
+    EXPECT_TRUE(window->mMakeCurrentCalled);
     EXPECT_TRUE(window->mSwapBuffersCalled);
+
+    EXPECT_TRUE(camera->mUpdateCalled);
+    EXPECT_TRUE(camera->mUnfollowCalled);
     
     EXPECT_TRUE(zone->mAcceptCalled);
     EXPECT_TRUE(zone->mOnLoadCalled);
     EXPECT_TRUE(zone->mOnUnloadCalled);
 }
- */
 

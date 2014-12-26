@@ -8,49 +8,41 @@
 
 #pragma once
 
-#include <memory>
-
-namespace math
-{
-    struct Matrix;
-}
+#include "ITextureShader.h"
 
 namespace mono
 {
-    class IShader;
-    struct Color;
-    
-    class TextureShader
+    class TextureShader : public ITextureShader
     {
     public:
 
         TextureShader();
+        ~TextureShader();
 
-        int GetMVMatrixLocation() const;
-        int GetPMatrixLocation() const;
+        virtual void Use();
+        virtual void Clear();
+        virtual unsigned int GetShaderId() const;
+        virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview);
 
-        int GetPositionAttributeLocation() const;
-        int GetTextureAttributeLocation() const;
+        virtual int GetPositionAttributeLocation() const;
+        virtual int GetTextureAttributeLocation() const;
 
-        void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview);
-        void SetShade(const mono::Color& shade);
-        void SetAlphaTexture(bool isAlpha);
-
-        void Use();
-        void Clear();
+        virtual void SetShade(const mono::Color& color);
+        virtual void SetAlphaTexture(bool isAlpha);
 
     private:
 
-        std::shared_ptr<mono::IShader> mShader;
+        unsigned int mProgram;
 
         int mMVMatrixLocation;
         int mPMatrixLocation;
+
+        int mPositionAttributeLocation;
+        int mTextureAttributeLocation;
+
         int mSamplerLocation;
         int mColorShadeLocation;
         int mIsAlphaTextureLocation;
-        
-        int mPositionAttributeLocation;
-        int mTextureAttributeLocation;
     };
 }
 

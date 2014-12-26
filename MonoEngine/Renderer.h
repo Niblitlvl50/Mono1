@@ -15,8 +15,8 @@
 
 namespace mono
 {
-    class ColorShader;
-    class TextureShader;
+    class IColorShader;
+    class ITextureShader;
 
     class Renderer : public IRenderer
     {
@@ -42,7 +42,7 @@ namespace mono
     private:
         
         void PrepareDraw();
-        void EndDraw() const;
+        void EndDraw();
 
         void doDrawTexts() const;
 
@@ -53,13 +53,12 @@ namespace mono
         math::Matrix mModelView;
         math::Matrix mCurrentTransform;
 
-        std::shared_ptr<ColorShader> mColorShader;
-        std::shared_ptr<TextureShader> mTextureShader;
+        std::shared_ptr<IColorShader> mColorShader;
+        std::shared_ptr<ITextureShader> mTextureShader;
 
         std::vector<IDrawablePtr> mDrawables;
         std::vector<IUpdatablePtr> mUpdatables;
         std::vector<TextDefinition> mTexts;
     };
-
 }
 

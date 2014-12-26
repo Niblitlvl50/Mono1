@@ -16,10 +16,11 @@
 #include "Matrix.h"
 #include "MathFunctions.h"
 #include "RenderUtils.h"
-#include "ColorShader.h"
-#include "TextureShader.h"
 #include "TextFunctions.h"
 
+#include "IShaderFactory.h"
+#include "ITextureShader.h"
+#include "IColorShader.h"
 
 using namespace mono;
 
@@ -27,8 +28,8 @@ Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
     : mCamera(camera),
       mWindow(window)
 {
-    mColorShader = std::make_shared<ColorShader>();
-    mTextureShader = std::make_shared<TextureShader>();
+    mColorShader = shaderFactory->CreateColorShader();
+    mTextureShader = shaderFactory->CreateTextureShader();
 }
 
 void Renderer::PrepareDraw()
@@ -42,9 +43,14 @@ void Renderer::PrepareDraw()
     mWindow->MakeCurrent();
 }
 
-void Renderer::EndDraw() const
+void Renderer::EndDraw()
 {
     mWindow->SwapBuffers();
+
+    // Clear all the stuff once the frame has been drawn
+    mDrawables.clear();
+    mUpdatables.clear();
+    mTexts.clear();
 }
 
 void Renderer::DrawFrame()
@@ -56,16 +62,13 @@ void Renderer::DrawFrame()
         mCurrentTransform = mModelView;
 
         const math::Quad& bounds = drawable->BoundingBox();
-
         const math::Quad& viewport = mCamera->GetViewport();
         const math::Quad camQuad(viewport.mA, viewport.mA + viewport.mB);
 
+        // Make sure the entity is visible
         const bool visible = math::QuadOverlaps(camQuad, bounds);
         if(visible)
-        {
-            //DrawQuad(bounds, mono::Color(1, 1, 1, 1), 1.0f);
             drawable->doDraw(*this);
-        }
     }
     
     // Draw all the texts after all the entities.

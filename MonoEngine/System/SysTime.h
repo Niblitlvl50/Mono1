@@ -11,7 +11,10 @@
 
 namespace Time
 {
+    //! Gets the system time in milliseconds
     unsigned int GetMilliseconds();
+
+    //! Sleep for some milliseconds
     void Sleep(unsigned int milliseconds);
 }
 

@@ -30,6 +30,7 @@ CameraController::CameraController(ICamera* cam, EventHandler& eventHandler)
     const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&CameraController::OnMultiGesture, this, _1);
     mMultiGestureToken = mEventHandler.AddListener(multiGestureFunc);
 }
+
 CameraController::~CameraController()
 {
     mEventHandler.RemoveListener(mMultiGestureToken);

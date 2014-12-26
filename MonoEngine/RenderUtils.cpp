@@ -14,15 +14,15 @@
 #include "MathFunctions.h"
 #include "TextDefinition.h"
 
-#include "ColorShader.h"
-#include "TextureShader.h"
+#include "IColorShader.h"
+#include "ITextureShader.h"
 
 #include <cmath>
 
 void mono::DrawQuad(const math::Quad& quad,
                     const mono::Color& color,
                     float width,
-                    const std::shared_ptr<ColorShader>& shader)
+                    const std::shared_ptr<IColorShader>& shader)
 {
     const std::vector<math::Vector2f> vertices = { math::Vector2f(quad.mA.mX, quad.mA.mY),
                                                    math::Vector2f(quad.mB.mX, quad.mA.mY),
@@ -37,7 +37,7 @@ void mono::DrawCircle(const math::Vector2f& position,
                       float radie,
                       int segments,
                       const mono::Color& color,
-                      const std::shared_ptr<ColorShader>& shader)
+                      const std::shared_ptr<IColorShader>& shader)
 {
     std::vector<math::Vector2f> vertices;
     vertices.reserve(segments);
@@ -56,7 +56,7 @@ void mono::DrawCircle(const math::Vector2f& position,
     DrawLine(vertices, color, 1.0f, shader);
 }
 
-void mono::DrawSprite(const mono::Sprite& sprite, const std::shared_ptr<TextureShader>& shader)
+void mono::DrawSprite(const mono::Sprite& sprite, const std::shared_ptr<ITextureShader>& shader)
 {
     static const float vertices[] = { -0.5f, -0.5f,
                                       -0.5f,  0.5f,
@@ -71,6 +71,7 @@ void mono::DrawSprite(const mono::Sprite& sprite, const std::shared_ptr<TextureS
                              quad.mB.mX, quad.mA.mY };
     
     shader->SetShade(sprite.GetShade());
+    shader->SetAlphaTexture(false);
     
     sprite.GetTexture()->Use();
 
@@ -86,7 +87,7 @@ void mono::DrawSprite(const mono::Sprite& sprite, const std::shared_ptr<TextureS
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawTexts(const std::vector<TextDefinition>& texts, const std::shared_ptr<TextureShader>& shader)
+void mono::DrawTexts(const std::vector<TextDefinition>& texts, const std::shared_ptr<ITextureShader>& shader)
 {
     if(texts.empty())
         return;
@@ -117,7 +118,7 @@ void mono::DrawTexts(const std::vector<TextDefinition>& texts, const std::shared
 void mono::DrawLine(const std::vector<math::Vector2f>& vertices,
                     const mono::Color& color,
                     float width,
-                    const std::shared_ptr<ColorShader>& shader)
+                    const std::shared_ptr<IColorShader>& shader)
 {
     std::vector<mono::Color> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
@@ -140,7 +141,7 @@ void mono::DrawLine(const std::vector<math::Vector2f>& vertices,
 void mono::DrawLines(const std::vector<math::Vector2f>& vertices,
                      const mono::Color& color,
                      float width,
-                     const std::shared_ptr<ColorShader>& shader)
+                     const std::shared_ptr<IColorShader>& shader)
 {
     std::vector<mono::Color> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
@@ -162,7 +163,7 @@ void mono::DrawLines(const std::vector<math::Vector2f>& vertices,
 void mono::DrawPoints(const std::vector<math::Vector2f>& vertices,
                       const mono::Color& color,
                       float size,
-                      const std::shared_ptr<ColorShader>& shader)
+                      const std::shared_ptr<IColorShader>& shader)
 {
     std::vector<mono::Color> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);

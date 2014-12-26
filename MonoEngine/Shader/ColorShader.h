@@ -8,40 +8,31 @@
 
 #pragma once
 
-#include <memory>
-
-namespace math
-{
-    struct Matrix;
-}
+#include "IColorShader.h"
 
 namespace mono
 {
-    class IShader;
-
-    class ColorShader
+    class ColorShader : public IColorShader
     {
     public:
 
         ColorShader();
 
-        int GetMVMatrixLocation() const;
-        int GetPMatrixLocation() const;
+        virtual void Use();
+        virtual void Clear();
+        virtual unsigned int GetShaderId() const;
+        virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview);
 
-        int GetPositionAttributeLocation() const;
-        int GetColorAttributeLocation() const;
-
-        void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview);
-
-        void Use();
-        void Clear();
+        virtual int GetPositionAttributeLocation() const;
+        virtual int GetColorAttributeLocation() const;
 
     private:
 
-        std::shared_ptr<mono::IShader> mShader;
+        unsigned int mProgram;
         
         int mMVMatrixLocation;
         int mPMatrixLocation;
+        
         int mPositionAttributeLocation;
         int mColorAttributeLocation;
     };

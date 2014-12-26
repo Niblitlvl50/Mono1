@@ -12,5 +12,7 @@
 
 namespace Video
 {
+    //! Get the screen size
+    //! return A 2d vector describing the width and height
     math::Vector2f GetCurrentWindowSize();
 }

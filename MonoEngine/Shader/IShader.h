@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include "MathFwd.h"
+
 namespace mono
 {
     class IShader
@@ -19,8 +21,7 @@ namespace mono
 
         virtual void Use() = 0;
         virtual void Clear() = 0;
-
-        virtual int32_t GetAttribLocation(const char* name) const = 0;
-        virtual int32_t GetUniformLocation(const char* name) const = 0;
+        virtual unsigned int GetShaderId() const = 0;
+        virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview) = 0;
     };
 }

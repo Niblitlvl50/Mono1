@@ -28,9 +28,6 @@
 
 #include "Vector2f.h"
 #include "Quad.h"
-#include "Color.h"
-#include "Utils.h"
-
 
 using namespace mono;
 
@@ -90,47 +87,36 @@ Engine::~Engine()
 
 void Engine::Run(IZonePtr zone)
 {
-    // Do i put this in a raii object so if there is an exception thrown
-    // IZone::OnUnload is still called?  
     zone->OnLoad(mCamera);
-        
-    FPSCounter counter;
+    
+    Renderer renderer(mCamera, mWindow);
     unsigned int lastTime = Time::GetMilliseconds();
-    	
+
     while(!mQuit)
     {
         const unsigned int beforeTime = Time::GetMilliseconds();
         const unsigned int delta = beforeTime - lastTime;
-        
+
+        // Handle input events
         Events::ProcessSystemEvents(mInputHandler);
         if(!mPause)
         {
-            Renderer renderer(mCamera, mWindow);
+            // Let the zone add stuff that will be rendered
             zone->Accept(renderer);
 
-            // Update the stuff, and then render the frame.
+            // Update all the stuff, and draw complete frame
             renderer.Update(delta);
-
-            // Draw fps and frame count
-            const unsigned int fps = counter.Fps();
-            const unsigned int frames = counter.Frames();
-            const std::string text = "FPS: " + std::to_string(fps) + " Frame: " + std::to_string(frames);
-            const mono::Color color(1.0f, 1.0f, 1.0f, 1.0f);
-            renderer.DrawText(text, mCamera->GetViewport().mA, false, color);
-
-            // Draw complete frame
             renderer.DrawFrame();
         }
         
         lastTime = beforeTime;
 
+        // Sleep for a millisecond
         Time::Sleep(1);        
-        counter++;
     }
     
-    // Remove possible follow entity
+    // Remove possible follow entity and unload the zone
     mCamera->Unfollow();
-    
     zone->OnUnload();
 }
 

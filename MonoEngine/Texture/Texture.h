@@ -13,7 +13,7 @@
 
 namespace mono
 {
-
+    // Concrete implementation of ITexture interface
     class Texture : public ITexture
     {
     public:

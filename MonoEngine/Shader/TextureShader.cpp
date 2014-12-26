@@ -7,11 +7,11 @@
 //
 
 #include "TextureShader.h"
-#include "IShader.h"
-#include "ShaderFactory.h"
 #include "SysOpenGL.h"
 #include "Matrix.h"
 #include "Color.h"
+
+#include "ShaderFunctions.h"
 
 
 namespace
@@ -54,26 +54,46 @@ using namespace mono;
 
 TextureShader::TextureShader()
 {
-    mShader = mono::CreateShader(vertexSource, fragmentSource);
+    const GLuint vertexShader = CompileShader(GL_VERTEX_SHADER, vertexSource);
+    const GLuint fragmentShader = CompileShader(GL_FRAGMENT_SHADER, fragmentSource);
+    
+    mProgram = LinkProgram(vertexShader, fragmentShader);
 
-    mMVMatrixLocation = mShader->GetUniformLocation("mv_matrix");
-    mPMatrixLocation = mShader->GetUniformLocation("p_matrix");
-    mSamplerLocation = mShader->GetUniformLocation("sampler");
-    mColorShadeLocation = mShader->GetUniformLocation("colorShade");
-    mIsAlphaTextureLocation = mShader->GetUniformLocation("isAlphaTexture");
+    mMVMatrixLocation = glGetUniformLocation(mProgram, "mv_matrix");
+    mPMatrixLocation = glGetUniformLocation(mProgram, "p_matrix");
 
-    mPositionAttributeLocation = mShader->GetAttribLocation("vertexPosition");
-    mTextureAttributeLocation = mShader->GetAttribLocation("textureCoord");
+    mSamplerLocation = glGetUniformLocation(mProgram, "sampler");
+    mColorShadeLocation = glGetUniformLocation(mProgram, "colorShade");
+    mIsAlphaTextureLocation = glGetUniformLocation(mProgram, "isAlphaTexture");
+
+    mPositionAttributeLocation = glGetAttribLocation(mProgram, "vertexPosition");
+    mTextureAttributeLocation = glGetAttribLocation(mProgram, "textureCoord");
 }
 
-int TextureShader::GetMVMatrixLocation() const
+TextureShader::~TextureShader()
 {
-    return mMVMatrixLocation;
+    glDeleteProgram(mProgram);
 }
 
-int TextureShader::GetPMatrixLocation() const
+void TextureShader::Use()
 {
-    return mPMatrixLocation;
+    glUseProgram(mProgram);
+}
+
+void TextureShader::Clear()
+{
+    glUseProgram(0);
+}
+
+unsigned int TextureShader::GetShaderId() const
+{
+    return mProgram;
+}
+
+void TextureShader::LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview)
+{
+    glUniformMatrix4fv(mPMatrixLocation, 1, GL_FALSE, projection.data);
+    glUniformMatrix4fv(mMVMatrixLocation, 1, GL_FALSE, modelview.data);
 }
 
 int TextureShader::GetPositionAttributeLocation() const
@@ -86,12 +106,6 @@ int TextureShader::GetTextureAttributeLocation() const
     return mTextureAttributeLocation;
 }
 
-void TextureShader::LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview)
-{
-    glUniformMatrix4fv(mPMatrixLocation, 1, GL_FALSE, projection.data);
-    glUniformMatrix4fv(mMVMatrixLocation, 1, GL_FALSE, modelview.data);
-}
-
 void TextureShader::SetShade(const mono::Color& shade)
 {
     glUniform4f(mColorShadeLocation, shade.red, shade.green, shade.blue, shade.alpha);
@@ -100,14 +114,4 @@ void TextureShader::SetShade(const mono::Color& shade)
 void TextureShader::SetAlphaTexture(bool isAlpha)
 {
     glUniform1i(mIsAlphaTextureLocation, isAlpha);
-}
-
-void TextureShader::Use()
-{
-    mShader->Use();
-}
-
-void TextureShader::Clear()
-{
-    mShader->Clear();
 }

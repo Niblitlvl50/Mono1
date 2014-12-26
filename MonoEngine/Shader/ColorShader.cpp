@@ -7,8 +7,7 @@
 //
 
 #include "ColorShader.h"
-#include "IShader.h"
-#include "ShaderFactory.h"
+#include "ShaderFunctions.h"
 #include "SysOpenGL.h"
 #include "Matrix.h"
 
@@ -46,21 +45,37 @@ using namespace mono;
 
 ColorShader::ColorShader()
 {
-    mShader = mono::CreateShader(vertexSource, fragmentSource);
-    mMVMatrixLocation = mShader->GetUniformLocation("mv_matrix");
-    mPMatrixLocation = mShader->GetUniformLocation("p_matrix");
-    mPositionAttributeLocation = mShader->GetAttribLocation("vertexPosition");
-    mColorAttributeLocation = mShader->GetAttribLocation("vertexColor");
+    const GLuint vertexShader = CompileShader(GL_VERTEX_SHADER, vertexSource);
+    const GLuint fragmentShader = CompileShader(GL_FRAGMENT_SHADER, fragmentSource);
+
+    mProgram = LinkProgram(vertexShader, fragmentShader);
+
+    mMVMatrixLocation = glGetUniformLocation(mProgram, "mv_matrix");
+    mPMatrixLocation = glGetUniformLocation(mProgram, "p_matrix");
+
+    mPositionAttributeLocation = glGetAttribLocation(mProgram, "vertexPosition");
+    mColorAttributeLocation = glGetAttribLocation(mProgram, "vertexColor");
 }
 
-int ColorShader::GetMVMatrixLocation() const
+void ColorShader::Use()
 {
-    return mMVMatrixLocation;
+    glUseProgram(mProgram);
 }
 
-int ColorShader::GetPMatrixLocation() const
+void ColorShader::Clear()
 {
-    return mPMatrixLocation;
+    glUseProgram(0);
+}
+
+unsigned int ColorShader::GetShaderId() const
+{
+    return mProgram;
+}
+
+void ColorShader::LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview)
+{
+    glUniformMatrix4fv(mPMatrixLocation, 1, GL_FALSE, projection.data);
+    glUniformMatrix4fv(mMVMatrixLocation, 1, GL_FALSE, modelview.data);
 }
 
 int ColorShader::GetPositionAttributeLocation() const
@@ -71,20 +86,4 @@ int ColorShader::GetPositionAttributeLocation() const
 int ColorShader::GetColorAttributeLocation() const
 {
     return mColorAttributeLocation;
-}
-
-void ColorShader::LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview)
-{
-    glUniformMatrix4fv(mPMatrixLocation, 1, GL_FALSE, projection.data);
-    glUniformMatrix4fv(mMVMatrixLocation, 1, GL_FALSE, modelview.data);
-}
-
-void ColorShader::Use()
-{
-    mShader->Use();
-}
-
-void ColorShader::Clear()
-{
-    mShader->Clear();
 }

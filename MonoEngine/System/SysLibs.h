@@ -10,6 +10,9 @@
 
 namespace Libs
 {
+    //! Init the framework
     void Init();
+
+    //! Shutdown the framework
     void Exit();
 }

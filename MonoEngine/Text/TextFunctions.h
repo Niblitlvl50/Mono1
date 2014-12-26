@@ -10,9 +10,7 @@
 
 #include "TextDefinition.h"
 #include "MathFwd.h"
-#include "Color.h"
 #include <string>
-#include <vector>
 
 namespace mono
 {    

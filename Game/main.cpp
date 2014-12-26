@@ -10,6 +10,7 @@
 #include "TextFunctions.h"
 #include "Color.h"
 #include "EventHandler.h"
+#include "ShaderFactory.h"
 #include "IWindow.h"
 
 #include <stdexcept>
@@ -24,7 +25,11 @@ int main(int argc, char* argv[])
         // The "global" event handler used throughout the game
         mono::EventHandler eventHandler;
 
-        const math::Vector2f& size = Video::GetCurrentWindowSize() / 2;
+        // Setup the shader factory. Done as a global to be able to test stuff
+        mono::ShaderFactory factory;
+        shaderFactory = &factory;
+
+        const math::Vector2f& size = Video::GetCurrentWindowSize(); // / 2;
         mono::IWindowPtr window = mono::CreateWindow("Mono1", size.mX, size.mY, false);
         window->SetBackgroundColor(mono::Color(0.6, 0.6, 0.6, 1.0));
 

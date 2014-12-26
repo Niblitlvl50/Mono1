@@ -13,15 +13,15 @@ namespace math
     struct Vector2f
     {
         Vector2f()
-            : mX(0.0f),
-              mY(0.0f)
         { }
+
         Vector2f(float x, float y)
             : mX(x),
               mY(y)
         { }
-        float mX;
-        float mY;
+
+        float mX = 0.0f;
+        float mY = 0.0f;
     };
 
 

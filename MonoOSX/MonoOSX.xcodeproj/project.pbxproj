@@ -234,12 +234,15 @@
 		91157C2F1A2641E30095CBE4 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91157C2D1A2641E30095CBE4 /* Matrix.cpp */; };
 		91157C301A2641E30095CBE4 /* Matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 91157C2E1A2641E30095CBE4 /* Matrix.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		91157C341A2646310095CBE4 /* MatrixTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91157C331A2646310095CBE4 /* MatrixTest.cpp */; };
-		91157C391A46F2470095CBE4 /* ShaderFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91157C381A46F2470095CBE4 /* ShaderFactory.cpp */; };
 		9141B7031826E5BA003B4BDD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9141B7021826E5BA003B4BDD /* main.cpp */; };
 		914FA5FC1A4C2EFC000132B7 /* ColorShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914FA5FA1A4C2EFC000132B7 /* ColorShader.cpp */; };
 		914FA5FD1A4C2EFC000132B7 /* ColorShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA5FB1A4C2EFC000132B7 /* ColorShader.h */; };
 		914FA6011A4CD15D000132B7 /* TextureShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914FA5FF1A4CD15D000132B7 /* TextureShader.cpp */; };
 		914FA6021A4CD15D000132B7 /* TextureShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA6001A4CD15D000132B7 /* TextureShader.h */; };
+		914FA60B1A4DEE58000132B7 /* ShaderFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914FA6091A4DEE58000132B7 /* ShaderFunctions.cpp */; };
+		914FA60C1A4DEE58000132B7 /* ShaderFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60A1A4DEE58000132B7 /* ShaderFunctions.h */; };
+		914FA6101A4E078C000132B7 /* ShaderFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914FA60E1A4E078C000132B7 /* ShaderFactory.cpp */; };
+		914FA6111A4E078C000132B7 /* ShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60F1A4E078C000132B7 /* ShaderFactory.h */; };
 		915E1845186645420000681D /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 915E1843186645420000681D /* PathPoint.cpp */; };
 		9163C0AE1826DCCB00832128 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0AA1826DCCB00832128 /* MathFwd.cpp */; };
 		9163C0AF1826DCCB00832128 /* MathFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0AB1826DCCB00832128 /* MathFwd.h */; };
@@ -661,9 +664,7 @@
 		91157C2D1A2641E30095CBE4 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Matrix.cpp; path = ../MonoEngine/Math/Matrix.cpp; sourceTree = SOURCE_ROOT; };
 		91157C2E1A2641E30095CBE4 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Matrix.h; path = ../MonoEngine/Math/Matrix.h; sourceTree = SOURCE_ROOT; };
 		91157C331A2646310095CBE4 /* MatrixTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MatrixTest.cpp; path = ../UnitTests/MatrixTest.cpp; sourceTree = SOURCE_ROOT; };
-		91157C361A46F0B70095CBE4 /* ShaderFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShaderFactory.h; path = ../MonoEngine/Shader/ShaderFactory.h; sourceTree = SOURCE_ROOT; };
 		91157C371A46F18D0095CBE4 /* IShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IShader.h; path = ../MonoEngine/Shader/IShader.h; sourceTree = SOURCE_ROOT; };
-		91157C381A46F2470095CBE4 /* ShaderFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderFactory.cpp; path = ../MonoEngine/Shader/ShaderFactory.cpp; sourceTree = SOURCE_ROOT; };
 		91203C301826F02900C5B323 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = "../External Libs/stb_truetype/stb_truetype.h"; sourceTree = "<group>"; };
 		91203C321826F8D100C5B323 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9138E038173C30DE00DCAC7D /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = System/Library/Frameworks/SDL2.framework; sourceTree = SDKROOT; };
@@ -673,6 +674,13 @@
 		914FA5FE1A4CCB68000132B7 /* TextDefinition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextDefinition.h; path = ../MonoEngine/Text/TextDefinition.h; sourceTree = SOURCE_ROOT; };
 		914FA5FF1A4CD15D000132B7 /* TextureShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextureShader.cpp; path = ../MonoEngine/Shader/TextureShader.cpp; sourceTree = SOURCE_ROOT; };
 		914FA6001A4CD15D000132B7 /* TextureShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureShader.h; path = ../MonoEngine/Shader/TextureShader.h; sourceTree = SOURCE_ROOT; };
+		914FA6031A4DE55E000132B7 /* ITextureShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ITextureShader.h; path = ../MonoEngine/Shader/ITextureShader.h; sourceTree = SOURCE_ROOT; };
+		914FA6041A4DE60C000132B7 /* IColorShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IColorShader.h; path = ../MonoEngine/Shader/IColorShader.h; sourceTree = SOURCE_ROOT; };
+		914FA6091A4DEE58000132B7 /* ShaderFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderFunctions.cpp; path = ../MonoEngine/Shader/ShaderFunctions.cpp; sourceTree = SOURCE_ROOT; };
+		914FA60A1A4DEE58000132B7 /* ShaderFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderFunctions.h; path = ../MonoEngine/Shader/ShaderFunctions.h; sourceTree = SOURCE_ROOT; };
+		914FA60D1A4E06DE000132B7 /* IShaderFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IShaderFactory.h; path = ../MonoEngine/Shader/IShaderFactory.h; sourceTree = SOURCE_ROOT; };
+		914FA60E1A4E078C000132B7 /* ShaderFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderFactory.cpp; path = ../MonoEngine/Shader/ShaderFactory.cpp; sourceTree = SOURCE_ROOT; };
+		914FA60F1A4E078C000132B7 /* ShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderFactory.h; path = ../MonoEngine/Shader/ShaderFactory.h; sourceTree = SOURCE_ROOT; };
 		915E1843186645420000681D /* PathPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathPoint.cpp; path = ../Game/PathPoint.cpp; sourceTree = "<group>"; };
 		915E1844186645420000681D /* PathPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathPoint.h; path = ../Game/PathPoint.h; sourceTree = "<group>"; };
 		9163C0AA1826DCCB00832128 /* MathFwd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MathFwd.cpp; path = ../MonoEngine/Math/MathFwd.cpp; sourceTree = SOURCE_ROOT; };
@@ -1294,11 +1302,11 @@
 		2BE473E3153201CC00CA5ACB /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				2BE473E5153201CC00CA5ACB /* EventFwd.h */,
 				9181E52C184113D300678586 /* EventFuncFwd.h */,
 				9163C0B21826DCE400832128 /* TouchEvent.h */,
 				2BBA5A86160A57D100D8D38E /* MultiGestureEvent.h */,
 				2BE473E4153201CC00CA5ACB /* ActivatedEvent.h */,
-				2BE473E5153201CC00CA5ACB /* EventFwd.h */,
 				2BE473E7153201CC00CA5ACB /* QuitEvent.h */,
 				2BE473E8153201CC00CA5ACB /* SurfaceChangedEvent.h */,
 				2BC2146F1535E4130063834F /* KeyDownEvent.h */,
@@ -1414,12 +1422,17 @@
 			isa = PBXGroup;
 			children = (
 				91157C371A46F18D0095CBE4 /* IShader.h */,
-				91157C361A46F0B70095CBE4 /* ShaderFactory.h */,
-				91157C381A46F2470095CBE4 /* ShaderFactory.cpp */,
-				914FA5FA1A4C2EFC000132B7 /* ColorShader.cpp */,
+				914FA6031A4DE55E000132B7 /* ITextureShader.h */,
+				914FA6041A4DE60C000132B7 /* IColorShader.h */,
+				914FA60D1A4E06DE000132B7 /* IShaderFactory.h */,
 				914FA5FB1A4C2EFC000132B7 /* ColorShader.h */,
-				914FA5FF1A4CD15D000132B7 /* TextureShader.cpp */,
+				914FA5FA1A4C2EFC000132B7 /* ColorShader.cpp */,
 				914FA6001A4CD15D000132B7 /* TextureShader.h */,
+				914FA5FF1A4CD15D000132B7 /* TextureShader.cpp */,
+				914FA60A1A4DEE58000132B7 /* ShaderFunctions.h */,
+				914FA6091A4DEE58000132B7 /* ShaderFunctions.cpp */,
+				914FA60F1A4E078C000132B7 /* ShaderFactory.h */,
+				914FA60E1A4E078C000132B7 /* ShaderFactory.cpp */,
 			);
 			name = Shader;
 			sourceTree = "<group>";
@@ -1569,6 +1582,7 @@
 				2BE4741F153201CC00CA5ACB /* EventToken.h in Headers */,
 				2BE47421153201CC00CA5ACB /* EventFwd.h in Headers */,
 				2BE47420153201CC00CA5ACB /* ActivatedEvent.h in Headers */,
+				914FA6111A4E078C000132B7 /* ShaderFactory.h in Headers */,
 				2BE47426153201CC00CA5ACB /* ICamera.h in Headers */,
 				2BE47427153201CC00CA5ACB /* IDrawable.h in Headers */,
 				9163C0DF1826DE4C00832128 /* inflate.h in Headers */,
@@ -1601,6 +1615,7 @@
 				2BE47429153201CC00CA5ACB /* IInputHandler.h in Headers */,
 				9163C0E61826DE4C00832128 /* zlib.h in Headers */,
 				2BE4742B153201CC00CA5ACB /* InputHandler.h in Headers */,
+				914FA60C1A4DEE58000132B7 /* ShaderFunctions.h in Headers */,
 				2BE47435153201CC00CA5ACB /* Renderer.h in Headers */,
 				2BE4743A153201CC00CA5ACB /* ImageFactory.h in Headers */,
 				2BE47438153201CC00CA5ACB /* IImage.h in Headers */,
@@ -1782,10 +1797,10 @@
 				2BD1E617153208E500A75171 /* pngpread.c in Sources */,
 				2BD1E618153208E500A75171 /* pngread.c in Sources */,
 				9163C0D71826DE4C00832128 /* gzlib.c in Sources */,
-				91157C391A46F2470095CBE4 /* ShaderFactory.cpp in Sources */,
 				2BD1E619153208E500A75171 /* pngrio.c in Sources */,
 				2BD1E61A153208E500A75171 /* pngrtran.c in Sources */,
 				2BD1E61B153208E500A75171 /* pngrutil.c in Sources */,
+				914FA6101A4E078C000132B7 /* ShaderFactory.cpp in Sources */,
 				2BD1E61C153208E500A75171 /* pngset.c in Sources */,
 				2BD1E61E153208E500A75171 /* pngtrans.c in Sources */,
 				2BD1E620153208E500A75171 /* pngwio.c in Sources */,
@@ -1807,6 +1822,7 @@
 				2BD1E5FB1532089300A75171 /* lfunc.c in Sources */,
 				2BD1E5FC1532089300A75171 /* lgc.c in Sources */,
 				2BD1E5FD1532089300A75171 /* linit.c in Sources */,
+				914FA60B1A4DEE58000132B7 /* ShaderFunctions.cpp in Sources */,
 				2BD1E5FE1532089300A75171 /* liolib.c in Sources */,
 				2BD1E5FF1532089300A75171 /* llex.c in Sources */,
 				2BD1E6001532089300A75171 /* lmathlib.c in Sources */,
