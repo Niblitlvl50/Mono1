@@ -16,15 +16,15 @@
 namespace
 {
     constexpr const char* vertexSource =
-    ""
+
     "attribute vec2 vertexPosition;"
     "attribute vec4 vertexColor;"
-    ""
+
     "uniform mat4 mv_matrix;"
     "uniform mat4 p_matrix;"
-    ""
+
     "varying vec4 color;"
-    ""
+
     "void main()"
     "{"
     "    gl_Position = p_matrix * mv_matrix * vec4(vertexPosition, 0.0, 1.0);"
@@ -32,9 +32,9 @@ namespace
     "}";
 
     constexpr const char* fragmentSource =
-    ""
+
     "varying vec4 color;"
-    ""
+
     "void main()"
     "{"
     "    gl_FragColor = color;"

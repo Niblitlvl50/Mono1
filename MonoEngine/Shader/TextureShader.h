@@ -34,6 +34,7 @@ namespace mono
 
         void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview);
         void SetShade(const mono::Color& shade);
+        void SetAlphaTexture(bool isAlpha);
 
         void Use();
         void Clear();
@@ -46,6 +47,7 @@ namespace mono
         int mPMatrixLocation;
         int mSamplerLocation;
         int mColorShadeLocation;
+        int mIsAlphaTextureLocation;
         
         int mPositionAttributeLocation;
         int mTextureAttributeLocation;

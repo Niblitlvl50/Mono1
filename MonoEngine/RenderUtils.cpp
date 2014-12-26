@@ -91,6 +91,8 @@ void mono::DrawTexts(const std::vector<TextDefinition>& texts, const std::shared
     if(texts.empty())
         return;
 
+    shader->SetAlphaTexture(true);
+
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
 
