@@ -10,11 +10,14 @@
 #pragma once
 
 #include "IRenderer.h"
-#include "TextFunctions.h"
+#include "TextDefinition.h"
 #include "Matrix.h"
 
 namespace mono
 {
+    class ColorShader;
+    class TextureShader;
+
     class Renderer : public IRenderer
     {
     public:
@@ -27,26 +30,35 @@ namespace mono
         virtual void AddDrawable(IDrawablePtr drawable);
         virtual void AddUpdatable(IUpdatablePtr updatable);
         
-        virtual void DrawSprite(const Sprite& sprite) const;
         virtual void DrawText(const std::string& text, const math::Vector2f& pos, bool center, const mono::Color& color);
+        virtual void DrawSprite(const Sprite& sprite) const;
+        virtual void DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color& color, float size) const;
+        virtual void DrawLines(const std::vector<math::Vector2f>& linePoints, const mono::Color& color, float width) const;
+        virtual void DrawQuad(const math::Quad& quad, const mono::Color& color, float width) const;
 
         virtual void PushNewTransform(const math::Matrix& transform);
         virtual const math::Matrix& GetCurrentTransform() const;
 
     private:
         
-        void PrepareDraw(math::Matrix& modelview) const;
+        void PrepareDraw();
         void EndDraw() const;
+
+        void doDrawTexts() const;
 
         ICameraPtr mCamera;
         IWindowPtr mWindow;
-        bool mDrawBB;
         
+        math::Matrix mProjection;
+        math::Matrix mModelView;
+        math::Matrix mCurrentTransform;
+
+        std::shared_ptr<ColorShader> mColorShader;
+        std::shared_ptr<TextureShader> mTextureShader;
+
         std::vector<IDrawablePtr> mDrawables;
         std::vector<IUpdatablePtr> mUpdatables;
         std::vector<TextDefinition> mTexts;
-
-        math::Matrix mCurrentTransform;
     };
 
 }

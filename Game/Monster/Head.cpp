@@ -7,7 +7,6 @@
 //
 
 #include "Head.h"
-#include "SysOpenGL.h"
 #include "IRenderer.h"
 
 using namespace game;
@@ -24,7 +23,7 @@ void Head::Draw(mono::IRenderer& renderer) const
 {
     renderer.DrawSprite(mHead);
     
-    glTranslatef(0.0f, -0.8f, 0.0f);
+    //glTranslatef(0.0f, -0.8f, 0.0f);
     renderer.DrawSprite(mJaw);
 }
 

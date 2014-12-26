@@ -10,14 +10,16 @@
 
 #include "png.h"
 #include "SysFile.h"
-#include "SysOpenGL.h"
 #include <stdexcept>
 #include <iostream>
 
 
 namespace
 {
-    const unsigned int PNG_HEADER_SIZE = 8;
+    constexpr unsigned int PNG_HEADER_SIZE = 8;
+
+    // Same as GL_RGBA!
+    constexpr unsigned int RGBA = 0x1908;
     
     struct libpngStruct
     {
@@ -125,8 +127,9 @@ int PNGImage::Height() const
 
 int PNGImage::ColorComponents() const
 {
-    return GL_RGBA;
-    
+    return RGBA;
+
+    /*
     if(mColorType & PNG_COLOR_TYPE_RGBA)
         return 4;
     else if(mColorType & PNG_COLOR_TYPE_RGB)
@@ -138,11 +141,12 @@ int PNGImage::ColorComponents() const
     
     // This indicates error.
     return 0;
+     */
 }
 
 unsigned int PNGImage::TargetFormat() const
 {
-    return GL_RGBA;
+    return RGBA;
 }
 
 bool PNGImage::HasAlpha() const

@@ -12,31 +12,36 @@
 #include "Sprite.h"
 #include "SysOpenGL.h"
 #include "MathFunctions.h"
+#include "TextDefinition.h"
+
+#include "ColorShader.h"
+#include "TextureShader.h"
 
 #include <cmath>
 
-void mono::DrawQuad(const math::Quad& quad, const mono::Color& color, float width)
+void mono::DrawQuad(const math::Quad& quad,
+                    const mono::Color& color,
+                    float width,
+                    const std::shared_ptr<ColorShader>& shader)
 {
-    const float vertices[] = { quad.mA.mX, quad.mA.mY,
-                               quad.mB.mX, quad.mA.mY,
-                               quad.mB.mX, quad.mB.mY,
-                               quad.mA.mX, quad.mB.mY };
-    
-    mono::Texture::Clear();
-    glLineWidth(width);
-    glColor4f(color.red, color.green, color.blue, color.alpha);
+    const std::vector<math::Vector2f> vertices = { math::Vector2f(quad.mA.mX, quad.mA.mY),
+                                                   math::Vector2f(quad.mB.mX, quad.mA.mY),
+                                                   math::Vector2f(quad.mB.mX, quad.mB.mY),
+                                                   math::Vector2f(quad.mA.mX, quad.mB.mY),
+                                                   math::Vector2f(quad.mA.mX, quad.mA.mY) };
 
-    glEnableClientState(GL_VERTEX_ARRAY);
-    
-    glVertexPointer(2, GL_FLOAT, 0, vertices);
-    glDrawArrays(GL_LINE_LOOP, 0, 4);
-    
-    glDisableClientState(GL_VERTEX_ARRAY);        
+    DrawLine(vertices, color, width, shader);
 }
 
-void mono::DrawCircle(const math::Vector2f& position, float radie, int segments, const mono::Color& color)
+void mono::DrawCircle(const math::Vector2f& position,
+                      float radie,
+                      int segments,
+                      const mono::Color& color,
+                      const std::shared_ptr<ColorShader>& shader)
 {
-    std::vector<float> vertices;
+    std::vector<math::Vector2f> vertices;
+    vertices.reserve(segments);
+
     const float coef = 2.0f * math::PI() / float(segments);
     
 	for(int index = 0; index < segments; ++index)
@@ -44,23 +49,14 @@ void mono::DrawCircle(const math::Vector2f& position, float radie, int segments,
 		const float radians = index * coef;
 		const float x = radie * std::cos(radians) + position.mX;
 		const float y = radie * std::sin(radians) + position.mY;
-        
-        vertices.push_back(x);
-        vertices.push_back(y);
+
+        vertices.emplace_back(x, y);
 	}
-    
-    mono::Texture::Clear();
-    glColor4f(color.red, color.green, color.blue, color.alpha);
- 
-    glEnableClientState(GL_VERTEX_ARRAY);
-    
-    glVertexPointer(2, GL_FLOAT, 0, vertices.data());
-    glDrawArrays(GL_LINE_LOOP, 0, segments);
-    
-    glDisableClientState(GL_VERTEX_ARRAY);
+
+    DrawLine(vertices, color, 1.0f, shader);
 }
 
-void mono::DrawSprite(const mono::Sprite& sprite)
+void mono::DrawSprite(const mono::Sprite& sprite, const std::shared_ptr<TextureShader>& shader)
 {
     static const float vertices[] = { -0.5f, -0.5f,
                                       -0.5f,  0.5f,
@@ -68,51 +64,119 @@ void mono::DrawSprite(const mono::Sprite& sprite)
                                        0.5f, -0.5f };
     static const unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };
 
-    sprite.GetTexture()->Use();
     const math::Quad& quad = sprite.GetTextureCoords();
     const float coords[] = { quad.mA.mX, quad.mA.mY,
                              quad.mA.mX, quad.mB.mY,
                              quad.mB.mX, quad.mB.mY,
                              quad.mB.mX, quad.mA.mY };
     
-    const mono::Color& color = sprite.GetShade();
-    glColor4f(color.red, color.green, color.blue, color.alpha);
+    shader->SetShade(sprite.GetShade());
     
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    
-    glVertexPointer(2, GL_FLOAT, 0, vertices);
-    glTexCoordPointer(2, GL_FLOAT, 0, coords);
+    sprite.GetTexture()->Use();
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(shader->GetTextureAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, coords);
+
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
-    
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
 }
 
-void mono::DrawLines(const std::vector<math::Vector2f>& vertices, const mono::Color& color, float width)
+void mono::DrawTexts(const std::vector<TextDefinition>& texts, const std::shared_ptr<TextureShader>& shader)
 {
-    glColor4f(color.red, color.green, color.blue, color.alpha);
+    if(texts.empty())
+        return;
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    for(const mono::TextDefinition& text : texts)
+    {
+        shader->SetShade(text.color);
+
+        glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, text.vertices.data());
+        glVertexAttribPointer(shader->GetTextureAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, text.texcoords.data());
+
+        // Number of chars in the text, times 3 since each triangle contains 3 vertices,
+        // times 2 since each char containts two triangles.
+        const int verticesToDraw = text.chars * 3 * 2;
+
+        glDrawArrays(GL_TRIANGLES, 0, verticesToDraw);
+    }
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+}
+
+void mono::DrawLine(const std::vector<math::Vector2f>& vertices,
+                    const mono::Color& color,
+                    float width,
+                    const std::shared_ptr<ColorShader>& shader)
+{
+    std::vector<mono::Color> colors(vertices.size());
+    std::fill(colors.begin(), colors.end(), color);
+
     glLineWidth(width);
 
-    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
 
-    glVertexPointer(2, GL_FLOAT, 0, vertices.data());
-    glDrawArrays(GL_LINES, 0, static_cast<int>(vertices.size()));
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, vertices.data());
+    glVertexAttribPointer(shader->GetColorAttributeLocation(), 4, GL_FLOAT, GL_FALSE, 0, colors.data());
 
-    glDisableClientState(GL_VERTEX_ARRAY);
+    glDrawArrays(GL_LINE_STRIP, 0, static_cast<int>(vertices.size()));
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
 }
 
-void mono::DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color& color, float size)
+
+void mono::DrawLines(const std::vector<math::Vector2f>& vertices,
+                     const mono::Color& color,
+                     float width,
+                     const std::shared_ptr<ColorShader>& shader)
 {
-    glColor4f(color.red, color.green, color.blue, color.alpha);
+    std::vector<mono::Color> colors(vertices.size());
+    std::fill(colors.begin(), colors.end(), color);
+
+    glLineWidth(width);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, vertices.data());
+    glVertexAttribPointer(shader->GetColorAttributeLocation(), 4, GL_FLOAT, GL_FALSE, 0, colors.data());
+
+    glDrawArrays(GL_LINES, 0, static_cast<int>(vertices.size()));
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+}
+
+void mono::DrawPoints(const std::vector<math::Vector2f>& vertices,
+                      const mono::Color& color,
+                      float size,
+                      const std::shared_ptr<ColorShader>& shader)
+{
+    std::vector<mono::Color> colors(vertices.size());
+    std::fill(colors.begin(), colors.end(), color);
+
     glPointSize(size);
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
 
-    glVertexPointer(2, GL_FLOAT, 0, points.data());
-    glDrawArrays(GL_POINTS, 0, static_cast<int>(points.size()));
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
 
-    glDisableClientState(GL_VERTEX_ARRAY);
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, vertices.data());
+    glVertexAttribPointer(shader->GetColorAttributeLocation(), 4, GL_FLOAT, GL_FALSE, 0, colors.data());
+
+    glDrawArrays(GL_POINTS, 0, static_cast<int>(vertices.size()));
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
 }
 
 

@@ -8,26 +8,22 @@
 
 #pragma once
 
+#include "TextDefinition.h"
 #include "MathFwd.h"
 #include "Color.h"
 #include <string>
 #include <vector>
 
 namespace mono
-{
-    struct TextDefinition
-    {
-        std::vector<float> vertices;
-        std::vector<float> texcoords;
-        mono::Color color;
-        unsigned int chars;
-    };
-    
+{    
     //! Loads a font
     //! @param font Font file to use
     //! @param size Size of the font on the generated bitmap
     //! @param scale Scale of font when drawing with opengl (small font sizes can produce bad quality)
     void LoadFont(const std::string& font, float size, float scale = 1.0f);
+
+    //! Use the loaded font
+    void UseFont();
 
     //! Clear the loaded font
     void UnloadFont();
@@ -43,9 +39,5 @@ namespace mono
     //! @param text The text to measure
     //! @return Size of the string
     math::Vector2f MeasureString(const std::string& text);
-
-    //! Draw all the texts defined at once
-    //! @param collection A collection of text definitions
-    void DrawTextFromDefinitions(const std::vector<TextDefinition>& collection);
 }
 

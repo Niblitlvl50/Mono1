@@ -9,7 +9,7 @@
 
 #include "TriangleObject.h"
 #include "SquareObject.h"
-#include "RenderUtils.h"
+#include "IRenderer.h"
 
 using namespace game;
 
@@ -22,13 +22,13 @@ TriangleObject::TriangleObject()
     AddChild(std::make_shared<SquareObject>(1, 1));
 }
 
-void TriangleObject::Draw(mono::IRenderer&) const
+void TriangleObject::Draw(mono::IRenderer& renderer) const
 {
     const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
     const mono::Color color(0.0, 0.0, 0.0, 1.0);
     const float size = 5.0f;
 
-    mono::DrawPoints(points, color, size);
+    renderer.DrawPoints(points, color, size);
 }
 
 void TriangleObject::Update(unsigned int delta)

@@ -10,6 +10,29 @@
 #include "Vector2f.h"
 #include <cmath>
 
+void math::Identity(Matrix& matrix)
+{
+    matrix.data[0] = 1;
+    matrix.data[1] = 0;
+    matrix.data[2] = 0;
+    matrix.data[3] = 0;
+
+    matrix.data[4] = 0;
+    matrix.data[5] = 1;
+    matrix.data[6] = 0;
+    matrix.data[7] = 0;
+
+    matrix.data[8] = 0;
+    matrix.data[9] = 0;
+    matrix.data[10] = 1;
+    matrix.data[11] = 0;
+
+    matrix.data[12] = 0;
+    matrix.data[13] = 0;
+    matrix.data[14] = 0;
+    matrix.data[15] = 1;
+}
+
 void math::Translate(Matrix& matrix, const Vector2f& vector)
 {
     matrix.data[12] += vector.mX;

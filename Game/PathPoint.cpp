@@ -9,7 +9,7 @@
 #include "PathPoint.h"
 #include "PathFactory.h"
 #include "IPath.h"
-#include "RenderUtils.h"
+#include "IRenderer.h"
 #include "Color.h"
 
 using namespace game;
@@ -32,8 +32,9 @@ void PathPoint::Draw(mono::IRenderer& renderer) const
 {
     const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
     const mono::Color color(0.7, 0.0, 0.0, 1.0);
-    const float size = 4.0f;
-    mono::DrawPoints(points, color, size);
+    constexpr float size = 4.0f;
+
+    renderer.DrawPoints(points, color, size);
 }
 
 void PathPoint::Update(unsigned int delta)

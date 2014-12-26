@@ -28,6 +28,7 @@ namespace math
                            0, 0, 0, 1 };
     };
 
+    void Identity(Matrix& matrix);
     void Translate(Matrix& matrix, const Vector2f& vector);
     void Position(Matrix& matrix, const Vector2f& position);
     void RotateZ(Matrix& matrix, float radians);

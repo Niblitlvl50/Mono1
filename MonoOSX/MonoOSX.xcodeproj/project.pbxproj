@@ -234,7 +234,12 @@
 		91157C2F1A2641E30095CBE4 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91157C2D1A2641E30095CBE4 /* Matrix.cpp */; };
 		91157C301A2641E30095CBE4 /* Matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 91157C2E1A2641E30095CBE4 /* Matrix.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		91157C341A2646310095CBE4 /* MatrixTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91157C331A2646310095CBE4 /* MatrixTest.cpp */; };
+		91157C391A46F2470095CBE4 /* ShaderFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91157C381A46F2470095CBE4 /* ShaderFactory.cpp */; };
 		9141B7031826E5BA003B4BDD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9141B7021826E5BA003B4BDD /* main.cpp */; };
+		914FA5FC1A4C2EFC000132B7 /* ColorShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914FA5FA1A4C2EFC000132B7 /* ColorShader.cpp */; };
+		914FA5FD1A4C2EFC000132B7 /* ColorShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA5FB1A4C2EFC000132B7 /* ColorShader.h */; };
+		914FA6011A4CD15D000132B7 /* TextureShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914FA5FF1A4CD15D000132B7 /* TextureShader.cpp */; };
+		914FA6021A4CD15D000132B7 /* TextureShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA6001A4CD15D000132B7 /* TextureShader.h */; };
 		915E1845186645420000681D /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 915E1843186645420000681D /* PathPoint.cpp */; };
 		9163C0AE1826DCCB00832128 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0AA1826DCCB00832128 /* MathFwd.cpp */; };
 		9163C0AF1826DCCB00832128 /* MathFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0AB1826DCCB00832128 /* MathFwd.h */; };
@@ -656,10 +661,18 @@
 		91157C2D1A2641E30095CBE4 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Matrix.cpp; path = ../MonoEngine/Math/Matrix.cpp; sourceTree = SOURCE_ROOT; };
 		91157C2E1A2641E30095CBE4 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Matrix.h; path = ../MonoEngine/Math/Matrix.h; sourceTree = SOURCE_ROOT; };
 		91157C331A2646310095CBE4 /* MatrixTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MatrixTest.cpp; path = ../UnitTests/MatrixTest.cpp; sourceTree = SOURCE_ROOT; };
+		91157C361A46F0B70095CBE4 /* ShaderFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShaderFactory.h; path = ../MonoEngine/Shader/ShaderFactory.h; sourceTree = SOURCE_ROOT; };
+		91157C371A46F18D0095CBE4 /* IShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IShader.h; path = ../MonoEngine/Shader/IShader.h; sourceTree = SOURCE_ROOT; };
+		91157C381A46F2470095CBE4 /* ShaderFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderFactory.cpp; path = ../MonoEngine/Shader/ShaderFactory.cpp; sourceTree = SOURCE_ROOT; };
 		91203C301826F02900C5B323 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = "../External Libs/stb_truetype/stb_truetype.h"; sourceTree = "<group>"; };
 		91203C321826F8D100C5B323 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9138E038173C30DE00DCAC7D /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = System/Library/Frameworks/SDL2.framework; sourceTree = SDKROOT; };
 		9141B7021826E5BA003B4BDD /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../Game/main.cpp; sourceTree = "<group>"; };
+		914FA5FA1A4C2EFC000132B7 /* ColorShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorShader.cpp; path = ../MonoEngine/Shader/ColorShader.cpp; sourceTree = SOURCE_ROOT; };
+		914FA5FB1A4C2EFC000132B7 /* ColorShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorShader.h; path = ../MonoEngine/Shader/ColorShader.h; sourceTree = SOURCE_ROOT; };
+		914FA5FE1A4CCB68000132B7 /* TextDefinition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextDefinition.h; path = ../MonoEngine/Text/TextDefinition.h; sourceTree = SOURCE_ROOT; };
+		914FA5FF1A4CD15D000132B7 /* TextureShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextureShader.cpp; path = ../MonoEngine/Shader/TextureShader.cpp; sourceTree = SOURCE_ROOT; };
+		914FA6001A4CD15D000132B7 /* TextureShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureShader.h; path = ../MonoEngine/Shader/TextureShader.h; sourceTree = SOURCE_ROOT; };
 		915E1843186645420000681D /* PathPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathPoint.cpp; path = ../Game/PathPoint.cpp; sourceTree = "<group>"; };
 		915E1844186645420000681D /* PathPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathPoint.h; path = ../Game/PathPoint.h; sourceTree = "<group>"; };
 		9163C0AA1826DCCB00832128 /* MathFwd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MathFwd.cpp; path = ../MonoEngine/Math/MathFwd.cpp; sourceTree = SOURCE_ROOT; };
@@ -1040,6 +1053,7 @@
 		2B6872DD1531FEA800B8C2FB /* MonoEngine */ = {
 			isa = PBXGroup;
 			children = (
+				91157C351A46F0790095CBE4 /* Shader */,
 				9181E55B1841683600678586 /* Paths */,
 				2B4A337F15E6B1C300390B94 /* CMPhysics */,
 				2B6BAF6A15A2437C00F64062 /* Text */,
@@ -1119,6 +1133,7 @@
 			children = (
 				2B6BAF6B15A243EF00F64062 /* TextFunctions.cpp */,
 				2B6BAF6C15A243EF00F64062 /* TextFunctions.h */,
+				914FA5FE1A4CCB68000132B7 /* TextDefinition.h */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1395,6 +1410,20 @@
 			name = "Test Files";
 			sourceTree = "<group>";
 		};
+		91157C351A46F0790095CBE4 /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+				91157C371A46F18D0095CBE4 /* IShader.h */,
+				91157C361A46F0B70095CBE4 /* ShaderFactory.h */,
+				91157C381A46F2470095CBE4 /* ShaderFactory.cpp */,
+				914FA5FA1A4C2EFC000132B7 /* ColorShader.cpp */,
+				914FA5FB1A4C2EFC000132B7 /* ColorShader.h */,
+				914FA5FF1A4CD15D000132B7 /* TextureShader.cpp */,
+				914FA6001A4CD15D000132B7 /* TextureShader.h */,
+			);
+			name = Shader;
+			sourceTree = "<group>";
+		};
 		9163C0B41826DE1300832128 /* zlib-1.2.8 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1589,6 +1618,7 @@
 				2B069A68156ACD9F00190763 /* Utils.h in Headers */,
 				2B6BAF6E15A243EF00F64062 /* TextFunctions.h in Headers */,
 				2B4D2F5415C32A92003A9193 /* MathFunctions.h in Headers */,
+				914FA5FD1A4C2EFC000132B7 /* ColorShader.h in Headers */,
 				2B4A336115E687CA00390B94 /* chipmunk.h in Headers */,
 				91C8A2231882CA4B00283CD7 /* Point.h in Headers */,
 				2B4A336215E687CA00390B94 /* chipmunk_ffi.h in Headers */,
@@ -1616,6 +1646,7 @@
 				9181E5281841133900678586 /* Color.h in Headers */,
 				9181E52D184113D300678586 /* EventFuncFwd.h in Headers */,
 				2B4A337615E687CA00390B94 /* cpShape.h in Headers */,
+				914FA6021A4CD15D000132B7 /* TextureShader.h in Headers */,
 				2B4A337715E687CA00390B94 /* cpSpace.h in Headers */,
 				2B4A337815E687CA00390B94 /* cpSpatialIndex.h in Headers */,
 				2B4A337915E687CA00390B94 /* cpVect.h in Headers */,
@@ -1751,6 +1782,7 @@
 				2BD1E617153208E500A75171 /* pngpread.c in Sources */,
 				2BD1E618153208E500A75171 /* pngread.c in Sources */,
 				9163C0D71826DE4C00832128 /* gzlib.c in Sources */,
+				91157C391A46F2470095CBE4 /* ShaderFactory.cpp in Sources */,
 				2BD1E619153208E500A75171 /* pngrio.c in Sources */,
 				2BD1E61A153208E500A75171 /* pngrtran.c in Sources */,
 				2BD1E61B153208E500A75171 /* pngrutil.c in Sources */,
@@ -1781,6 +1813,7 @@
 				2BD1E6011532089300A75171 /* lmem.c in Sources */,
 				2BD1E6021532089300A75171 /* loadlib.c in Sources */,
 				9163C0DB1826DE4C00832128 /* inffast.c in Sources */,
+				914FA6011A4CD15D000132B7 /* TextureShader.cpp in Sources */,
 				2BD1E6031532089300A75171 /* lobject.c in Sources */,
 				2BD1E6041532089300A75171 /* lopcodes.c in Sources */,
 				2BD1E6051532089300A75171 /* loslib.c in Sources */,
@@ -1808,6 +1841,7 @@
 				2BE4743B153201CC00CA5ACB /* PNGImage.cpp in Sources */,
 				2BE4743D153201CC00CA5ACB /* SDLWindow.cpp in Sources */,
 				2BE4743F153201CC00CA5ACB /* SysEvents.cpp in Sources */,
+				914FA5FC1A4C2EFC000132B7 /* ColorShader.cpp in Sources */,
 				2BE47441153201CC00CA5ACB /* SysFile.cpp in Sources */,
 				2BE47443153201CC00CA5ACB /* SysLibs.cpp in Sources */,
 				2BE47446153201CC00CA5ACB /* SysTime.cpp in Sources */,

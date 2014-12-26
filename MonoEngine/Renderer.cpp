@@ -8,41 +8,38 @@
  */
 
 #include "Renderer.h"
-#include "SysOpenGL.h"
 #include "IEntity.h"
 #include "ICamera.h"
 #include "IWindow.h"
 #include "Vector2f.h"
 #include "Quad.h"
+#include "Matrix.h"
 #include "MathFunctions.h"
 #include "RenderUtils.h"
-#include "Matrix.h"
+#include "ColorShader.h"
+#include "TextureShader.h"
+#include "TextFunctions.h"
+
 
 using namespace mono;
 
 Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
     : mCamera(camera),
-      mWindow(window),
-      mDrawBB(true)
-{ }
-
-void Renderer::PrepareDraw(math::Matrix& modelview) const
+      mWindow(window)
 {
-    mWindow->MakeCurrent();
+    mColorShader = std::make_shared<ColorShader>();
+    mTextureShader = std::make_shared<TextureShader>();
+}
 
+void Renderer::PrepareDraw()
+{
     const math::Quad& viewport = mCamera->GetViewport();
-    const math::Matrix& projection = math::Ortho(0.0f, viewport.mB.mX, 0.0f, viewport.mB.mY, 0.0f, 10.0f);
+    mProjection = math::Ortho(0.0f, viewport.mB.mX, 0.0f, viewport.mB.mY, 0.0f, 10.0f);
 
-    math::Translate(modelview, -viewport.mA);
+    math::Identity(mModelView);
+    math::Translate(mModelView, -viewport.mA);
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Theese goes into shaders later on!
-    glMatrixMode(GL_PROJECTION);
-    glLoadMatrixf(projection.data);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadMatrixf(modelview.data);
+    mWindow->MakeCurrent();
 }
 
 void Renderer::EndDraw() const
@@ -52,29 +49,29 @@ void Renderer::EndDraw() const
 
 void Renderer::DrawFrame()
 {
-    math::Matrix modelview;
-    PrepareDraw(modelview);
+    PrepareDraw();
     
     for(const auto& drawable : mDrawables)
     {
-        mCurrentTransform = modelview;
-        glLoadMatrixf(modelview.data);
+        mCurrentTransform = mModelView;
 
         const math::Quad& bounds = drawable->BoundingBox();
-        if(mDrawBB)
-            DrawQuad(bounds, mono::Color(1, 1, 1, 1), 1.0f);
-        
+
         const math::Quad& viewport = mCamera->GetViewport();
         const math::Quad camQuad(viewport.mA, viewport.mA + viewport.mB);
+
         const bool visible = math::QuadOverlaps(camQuad, bounds);
         if(visible)
+        {
+            //DrawQuad(bounds, mono::Color(1, 1, 1, 1), 1.0f);
             drawable->doDraw(*this);
+        }
     }
     
     // Draw all the texts after all the entities.
-    glLoadMatrixf(modelview.data);
-    DrawTextFromDefinitions(mTexts);
-    
+    mCurrentTransform = mModelView;
+    doDrawTexts();
+
     EndDraw();
 }
 
@@ -96,23 +93,54 @@ void Renderer::AddUpdatable(IUpdatablePtr updatable)
     mUpdatables.push_back(updatable);
 }
 
-void Renderer::DrawSprite(const Sprite& sprite) const
-{
-    ::DrawSprite(sprite);
-}
-
 void Renderer::DrawText(const std::string& text, const math::Vector2f& pos, bool center, const mono::Color& color)
 {
     TextDefinition def = GenerateVertexDataFromString(text, pos, center);
     def.color = color;
-    
+
     // Save the text in the collection
     mTexts.push_back(def);
 }
 
+void Renderer::DrawSprite(const Sprite& sprite) const
+{
+    mTextureShader->Use();
+    mTextureShader->LoadMatrices(mProjection, mCurrentTransform);
+    ::DrawSprite(sprite, mTextureShader);
+}
+
+void Renderer::doDrawTexts() const
+{
+    UseFont();
+    
+    mTextureShader->Use();
+    mTextureShader->LoadMatrices(mProjection, mCurrentTransform);
+    ::DrawTexts(mTexts, mTextureShader);
+}
+
+void Renderer::DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color& color, float size) const
+{
+    mColorShader->Use();
+    mColorShader->LoadMatrices(mProjection, mCurrentTransform);
+    ::DrawPoints(points, color, size, mColorShader);
+}
+
+void Renderer::DrawLines(const std::vector<math::Vector2f>& linePoints, const mono::Color& color, float width) const
+{
+    mColorShader->Use();
+    mColorShader->LoadMatrices(mProjection, mCurrentTransform);
+    ::DrawLines(linePoints, color, width, mColorShader);
+}
+
+void Renderer::DrawQuad(const math::Quad& quad, const mono::Color& color, float width) const
+{
+    mColorShader->Use();
+    mColorShader->LoadMatrices(mProjection, mCurrentTransform);
+    ::DrawQuad(quad, color, width, mColorShader);
+}
+
 void Renderer::PushNewTransform(const math::Matrix& transform)
 {
-    glLoadMatrixf(transform.data);
     mCurrentTransform = transform;
 }
 

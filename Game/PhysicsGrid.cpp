@@ -11,7 +11,6 @@
 #include "CMIShape.h"
 #include "IRenderer.h"
 #include "Color.h"
-#include "RenderUtils.h"
 
 #include <functional>
 
@@ -79,12 +78,12 @@ PhysicsGrid::PhysicsGrid(const math::Quad& bounds)
 
 void PhysicsGrid::Draw(mono::IRenderer& renderer) const
 {
-    const float quadWidth = 2.0f;
-    mono::DrawQuad(mBounds, mono::Color(1, 1, 1, 1), quadWidth);
+    constexpr float quadWidth = 2.0f;
+    renderer.DrawQuad(mBounds, mono::Color(1, 1, 1, 1), quadWidth);
 
     const mono::Color color(1.0f, 1.0f, 1.0f, 0.2f);
-    const float lineWidth = 1.0f;
-    mono::DrawLines(mGridVertices, color, lineWidth);
+    constexpr float lineWidth = 1.0f;
+    renderer.DrawLines(mGridVertices, color, lineWidth);
 }
 
 void PhysicsGrid::Update(unsigned int delta)
