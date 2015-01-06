@@ -22,8 +22,8 @@ namespace libpng
         void ReadSource();
 
         virtual const byte* Data() const;
-        virtual int Width() const;
-        virtual int Height() const;
+        virtual unsigned int Width() const;
+        virtual unsigned int Height() const;
         virtual int ColorComponents() const;
         virtual unsigned int TargetFormat() const;
         virtual bool HasAlpha() const;

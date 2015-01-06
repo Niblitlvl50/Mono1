@@ -25,8 +25,8 @@ namespace mono
         
     private:
         
-        virtual void OnKeyDown(unsigned int key);
-        virtual void OnKeyUp(unsigned int key);
+        virtual void OnKeyDown(int key);
+        virtual void OnKeyUp(int key);
         virtual void OnMouseDown(unsigned int button, int x, int y);
         virtual void OnMouseUp(unsigned int button, int x, int y);
         virtual void OnMouseMotion(int x, int y);
@@ -34,7 +34,7 @@ namespace mono
         virtual void OnTouchDown(float x, float y, float dx, float dy);
         virtual void OnTouchUp(float x, float y, float dx, float dy);
         virtual void OnTouchMotion(float x, float y, float dx, float dy);
-        virtual void OnMultiGesture(int x, int y, float theta, float distance);
+        virtual void OnMultiGesture(float x, float y, float theta, float distance);
         virtual void OnUserEvent(int code, void* data1, void* data2);
         virtual void OnQuit();
 

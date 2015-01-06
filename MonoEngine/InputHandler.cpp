@@ -31,7 +31,7 @@ InputHandler::InputHandler(const CoordinateFunc& func, EventHandler& eventHandle
       mEventHandler(eventHandler)
 { }
 
-void InputHandler::OnKeyDown(unsigned int key)
+void InputHandler::OnKeyDown(int key)
 {
     if(key == SDLK_ESCAPE)
         return;
@@ -40,7 +40,7 @@ void InputHandler::OnKeyDown(unsigned int key)
     mEventHandler.DispatchEvent(event);
 }
 
-void InputHandler::OnKeyUp(unsigned int key)
+void InputHandler::OnKeyUp(int key)
 {
     if(key == SDLK_ESCAPE)
     {
@@ -105,13 +105,13 @@ void InputHandler::OnTouchMotion(float x, float y, float dx, float dy)
     mEventHandler.DispatchEvent(event);
 }
 
-void InputHandler::OnMultiGesture(int x, int y, float theta, float distance)
+void InputHandler::OnMultiGesture(float x, float y, float theta, float distance)
 {
     const Event::MultiGestureEvent event(x, y, theta, distance);
     mEventHandler.DispatchEvent(event);
 }
 
-void InputHandler::OnUserEvent(int code, void* data1, void* data2)
+void InputHandler::OnUserEvent(int, void*, void*)
 { }
 
 void InputHandler::OnQuit()

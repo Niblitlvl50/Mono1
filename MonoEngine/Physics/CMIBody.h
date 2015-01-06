@@ -47,7 +47,7 @@ namespace cm
         virtual float GetAngle() const = 0;
         
         //! Sets the moment(inertia)
-        //! @param moment 
+        //! @param moment Moment
         virtual void SetMoment(float moment) = 0;
         
         //! Gets the moment(inertia) of the body

@@ -15,7 +15,7 @@ namespace
 {
     struct Bitmap : public mono::IImage
     {
-        Bitmap(const byte* data, int width, int height, int colorComponents, unsigned int targetFormat)
+        Bitmap(const byte* data, unsigned int width, unsigned int height, int colorComponents, unsigned int targetFormat)
             : mData(data),
               mWidth(width),
               mHeight(height),
@@ -28,11 +28,11 @@ namespace
         {
             return mData;
         }
-        virtual int Width() const
+        virtual unsigned int Width() const
         {
             return mWidth;
         }
-        virtual int Height() const
+        virtual unsigned int Height() const
         {
             return mHeight;
         }
@@ -50,8 +50,8 @@ namespace
         }
 
         const byte* mData;
-        const int mWidth;
-        const int mHeight;
+        const unsigned int mWidth;
+        const unsigned int mHeight;
         const int mColorComponents;
         const unsigned int mTargetFormat;
         const bool mAlpha;

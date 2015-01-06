@@ -24,8 +24,8 @@ namespace mono
         virtual unsigned int GetShaderId() const;
         virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview);
 
-        virtual int GetPositionAttributeLocation() const;
-        virtual int GetTextureAttributeLocation() const;
+        virtual unsigned int GetPositionAttributeLocation() const;
+        virtual unsigned int GetTextureAttributeLocation() const;
 
         virtual void SetShade(const mono::Color& color);
         virtual void SetAlphaTexture(bool isAlpha);
@@ -37,8 +37,8 @@ namespace mono
         int mMVMatrixLocation;
         int mPMatrixLocation;
 
-        int mPositionAttributeLocation;
-        int mTextureAttributeLocation;
+        unsigned int mPositionAttributeLocation;
+        unsigned int mTextureAttributeLocation;
 
         int mSamplerLocation;
         int mColorShadeLocation;

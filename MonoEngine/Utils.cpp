@@ -20,7 +20,7 @@ FPSCounter::FPSCounter()
       mFps(0)
 { }
 
-void FPSCounter::operator ++ (int i)
+void FPSCounter::operator ++ (int)
 {
     ++mFrames;
     ++mTotalFrames;
@@ -30,7 +30,7 @@ void FPSCounter::operator ++ (int i)
     if(delta >= 1000)
     {
         mTime = currentTime;
-        mFps = std::floor(float(mFrames) / 1.0f);
+        mFps = (unsigned int)std::floor(float(mFrames) / 1.0f);
         mFrames = 0;
     }    
 }

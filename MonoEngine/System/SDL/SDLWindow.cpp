@@ -59,7 +59,7 @@ namespace
 }
 
 
-SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fullscreen)
+SDLWindow::SDLWindow(const std::string& title, int width, int height, bool)
     : mSize(width, height),
       mWindow(nullptr),
       mContext(nullptr)
@@ -67,6 +67,7 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
     /* Request opengl 2.1 context.
      * SDL doesn't have the ability to choose which profile at this time of writing,
      * but it should default to the core profile */
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
     
@@ -75,7 +76,6 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
-    SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 1);
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
     //const unsigned int screenflag = fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE;
@@ -84,7 +84,7 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool fulls
     // Create our window centered and with the given resolution
     mWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
     if(!mWindow)
-        throw std::runtime_error("Unable to create sdl window");
+        throw std::runtime_error("Unable to create SDL window");
 
     mContext = SDL_GL_CreateContext(mWindow);
     if(!mContext)
@@ -108,7 +108,7 @@ void SDLWindow::SurfaceChanged(int width, int height)
     mSize = math::Vector2f(width, height);
 }
 
-void SDLWindow::Activated(bool activated)
+void SDLWindow::Activated(bool)
 { }
 
 void SDLWindow::MakeCurrent()

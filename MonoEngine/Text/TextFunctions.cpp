@@ -82,7 +82,7 @@ void mono::LoadFont(const std::string& font, float size, float scale)
         data.texCoordY1 = bakedchar.y0 * texCoordYMulti;
         
         // For the correct char we need to add base to the index.
-        const char thechar = index + base;
+        const char thechar = static_cast<char>(index + base);
         charMap[thechar] = data;
     }
 }

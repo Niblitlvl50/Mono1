@@ -38,14 +38,14 @@ namespace
         
         virtual math::Vector2f GetPositionByLength(float length) const
         {
-            float lengthCounter = 0;
             math::Vector2f last = mPath.front();
             if(length == 0)
                 return last;
             
+            float lengthCounter = 0;
+
             for(const auto& point : mPath)
             {
-                // Do something...
                 const math::Vector2f& diff = point - last;
                 const float diffLength = math::Length(diff);
                 lengthCounter += diffLength;
@@ -65,7 +65,17 @@ namespace
             
             return math::Vector2f();
         }
-        
+
+        virtual size_t Points() const
+        {
+            return mPath.size();
+        }
+
+        virtual math::Vector2f GetPointByIndex(size_t index) const
+        {
+            return mPath[index];
+        }
+
         const std::vector<math::Vector2f> mPath;
         float mLength;
     };
@@ -74,7 +84,7 @@ namespace
 std::shared_ptr<mono::IPath> mono::CreatePath(const std::string& pathFile)
 {
     lua::LuaState config(pathFile);
-    const lua::MapIntFloatTable table = lua::GetTableMap<int, float>(config, "path");
+    const lua::MapIntFloatTable& table = lua::GetTableMap<int, float>(config, "path");
 
     std::vector<math::Vector2f> coords;
     coords.reserve(table.size());

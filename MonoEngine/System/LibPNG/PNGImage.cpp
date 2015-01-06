@@ -115,12 +115,12 @@ const byte* PNGImage::Data() const
     return mData.get();
 }
 
-int PNGImage::Width() const
+unsigned int PNGImage::Width() const
 {
     return mWidth;
 }
 
-int PNGImage::Height() const
+unsigned int PNGImage::Height() const
 {
     return mHeight;
 }

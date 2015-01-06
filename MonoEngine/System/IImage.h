@@ -23,10 +23,10 @@ namespace mono
         virtual const byte* Data() const = 0;
 
         //! Return the width
-        virtual int Width() const = 0;
+        virtual unsigned int Width() const = 0;
 
         //! Return the height
-        virtual int Height() const = 0;
+        virtual unsigned int Height() const = 0;
 
         //! I dont know!
         virtual int ColorComponents() const = 0;

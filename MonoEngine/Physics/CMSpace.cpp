@@ -22,7 +22,7 @@ using namespace cm;
 
 Space::Space(const math::Vector2f& gravity, float damping)
 {
-    const auto beginFunc = [](cpArbiter* arb, cpSpace* space, void* data) -> cpBool {
+    const auto beginFunc = [](cpArbiter* arb, cpSpace*, void* data) -> cpBool {
         return static_cast<Space*>(data)->OnCollision(arb);
     };
 
@@ -123,7 +123,7 @@ bool Space::OnCollision(cpArbiter* arb)
     return true;
 }
 
-void Space::OnPostStep(void* object, void* data)
+void Space::OnPostStep(void* object, void*)
 {
     for(auto& body : mBodies)
     {

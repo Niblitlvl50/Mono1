@@ -19,8 +19,8 @@ namespace mono
         virtual ~IColorShader()
         { }
 
-        virtual int GetPositionAttributeLocation() const = 0;
-        virtual int GetColorAttributeLocation() const = 0;
+        virtual unsigned int GetPositionAttributeLocation() const = 0;
+        virtual unsigned int GetColorAttributeLocation() const = 0;
     };
 }
 

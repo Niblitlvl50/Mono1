@@ -35,7 +35,7 @@ void mono::DrawQuad(const math::Quad& quad,
 
 void mono::DrawCircle(const math::Vector2f& position,
                       float radie,
-                      int segments,
+                      unsigned int segments,
                       const mono::Color& color,
                       const std::shared_ptr<IColorShader>& shader)
 {
@@ -44,7 +44,7 @@ void mono::DrawCircle(const math::Vector2f& position,
 
     const float coef = 2.0f * math::PI() / float(segments);
     
-	for(int index = 0; index < segments; ++index)
+	for(unsigned int index = 0; index < segments; ++index)
 	{
 		const float radians = index * coef;
 		const float x = radie * std::cos(radians) + position.mX;
@@ -106,7 +106,7 @@ void mono::DrawTexts(const std::vector<TextDefinition>& texts, const std::shared
 
         // Number of chars in the text, times 3 since each triangle contains 3 vertices,
         // times 2 since each char containts two triangles.
-        const int verticesToDraw = text.chars * 3 * 2;
+        const int verticesToDraw = (int)text.chars * 3 * 2;
 
         glDrawArrays(GL_TRIANGLES, 0, verticesToDraw);
     }

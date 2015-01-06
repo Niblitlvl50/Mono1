@@ -53,8 +53,8 @@ ColorShader::ColorShader()
     mMVMatrixLocation = glGetUniformLocation(mProgram, "mv_matrix");
     mPMatrixLocation = glGetUniformLocation(mProgram, "p_matrix");
 
-    mPositionAttributeLocation = glGetAttribLocation(mProgram, "vertexPosition");
-    mColorAttributeLocation = glGetAttribLocation(mProgram, "vertexColor");
+    mPositionAttributeLocation = (unsigned int)glGetAttribLocation(mProgram, "vertexPosition");
+    mColorAttributeLocation = (unsigned int)glGetAttribLocation(mProgram, "vertexColor");
 }
 
 void ColorShader::Use()
@@ -78,12 +78,12 @@ void ColorShader::LoadMatrices(const math::Matrix& projection, const math::Matri
     glUniformMatrix4fv(mMVMatrixLocation, 1, GL_FALSE, modelview.data);
 }
 
-int ColorShader::GetPositionAttributeLocation() const
+unsigned int ColorShader::GetPositionAttributeLocation() const
 {
     return mPositionAttributeLocation;
 }
 
-int ColorShader::GetColorAttributeLocation() const
+unsigned int ColorShader::GetColorAttributeLocation() const
 {
     return mColorAttributeLocation;
 }

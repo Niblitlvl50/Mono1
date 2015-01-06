@@ -140,12 +140,12 @@ namespace
         virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview)
         { }
 
-        virtual int GetPositionAttributeLocation() const
+        virtual unsigned int GetPositionAttributeLocation() const
         {
             return 0;
         }
 
-        virtual int GetColorAttributeLocation() const
+        virtual unsigned int GetColorAttributeLocation() const
         {
             return 0;
         }
@@ -165,12 +165,12 @@ namespace
         virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview)
         { }
 
-        virtual int GetPositionAttributeLocation() const
+        virtual unsigned int GetPositionAttributeLocation() const
         {
             return 0;
         }
 
-        virtual int GetTextureAttributeLocation() const
+        virtual unsigned int GetTextureAttributeLocation() const
         {
             return 0;
         }
@@ -207,7 +207,7 @@ TEST(EngineTest, Basic)
     std::shared_ptr<MocZone> zone = std::make_shared<MocZone>();
     
     {
-        mono::Engine engine(60.0f, window, camera, handler);
+        mono::Engine engine(window, camera, handler);
         EXPECT_NO_THROW(engine.Run(zone));
     }
 

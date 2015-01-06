@@ -12,11 +12,11 @@ namespace Event
 {
     struct KeyDownEvent
     {
-        KeyDownEvent(unsigned int key)
+        KeyDownEvent(int key)
             : mKey(key)
         { }
         
-        const unsigned int mKey;
+        const int mKey;
     };
 }
 

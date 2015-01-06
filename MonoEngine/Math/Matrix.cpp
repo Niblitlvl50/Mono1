@@ -187,9 +187,9 @@ math::Matrix math::Ortho(float left, float right, float bottom, float top, float
 {
     math::Matrix matrix;
 
-    matrix.data[0]  =  2.0 / right - left;
-    matrix.data[5]  =  2.0 / top - bottom;
-    matrix.data[10] = -2.0 / far - near;
+    matrix.data[0]  =  2.0f / right - left;
+    matrix.data[5]  =  2.0f / top - bottom;
+    matrix.data[10] = -2.0f / far - near;
     matrix.data[12]  = - (right + left) / (right - left);
     matrix.data[13]  = - (top + bottom) / (top - bottom);
     matrix.data[14] = - (far + near) / (far - near);

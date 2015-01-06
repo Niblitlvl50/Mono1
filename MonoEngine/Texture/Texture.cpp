@@ -9,25 +9,28 @@
 #include "Texture.h"
 #include "SysOpenGL.h"
 #include <iostream>
+#include <limits>
 
 using namespace mono;
 
 namespace
 {
-    int NextPowerOfTwo(int x)
+    unsigned int NextPowerOfTwo(unsigned int x)
     {
-        int val = 1;
+        unsigned int val = 1;
         while(val < x)
             val *= 2;
 
         return val;
     }
+
+    constexpr unsigned int NO_BOUND_TEXTURE = std::numeric_limits<unsigned int>::max();
 }
 
-unsigned int mono::Texture::sBoundTexture = -1;
+unsigned int mono::Texture::sBoundTexture = NO_BOUND_TEXTURE;
 
 Texture::Texture(IImagePtr image)
-    : mTextureId(-1),
+    : mTextureId(NO_BOUND_TEXTURE),
       mWidth(image->Width()),
       mHeight(image->Height())
 {
@@ -35,12 +38,12 @@ Texture::Texture(IImagePtr image)
     glBindTexture(GL_TEXTURE_2D, mTextureId);
     
     const int internalFormat = image->ColorComponents();
-    const int width = NextPowerOfTwo(image->Width());
-    const int height = NextPowerOfTwo(image->Height());
+    const unsigned int width = NextPowerOfTwo(image->Width());
+    const unsigned int height = NextPowerOfTwo(image->Height());
     const unsigned int sourceFormat = image->TargetFormat();
     const byte* data = image->Data();
     
-    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, sourceFormat, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, (int)width, (int)height, 0, sourceFormat, GL_UNSIGNED_BYTE, data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -65,12 +68,12 @@ void Texture::Use() const
     }
 }
 
-int Texture::Width() const
+unsigned int Texture::Width() const
 {
     return mWidth;
 }
 
-int Texture::Height() const
+unsigned int Texture::Height() const
 {
     return mHeight;
 }
@@ -78,5 +81,5 @@ int Texture::Height() const
 void Texture::Clear()
 {
     glBindTexture(GL_TEXTURE_2D, 0);
-    sBoundTexture = -1;
+    sBoundTexture = NO_BOUND_TEXTURE;
 }

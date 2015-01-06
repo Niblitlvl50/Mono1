@@ -28,7 +28,7 @@ namespace mono
     //! Draws a circle
     void DrawCircle(const math::Vector2f& position,
                     float radie,
-                    int segments,
+                    unsigned int segments,
                     const mono::Color& color,
                     const std::shared_ptr<IColorShader>& shader);
     

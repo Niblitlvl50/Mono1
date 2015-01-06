@@ -23,8 +23,8 @@ namespace mono
         virtual unsigned int GetShaderId() const;
         virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview);
 
-        virtual int GetPositionAttributeLocation() const;
-        virtual int GetColorAttributeLocation() const;
+        virtual unsigned int GetPositionAttributeLocation() const;
+        virtual unsigned int GetColorAttributeLocation() const;
 
     private:
 
@@ -33,7 +33,7 @@ namespace mono
         int mMVMatrixLocation;
         int mPMatrixLocation;
         
-        int mPositionAttributeLocation;
-        int mColorAttributeLocation;
+        unsigned int mPositionAttributeLocation;
+        unsigned int mColorAttributeLocation;
     };
 }

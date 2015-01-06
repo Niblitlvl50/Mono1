@@ -17,8 +17,8 @@ namespace mono
         virtual ~IInputHandler()
         { }
 		
-        virtual void OnKeyDown(unsigned int key) = 0;
-        virtual void OnKeyUp(unsigned int key) = 0;
+        virtual void OnKeyDown(int key) = 0;
+        virtual void OnKeyUp(int key) = 0;
         virtual void OnMouseDown(unsigned int button, int x, int y) = 0;
         virtual void OnMouseUp(unsigned int button, int x, int y) = 0;
         virtual void OnMouseMotion(int x, int y) = 0;
@@ -26,7 +26,7 @@ namespace mono
         virtual void OnTouchDown(float x, float y, float dx, float dy) = 0;
         virtual void OnTouchUp(float x, float y, float dx, float dy) = 0;
         virtual void OnTouchMotion(float x, float y, float dx, float dy) = 0;
-        virtual void OnMultiGesture(int x, int y, float theta, float distance) = 0;
+        virtual void OnMultiGesture(float x, float y, float theta, float distance) = 0;
         virtual void OnUserEvent(int code, void* data1, void* data2) = 0;
         virtual void OnQuit() = 0;
 

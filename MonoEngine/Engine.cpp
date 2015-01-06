@@ -52,10 +52,9 @@ namespace Func
 }
 
 
-Engine::Engine(unsigned int hz, IWindowPtr window, ICameraPtr camera, EventHandler& eventHandler)
+Engine::Engine(IWindowPtr window, ICameraPtr camera, EventHandler& eventHandler)
     : mPause(false),
       mQuit(false),
-      mHz(hz),
       mWindow(window),
       mCamera(camera),
       mEventHandler(eventHandler)
@@ -120,7 +119,7 @@ void Engine::Run(IZonePtr zone)
     zone->OnUnload();
 }
 
-void Engine::OnPause(const Event::PauseEvent& event)
+void Engine::OnPause(const Event::PauseEvent&)
 {
     mPause = !mPause;
 }

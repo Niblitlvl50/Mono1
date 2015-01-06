@@ -21,11 +21,11 @@ namespace mono
 
         //! Get the width of the texture
         //! \return int
-        virtual int Width() const = 0;
+        virtual unsigned int Width() const = 0;
 
         //! Get the height of the texture
         //! \return int
-        virtual int Height() const = 0;
+        virtual unsigned int Height() const = 0;
     };
 }
 
