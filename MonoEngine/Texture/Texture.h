@@ -21,8 +21,6 @@ namespace mono
         Texture(IImagePtr image);
         ~Texture();
         
-        static void Clear();
-
     private:
         virtual void Use() const;
         virtual unsigned int Width() const;

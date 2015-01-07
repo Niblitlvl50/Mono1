@@ -77,9 +77,3 @@ unsigned int Texture::Height() const
 {
     return mHeight;
 }
-
-void Texture::Clear()
-{
-    glBindTexture(GL_TEXTURE_2D, 0);
-    sBoundTexture = NO_BOUND_TEXTURE;
-}

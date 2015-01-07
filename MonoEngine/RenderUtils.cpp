@@ -8,12 +8,11 @@
 
 #include "RenderUtils.h"
 #include "Quad.h"
-#include "Texture.h"
 #include "Sprite.h"
 #include "SysOpenGL.h"
 #include "MathFunctions.h"
 #include "TextDefinition.h"
-
+#include "ITexture.h"
 #include "IColorShader.h"
 #include "ITextureShader.h"
 
