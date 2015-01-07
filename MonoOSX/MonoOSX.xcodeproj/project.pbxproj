@@ -99,7 +99,7 @@
 		2BBA5A82160A578100D8D38E /* cpSpatialIndex.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A64160A578100D8D38E /* cpSpatialIndex.c */; };
 		2BBA5A83160A578100D8D38E /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A65160A578100D8D38E /* cpSweep1D.c */; };
 		2BBA5A84160A578100D8D38E /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A66160A578100D8D38E /* cpVect.c */; };
-		2BBA5A85160A578100D8D38E /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BBA5A67160A578100D8D38E /* prime.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2BBA5A85160A578100D8D38E /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BBA5A67160A578100D8D38E /* prime.h */; };
 		2BBA5A87160A57D100D8D38E /* MultiGestureEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BBA5A86160A57D100D8D38E /* MultiGestureEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BBA5A96160A5D7900D8D38E /* SysVideo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A94160A5D7900D8D38E /* SysVideo.cpp */; };
 		2BBA5A97160A5D7900D8D38E /* SysVideo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BBA5A95160A5D7900D8D38E /* SysVideo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -253,29 +253,29 @@
 		9163C0CF1826DE4C00832128 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0B51826DE4C00832128 /* adler32.c */; };
 		9163C0D01826DE4C00832128 /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0B61826DE4C00832128 /* compress.c */; };
 		9163C0D11826DE4C00832128 /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0B71826DE4C00832128 /* crc32.c */; };
-		9163C0D21826DE4C00832128 /* crc32.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0B81826DE4C00832128 /* crc32.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9163C0D21826DE4C00832128 /* crc32.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0B81826DE4C00832128 /* crc32.h */; };
 		9163C0D31826DE4C00832128 /* deflate.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0B91826DE4C00832128 /* deflate.c */; };
-		9163C0D41826DE4C00832128 /* deflate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0BA1826DE4C00832128 /* deflate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9163C0D41826DE4C00832128 /* deflate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0BA1826DE4C00832128 /* deflate.h */; };
 		9163C0D51826DE4C00832128 /* gzclose.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0BB1826DE4C00832128 /* gzclose.c */; };
-		9163C0D61826DE4C00832128 /* gzguts.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0BC1826DE4C00832128 /* gzguts.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9163C0D61826DE4C00832128 /* gzguts.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0BC1826DE4C00832128 /* gzguts.h */; };
 		9163C0D71826DE4C00832128 /* gzlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0BD1826DE4C00832128 /* gzlib.c */; };
 		9163C0D81826DE4C00832128 /* gzread.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0BE1826DE4C00832128 /* gzread.c */; };
 		9163C0D91826DE4C00832128 /* gzwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0BF1826DE4C00832128 /* gzwrite.c */; };
 		9163C0DA1826DE4C00832128 /* infback.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0C01826DE4C00832128 /* infback.c */; };
 		9163C0DB1826DE4C00832128 /* inffast.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0C11826DE4C00832128 /* inffast.c */; };
-		9163C0DC1826DE4C00832128 /* inffast.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0C21826DE4C00832128 /* inffast.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		9163C0DD1826DE4C00832128 /* inffixed.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0C31826DE4C00832128 /* inffixed.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9163C0DC1826DE4C00832128 /* inffast.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0C21826DE4C00832128 /* inffast.h */; };
+		9163C0DD1826DE4C00832128 /* inffixed.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0C31826DE4C00832128 /* inffixed.h */; };
 		9163C0DE1826DE4C00832128 /* inflate.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0C41826DE4C00832128 /* inflate.c */; };
-		9163C0DF1826DE4C00832128 /* inflate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0C51826DE4C00832128 /* inflate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9163C0DF1826DE4C00832128 /* inflate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0C51826DE4C00832128 /* inflate.h */; };
 		9163C0E01826DE4C00832128 /* inftrees.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0C61826DE4C00832128 /* inftrees.c */; };
-		9163C0E11826DE4C00832128 /* inftrees.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0C71826DE4C00832128 /* inftrees.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9163C0E11826DE4C00832128 /* inftrees.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0C71826DE4C00832128 /* inftrees.h */; };
 		9163C0E21826DE4C00832128 /* trees.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0C81826DE4C00832128 /* trees.c */; };
-		9163C0E31826DE4C00832128 /* trees.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0C91826DE4C00832128 /* trees.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9163C0E31826DE4C00832128 /* trees.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0C91826DE4C00832128 /* trees.h */; };
 		9163C0E41826DE4C00832128 /* uncompr.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0CA1826DE4C00832128 /* uncompr.c */; };
-		9163C0E51826DE4C00832128 /* zconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0CB1826DE4C00832128 /* zconf.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		9163C0E61826DE4C00832128 /* zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0CC1826DE4C00832128 /* zlib.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9163C0E51826DE4C00832128 /* zconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0CB1826DE4C00832128 /* zconf.h */; };
+		9163C0E61826DE4C00832128 /* zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0CC1826DE4C00832128 /* zlib.h */; };
 		9163C0E71826DE4C00832128 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0CD1826DE4C00832128 /* zutil.c */; };
-		9163C0E81826DE4C00832128 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0CE1826DE4C00832128 /* zutil.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9163C0E81826DE4C00832128 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0CE1826DE4C00832128 /* zutil.h */; };
 		9181E5281841133900678586 /* Color.h in Headers */ = {isa = PBXBuildFile; fileRef = 9181E5241841133900678586 /* Color.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9181E5291841133900678586 /* IPhysicsEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 9181E5251841133900678586 /* IPhysicsEntity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9181E52A1841133900678586 /* IPhysicsZone.h in Headers */ = {isa = PBXBuildFile; fileRef = 9181E5261841133900678586 /* IPhysicsZone.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -292,7 +292,6 @@
 		9181E5641841F6F000678586 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8217D3C8BC004F1868 /* AudioToolbox.framework */; };
 		9181E5651841F6F400678586 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8417D3C8C0004F1868 /* AudioUnit.framework */; };
 		9181E5671841F70D00678586 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8617D3C8D5004F1868 /* IOKit.framework */; };
-		9181E5681841F71B00678586 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8A17D3C8F2004F1868 /* ForceFeedback.framework */; };
 		9181E5691841F72B00678586 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8C17D3C8FF004F1868 /* Carbon.framework */; };
 		9181E56A1841F73800678586 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE4748B1532038B00CA5ACB /* OpenGL.framework */; };
 		9181E56C18428CD800678586 /* firebullet.sprite in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BFF896F1707622400499D08 /* firebullet.sprite */; };
@@ -306,6 +305,7 @@
 		9181E57418428CD800678586 /* Ryu.sprite in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BCDDCE2154BEA2A005D8520 /* Ryu.sprite */; };
 		918A19B11A190FF90067BB36 /* Rocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 918A19AF1A190FF90067BB36 /* Rocket.cpp */; };
 		918A19B41A19132E0067BB36 /* Quad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 918A19B31A19132E0067BB36 /* Quad.cpp */; };
+		91B56C581A5DD7390009B6D4 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8A17D3C8F2004F1868 /* ForceFeedback.framework */; };
 		91B63F7D17D3C545004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F7C17D3C545004F1868 /* libSDL2.a */; };
 		91B63F8E17D3CB40004F1868 /* MonoEngine.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6872DC1531FEA800B8C2FB /* MonoEngine.lib */; };
 		91B63F8F17D3CB6B004F1868 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8C17D3C8FF004F1868 /* Carbon.framework */; };
@@ -777,12 +777,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91B56C581A5DD7390009B6D4 /* ForceFeedback.framework in Frameworks */,
 				9181E5641841F6F000678586 /* AudioToolbox.framework in Frameworks */,
 				9181E5651841F6F400678586 /* AudioUnit.framework in Frameworks */,
 				9181E5691841F72B00678586 /* Carbon.framework in Frameworks */,
 				9181E5621841F6DE00678586 /* Cocoa.framework in Frameworks */,
 				9181E5631841F6E400678586 /* CoreAudio.framework in Frameworks */,
-				9181E5681841F71B00678586 /* ForceFeedback.framework in Frameworks */,
 				9181E5671841F70D00678586 /* IOKit.framework in Frameworks */,
 				9181E56A1841F73800678586 /* OpenGL.framework in Frameworks */,
 				2BD1E63515320A3A00A75171 /* MonoEngine.lib in Frameworks */,
@@ -1591,18 +1591,6 @@
 				91C8A2231882CA4B00283CD7 /* Point.h in Headers */,
 				911840591A5C8E81006301E2 /* IShaderFactory.h in Headers */,
 				9181E52B1841133900678586 /* MonoPtrFwd.h in Headers */,
-				9163C0DF1826DE4C00832128 /* inflate.h in Headers */,
-				9163C0E61826DE4C00832128 /* zlib.h in Headers */,
-				9163C0E31826DE4C00832128 /* trees.h in Headers */,
-				9163C0DC1826DE4C00832128 /* inffast.h in Headers */,
-				9163C0E11826DE4C00832128 /* inftrees.h in Headers */,
-				9163C0D61826DE4C00832128 /* gzguts.h in Headers */,
-				9163C0DD1826DE4C00832128 /* inffixed.h in Headers */,
-				9163C0E81826DE4C00832128 /* zutil.h in Headers */,
-				9163C0D41826DE4C00832128 /* deflate.h in Headers */,
-				2BBA5A85160A578100D8D38E /* prime.h in Headers */,
-				9163C0D21826DE4C00832128 /* crc32.h in Headers */,
-				9163C0E51826DE4C00832128 /* zconf.h in Headers */,
 				9181E5281841133900678586 /* Color.h in Headers */,
 				911840541A5C8DBC006301E2 /* LuaFunctions.h in Headers */,
 				9181E52D184113D300678586 /* EventFuncFwd.h in Headers */,
@@ -1629,6 +1617,18 @@
 				9181E5291841133900678586 /* IPhysicsEntity.h in Headers */,
 				2BFC221C16FA56CF00EBEAFB /* SpriteAttributes.h in Headers */,
 				2B88ED04170849E400E4C238 /* PhysicsEntityBase.h in Headers */,
+				9163C0DF1826DE4C00832128 /* inflate.h in Headers */,
+				9163C0E61826DE4C00832128 /* zlib.h in Headers */,
+				9163C0E31826DE4C00832128 /* trees.h in Headers */,
+				9163C0DC1826DE4C00832128 /* inffast.h in Headers */,
+				9163C0E11826DE4C00832128 /* inftrees.h in Headers */,
+				9163C0D61826DE4C00832128 /* gzguts.h in Headers */,
+				9163C0DD1826DE4C00832128 /* inffixed.h in Headers */,
+				9163C0E81826DE4C00832128 /* zutil.h in Headers */,
+				9163C0D41826DE4C00832128 /* deflate.h in Headers */,
+				2BBA5A85160A578100D8D38E /* prime.h in Headers */,
+				9163C0D21826DE4C00832128 /* crc32.h in Headers */,
+				9163C0E51826DE4C00832128 /* zconf.h in Headers */,
 				2B4A337215E687CA00390B94 /* cpArbiter.h in Headers */,
 				2B4A337315E687CA00390B94 /* cpBB.h in Headers */,
 				2B4A337415E687CA00390B94 /* cpBody.h in Headers */,
@@ -2007,6 +2007,7 @@
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
+				PRIVATE_HEADERS_FOLDER_PATH = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				VALID_ARCHS = "i386 x86_64";
@@ -2067,6 +2068,7 @@
 				);
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRIVATE_HEADERS_FOLDER_PATH = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				VALID_ARCHS = "i386 x86_64";
