@@ -83,7 +83,7 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool)
 
     // Create our window centered and with the given resolution
     mWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
-    if(!mWindow)
+    if(mWindow == 0)
         throw std::runtime_error("Unable to create SDL window");
 
     mContext = SDL_GL_CreateContext(mWindow);

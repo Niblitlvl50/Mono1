@@ -9,6 +9,7 @@
 #include "SysLibs.h"
 #include "SDL.h"
 #include <stdexcept>
+#include <cstdio>
 
 void Libs::Init()
 {
@@ -16,6 +17,11 @@ void Libs::Init()
     const int result = SDL_Init(SDL_INIT_VIDEO);
     if(result != 0)
         throw std::runtime_error("Couldn't initialize SDL");
+
+    SDL_version version;
+    SDL_GetVersion(&version);
+
+    std::printf("Initiated libSDL, version: %d.%d.%d\n", version.major, version.minor, version.patch);
 }
 
 void Libs::Exit()
