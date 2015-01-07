@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		002F3C0109D093BD00EBEB88 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F3C0009D093BD00EBEB88 /* OpenGL.framework */; };
 		2B069A67156ACD9F00190763 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B069A65156ACD9E00190763 /* Utils.cpp */; };
 		2B069A68156ACD9F00190763 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B069A66156ACD9E00190763 /* Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B0BEEDF162183C300A96003 /* ShuttleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B0BEEDE162183C300A96003 /* ShuttleController.cpp */; };
@@ -306,6 +305,7 @@
 		918A19B11A190FF90067BB36 /* Rocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 918A19AF1A190FF90067BB36 /* Rocket.cpp */; };
 		918A19B41A19132E0067BB36 /* Quad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 918A19B31A19132E0067BB36 /* Quad.cpp */; };
 		91B56C581A5DD7390009B6D4 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8A17D3C8F2004F1868 /* ForceFeedback.framework */; };
+		91B56C591A5DD9B80009B6D4 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE4748B1532038B00CA5ACB /* OpenGL.framework */; };
 		91B63F7D17D3C545004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F7C17D3C545004F1868 /* libSDL2.a */; };
 		91B63F8E17D3CB40004F1868 /* MonoEngine.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6872DC1531FEA800B8C2FB /* MonoEngine.lib */; };
 		91B63F8F17D3CB6B004F1868 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8C17D3C8FF004F1868 /* Carbon.framework */; };
@@ -369,7 +369,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		002F3C0009D093BD00EBEB88 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		2B069A65156ACD9E00190763 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Utils.cpp; path = ../MonoEngine/Utils.cpp; sourceTree = SOURCE_ROOT; };
 		2B069A66156ACD9E00190763 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = ../MonoEngine/Utils.h; sourceTree = SOURCE_ROOT; };
 		2B0BEEDE162183C300A96003 /* ShuttleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShuttleController.cpp; path = ../Game/ShuttleController.cpp; sourceTree = "<group>"; };
@@ -793,6 +792,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91B56C591A5DD9B80009B6D4 /* OpenGL.framework in Frameworks */,
 				91B63F9417D3CB8E004F1868 /* AudioToolbox.framework in Frameworks */,
 				91B63F9317D3CB89004F1868 /* AudioUnit.framework in Frameworks */,
 				91B63F8F17D3CB6B004F1868 /* Carbon.framework in Frameworks */,
@@ -800,7 +800,6 @@
 				91B63F9517D3CB96004F1868 /* CoreAudio.framework in Frameworks */,
 				91B63F9017D3CB72004F1868 /* ForceFeedback.framework in Frameworks */,
 				91B63F9217D3CB81004F1868 /* IOKit.framework in Frameworks */,
-				002F3C0109D093BD00EBEB88 /* OpenGL.framework in Frameworks */,
 				91B63F8E17D3CB40004F1868 /* MonoEngine.lib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1204,19 +1203,10 @@
 			path = constraints;
 			sourceTree = "<group>";
 		};
-		2BD1E5681532068600A75171 /* Linked Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				002F3C0009D093BD00EBEB88 /* OpenGL.framework */,
-			);
-			name = "Linked Frameworks";
-			sourceTree = "<group>";
-		};
 		2BD728AE152B95B60048435D /* Game */ = {
 			isa = PBXGroup;
 			children = (
 				2B75E94516B5534100B84A26 /* Events */,
-				2BD1E5681532068600A75171 /* Linked Frameworks */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				9141B7021826E5BA003B4BDD /* main.cpp */,
 				2BD1E5E41532080500A75171 /* OscillatingLine.cpp */,
