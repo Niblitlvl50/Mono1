@@ -234,7 +234,7 @@
 		911840561A5C8E6B006301E2 /* IShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 91157C371A46F18D0095CBE4 /* IShader.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		911840571A5C8E74006301E2 /* ITextureShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA6031A4DE55E000132B7 /* ITextureShader.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		911840581A5C8E7A006301E2 /* IColorShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA6041A4DE60C000132B7 /* IColorShader.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		911840591A5C8E81006301E2 /* IShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60D1A4E06DE000132B7 /* IShaderFactory.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		911840591A5C8E81006301E2 /* IShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60D1A4E06DE000132B7 /* IShaderFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9141B7031826E5BA003B4BDD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9141B7021826E5BA003B4BDD /* main.cpp */; };
 		914FA5FC1A4C2EFC000132B7 /* ColorShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914FA5FA1A4C2EFC000132B7 /* ColorShader.cpp */; };
 		914FA5FD1A4C2EFC000132B7 /* ColorShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA5FB1A4C2EFC000132B7 /* ColorShader.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -243,7 +243,7 @@
 		914FA60B1A4DEE58000132B7 /* ShaderFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914FA6091A4DEE58000132B7 /* ShaderFunctions.cpp */; };
 		914FA60C1A4DEE58000132B7 /* ShaderFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60A1A4DEE58000132B7 /* ShaderFunctions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		914FA6101A4E078C000132B7 /* ShaderFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914FA60E1A4E078C000132B7 /* ShaderFactory.cpp */; };
-		914FA6111A4E078C000132B7 /* ShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60F1A4E078C000132B7 /* ShaderFactory.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		914FA6111A4E078C000132B7 /* ShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60F1A4E078C000132B7 /* ShaderFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		915E1845186645420000681D /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 915E1843186645420000681D /* PathPoint.cpp */; };
 		9163C0AE1826DCCB00832128 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0AA1826DCCB00832128 /* MathFwd.cpp */; };
 		9163C0AF1826DCCB00832128 /* MathFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0AB1826DCCB00832128 /* MathFwd.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -317,6 +317,7 @@
 		91B63F9617D3CB9C004F1868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F7E17D3C881004F1868 /* Cocoa.framework */; };
 		91C8A2221882CA4B00283CD7 /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91C8A2201882CA4B00283CD7 /* Point.cpp */; };
 		91C8A2231882CA4B00283CD7 /* Point.h in Headers */ = {isa = PBXBuildFile; fileRef = 91C8A2211882CA4B00283CD7 /* Point.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		91D2217B1A5E5D5500415214 /* IAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 91D2217A1A5E5D5500415214 /* IAction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -761,6 +762,7 @@
 		91B63F8C17D3C8FF004F1868 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		91C8A2201882CA4B00283CD7 /* Point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Point.cpp; path = ../MonoEngine/Math/Point.cpp; sourceTree = SOURCE_ROOT; };
 		91C8A2211882CA4B00283CD7 /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Point.h; path = ../MonoEngine/Math/Point.h; sourceTree = SOURCE_ROOT; };
+		91D2217A1A5E5D5500415214 /* IAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAction.h; path = ../MonoEngine/IAction.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1063,6 +1065,7 @@
 				2BE473E3153201CC00CA5ACB /* Events */,
 				2BE473FE153201CC00CA5ACB /* System */,
 				2BE47413153201CC00CA5ACB /* Texture */,
+				91D2217A1A5E5D5500415214 /* IAction.h */,
 				9181E5241841133900678586 /* Color.h */,
 				9181E5251841133900678586 /* IPhysicsEntity.h */,
 				9181E5261841133900678586 /* IPhysicsZone.h */,
@@ -1527,6 +1530,7 @@
 				2BE4741F153201CC00CA5ACB /* EventToken.h in Headers */,
 				2BE47421153201CC00CA5ACB /* EventFwd.h in Headers */,
 				2BE47420153201CC00CA5ACB /* ActivatedEvent.h in Headers */,
+				91D2217B1A5E5D5500415214 /* IAction.h in Headers */,
 				914FA6111A4E078C000132B7 /* ShaderFactory.h in Headers */,
 				911840561A5C8E6B006301E2 /* IShader.h in Headers */,
 				2BE47426153201CC00CA5ACB /* ICamera.h in Headers */,
@@ -1997,7 +2001,7 @@
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
-				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/private;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				VALID_ARCHS = "i386 x86_64";
@@ -2058,7 +2062,7 @@
 				);
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/private;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				VALID_ARCHS = "i386 x86_64";
