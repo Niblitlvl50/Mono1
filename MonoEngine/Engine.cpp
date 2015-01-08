@@ -113,10 +113,15 @@ void Engine::Run(IZonePtr zone)
         // Sleep for a millisecond
         Time::Sleep(1);        
     }
-    
+
     // Remove possible follow entity and unload the zone
     mCamera->Unfollow();
     zone->OnUnload();
+
+    // Reset the quit and pause flag for when you want
+    // to reuse the engine for another zone.
+    mQuit = false;
+    mPause = false;
 }
 
 void Engine::OnPause(const Event::PauseEvent&)

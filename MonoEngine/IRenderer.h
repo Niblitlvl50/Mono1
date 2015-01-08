@@ -31,6 +31,7 @@ namespace mono
         virtual void DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color& color, float size) const = 0;
         virtual void DrawLines(const std::vector<math::Vector2f>& linePoints, const mono::Color& color, float width) const = 0;
         virtual void DrawQuad(const math::Quad& quad, const mono::Color& color, float width) const = 0;
+        virtual void DrawCircle(const math::Vector2f& pos, float radie, int segments, const mono::Color& color) const = 0;
 
         virtual void PushNewTransform(const math::Matrix& transform) = 0;
         virtual const math::Matrix& GetCurrentTransform() const = 0;

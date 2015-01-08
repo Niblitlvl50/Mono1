@@ -142,6 +142,13 @@ void Renderer::DrawQuad(const math::Quad& quad, const mono::Color& color, float 
     ::DrawQuad(quad, color, width, mColorShader);
 }
 
+void Renderer::DrawCircle(const math::Vector2f& pos, float radie, int segments, const mono::Color& color) const
+{
+    mColorShader->Use();
+    mColorShader->LoadMatrices(mProjection, mCurrentTransform);
+    ::DrawCircle(pos, radie, segments, color, mColorShader);
+}
+
 void Renderer::PushNewTransform(const math::Matrix& transform)
 {
     mCurrentTransform = transform;
