@@ -137,6 +137,8 @@ var createPathFiles = function(pathItems)
 			{
 				var point = points[pointIndex]
 				var x = point.anchor[0] - basePoint.anchor[0]
+
+				// Invert the y-axis since these points should be in opengl coordinate system
 				var y = (point.anchor[1] - basePoint.anchor[1]) * -1
 				file.writeln("path[" + pointIndex + "] = { " + x + ", " + y + " }")
 			}
