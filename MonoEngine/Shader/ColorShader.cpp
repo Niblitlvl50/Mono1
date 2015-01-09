@@ -62,20 +62,19 @@ void ColorShader::Use()
     glUseProgram(mProgram);
 }
 
-void ColorShader::Clear()
-{
-    glUseProgram(0);
-}
-
 unsigned int ColorShader::GetShaderId() const
 {
     return mProgram;
 }
 
-void ColorShader::LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview)
+void ColorShader::LoadProjectionMatrix(const math::Matrix& projection)
 {
     glUniformMatrix4fv(mPMatrixLocation, 1, GL_FALSE, projection.data);
-    glUniformMatrix4fv(mMVMatrixLocation, 1, GL_FALSE, modelview.data);
+}
+
+void ColorShader::LoadModelViewMatrix(const math::Matrix& modelView)
+{
+    glUniformMatrix4fv(mMVMatrixLocation, 1, GL_FALSE, modelView.data);
 }
 
 unsigned int ColorShader::GetPositionAttributeLocation() const

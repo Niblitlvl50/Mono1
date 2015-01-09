@@ -19,9 +19,9 @@ namespace mono
         ColorShader();
 
         virtual void Use();
-        virtual void Clear();
         virtual unsigned int GetShaderId() const;
-        virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview);
+        virtual void LoadProjectionMatrix(const math::Matrix& projection);
+        virtual void LoadModelViewMatrix(const math::Matrix& modelView);
 
         virtual unsigned int GetPositionAttributeLocation() const;
         virtual unsigned int GetColorAttributeLocation() const;

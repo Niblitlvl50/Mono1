@@ -29,6 +29,7 @@ namespace mono
     void DrawCircle(const math::Vector2f& position,
                     float radie,
                     unsigned int segments,
+                    float lineWidth,
                     const mono::Color& color,
                     const std::shared_ptr<IColorShader>& shader);
     

@@ -80,20 +80,19 @@ void TextureShader::Use()
     glUseProgram(mProgram);
 }
 
-void TextureShader::Clear()
-{
-    glUseProgram(0);
-}
-
 unsigned int TextureShader::GetShaderId() const
 {
     return mProgram;
 }
 
-void TextureShader::LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview)
+void TextureShader::LoadProjectionMatrix(const math::Matrix& projection)
 {
     glUniformMatrix4fv(mPMatrixLocation, 1, GL_FALSE, projection.data);
-    glUniformMatrix4fv(mMVMatrixLocation, 1, GL_FALSE, modelview.data);
+}
+
+void TextureShader::LoadModelViewMatrix(const math::Matrix& modelView)
+{
+    glUniformMatrix4fv(mMVMatrixLocation, 1, GL_FALSE, modelView.data);
 }
 
 unsigned int TextureShader::GetPositionAttributeLocation() const

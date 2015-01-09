@@ -35,11 +35,12 @@ void mono::DrawQuad(const math::Quad& quad,
 void mono::DrawCircle(const math::Vector2f& position,
                       float radie,
                       unsigned int segments,
+                      float lineWidth,
                       const mono::Color& color,
                       const std::shared_ptr<IColorShader>& shader)
 {
     std::vector<math::Vector2f> vertices;
-    vertices.reserve(segments);
+    vertices.reserve(segments +1);
 
     const float coef = 2.0f * math::PI() / float(segments);
     
@@ -52,7 +53,12 @@ void mono::DrawCircle(const math::Vector2f& position,
         vertices.emplace_back(x, y);
 	}
 
-    DrawLine(vertices, color, 1.0f, shader);
+    // Add the last vertex to close the circle
+    const float x = radie * std::cos(0) + position.mX;
+    const float y = radie * std::sin(0) + position.mY;
+    vertices.emplace_back(x, y);
+
+    DrawLine(vertices, color, lineWidth, shader);
 }
 
 void mono::DrawSprite(const mono::Sprite& sprite, const std::shared_ptr<ITextureShader>& shader)

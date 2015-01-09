@@ -20,8 +20,8 @@ namespace mono
         { }
 
         virtual void Use() = 0;
-        virtual void Clear() = 0;
         virtual unsigned int GetShaderId() const = 0;
-        virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview) = 0;
+        virtual void LoadProjectionMatrix(const math::Matrix& projection) = 0;
+        virtual void LoadModelViewMatrix(const math::Matrix& modelView) = 0;
     };
 }
