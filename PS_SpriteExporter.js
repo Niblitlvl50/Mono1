@@ -66,7 +66,7 @@ var createSpriteFilesFromLayers = function(layers)
 		var attributes = checkFileForAttributes(filename, "attributes")
 
 		var file = new File(filename)
-		file.lineFeed = "Macintosh";
+		file.lineFeed = "Macintosh"
 		file.open('w')
 		
 		file.writeln("")
@@ -131,13 +131,13 @@ var createPathFiles = function(pathItems)
 			var points = subItem.pathPoints
 
 			// Let this be the base for the local path coordinate system
-			var basePoint = points[0];
+			var basePoint = points[0]
 
 			for(var pointIndex = 0; pointIndex < points.length; ++pointIndex)
 			{
 				var point = points[pointIndex]
 				var x = point.anchor[0] - basePoint.anchor[0]
-				var y = point.anchor[1] - basePoint.anchor[1]
+				var y = (point.anchor[1] - basePoint.anchor[1]) * -1
 				file.writeln("path[" + pointIndex + "] = { " + x + ", " + y + " }")
 			}
 		}
