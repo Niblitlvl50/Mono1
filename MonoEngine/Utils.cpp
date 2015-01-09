@@ -48,7 +48,8 @@ unsigned int FPSCounter::Frames() const
 
 float mono::Random()
 {
-    static std::default_random_engine engine;
+    constexpr int seed = 666;
+    static std::default_random_engine engine(seed);
     
     std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
     return distribution(engine);
