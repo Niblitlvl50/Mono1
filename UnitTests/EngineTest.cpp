@@ -131,20 +131,18 @@ namespace
         
         virtual void Use()
         { }
-        virtual void Clear()
-        { }
         virtual unsigned int GetShaderId() const
         {
             return 0;
         }
-        virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview)
+        virtual void LoadProjectionMatrix(const math::Matrix& projection)
         { }
-
+        virtual void LoadModelViewMatrix(const math::Matrix& modelView)
+        { }
         virtual unsigned int GetPositionAttributeLocation() const
         {
             return 0;
         }
-
         virtual unsigned int GetColorAttributeLocation() const
         {
             return 0;
@@ -156,25 +154,22 @@ namespace
     public:
         virtual void Use()
         { }
-        virtual void Clear()
-        { }
         virtual unsigned int GetShaderId() const
         {
             return 0;
         }
-        virtual void LoadMatrices(const math::Matrix& projection, const math::Matrix& modelview)
+        virtual void LoadProjectionMatrix(const math::Matrix& projection)
         { }
-
+        virtual void LoadModelViewMatrix(const math::Matrix& modelView)
+        { }
         virtual unsigned int GetPositionAttributeLocation() const
         {
             return 0;
         }
-
         virtual unsigned int GetTextureAttributeLocation() const
         {
             return 0;
         }
-
         virtual void SetShade(const mono::Color& color)
         { }
         virtual void SetAlphaTexture(bool isAlpha)
