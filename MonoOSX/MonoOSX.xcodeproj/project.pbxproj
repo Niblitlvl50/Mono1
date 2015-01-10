@@ -244,6 +244,7 @@
 		914FA60C1A4DEE58000132B7 /* ShaderFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60A1A4DEE58000132B7 /* ShaderFunctions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		914FA6101A4E078C000132B7 /* ShaderFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914FA60E1A4E078C000132B7 /* ShaderFactory.cpp */; };
 		914FA6111A4E078C000132B7 /* ShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60F1A4E078C000132B7 /* ShaderFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		915D48E11A614811009BDC1D /* rektangel.path in CopyFiles */ = {isa = PBXBuildFile; fileRef = 915D48E01A614760009BDC1D /* rektangel.path */; };
 		915E1845186645420000681D /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 915E1843186645420000681D /* PathPoint.cpp */; };
 		9163C0AE1826DCCB00832128 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0AA1826DCCB00832128 /* MathFwd.cpp */; };
 		9163C0AF1826DCCB00832128 /* MathFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0AB1826DCCB00832128 /* MathFwd.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -344,6 +345,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				915D48E11A614811009BDC1D /* rektangel.path in CopyFiles */,
 				9181E558184167D500678586 /* luaconfig.lua in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -671,6 +673,7 @@
 		914FA60D1A4E06DE000132B7 /* IShaderFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IShaderFactory.h; path = ../MonoEngine/Shader/IShaderFactory.h; sourceTree = SOURCE_ROOT; };
 		914FA60E1A4E078C000132B7 /* ShaderFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderFactory.cpp; path = ../MonoEngine/Shader/ShaderFactory.cpp; sourceTree = SOURCE_ROOT; };
 		914FA60F1A4E078C000132B7 /* ShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderFactory.h; path = ../MonoEngine/Shader/ShaderFactory.h; sourceTree = SOURCE_ROOT; };
+		915D48E01A614760009BDC1D /* rektangel.path */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rektangel.path; path = ../UnitTests/TestFiles/rektangel.path; sourceTree = SOURCE_ROOT; };
 		915E1843186645420000681D /* PathPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathPoint.cpp; path = ../Game/PathPoint.cpp; sourceTree = "<group>"; };
 		915E1844186645420000681D /* PathPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathPoint.h; path = ../Game/PathPoint.h; sourceTree = "<group>"; };
 		9163C0AA1826DCCB00832128 /* MathFwd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MathFwd.cpp; path = ../MonoEngine/Math/MathFwd.cpp; sourceTree = SOURCE_ROOT; };
@@ -1360,6 +1363,7 @@
 		2BF8E39D1545FA6700F46049 /* Test Files */ = {
 			isa = PBXGroup;
 			children = (
+				915D48E01A614760009BDC1D /* rektangel.path */,
 				9181E5571841679E00678586 /* luaconfig.lua */,
 			);
 			name = "Test Files";

@@ -1,0 +1,1 @@
+-- This path is exported from Namnlšst-1-- The path variable contains a collection of x and y pairspath = { }path[0] = { 0, 0 }path[1] = { 95.78125, 0 }path[2] = { 95.78125, -71.83984375 }path[3] = { 0, -71.83984375 }

@@ -80,3 +80,29 @@ TEST(PathTest, GetPositionFromComplexPath)
     EXPECT_EQ(10, atLength2.mY);
 }
 
+TEST(PathTest, CreatePathAndGetPointsAndVerifyTheSame)
+{
+    const std::vector<math::Vector2f> coords = { math::Vector2f(0, 0),
+                                                 math::Vector2f(10, 10),
+                                                 math::Vector2f(-100, -777) };
+
+    const std::shared_ptr<mono::IPath> path = mono::CreatePath(coords);
+    EXPECT_EQ(coords, path->GetPathPoints());
+}
+
+TEST(PathTest, CreatePathFromFileAndVerifyCoordinates)
+{
+    const std::vector<math::Vector2f> coords = { math::Vector2f(0, 0),
+                                                 math::Vector2f(95.78125, 0),
+                                                 math::Vector2f(95.78125, -71.83984375),
+                                                 math::Vector2f(0, -71.83984375) };
+
+    const std::shared_ptr<mono::IPath> path = mono::CreatePath("rektangel.path");
+    EXPECT_EQ(coords, path->GetPathPoints());
+}
+
+TEST(PathTest, NonExistingPathFileShouldThrowExpcetion)
+{
+    EXPECT_THROW(mono::CreatePath("whatever"), std::runtime_error);
+}
+
