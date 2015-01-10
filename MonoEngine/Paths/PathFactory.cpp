@@ -66,14 +66,9 @@ namespace
             return math::Vector2f();
         }
 
-        virtual size_t Points() const
+        virtual const std::vector<math::Vector2f>& GetPathPoints() const
         {
-            return mPath.size();
-        }
-
-        virtual math::Vector2f GetPointByIndex(size_t index) const
-        {
-            return mPath[index];
+            return mPath;
         }
 
         const std::vector<math::Vector2f> mPath;

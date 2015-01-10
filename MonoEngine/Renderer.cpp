@@ -146,6 +146,14 @@ void Renderer::DrawLines(const std::vector<math::Vector2f>& linePoints, const mo
     ::DrawLines(linePoints, color, width, mColorShader);
 }
 
+void Renderer::DrawPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color& color, float width) const
+{
+    mColorShader->Use();
+    mColorShader->LoadModelViewMatrix(mCurrentTransform);
+
+    ::DrawLine(linePoints, color, width, mColorShader);
+}
+
 void Renderer::DrawQuad(const math::Quad& quad, const mono::Color& color, float width) const
 {
     mColorShader->Use();

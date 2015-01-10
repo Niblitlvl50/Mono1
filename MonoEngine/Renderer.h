@@ -34,6 +34,7 @@ namespace mono
         virtual void DrawSprite(const Sprite& sprite) const;
         virtual void DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color& color, float size) const;
         virtual void DrawLines(const std::vector<math::Vector2f>& linePoints, const mono::Color& color, float width) const;
+        virtual void DrawPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color& color, float width) const;
         virtual void DrawQuad(const math::Quad& quad, const mono::Color& color, float width) const;
         virtual void DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const mono::Color& color) const;
 

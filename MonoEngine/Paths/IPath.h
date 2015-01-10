@@ -9,6 +9,7 @@
 #pragma once
 
 #include "MathFwd.h"
+#include <vector>
 
 namespace mono
 {
@@ -16,11 +17,14 @@ namespace mono
     {
         virtual ~IPath()
         { }
-        
+
+        // Get total length of the path
         virtual float Length() const = 0;
+
+        // Get a position from a length value
         virtual math::Vector2f GetPositionByLength(float length) const = 0;
 
-        virtual size_t Points() const = 0;
-        virtual math::Vector2f GetPointByIndex(size_t index) const = 0;
+        // Get a collection of all the points that defines the path
+        virtual const std::vector<math::Vector2f>& GetPathPoints() const = 0;
     };
 }
