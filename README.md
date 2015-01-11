@@ -21,7 +21,7 @@ shaderFactory = &factory;
 // Define a mono::Vector2f that specifies how large window you want. There is a 
 // function for checking the current desktop windows size if you want to use that.
 // And that is this function: Video::GetCurrentWindowSize().
-const math::Vector2f& size(800, 600);
+const math::Vector2f size(800, 600);
 
 // Create a window, the last parameter is if you want the window fullscreen or not,
 // although this is disabled for now. 
