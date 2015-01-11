@@ -20,7 +20,7 @@ shaderFactory = &factory;
 
 // Create a window, the last parameter is if you want the window fullscreen or not,
 // although this is disabled for now. 
-mono::IWindowPtr window = mono::CreateWindow("Mono1", 800, 600, false);
+mono::IWindowPtr window = mono::CreateWindow("GameWindow", 800, 600, false);
 
 // Create a camera, there is a "TraceCamera" object in the library but you can create your own
 // by inheriting from the mono::ICamera interface.
