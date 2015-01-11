@@ -36,7 +36,7 @@ mono::Engine engine(window, camera, eventHandler);
 
 // Then you call the Run function and pass in your own "Zone" object, it's an object
 // inheriting from the mono::IZone interface. This is where your game will take place.
-engine.Run(std::make_shared<game::TestZone>(eventHandler));
+engine.Run(std::make_shared<game::GameZone>(eventHandler));
 
 // For good practice, call UnloadFont() when you want to clean up the font.
 mono::UnloadFont();
