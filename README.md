@@ -6,7 +6,7 @@ A 2D SDL2 game engine
 
 Usage
 
-```
+```C++
 // First init the library
 Libs::Init();
 
