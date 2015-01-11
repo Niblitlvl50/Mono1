@@ -30,7 +30,9 @@ mono::IWindowPtr window = mono::CreateWindow("Mono1", size.mX, size.mY, false);
 // by inheriting from the mono::ICamera interface.
 mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.mX, size.mY, eventHandler);
 
-// If you want to use text, you need to load a font. MonoEngine supports truetype fonts.
+// If you want to use text, you need to load a font, and it has to be done after you 
+// have created an OpenGL context, in this case after we created the window.
+// MonoEngine supports truetype fonts.
 mono::LoadFont("pixelette.ttf", 10.0f);
 
 // Create the engine, pass in the window, camera and the event handler
