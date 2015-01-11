@@ -7,6 +7,7 @@ A SDL 2.0 game engine... taking form.
 
 Usage
 
+```
 // First init the library
 Libs::Init();
 
@@ -42,4 +43,4 @@ mono::UnloadFont();
 
 // And lastly, for good practice as well, exit the library
 Libs::Exit();
-
+```
