@@ -63,8 +63,8 @@ void mono::LoadFont(const std::string& font, float size, float scale)
     fontTexture = mono::CreateTexture(bitmap, width, height, ALPHA, ALPHA);
     
 
-    const float texCoordXMulti = 1.0f / width;
-    const float texCoordYMulti = 1.0f / height;
+    constexpr float texCoordXMulti = 1.0f / width;
+    constexpr float texCoordYMulti = 1.0f / height;
     
     for(int index = 0; index < chars; ++index)
     {
