@@ -1,8 +1,7 @@
 Mono1
 =====
 
-A SDL 2.0 game engine... taking form. 
-
+A 2D SDL2 game engine
 
 
 Usage
