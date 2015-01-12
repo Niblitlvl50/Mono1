@@ -1,5 +1,4 @@
 
-#include "SDL.h"
 
 #include "SysLibs.h"
 #include "SysVideo.h"
@@ -10,13 +9,12 @@
 #include "TextFunctions.h"
 #include "Color.h"
 #include "EventHandler.h"
-#include "ShaderFactory.h"
 #include "IWindow.h"
 
 #include <stdexcept>
 #include <iostream>
 
-int main(int argc, char* argv[])
+int main()
 {
     try
     {
@@ -24,10 +22,6 @@ int main(int argc, char* argv[])
 
         // The "global" event handler used throughout the game
         mono::EventHandler eventHandler;
-
-        // Setup the shader factory. Done as a global to be able to test stuff
-        mono::ShaderFactory factory;
-        shaderFactory = &factory;
 
         const math::Vector2f& size = Video::GetCurrentWindowSize(); // / 2;
         mono::IWindowPtr window = mono::CreateWindow("Mono1", size.mX, size.mY, false);
@@ -38,8 +32,6 @@ int main(int argc, char* argv[])
 
         mono::Engine engine(window, camera, eventHandler);
         engine.Run(std::make_shared<game::TestZone>(eventHandler));
-
-        mono::UnloadFont();
     }
     catch(const std::runtime_error& e)
     {

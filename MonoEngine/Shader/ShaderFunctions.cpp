@@ -7,14 +7,22 @@
 //
 
 #include "ShaderFunctions.h"
+#include "IShaderFactory.h"
+#include "ShaderFactory.h"
 #include "SysOpenGL.h"
 
 #include <vector>
 #include <string>
 
-uint mono::CompileShader(uint type, const char* source)
+namespace
 {
-    const GLuint shader = glCreateShader(type);
+    const mono::IShaderFactory* shaderFactory = nullptr;
+}
+
+uint mono::CompileShader(mono::ShaderType type, const char* source)
+{
+    const GLenum shaderType = (type == mono::ShaderType::VERTEX) ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER;
+    const GLuint shader = glCreateShader(shaderType);
 
     glShaderSource(shader, 1, &source, 0);
     glCompileShader(shader);
@@ -83,3 +91,29 @@ uint mono::LinkProgram(uint vertexShader, uint fragmentShader)
 
     return program;
 }
+
+void mono::LoadDefaultShaderFactory()
+{
+    UnloadShaderFactory();
+    shaderFactory = new mono::ShaderFactory;
+}
+
+void mono::LoadCustomShaderFactory(const mono::IShaderFactory* customFactory)
+{
+    UnloadShaderFactory();
+    shaderFactory = customFactory;
+}
+
+const mono::IShaderFactory* mono::GetShaderFactory()
+{
+    return shaderFactory;
+}
+
+void mono::UnloadShaderFactory()
+{
+    if(shaderFactory)
+        delete shaderFactory;
+
+    shaderFactory = nullptr;
+}
+

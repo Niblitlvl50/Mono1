@@ -19,6 +19,7 @@
 #include "TextFunctions.h"
 
 #include "IShaderFactory.h"
+#include "ShaderFunctions.h"
 #include "ITextureShader.h"
 #include "IColorShader.h"
 
@@ -28,8 +29,8 @@ Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
     : mCamera(camera),
       mWindow(window)
 {
-    mColorShader = shaderFactory->CreateColorShader();
-    mTextureShader = shaderFactory->CreateTextureShader();
+    mColorShader = GetShaderFactory()->CreateColorShader();
+    mTextureShader = GetShaderFactory()->CreateTextureShader();
 }
 
 void Renderer::PrepareDraw()

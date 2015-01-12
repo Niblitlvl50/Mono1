@@ -26,5 +26,3 @@ namespace mono
         virtual std::shared_ptr<IColorShader> CreateColorShader() const = 0;
     };
 }
-
-extern mono::IShaderFactory* shaderFactory;

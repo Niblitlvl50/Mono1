@@ -21,5 +21,3 @@ std::shared_ptr<mono::IColorShader> ShaderFactory::CreateColorShader() const
 {
     return std::make_shared<mono::ColorShader>();
 }
-
-mono::IShaderFactory* shaderFactory = nullptr;

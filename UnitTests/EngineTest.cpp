@@ -16,6 +16,7 @@
 #include "IShaderFactory.h"
 #include "IColorShader.h"
 #include "ITextureShader.h"
+#include "ShaderFunctions.h"
 
 #include "Vector2f.h"
 #include "Quad.h"
@@ -194,8 +195,7 @@ namespace
 TEST(EngineTest, Basic)
 {
     mono::EventHandler handler;
-    NullFactory factory;
-    shaderFactory = &factory;
+    mono::LoadCustomShaderFactory(new NullFactory);
 
     std::shared_ptr<MocWindow> window = std::make_shared<MocWindow>(handler);
     std::shared_ptr<MocCamera> camera = std::make_shared<MocCamera>();
@@ -215,5 +215,7 @@ TEST(EngineTest, Basic)
     EXPECT_TRUE(zone->mAcceptCalled);
     EXPECT_TRUE(zone->mOnLoadCalled);
     EXPECT_TRUE(zone->mOnUnloadCalled);
+
+    mono::UnloadShaderFactory();
 }
 

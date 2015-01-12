@@ -45,8 +45,8 @@ using namespace mono;
 
 ColorShader::ColorShader()
 {
-    const GLuint vertexShader = CompileShader(GL_VERTEX_SHADER, vertexSource);
-    const GLuint fragmentShader = CompileShader(GL_FRAGMENT_SHADER, fragmentSource);
+    const GLuint vertexShader = CompileShader(mono::ShaderType::VERTEX, vertexSource);
+    const GLuint fragmentShader = CompileShader(mono::ShaderType::FRAGMENT, fragmentSource);
 
     mProgram = LinkProgram(vertexShader, fragmentShader);
 
