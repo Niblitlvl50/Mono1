@@ -14,10 +14,6 @@ Libs::Init();
 // between objects.
 mono::EventHandler eventHandler;
 
-// Setup the shader factory. Done as a global to be able to test stuff.
-mono::ShaderFactory factory;
-shaderFactory = &factory;
-
 // Create a window, the last parameter is if you want the window fullscreen or not,
 // although this is disabled for now. 
 mono::IWindowPtr window = mono::CreateWindow("GameWindow", 800, 600, false);
@@ -38,9 +34,6 @@ mono::Engine engine(window, camera, eventHandler);
 // inheriting from the mono::IZone interface. This is where your game will take place.
 engine.Run(std::make_shared<game::GameZone>(eventHandler));
 
-// For good practice, call UnloadFont() when you want to clean up the font.
-mono::UnloadFont();
-
-// And lastly, for good practice as well, exit the library.
+// And lastly and for good practice, exit the library.
 Libs::Exit();
 ```
