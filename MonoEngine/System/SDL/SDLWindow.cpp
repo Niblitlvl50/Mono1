@@ -15,7 +15,7 @@
 #include <string>
 #include <iostream>
 
-#include "SDL.h"
+#include "SDL_video.h"
 
 using namespace mono;
 

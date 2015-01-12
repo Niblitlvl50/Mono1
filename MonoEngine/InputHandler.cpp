@@ -22,7 +22,6 @@
 #include "TouchEvent.h"
 #include "MultiGestureEvent.h"
 
-#include "SDL.h"
 
 using namespace mono;
 
@@ -33,23 +32,12 @@ InputHandler::InputHandler(const CoordinateFunc& func, EventHandler& eventHandle
 
 void InputHandler::OnKeyDown(int key)
 {
-    if(key == SDLK_ESCAPE)
-        return;
-
     const Event::KeyDownEvent event(key);
     mEventHandler.DispatchEvent(event);
 }
 
 void InputHandler::OnKeyUp(int key)
 {
-    if(key == SDLK_ESCAPE)
-    {
-        SDL_Event event;
-        event.type = SDL_QUIT;
-        SDL_PushEvent(&event);
-        return;
-    }
-
     const Event::KeyUpEvent event(key);
     mEventHandler.DispatchEvent(event);
 }

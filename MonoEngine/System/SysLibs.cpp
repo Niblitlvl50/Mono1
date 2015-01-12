@@ -7,6 +7,8 @@
 //
 
 #include "SysLibs.h"
+#include "TextFunctions.h"
+#include "ShaderFunctions.h"
 #include "SDL.h"
 #include <stdexcept>
 #include <cstdio>
@@ -22,9 +24,14 @@ void Libs::Init()
     SDL_GetVersion(&version);
 
     std::printf("Initiated libSDL, version: %d.%d.%d\n", version.major, version.minor, version.patch);
+
+    mono::LoadDefaultShaderFactory();
 }
 
 void Libs::Exit()
 {
+    mono::UnloadShaderFactory();
+    mono::UnloadFont();
+
     SDL_Quit();
 }

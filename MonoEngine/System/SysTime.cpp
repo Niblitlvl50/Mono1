@@ -7,9 +7,7 @@
 //
 
 #include "SysTime.h"
-//#include <SDL_timer.h>
-
-#include "SDL.h"
+#include "SDL_timer.h"
 
 unsigned int Time::GetMilliseconds()
 {

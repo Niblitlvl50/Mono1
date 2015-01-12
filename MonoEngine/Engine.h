@@ -29,7 +29,7 @@ namespace mono
         void OnQuit(const Event::QuitEvent& event);
         void OnSurfaceChanged(const Event::SurfaceChangedEvent& event);
         void OnActivated(const Event::ActivatedEvent& event);
-        
+        void OnKeyUp(const Event::KeyUpEvent& event);        
 
         bool mPause;
         bool mQuit;
@@ -43,6 +43,7 @@ namespace mono
         EventToken<Event::QuitEvent> mQuitToken;
         EventToken<Event::SurfaceChangedEvent> mSurfaceChangedToken;
         EventToken<Event::ActivatedEvent> mActivatedToken;
+        EventToken<Event::KeyUpEvent> mKeyUpToken;
     };
 }
 
