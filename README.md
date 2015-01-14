@@ -4,7 +4,7 @@ Mono1
 A 2D SDL2 game engine
 
 
-Usage
+## Usage
 
 ```C++
 // First init the library
@@ -37,3 +37,17 @@ engine.Run(std::make_shared<game::GameZone>(eventHandler));
 // And lastly and for good practice, exit the library.
 Libs::Exit();
 ```
+
+## Linking
+
+Building on OSX you need to link against the following frameworks:
+
+* Carbon.framework
+* IOKit.framework
+* ForceFeedback.framework
+* CoreAudio.framework
+* Cocoa.framework
+* AudioUnit.framework
+* AudioToolbox.framework
+* OpenGL.framework
+
