@@ -42,12 +42,12 @@ Libs::Exit();
 
 Building on OSX you need to link against the following frameworks:
 
-* Carbon.framework
-* IOKit.framework
-* ForceFeedback.framework
-* CoreAudio.framework
-* Cocoa.framework
-* AudioUnit.framework
 * AudioToolbox.framework
+* AudioUnit.framework
+* Carbon.framework
+* Cocoa.framework
+* CoreAudio.framework
+* ForceFeedback.framework
+* IOKit.framework
 * OpenGL.framework
 
