@@ -28,12 +28,12 @@ TraceCamera::TraceCamera(int width, int height, EventHandler& eventHandler)
 
 void TraceCamera::Update(unsigned int delta)
 {
-    const float change = (mTargetViewport.mB.mX - mViewport.mB.mX);
+    const float change = (mTargetViewport.mB.x - mViewport.mB.x);
     const float xzero = std::floor(std::abs(change));
 
     if(xzero != 0.0f)
     {
-        const float aspect = mViewport.mB.mX / mViewport.mB.mY;
+        const float aspect = mViewport.mB.x / mViewport.mB.y;
         math::ResizeQuad(mViewport, change * 0.1f, aspect);
     }
     

@@ -11,73 +11,73 @@
 
 math::Vector2f math::operator + (const math::Vector2f& left, const math::Vector2f& right)
 {
-    return Vector2f(left.mX + right.mX, left.mY + right.mY);
+    return Vector2f(left.x + right.x, left.y + right.y);
 }
 
 math::Vector2f math::operator - (const math::Vector2f& left, const math::Vector2f& right)
 {
-    return Vector2f(left.mX - right.mX, left.mY - right.mY);
+    return Vector2f(left.x - right.x, left.y - right.y);
 }
 
 math::Vector2f math::operator * (const math::Vector2f& left, float value)
 {
-    return Vector2f(left.mX * value, left.mY * value);
+    return Vector2f(left.x * value, left.y * value);
 }
 
 math::Vector2f math::operator * (const math::Vector2f& left, const math::Vector2f& right)
 {
-    return math::Vector2f(left.mX * right.mX, left.mY * right.mY);
+    return math::Vector2f(left.x * right.x, left.y * right.y);
 }
 
 math::Vector2f math::operator / (const math::Vector2f& left, const math::Vector2f& right)
 {
-    return Vector2f(left.mX / right.mX, left.mY / right.mY);
+    return Vector2f(left.x / right.x, left.y / right.y);
 }
 
 math::Vector2f math::operator / (const math::Vector2f& left, float value)
 {
-    return Vector2f(left.mX / value, left.mY / value);
+    return Vector2f(left.x / value, left.y / value);
 }
 
 math::Vector2f math::operator - (const math::Vector2f& vector)
 {
-    return Vector2f(-vector.mX, -vector.mY);
+    return Vector2f(-vector.x, -vector.y);
 }
 
 void math::operator *= (math::Vector2f& left, float value)
 {
-    left.mX *= value;
-    left.mY *= value;
+    left.x *= value;
+    left.y *= value;
 }
 
 void math::operator += (math::Vector2f& left, const math::Vector2f& right)
 {
-    left.mX += right.mX;
-    left.mY += right.mY;
+    left.x += right.x;
+    left.y += right.y;
 }
 
 void math::operator -= (math::Vector2f& left, const math::Vector2f& right)
 {
-    left.mX -= right.mX;
-    left.mY -= right.mY;
+    left.x -= right.x;
+    left.y -= right.y;
 }
 
 bool math::operator == (const math::Vector2f& left, const math::Vector2f& right)
 {
-    return left.mX == right.mX &&
-           left.mY == right.mY;
+    return left.x == right.x &&
+           left.y == right.y;
 }
 
 float math::Length(const math::Vector2f& vector)
 {
-    return std::sqrt(vector.mX * vector.mX + vector.mY * vector.mY);
+    return std::sqrt(vector.x * vector.x + vector.y * vector.y);
 }
 
 void math::Normalize(math::Vector2f& vector)
 {
     const float length = Length(vector);
-    vector.mX /= length;
-    vector.mY /= length;
+    vector.x /= length;
+    vector.y /= length;
 }
 
 const math::Vector2f math::zeroVec = math::Vector2f(0.0f, 0.0f);

@@ -14,10 +14,10 @@
 
 bool math::PointInsideQuad(const math::Vector2f& point, const math::Quad& quad)
 {
-    if(point.mX > quad.mA.mX &&
-       point.mX < quad.mB.mX &&
-       point.mY > quad.mA.mY &&
-       point.mY < quad.mB.mY)
+    if(point.x > quad.mA.x &&
+       point.x < quad.mB.x &&
+       point.y > quad.mA.y &&
+       point.y < quad.mB.y)
         return true;
     
     return false;
@@ -31,8 +31,8 @@ bool math::QuadOverlaps(const math::Quad& left, const math::Quad& right)
     const Vector2f& right1 = right.mA;
     const Vector2f& right2 = right.mB;
     
-    if( left1.mX < right2.mX && left2.mX > right1.mX &&
-        left1.mY < right2.mY && left2.mY > right1.mY )
+    if( left1.x < right2.x && left2.x > right1.x &&
+        left1.y < right2.y && left2.y > right1.y )
         return true;
     
     return false;
@@ -43,16 +43,16 @@ void math::ResizeQuad(math::Quad& quad, float value, float aspect)
     const float resizeX = value * aspect;
     const float resizeY = value;
     
-    quad.mA.mX -= (resizeX * 0.5f);
-    quad.mA.mY -= (resizeY * 0.5f);
+    quad.mA.x -= (resizeX * 0.5f);
+    quad.mA.y -= (resizeY * 0.5f);
 
-    quad.mB.mX += resizeX;
-    quad.mB.mY += resizeY;
+    quad.mB.x += resizeX;
+    quad.mB.y += resizeY;
 }
 
 float math::AngleBetweenPoints(const math::Vector2f& first, const math::Vector2f& second)
 {
-    const float angle = std::atan2(second.mY - first.mY, second.mX - first.mX);
+    const float angle = std::atan2(second.y - first.y, second.x - first.x);
     return ToDegrees(angle);
 }
 

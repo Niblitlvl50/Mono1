@@ -53,23 +53,23 @@ void AnimatedDude::Update(unsigned int delta)
 {
     const float value = (delta * constants::SPEED);
     
-    const bool xzero = (std::floor(std::abs(mPosition.mX - mTarget.mX)) == 0.0f);
-    const bool yzero = (std::floor(std::abs(mPosition.mY - mTarget.mY)) == 0.0f);
+    const bool xzero = (std::floor(std::abs(mPosition.x - mTarget.x)) == 0.0f);
+    const bool yzero = (std::floor(std::abs(mPosition.y - mTarget.y)) == 0.0f);
         
     if(!xzero)
     {
-        if(mPosition.mX > mTarget.mX)
-            mPosition.mX -= value;
-        else if(mPosition.mX < mTarget.mX)
-            mPosition.mX += value;
+        if(mPosition.x > mTarget.x)
+            mPosition.x -= value;
+        else if(mPosition.x < mTarget.x)
+            mPosition.x += value;
     }
     
     if(!yzero)
     {
-        if(mPosition.mY > mTarget.mY)
-            mPosition.mY -= value;
-        else if(mPosition.mY < mTarget.mY)
-            mPosition.mY += value;
+        if(mPosition.y > mTarget.y)
+            mPosition.y -= value;
+        else if(mPosition.y < mTarget.y)
+            mPosition.y += value;
     }
     
     if(xzero && yzero)

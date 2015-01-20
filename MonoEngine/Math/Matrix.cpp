@@ -35,8 +35,8 @@ void math::Identity(Matrix& matrix)
 
 void math::Translate(Matrix& matrix, const Vector2f& vector)
 {
-    matrix.data[12] += vector.mX;
-    matrix.data[13] += vector.mY;
+    matrix.data[12] += vector.x;
+    matrix.data[13] += vector.y;
     //matrix.data[14] += 0.0f;
 
     // The elements of the matrix are stored as column major order.
@@ -70,8 +70,8 @@ void math::Translate(Matrix& matrix, const Vector2f& vector)
 
 void math::Position(Matrix& matrix, const Vector2f& position)
 {
-    matrix.data[12] = position.mX;
-    matrix.data[13] = position.mY;
+    matrix.data[12] = position.x;
+    matrix.data[13] = position.y;
     //matrix.data[14] += 0.0f;
 }
 
@@ -111,15 +111,15 @@ void math::ScaleXY(Matrix& matrix, const Vector2f& scale)
     // |  2  6 10 14 |
     // |  3  7 11 15 |
 
-    matrix.data[0] *= scale.mX;
-    matrix.data[4] *= scale.mX;
-    matrix.data[8] *= scale.mX;
-    matrix.data[12] *= scale.mX;
+    matrix.data[0] *= scale.x;
+    matrix.data[4] *= scale.x;
+    matrix.data[8] *= scale.x;
+    matrix.data[12] *= scale.x;
 
-    matrix.data[1] *= scale.mY;
-    matrix.data[5] *= scale.mY;
-    matrix.data[9] *= scale.mY;
-    matrix.data[13] *= scale.mY;
+    matrix.data[1] *= scale.y;
+    matrix.data[5] *= scale.y;
+    matrix.data[9] *= scale.y;
+    matrix.data[13] *= scale.y;
 
     //matrix.data[2] *= scale.mZ;
     //matrix.data[6] *= scale.mZ;

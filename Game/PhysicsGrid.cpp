@@ -22,8 +22,8 @@ namespace
     {
         constexpr float cellSize = 50.0f;
 
-        const float width = bounds.mB.mX - bounds.mA.mX;
-        const float height = bounds.mB.mY - bounds.mA.mY;
+        const float width = bounds.mB.x - bounds.mA.x;
+        const float height = bounds.mB.y - bounds.mA.y;
 
         const float cellsWidth = width / cellSize;
         const float cellsHeight = height / cellSize;
@@ -32,18 +32,18 @@ namespace
 
         for(int index = 1; index < cellsWidth; ++index)
         {
-            const float x = bounds.mA.mX + index * cellSize;
+            const float x = bounds.mA.x + index * cellSize;
 
-            vertices.push_back(math::Vector2f(x, bounds.mA.mY));
-            vertices.push_back(math::Vector2f(x, bounds.mB.mY));
+            vertices.push_back(math::Vector2f(x, bounds.mA.y));
+            vertices.push_back(math::Vector2f(x, bounds.mB.y));
         }
 
         for(int index = 1; index < cellsHeight; ++index)
         {
-            const float y = bounds.mA.mY + index * cellSize;
+            const float y = bounds.mA.y + index * cellSize;
 
-            vertices.push_back(math::Vector2f(bounds.mA.mX, y));
-            vertices.push_back(math::Vector2f(bounds.mB.mX, y));
+            vertices.push_back(math::Vector2f(bounds.mA.x, y));
+            vertices.push_back(math::Vector2f(bounds.mB.x, y));
         }
 
         return vertices;
@@ -58,9 +58,9 @@ PhysicsGrid::PhysicsGrid(const math::Quad& bounds)
     constexpr float radius = 2.0f;
 
     const math::Vector2f first = mBounds.mA;
-    const math::Vector2f second = math::Vector2f(mBounds.mA.mX, mBounds.mB.mY);
+    const math::Vector2f second = math::Vector2f(mBounds.mA.x, mBounds.mB.y);
     const math::Vector2f third = mBounds.mB;
-    const math::Vector2f fourth = math::Vector2f(mBounds.mB.mX, mBounds.mA.mY);
+    const math::Vector2f fourth = math::Vector2f(mBounds.mB.x, mBounds.mA.y);
 
     mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, first, second, radius));
     mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, second, third, radius));

@@ -23,11 +23,11 @@ void mono::DrawQuad(const math::Quad& quad,
                     float width,
                     const std::shared_ptr<IColorShader>& shader)
 {
-    const std::vector<math::Vector2f> vertices = { math::Vector2f(quad.mA.mX, quad.mA.mY),
-                                                   math::Vector2f(quad.mB.mX, quad.mA.mY),
-                                                   math::Vector2f(quad.mB.mX, quad.mB.mY),
-                                                   math::Vector2f(quad.mA.mX, quad.mB.mY),
-                                                   math::Vector2f(quad.mA.mX, quad.mA.mY) };
+    const std::vector<math::Vector2f> vertices = { math::Vector2f(quad.mA.x, quad.mA.y),
+                                                   math::Vector2f(quad.mB.x, quad.mA.y),
+                                                   math::Vector2f(quad.mB.x, quad.mB.y),
+                                                   math::Vector2f(quad.mA.x, quad.mB.y),
+                                                   math::Vector2f(quad.mA.x, quad.mA.y) };
 
     DrawLine(vertices, color, width, shader);
 }
@@ -47,15 +47,15 @@ void mono::DrawCircle(const math::Vector2f& position,
 	for(unsigned int index = 0; index < segments; ++index)
 	{
 		const float radians = index * coef;
-		const float x = radie * std::cos(radians) + position.mX;
-		const float y = radie * std::sin(radians) + position.mY;
+		const float x = radie * std::cos(radians) + position.x;
+		const float y = radie * std::sin(radians) + position.y;
 
         vertices.emplace_back(x, y);
 	}
 
     // Add the last vertex to close the circle
-    const float x = radie * std::cos(0) + position.mX;
-    const float y = radie * std::sin(0) + position.mY;
+    const float x = radie * std::cos(0) + position.x;
+    const float y = radie * std::sin(0) + position.y;
     vertices.emplace_back(x, y);
 
     DrawLine(vertices, color, lineWidth, shader);
@@ -70,10 +70,10 @@ void mono::DrawSprite(const mono::Sprite& sprite, const std::shared_ptr<ITexture
     static const unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };
 
     const math::Quad& quad = sprite.GetTextureCoords();
-    const float coords[] = { quad.mA.mX, quad.mA.mY,
-                             quad.mA.mX, quad.mB.mY,
-                             quad.mB.mX, quad.mB.mY,
-                             quad.mB.mX, quad.mA.mY };
+    const float coords[] = { quad.mA.x, quad.mA.y,
+                             quad.mA.x, quad.mB.y,
+                             quad.mB.x, quad.mB.y,
+                             quad.mB.x, quad.mA.y };
     
     shader->SetShade(sprite.GetShade());
     shader->SetAlphaTexture(false);

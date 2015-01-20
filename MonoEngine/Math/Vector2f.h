@@ -16,12 +16,12 @@ namespace math
         { }
 
         Vector2f(float x, float y)
-            : mX(x),
-              mY(y)
+            : x(x),
+              y(y)
         { }
 
-        float mX = 0.0f;
-        float mY = 0.0f;
+        float x = 0.0f;
+        float y = 0.0f;
     };
 
 

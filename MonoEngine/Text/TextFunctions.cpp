@@ -109,11 +109,11 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text,
     textDef.vertices.reserve(textDef.chars * 12);
     textDef.texcoords.reserve(textDef.chars * 12);
     
-    float xposition = pos.mX;
-    float yposition = pos.mY;
+    float xposition = pos.x;
+    float yposition = pos.y;
     
     if(center)
-        xposition -= MeasureString(text).mX / 2.0f;
+        xposition -= MeasureString(text).x / 2.0f;
 
     for(const char& currentChar : text)
     {
@@ -180,8 +180,8 @@ math::Vector2f mono::MeasureString(const std::string& text)
             continue;
         
         const CharData& data = foundChar->second;
-        size.mX += data.xadvance;
-        size.mY = std::max(data.height, size.mY);
+        size.x += data.xadvance;
+        size.y = std::max(data.height, size.y);
     }
     
     return size;

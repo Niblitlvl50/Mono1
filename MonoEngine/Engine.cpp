@@ -43,13 +43,13 @@ namespace Func
         const math::Vector2f& scale = viewport.mB / windowSize;
         
         const float screenX = x;
-        const float screenY = windowSize.mY - y;
+        const float screenY = windowSize.y - y;
         
-        const float tempx = screenX * scale.mX;
-        const float tempy = screenY * scale.mY;
+        const float tempx = screenX * scale.x;
+        const float tempy = screenY * scale.y;
         
-        x = tempx + viewport.mA.mX;
-        y = tempy + viewport.mA.mY;
+        x = tempx + viewport.mA.x;
+        y = tempy + viewport.mA.y;
     }
 }
 

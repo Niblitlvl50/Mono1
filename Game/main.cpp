@@ -24,10 +24,10 @@ int main()
         mono::EventHandler eventHandler;
 
         const math::Vector2f& size = Video::GetCurrentWindowSize(); // / 2;
-        mono::IWindowPtr window = mono::CreateWindow("Mono1", size.mX, size.mY, false);
+        mono::IWindowPtr window = mono::CreateWindow("Mono1", size.x, size.y, false);
         window->SetBackgroundColor(mono::Color(0.6, 0.6, 0.6, 1.0));
 
-        mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.mX, size.mY, eventHandler);
+        mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.x, size.y, eventHandler);
         mono::LoadFont("pixelette.ttf", 10.0f);
 
         mono::Engine engine(window, camera, eventHandler);

@@ -27,7 +27,7 @@ Space::Space(const math::Vector2f& gravity, float damping)
     };
 
     mSpace = cpSpaceNew();
-    cpSpaceSetGravity(mSpace, cpv(gravity.mX, gravity.mY));
+    cpSpaceSetGravity(mSpace, cpv(gravity.x, gravity.y));
     cpSpaceSetDamping(mSpace, damping);
     cpSpaceAddCollisionHandler(mSpace, 0, 0, beginFunc, 0, 0, 0, this);
 }

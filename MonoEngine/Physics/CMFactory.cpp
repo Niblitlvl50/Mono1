@@ -60,7 +60,7 @@ namespace
         }
         void SetPosition(const math::Vector2f& position)
         {
-            cpBodySetPos(mBody, cpv(position.mX, position.mY));
+            cpBodySetPos(mBody, cpv(position.x, position.y));
         }
         math::Vector2f GetPosition() const
         {
@@ -68,15 +68,15 @@ namespace
         }
         void ApplyForce(const math::Vector2f& force, const math::Vector2f& offset)
         {
-            cpBodyApplyForce(mBody, cpv(force.mX, force.mY), cpv(offset.mX, offset.mY));
+            cpBodyApplyForce(mBody, cpv(force.y, force.y), cpv(offset.x, offset.y));
         }
         void ApplyImpulse(const math::Vector2f& impulse, const math::Vector2f& offset)
         {
-            cpBodyApplyImpulse(mBody, cpv(impulse.mX, impulse.mY), cpv(offset.mX, offset.mY));
+            cpBodyApplyImpulse(mBody, cpv(impulse.x, impulse.y), cpv(offset.x, offset.y));
         }
         void SetVelocity(const math::Vector2f& velocity)
         {
-            cpBodySetVel(mBody, cpv(velocity.mX, velocity.mY));
+            cpBodySetVel(mBody, cpv(velocity.x, velocity.y));
         }
         void ResetForces()
         {
@@ -109,8 +109,8 @@ namespace
     {
         CMShape(cm::IBodyPtr body, float radius, const math::Vector2f& offset)
         {
-            mShape = cpCircleShapeNew(body->Body(), radius, cpv(offset.mX, offset.mY));
-            mInertiaValue = cpMomentForCircle(body->GetMass(), 0.0f, radius, cpv(offset.mX, offset.mY));
+            mShape = cpCircleShapeNew(body->Body(), radius, cpv(offset.x, offset.y));
+            mInertiaValue = cpMomentForCircle(body->GetMass(), 0.0f, radius, cpv(offset.x, offset.y));
         }
         CMShape(cm::IBodyPtr body, float width, float height)
         {
@@ -119,20 +119,20 @@ namespace
         }
         CMShape(cm::IBodyPtr body, const math::Vector2f& first, const math::Vector2f& second, float radius)
         {
-            mShape = cpSegmentShapeNew(body->Body(), cpv(first.mX, first.mY), cpv(second.mX, second.mY), radius);
-            mInertiaValue = cpMomentForSegment(body->GetMass(), cpv(first.mX, first.mY), cpv(second.mX, second.mY));
+            mShape = cpSegmentShapeNew(body->Body(), cpv(first.x, first.y), cpv(second.x, second.y), radius);
+            mInertiaValue = cpMomentForSegment(body->GetMass(), cpv(first.x, first.y), cpv(second.x, second.y));
         }
         CMShape(cm::IBodyPtr body, const std::vector<math::Vector2f>& vertices, const math::Vector2f& offset)
         {
             const auto transformFunc = [](const math::Vector2f& position) {
-                return cpv(position.mX, position.mY);
+                return cpv(position.x, position.y);
             };
             
             std::vector<cpVect> vects(vertices.size());
             std::transform(vertices.begin(), vertices.end(), vects.begin(), transformFunc);
             
-            mShape = cpPolyShapeNew(body->Body(), int(vects.size()), vects.data(), cpv(offset.mX, offset.mY));
-            mInertiaValue = cpMomentForPoly(body->GetMass(), int(vects.size()), vects.data(), cpv(offset.mX, offset.mY));
+            mShape = cpPolyShapeNew(body->Body(), int(vects.size()), vects.data(), cpv(offset.x, offset.y));
+            mInertiaValue = cpMomentForPoly(body->GetMass(), int(vects.size()), vects.data(), cpv(offset.x, offset.y));
         }
         ~CMShape()
         {

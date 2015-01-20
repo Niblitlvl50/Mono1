@@ -46,7 +46,7 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     mPhysicsObject.body->SetPosition(mPosition);
     mPhysicsObject.body->SetCollisionHandler(this);
 
-    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, mScale.mX, mScale.mY);
+    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, mScale.x, mScale.y);
     shape->SetElasticity(0.1f);
     
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());

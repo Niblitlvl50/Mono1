@@ -16,12 +16,12 @@ namespace math
         { }
 
         Point(int x, int y)
-            : mX(x),
-              mY(y)
+            : x(x),
+              y(y)
         { }
 
-        int mX = 0;
-        int mY = 0;
+        int x = 0;
+        int y = 0;
     };
     
     Point operator + (const math::Point& left, const math::Point& right);

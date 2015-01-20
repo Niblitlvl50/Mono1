@@ -47,8 +47,8 @@ void CameraController::OnMultiGesture(const Event::MultiGestureEvent& event)
     math::Quad quad = mCam->GetViewport();
 
     const float multiplier = (event.mDistance < 0.0f) ? 1.0f : -1.0f;
-    const float resizeValue = quad.mB.mX * 0.15f * multiplier;
-    const float aspect = quad.mB.mX / quad.mB.mY;
+    const float resizeValue = quad.mB.x * 0.15f * multiplier;
+    const float aspect = quad.mB.x / quad.mB.y;
     math::ResizeQuad(quad, resizeValue, aspect);
 
     mCam->SetTargetViewport(quad);
