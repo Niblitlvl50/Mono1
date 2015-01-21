@@ -31,7 +31,7 @@ PathPoint::PathPoint()
 void PathPoint::Draw(mono::IRenderer& renderer) const
 {
     const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
-    const mono::Color color(0.7, 0.0, 0.0, 1.0);
+    const mono::Color color(0.7, 0.0, 0.0);
     constexpr float size = 4.0f;
 
     renderer.DrawPoints(points, color, size);

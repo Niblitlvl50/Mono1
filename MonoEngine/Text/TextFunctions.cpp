@@ -105,7 +105,7 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text,
 {
     mono::TextDefinition textDef;
     textDef.chars = static_cast<unsigned int>(text.length());
-    textDef.color = mono::Color(1.0f, 1.0f, 1.0f, 1.0f);
+    textDef.color = mono::Color(1.0f, 1.0f, 1.0f);
     textDef.vertices.reserve(textDef.chars * 12);
     textDef.texcoords.reserve(textDef.chars * 12);
     

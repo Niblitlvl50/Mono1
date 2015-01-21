@@ -14,6 +14,13 @@ namespace mono
     {
         Color()
         { }
+
+        Color(float r, float g, float b)
+            : red(r),
+              green(g),
+              blue(b),
+              alpha(1.0f)
+        { }
         
         Color(float r, float g, float b, float a)
             : red(r),

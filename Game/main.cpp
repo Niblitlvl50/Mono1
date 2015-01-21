@@ -25,7 +25,7 @@ int main()
 
         const math::Vector2f& size = Video::GetCurrentWindowSize(); // / 2;
         mono::IWindowPtr window = mono::CreateWindow("Mono1", size.x, size.y, false);
-        window->SetBackgroundColor(mono::Color(0.6, 0.6, 0.6, 1.0));
+        window->SetBackgroundColor(mono::Color(0.6, 0.6, 0.6));
 
         mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.x, size.y, eventHandler);
         mono::LoadFont("pixelette.ttf", 10.0f);
