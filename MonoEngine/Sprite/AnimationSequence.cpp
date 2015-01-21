@@ -10,15 +10,17 @@
 
 using namespace mono;
 
-AnimationSequence::AnimationSequence(unsigned int start, unsigned int end, bool loop, const FrameDurations& durations)
-    : mStart(start),
-      mEnd(end),
-      mFrame(start),
+AnimationSequence::AnimationSequence(bool loopSequence)
+    : mCurrentFrame(0),
       mElapsedTime(0),
-      mLoopSequence(loop),
-      mDone(false),
-      mDurations(durations)
+      mLoopSequence(loopSequence),
+      mDone(false)
 { }
+
+void AnimationSequence::AddFrame(unsigned int frameNumber, unsigned int duration)
+{
+    mFrames.push_back(mono::Frame(frameNumber, duration));
+}
 
 void AnimationSequence::Tick(unsigned int delta)
 {
@@ -26,16 +28,17 @@ void AnimationSequence::Tick(unsigned int delta)
         return;
     
     mElapsedTime += delta;
-    if(mElapsedTime > mDurations.at(mFrame - mStart))
+
+    const mono::Frame& frame = mFrames.at(mCurrentFrame);
+    if(mElapsedTime > frame.duration)
     {
         mElapsedTime = 0;
-        mFrame++;
-        
-        if(mFrame > mEnd)
+        mCurrentFrame++;
+
+        if(mCurrentFrame >= mFrames.size())
         {
-            if(mLoopSequence)
-                mFrame = mStart;
-            else
+            mCurrentFrame = 0;
+            if(!mLoopSequence)
                 mDone = true;
         }
     }
@@ -43,7 +46,7 @@ void AnimationSequence::Tick(unsigned int delta)
 
 unsigned int AnimationSequence::Frame() const
 {
-    return mFrame;
+    return mFrames.at(mCurrentFrame).frame;
 }
 
 bool AnimationSequence::Finished() const

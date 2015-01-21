@@ -66,16 +66,16 @@ Sprite::Sprite(const std::string& file)
 {
     lua::LuaState config(file);
 
-    const std::string texture = lua::GetValue<std::string>(config, "texture");
+    const std::string& texture = lua::GetValue<std::string>(config, "texture");
     mTexture = mono::CreateTexture(texture);
     
     TextureData data;
-    data.rows = lua::GetValue<int>(config, "rows");
+    data.rows    = lua::GetValue<int>(config, "rows");
     data.columns = lua::GetValue<int>(config, "columns");
-    data.x = lua::GetValue<int>(config, "x");
-    data.y = lua::GetValue<int>(config, "y");
-    data.u = lua::GetValue<int>(config, "u");
-    data.v = lua::GetValue<int>(config, "v");    
+    data.x       = lua::GetValue<int>(config, "x");
+    data.y       = lua::GetValue<int>(config, "y");
+    data.u       = lua::GetValue<int>(config, "u");
+    data.v       = lua::GetValue<int>(config, "v");
     
     data.textureSizeX = mTexture->Width();
     data.textureSizeY = mTexture->Height();
@@ -146,26 +146,19 @@ void Sprite::DefineAnimation(int id, const std::vector<int>& frames, bool loop)
     const bool even = (frames.size() % 2) == 0;
     if(!even)
         throw std::runtime_error("Animation vector does not match up, not an even number of values");
-    
-    std::vector<int>::const_iterator lastFrame = frames.end();
-    --lastFrame;
-    --lastFrame;
-    
-    const int start = *frames.begin();
-    const int end = *lastFrame;
-    
-    std::vector<unsigned int> durations;
+
+    AnimationSequence sequence(loop);
+
     for(auto it = frames.begin(), end = frames.end(); it != end; ++it)
     {
+        const unsigned int frame = *it;
         ++it;
-        durations.push_back(*it);
+        const unsigned int duration = *it;
+
+        sequence.AddFrame(frame, duration);
     }
-    
-    const int diff = end - start;
-    if(diff < 0)
-        throw std::runtime_error("Animation definition's start and end does not match up");
-    
-    mDefinedAnimations.insert(std::make_pair(id, AnimationSequence(start, end, loop, durations)));
+
+    mDefinedAnimations.insert(std::make_pair(id, sequence));
 }
 
 void Sprite::DefineAnimation(int id, const std::vector<int>& frames, const std::vector<std::string>& attributes)

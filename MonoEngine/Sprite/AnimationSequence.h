@@ -13,24 +13,42 @@
 
 namespace mono
 {
-    typedef std::vector<unsigned int> FrameDurations;
-
-    struct AnimationSequence
+    struct Frame
     {
-        AnimationSequence(unsigned int start, unsigned int end, bool loop, const FrameDurations& durations);        
+        Frame()
+            : frame(0),
+              duration(-1)
+        { }
 
+        Frame(unsigned int frame, unsigned int duration)
+            : frame(frame),
+              duration(duration)
+        { }
+
+        unsigned int frame;
+        unsigned int duration;
+    };
+
+    class AnimationSequence
+    {
+    public:
+
+        AnimationSequence(bool loopSequence);
+
+        void AddFrame(unsigned int frameNumber, unsigned int duration);
         void Tick(unsigned int delta);
+
         unsigned int Frame() const;
         bool Finished() const;
-        
+
     private:
-        
-        unsigned int mStart;
-        unsigned int mEnd;
-        unsigned int mFrame;
+
+        unsigned int mCurrentFrame;
         unsigned int mElapsedTime;
+
         bool mLoopSequence;
         bool mDone;
-        FrameDurations mDurations;
+
+        std::vector<mono::Frame> mFrames;
     };
 }
