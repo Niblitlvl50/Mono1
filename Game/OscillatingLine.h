@@ -13,11 +13,11 @@
 
 namespace game
 {
-    class OscillatingLine : public mono::EntityBase
+    class DotEntity : public mono::EntityBase
     {
     public:
         
-        OscillatingLine();
+        DotEntity();
         
     private:
         

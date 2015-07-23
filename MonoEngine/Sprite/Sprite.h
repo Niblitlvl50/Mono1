@@ -37,8 +37,7 @@
 
 #pragma once
 
-#include "MonoPtrFwd.h"
-#include "IUpdatable.h"
+#include "ISprite.h"
 #include "AnimationSequence.h"
 #include "Quad.h"
 #include "Color.h"
@@ -49,7 +48,7 @@
 
 namespace mono
 {    
-    class Sprite : public IUpdatable
+    class Sprite : public ISprite
     {
     public:
 
@@ -59,15 +58,15 @@ namespace mono
         
         //! Gets the sprites texture
         //! @return ITexturePtr A shared pointer to the texture.
-        ITexturePtr GetTexture() const;
+        virtual ITexturePtr GetTexture() const;
         
         //! Gets the quad representing the texture coordinates
         //! @return Math::Quad A reference to the texture coords.
-        const math::Quad& GetTextureCoords() const;
+        virtual const math::Quad& GetTextureCoords() const;
         
         //! Gets the color shade of the sprite
         //! @return Color A reference to the color shading.
-        const Color& GetShade() const;
+        virtual const Color& GetShade() const;
         
         //! Sets the color shade of the sprite
         //! @param[in] color The color shading
@@ -87,12 +86,12 @@ namespace mono
         
         //! Tell the sprite to run a specific animation.
         //! @param[in] id The animation to run.
-        void SetAnimation(int id);
+        virtual void SetAnimation(int id);
         
         //! Tell the sprite to run a specific animation, and get a callback when finished
         //! @param[in] id The animation to run.
         //! @param[in] func A callback function.
-        void SetAnimation(int id, std::function<void ()> func);
+        virtual void SetAnimation(int id, const std::function<void ()>& func);
         
         virtual void doUpdate(unsigned int delta);
 

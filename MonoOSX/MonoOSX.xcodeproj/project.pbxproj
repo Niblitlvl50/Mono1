@@ -244,6 +244,8 @@
 		914FA60C1A4DEE58000132B7 /* ShaderFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60A1A4DEE58000132B7 /* ShaderFunctions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		914FA6101A4E078C000132B7 /* ShaderFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914FA60E1A4E078C000132B7 /* ShaderFactory.cpp */; };
 		914FA6111A4E078C000132B7 /* ShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60F1A4E078C000132B7 /* ShaderFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		91526EA81B5BFA22009F46E7 /* SysKeycodes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91526EA71B5BFA22009F46E7 /* SysKeycodes.cpp */; };
+		91526EAB1B5BFEC6009F46E7 /* RocketLauncher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91526EA91B5BFEC6009F46E7 /* RocketLauncher.cpp */; };
 		915D48E11A614811009BDC1D /* rektangel.path in CopyFiles */ = {isa = PBXBuildFile; fileRef = 915D48E01A614760009BDC1D /* rektangel.path */; };
 		915E1845186645420000681D /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 915E1843186645420000681D /* PathPoint.cpp */; };
 		9163C0AE1826DCCB00832128 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0AA1826DCCB00832128 /* MathFwd.cpp */; };
@@ -276,6 +278,7 @@
 		9163C0E61826DE4C00832128 /* zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0CC1826DE4C00832128 /* zlib.h */; };
 		9163C0E71826DE4C00832128 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 9163C0CD1826DE4C00832128 /* zutil.c */; };
 		9163C0E81826DE4C00832128 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = 9163C0CE1826DE4C00832128 /* zutil.h */; };
+		917DE2051AC2055900D1F795 /* CubeSwarm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 917DE2031AC2055900D1F795 /* CubeSwarm.cpp */; };
 		9181E5281841133900678586 /* Color.h in Headers */ = {isa = PBXBuildFile; fileRef = 9181E5241841133900678586 /* Color.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9181E5291841133900678586 /* IPhysicsEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 9181E5251841133900678586 /* IPhysicsEntity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9181E52A1841133900678586 /* IPhysicsZone.h in Headers */ = {isa = PBXBuildFile; fileRef = 9181E5261841133900678586 /* IPhysicsZone.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -305,6 +308,9 @@
 		9181E57418428CD800678586 /* Ryu.sprite in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2BCDDCE2154BEA2A005D8520 /* Ryu.sprite */; };
 		918A19B11A190FF90067BB36 /* Rocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 918A19AF1A190FF90067BB36 /* Rocket.cpp */; };
 		918A19B41A19132E0067BB36 /* Quad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 918A19B31A19132E0067BB36 /* Quad.cpp */; };
+		91ABBDDB1B5BADFB0097667E /* WeaponFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91ABBDDA1B5BADFB0097667E /* WeaponFactory.cpp */; };
+		91ABBDDF1B5BAE7F0097667E /* StandardWeapon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91ABBDDD1B5BAE7F0097667E /* StandardWeapon.cpp */; };
+		91ABBDE21B5BC3150097667E /* ISprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 91ABBDE11B5BC3150097667E /* ISprite.h */; };
 		91B56C581A5DD7390009B6D4 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F8A17D3C8F2004F1868 /* ForceFeedback.framework */; };
 		91B56C591A5DD9B80009B6D4 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE4748B1532038B00CA5ACB /* OpenGL.framework */; };
 		91B63F7D17D3C545004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63F7C17D3C545004F1868 /* libSDL2.a */; };
@@ -673,6 +679,9 @@
 		914FA60D1A4E06DE000132B7 /* IShaderFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IShaderFactory.h; path = ../MonoEngine/Shader/IShaderFactory.h; sourceTree = SOURCE_ROOT; };
 		914FA60E1A4E078C000132B7 /* ShaderFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderFactory.cpp; path = ../MonoEngine/Shader/ShaderFactory.cpp; sourceTree = SOURCE_ROOT; };
 		914FA60F1A4E078C000132B7 /* ShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderFactory.h; path = ../MonoEngine/Shader/ShaderFactory.h; sourceTree = SOURCE_ROOT; };
+		91526EA71B5BFA22009F46E7 /* SysKeycodes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SysKeycodes.cpp; path = ../MonoEngine/System/SysKeycodes.cpp; sourceTree = SOURCE_ROOT; };
+		91526EA91B5BFEC6009F46E7 /* RocketLauncher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RocketLauncher.cpp; path = ../Game/Weapons/RocketLauncher.cpp; sourceTree = "<group>"; };
+		91526EAA1B5BFEC6009F46E7 /* RocketLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RocketLauncher.h; path = ../Game/Weapons/RocketLauncher.h; sourceTree = "<group>"; };
 		915D48E01A614760009BDC1D /* rektangel.path */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rektangel.path; path = ../UnitTests/TestFiles/rektangel.path; sourceTree = SOURCE_ROOT; };
 		915E1843186645420000681D /* PathPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PathPoint.cpp; path = ../Game/PathPoint.cpp; sourceTree = "<group>"; };
 		915E1844186645420000681D /* PathPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathPoint.h; path = ../Game/PathPoint.h; sourceTree = "<group>"; };
@@ -706,6 +715,8 @@
 		9163C0CC1826DE4C00832128 /* zlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zlib.h; path = "../External Libs/zlib-1.2.8/zlib.h"; sourceTree = "<group>"; };
 		9163C0CD1826DE4C00832128 /* zutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zutil.c; path = "../External Libs/zlib-1.2.8/zutil.c"; sourceTree = "<group>"; };
 		9163C0CE1826DE4C00832128 /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zutil.h; path = "../External Libs/zlib-1.2.8/zutil.h"; sourceTree = "<group>"; };
+		917DE2031AC2055900D1F795 /* CubeSwarm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CubeSwarm.cpp; path = ../Game/CubeSwarm.cpp; sourceTree = "<group>"; };
+		917DE2041AC2055900D1F795 /* CubeSwarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CubeSwarm.h; path = ../Game/CubeSwarm.h; sourceTree = "<group>"; };
 		9181E5241841133900678586 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Color.h; path = ../MonoEngine/Color.h; sourceTree = SOURCE_ROOT; };
 		9181E5251841133900678586 /* IPhysicsEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPhysicsEntity.h; path = ../MonoEngine/IPhysicsEntity.h; sourceTree = SOURCE_ROOT; };
 		9181E5261841133900678586 /* IPhysicsZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPhysicsZone.h; path = ../MonoEngine/IPhysicsZone.h; sourceTree = SOURCE_ROOT; };
@@ -754,6 +765,13 @@
 		918A19B01A190FF90067BB36 /* Rocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rocket.h; path = ../Game/Rocket.h; sourceTree = "<group>"; };
 		918A19B31A19132E0067BB36 /* Quad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Quad.cpp; path = ../MonoEngine/Math/Quad.cpp; sourceTree = SOURCE_ROOT; };
 		918A19B51A191DFC0067BB36 /* ShockwaveEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShockwaveEvent.h; path = ../Game/Events/ShockwaveEvent.h; sourceTree = "<group>"; };
+		91ABBDD81B5BAD070097667E /* IWeaponSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IWeaponSystem.h; path = ../Game/IWeaponSystem.h; sourceTree = "<group>"; };
+		91ABBDD91B5BADA50097667E /* WeaponFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeaponFactory.h; path = ../Game/WeaponFactory.h; sourceTree = "<group>"; };
+		91ABBDDA1B5BADFB0097667E /* WeaponFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WeaponFactory.cpp; path = ../Game/WeaponFactory.cpp; sourceTree = "<group>"; };
+		91ABBDDD1B5BAE7F0097667E /* StandardWeapon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StandardWeapon.cpp; path = ../Game/Weapons/StandardWeapon.cpp; sourceTree = "<group>"; };
+		91ABBDDE1B5BAE7F0097667E /* StandardWeapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StandardWeapon.h; path = ../Game/Weapons/StandardWeapon.h; sourceTree = "<group>"; };
+		91ABBDE01B5BB8EA0097667E /* WeaponTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WeaponTypes.h; path = ../Game/Weapons/WeaponTypes.h; sourceTree = "<group>"; };
+		91ABBDE11B5BC3150097667E /* ISprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISprite.h; path = ../MonoEngine/Sprite/ISprite.h; sourceTree = SOURCE_ROOT; };
 		91B63F7C17D3C545004F1868 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = "../External Libs/SDL2/osx/debug/libSDL2.a"; sourceTree = SOURCE_ROOT; };
 		91B63F7E17D3C881004F1868 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		91B63F8017D3C8A6004F1868 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -890,6 +908,7 @@
 		2B2F385F15420C2900C44D55 /* Sprite */ = {
 			isa = PBXGroup;
 			children = (
+				91ABBDE11B5BC3150097667E /* ISprite.h */,
 				2B2F386815421EE700C44D55 /* Sprite.cpp */,
 				2B2F386915421EE700C44D55 /* Sprite.h */,
 				2B2F386015420C4E00C44D55 /* AnimationSequence.cpp */,
@@ -1212,6 +1231,7 @@
 		2BD728AE152B95B60048435D /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				91ABBDDC1B5BAE610097667E /* Weapons */,
 				2B75E94516B5534100B84A26 /* Events */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				9141B7021826E5BA003B4BDD /* main.cpp */,
@@ -1237,14 +1257,12 @@
 				2B0BEEE21621955A00A96003 /* Moon.cpp */,
 				2B75E94216B52A4100B84A26 /* Meteor.cpp */,
 				2B75E94416B52A5200B84A26 /* Meteor.h */,
-				2BFF89771707624B00499D08 /* FireBullet.h */,
-				2BFF8978170762B900499D08 /* FireBullet.cpp */,
 				915E1843186645420000681D /* PathPoint.cpp */,
 				915E1844186645420000681D /* PathPoint.h */,
-				918A19AF1A190FF90067BB36 /* Rocket.cpp */,
-				918A19B01A190FF90067BB36 /* Rocket.h */,
 				910C24C01A1A969600A79D1C /* PhysicsGrid.cpp */,
 				910C24C11A1A969600A79D1C /* PhysicsGrid.h */,
+				917DE2031AC2055900D1F795 /* CubeSwarm.cpp */,
+				917DE2041AC2055900D1F795 /* CubeSwarm.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -1302,6 +1320,7 @@
 				2BE4740E153201CC00CA5ACB /* SysOpenGL.h */,
 				2BF683A115BF3DDC00D0141A /* SysTypes.h */,
 				2B96337315EA2BF0009E88EC /* SysKeycodes.h */,
+				91526EA71B5BFA22009F46E7 /* SysKeycodes.cpp */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -1386,6 +1405,17 @@
 				914FA60E1A4E078C000132B7 /* ShaderFactory.cpp */,
 			);
 			name = Shader;
+			sourceTree = "<group>";
+		};
+		91526EAC1B5C0046009F46E7 /* Bullets */ = {
+			isa = PBXGroup;
+			children = (
+				2BFF89771707624B00499D08 /* FireBullet.h */,
+				2BFF8978170762B900499D08 /* FireBullet.cpp */,
+				918A19AF1A190FF90067BB36 /* Rocket.cpp */,
+				918A19B01A190FF90067BB36 /* Rocket.h */,
+			);
+			name = Bullets;
 			sourceTree = "<group>";
 		};
 		9163C0B41826DE1300832128 /* zlib-1.2.8 */ = {
@@ -1521,6 +1551,22 @@
 			name = Paths;
 			sourceTree = "<group>";
 		};
+		91ABBDDC1B5BAE610097667E /* Weapons */ = {
+			isa = PBXGroup;
+			children = (
+				91526EAC1B5C0046009F46E7 /* Bullets */,
+				91ABBDD81B5BAD070097667E /* IWeaponSystem.h */,
+				91ABBDD91B5BADA50097667E /* WeaponFactory.h */,
+				91ABBDDA1B5BADFB0097667E /* WeaponFactory.cpp */,
+				91ABBDDD1B5BAE7F0097667E /* StandardWeapon.cpp */,
+				91ABBDDE1B5BAE7F0097667E /* StandardWeapon.h */,
+				91ABBDE01B5BB8EA0097667E /* WeaponTypes.h */,
+				91526EA91B5BFEC6009F46E7 /* RocketLauncher.cpp */,
+				91526EAA1B5BFEC6009F46E7 /* RocketLauncher.h */,
+			);
+			name = Weapons;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1619,6 +1665,7 @@
 				9163C0E61826DE4C00832128 /* zlib.h in Headers */,
 				9163C0E31826DE4C00832128 /* trees.h in Headers */,
 				9163C0DC1826DE4C00832128 /* inffast.h in Headers */,
+				91ABBDE21B5BC3150097667E /* ISprite.h in Headers */,
 				9163C0E11826DE4C00832128 /* inftrees.h in Headers */,
 				9163C0D61826DE4C00832128 /* gzguts.h in Headers */,
 				9163C0DD1826DE4C00832128 /* inffixed.h in Headers */,
@@ -1799,6 +1846,7 @@
 				2BD1E60A1532089300A75171 /* ltable.c in Sources */,
 				2BD1E60B1532089300A75171 /* ltablib.c in Sources */,
 				2BD1E60C1532089300A75171 /* ltm.c in Sources */,
+				91526EA81B5BFA22009F46E7 /* SysKeycodes.cpp in Sources */,
 				2BD1E60D1532089300A75171 /* lua.c in Sources */,
 				2BD1E60E1532089300A75171 /* luac.c in Sources */,
 				2BD1E60F1532089300A75171 /* lundump.c in Sources */,
@@ -1902,9 +1950,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BD1E5ED1532080500A75171 /* OscillatingLine.cpp in Sources */,
+				91526EAB1B5BFEC6009F46E7 /* RocketLauncher.cpp in Sources */,
 				910C24C21A1A969600A79D1C /* PhysicsGrid.cpp in Sources */,
+				91ABBDDB1B5BADFB0097667E /* WeaponFactory.cpp in Sources */,
 				2BD1E5EE1532080500A75171 /* SquareObject.cpp in Sources */,
 				2BD1E5EF1532080500A75171 /* TestZone.cpp in Sources */,
+				917DE2051AC2055900D1F795 /* CubeSwarm.cpp in Sources */,
 				2BD1E5F01532080500A75171 /* TriangleObject.cpp in Sources */,
 				2B4B06A015331F13006D0C75 /* AnimatedDude.cpp in Sources */,
 				9141B7031826E5BA003B4BDD /* main.cpp in Sources */,
@@ -1912,6 +1963,7 @@
 				2BAA30E815435599003BF117 /* Explosion.cpp in Sources */,
 				918A19B11A190FF90067BB36 /* Rocket.cpp in Sources */,
 				2BD392D315E8DE1500C010B7 /* Shuttle.cpp in Sources */,
+				91ABBDDF1B5BAE7F0097667E /* StandardWeapon.cpp in Sources */,
 				915E1845186645420000681D /* PathPoint.cpp in Sources */,
 				2B0BEEDF162183C300A96003 /* ShuttleController.cpp in Sources */,
 				2B0BEEE31621955B00A96003 /* Moon.cpp in Sources */,

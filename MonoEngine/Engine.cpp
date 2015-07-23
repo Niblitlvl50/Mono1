@@ -152,7 +152,7 @@ void Engine::OnActivated(const Event::ActivatedEvent& event)
 
 void Engine::OnKeyUp(const Event::KeyUpEvent& event)
 {
-    if(event.mKey == SDLK_ESCAPE)
+    if(event.mKey == Key::ESCAPE)
         mEventHandler.DispatchEvent(Event::QuitEvent());
 }
 

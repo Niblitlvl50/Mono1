@@ -16,14 +16,14 @@
 
 using namespace game;
 
-OscillatingLine::OscillatingLine()
+DotEntity::DotEntity()
     : mBase(400.0f, 100.0f),
       mDelta(0.0f)
 {
     mScale = math::Vector2f(3.0f, 3.0f);
 }
 
-void OscillatingLine::Draw(mono::IRenderer& renderer) const
+void DotEntity::Draw(mono::IRenderer& renderer) const
 {
     const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
     const mono::Color color(0.0, 0.0, 0.0);
@@ -33,7 +33,7 @@ void OscillatingLine::Draw(mono::IRenderer& renderer) const
     renderer.DrawText("dot...", mPosition + math::Vector2f(0.0f, 5.0f), true, color);
 }
 
-void OscillatingLine::Update(unsigned int delta)
+void DotEntity::Update(unsigned int delta)
 {
     mDelta += (delta * 0.001f);
 

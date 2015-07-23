@@ -135,7 +135,7 @@ void Sprite::SetAnimation(int id)
     mActiveAnimationId = id;
 }
 
-void Sprite::SetAnimation(int id, std::function<void ()> func)
+void Sprite::SetAnimation(int id, const std::function<void ()>& func)
 {
     mActiveAnimationId = id;
     mCallbackFunction = func;

@@ -17,6 +17,7 @@
 #include "Moon.h"
 #include "Meteor.h"
 #include "PathPoint.h"
+#include "CubeSwarm.h"
 
 #include "Quad.h"
 
@@ -173,12 +174,14 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(moon2, mono::FOREGROUND);
     
     AddEntity(std::make_shared<TriangleObject>(), mono::BACKGROUND);
-    AddEntity(std::make_shared<OscillatingLine>(), mono::FOREGROUND);
+    AddEntity(std::make_shared<DotEntity>(), mono::FOREGROUND);
     AddEntity(std::make_shared<PathPoint>(), mono::BACKGROUND);
     
     AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
 
     AddMeteorCluster(this);
+
+    AddEntity(std::make_shared<game::CubeSwarm>(), mono::FOREGROUND);
         
     camera->SetPosition(shuttle->Position());
     camera->Follow(shuttle);

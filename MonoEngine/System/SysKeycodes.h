@@ -9,4 +9,14 @@
 
 #pragma once
 
-#include "SDL_keycode.h"
+namespace Key
+{
+    extern const int ESCAPE;
+    extern const int ONE;
+    extern const int TWO;
+    extern const int LEFT;
+    extern const int RIGHT;
+    extern const int UP;
+    extern const int DOWN;
+}
+

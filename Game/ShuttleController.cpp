@@ -14,8 +14,10 @@
 #include "MouseDownEvent.h"
 #include "MouseMotionEvent.h"
 #include "MultiGestureEvent.h"
+#include "KeyDownEvent.h"
 #include "CMIBody.h"
-
+#include "SysKeycodes.h"
+#include "WeaponTypes.h"
 #include "MathFunctions.h"
 
 #include <cmath>
@@ -38,6 +40,9 @@ ShuttleController::ShuttleController(game::Shuttle* shuttle, mono::EventHandler&
     
     const Event::MouseMotionEventFunc mouseMotionFunc = std::bind(&ShuttleController::OnMouseMotion, this, _1);
     mMouseMotionToken = mEventHandler.AddListener(mouseMotionFunc);
+
+    const Event::KeyDownEventFunc keyDownFunc = std::bind(&ShuttleController::OnKeyDown, this, _1);
+    mKeyDownToken = mEventHandler.AddListener(keyDownFunc);
 
     //const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&ShuttleController::OnMultiGesture, this, _1);
     //mMultiGestureToken = mEventHandler.AddListener(multiGestureFunc);
@@ -91,6 +96,14 @@ void ShuttleController::OnMultiGesture(const Event::MultiGestureEvent& event)
 {
     const float force = event.mTheta * 1000;
     mShuttle->ApplyRotationForce(force);
+}
+
+void ShuttleController::OnKeyDown(const Event::KeyDownEvent& event)
+{
+    if(event.mKey == Key::ONE)
+        mShuttle->SelectWeapon(WeaponType::STANDARD);
+    else if(event.mKey == Key::TWO)
+        mShuttle->SelectWeapon(WeaponType::ROCKET);
 }
 
 void ShuttleController::HandleOnShuttlePress()

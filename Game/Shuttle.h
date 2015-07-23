@@ -15,15 +15,21 @@
 
 namespace game
 {
+    class IWeaponSystem;
+    enum class WeaponType;
+
     class Shuttle : public mono::PhysicsEntityBase, public cm::ICollisionHandler
     {
     public:
         
         Shuttle(float x, float y, mono::EventHandler& eventHandler);
+        virtual ~Shuttle();
 
     private:
 
         friend class ShuttleController;
+
+        void SelectWeapon(WeaponType weapon);
         
         void ApplyRotationForce(float force);
         void ApplyThrustForce(float force);
@@ -38,8 +44,11 @@ namespace game
         
         virtual void OnCollideWith(cm::IBodyPtr body);
         virtual void OnPostStep();
-        
+
+        std::unique_ptr<IWeaponSystem> mWeapon;
+
         mono::Sprite mSprite;
+        //mono::Sprite mWeaponSprite;
         ShuttleController mController;
         mono::EventHandler& mEventHandler;
     };

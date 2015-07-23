@@ -11,13 +11,10 @@
 #include "CMIShape.h"
 #include "CMFactory.h"
 
-#include "Meteor.h"
-#include "FireBullet.h"
-#include "Rocket.h"
 #include "EventHandler.h"
-#include "SpawnEntityEvent.h"
-#include "SpawnPhysicsEntityEvent.h"
 #include "IRenderer.h"
+#include "IWeaponSystem.h"
+#include "WeaponFactory.h"
 
 #include "MathFunctions.h"
 #include <cmath>
@@ -53,7 +50,13 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     mPhysicsObject.shapes.push_back(shape);    
     
     mSprite.SetAnimation(constants::IDLE);
+
+    // Make sure we have a weapon
+    SelectWeapon(WeaponType::STANDARD);
 }
+
+Shuttle::~Shuttle()
+{ }
 
 void Shuttle::Draw(mono::IRenderer& renderer) const
 {
@@ -73,6 +76,14 @@ void Shuttle::OnCollideWith(cm::IBodyPtr body)
 
 void Shuttle::OnPostStep()
 { }
+
+void Shuttle::SelectWeapon(WeaponType weapon)
+{
+    mWeapon = Factory::CreateWeapon(weapon, mEventHandler);
+
+    // Setup the weapon's sprite
+    //mWeaponSprite.
+}
 
 void Shuttle::ApplyRotationForce(float force)
 {
@@ -100,16 +111,7 @@ void Shuttle::ApplyImpulse(const math::Vector2f& force)
 
 void Shuttle::Fire()
 {
-    const math::Vector2f unit(-std::sin(math::ToRadians(mRotation)),
-                               std::cos(math::ToRadians(mRotation)));
-    const math::Vector2f& position = mPosition + (unit * 20.0f);
-    const math::Vector2f& impulse = unit * 500.0f;
-    
-    //auto bullet = std::make_shared<FireBullet>(position, mRotation, mEventHandler);
-    auto bullet = std::make_shared<Rocket>(position, mRotation, mEventHandler);
-    bullet->GetPhysics().body->ApplyImpulse(impulse, math::zeroVec);
-
-    mEventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
+    mWeapon->Fire(mPosition, mRotation);
 }
 
 void Shuttle::StartThrusting()
