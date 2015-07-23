@@ -7,7 +7,7 @@
 //
 
 
-#include "OscillatingLine.h"
+#include "DotEntity.h"
 #include "IRenderer.h"
 #include "Color.h"
 

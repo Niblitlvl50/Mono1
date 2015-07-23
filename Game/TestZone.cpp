@@ -11,7 +11,7 @@
 
 #include "PhysicsGrid.h"
 #include "TriangleObject.h"
-#include "OscillatingLine.h"
+#include "DotEntity.h"
 #include "AnimatedDude.h"
 #include "Shuttle.h"
 #include "Moon.h"
