@@ -10,7 +10,7 @@
 #include "ICamera.h"
 
 #include "PhysicsGrid.h"
-#include "TriangleObject.h"
+#include "InvaderGroup.h"
 #include "DotEntity.h"
 #include "AnimatedDude.h"
 #include "Shuttle.h"
@@ -173,7 +173,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     std::shared_ptr<Moon> moon2 = std::make_shared<Moon>(-400.0f, 400.0f, 50.0f);
     AddPhysicsEntity(moon2, mono::FOREGROUND);
     
-    AddEntity(std::make_shared<TriangleObject>(), mono::BACKGROUND);
+    AddEntity(std::make_shared<InvaderGroup>(), mono::BACKGROUND);
     AddEntity(std::make_shared<DotEntity>(), mono::FOREGROUND);
     AddEntity(std::make_shared<PathPoint>(), mono::BACKGROUND);
     

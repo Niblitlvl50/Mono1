@@ -7,23 +7,23 @@
  *
  */
 
-#include "SquareObject.h"
+#include "InvaderEntity.h"
 #include "IRenderer.h"
 
 using namespace game;
 
-SquareObject::SquareObject(float x, float y)
+InvaderEntity::InvaderEntity(float x, float y)
     : mSprite("invader.sprite")
 {
     mPosition = math::Vector2f(x, y);
 }
 
-void SquareObject::Draw(mono::IRenderer& renderer) const
+void InvaderEntity::Draw(mono::IRenderer& renderer) const
 {
     renderer.DrawSprite(mSprite);
 }
 
-void SquareObject::Update(unsigned int delta)
+void InvaderEntity::Update(unsigned int delta)
 {
     mRotation -= (delta * 0.1f);
     if(mRotation < -360.0f)

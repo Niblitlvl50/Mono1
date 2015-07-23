@@ -111,9 +111,9 @@
 		2BCF677015E8256100DBEB50 /* CMIBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BCF676F15E8256100DBEB50 /* CMIBody.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BCF677215E82E8000DBEB50 /* CMObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BCF677115E82E7F00DBEB50 /* CMObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BD1E5ED1532080500A75171 /* DotEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E41532080500A75171 /* DotEntity.cpp */; };
-		2BD1E5EE1532080500A75171 /* SquareObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E61532080500A75171 /* SquareObject.cpp */; };
+		2BD1E5EE1532080500A75171 /* InvaderEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E61532080500A75171 /* InvaderEntity.cpp */; };
 		2BD1E5EF1532080500A75171 /* TestZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5E81532080500A75171 /* TestZone.cpp */; };
-		2BD1E5F01532080500A75171 /* TriangleObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5EA1532080500A75171 /* TriangleObject.cpp */; };
+		2BD1E5F01532080500A75171 /* InvaderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5EA1532080500A75171 /* InvaderGroup.cpp */; };
 		2BD1E5F31532089200A75171 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5721532072000A75171 /* lapi.c */; };
 		2BD1E5F41532089200A75171 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5741532072000A75171 /* lauxlib.c */; };
 		2BD1E5F51532089200A75171 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1E5761532072000A75171 /* lbaselib.c */; };
@@ -577,12 +577,12 @@
 		2BD1E5C21532078D00A75171 /* pngwutil.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = pngwutil.c; path = "../External Libs/lpng156/pngwutil.c"; sourceTree = SOURCE_ROOT; };
 		2BD1E5E41532080500A75171 /* DotEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DotEntity.cpp; path = ../Game/DotEntity.cpp; sourceTree = "<group>"; };
 		2BD1E5E51532080500A75171 /* DotEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DotEntity.h; path = ../Game/DotEntity.h; sourceTree = "<group>"; };
-		2BD1E5E61532080500A75171 /* SquareObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SquareObject.cpp; path = ../Game/SquareObject.cpp; sourceTree = "<group>"; };
-		2BD1E5E71532080500A75171 /* SquareObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SquareObject.h; path = ../Game/SquareObject.h; sourceTree = "<group>"; };
+		2BD1E5E61532080500A75171 /* InvaderEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InvaderEntity.cpp; path = ../Game/InvaderEntity.cpp; sourceTree = "<group>"; };
+		2BD1E5E71532080500A75171 /* InvaderEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InvaderEntity.h; path = ../Game/InvaderEntity.h; sourceTree = "<group>"; };
 		2BD1E5E81532080500A75171 /* TestZone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestZone.cpp; path = ../Game/TestZone.cpp; sourceTree = "<group>"; };
 		2BD1E5E91532080500A75171 /* TestZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestZone.h; path = ../Game/TestZone.h; sourceTree = "<group>"; };
-		2BD1E5EA1532080500A75171 /* TriangleObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TriangleObject.cpp; path = ../Game/TriangleObject.cpp; sourceTree = "<group>"; };
-		2BD1E5EB1532080500A75171 /* TriangleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TriangleObject.h; path = ../Game/TriangleObject.h; sourceTree = "<group>"; };
+		2BD1E5EA1532080500A75171 /* InvaderGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InvaderGroup.cpp; path = ../Game/InvaderGroup.cpp; sourceTree = "<group>"; };
+		2BD1E5EB1532080500A75171 /* InvaderGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InvaderGroup.h; path = ../Game/InvaderGroup.h; sourceTree = "<group>"; };
 		2BD1E63E1532155500A75171 /* LuaTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaTest.cpp; path = ../UnitTests/LuaTest.cpp; sourceTree = SOURCE_ROOT; };
 		2BD392D115E8DE1400C010B7 /* Shuttle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shuttle.cpp; path = ../Game/Shuttle.cpp; sourceTree = "<group>"; };
 		2BD392D215E8DE1400C010B7 /* Shuttle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shuttle.h; path = ../Game/Shuttle.h; sourceTree = "<group>"; };
@@ -1237,12 +1237,12 @@
 				9141B7021826E5BA003B4BDD /* main.cpp */,
 				2BD1E5E41532080500A75171 /* DotEntity.cpp */,
 				2BD1E5E51532080500A75171 /* DotEntity.h */,
-				2BD1E5E61532080500A75171 /* SquareObject.cpp */,
-				2BD1E5E71532080500A75171 /* SquareObject.h */,
+				2BD1E5E61532080500A75171 /* InvaderEntity.cpp */,
+				2BD1E5E71532080500A75171 /* InvaderEntity.h */,
 				2BD1E5E81532080500A75171 /* TestZone.cpp */,
 				2BD1E5E91532080500A75171 /* TestZone.h */,
-				2BD1E5EA1532080500A75171 /* TriangleObject.cpp */,
-				2BD1E5EB1532080500A75171 /* TriangleObject.h */,
+				2BD1E5EA1532080500A75171 /* InvaderGroup.cpp */,
+				2BD1E5EB1532080500A75171 /* InvaderGroup.h */,
 				2B4B069E15331F12006D0C75 /* AnimatedDude.cpp */,
 				2B4B069F15331F12006D0C75 /* AnimatedDude.h */,
 				2BC214731535E6B30063834F /* AnimatedDudeController.cpp */,
@@ -1953,10 +1953,10 @@
 				91526EAB1B5BFEC6009F46E7 /* RocketLauncher.cpp in Sources */,
 				910C24C21A1A969600A79D1C /* PhysicsGrid.cpp in Sources */,
 				91ABBDDB1B5BADFB0097667E /* WeaponFactory.cpp in Sources */,
-				2BD1E5EE1532080500A75171 /* SquareObject.cpp in Sources */,
+				2BD1E5EE1532080500A75171 /* InvaderEntity.cpp in Sources */,
 				2BD1E5EF1532080500A75171 /* TestZone.cpp in Sources */,
 				917DE2051AC2055900D1F795 /* CubeSwarm.cpp in Sources */,
-				2BD1E5F01532080500A75171 /* TriangleObject.cpp in Sources */,
+				2BD1E5F01532080500A75171 /* InvaderGroup.cpp in Sources */,
 				2B4B06A015331F13006D0C75 /* AnimatedDude.cpp in Sources */,
 				9141B7031826E5BA003B4BDD /* main.cpp in Sources */,
 				2BC214751535E6B40063834F /* AnimatedDudeController.cpp in Sources */,

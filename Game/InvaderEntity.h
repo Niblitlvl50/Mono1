@@ -1,5 +1,5 @@
 /*
- *  TriangleObject.h
+ *  SquareObject.h
  *  Monolith1
  *
  *  Created by Niblit on 2011-02-21.
@@ -10,19 +10,23 @@
 #pragma once
 
 #include "EntityBase.h"
+#include "Sprite.h"
 
 namespace game
 {
-    class TriangleObject : public mono::EntityBase
+    class InvaderEntity : public mono::EntityBase
     {
     public:
 
-        TriangleObject();
+        InvaderEntity(float x, float y);
 
     private:
 
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
+
+        mono::Sprite mSprite;
     };
+
 }
 

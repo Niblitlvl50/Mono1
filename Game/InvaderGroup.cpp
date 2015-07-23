@@ -7,22 +7,22 @@
  *
  */
 
-#include "TriangleObject.h"
-#include "SquareObject.h"
+#include "InvaderGroup.h"
+#include "InvaderEntity.h"
 #include "IRenderer.h"
 
 using namespace game;
 
-TriangleObject::TriangleObject()
+InvaderGroup::InvaderGroup()
 {
     mPosition = math::Vector2f(0.0f, -30.0f);
     mScale = math::Vector2f(20.0f, 20.0f);
     
-    AddChild(std::make_shared<SquareObject>(-1, -1));
-    AddChild(std::make_shared<SquareObject>(1, 1));
+    AddChild(std::make_shared<InvaderEntity>(-1, -1));
+    AddChild(std::make_shared<InvaderEntity>(1, 1));
 }
 
-void TriangleObject::Draw(mono::IRenderer& renderer) const
+void InvaderGroup::Draw(mono::IRenderer& renderer) const
 {
     const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
     const mono::Color color(0.0, 0.0, 0.0);
@@ -31,7 +31,7 @@ void TriangleObject::Draw(mono::IRenderer& renderer) const
     renderer.DrawPoints(points, color, size);
 }
 
-void TriangleObject::Update(unsigned int delta)
+void InvaderGroup::Update(unsigned int delta)
 {
     mRotation += (delta * 0.1f);
     if(mRotation > 360.0f)
