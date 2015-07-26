@@ -62,11 +62,6 @@ const math::Quad& TraceCamera::GetViewport() const
     return mViewport;
 }
 
-math::Quad& TraceCamera::GetViewport()
-{
-    return mViewport;
-}
-
 void TraceCamera::SetTargetViewport(const math::Quad& target)
 {
     mTargetViewport = target;

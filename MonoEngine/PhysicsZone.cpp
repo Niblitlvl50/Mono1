@@ -80,10 +80,10 @@ void PhysicsZone::DoPreAccept()
         
         cm::Object& object = entity->GetPhysics();
         mPhysics->mSpace.RemoveBody(object.body);
-        
-        for(auto it = object.shapes.begin(), end = object.shapes.end(); it != end; ++it)
-            mPhysics->mSpace.RemoveShape(*it);
-        
+
+        for(auto& shape : object.shapes)
+            mPhysics->mSpace.RemoveShape(shape);
+
         RemoveDrawable(entity);
     }
     
