@@ -8,7 +8,7 @@
 
 #pragma once
 
-namespace Libs
+namespace System
 {
     //! Init the framework
     void Init();

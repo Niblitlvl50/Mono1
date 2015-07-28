@@ -13,7 +13,7 @@
 #include <stdexcept>
 #include <cstdio>
 
-void Libs::Init()
+void System::Init()
 {
     // Init SDL video subsystem
     const int result = SDL_Init(SDL_INIT_VIDEO);
@@ -28,7 +28,7 @@ void Libs::Init()
     mono::LoadDefaultShaderFactory();
 }
 
-void Libs::Exit()
+void System::Exit()
 {
     mono::UnloadShaderFactory();
     mono::UnloadFont();

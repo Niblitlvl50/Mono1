@@ -18,7 +18,7 @@ int main()
 {
     try
     {
-        Libs::Init();
+        System::Init();
 
         // The "global" event handler used throughout the game
         mono::EventHandler eventHandler;
@@ -46,7 +46,7 @@ int main()
         std::cout << "Shutdown due to unknown exception" << std::endl;
     }
 
-    Libs::Exit();
+    System::Exit();
 	
     return 0;
 }

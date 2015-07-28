@@ -65,7 +65,7 @@ mono::IImagePtr mono::LoadImage(const std::string& source)
     if(dotpos == std::string::npos)
         throw std::runtime_error("Unable to determine extension");
     
-    const std::string extension = source.substr(dotpos +1);
+    const std::string& extension = source.substr(dotpos +1);
     if(extension == "png")
         return std::make_shared<libpng::PNGImage>(source);
 
