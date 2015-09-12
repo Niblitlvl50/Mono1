@@ -86,15 +86,15 @@ void Events::ProcessSystemEvents(mono::IInputHandlerPtr handler)
                 break;
                 
             case SDL_FINGERDOWN:
-                handler->OnTouchDown(event.tfinger.x, event.tfinger.y, event.tfinger.dx, event.tfinger.dy);
+                handler->OnTouchDown(event.tfinger.fingerId, event.tfinger.x, event.tfinger.y, event.tfinger.dx, event.tfinger.dy);
                 break;
             
             case SDL_FINGERUP:
-                handler->OnTouchUp(event.tfinger.x, event.tfinger.y, event.tfinger.dx, event.tfinger.dy);
+                handler->OnTouchUp(event.tfinger.fingerId, event.tfinger.x, event.tfinger.y, event.tfinger.dx, event.tfinger.dy);
                 break;
                 
             case SDL_FINGERMOTION:
-                handler->OnTouchMotion(event.tfinger.x, event.tfinger.y, event.tfinger.dx, event.tfinger.dy);
+                handler->OnTouchMotion(event.tfinger.fingerId, event.tfinger.x, event.tfinger.y, event.tfinger.dx, event.tfinger.dy);
                 break;
                 
             case SDL_MULTIGESTURE:

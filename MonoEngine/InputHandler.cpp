@@ -75,21 +75,21 @@ void InputHandler::OnMouseWheel(int x, int y)
     mEventHandler.DispatchEvent(event);
 }
 
-void InputHandler::OnTouchDown(float x, float y, float dx, float dy)
+void InputHandler::OnTouchDown(int64_t touchId, float x, float y, float dx, float dy)
 {
-    const Event::TouchEvent event(Event::TouchType::DOWN, x, y, dx, dy);
+    const Event::TouchEvent event(Event::TouchType::DOWN, touchId, x, y, dx, dy);
     mEventHandler.DispatchEvent(event);
 }
 
-void InputHandler::OnTouchUp(float x, float y, float dx, float dy)
+void InputHandler::OnTouchUp(int64_t touchId, float x, float y, float dx, float dy)
 {
-    const Event::TouchEvent event(Event::TouchType::UP, x, y, dx, dy);
+    const Event::TouchEvent event(Event::TouchType::UP, touchId, x, y, dx, dy);
     mEventHandler.DispatchEvent(event);
 }
 
-void InputHandler::OnTouchMotion(float x, float y, float dx, float dy)
+void InputHandler::OnTouchMotion(int64_t touchId, float x, float y, float dx, float dy)
 {
-    const Event::TouchEvent event(Event::TouchType::MOTION, x, y, dx, dy);
+    const Event::TouchEvent event(Event::TouchType::MOTION, touchId, x, y, dx, dy);
     mEventHandler.DispatchEvent(event);
 }
 

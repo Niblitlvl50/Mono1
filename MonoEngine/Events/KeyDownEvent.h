@@ -13,10 +13,10 @@ namespace Event
     struct KeyDownEvent
     {
         KeyDownEvent(int key)
-            : mKey(key)
+            : key(key)
         { }
         
-        const int mKey;
+        const int key;
     };
 }
 

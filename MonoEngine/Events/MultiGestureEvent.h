@@ -13,15 +13,15 @@ namespace Event
     struct MultiGestureEvent
     {
         MultiGestureEvent(float x, float y, float theta, float distance)
-            : mX(x),
-              mY(y),
-              mTheta(theta),
-              mDistance(distance)
+            : x(x),
+              y(y),
+              theta(theta),
+              distance(distance)
         { }
         
-        const float mX;
-        const float mY;
-        const float mTheta;
-        const float mDistance;
+        const float x;
+        const float y;
+        const float theta;
+        const float distance;
     };
 }

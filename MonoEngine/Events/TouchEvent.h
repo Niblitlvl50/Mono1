@@ -19,18 +19,20 @@ namespace Event
     
     struct TouchEvent
     {
-        TouchEvent(TouchType type, float x, float y, float dx, float dy)
-            : mType(type),
-              mX(x),
-              mY(y),
-              mDX(dx),
-              mDY(dy)
+        TouchEvent(TouchType type, int64_t touchId, float x, float y, float dx, float dy)
+            : type(type),
+              touchId(touchId),
+              x(x),
+              y(y),
+              dX(dx),
+              dY(dy)
         { }
         
-        const TouchType mType;
-        const float mX;
-        const float mY;
-        const float mDX;
-        const float mDY;
+        const TouchType type;
+        const int64_t touchId;
+        const float x;
+        const float y;
+        const float dX;
+        const float dY;
     };
 }

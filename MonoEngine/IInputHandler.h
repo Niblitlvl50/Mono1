@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <cstdint>
+
 namespace mono
 {
 
@@ -23,9 +25,9 @@ namespace mono
         virtual void OnMouseUp(unsigned int button, int x, int y) = 0;
         virtual void OnMouseMotion(int x, int y) = 0;
         virtual void OnMouseWheel(int x, int y) = 0;
-        virtual void OnTouchDown(float x, float y, float dx, float dy) = 0;
-        virtual void OnTouchUp(float x, float y, float dx, float dy) = 0;
-        virtual void OnTouchMotion(float x, float y, float dx, float dy) = 0;
+        virtual void OnTouchDown(int64_t touchId, float x, float y, float dx, float dy) = 0;
+        virtual void OnTouchUp(int64_t touchId, float x, float y, float dx, float dy) = 0;
+        virtual void OnTouchMotion(int64_t touchId, float x, float y, float dx, float dy) = 0;
         virtual void OnMultiGesture(float x, float y, float theta, float distance) = 0;
         virtual void OnUserEvent(int code, void* data1, void* data2) = 0;
         virtual void OnQuit() = 0;

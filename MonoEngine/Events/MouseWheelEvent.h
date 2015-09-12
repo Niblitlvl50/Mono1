@@ -14,11 +14,11 @@ namespace Event
     struct MouseWheelEvent
     {
         MouseWheelEvent(int x, int y)
-            : mX(x),
-              mY(y)
+            : x(x),
+              y(y)
         { }
         
-        const int mX;
-        const int mY;
+        const int x;
+        const int y;
     };
 }

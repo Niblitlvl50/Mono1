@@ -32,14 +32,14 @@ AnimatedDudeController::~AnimatedDudeController()
 
 void AnimatedDudeController::OnKeyDown(const Event::KeyDownEvent& event)
 {
-    if(event.mKey == Key::RIGHT)
+    if(event.key == Key::RIGHT)
         mDude->mTarget.x += 20.0f;
-    else if(event.mKey == Key::LEFT)
+    else if(event.key == Key::LEFT)
         mDude->mTarget.x -= 20.0f;
     
-    if(event.mKey == Key::UP)
+    if(event.key == Key::UP)
         mDude->mTarget.y += 20.0f;
-    else if(event.mKey == Key::DOWN)
+    else if(event.key == Key::DOWN)
         mDude->mTarget.y -= 20.0f;
 }
 

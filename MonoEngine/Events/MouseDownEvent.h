@@ -13,14 +13,14 @@ namespace Event
     struct MouseDownEvent
     {
         MouseDownEvent(unsigned int key, int screenX, int screenY, float worldX, float worldY)
-            : mKey(key),
+            : key(key),
               screenX(screenX),
               screenY(screenY),
               worldX(worldX),
               worldY(worldY)
         { }
         
-        const unsigned int mKey;
+        const unsigned int key;
         const int screenX;
         const int screenY;
         const float worldX;

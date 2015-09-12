@@ -94,15 +94,15 @@ void ShuttleController::OnMouseMotion(const Event::MouseMotionEvent& event)
 
 void ShuttleController::OnMultiGesture(const Event::MultiGestureEvent& event)
 {
-    const float force = event.mTheta * 1000;
+    const float force = event.theta * 1000;
     mShuttle->ApplyRotationForce(force);
 }
 
 void ShuttleController::OnKeyDown(const Event::KeyDownEvent& event)
 {
-    if(event.mKey == Key::ONE)
+    if(event.key == Key::ONE)
         mShuttle->SelectWeapon(WeaponType::STANDARD);
-    else if(event.mKey == Key::TWO)
+    else if(event.key == Key::TWO)
         mShuttle->SelectWeapon(WeaponType::ROCKET);
 }
 
