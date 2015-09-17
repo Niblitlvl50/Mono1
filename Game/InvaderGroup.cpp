@@ -25,8 +25,8 @@ InvaderGroup::InvaderGroup()
 void InvaderGroup::Draw(mono::IRenderer& renderer) const
 {
     const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
-    const mono::Color color(0.0, 0.0, 0.0);
-    const float size = 5.0f;
+    constexpr mono::Color color(0.0, 0.0, 0.0);
+    constexpr float size = 5.0f;
 
     renderer.DrawPoints(points, color, size);
 }

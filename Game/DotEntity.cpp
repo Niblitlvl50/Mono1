@@ -26,7 +26,7 @@ DotEntity::DotEntity()
 void DotEntity::Draw(mono::IRenderer& renderer) const
 {
     const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
-    const mono::Color color(0.0, 0.0, 0.0);
+    constexpr mono::Color color(0.0, 0.0, 0.0);
     const float size = 4.0f;
 
     renderer.DrawPoints(points, color, size);

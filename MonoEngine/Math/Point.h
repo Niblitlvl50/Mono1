@@ -12,10 +12,10 @@ namespace math
 {
     struct Point
     {
-        Point()
+        constexpr Point()
         { }
 
-        Point(int x, int y)
+        constexpr Point(int x, int y)
             : x(x),
               y(y)
         { }

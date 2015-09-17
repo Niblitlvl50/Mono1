@@ -79,5 +79,3 @@ void math::Normalize(math::Vector2f& vector)
     vector.x /= length;
     vector.y /= length;
 }
-
-const math::Vector2f math::zeroVec = math::Vector2f(0.0f, 0.0f);

@@ -12,10 +12,10 @@ namespace math
 {
     struct Vector2f
     {
-        Vector2f()
+        constexpr Vector2f()
         { }
 
-        Vector2f(float x, float y)
+        constexpr Vector2f(float x, float y)
             : x(x),
               y(y)
         { }
@@ -49,6 +49,6 @@ namespace math
     void Normalize(Vector2f& vector);
 
     // Just a convineince vector declared to zero.
-    extern const Vector2f zeroVec;
+    constexpr Vector2f zeroVec = Vector2f();
 }
 

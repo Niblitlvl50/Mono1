@@ -14,15 +14,15 @@ namespace math
 {
     struct Quad
     {
-        Quad()
+        constexpr Quad()
         { }
 
-        Quad(float x, float y, float w, float h)
+        constexpr Quad(float x, float y, float w, float h)
             : mA(x, y),
               mB(w, h)
         { }
 
-        Quad(const Vector2f& a, const Vector2f& b)
+        constexpr Quad(const Vector2f& a, const Vector2f& b)
             : mA(a),
               mB(b)
         { }
@@ -40,6 +40,7 @@ namespace math
     //! will not do what you think. 
     //!
     void operator |= (Quad& left, const Quad& right);
-    
-    extern const Quad zeroQuad;
+
+    //! Zero quad defined for convenience
+    constexpr Quad zeroQuad = Quad(zeroVec, zeroVec);
 }

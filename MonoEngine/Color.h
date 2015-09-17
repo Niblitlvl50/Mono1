@@ -12,17 +12,17 @@ namespace mono
 {
     struct Color
     {
-        Color()
+        constexpr Color()
         { }
 
-        Color(float r, float g, float b)
+        constexpr Color(float r, float g, float b)
             : red(r),
               green(g),
               blue(b),
               alpha(1.0f)
         { }
         
-        Color(float r, float g, float b, float a)
+        constexpr Color(float r, float g, float b, float a)
             : red(r),
               green(g),
               blue(b),
