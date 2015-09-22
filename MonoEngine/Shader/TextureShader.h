@@ -27,7 +27,7 @@ namespace mono
         virtual unsigned int GetPositionAttributeLocation() const;
         virtual unsigned int GetTextureAttributeLocation() const;
 
-        virtual void SetShade(const mono::Color& color);
+        virtual void SetShade(const mono::Color::RGBA& color);
         virtual void SetAlphaTexture(bool isAlpha);
 
     private:

@@ -66,11 +66,11 @@ namespace mono
         
         //! Gets the color shade of the sprite
         //! @return Color A reference to the color shading.
-        virtual const Color& GetShade() const;
+        virtual const Color::RGBA& GetShade() const;
         
         //! Sets the color shade of the sprite
         //! @param[in] color The color shading
-        void SetShade(const mono::Color& color);
+        void SetShade(const mono::Color::RGBA& color);
         
         //! Define an animation sequence by giving pairs of frame and duration.
         //! @param[in] id Id of the animation.
@@ -104,7 +104,7 @@ namespace mono
         std::vector<math::Quad> mTextureCoordinates;
         std::map<int, AnimationSequence> mDefinedAnimations;
 
-        Color mColor;
+        Color::RGBA mColor;
     };
 }
 

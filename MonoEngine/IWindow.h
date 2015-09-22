@@ -9,12 +9,11 @@
 
 #pragma once
 
+#include "MonoFwd.h"
 #include "MathFwd.h"
 
 namespace mono
 {
-    struct Color;
-    
     struct IWindow
     {
         virtual ~IWindow()
@@ -24,7 +23,7 @@ namespace mono
         virtual void Activated(bool activated) = 0;
         virtual void SwapBuffers() const = 0;
         virtual void MakeCurrent() = 0;
-        virtual void SetBackgroundColor(const mono::Color& color) = 0;
+        virtual void SetBackgroundColor(const mono::Color::RGBA& color) = 0;
         virtual const math::Vector2f& Size() const = 0;
     };
 

@@ -32,8 +32,8 @@ TEST(PathTest, GetPathAtFullLength)
     
     std::shared_ptr<mono::IPath> path = mono::CreatePath(coords);
     const math::Vector2f atLength10 = path->GetPositionByLength(10);
-    EXPECT_EQ(10, atLength10.mX);
-    EXPECT_EQ(0, atLength10.mY);
+    EXPECT_EQ(10, atLength10.x);
+    EXPECT_EQ(0, atLength10.y);
 }
 
 TEST(PathTest, GetPathAtHalfLength)
@@ -44,8 +44,8 @@ TEST(PathTest, GetPathAtHalfLength)
     
     std::shared_ptr<mono::IPath> path = mono::CreatePath(coords);
     const math::Vector2f atLength5 = path->GetPositionByLength(5);
-    EXPECT_EQ(5, atLength5.mX);
-    EXPECT_EQ(0, atLength5.mY);
+    EXPECT_EQ(5, atLength5.x);
+    EXPECT_EQ(0, atLength5.y);
 }
 
 TEST(PathTest, GetPathAtZeroLength)
@@ -56,8 +56,8 @@ TEST(PathTest, GetPathAtZeroLength)
     
     std::shared_ptr<mono::IPath> path = mono::CreatePath(coords);
     const math::Vector2f atLength0 = path->GetPositionByLength(0);
-    EXPECT_EQ(0, atLength0.mX);
-    EXPECT_EQ(0, atLength0.mY);
+    EXPECT_EQ(0, atLength0.x);
+    EXPECT_EQ(0, atLength0.y);
 }
 
 TEST(PathTest, GetPositionFromComplexPath)
@@ -72,12 +72,12 @@ TEST(PathTest, GetPositionFromComplexPath)
     const float length = path->Length();
     
     const math::Vector2f atLength0 = path->GetPositionByLength(0);
-    EXPECT_EQ(0, atLength0.mX);
-    EXPECT_EQ(-5, atLength0.mY);
+    EXPECT_EQ(0, atLength0.x);
+    EXPECT_EQ(-5, atLength0.y);
     
     const math::Vector2f atLength2 = path->GetPositionByLength(length);
-    EXPECT_EQ(2, atLength2.mX);
-    EXPECT_EQ(10, atLength2.mY);
+    EXPECT_EQ(2, atLength2.x);
+    EXPECT_EQ(10, atLength2.y);
 }
 
 TEST(PathTest, CreatePathAndGetPointsAndVerifyTheSame)

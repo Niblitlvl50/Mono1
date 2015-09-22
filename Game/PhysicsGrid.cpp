@@ -79,9 +79,9 @@ PhysicsGrid::PhysicsGrid(const math::Quad& bounds)
 void PhysicsGrid::Draw(mono::IRenderer& renderer) const
 {
     constexpr float quadWidth = 2.0f;
-    renderer.DrawQuad(mBounds, mono::Color(1, 1, 1), quadWidth);
+    renderer.DrawQuad(mBounds, mono::Color::RGBA(1, 1, 1), quadWidth);
 
-    const mono::Color color(1.0f, 1.0f, 1.0f, 0.2f);
+    constexpr mono::Color::RGBA color(1.0f, 1.0f, 1.0f, 0.2f);
     constexpr float lineWidth = 1.0f;
     renderer.DrawLines(mGridVertices, color, lineWidth);
 }

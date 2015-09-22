@@ -24,6 +24,12 @@ namespace mono
     struct IAction;
     struct IPath;
     
-    struct Color;
     class EventHandler;
+    class Sprite;
+
+    namespace Color
+    {
+        struct RGBA;
+        struct HSL;
+    }
 }

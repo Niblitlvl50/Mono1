@@ -19,7 +19,7 @@
 #include <cmath>
 
 void mono::DrawQuad(const math::Quad& quad,
-                    const mono::Color& color,
+                    const mono::Color::RGBA& color,
                     float width,
                     const std::shared_ptr<IColorShader>& shader)
 {
@@ -36,7 +36,7 @@ void mono::DrawCircle(const math::Vector2f& position,
                       float radie,
                       unsigned int segments,
                       float lineWidth,
-                      const mono::Color& color,
+                      const mono::Color::RGBA& color,
                       const std::shared_ptr<IColorShader>& shader)
 {
     std::vector<math::Vector2f> vertices;
@@ -121,11 +121,11 @@ void mono::DrawTexts(const std::vector<TextDefinition>& texts, const std::shared
 }
 
 void mono::DrawLine(const std::vector<math::Vector2f>& vertices,
-                    const mono::Color& color,
+                    const mono::Color::RGBA& color,
                     float width,
                     const std::shared_ptr<IColorShader>& shader)
 {
-    std::vector<mono::Color> colors(vertices.size());
+    std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
 
     glLineWidth(width);
@@ -144,11 +144,11 @@ void mono::DrawLine(const std::vector<math::Vector2f>& vertices,
 
 
 void mono::DrawLines(const std::vector<math::Vector2f>& vertices,
-                     const mono::Color& color,
+                     const mono::Color::RGBA& color,
                      float width,
                      const std::shared_ptr<IColorShader>& shader)
 {
-    std::vector<mono::Color> colors(vertices.size());
+    std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
 
     glLineWidth(width);
@@ -166,11 +166,11 @@ void mono::DrawLines(const std::vector<math::Vector2f>& vertices,
 }
 
 void mono::DrawPoints(const std::vector<math::Vector2f>& vertices,
-                      const mono::Color& color,
+                      const mono::Color::RGBA& color,
                       float size,
                       const std::shared_ptr<IColorShader>& shader)
 {
-    std::vector<mono::Color> colors(vertices.size());
+    std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
 
     glPointSize(size);

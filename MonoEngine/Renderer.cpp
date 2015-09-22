@@ -104,7 +104,7 @@ void Renderer::AddUpdatable(IUpdatablePtr updatable)
     mUpdatables.push_back(updatable);
 }
 
-void Renderer::DrawText(const std::string& text, const math::Vector2f& pos, bool center, const mono::Color& color)
+void Renderer::DrawText(const std::string& text, const math::Vector2f& pos, bool center, const mono::Color::RGBA& color)
 {
     TextDefinition def = mono::GenerateVertexDataFromString(text, pos, center);
     def.color = color;
@@ -131,7 +131,7 @@ void Renderer::DrawSprite(const Sprite& sprite) const
     ::DrawSprite(sprite, mTextureShader);
 }
 
-void Renderer::DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color& color, float size) const
+void Renderer::DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color::RGBA& color, float size) const
 {
     mColorShader->Use();
     mColorShader->LoadModelViewMatrix(mCurrentTransform);
@@ -139,7 +139,7 @@ void Renderer::DrawPoints(const std::vector<math::Vector2f>& points, const mono:
     ::DrawPoints(points, color, size, mColorShader);
 }
 
-void Renderer::DrawLines(const std::vector<math::Vector2f>& linePoints, const mono::Color& color, float width) const
+void Renderer::DrawLines(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const
 {
     mColorShader->Use();
     mColorShader->LoadModelViewMatrix(mCurrentTransform);
@@ -147,7 +147,7 @@ void Renderer::DrawLines(const std::vector<math::Vector2f>& linePoints, const mo
     ::DrawLines(linePoints, color, width, mColorShader);
 }
 
-void Renderer::DrawPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color& color, float width) const
+void Renderer::DrawPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const
 {
     mColorShader->Use();
     mColorShader->LoadModelViewMatrix(mCurrentTransform);
@@ -155,7 +155,7 @@ void Renderer::DrawPolyline(const std::vector<math::Vector2f>& linePoints, const
     ::DrawLine(linePoints, color, width, mColorShader);
 }
 
-void Renderer::DrawQuad(const math::Quad& quad, const mono::Color& color, float width) const
+void Renderer::DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const
 {
     mColorShader->Use();
     mColorShader->LoadModelViewMatrix(mCurrentTransform);
@@ -163,7 +163,7 @@ void Renderer::DrawQuad(const math::Quad& quad, const mono::Color& color, float 
     ::DrawQuad(quad, color, width, mColorShader);
 }
 
-void Renderer::DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const mono::Color& color) const
+void Renderer::DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const
 {
     mColorShader->Use();
     mColorShader->LoadModelViewMatrix(mCurrentTransform);

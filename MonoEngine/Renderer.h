@@ -30,13 +30,13 @@ namespace mono
         virtual void AddDrawable(IDrawablePtr drawable);
         virtual void AddUpdatable(IUpdatablePtr updatable);
         
-        virtual void DrawText(const std::string& text, const math::Vector2f& pos, bool center, const mono::Color& color);
+        virtual void DrawText(const std::string& text, const math::Vector2f& pos, bool center, const mono::Color::RGBA& color);
         virtual void DrawSprite(const Sprite& sprite) const;
-        virtual void DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color& color, float size) const;
-        virtual void DrawLines(const std::vector<math::Vector2f>& linePoints, const mono::Color& color, float width) const;
-        virtual void DrawPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color& color, float width) const;
-        virtual void DrawQuad(const math::Quad& quad, const mono::Color& color, float width) const;
-        virtual void DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const mono::Color& color) const;
+        virtual void DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color::RGBA& color, float size) const;
+        virtual void DrawLines(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const;
+        virtual void DrawPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const;
+        virtual void DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const;
+        virtual void DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const;
 
         virtual void PushNewTransform(const math::Matrix& transform);
         virtual const math::Matrix& GetCurrentTransform() const;

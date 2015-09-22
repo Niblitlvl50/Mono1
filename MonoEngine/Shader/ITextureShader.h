@@ -12,7 +12,10 @@
 
 namespace mono
 {
-    struct Color;
+    namespace Color
+    {
+        struct RGBA;
+    }
     
     class ITextureShader : public IShader
     {
@@ -24,7 +27,7 @@ namespace mono
         virtual unsigned int GetPositionAttributeLocation() const = 0;
         virtual unsigned int GetTextureAttributeLocation() const = 0;
         
-        virtual void SetShade(const mono::Color& color) = 0;
+        virtual void SetShade(const mono::Color::RGBA& color) = 0;
         virtual void SetAlphaTexture(bool isAlpha) = 0;
     };
 }

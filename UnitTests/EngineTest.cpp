@@ -45,7 +45,7 @@ namespace
         {
             mMakeCurrentCalled = true;
         }
-        virtual void SetBackgroundColor(const mono::Color& color)
+        virtual void SetBackgroundColor(const mono::Color::RGBA& color)
         { }
         virtual const math::Vector2f& Size() const
         {
@@ -171,7 +171,7 @@ namespace
         {
             return 0;
         }
-        virtual void SetShade(const mono::Color& color)
+        virtual void SetShade(const mono::Color::RGBA& color)
         { }
         virtual void SetAlphaTexture(bool isAlpha)
         { }

@@ -29,7 +29,7 @@ namespace mono
         virtual void Activated(bool activated);
         virtual void MakeCurrent();
         virtual void SwapBuffers() const;
-        virtual void SetBackgroundColor(const mono::Color& color);
+        virtual void SetBackgroundColor(const mono::Color::RGBA& color);
         virtual const math::Vector2f& Size() const;
 	
     private:

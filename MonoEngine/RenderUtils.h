@@ -8,20 +8,19 @@
 
 #pragma once
 
+#include "MonoFwd.h"
 #include "MathFwd.h"
 #include <vector>
 
 namespace mono
 {
-    class Sprite;
-    class Color;
     class IColorShader;
     class ITextureShader;
     struct TextDefinition;
     
     //! Draws a quad
     void DrawQuad(const math::Quad& quad,
-                  const mono::Color& color,
+                  const mono::Color::RGBA& color,
                   float width,
                   const std::shared_ptr<IColorShader>& shader);
     
@@ -30,7 +29,7 @@ namespace mono
                     float radie,
                     unsigned int segments,
                     float lineWidth,
-                    const mono::Color& color,
+                    const mono::Color::RGBA& color,
                     const std::shared_ptr<IColorShader>& shader);
     
     //! Draws a sprite
@@ -43,19 +42,19 @@ namespace mono
 
     //! Draws a single line
     void DrawLine(const std::vector<math::Vector2f>& vertices,
-                  const mono::Color& color,
+                  const mono::Color::RGBA& color,
                   float width,
                   const std::shared_ptr<IColorShader>& shader);
 
     //! Draws lines, not connected to each other
     void DrawLines(const std::vector<math::Vector2f>& vertices,
-                   const mono::Color& color,
+                   const mono::Color::RGBA& color,
                    float width,
                    const std::shared_ptr<IColorShader>& shader);
 
     // Draw a collection of points
     void DrawPoints(const std::vector<math::Vector2f>& vertices,
-                    const mono::Color& color,
+                    const mono::Color::RGBA& color,
                     float size,
                     const std::shared_ptr<IColorShader>& shader);
 }

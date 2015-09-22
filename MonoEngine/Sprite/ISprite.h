@@ -28,11 +28,11 @@ namespace mono
 
         //! Gets the color shade of the sprite
         //! @return Color A reference to the color shading.
-        virtual const Color& GetShade() const = 0;
+        virtual const Color::RGBA& GetShade() const = 0;
 
         //! Sets the color shade of the sprite
         //! @param[in] color The color shading
-        virtual void SetShade(const mono::Color& color) = 0;
+        virtual void SetShade(const mono::Color::RGBA& color) = 0;
 
         //! Tell the sprite to run a specific animation.
         //! @param[in] id The animation to run.

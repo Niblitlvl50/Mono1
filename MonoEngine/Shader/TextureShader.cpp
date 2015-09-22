@@ -105,7 +105,7 @@ unsigned int TextureShader::GetTextureAttributeLocation() const
     return mTextureAttributeLocation;
 }
 
-void TextureShader::SetShade(const mono::Color& shade)
+void TextureShader::SetShade(const mono::Color::RGBA& shade)
 {
     glUniform4f(mColorShadeLocation, shade.red, shade.green, shade.blue, shade.alpha);
 }

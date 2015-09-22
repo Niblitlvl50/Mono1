@@ -235,6 +235,8 @@
 		911840571A5C8E74006301E2 /* ITextureShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA6031A4DE55E000132B7 /* ITextureShader.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		911840581A5C8E7A006301E2 /* IColorShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA6041A4DE60C000132B7 /* IColorShader.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		911840591A5C8E81006301E2 /* IShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60D1A4E06DE000132B7 /* IShaderFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		912584621BB07EB9006692A9 /* ColorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912584611BB07EB9006692A9 /* ColorTest.cpp */; settings = {ASSET_TAGS = (); }; };
+		912584641BB09271006692A9 /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912584631BB09271006692A9 /* Color.cpp */; settings = {ASSET_TAGS = (); }; };
 		9141B7031826E5BA003B4BDD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9141B7021826E5BA003B4BDD /* main.cpp */; };
 		914FA5FC1A4C2EFC000132B7 /* ColorShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914FA5FA1A4C2EFC000132B7 /* ColorShader.cpp */; };
 		914FA5FD1A4C2EFC000132B7 /* ColorShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA5FB1A4C2EFC000132B7 /* ColorShader.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -666,6 +668,8 @@
 		91157C371A46F18D0095CBE4 /* IShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IShader.h; path = ../MonoEngine/Shader/IShader.h; sourceTree = SOURCE_ROOT; };
 		91203C301826F02900C5B323 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = "../External Libs/stb_truetype/stb_truetype.h"; sourceTree = "<group>"; };
 		91203C321826F8D100C5B323 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		912584611BB07EB9006692A9 /* ColorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorTest.cpp; path = ../UnitTests/ColorTest.cpp; sourceTree = SOURCE_ROOT; };
+		912584631BB09271006692A9 /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Color.cpp; path = ../MonoEngine/Color.cpp; sourceTree = SOURCE_ROOT; };
 		9141B7021826E5BA003B4BDD /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../Game/main.cpp; sourceTree = "<group>"; };
 		914FA5FA1A4C2EFC000132B7 /* ColorShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorShader.cpp; path = ../MonoEngine/Shader/ColorShader.cpp; sourceTree = SOURCE_ROOT; };
 		914FA5FB1A4C2EFC000132B7 /* ColorShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorShader.h; path = ../MonoEngine/Shader/ColorShader.h; sourceTree = SOURCE_ROOT; };
@@ -1089,6 +1093,7 @@
 				2BE47413153201CC00CA5ACB /* Texture */,
 				91D2217A1A5E5D5500415214 /* IAction.h */,
 				9181E5241841133900678586 /* Color.h */,
+				912584631BB09271006692A9 /* Color.cpp */,
 				9181E5251841133900678586 /* IPhysicsEntity.h */,
 				9181E5261841133900678586 /* IPhysicsZone.h */,
 				9181E5271841133900678586 /* MonoPtrFwd.h */,
@@ -1135,6 +1140,7 @@
 				91035EC518649D58009BEE6C /* EventHandlerTest.cpp */,
 				91157C291A2148610095CBE4 /* RandomTest.cpp */,
 				91157C331A2646310095CBE4 /* MatrixTest.cpp */,
+				912584611BB07EB9006692A9 /* ColorTest.cpp */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -1884,6 +1890,7 @@
 				2B6BAF6D15A243EF00F64062 /* TextFunctions.cpp in Sources */,
 				2B4D2F5315C32A92003A9193 /* MathFunctions.cpp in Sources */,
 				2B4A337D15E68A5000390B94 /* PhysicsZone.cpp in Sources */,
+				912584641BB09271006692A9 /* Color.cpp in Sources */,
 				2B4A338215E6B20800390B94 /* CMSpace.cpp in Sources */,
 				2B4A339015E6C1A100390B94 /* CMFactory.cpp in Sources */,
 				2B96337115EA2A5D009E88EC /* CameraController.cpp in Sources */,
@@ -1938,6 +1945,7 @@
 				9181E55618411D8200678586 /* gtest-all.cc in Sources */,
 				2B6872D61531FB9600B8C2FB /* gtest_main.cc in Sources */,
 				9181E55A184167F300678586 /* PathTest.cpp in Sources */,
+				912584621BB07EB9006692A9 /* ColorTest.cpp in Sources */,
 				91035EC718649D58009BEE6C /* EventHandlerTest.cpp in Sources */,
 				2B6872D71531FB9600B8C2FB /* EngineTest.cpp in Sources */,
 				2BD1E6401532155500A75171 /* LuaTest.cpp in Sources */,

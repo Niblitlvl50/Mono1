@@ -125,7 +125,7 @@ void SDLWindow::SwapBuffers() const
     SDL_GL_SwapWindow(mWindow);
 }
 
-void SDLWindow::SetBackgroundColor(const mono::Color& color)
+void SDLWindow::SetBackgroundColor(const mono::Color::RGBA& color)
 {
     glClearColor(color.red, color.green, color.blue, color.alpha);
 }

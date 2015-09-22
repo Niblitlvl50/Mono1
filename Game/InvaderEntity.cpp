@@ -16,6 +16,7 @@ InvaderEntity::InvaderEntity(float x, float y)
     : mSprite("invader.sprite")
 {
     mPosition = math::Vector2f(x, y);
+    mSprite.SetShade(mono::Color::RGBA(1, 1, 1, 0.5));
 }
 
 void InvaderEntity::Draw(mono::IRenderer& renderer) const

@@ -111,12 +111,12 @@ const math::Quad& Sprite::GetTextureCoords() const
     return anim.Finished() ? math::zeroQuad : mTextureCoordinates.at(anim.Frame());
 }
 
-const Color& Sprite::GetShade() const
+const Color::RGBA& Sprite::GetShade() const
 {
     return mColor;
 }
 
-void Sprite::SetShade(const mono::Color& color)
+void Sprite::SetShade(const mono::Color::RGBA& color)
 {
     mColor = color;
 }
