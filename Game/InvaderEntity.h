@@ -11,6 +11,7 @@
 
 #include "EntityBase.h"
 #include "Sprite.h"
+#include "Color.h"
 
 namespace game
 {
@@ -26,6 +27,7 @@ namespace game
         virtual void Update(unsigned int delta);
 
         mono::Sprite mSprite;
+        mono::Color::HSL mColor;
     };
 
 }

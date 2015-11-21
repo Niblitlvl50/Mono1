@@ -50,11 +50,14 @@ namespace mono
             { }
 
             float hue = 0.0f;
-            float saturation = 0.0f;
-            float lightness = 0.0f;
+            float saturation = 0.5f;
+            float lightness = 0.5f;
         };
 
+        //! Convert HSL to RGBA
         mono::Color::RGBA ToRGBA(const mono::Color::HSL& hsl);
+
+        //! Convert RGBA to HSL
         mono::Color::HSL ToHSL(const mono::Color::RGBA& rgb);
     }
 }

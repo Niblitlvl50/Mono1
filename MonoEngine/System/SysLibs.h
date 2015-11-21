@@ -8,6 +8,10 @@
 
 #pragma once
 
+// Its a must to include SDL_main.h in the header where main(...)
+// is declared.
+#include "SDL_main.h"
+
 namespace System
 {
     //! Init the framework

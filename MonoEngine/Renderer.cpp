@@ -23,6 +23,7 @@
 #include "ITextureShader.h"
 #include "IColorShader.h"
 
+
 using namespace mono;
 
 Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
@@ -36,7 +37,7 @@ Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
 void Renderer::PrepareDraw()
 {
     const math::Quad& viewport = mCamera->GetViewport();
-    mProjection = math::Ortho(0.0f, viewport.mB.x, 0.0f, viewport.mB.y, 0.0f, 10.0f);
+    mProjection = math::Ortho(0.0f, viewport.mB.x, 0.0f, viewport.mB.y, -10.0f, 10.0f);
 
     math::Identity(mModelView);
     math::Translate(mModelView, -viewport.mA);

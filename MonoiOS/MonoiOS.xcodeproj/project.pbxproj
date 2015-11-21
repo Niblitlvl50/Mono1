@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -32,7 +32,6 @@
 		2B26D71C15FD2BB5001E9748 /* SysEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6EC15FD2BB5001E9748 /* SysEvents.cpp */; };
 		2B26D71D15FD2BB5001E9748 /* SysFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6EE15FD2BB5001E9748 /* SysFile.cpp */; };
 		2B26D71E15FD2BB5001E9748 /* SysLibs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6F115FD2BB5001E9748 /* SysLibs.cpp */; };
-		2B26D71F15FD2BB5001E9748 /* SysOpenGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6F315FD2BB5001E9748 /* SysOpenGL.cpp */; };
 		2B26D72015FD2BB5001E9748 /* SysTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6F515FD2BB5001E9748 /* SysTime.cpp */; };
 		2B26D72115FD2BB5001E9748 /* WindowFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6F815FD2BB5001E9748 /* WindowFactory.cpp */; };
 		2B26D72215FD2BB5001E9748 /* TextFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6FB15FD2BB5001E9748 /* TextFunctions.cpp */; };
@@ -92,11 +91,8 @@
 		2B26DB8115FD3281001E9748 /* AnimatedDude.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB3E15FD3280001E9748 /* AnimatedDude.cpp */; };
 		2B26DB8215FD3281001E9748 /* AnimatedDudeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB4015FD3280001E9748 /* AnimatedDudeController.cpp */; };
 		2B26DB8315FD3281001E9748 /* Explosion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB4215FD3280001E9748 /* Explosion.cpp */; };
-		2B26DB8815FD3281001E9748 /* OscillatingLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB4D15FD3280001E9748 /* OscillatingLine.cpp */; };
 		2B26DBB115FD3282001E9748 /* Shuttle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7915FD3281001E9748 /* Shuttle.cpp */; };
-		2B26DBB215FD3282001E9748 /* SquareObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7B15FD3281001E9748 /* SquareObject.cpp */; };
 		2B26DBB315FD3282001E9748 /* TestZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7D15FD3281001E9748 /* TestZone.cpp */; };
-		2B26DBB415FD3282001E9748 /* TriangleObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7F15FD3281001E9748 /* TriangleObject.cpp */; };
 		2B95CF20162F37C6006769BF /* Moon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B95CF1C162F37C6006769BF /* Moon.cpp */; };
 		2B95CF21162F37C6006769BF /* ShuttleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B95CF1E162F37C6006769BF /* ShuttleController.cpp */; };
 		2B95CF24162F3857006769BF /* moon.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B95CF22162F3857006769BF /* moon.sprite */; };
@@ -162,7 +158,6 @@
 		2BD3CBC2160BB2B30043156E /* SysEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6EC15FD2BB5001E9748 /* SysEvents.cpp */; };
 		2BD3CBC3160BB2B30043156E /* SysFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6EE15FD2BB5001E9748 /* SysFile.cpp */; };
 		2BD3CBC4160BB2B30043156E /* SysLibs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6F115FD2BB5001E9748 /* SysLibs.cpp */; };
-		2BD3CBC5160BB2B30043156E /* SysOpenGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6F315FD2BB5001E9748 /* SysOpenGL.cpp */; };
 		2BD3CBC6160BB2B30043156E /* SysTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6F515FD2BB5001E9748 /* SysTime.cpp */; };
 		2BD3CBC7160BB2B30043156E /* WindowFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6F815FD2BB5001E9748 /* WindowFactory.cpp */; };
 		2BD3CBC8160BB2B30043156E /* TextFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6FB15FD2BB5001E9748 /* TextFunctions.cpp */; };
@@ -221,11 +216,8 @@
 		2BD3CC11160BB2B30043156E /* AnimatedDude.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB3E15FD3280001E9748 /* AnimatedDude.cpp */; };
 		2BD3CC12160BB2B30043156E /* AnimatedDudeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB4015FD3280001E9748 /* AnimatedDudeController.cpp */; };
 		2BD3CC13160BB2B30043156E /* Explosion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB4215FD3280001E9748 /* Explosion.cpp */; };
-		2BD3CC14160BB2B30043156E /* OscillatingLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB4D15FD3280001E9748 /* OscillatingLine.cpp */; };
 		2BD3CC15160BB2B30043156E /* Shuttle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7915FD3281001E9748 /* Shuttle.cpp */; };
-		2BD3CC16160BB2B30043156E /* SquareObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7B15FD3281001E9748 /* SquareObject.cpp */; };
 		2BD3CC17160BB2B30043156E /* TestZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7D15FD3281001E9748 /* TestZone.cpp */; };
-		2BD3CC18160BB2B30043156E /* TriangleObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7F15FD3281001E9748 /* TriangleObject.cpp */; };
 		2BD3CC1A160BB2B30043156E /* SysVideo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A3C1607B56800D8D38E /* SysVideo.cpp */; };
 		2BD3CC1B160BB2B30043156E /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A9E160A5EDA00D8D38E /* chipmunk.c */; };
 		2BD3CC1C160BB2B30043156E /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA1160A5EDA00D8D38E /* cpConstraint.c */; };
@@ -324,6 +316,25 @@
 		91D6465D186F2D0D00FA6CB5 /* PathFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465A186F2D0D00FA6CB5 /* PathFactory.cpp */; };
 		91D64660186F2D2C00FA6CB5 /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */; };
 		91D64661186F2D2C00FA6CB5 /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */; };
+		91D71EEE1BF8AE5D0097AEA0 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71EEA1BF8AE5D0097AEA0 /* Matrix.cpp */; };
+		91D71EEF1BF8AE5D0097AEA0 /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71EEC1BF8AE5D0097AEA0 /* Point.cpp */; };
+		91D71EF41BF8AEAB0097AEA0 /* CubeSwarm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71EF01BF8AEAB0097AEA0 /* CubeSwarm.cpp */; };
+		91D71EF51BF8AEAB0097AEA0 /* DotEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71EF21BF8AEAB0097AEA0 /* DotEntity.cpp */; };
+		91D71EFB1BF8AEB50097AEA0 /* InvaderEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71EF61BF8AEB50097AEA0 /* InvaderEntity.cpp */; };
+		91D71EFC1BF8AEB50097AEA0 /* InvaderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71EF81BF8AEB50097AEA0 /* InvaderGroup.cpp */; };
+		91D71F051BF8AEC20097AEA0 /* PhysicsGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71EFD1BF8AEC20097AEA0 /* PhysicsGrid.cpp */; };
+		91D71F061BF8AEC20097AEA0 /* Rocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71EFF1BF8AEC20097AEA0 /* Rocket.cpp */; };
+		91D71F071BF8AEC20097AEA0 /* Spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F011BF8AEC20097AEA0 /* Spawner.cpp */; };
+		91D71F081BF8AEC20097AEA0 /* WeaponFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F031BF8AEC20097AEA0 /* WeaponFactory.cpp */; };
+		91D71F0F1BF8AED80097AEA0 /* RocketLauncher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F0A1BF8AED80097AEA0 /* RocketLauncher.cpp */; };
+		91D71F101BF8AED80097AEA0 /* StandardWeapon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F0C1BF8AED80097AEA0 /* StandardWeapon.cpp */; };
+		91D71F131BF8AF110097AEA0 /* SysKeycodes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F121BF8AF110097AEA0 /* SysKeycodes.cpp */; };
+		91D71F241BF8AF6F0097AEA0 /* ColorShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F181BF8AF6F0097AEA0 /* ColorShader.cpp */; };
+		91D71F251BF8AF6F0097AEA0 /* ShaderFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F1E1BF8AF6F0097AEA0 /* ShaderFactory.cpp */; };
+		91D71F261BF8AF6F0097AEA0 /* ShaderFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F201BF8AF6F0097AEA0 /* ShaderFunctions.cpp */; };
+		91D71F271BF8AF6F0097AEA0 /* TextureShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F221BF8AF6F0097AEA0 /* TextureShader.cpp */; };
+		91D71F2A1BF8E1D60097AEA0 /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F291BF8E1D60097AEA0 /* Color.cpp */; };
+		91D71F2C1BF913CA0097AEA0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D71F2B1BF913CA0097AEA0 /* Images.xcassets */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
 		FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07C0E26BD8C00F39101 /* Icon.png */; };
 		FD77A07F0E26BDA900F39101 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07E0E26BDA900F39101 /* Default.png */; };
@@ -376,9 +387,6 @@
 		2B26D6C815FD2BB5001E9748 /* MathFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathFunctions.h; sourceTree = "<group>"; };
 		2B26D6C915FD2BB5001E9748 /* Quad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quad.h; sourceTree = "<group>"; };
 		2B26D6CA15FD2BB5001E9748 /* Vector2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector2f.h; sourceTree = "<group>"; };
-		2B26D6CC15FD2BB5001E9748 /* MonoEngine-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MonoEngine-Prefix.pch"; sourceTree = "<group>"; };
-		2B26D6CD15FD2BB5001E9748 /* MonoEngineProj.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MonoEngineProj.xcconfig; sourceTree = "<group>"; };
-		2B26D6CE15FD2BB5001E9748 /* MonoEngineTarget.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MonoEngineTarget.xcconfig; sourceTree = "<group>"; };
 		2B26D6CF15FD2BB5001E9748 /* MonoFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonoFwd.h; sourceTree = "<group>"; };
 		2B26D6D115FD2BB5001E9748 /* CMFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CMFactory.cpp; sourceTree = "<group>"; };
 		2B26D6D215FD2BB5001E9748 /* CMFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMFactory.h; sourceTree = "<group>"; };
@@ -410,7 +418,6 @@
 		2B26D6F015FD2BB5001E9748 /* SysKeycodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysKeycodes.h; sourceTree = "<group>"; };
 		2B26D6F115FD2BB5001E9748 /* SysLibs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysLibs.cpp; sourceTree = "<group>"; };
 		2B26D6F215FD2BB5001E9748 /* SysLibs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysLibs.h; sourceTree = "<group>"; };
-		2B26D6F315FD2BB5001E9748 /* SysOpenGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysOpenGL.cpp; sourceTree = "<group>"; };
 		2B26D6F415FD2BB5001E9748 /* SysOpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysOpenGL.h; sourceTree = "<group>"; };
 		2B26D6F515FD2BB5001E9748 /* SysTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysTime.cpp; sourceTree = "<group>"; };
 		2B26D6F615FD2BB5001E9748 /* SysTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysTime.h; sourceTree = "<group>"; };
@@ -550,16 +557,10 @@
 		2B26DB4115FD3280001E9748 /* AnimatedDudeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedDudeController.h; sourceTree = "<group>"; };
 		2B26DB4215FD3280001E9748 /* Explosion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Explosion.cpp; sourceTree = "<group>"; };
 		2B26DB4315FD3280001E9748 /* Explosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Explosion.h; sourceTree = "<group>"; };
-		2B26DB4D15FD3280001E9748 /* OscillatingLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscillatingLine.cpp; sourceTree = "<group>"; };
-		2B26DB4E15FD3280001E9748 /* OscillatingLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscillatingLine.h; sourceTree = "<group>"; };
 		2B26DB7915FD3281001E9748 /* Shuttle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shuttle.cpp; sourceTree = "<group>"; };
 		2B26DB7A15FD3281001E9748 /* Shuttle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shuttle.h; sourceTree = "<group>"; };
-		2B26DB7B15FD3281001E9748 /* SquareObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SquareObject.cpp; sourceTree = "<group>"; };
-		2B26DB7C15FD3281001E9748 /* SquareObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareObject.h; sourceTree = "<group>"; };
 		2B26DB7D15FD3281001E9748 /* TestZone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestZone.cpp; sourceTree = "<group>"; };
 		2B26DB7E15FD3281001E9748 /* TestZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestZone.h; sourceTree = "<group>"; };
-		2B26DB7F15FD3281001E9748 /* TriangleObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriangleObject.cpp; sourceTree = "<group>"; };
-		2B26DB8015FD3281001E9748 /* TriangleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriangleObject.h; sourceTree = "<group>"; };
 		2B95CF1A162F3790006769BF /* MouseDownEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseDownEvent.h; sourceTree = "<group>"; };
 		2B95CF1C162F37C6006769BF /* Moon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Moon.cpp; sourceTree = "<group>"; };
 		2B95CF1D162F37C6006769BF /* Moon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Moon.h; sourceTree = "<group>"; };
@@ -668,6 +669,50 @@
 		91D6465B186F2D0D00FA6CB5 /* PathFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathFactory.h; path = Paths/PathFactory.h; sourceTree = "<group>"; };
 		91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PathPoint.cpp; sourceTree = "<group>"; };
 		91D6465F186F2D2C00FA6CB5 /* PathPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathPoint.h; sourceTree = "<group>"; };
+		91D71EEA1BF8AE5D0097AEA0 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
+		91D71EEB1BF8AE5D0097AEA0 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		91D71EEC1BF8AE5D0097AEA0 /* Point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Point.cpp; sourceTree = "<group>"; };
+		91D71EED1BF8AE5D0097AEA0 /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point.h; sourceTree = "<group>"; };
+		91D71EF01BF8AEAB0097AEA0 /* CubeSwarm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CubeSwarm.cpp; sourceTree = "<group>"; };
+		91D71EF11BF8AEAB0097AEA0 /* CubeSwarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubeSwarm.h; sourceTree = "<group>"; };
+		91D71EF21BF8AEAB0097AEA0 /* DotEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DotEntity.cpp; sourceTree = "<group>"; };
+		91D71EF31BF8AEAB0097AEA0 /* DotEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotEntity.h; sourceTree = "<group>"; };
+		91D71EF61BF8AEB50097AEA0 /* InvaderEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InvaderEntity.cpp; sourceTree = "<group>"; };
+		91D71EF71BF8AEB50097AEA0 /* InvaderEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvaderEntity.h; sourceTree = "<group>"; };
+		91D71EF81BF8AEB50097AEA0 /* InvaderGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InvaderGroup.cpp; sourceTree = "<group>"; };
+		91D71EF91BF8AEB50097AEA0 /* InvaderGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvaderGroup.h; sourceTree = "<group>"; };
+		91D71EFA1BF8AEB50097AEA0 /* IWeaponSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWeaponSystem.h; sourceTree = "<group>"; };
+		91D71EFD1BF8AEC20097AEA0 /* PhysicsGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsGrid.cpp; sourceTree = "<group>"; };
+		91D71EFE1BF8AEC20097AEA0 /* PhysicsGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsGrid.h; sourceTree = "<group>"; };
+		91D71EFF1BF8AEC20097AEA0 /* Rocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Rocket.cpp; sourceTree = "<group>"; };
+		91D71F001BF8AEC20097AEA0 /* Rocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rocket.h; sourceTree = "<group>"; };
+		91D71F011BF8AEC20097AEA0 /* Spawner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spawner.cpp; sourceTree = "<group>"; };
+		91D71F021BF8AEC20097AEA0 /* Spawner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spawner.h; sourceTree = "<group>"; };
+		91D71F031BF8AEC20097AEA0 /* WeaponFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeaponFactory.cpp; sourceTree = "<group>"; };
+		91D71F041BF8AEC20097AEA0 /* WeaponFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeaponFactory.h; sourceTree = "<group>"; };
+		91D71F0A1BF8AED80097AEA0 /* RocketLauncher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RocketLauncher.cpp; path = Weapons/RocketLauncher.cpp; sourceTree = "<group>"; };
+		91D71F0B1BF8AED80097AEA0 /* RocketLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RocketLauncher.h; path = Weapons/RocketLauncher.h; sourceTree = "<group>"; };
+		91D71F0C1BF8AED80097AEA0 /* StandardWeapon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StandardWeapon.cpp; path = Weapons/StandardWeapon.cpp; sourceTree = "<group>"; };
+		91D71F0D1BF8AED80097AEA0 /* StandardWeapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StandardWeapon.h; path = Weapons/StandardWeapon.h; sourceTree = "<group>"; };
+		91D71F0E1BF8AED80097AEA0 /* WeaponTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeaponTypes.h; path = Weapons/WeaponTypes.h; sourceTree = "<group>"; };
+		91D71F111BF8AEF20097AEA0 /* TextDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextDefinition.h; sourceTree = "<group>"; };
+		91D71F121BF8AF110097AEA0 /* SysKeycodes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysKeycodes.cpp; sourceTree = "<group>"; };
+		91D71F141BF8AF360097AEA0 /* IAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAction.h; sourceTree = "<group>"; };
+		91D71F181BF8AF6F0097AEA0 /* ColorShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorShader.cpp; path = Shader/ColorShader.cpp; sourceTree = "<group>"; };
+		91D71F191BF8AF6F0097AEA0 /* ColorShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorShader.h; path = Shader/ColorShader.h; sourceTree = "<group>"; };
+		91D71F1A1BF8AF6F0097AEA0 /* IColorShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IColorShader.h; path = Shader/IColorShader.h; sourceTree = "<group>"; };
+		91D71F1B1BF8AF6F0097AEA0 /* IShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IShader.h; path = Shader/IShader.h; sourceTree = "<group>"; };
+		91D71F1C1BF8AF6F0097AEA0 /* IShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IShaderFactory.h; path = Shader/IShaderFactory.h; sourceTree = "<group>"; };
+		91D71F1D1BF8AF6F0097AEA0 /* ITextureShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ITextureShader.h; path = Shader/ITextureShader.h; sourceTree = "<group>"; };
+		91D71F1E1BF8AF6F0097AEA0 /* ShaderFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderFactory.cpp; path = Shader/ShaderFactory.cpp; sourceTree = "<group>"; };
+		91D71F1F1BF8AF6F0097AEA0 /* ShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderFactory.h; path = Shader/ShaderFactory.h; sourceTree = "<group>"; };
+		91D71F201BF8AF6F0097AEA0 /* ShaderFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderFunctions.cpp; path = Shader/ShaderFunctions.cpp; sourceTree = "<group>"; };
+		91D71F211BF8AF6F0097AEA0 /* ShaderFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderFunctions.h; path = Shader/ShaderFunctions.h; sourceTree = "<group>"; };
+		91D71F221BF8AF6F0097AEA0 /* TextureShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextureShader.cpp; path = Shader/TextureShader.cpp; sourceTree = "<group>"; };
+		91D71F231BF8AF6F0097AEA0 /* TextureShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureShader.h; path = Shader/TextureShader.h; sourceTree = "<group>"; };
+		91D71F281BF8B3120097AEA0 /* ShockwaveEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShockwaveEvent.h; path = Events/ShockwaveEvent.h; sourceTree = "<group>"; };
+		91D71F291BF8E1D60097AEA0 /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
+		91D71F2B1BF913CA0097AEA0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "MonoiOS Device/Images.xcassets"; sourceTree = "<group>"; };
 		FD779EDD0E26BA1200F39101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		FD77A07C0E26BD8C00F39101 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		FD77A07E0E26BDA900F39101 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -734,6 +779,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				91D71F2B1BF913CA0097AEA0 /* Images.xcassets */,
 				2BDD2CA0171CA01F0041CB18 /* firebullet.sprite */,
 				2BDD2CA1171CA01F0041CB18 /* meteorite.sprite */,
 				2B95CF26162F38AA006769BF /* explosion.sprite */,
@@ -768,6 +814,9 @@
 		2B26D69C15FD2BB5001E9748 /* MonoEngine */ = {
 			isa = PBXGroup;
 			children = (
+				91D71F291BF8E1D60097AEA0 /* Color.cpp */,
+				91D71F171BF8AF610097AEA0 /* Shaders */,
+				91D71F141BF8AF360097AEA0 /* IAction.h */,
 				91D64658186F2CF900FA6CB5 /* Paths */,
 				9181E522183BD54700678586 /* IPhysicsEntity.h */,
 				9181E521183A8D3800678586 /* Color.h */,
@@ -791,9 +840,6 @@
 				2B26D6BE15FD2BB5001E9748 /* IZone.h */,
 				2B26D6BF15FD2BB5001E9748 /* Lua */,
 				2B26D6C615FD2BB5001E9748 /* Math */,
-				2B26D6CC15FD2BB5001E9748 /* MonoEngine-Prefix.pch */,
-				2B26D6CD15FD2BB5001E9748 /* MonoEngineProj.xcconfig */,
-				2B26D6CE15FD2BB5001E9748 /* MonoEngineTarget.xcconfig */,
 				2B26D6CF15FD2BB5001E9748 /* MonoFwd.h */,
 				2B26D6D015FD2BB5001E9748 /* Physics */,
 				2BDD2C8B171C9F540041CB18 /* PhysicsEntityBase.cpp */,
@@ -875,6 +921,10 @@
 		2B26D6C615FD2BB5001E9748 /* Math */ = {
 			isa = PBXGroup;
 			children = (
+				91D71EEA1BF8AE5D0097AEA0 /* Matrix.cpp */,
+				91D71EEB1BF8AE5D0097AEA0 /* Matrix.h */,
+				91D71EEC1BF8AE5D0097AEA0 /* Point.cpp */,
+				91D71EED1BF8AE5D0097AEA0 /* Point.h */,
 				91C41E471826E2A50035E778 /* MathFwd.cpp */,
 				91C41E481826E2A50035E778 /* MathFwd.h */,
 				2B26D6C715FD2BB5001E9748 /* MathFunctions.cpp */,
@@ -926,9 +976,9 @@
 				2B26D6EE15FD2BB5001E9748 /* SysFile.cpp */,
 				2B26D6EF15FD2BB5001E9748 /* SysFile.h */,
 				2B26D6F015FD2BB5001E9748 /* SysKeycodes.h */,
+				91D71F121BF8AF110097AEA0 /* SysKeycodes.cpp */,
 				2B26D6F115FD2BB5001E9748 /* SysLibs.cpp */,
 				2B26D6F215FD2BB5001E9748 /* SysLibs.h */,
-				2B26D6F315FD2BB5001E9748 /* SysOpenGL.cpp */,
 				2B26D6F415FD2BB5001E9748 /* SysOpenGL.h */,
 				2B26D6F515FD2BB5001E9748 /* SysTime.cpp */,
 				2B26D6F615FD2BB5001E9748 /* SysTime.h */,
@@ -962,6 +1012,7 @@
 		2B26D6FA15FD2BB5001E9748 /* Text */ = {
 			isa = PBXGroup;
 			children = (
+				91D71F111BF8AEF20097AEA0 /* TextDefinition.h */,
 				2B26D6FB15FD2BB5001E9748 /* TextFunctions.cpp */,
 				2B26D6FC15FD2BB5001E9748 /* TextFunctions.h */,
 			);
@@ -1173,10 +1224,28 @@
 		2B26DB3D15FD3280001E9748 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				91D71F091BF8AEC80097AEA0 /* Weapons */,
+				91D71EFD1BF8AEC20097AEA0 /* PhysicsGrid.cpp */,
+				91D71EFE1BF8AEC20097AEA0 /* PhysicsGrid.h */,
+				91D71EFF1BF8AEC20097AEA0 /* Rocket.cpp */,
+				91D71F001BF8AEC20097AEA0 /* Rocket.h */,
+				91D71F011BF8AEC20097AEA0 /* Spawner.cpp */,
+				91D71F021BF8AEC20097AEA0 /* Spawner.h */,
+				91D71F031BF8AEC20097AEA0 /* WeaponFactory.cpp */,
+				91D71F041BF8AEC20097AEA0 /* WeaponFactory.h */,
+				91D71EF61BF8AEB50097AEA0 /* InvaderEntity.cpp */,
+				91D71EF71BF8AEB50097AEA0 /* InvaderEntity.h */,
+				91D71EF81BF8AEB50097AEA0 /* InvaderGroup.cpp */,
+				91D71EF91BF8AEB50097AEA0 /* InvaderGroup.h */,
+				91D71EFA1BF8AEB50097AEA0 /* IWeaponSystem.h */,
+				91D71EF01BF8AEAB0097AEA0 /* CubeSwarm.cpp */,
+				91D71EF11BF8AEAB0097AEA0 /* CubeSwarm.h */,
+				91D71EF21BF8AEAB0097AEA0 /* DotEntity.cpp */,
+				91D71EF31BF8AEAB0097AEA0 /* DotEntity.h */,
+				2BDD2C93171C9F7F0041CB18 /* Events */,
+				918157241826E5E600C66F2B /* main.cpp */,
 				91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */,
 				91D6465F186F2D2C00FA6CB5 /* PathPoint.h */,
-				918157241826E5E600C66F2B /* main.cpp */,
-				2BDD2C93171C9F7F0041CB18 /* Events */,
 				2B26DB3E15FD3280001E9748 /* AnimatedDude.cpp */,
 				2B26DB3F15FD3280001E9748 /* AnimatedDude.h */,
 				2B26DB4015FD3280001E9748 /* AnimatedDudeController.cpp */,
@@ -1189,18 +1258,12 @@
 				2BDD2C9B171C9FBE0041CB18 /* Meteor.h */,
 				2B95CF1C162F37C6006769BF /* Moon.cpp */,
 				2B95CF1D162F37C6006769BF /* Moon.h */,
-				2B26DB4D15FD3280001E9748 /* OscillatingLine.cpp */,
-				2B26DB4E15FD3280001E9748 /* OscillatingLine.h */,
 				2B26DB7915FD3281001E9748 /* Shuttle.cpp */,
 				2B26DB7A15FD3281001E9748 /* Shuttle.h */,
 				2B95CF1E162F37C6006769BF /* ShuttleController.cpp */,
 				2B95CF1F162F37C6006769BF /* ShuttleController.h */,
-				2B26DB7B15FD3281001E9748 /* SquareObject.cpp */,
-				2B26DB7C15FD3281001E9748 /* SquareObject.h */,
 				2B26DB7D15FD3281001E9748 /* TestZone.cpp */,
 				2B26DB7E15FD3281001E9748 /* TestZone.h */,
-				2B26DB7F15FD3281001E9748 /* TriangleObject.cpp */,
-				2B26DB8015FD3281001E9748 /* TriangleObject.h */,
 			);
 			name = Game;
 			path = ../Game;
@@ -1255,6 +1318,7 @@
 		2BDD2C93171C9F7F0041CB18 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				91D71F281BF8B3120097AEA0 /* ShockwaveEvent.h */,
 				2BDD2C94171C9F970041CB18 /* RemoveEntityEvent.h */,
 				2BDD2C95171C9F970041CB18 /* RemovePhysicsEntityEvent.h */,
 				2BDD2C96171C9F970041CB18 /* SpawnEntityEvent.h */,
@@ -1308,6 +1372,37 @@
 			name = Paths;
 			sourceTree = "<group>";
 		};
+		91D71F091BF8AEC80097AEA0 /* Weapons */ = {
+			isa = PBXGroup;
+			children = (
+				91D71F0A1BF8AED80097AEA0 /* RocketLauncher.cpp */,
+				91D71F0B1BF8AED80097AEA0 /* RocketLauncher.h */,
+				91D71F0C1BF8AED80097AEA0 /* StandardWeapon.cpp */,
+				91D71F0D1BF8AED80097AEA0 /* StandardWeapon.h */,
+				91D71F0E1BF8AED80097AEA0 /* WeaponTypes.h */,
+			);
+			name = Weapons;
+			sourceTree = "<group>";
+		};
+		91D71F171BF8AF610097AEA0 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				91D71F181BF8AF6F0097AEA0 /* ColorShader.cpp */,
+				91D71F191BF8AF6F0097AEA0 /* ColorShader.h */,
+				91D71F1A1BF8AF6F0097AEA0 /* IColorShader.h */,
+				91D71F1B1BF8AF6F0097AEA0 /* IShader.h */,
+				91D71F1C1BF8AF6F0097AEA0 /* IShaderFactory.h */,
+				91D71F1D1BF8AF6F0097AEA0 /* ITextureShader.h */,
+				91D71F1E1BF8AF6F0097AEA0 /* ShaderFactory.cpp */,
+				91D71F1F1BF8AF6F0097AEA0 /* ShaderFactory.h */,
+				91D71F201BF8AF6F0097AEA0 /* ShaderFunctions.cpp */,
+				91D71F211BF8AF6F0097AEA0 /* ShaderFunctions.h */,
+				91D71F221BF8AF6F0097AEA0 /* TextureShader.cpp */,
+				91D71F231BF8AF6F0097AEA0 /* TextureShader.h */,
+			);
+			name = Shaders;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1351,10 +1446,15 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0710;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = 9H999WGK7V;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MonoiOS" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -1381,6 +1481,7 @@
 				2B26DB3C15FD31D9001E9748 /* pixelette.ttf in Resources */,
 				FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */,
 				FD77A07F0E26BDA900F39101 /* Default.png in Resources */,
+				91D71F2C1BF913CA0097AEA0 /* Images.xcassets in Resources */,
 				2BA8E1081618BE5E00C17873 /* shuttle.sprite in Resources */,
 				2BA8E10D1618BFBE00C17873 /* ryu.sprite in Resources */,
 				2B95CF24162F3857006769BF /* moon.sprite in Resources */,
@@ -1418,6 +1519,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B26D70715FD2BB5001E9748 /* CameraController.cpp in Sources */,
+				91D71F2A1BF8E1D60097AEA0 /* Color.cpp in Sources */,
+				91D71F251BF8AF6F0097AEA0 /* ShaderFactory.cpp in Sources */,
 				2B26D70815FD2BB5001E9748 /* TraceCamera.cpp in Sources */,
 				2B26D70915FD2BB5001E9748 /* Engine.cpp in Sources */,
 				2B26D70A15FD2BB5001E9748 /* EntityBase.cpp in Sources */,
@@ -1437,23 +1540,27 @@
 				2B26D71A15FD2BB5001E9748 /* PNGImage.cpp in Sources */,
 				2B26D71B15FD2BB5001E9748 /* SDLWindow.cpp in Sources */,
 				2B26D71C15FD2BB5001E9748 /* SysEvents.cpp in Sources */,
+				91D71F081BF8AEC20097AEA0 /* WeaponFactory.cpp in Sources */,
 				2B26D71D15FD2BB5001E9748 /* SysFile.cpp in Sources */,
 				2B26D71E15FD2BB5001E9748 /* SysLibs.cpp in Sources */,
-				2B26D71F15FD2BB5001E9748 /* SysOpenGL.cpp in Sources */,
 				2B26D72015FD2BB5001E9748 /* SysTime.cpp in Sources */,
+				91D71EEE1BF8AE5D0097AEA0 /* Matrix.cpp in Sources */,
 				2B26D72115FD2BB5001E9748 /* WindowFactory.cpp in Sources */,
 				2B26D72215FD2BB5001E9748 /* TextFunctions.cpp in Sources */,
 				2B26D72315FD2BB5001E9748 /* Texture.cpp in Sources */,
+				91D71EF51BF8AEAB0097AEA0 /* DotEntity.cpp in Sources */,
 				2B26D72415FD2BB5001E9748 /* TextureFactory.cpp in Sources */,
 				2B26D72515FD2BB5001E9748 /* Utils.cpp in Sources */,
 				2B26D72615FD2BB5001E9748 /* ZoneBase.cpp in Sources */,
 				2B26D9D215FD2BD9001E9748 /* example.c in Sources */,
+				91D71F051BF8AEC20097AEA0 /* PhysicsGrid.cpp in Sources */,
 				2B26D9DB15FD2BD9001E9748 /* png.c in Sources */,
 				2B26D9DE15FD2BD9001E9748 /* pngerror.c in Sources */,
 				2B26D9DF15FD2BD9001E9748 /* pngget.c in Sources */,
 				2B26D9E015FD2BD9001E9748 /* pngmem.c in Sources */,
 				2B26D9E215FD2BD9001E9748 /* pngpread.c in Sources */,
 				2B26D9E315FD2BD9001E9748 /* pngread.c in Sources */,
+				91D71F0F1BF8AED80097AEA0 /* RocketLauncher.cpp in Sources */,
 				2B26D9E415FD2BD9001E9748 /* pngrio.c in Sources */,
 				2B26D9E515FD2BD9001E9748 /* pngrtran.c in Sources */,
 				2B26D9E615FD2BD9001E9748 /* pngrutil.c in Sources */,
@@ -1465,8 +1572,10 @@
 				2B26D9EF15FD2BD9001E9748 /* pngwutil.c in Sources */,
 				2B26DA4015FD2BD9001E9748 /* lapi.c in Sources */,
 				2B26DA4115FD2BD9001E9748 /* lauxlib.c in Sources */,
+				91D71EFC1BF8AEB50097AEA0 /* InvaderGroup.cpp in Sources */,
 				2B26DA4215FD2BD9001E9748 /* lbaselib.c in Sources */,
 				2B26DA4315FD2BD9001E9748 /* lcode.c in Sources */,
+				91D71F261BF8AF6F0097AEA0 /* ShaderFunctions.cpp in Sources */,
 				2B26DA4415FD2BD9001E9748 /* ldblib.c in Sources */,
 				2B26DA4515FD2BD9001E9748 /* ldebug.c in Sources */,
 				2B26DA4615FD2BD9001E9748 /* ldo.c in Sources */,
@@ -1486,6 +1595,7 @@
 				2B26DA5415FD2BD9001E9748 /* lstate.c in Sources */,
 				2B26DA5515FD2BD9001E9748 /* lstring.c in Sources */,
 				2B26DA5615FD2BD9001E9748 /* lstrlib.c in Sources */,
+				91D71F061BF8AEC20097AEA0 /* Rocket.cpp in Sources */,
 				2B26DA5715FD2BD9001E9748 /* ltable.c in Sources */,
 				91282D1D1826764500B80892 /* Vector2f.cpp in Sources */,
 				2B26DA5815FD2BD9001E9748 /* ltablib.c in Sources */,
@@ -1497,14 +1607,15 @@
 				2B26DA5E15FD2BD9001E9748 /* lzio.c in Sources */,
 				2B26DA5F15FD2BD9001E9748 /* print.c in Sources */,
 				2B26DB8115FD3281001E9748 /* AnimatedDude.cpp in Sources */,
+				91D71EF41BF8AEAB0097AEA0 /* CubeSwarm.cpp in Sources */,
 				91282D1A1826759E00B80892 /* Quad.cpp in Sources */,
 				2B26DB8215FD3281001E9748 /* AnimatedDudeController.cpp in Sources */,
 				2B26DB8315FD3281001E9748 /* Explosion.cpp in Sources */,
-				2B26DB8815FD3281001E9748 /* OscillatingLine.cpp in Sources */,
+				91D71EEF1BF8AE5D0097AEA0 /* Point.cpp in Sources */,
 				2B26DBB115FD3282001E9748 /* Shuttle.cpp in Sources */,
-				2B26DBB215FD3282001E9748 /* SquareObject.cpp in Sources */,
 				2B26DBB315FD3282001E9748 /* TestZone.cpp in Sources */,
-				2B26DBB415FD3282001E9748 /* TriangleObject.cpp in Sources */,
+				91D71F271BF8AF6F0097AEA0 /* TextureShader.cpp in Sources */,
+				91D71F071BF8AEC20097AEA0 /* Spawner.cpp in Sources */,
 				2BBA5A3D1607B56800D8D38E /* SysVideo.cpp in Sources */,
 				918157251826E5E600C66F2B /* main.cpp in Sources */,
 				2BBA5ABE160A5EDA00D8D38E /* chipmunk.c in Sources */,
@@ -1513,6 +1624,7 @@
 				2BBA5AC2160A5EDA00D8D38E /* cpDampedSpring.c in Sources */,
 				2BBA5AC3160A5EDA00D8D38E /* cpGearJoint.c in Sources */,
 				2BBA5AC4160A5EDA00D8D38E /* cpGrooveJoint.c in Sources */,
+				91D71F241BF8AF6F0097AEA0 /* ColorShader.cpp in Sources */,
 				91C41E491826E2A50035E778 /* MathFwd.cpp in Sources */,
 				2BBA5AC5160A5EDA00D8D38E /* cpPinJoint.c in Sources */,
 				2BBA5AC6160A5EDA00D8D38E /* cpPivotJoint.c in Sources */,
@@ -1525,6 +1637,7 @@
 				2BBA5ACD160A5EDA00D8D38E /* cpBB.c in Sources */,
 				2BBA5ACE160A5EDA00D8D38E /* cpBBTree.c in Sources */,
 				2BBA5ACF160A5EDA00D8D38E /* cpBody.c in Sources */,
+				91D71F131BF8AF110097AEA0 /* SysKeycodes.cpp in Sources */,
 				2BBA5AD0160A5EDA00D8D38E /* cpCollision.c in Sources */,
 				2BBA5AD1160A5EDA00D8D38E /* cpHashSet.c in Sources */,
 				2BBA5AD2160A5EDA00D8D38E /* cpPolyShape.c in Sources */,
@@ -1536,12 +1649,14 @@
 				2BBA5AD7160A5EDA00D8D38E /* cpSpaceQuery.c in Sources */,
 				2BBA5AD8160A5EDA00D8D38E /* cpSpaceStep.c in Sources */,
 				2BBA5AD9160A5EDA00D8D38E /* cpSpatialIndex.c in Sources */,
+				91D71EFB1BF8AEB50097AEA0 /* InvaderEntity.cpp in Sources */,
 				2BBA5ADA160A5EDA00D8D38E /* cpSweep1D.c in Sources */,
 				2BBA5ADB160A5EDA00D8D38E /* cpVect.c in Sources */,
 				2B95CF20162F37C6006769BF /* Moon.cpp in Sources */,
 				2B95CF21162F37C6006769BF /* ShuttleController.cpp in Sources */,
 				2BDD2C8F171C9F540041CB18 /* PhysicsEntityBase.cpp in Sources */,
 				2BDD2C91171C9F540041CB18 /* RenderUtils.cpp in Sources */,
+				91D71F101BF8AED80097AEA0 /* StandardWeapon.cpp in Sources */,
 				2BDD2C9C171C9FBE0041CB18 /* FireBullet.cpp in Sources */,
 				2BDD2C9E171C9FBE0041CB18 /* Meteor.cpp in Sources */,
 				9199F5E917E3AA0F0001FE28 /* adler32.c in Sources */,
@@ -1588,7 +1703,6 @@
 				2BD3CBC2160BB2B30043156E /* SysEvents.cpp in Sources */,
 				2BD3CBC3160BB2B30043156E /* SysFile.cpp in Sources */,
 				2BD3CBC4160BB2B30043156E /* SysLibs.cpp in Sources */,
-				2BD3CBC5160BB2B30043156E /* SysOpenGL.cpp in Sources */,
 				2BD3CBC6160BB2B30043156E /* SysTime.cpp in Sources */,
 				2BD3CBC7160BB2B30043156E /* WindowFactory.cpp in Sources */,
 				2BD3CBC8160BB2B30043156E /* TextFunctions.cpp in Sources */,
@@ -1649,11 +1763,8 @@
 				2BD3CC12160BB2B30043156E /* AnimatedDudeController.cpp in Sources */,
 				91282D1B1826759E00B80892 /* Quad.cpp in Sources */,
 				2BD3CC13160BB2B30043156E /* Explosion.cpp in Sources */,
-				2BD3CC14160BB2B30043156E /* OscillatingLine.cpp in Sources */,
 				2BD3CC15160BB2B30043156E /* Shuttle.cpp in Sources */,
-				2BD3CC16160BB2B30043156E /* SquareObject.cpp in Sources */,
 				2BD3CC17160BB2B30043156E /* TestZone.cpp in Sources */,
-				2BD3CC18160BB2B30043156E /* TriangleObject.cpp in Sources */,
 				2BD3CC1A160BB2B30043156E /* SysVideo.cpp in Sources */,
 				918157261826E5E600C66F2B /* main.cpp in Sources */,
 				2BD3CC1B160BB2B30043156E /* chipmunk.c in Sources */,
@@ -1718,7 +1829,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Niklas Damberg (KE6DZTA6CM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
@@ -1731,13 +1842,14 @@
 					"\"$(SRCROOT)/../External Libs/SDL2/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/SDL/lib\"",
 					"\"$(SRCROOT)/../External Libs/chipmunk-6.1.1\"",
 					"\"$(SRCROOT)/../External Libs/SDL2/ios/debug\"",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = MonoiOS;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1750,7 +1862,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Niklas Damberg (KE6DZTA6CM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
@@ -1761,13 +1873,14 @@
 					"\"$(SRCROOT)/../External Libs/SDL2/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/SDL/lib\"",
 					"\"$(SRCROOT)/../External Libs/chipmunk-6.1.1\"",
 					"\"$(SRCROOT)/../External Libs/SDL2/ios/debug\"",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = MonoiOS;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1803,6 +1916,7 @@
 					"\"$(SRCROOT)/../External Libs/chipmunk-6.1.1\"",
 					"\"$(SRCROOT)/../External Libs/SDL2/ios/debug\"",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = "MonoiOS Simulator";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A6F143AC-AFC9-4B76-9B6D-ACCD84A87832";
 				SUPPORTED_PLATFORMS = iphonesimulator;
@@ -1835,6 +1949,7 @@
 					"\"$(SRCROOT)/../External Libs/chipmunk-6.1.1\"",
 					"\"$(SRCROOT)/../External Libs/SDL2/ios/debug\"",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = "MonoiOS Simulator";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A6F143AC-AFC9-4B76-9B6D-ACCD84A87832";
 				SUPPORTED_PLATFORMS = iphonesimulator;
@@ -1849,9 +1964,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = __IPHONEOS__;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
@@ -1869,6 +1987,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;

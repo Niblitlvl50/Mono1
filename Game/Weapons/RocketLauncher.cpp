@@ -35,6 +35,11 @@ void RocketLauncher::Fire(const math::Vector2f& position, float direction)
     mEventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
 }
 
+int RocketLauncher::RoundsPerSecond() const
+{
+    return 1;
+}
+
 const char* RocketLauncher::SpriteFile() const
 {
     return "RocketLauncherSprite.sprite";

@@ -20,6 +20,7 @@ namespace game
         StandardWeapon(mono::EventHandler& eventHandler);
 
         virtual void Fire(const math::Vector2f& position, float direction);
+        virtual int RoundsPerSecond() const;
         virtual const char* SpriteFile() const;
 
     private:

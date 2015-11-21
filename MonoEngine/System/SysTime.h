@@ -9,8 +9,31 @@
 
 #pragma once
 
+#include <memory>
+#include <functional>
+
 namespace Time
 {
+    class ITimer
+    {
+    public:
+
+        virtual ~ITimer()
+        { }
+
+        virtual void Start() = 0;
+        virtual void Stop() = 0;
+    };
+
+    typedef std::unique_ptr<ITimer> ITimerPtr;
+
+
+    //! Create a timer with a single callback after a certain time
+    ITimerPtr CreateOneShotTimer(unsigned int ms, const std::function<void ()>& callback);
+
+    //! Creates a timer with repeating callbacks at a certain intervall
+    ITimerPtr CreateRepeatingTimer(unsigned int ms, const std::function<void ()>& callback);
+
     //! Gets the system time in milliseconds
     unsigned int GetMilliseconds();
 

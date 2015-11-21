@@ -25,17 +25,21 @@ mono::Color::RGBA mono::Color::ToRGBA(const mono::Color::HSL& hsl)
 
             if(t < 0.0f)
                 t += 1.0f;
-
-            if(t > 1.0f)
+            else if(t > 1.0f)
                 t -= 1.0f;
 
             if(t < 1.0f / 6.0f)
                 return p + (q - p) * 6.0f * t;
 
+            /*
             if(t < 1.0f / 2.0f)
                 return q;
+            */
 
-            if(t < 2.0f / 3.0f)
+            if(1.0 / 6.0 <= t && t < 0.5)
+                return q;
+
+            if(t >= 0.5f && t < 2.0f / 3.0f)
                 return p + (q - p) * (2.0f / 3.0f - t) * 6.0f;
 
             return p;

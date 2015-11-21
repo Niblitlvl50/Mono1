@@ -12,6 +12,11 @@
 
 namespace Events
 {
+    enum PredefinedUserEventCode
+    {
+        TIMER_CALLBACK = 1
+    };
+
     //! Process the system events, input and other events
     //! \param handler An input handler that takes care of the events
     void ProcessSystemEvents(mono::IInputHandlerPtr handler);

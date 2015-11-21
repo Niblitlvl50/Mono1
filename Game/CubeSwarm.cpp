@@ -17,6 +17,7 @@ using namespace game;
 
 
 CubeSwarm::CubeSwarm()
+    : mColor(0.0f, 0.5f, 0.5f)
 {
     mCubes.resize(100);
 
@@ -26,8 +27,10 @@ CubeSwarm::CubeSwarm()
 
 void CubeSwarm::Draw(mono::IRenderer& renderer) const
 {
+    const mono::Color::RGBA color = mono::Color::ToRGBA(mColor);
+
     for(const Cube& cube : mCubes)
-        renderer.DrawQuad(cube.quad, cube.color, 2.0f);
+        renderer.DrawQuad(cube.quad, color, 2.0f);
 }
 
 void CubeSwarm::Update(unsigned int delta)
@@ -41,6 +44,10 @@ void CubeSwarm::Update(unsigned int delta)
         cube.quad.mA += add;
         cube.quad.mB += add;
     }
+
+    mColor.hue += delta * 0.0005f;
+    if(mColor.hue > 1.0f)
+        mColor.hue = 0.0f;
 }
 
 CubeSwarm::Cube CubeSwarm::GenerateCube()

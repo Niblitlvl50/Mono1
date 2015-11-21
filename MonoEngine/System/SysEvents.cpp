@@ -48,6 +48,22 @@ namespace
         }
     
     }
+
+    bool HandlePredefinedUserEvent(const SDL_UserEvent& event)
+    {
+        if(event.code == Events::TIMER_CALLBACK)
+        {
+            // Function signature
+            typedef void (*callback)(void*);
+
+            const callback func = reinterpret_cast<callback>(event.data1);
+            func(event.data2);
+
+            return true;
+        }
+
+        return false;
+    }
 }
 
 
@@ -102,8 +118,13 @@ void Events::ProcessSystemEvents(mono::IInputHandlerPtr handler)
                 break;
 
             case SDL_USEREVENT:
-                handler->OnUserEvent(event.user.code, event.user.data1, event.user.data2);
+            {
+                const bool handled = HandlePredefinedUserEvent(event.user);
+                if(!handled)
+                    handler->OnUserEvent(event.user.code, event.user.data1, event.user.data2);
+
                 break;
+            }
 
             case SDL_WINDOWEVENT:
                 HandleWindowEvent(event.window, handler);

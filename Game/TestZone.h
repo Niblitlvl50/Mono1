@@ -12,6 +12,8 @@
 #include "PhysicsZone.h"
 #include "EventToken.h"
 
+#include "Spawner.h"
+
 namespace game
 {
     struct SpawnEntityEvent;
@@ -45,6 +47,8 @@ namespace game
         mono::EventToken<game::ShockwaveEvent> mShockwaveEventToken;
         
         mono::EventHandler& mEventHandler;
+
+        Spawner m_spawner;
     };
 }
 

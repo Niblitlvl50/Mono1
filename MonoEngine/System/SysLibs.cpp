@@ -16,9 +16,12 @@
 void System::Init()
 {
     // Init SDL video subsystem
-    const int result = SDL_Init(SDL_INIT_VIDEO);
+    const int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
     if(result != 0)
-        throw std::runtime_error("Couldn't initialize SDL");
+    {
+        const std::string error = "Couldn't initialize SDL" + std::string(SDL_GetError());
+        throw std::runtime_error(error);
+    }
 
     SDL_version version;
     SDL_GetVersion(&version);

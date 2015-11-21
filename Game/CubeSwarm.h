@@ -43,6 +43,7 @@ namespace game
 
         Cube GenerateCube();
 
+        mono::Color::HSL mColor;
         std::vector<Cube> mCubes;
     };
 }

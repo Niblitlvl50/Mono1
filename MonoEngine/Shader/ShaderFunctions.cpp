@@ -23,6 +23,8 @@ uint mono::CompileShader(mono::ShaderType type, const char* source)
 {
     const GLenum shaderType = (type == mono::ShaderType::VERTEX) ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER;
     const GLuint shader = glCreateShader(shaderType);
+    if(shader == 0)
+        throw std::runtime_error("Unable to create shader: " + std::string(source));
 
     glShaderSource(shader, 1, &source, 0);
     glCompileShader(shader);

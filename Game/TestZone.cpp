@@ -131,7 +131,8 @@ namespace
 
 TestZone::TestZone(mono::EventHandler& eventHandler)
     : PhysicsZone(math::Vector2f(0.0f, 0.0f)),
-      mEventHandler(eventHandler)
+      mEventHandler(eventHandler),
+      m_spawner(eventHandler)
 {
     const game::SpawnEntityFunc spawnEntityFunc = std::bind(&TestZone::SpawnEntity, this, _1);
     mSpawnEntityToken = mEventHandler.AddListener(spawnEntityFunc);

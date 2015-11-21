@@ -224,6 +224,7 @@
 		2BFF8979170762BB00499D08 /* FireBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BFF8978170762B900499D08 /* FireBullet.cpp */; };
 		91035EC718649D58009BEE6C /* EventHandlerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91035EC518649D58009BEE6C /* EventHandlerTest.cpp */; };
 		910C24C21A1A969600A79D1C /* PhysicsGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 910C24C01A1A969600A79D1C /* PhysicsGrid.cpp */; };
+		911410891BBFE1C800F1DC23 /* Spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 911410871BBFE1C800F1DC23 /* Spawner.cpp */; settings = {ASSET_TAGS = (); }; };
 		91157C2A1A2148610095CBE4 /* RandomTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91157C291A2148610095CBE4 /* RandomTest.cpp */; };
 		91157C2C1A228E760095CBE4 /* laser.sprite in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91157C2B1A228E640095CBE4 /* laser.sprite */; };
 		91157C2F1A2641E30095CBE4 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91157C2D1A2641E30095CBE4 /* Matrix.cpp */; };
@@ -660,6 +661,8 @@
 		91035EC518649D58009BEE6C /* EventHandlerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventHandlerTest.cpp; path = ../UnitTests/EventHandlerTest.cpp; sourceTree = SOURCE_ROOT; };
 		910C24C01A1A969600A79D1C /* PhysicsGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicsGrid.cpp; path = ../Game/PhysicsGrid.cpp; sourceTree = "<group>"; };
 		910C24C11A1A969600A79D1C /* PhysicsGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhysicsGrid.h; path = ../Game/PhysicsGrid.h; sourceTree = "<group>"; };
+		911410871BBFE1C800F1DC23 /* Spawner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Spawner.cpp; path = ../Game/Spawner.cpp; sourceTree = "<group>"; };
+		911410881BBFE1C800F1DC23 /* Spawner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Spawner.h; path = ../Game/Spawner.h; sourceTree = "<group>"; };
 		91157C291A2148610095CBE4 /* RandomTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RandomTest.cpp; path = ../UnitTests/RandomTest.cpp; sourceTree = SOURCE_ROOT; };
 		91157C2B1A228E640095CBE4 /* laser.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = laser.sprite; path = ../Game/res/laser.sprite; sourceTree = "<group>"; };
 		91157C2D1A2641E30095CBE4 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Matrix.cpp; path = ../MonoEngine/Math/Matrix.cpp; sourceTree = SOURCE_ROOT; };
@@ -1269,6 +1272,8 @@
 				910C24C11A1A969600A79D1C /* PhysicsGrid.h */,
 				917DE2031AC2055900D1F795 /* CubeSwarm.cpp */,
 				917DE2041AC2055900D1F795 /* CubeSwarm.h */,
+				911410871BBFE1C800F1DC23 /* Spawner.cpp */,
+				911410881BBFE1C800F1DC23 /* Spawner.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -1957,6 +1962,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				911410891BBFE1C800F1DC23 /* Spawner.cpp in Sources */,
 				2BD1E5ED1532080500A75171 /* DotEntity.cpp in Sources */,
 				91526EAB1B5BFEC6009F46E7 /* RocketLauncher.cpp in Sources */,
 				910C24C21A1A969600A79D1C /* PhysicsGrid.cpp in Sources */,

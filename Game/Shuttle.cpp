@@ -17,6 +17,7 @@
 #include "WeaponFactory.h"
 
 #include "MathFunctions.h"
+#include "SysTime.h"
 #include <cmath>
 
 using namespace game;
@@ -34,7 +35,8 @@ namespace constants
 Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     : mSprite("shuttle.sprite"),
       mController(this, eventHandler),
-      mEventHandler(eventHandler)
+      mEventHandler(eventHandler),
+      m_lastFireTimestamp(0)
 {
     mPosition = math::Vector2f(x, y);
     mScale = math::Vector2f(20.0f, 20.0f);
@@ -111,7 +113,17 @@ void Shuttle::ApplyImpulse(const math::Vector2f& force)
 
 void Shuttle::Fire()
 {
-    mWeapon->Fire(mPosition, mRotation);
+    const float value = 1.0 / mWeapon->RoundsPerSecond();
+    const unsigned int msDelta = value * 1000;
+
+    const unsigned int now = Time::GetMilliseconds();
+    const unsigned int delta = now - m_lastFireTimestamp;
+
+    if(delta > msDelta)
+    {
+        mWeapon->Fire(mPosition, mRotation);
+        m_lastFireTimestamp = now;
+    }
 }
 
 void Shuttle::StartThrusting()

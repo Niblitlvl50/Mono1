@@ -19,6 +19,7 @@ namespace game
         RocketLauncher(mono::EventHandler& handler);
 
         virtual void Fire(const math::Vector2f& position, float direction);
+        virtual int RoundsPerSecond() const;
         virtual const char* SpriteFile() const;
 
     private:

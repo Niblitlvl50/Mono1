@@ -35,6 +35,11 @@ void StandardWeapon::Fire(const math::Vector2f& position, float direction)
     mEventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
 }
 
+int StandardWeapon::RoundsPerSecond() const
+{
+    return 4;
+}
+
 const char* StandardWeapon::SpriteFile() const
 {
     return "StandardWeaponSprite.sprite";

@@ -63,11 +63,11 @@ void mono::DrawCircle(const math::Vector2f& position,
 
 void mono::DrawSprite(const mono::Sprite& sprite, const std::shared_ptr<ITextureShader>& shader)
 {
-    static const float vertices[] = { -0.5f, -0.5f,
-                                      -0.5f,  0.5f,
-                                       0.5f,  0.5f,
-                                       0.5f, -0.5f };
-    static const unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };
+    constexpr float vertices[] = { -0.5f, -0.5f,
+                                   -0.5f,  0.5f,
+                                    0.5f,  0.5f,
+                                    0.5f, -0.5f };
+    constexpr unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };
 
     const math::Quad& quad = sprite.GetTextureCoords();
     const float coords[] = { quad.mA.x, quad.mA.y,
@@ -173,7 +173,7 @@ void mono::DrawPoints(const std::vector<math::Vector2f>& vertices,
     std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
 
-    glPointSize(size);
+    //glPointSize(size);
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);

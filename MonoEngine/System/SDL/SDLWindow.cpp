@@ -39,11 +39,9 @@ namespace
         if(glslversion)
             std::cout << "GLSL version: " << glslversion << std::endl;
 
-        /*
         const GLubyte* extensions = glGetString(GL_EXTENSIONS);
         if(extensions)
             std::cout << "Extensions: " << extensions << std::endl;
-         */
     }
 
     void SetupOpenGL()
@@ -53,8 +51,8 @@ namespace
         
         glDisable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
-        glEnable(GL_POINT_SMOOTH);
-        glEnable(GL_LINE_SMOOTH);
+        //glEnable(GL_POINT_SMOOTH);
+        //glEnable(GL_LINE_SMOOTH);
     }
 }
 
@@ -64,17 +62,19 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool)
       mWindow(nullptr),
       mContext(nullptr)
 {
-    /* Request opengl 2.1 context.
-     * SDL doesn't have the ability to choose which profile at this time of writing,
-     * but it should default to the core profile */
-    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-    
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
+    // Request opengl 2.1 context.
+    // SDL doesn't have the ability to choose which profile at this time of writing,
+    // but it should default to the core profile
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+    //SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
+    //SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
+    //SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
+    //SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
@@ -118,6 +118,7 @@ void SDLWindow::MakeCurrent()
 {
     SDL_GL_MakeCurrent(mWindow, mContext);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glViewport(0, 0, mSize.x, mSize.y);
 }
 
 void SDLWindow::SwapBuffers() const

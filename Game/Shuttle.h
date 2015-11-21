@@ -51,6 +51,7 @@ namespace game
         //mono::Sprite mWeaponSprite;
         ShuttleController mController;
         mono::EventHandler& mEventHandler;
+        unsigned int m_lastFireTimestamp;
     };
 }
 
