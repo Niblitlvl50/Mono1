@@ -72,6 +72,8 @@ void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
 
 void ShuttleController::OnMouseUp(const Event::MouseUpEvent& event)
 {
+    mShuttle->StopFire();
+    
     mShuttle->mPhysicsObject.body->ResetForces();
     mShuttle->StopThrusting();
     mMouseDown = false;

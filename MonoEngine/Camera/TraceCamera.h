@@ -23,10 +23,10 @@ namespace mono
         
         virtual void Update(unsigned int delta);
         
-        virtual void Follow(const mono::IEntityPtr entity);
+        virtual void Follow(const mono::IEntityPtr entity, const math::Vector2f& offset);
         virtual void Unfollow();
         
-        virtual const math::Quad& GetViewport() const;
+        virtual math::Quad GetViewport() const;
 
         virtual void SetTargetViewport(const math::Quad& target);
         virtual void SetPosition(const math::Vector2f& position);
@@ -36,6 +36,7 @@ namespace mono
         CameraController mController;
         
         IEntityPtr mEntity;
+        math::Vector2f m_offset;
         math::Quad mViewport;
         math::Quad mTargetViewport;
     };

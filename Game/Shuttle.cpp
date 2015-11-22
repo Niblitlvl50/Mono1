@@ -36,6 +36,7 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     : mSprite("shuttle.sprite"),
       mController(this, eventHandler),
       mEventHandler(eventHandler),
+      m_fire(false),
       m_lastFireTimestamp(0)
 {
     mPosition = math::Vector2f(x, y);
@@ -55,6 +56,7 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
 
     // Make sure we have a weapon
     SelectWeapon(WeaponType::STANDARD);
+    //SelectWeapon(WeaponType::ROCKET);
 }
 
 Shuttle::~Shuttle()
@@ -68,6 +70,21 @@ void Shuttle::Draw(mono::IRenderer& renderer) const
 void Shuttle::Update(unsigned int delta)
 {
     mSprite.doUpdate(delta);
+
+    if(m_fire)
+    {
+        const float rpsHz = 1.0 / mWeapon->RoundsPerSecond();
+        const unsigned int weaponDelta = rpsHz * 1000;
+
+        const unsigned int now = Time::GetMilliseconds();
+        const unsigned int delta = now - m_lastFireTimestamp;
+
+        if(delta > weaponDelta)
+        {
+            mWeapon->Fire(mPosition, mRotation);
+            m_lastFireTimestamp = now;
+        }
+    }
 }
 
 void Shuttle::OnCollideWith(cm::IBodyPtr body)
@@ -113,17 +130,12 @@ void Shuttle::ApplyImpulse(const math::Vector2f& force)
 
 void Shuttle::Fire()
 {
-    const float value = 1.0 / mWeapon->RoundsPerSecond();
-    const unsigned int msDelta = value * 1000;
+    m_fire = true;
+}
 
-    const unsigned int now = Time::GetMilliseconds();
-    const unsigned int delta = now - m_lastFireTimestamp;
-
-    if(delta > msDelta)
-    {
-        mWeapon->Fire(mPosition, mRotation);
-        m_lastFireTimestamp = now;
-    }
+void Shuttle::StopFire()
+{
+    m_fire = false;
 }
 
 void Shuttle::StartThrusting()

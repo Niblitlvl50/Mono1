@@ -36,6 +36,8 @@ namespace game
         void ApplyImpulse(const math::Vector2f& force);
 
         void Fire();
+        void StopFire();
+
         void StartThrusting();
         void StopThrusting();
         
@@ -51,6 +53,8 @@ namespace game
         //mono::Sprite mWeaponSprite;
         ShuttleController mController;
         mono::EventHandler& mEventHandler;
+
+        bool m_fire;
         unsigned int m_lastFireTimestamp;
     };
 }

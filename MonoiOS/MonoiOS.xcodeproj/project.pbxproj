@@ -310,6 +310,7 @@
 		9199F60A17E3AA0F0001FE28 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5E717E3AA0F0001FE28 /* zutil.c */; };
 		91B63FA217D3D2FE004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63FA117D3D2FE004F1868 /* libSDL2.a */; };
 		91B63FA317DC9F7E004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63FA117D3D2FE004F1868 /* libSDL2.a */; };
+		91B746FC1C00E73000F257CC /* laser.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91B746FB1C00E73000F257CC /* laser.sprite */; };
 		91C41E491826E2A50035E778 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91C41E471826E2A50035E778 /* MathFwd.cpp */; };
 		91C41E4A1826E2A50035E778 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91C41E471826E2A50035E778 /* MathFwd.cpp */; };
 		91D6465C186F2D0D00FA6CB5 /* PathFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465A186F2D0D00FA6CB5 /* PathFactory.cpp */; };
@@ -662,6 +663,7 @@
 		9199F5E717E3AA0F0001FE28 /* zutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zutil.c; path = "zlib-1.2.8/zutil.c"; sourceTree = "<group>"; };
 		9199F5E817E3AA0F0001FE28 /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zutil.h; path = "zlib-1.2.8/zutil.h"; sourceTree = "<group>"; };
 		91B63FA117D3D2FE004F1868 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = SDL2/ios/debug/libSDL2.a; sourceTree = "<group>"; };
+		91B746FB1C00E73000F257CC /* laser.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = laser.sprite; path = ../Game/res/laser.sprite; sourceTree = "<group>"; };
 		91C41E471826E2A50035E778 /* MathFwd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathFwd.cpp; sourceTree = "<group>"; };
 		91C41E481826E2A50035E778 /* MathFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathFwd.h; sourceTree = "<group>"; };
 		91D64659186F2D0D00FA6CB5 /* IPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPath.h; path = Paths/IPath.h; sourceTree = "<group>"; };
@@ -766,6 +768,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				91B746FB1C00E73000F257CC /* laser.sprite */,
 				2B26DB3D15FD3280001E9748 /* Game */,
 				2B26D72715FD2BD8001E9748 /* External Libs */,
 				2B26D69C15FD2BB5001E9748 /* MonoEngine */,
@@ -1224,6 +1227,7 @@
 		2B26DB3D15FD3280001E9748 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				2BDD2C93171C9F7F0041CB18 /* Events */,
 				91D71F091BF8AEC80097AEA0 /* Weapons */,
 				91D71EFD1BF8AEC20097AEA0 /* PhysicsGrid.cpp */,
 				91D71EFE1BF8AEC20097AEA0 /* PhysicsGrid.h */,
@@ -1242,7 +1246,6 @@
 				91D71EF11BF8AEAB0097AEA0 /* CubeSwarm.h */,
 				91D71EF21BF8AEAB0097AEA0 /* DotEntity.cpp */,
 				91D71EF31BF8AEAB0097AEA0 /* DotEntity.h */,
-				2BDD2C93171C9F7F0041CB18 /* Events */,
 				918157241826E5E600C66F2B /* main.cpp */,
 				91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */,
 				91D6465F186F2D2C00FA6CB5 /* PathPoint.h */,
@@ -1478,6 +1481,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91B746FC1C00E73000F257CC /* laser.sprite in Resources */,
 				2B26DB3C15FD31D9001E9748 /* pixelette.ttf in Resources */,
 				FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */,
 				FD77A07F0E26BDA900F39101 /* Default.png in Resources */,

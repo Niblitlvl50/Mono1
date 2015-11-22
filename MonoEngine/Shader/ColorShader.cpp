@@ -22,12 +22,14 @@ namespace
 
     "uniform mat4 mv_matrix;"
     "uniform mat4 p_matrix;"
+    "uniform float pointSize;"
 
     "varying vec4 color;"
 
     "void main()"
     "{"
     "    gl_Position = p_matrix * mv_matrix * vec4(vertexPosition, 0.0, 1.0);"
+    "    gl_PointSize = pointSize;"
     "    color = vertexColor;"
     "}";
 
@@ -54,6 +56,7 @@ ColorShader::ColorShader()
 
     mMVMatrixLocation = glGetUniformLocation(mProgram, "mv_matrix");
     mPMatrixLocation = glGetUniformLocation(mProgram, "p_matrix");
+    m_pointSizeLocation = glGetUniformLocation(mProgram, "pointSize");
 
     mPositionAttributeLocation = (unsigned int)glGetAttribLocation(mProgram, "vertexPosition");
     mColorAttributeLocation = (unsigned int)glGetAttribLocation(mProgram, "vertexColor");
@@ -77,6 +80,11 @@ void ColorShader::LoadProjectionMatrix(const math::Matrix& projection)
 void ColorShader::LoadModelViewMatrix(const math::Matrix& modelView)
 {
     glUniformMatrix4fv(mMVMatrixLocation, 1, GL_FALSE, modelView.data);
+}
+
+void ColorShader::SetPointSize(float size)
+{
+    glUniform1f(m_pointSizeLocation, size);
 }
 
 unsigned int ColorShader::GetPositionAttributeLocation() const

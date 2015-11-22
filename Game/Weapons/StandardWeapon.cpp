@@ -37,7 +37,7 @@ void StandardWeapon::Fire(const math::Vector2f& position, float direction)
 
 int StandardWeapon::RoundsPerSecond() const
 {
-    return 4;
+    return 10;
 }
 
 const char* StandardWeapon::SpriteFile() const

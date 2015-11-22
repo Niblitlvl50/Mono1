@@ -185,7 +185,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddEntity(std::make_shared<game::CubeSwarm>(), mono::FOREGROUND);
         
     camera->SetPosition(shuttle->Position());
-    camera->Follow(shuttle);
+    camera->Follow(shuttle, math::Vector2f(0, -100));
 }
 
 void TestZone::OnUnload()

@@ -22,10 +22,10 @@ namespace mono
         
         virtual void Update(unsigned int delta) = 0;
                 
-        virtual void Follow(const mono::IEntityPtr entity) = 0;
+        virtual void Follow(const mono::IEntityPtr entity, const math::Vector2f& offset) = 0;
         virtual void Unfollow() = 0;
         
-        virtual const math::Quad& GetViewport() const = 0;
+        virtual math::Quad GetViewport() const = 0;
         
         virtual void SetTargetViewport(const math::Quad& target) = 0;
         virtual void SetPosition(const math::Vector2f& position) = 0;

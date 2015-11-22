@@ -23,7 +23,8 @@ namespace constants
 TraceCamera::TraceCamera(int width, int height, EventHandler& eventHandler)
     : mController(this, eventHandler),
       mViewport(0.0f, 0.0f, width, height),
-      mTargetViewport(mViewport)
+      mTargetViewport(mViewport),
+      m_offset(math::zeroVec)
 { }
 
 void TraceCamera::Update(unsigned int delta)
@@ -47,9 +48,10 @@ void TraceCamera::Update(unsigned int delta)
     }
 }
 
-void TraceCamera::Follow(const mono::IEntityPtr entity)
+void TraceCamera::Follow(const mono::IEntityPtr entity, const math::Vector2f& offset)
 {
     mEntity = entity;
+    m_offset = offset;
 }
 
 void TraceCamera::Unfollow()
@@ -57,9 +59,12 @@ void TraceCamera::Unfollow()
     mEntity = nullptr;
 }
 
-const math::Quad& TraceCamera::GetViewport() const
+math::Quad TraceCamera::GetViewport() const
 {
-    return mViewport;
+    math::Quad result = mViewport;
+    result.mA -= m_offset;
+
+    return result;
 }
 
 void TraceCamera::SetTargetViewport(const math::Quad& target)
@@ -69,6 +74,7 @@ void TraceCamera::SetTargetViewport(const math::Quad& target)
 
 void TraceCamera::SetPosition(const math::Vector2f& position)
 {
+    // The position is the middle of the quad, not the lower left corner.
     const math::Vector2f& xy = position - (mViewport.mB * 0.5f);
     mViewport.mA = xy;
 }

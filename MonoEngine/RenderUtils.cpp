@@ -173,7 +173,7 @@ void mono::DrawPoints(const std::vector<math::Vector2f>& vertices,
     std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
 
-    //glPointSize(size);
+    shader->SetPointSize(size);
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -181,7 +181,7 @@ void mono::DrawPoints(const std::vector<math::Vector2f>& vertices,
     glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, vertices.data());
     glVertexAttribPointer(shader->GetColorAttributeLocation(), 4, GL_FLOAT, GL_FALSE, 0, colors.data());
 
-    glDrawArrays(GL_POINTS, 0, static_cast<int>(vertices.size()));
+    glDrawArrays(GL_POINTS, 0, static_cast<GLsizei>(vertices.size()));
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
