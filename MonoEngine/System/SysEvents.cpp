@@ -12,7 +12,7 @@
 
 namespace
 {
-    void HandleWindowEvent(const SDL_WindowEvent& event, mono::IInputHandlerPtr handler)
+    void HandleWindowEvent(const SDL_WindowEvent& event, const mono::IInputHandlerPtr& handler)
     {
         switch(event.event)
         {
@@ -128,6 +128,24 @@ void Events::ProcessSystemEvents(mono::IInputHandlerPtr handler)
 
             case SDL_WINDOWEVENT:
                 HandleWindowEvent(event.window, handler);
+                break;
+
+            case SDL_APP_TERMINATING:
+                break;
+
+            case SDL_APP_LOWMEMORY:
+                break;
+
+            case SDL_APP_WILLENTERBACKGROUND:
+                break;
+                
+            case SDL_APP_DIDENTERBACKGROUND:
+                break;
+
+            case SDL_APP_WILLENTERFOREGROUND:
+                break;
+
+            case SDL_APP_DIDENTERFOREGROUND:
                 break;
 
             case SDL_QUIT:

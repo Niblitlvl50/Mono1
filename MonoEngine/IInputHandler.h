@@ -30,6 +30,10 @@ namespace mono
         virtual void OnTouchMotion(int64_t touchId, float x, float y, float dx, float dy) = 0;
         virtual void OnMultiGesture(float x, float y, float theta, float distance) = 0;
         virtual void OnUserEvent(int code, void* data1, void* data2) = 0;
+
+        virtual void OnAppTerminating() = 0;
+        virtual void OnEnterBackground() = 0;
+        virtual void OnEnterForeground() = 0;
         virtual void OnQuit() = 0;
 
         virtual void OnSurfaceChanged(int width, int height) = 0;

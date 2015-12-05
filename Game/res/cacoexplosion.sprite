@@ -1,0 +1,1 @@
+-- This sprite is exported from cacodemon.psdtexture = "cacodemon.png"rows = 1columns = 3x = 161y = 241u = 337v = 297animations = { }animations[0] = { 0, 100, 1, 100, 2, 100 }attributes = { }attributes[0] = { "no-loop" }

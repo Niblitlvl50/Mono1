@@ -308,6 +308,14 @@
 		9199F60817E3AA0F0001FE28 /* zlib.pc.in in Resources */ = {isa = PBXBuildFile; fileRef = 9199F5E617E3AA0F0001FE28 /* zlib.pc.in */; };
 		9199F60917E3AA0F0001FE28 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5E717E3AA0F0001FE28 /* zutil.c */; };
 		9199F60A17E3AA0F0001FE28 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5E717E3AA0F0001FE28 /* zutil.c */; };
+		91A8775B1C022CD800DF77B5 /* CacoDemon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91A877591C022CD800DF77B5 /* CacoDemon.cpp */; };
+		91A8775C1C022CD800DF77B5 /* CacoDemon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91A877591C022CD800DF77B5 /* CacoDemon.cpp */; };
+		91A8775F1C0230F500DF77B5 /* cacodemon.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A8775D1C0230F500DF77B5 /* cacodemon.png */; };
+		91A877601C0230F500DF77B5 /* cacodemon.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91A8775E1C0230F500DF77B5 /* cacodemon.sprite */; };
+		91A877631C0236B800DF77B5 /* CacoDemonController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91A877611C0236B800DF77B5 /* CacoDemonController.cpp */; };
+		91A877641C0236B800DF77B5 /* CacoDemonController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91A877611C0236B800DF77B5 /* CacoDemonController.cpp */; };
+		91A877671C02631A00DF77B5 /* cacobullet.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91A877651C02631A00DF77B5 /* cacobullet.sprite */; };
+		91A877681C02631A00DF77B5 /* cacoexplosion.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91A877661C02631A00DF77B5 /* cacoexplosion.sprite */; };
 		91B63FA217D3D2FE004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63FA117D3D2FE004F1868 /* libSDL2.a */; };
 		91B63FA317DC9F7E004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63FA117D3D2FE004F1868 /* libSDL2.a */; };
 		91B746FC1C00E73000F257CC /* laser.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91B746FB1C00E73000F257CC /* laser.sprite */; };
@@ -662,6 +670,16 @@
 		9199F5E617E3AA0F0001FE28 /* zlib.pc.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = zlib.pc.in; path = "zlib-1.2.8/zlib.pc.in"; sourceTree = "<group>"; };
 		9199F5E717E3AA0F0001FE28 /* zutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zutil.c; path = "zlib-1.2.8/zutil.c"; sourceTree = "<group>"; };
 		9199F5E817E3AA0F0001FE28 /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zutil.h; path = "zlib-1.2.8/zutil.h"; sourceTree = "<group>"; };
+		91A877571C01E45000DF77B5 /* ISprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISprite.h; sourceTree = "<group>"; };
+		91A877581C01E45000DF77B5 /* SpriteAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteAttributes.h; sourceTree = "<group>"; };
+		91A877591C022CD800DF77B5 /* CacoDemon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CacoDemon.cpp; sourceTree = "<group>"; };
+		91A8775A1C022CD800DF77B5 /* CacoDemon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacoDemon.h; sourceTree = "<group>"; };
+		91A8775D1C0230F500DF77B5 /* cacodemon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cacodemon.png; path = ../Game/res/cacodemon.png; sourceTree = "<group>"; };
+		91A8775E1C0230F500DF77B5 /* cacodemon.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = cacodemon.sprite; path = ../Game/res/cacodemon.sprite; sourceTree = "<group>"; };
+		91A877611C0236B800DF77B5 /* CacoDemonController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CacoDemonController.cpp; sourceTree = "<group>"; };
+		91A877621C0236B800DF77B5 /* CacoDemonController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacoDemonController.h; sourceTree = "<group>"; };
+		91A877651C02631A00DF77B5 /* cacobullet.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = cacobullet.sprite; path = ../Game/res/cacobullet.sprite; sourceTree = "<group>"; };
+		91A877661C02631A00DF77B5 /* cacoexplosion.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = cacoexplosion.sprite; path = ../Game/res/cacoexplosion.sprite; sourceTree = "<group>"; };
 		91B63FA117D3D2FE004F1868 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = SDL2/ios/debug/libSDL2.a; sourceTree = "<group>"; };
 		91B746FB1C00E73000F257CC /* laser.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = laser.sprite; path = ../Game/res/laser.sprite; sourceTree = "<group>"; };
 		91C41E471826E2A50035E778 /* MathFwd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathFwd.cpp; sourceTree = "<group>"; };
@@ -768,6 +786,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				91A877651C02631A00DF77B5 /* cacobullet.sprite */,
+				91A877661C02631A00DF77B5 /* cacoexplosion.sprite */,
+				91A8775D1C0230F500DF77B5 /* cacodemon.png */,
+				91A8775E1C0230F500DF77B5 /* cacodemon.sprite */,
 				91B746FB1C00E73000F257CC /* laser.sprite */,
 				2B26DB3D15FD3280001E9748 /* Game */,
 				2B26D72715FD2BD8001E9748 /* External Libs */,
@@ -958,6 +980,8 @@
 		2B26D6DD15FD2BB5001E9748 /* Sprite */ = {
 			isa = PBXGroup;
 			children = (
+				91A877571C01E45000DF77B5 /* ISprite.h */,
+				91A877581C01E45000DF77B5 /* SpriteAttributes.h */,
 				2B26D6DE15FD2BB5001E9748 /* AnimationSequence.cpp */,
 				2B26D6DF15FD2BB5001E9748 /* AnimationSequence.h */,
 				2B26D6E015FD2BB5001E9748 /* Sprite.cpp */,
@@ -1267,6 +1291,10 @@
 				2B95CF1F162F37C6006769BF /* ShuttleController.h */,
 				2B26DB7D15FD3281001E9748 /* TestZone.cpp */,
 				2B26DB7E15FD3281001E9748 /* TestZone.h */,
+				91A877591C022CD800DF77B5 /* CacoDemon.cpp */,
+				91A8775A1C022CD800DF77B5 /* CacoDemon.h */,
+				91A877611C0236B800DF77B5 /* CacoDemonController.cpp */,
+				91A877621C0236B800DF77B5 /* CacoDemonController.h */,
 			);
 			name = Game;
 			path = ../Game;
@@ -1481,6 +1509,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91A877671C02631A00DF77B5 /* cacobullet.sprite in Resources */,
+				91A877681C02631A00DF77B5 /* cacoexplosion.sprite in Resources */,
+				91A8775F1C0230F500DF77B5 /* cacodemon.png in Resources */,
+				91A877601C0230F500DF77B5 /* cacodemon.sprite in Resources */,
 				91B746FC1C00E73000F257CC /* laser.sprite in Resources */,
 				2B26DB3C15FD31D9001E9748 /* pixelette.ttf in Resources */,
 				FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */,
@@ -1555,6 +1587,7 @@
 				91D71EF51BF8AEAB0097AEA0 /* DotEntity.cpp in Sources */,
 				2B26D72415FD2BB5001E9748 /* TextureFactory.cpp in Sources */,
 				2B26D72515FD2BB5001E9748 /* Utils.cpp in Sources */,
+				91A877631C0236B800DF77B5 /* CacoDemonController.cpp in Sources */,
 				2B26D72615FD2BB5001E9748 /* ZoneBase.cpp in Sources */,
 				2B26D9D215FD2BD9001E9748 /* example.c in Sources */,
 				91D71F051BF8AEC20097AEA0 /* PhysicsGrid.cpp in Sources */,
@@ -1603,6 +1636,7 @@
 				2B26DA5715FD2BD9001E9748 /* ltable.c in Sources */,
 				91282D1D1826764500B80892 /* Vector2f.cpp in Sources */,
 				2B26DA5815FD2BD9001E9748 /* ltablib.c in Sources */,
+				91A8775B1C022CD800DF77B5 /* CacoDemon.cpp in Sources */,
 				2B26DA5915FD2BD9001E9748 /* ltm.c in Sources */,
 				2B26DA5A15FD2BD9001E9748 /* lua.c in Sources */,
 				2B26DA5B15FD2BD9001E9748 /* luac.c in Sources */,
@@ -1781,6 +1815,7 @@
 				2BD3CC21160BB2B30043156E /* cpPinJoint.c in Sources */,
 				2BD3CC22160BB2B30043156E /* cpPivotJoint.c in Sources */,
 				2BD3CC23160BB2B30043156E /* cpRatchetJoint.c in Sources */,
+				91A8775C1C022CD800DF77B5 /* CacoDemon.cpp in Sources */,
 				2BD3CC24160BB2B30043156E /* cpRotaryLimitJoint.c in Sources */,
 				2BD3CC25160BB2B30043156E /* cpSimpleMotor.c in Sources */,
 				2BD3CC26160BB2B30043156E /* cpSlideJoint.c in Sources */,
@@ -1821,6 +1856,7 @@
 				9199F5FE17E3AA0F0001FE28 /* inflate.c in Sources */,
 				9199F60017E3AA0F0001FE28 /* inftrees.c in Sources */,
 				9199F60217E3AA0F0001FE28 /* trees.c in Sources */,
+				91A877641C0236B800DF77B5 /* CacoDemonController.cpp in Sources */,
 				9199F60417E3AA0F0001FE28 /* uncompr.c in Sources */,
 				9199F60A17E3AA0F0001FE28 /* zutil.c in Sources */,
 			);

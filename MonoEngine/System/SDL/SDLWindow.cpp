@@ -39,9 +39,11 @@ namespace
         if(glslversion)
             std::cout << "GLSL version: " << glslversion << std::endl;
 
+        /*
         const GLubyte* extensions = glGetString(GL_EXTENSIONS);
         if(extensions)
             std::cout << "Extensions: " << extensions << std::endl;
+         */
     }
 
     void SetupOpenGL()
@@ -65,7 +67,9 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool)
     // Request opengl 2.1 context.
     // SDL doesn't have the ability to choose which profile at this time of writing,
     // but it should default to the core profile
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
@@ -81,8 +85,7 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool)
     //const unsigned int screenflag = fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE;
     const unsigned int flags = SDL_WINDOW_SHOWN |
                                SDL_WINDOW_OPENGL |
-                               SDL_WINDOW_BORDERLESS |
-                               SDL_WINDOW_ALLOW_HIGHDPI; // | screenflag;
+    SDL_WINDOW_BORDERLESS; //| SDL_WINDOW_ALLOW_HIGHDPI; // | screenflag;
 
     // Create our window centered and with the given resolution
     mWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);

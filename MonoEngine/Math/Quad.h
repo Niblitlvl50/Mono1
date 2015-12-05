@@ -41,6 +41,8 @@ namespace math
     //!
     void operator |= (Quad& left, const Quad& right);
 
+    bool operator == (const Quad& left, const Quad& right);
+
     //! Zero quad defined for convenience
     constexpr Quad zeroQuad = Quad(zeroVec, zeroVec);
 }

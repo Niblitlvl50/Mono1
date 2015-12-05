@@ -18,6 +18,7 @@
 #include "Meteor.h"
 #include "PathPoint.h"
 #include "CubeSwarm.h"
+#include "CacoDemon.h"
 
 #include "Quad.h"
 
@@ -173,7 +174,9 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     
     std::shared_ptr<Moon> moon2 = std::make_shared<Moon>(-400.0f, 400.0f, 50.0f);
     AddPhysicsEntity(moon2, mono::FOREGROUND);
-    
+
+    AddPhysicsEntity(std::make_shared<game::CacoDemon>(mEventHandler), mono::FOREGROUND);
+
     AddEntity(std::make_shared<InvaderGroup>(), mono::BACKGROUND);
     AddEntity(std::make_shared<DotEntity>(), mono::FOREGROUND);
     AddEntity(std::make_shared<PathPoint>(), mono::BACKGROUND);
@@ -183,7 +186,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddMeteorCluster(this);
 
     AddEntity(std::make_shared<game::CubeSwarm>(), mono::FOREGROUND);
-        
+
     camera->SetPosition(shuttle->Position());
     camera->Follow(shuttle, math::Vector2f(0, -100));
 }

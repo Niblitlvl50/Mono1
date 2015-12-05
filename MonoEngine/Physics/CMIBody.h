@@ -9,6 +9,7 @@
 #pragma once
 
 #include "CMFwd.h"
+#include "MathFwd.h"
 
 namespace cm
 {

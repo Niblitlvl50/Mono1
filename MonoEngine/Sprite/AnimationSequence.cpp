@@ -54,4 +54,12 @@ bool AnimationSequence::Finished() const
     return mDone;
 }
 
+void AnimationSequence::Restart()
+{
+    mCurrentFrame = 0;
+    mElapsedTime = 0;
+    mDone = false;
+}
+
+
 

@@ -23,9 +23,9 @@ namespace mono
     struct ITexture;
     struct IAction;
     struct IPath;
-    
+    class ISprite;
+
     class EventHandler;
-    class Sprite;
 
     namespace Color
     {

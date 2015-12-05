@@ -18,11 +18,15 @@ namespace mono
 {
     class ISprite : public IUpdatable
     {
+    public:
+        
         //! Gets the sprites texture
         //! @return ITexturePtr A shared pointer to the texture.
         virtual ITexturePtr GetTexture() const = 0;
 
-        //! Gets the quad representing the texture coordinates
+        //! Gets the quad representing the texture coordinates,
+        //! the sprite can return zeroQuad for texture coordinates
+        //! if the animation is finished.
         //! @return Math::Quad A reference to the texture coords.
         virtual const math::Quad& GetTextureCoords() const = 0;
 
@@ -42,5 +46,13 @@ namespace mono
         //! @param[in] id The animation to run.
         //! @param[in] func A callback function.
         virtual void SetAnimation(int id, const std::function<void ()>& func) = 0;
+
+        //! Returns the number of defined animations for this sprite
+        //! @return unsigned int
+        virtual int GetDefinedAnimations() const = 0;
+
+        //! Returns the current active animation
+        //! @return unsigned int
+        virtual int GetActiveAnimation() const = 0;
     };
 }

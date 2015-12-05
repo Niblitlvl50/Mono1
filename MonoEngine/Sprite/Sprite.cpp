@@ -126,19 +126,21 @@ void Sprite::doUpdate(unsigned int delta)
     AnimationSequence& anim = mDefinedAnimations.find(mActiveAnimationId)->second;
     anim.Tick(delta);
 
-    if(anim.Finished())
+    if(anim.Finished() && mCallbackFunction)
         mCallbackFunction();
 }
 
 void Sprite::SetAnimation(int id)
 {
-    mActiveAnimationId = id;
+    SetAnimation(id, nullptr);
 }
 
 void Sprite::SetAnimation(int id, const std::function<void ()>& func)
 {
     mActiveAnimationId = id;
     mCallbackFunction = func;
+
+    mDefinedAnimations.find(id)->second.Restart();
 }
 
 void Sprite::DefineAnimation(int id, const std::vector<int>& frames, bool loop)
@@ -167,6 +169,15 @@ void Sprite::DefineAnimation(int id, const std::vector<int>& frames, const std::
     DefineAnimation(id, frames, !noloop);
 }
 
+int Sprite::GetDefinedAnimations() const
+{
+    return static_cast<int>(mDefinedAnimations.size());
+}
+
+int Sprite::GetActiveAnimation() const
+{
+    return mActiveAnimationId;
+}
 
 
 

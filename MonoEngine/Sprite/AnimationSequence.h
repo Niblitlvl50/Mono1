@@ -40,6 +40,7 @@ namespace mono
 
         unsigned int Frame() const;
         bool Finished() const;
+        void Restart();
 
     private:
 

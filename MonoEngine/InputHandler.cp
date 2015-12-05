@@ -43,7 +43,6 @@ void InputHandler::OnKeyUp(int key)
     if(key == Key::ESCAPE)
     {
         mEventHandler.DispatchEvent(Event::QuitEvent());
-        return;
     }
 
     const Event::KeyUpEvent event(key);

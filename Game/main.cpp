@@ -11,43 +11,31 @@
 #include "EventHandler.h"
 #include "IWindow.h"
 
-#include <stdexcept>
-#include <iostream>
-
 int main(int argc, char* argv[])
 {
-    try
-    {
-        System::Init();
+    constexpr math::Vector2f iPhone6SSize(750.0f, 1334.0f);
 
-        // The "global" event handler used throughout the game
-        mono::EventHandler eventHandler;
+    System::Init();
 
-        const math::Vector2f& size = Video::GetCurrentWindowSize(); // / 2;
-        mono::IWindowPtr window = mono::CreateWindow("Mono1", size.x, size.y, false);
-        window->SetBackgroundColor(mono::Color::RGBA(0.6, 0.6, 0.6));
+    // The "global" event handler used throughout the game
+    mono::EventHandler eventHandler;
 
-        mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.x / 2, size.y / 2, eventHandler);
-        mono::LoadFont("pixelette.ttf", 10.0f);
+    const math::Vector2f& nativeSize = Video::GetCurrentWindowSize(); // / 2;
+    const float ratio = nativeSize.y / iPhone6SSize.y;
 
-        mono::Engine engine(window, camera, eventHandler);
-        engine.Run(std::make_shared<game::TestZone>(eventHandler));
-    }
-    catch(const std::runtime_error& e)
-    {
-        std::cout << "Shutdown due to exception: " << e.what() << std::endl;
-    }
-    catch(const std::exception& e)
-    {
-        std::cout << "Shutdown due to exception: " << e.what() << std::endl;
-    }
-    catch(...)
-    {
-        std::cout << "Shutdown due to unknown exception" << std::endl;
-    }
+    const math::Vector2f& size = iPhone6SSize * ratio;
+
+    mono::IWindowPtr window = mono::CreateWindow("Mono1", size.x, size.y, false);
+    window->SetBackgroundColor(mono::Color::RGBA(0.6, 0.6, 0.6));
+
+    mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.x, size.y, eventHandler);
+    mono::LoadFont("pixelette.ttf", 10.0f);
+
+    mono::Engine engine(window, camera, eventHandler);
+    engine.Run(std::make_shared<game::TestZone>(eventHandler));
 
     System::Exit();
-	
+
     return 0;
 }
 

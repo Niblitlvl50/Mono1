@@ -124,7 +124,7 @@ void Renderer::doDrawTexts() const
     ::DrawTexts(mTexts, mTextureShader);
 }
 
-void Renderer::DrawSprite(const Sprite& sprite) const
+void Renderer::DrawSprite(const ISprite& sprite) const
 {
     mTextureShader->Use();
     mTextureShader->LoadModelViewMatrix(mCurrentTransform);

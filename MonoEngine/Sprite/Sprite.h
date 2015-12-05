@@ -92,7 +92,13 @@ namespace mono
         //! @param[in] id The animation to run.
         //! @param[in] func A callback function.
         virtual void SetAnimation(int id, const std::function<void ()>& func);
-        
+
+        //! Returns the number of defined animations for this sprite
+        //! @return int
+        virtual int GetDefinedAnimations() const;
+
+        virtual int GetActiveAnimation() const;
+
         virtual void doUpdate(unsigned int delta);
 
     private:

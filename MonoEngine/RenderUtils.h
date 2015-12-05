@@ -33,7 +33,7 @@ namespace mono
                     const std::shared_ptr<IColorShader>& shader);
     
     //! Draws a sprite
-    void DrawSprite(const Sprite& sprite,
+    void DrawSprite(const ISprite& sprite,
                     const std::shared_ptr<ITextureShader>& shader);
 
     //! Draws texts from the text definitions

@@ -27,3 +27,8 @@ void math::operator |= (math::Quad& left, const math::Quad& right)
     left.mB.x = std::max(left.mB.x, right.mB.x);
     left.mB.y = std::max(left.mB.y, right.mB.y);
 }
+
+bool math::operator == (const math::Quad& left, const math::Quad& right)
+{
+    return left.mA == right.mA && left.mB == right.mB;
+}

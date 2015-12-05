@@ -8,7 +8,7 @@
 
 #include "RenderUtils.h"
 #include "Quad.h"
-#include "Sprite.h"
+#include "ISprite.h"
 #include "SysOpenGL.h"
 #include "MathFunctions.h"
 #include "TextDefinition.h"
@@ -61,15 +61,20 @@ void mono::DrawCircle(const math::Vector2f& position,
     DrawLine(vertices, color, lineWidth, shader);
 }
 
-void mono::DrawSprite(const mono::Sprite& sprite, const std::shared_ptr<ITextureShader>& shader)
+void mono::DrawSprite(const mono::ISprite& sprite, const std::shared_ptr<ITextureShader>& shader)
 {
+    // The sprite can return zeroQuad as texture coordinates
+    // when the animation is finished
+    const math::Quad& quad = sprite.GetTextureCoords();
+    if(quad == math::zeroQuad)
+        return;
+
     constexpr float vertices[] = { -0.5f, -0.5f,
                                    -0.5f,  0.5f,
                                     0.5f,  0.5f,
                                     0.5f, -0.5f };
     constexpr unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };
 
-    const math::Quad& quad = sprite.GetTextureCoords();
     const float coords[] = { quad.mA.x, quad.mA.y,
                              quad.mA.x, quad.mB.y,
                              quad.mB.x, quad.mB.y,

@@ -16,7 +16,6 @@
 
 #include "SysTime.h"
 #include "SysEvents.h"
-#include "SysKeycodes.h"
 
 #include "EventHandler.h"
 #include "EventFuncFwd.h"
@@ -24,7 +23,6 @@
 #include "QuitEvent.h"
 #include "SurfaceChangedEvent.h"
 #include "ActivatedEvent.h"
-#include "KeyUpEvent.h"
 
 #include "Renderer.h"
 
@@ -76,9 +74,6 @@ Engine::Engine(IWindowPtr window, ICameraPtr camera, EventHandler& eventHandler)
 	
     const Event::ActivatedEventFunc activatedFunc = std::bind(&Engine::OnActivated, this, _1);
     mActivatedToken = mEventHandler.AddListener(activatedFunc);
-
-    const Event::KeyUpEventFunc keyUpFunc = std::bind(&Engine::OnKeyUp, this, _1);
-    mKeyUpToken = mEventHandler.AddListener(keyUpFunc);
 }
 
 Engine::~Engine()
@@ -87,7 +82,6 @@ Engine::~Engine()
     mEventHandler.RemoveListener(mQuitToken);
     mEventHandler.RemoveListener(mSurfaceChangedToken);
     mEventHandler.RemoveListener(mActivatedToken);
-    mEventHandler.RemoveListener(mKeyUpToken);
 }
 
 void Engine::Run(IZonePtr zone)
@@ -148,12 +142,6 @@ void Engine::OnSurfaceChanged(const Event::SurfaceChangedEvent& event)
 void Engine::OnActivated(const Event::ActivatedEvent& event)
 {
     mWindow->Activated(event.gain);
-}
-
-void Engine::OnKeyUp(const Event::KeyUpEvent& event)
-{
-    if(event.key == Key::ESCAPE)
-        mEventHandler.DispatchEvent(Event::QuitEvent());
 }
 
 
