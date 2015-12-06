@@ -12,7 +12,7 @@ namespace Event
 {
     struct KeyDownEvent
     {
-        KeyDownEvent(int key)
+        constexpr KeyDownEvent(int key)
             : key(key)
         { }
         

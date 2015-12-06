@@ -19,7 +19,7 @@ namespace Event
     
     struct TouchEvent
     {
-        TouchEvent(TouchType type, int64_t touchId, float x, float y, float dx, float dy)
+        constexpr TouchEvent(TouchType type, int64_t touchId, float x, float y, float dx, float dy)
             : type(type),
               touchId(touchId),
               x(x),

@@ -13,7 +13,7 @@ namespace Event
 {
     struct SurfaceChangedEvent
     {
-        SurfaceChangedEvent(int w, int h)
+        constexpr SurfaceChangedEvent(int w, int h)
             : width(w),
               height(h)
         { }

@@ -12,7 +12,7 @@ namespace Event
 {
     struct MouseDownEvent
     {
-        MouseDownEvent(unsigned int key, int screenX, int screenY, float worldX, float worldY)
+        constexpr MouseDownEvent(unsigned int key, int screenX, int screenY, float worldX, float worldY)
             : key(key),
               screenX(screenX),
               screenY(screenY),

@@ -13,7 +13,7 @@ namespace Event
 {
     struct KeyUpEvent
     {
-        KeyUpEvent(int key)
+        constexpr KeyUpEvent(int key)
             : key(key)
         { }
         

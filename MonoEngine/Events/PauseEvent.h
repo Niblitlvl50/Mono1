@@ -12,7 +12,10 @@ namespace Event
 {
     struct PauseEvent
     {
-        PauseEvent()
+        constexpr PauseEvent(bool pause)
+            : pause(pause)
         { }
+
+        const bool pause;
     };
 }

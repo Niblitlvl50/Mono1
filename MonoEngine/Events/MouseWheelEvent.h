@@ -13,7 +13,7 @@ namespace Event
 {
     struct MouseWheelEvent
     {
-        MouseWheelEvent(int x, int y)
+        constexpr MouseWheelEvent(int x, int y)
             : x(x),
               y(y)
         { }

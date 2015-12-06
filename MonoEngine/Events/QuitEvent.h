@@ -12,7 +12,7 @@ namespace Event
 {
     struct QuitEvent
     {
-        QuitEvent()
+        constexpr QuitEvent()
         { }
     };
 }

@@ -19,5 +19,5 @@ namespace Events
 
     //! Process the system events, input and other events
     //! \param handler An input handler that takes care of the events
-    void ProcessSystemEvents(mono::IInputHandlerPtr handler);
+    void ProcessSystemEvents(const mono::IInputHandlerPtr& handler);
 }

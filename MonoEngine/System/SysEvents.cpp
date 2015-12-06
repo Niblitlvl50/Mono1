@@ -67,12 +67,12 @@ namespace
 }
 
 
-void Events::ProcessSystemEvents(mono::IInputHandlerPtr handler)
+void Events::ProcessSystemEvents(const mono::IInputHandlerPtr& handler)
 {
-    /* Our SDL event placeholder. */
+    // Our SDL event placeholder.
     SDL_Event event;
 	
-    /* Grab all the events off the queue. */
+    // Grab all the events off the queue.
     while(SDL_PollEvent(&event))
     {
         switch(event.type)
@@ -131,12 +131,14 @@ void Events::ProcessSystemEvents(mono::IInputHandlerPtr handler)
                 break;
 
             case SDL_APP_TERMINATING:
+                handler->OnAppTerminating();
                 break;
 
             case SDL_APP_LOWMEMORY:
                 break;
 
             case SDL_APP_WILLENTERBACKGROUND:
+                handler->OnEnterBackground();
                 break;
                 
             case SDL_APP_DIDENTERBACKGROUND:
@@ -146,6 +148,7 @@ void Events::ProcessSystemEvents(mono::IInputHandlerPtr handler)
                 break;
 
             case SDL_APP_DIDENTERFOREGROUND:
+                handler->OnEnterForeground();
                 break;
 
             case SDL_QUIT:

@@ -13,7 +13,7 @@ namespace Event
 {
     struct ActivatedEvent
     {
-        ActivatedEvent(bool gain)
+        constexpr ActivatedEvent(bool gain)
             : gain(gain)
         { }
         

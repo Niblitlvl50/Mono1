@@ -12,6 +12,7 @@ namespace Event
 {
     struct PauseEvent;
     struct QuitEvent;
+    struct ApplicationEvent;
     struct SurfaceChangedEvent;
     struct ActivatedEvent;
     struct KeyDownEvent;

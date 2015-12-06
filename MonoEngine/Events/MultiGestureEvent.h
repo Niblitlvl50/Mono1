@@ -12,7 +12,7 @@ namespace Event
 {
     struct MultiGestureEvent
     {
-        MultiGestureEvent(float x, float y, float theta, float distance)
+        constexpr MultiGestureEvent(float x, float y, float theta, float distance)
             : x(x),
               y(y),
               theta(theta),

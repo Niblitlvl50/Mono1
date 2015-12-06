@@ -12,6 +12,7 @@
 
 #include "QuitEvent.h"
 #include "PauseEvent.h"
+#include "ApplicationEvent.h"
 #include "SurfaceChangedEvent.h"
 #include "ActivatedEvent.h"
 #include "KeyDownEvent.h"
@@ -111,21 +112,26 @@ void InputHandler::OnUserEvent(int, void*, void*)
 { }
 
 void InputHandler::OnAppTerminating()
-{ }
+{
+    constexpr Event::ApplicationEvent event(Event::ApplicationState::TERMINATING);
+    mEventHandler.DispatchEvent(event);
+}
 
 void InputHandler::OnEnterBackground()
 {
-    mEventHandler.DispatchEvent(Event::PauseEvent());
+    constexpr Event::ApplicationEvent event(Event::ApplicationState::ENTER_BACKGROUND);
+    mEventHandler.DispatchEvent(event);
 }
 
 void InputHandler::OnEnterForeground()
 {
-    mEventHandler.DispatchEvent(Event::PauseEvent());
+    constexpr Event::ApplicationEvent event(Event::ApplicationState::ENTER_FOREGROUND);
+    mEventHandler.DispatchEvent(event);
 }
 
 void InputHandler::OnQuit()
 {
-    const Event::QuitEvent event;
+    constexpr Event::QuitEvent event;
     mEventHandler.DispatchEvent(event);
 }
 

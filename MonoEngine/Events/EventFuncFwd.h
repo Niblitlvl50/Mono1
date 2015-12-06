@@ -15,6 +15,7 @@ namespace Event
 {
     typedef std::function<void (const PauseEvent&)> PauseEventFunc;
     typedef std::function<void (const QuitEvent&)> QuitEventFunc;
+    typedef std::function<void (const ApplicationEvent&)> ApplicationEventFunc;
     typedef std::function<void (const SurfaceChangedEvent&)> SurfaceChangedEventFunc;
     typedef std::function<void (const ActivatedEvent&)> ActivatedEventFunc;
     typedef std::function<void (const KeyDownEvent&)> KeyDownEventFunc;

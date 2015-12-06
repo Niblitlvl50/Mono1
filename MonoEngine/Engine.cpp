@@ -21,6 +21,7 @@
 #include "EventFuncFwd.h"
 #include "PauseEvent.h"
 #include "QuitEvent.h"
+#include "ApplicationEvent.h"
 #include "SurfaceChangedEvent.h"
 #include "ActivatedEvent.h"
 
@@ -55,6 +56,7 @@ namespace Func
 Engine::Engine(IWindowPtr window, ICameraPtr camera, EventHandler& eventHandler)
     : mPause(false),
       mQuit(false),
+      mUpdateLastTime(false),
       mWindow(window),
       mCamera(camera),
       mEventHandler(eventHandler)
@@ -69,6 +71,9 @@ Engine::Engine(IWindowPtr window, ICameraPtr camera, EventHandler& eventHandler)
     const Event::QuitEventFunc quitFunc = std::bind(&Engine::OnQuit, this, _1);
     mQuitToken = mEventHandler.AddListener(quitFunc);
 
+    const Event::ApplicationEventFunc appFunc = std::bind(&Engine::OnApplication, this, _1);
+    mApplicationToken = mEventHandler.AddListener(appFunc);
+
     const Event::SurfaceChangedEventFunc surfaceChangedFunc = std::bind(&Engine::OnSurfaceChanged, this, _1);
     mSurfaceChangedToken = mEventHandler.AddListener(surfaceChangedFunc);
 	
@@ -80,6 +85,7 @@ Engine::~Engine()
 {
     mEventHandler.RemoveListener(mPauseToken);
     mEventHandler.RemoveListener(mQuitToken);
+    mEventHandler.RemoveListener(mApplicationToken);
     mEventHandler.RemoveListener(mSurfaceChangedToken);
     mEventHandler.RemoveListener(mActivatedToken);
 }
@@ -93,6 +99,16 @@ void Engine::Run(IZonePtr zone)
 
     while(!mQuit)
     {
+        // When exiting the application on iOS the lastTime variable
+        // will be from when you exited, and then when you resume
+        // the app the calculated delta will be huge and screw
+        // everything up, thats why we need to update it here.
+        if(mUpdateLastTime)
+        {
+            lastTime = Time::GetMilliseconds();
+            mUpdateLastTime = false;
+        }
+
         const unsigned int beforeTime = Time::GetMilliseconds();
         const unsigned int delta = beforeTime - lastTime;
 
@@ -122,16 +138,30 @@ void Engine::Run(IZonePtr zone)
     // to reuse the engine for another zone.
     mQuit = false;
     mPause = false;
+    mUpdateLastTime = false;
 }
 
-void Engine::OnPause(const Event::PauseEvent&)
+void Engine::OnPause(const Event::PauseEvent& event)
 {
-    mPause = !mPause;
+    mPause = event.pause;
 }
 
 void Engine::OnQuit(const Event::QuitEvent&)
 {
     mQuit = true;
+}
+
+void Engine::OnApplication(const Event::ApplicationEvent& event)
+{
+    if(event.state == Event::ApplicationState::ENTER_BACKGROUND)
+    {
+        mPause = true;
+    }
+    else if(event.state == Event::ApplicationState::ENTER_FOREGROUND)
+    {
+        mPause = false;
+        mUpdateLastTime = true;
+    }
 }
 
 void Engine::OnSurfaceChanged(const Event::SurfaceChangedEvent& event)

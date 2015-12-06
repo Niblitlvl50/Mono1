@@ -27,11 +27,13 @@ namespace mono
 		
         void OnPause(const Event::PauseEvent& event);
         void OnQuit(const Event::QuitEvent& event);
+        void OnApplication(const Event::ApplicationEvent& event);
         void OnSurfaceChanged(const Event::SurfaceChangedEvent& event);
         void OnActivated(const Event::ActivatedEvent& event);
 
         bool mPause;
         bool mQuit;
+        bool mUpdateLastTime;
 
         IWindowPtr mWindow;
         ICameraPtr mCamera;
@@ -40,6 +42,7 @@ namespace mono
 
         EventToken<Event::PauseEvent> mPauseToken;
         EventToken<Event::QuitEvent> mQuitToken;
+        EventToken<Event::ApplicationEvent> mApplicationToken;
         EventToken<Event::SurfaceChangedEvent> mSurfaceChangedToken;
         EventToken<Event::ActivatedEvent> mActivatedToken;
     };
