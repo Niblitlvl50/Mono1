@@ -1,1 +1,1 @@
--- This sprite is exported from spritesheet.psdtexture = "spritesheet.png"rows = 7columns = 1x = 218y = 4u = 250v = 224animations = { }animations[0] = { 0, 100, 1, 50, 2, 50, 3, 50, 4, 100, 5, 100, 6, 100 }attributes = { }attributes[0] = { "no-loop" }
+-- This sprite is exported from spritesheet.psdtexture = "spritesheet.png"rows = 7columns = 1x = 134y = 2u = 165v = 223animations = { }animations[0] = { 0, 100, 1, 50, 2, 50, 3, 50, 4, 100, 5, 100, 6, 100 }attributes = { }attributes[0] = { "no-loop" }
