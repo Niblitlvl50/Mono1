@@ -15,14 +15,10 @@ namespace mono
     template <typename T>
     bool FindAndRemove(std::vector<std::shared_ptr<T>>& collection, const std::shared_ptr<T>& object)
     {
-        const auto findFunc = [&object](const std::shared_ptr<T> other) {
-            return object == other;
-        };
-        
-        const auto newEnd = std::remove_if(collection.begin(), collection.end(), findFunc);
-        if(newEnd != collection.end())
+        const auto it = std::find(collection.begin(), collection.end(), object);
+        if(it != collection.end())
         {
-            collection.erase(newEnd);
+            collection.erase(it);
             return true;
         }
         
