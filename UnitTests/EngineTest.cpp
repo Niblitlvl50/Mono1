@@ -68,13 +68,13 @@ namespace
         {
             mUpdateCalled = true;
         }
-        virtual void Follow(const mono::IEntityPtr entity)
+        virtual void Follow(const mono::IEntityPtr entity, const math::Vector2f& offset)
         { }
         virtual void Unfollow()
         {
             mUnfollowCalled = true;
         }
-        virtual const math::Quad& GetViewport() const
+        virtual math::Quad GetViewport() const
         {
             return mViewport;
         }
@@ -148,6 +148,8 @@ namespace
         {
             return 0;
         }
+        virtual void SetPointSize(float size)
+        { }
     };
 
     class NullTextureShader : public mono::ITextureShader
