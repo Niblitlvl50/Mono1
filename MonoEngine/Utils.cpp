@@ -50,7 +50,7 @@ float mono::Random()
 {
     constexpr int seed = 666;
     static std::default_random_engine engine(seed);
+    static std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
     
-    std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
     return distribution(engine);
 }
