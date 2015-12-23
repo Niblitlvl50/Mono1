@@ -101,6 +101,10 @@ namespace
     void ApplyShockwave(cm::IBodyPtr body, const math::Vector2f& position, float magnitude)
     {
         math::Vector2f unit = body->GetPosition() - position;
+        const float length = math::Length(unit);
+        if(length > 50)
+            return;
+
         math::Normalize(unit);
         
         const math::Vector2f& impulse = unit * magnitude;
