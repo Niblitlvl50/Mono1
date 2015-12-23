@@ -35,6 +35,12 @@ void CubeSwarm::Draw(mono::IRenderer& renderer) const
 
 void CubeSwarm::Update(unsigned int delta)
 {
+    // Reset the bounding box values, will get updated inside the for-loop
+    m_bounds.mA.x = -99e99;
+    m_bounds.mA.y = 99e99;
+    m_bounds.mB.x = -99e99;
+    m_bounds.mB.y = 99e99;
+
     for(Cube& cube : mCubes)
     {
         const float add_x = mono::Random() * 2.0 - 1.0;
@@ -43,11 +49,18 @@ void CubeSwarm::Update(unsigned int delta)
 
         cube.quad.mA += add;
         cube.quad.mB += add;
+
+        m_bounds |= cube.quad;
     }
 
     mColor.hue += delta * 0.0005f;
     if(mColor.hue > 1.0f)
         mColor.hue = 0.0f;
+}
+
+math::Quad CubeSwarm::BoundingBox() const
+{
+    return m_bounds;
 }
 
 CubeSwarm::Cube CubeSwarm::GenerateCube()

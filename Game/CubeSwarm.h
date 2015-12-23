@@ -24,6 +24,7 @@ namespace game
 
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
+        virtual math::Quad BoundingBox() const;
 
     private:
 
@@ -43,6 +44,7 @@ namespace game
 
         Cube GenerateCube();
 
+        math::Quad m_bounds;
         mono::Color::HSL mColor;
         std::vector<Cube> mCubes;
     };
