@@ -16,6 +16,7 @@
 #include "IShaderFactory.h"
 #include "IColorShader.h"
 #include "ITextureShader.h"
+#include "IMorphingShader.h"
 #include "ShaderFunctions.h"
 
 #include "Vector2f.h"
@@ -175,6 +176,35 @@ namespace
         { }
     };
 
+    class NullMorphShader : public mono::IMorphingShader
+    {
+    public:
+        virtual void Use()
+        { }
+        virtual unsigned int GetShaderId() const
+        {
+            return 0;
+        }
+        virtual void LoadProjectionMatrix(const math::Matrix& projection)
+        { }
+        virtual void LoadModelViewMatrix(const math::Matrix& modelView)
+        { }
+        virtual void SetMorphGrade(float grade)
+        { }
+        virtual unsigned int GetPositionLocation() const
+        {
+            return 0;
+        }
+        virtual unsigned int GetMorphPositionLocation() const
+        {
+            return 0;
+        }
+        virtual unsigned int GetColorLocation() const
+        {
+            return 0;
+        }
+    };
+
     class NullFactory : public mono::IShaderFactory
     {
     public:
@@ -186,6 +216,11 @@ namespace
         virtual std::shared_ptr<mono::IColorShader> CreateColorShader() const
         {
             return std::make_shared<NullColorShader>();
+        }
+
+        virtual std::shared_ptr<mono::IMorphingShader> CreateMorphingShader() const
+        {
+            return std::make_shared<NullMorphShader>();
         }
     };
 }

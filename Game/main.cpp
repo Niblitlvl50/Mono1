@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     // The "global" event handler used throughout the game
     mono::EventHandler eventHandler;
 
-    const math::Vector2f& nativeSize = Video::GetCurrentWindowSize(); // / 2;
+    const math::Vector2f& nativeSize = Video::GetCurrentWindowSize();
     const float ratio = nativeSize.y / iPhone6SSize.y;
 
     const math::Vector2f& size = iPhone6SSize * ratio;
@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
     mono::IWindowPtr window = mono::CreateWindow("Mono1", size.x, size.y, false);
     window->SetBackgroundColor(mono::Color::RGBA(0.6, 0.6, 0.6));
 
-    mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.x, size.y, eventHandler);
+    mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.x / 2, size.y / 2, eventHandler);
     mono::LoadFont("pixelette.ttf", 10.0f);
 
     mono::Engine engine(window, camera, eventHandler);

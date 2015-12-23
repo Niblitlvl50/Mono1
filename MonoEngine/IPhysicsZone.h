@@ -20,7 +20,7 @@ namespace mono
     {
         virtual void ForEachBody(const std::function<void (cm::IBodyPtr)>& func) = 0;
 
-        virtual void AddPhysicsEntity(mono::IPhysicsEntityPtr entity, int layer) = 0;
-        virtual void RemovePhysicsEntity(mono::IPhysicsEntityPtr entity) = 0;
+        virtual void AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer) = 0;
+        virtual void RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity) = 0;
     };
 }

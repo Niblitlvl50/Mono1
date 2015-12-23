@@ -72,7 +72,7 @@ void ZoneBase::DoPreAccept()
     }
 }
 
-void ZoneBase::AddEntity(IEntityPtr entity, int layer)
+void ZoneBase::AddEntity(const IEntityPtr& entity, int layer)
 {
     auto layerIt = mLayersEntities.find(layer);
     if(layerIt == mLayersEntities.end())
@@ -81,7 +81,7 @@ void ZoneBase::AddEntity(IEntityPtr entity, int layer)
     layerIt->second.push_back(entity);
 }
 
-void ZoneBase::RemoveEntity(IEntityPtr entity)
+void ZoneBase::RemoveEntity(const IEntityPtr& entity)
 {
     bool result = false;
     for(auto& layer : mLayersEntities)
@@ -95,19 +95,19 @@ void ZoneBase::RemoveEntity(IEntityPtr entity)
         throw std::runtime_error("ZoneBase - Unable to remove entity");
 }
 
-void ZoneBase::AddUpdatable(IUpdatablePtr updatable)
+void ZoneBase::AddUpdatable(const IUpdatablePtr& updatable)
 {
     mUpdatables.push_back(updatable);
 }
 
-void ZoneBase::RemoveUpdatable(IUpdatablePtr updatable)
+void ZoneBase::RemoveUpdatable(const IUpdatablePtr& updatable)
 {
     const bool result = mono::FindAndRemove(mUpdatables, updatable);
     if(!result)
         throw std::runtime_error("ZoneBase - Unable to remove updatable");
 }
 
-void ZoneBase::AddDrawable(IDrawablePtr drawable, int layer)
+void ZoneBase::AddDrawable(const IDrawablePtr& drawable, int layer)
 {
     auto layerIt = mLayersDrawables.find(layer);
     if(layerIt == mLayersDrawables.end())
@@ -116,7 +116,7 @@ void ZoneBase::AddDrawable(IDrawablePtr drawable, int layer)
     layerIt->second.push_back(drawable);
 }
 
-void ZoneBase::RemoveDrawable(IDrawablePtr drawable)
+void ZoneBase::RemoveDrawable(const IDrawablePtr& drawable)
 {
     bool result = false;
     for(auto& layer : mLayersDrawables)

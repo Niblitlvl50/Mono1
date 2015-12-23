@@ -98,9 +98,9 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool)
 
     //SDL_ShowCursor(SDL_DISABLE);
     	        
-    PrintOpenGLInfo();
     SetupOpenGL();
     MakeCurrent();
+    PrintOpenGLInfo();
 }
 
 SDLWindow::~SDLWindow()

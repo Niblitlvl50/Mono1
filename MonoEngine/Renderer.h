@@ -17,6 +17,7 @@ namespace mono
 {
     class IColorShader;
     class ITextureShader;
+    class IMorphingShader;
 
     class Renderer : public IRenderer
     {
@@ -27,8 +28,8 @@ namespace mono
         virtual void DrawFrame();
         virtual void Update(unsigned int milliseconds);
 
-        virtual void AddDrawable(IDrawablePtr drawable);
-        virtual void AddUpdatable(IUpdatablePtr updatable);
+        virtual void AddDrawable(const IDrawablePtr& drawable);
+        virtual void AddUpdatable(const IUpdatablePtr& updatable);
         
         virtual void DrawText(const std::string& text, const math::Vector2f& pos, bool center, const mono::Color::RGBA& color);
         virtual void DrawSprite(const ISprite& sprite) const;
@@ -37,6 +38,7 @@ namespace mono
         virtual void DrawPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const;
         virtual void DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const;
         virtual void DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const;
+        virtual void DrawShape(const std::vector<math::Vector2f>& shape1, const std::vector<math::Vector2f>& shape2, float morphGrade, const Color::RGBA& color);
 
         virtual void PushNewTransform(const math::Matrix& transform);
         virtual const math::Matrix& GetCurrentTransform() const;
@@ -57,6 +59,7 @@ namespace mono
 
         std::shared_ptr<IColorShader> mColorShader;
         std::shared_ptr<ITextureShader> mTextureShader;
+        std::shared_ptr<IMorphingShader> m_morphShader;
 
         std::vector<IDrawablePtr> mDrawables;
         std::vector<IUpdatablePtr> mUpdatables;

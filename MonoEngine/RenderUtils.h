@@ -16,6 +16,7 @@ namespace mono
 {
     class IColorShader;
     class ITextureShader;
+    class IMorphingShader;
     struct TextDefinition;
     
     //! Draws a quad
@@ -57,5 +58,10 @@ namespace mono
                     const mono::Color::RGBA& color,
                     float size,
                     const std::shared_ptr<IColorShader>& shader);
+
+    void DrawShape(const std::vector<math::Vector2f>& shape1,
+                   const std::vector<math::Vector2f>& shape2,
+                   const mono::Color::RGBA& color,
+                   const std::shared_ptr<IMorphingShader>& shader);
 }
 

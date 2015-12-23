@@ -15,6 +15,7 @@
 #include "ITexture.h"
 #include "IColorShader.h"
 #include "ITextureShader.h"
+#include "IMorphingShader.h"
 
 #include <cmath>
 
@@ -192,4 +193,29 @@ void mono::DrawPoints(const std::vector<math::Vector2f>& vertices,
     glDisableVertexAttribArray(1);
 }
 
+void mono::DrawShape(const std::vector<math::Vector2f>& shape1,
+                     const std::vector<math::Vector2f>& shape2,
+                     const mono::Color::RGBA& color,
+                     const std::shared_ptr<IMorphingShader>& shader)
+{
+    if(shape1.size() != shape2.size())
+        return;
+
+    std::vector<mono::Color::RGBA> colors(shape1.size());
+    std::fill(colors.begin(), colors.end(), color);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
+
+    glVertexAttribPointer(shader->GetPositionLocation(), 2, GL_FLOAT, GL_FALSE, 0, shape1.data());
+    glVertexAttribPointer(shader->GetMorphPositionLocation(), 2, GL_FLOAT, GL_FALSE, 0, shape2.data());
+    glVertexAttribPointer(shader->GetColorLocation(), 4, GL_FLOAT, GL_FALSE, 0, colors.data());
+
+    glDrawArrays(GL_LINE_STRIP, 0, static_cast<GLsizei>(shape1.size()));
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
+}
 

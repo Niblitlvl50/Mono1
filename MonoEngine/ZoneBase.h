@@ -21,18 +21,17 @@ namespace mono
         
         ZoneBase();
         
-        
         virtual void Accept(IRenderer& renderer);
         virtual void DoPreAccept();
         
-        virtual void AddEntity(IEntityPtr entity, int layer);
-        virtual void RemoveEntity(IEntityPtr entity);
+        virtual void AddEntity(const IEntityPtr& entity, int layer);
+        virtual void RemoveEntity(const IEntityPtr& entity);
         
-        virtual void AddUpdatable(IUpdatablePtr updatable);
-        virtual void RemoveUpdatable(IUpdatablePtr updatable);
+        virtual void AddUpdatable(const IUpdatablePtr& updatable);
+        virtual void RemoveUpdatable(const IUpdatablePtr& updatable);
         
-        virtual void AddDrawable(IDrawablePtr drawable, int layer);
-        virtual void RemoveDrawable(IDrawablePtr drawable);
+        virtual void AddDrawable(const IDrawablePtr& drawable, int layer);
+        virtual void RemoveDrawable(const IDrawablePtr& drawable);
         
         virtual void ClearEntities();
 

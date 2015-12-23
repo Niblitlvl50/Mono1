@@ -19,6 +19,7 @@
 #include "PathPoint.h"
 #include "CubeSwarm.h"
 #include "CacoDemon.h"
+#include "Morpher.h"
 
 #include "Quad.h"
 
@@ -180,6 +181,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddEntity(std::make_shared<InvaderGroup>(), mono::BACKGROUND);
     AddEntity(std::make_shared<DotEntity>(), mono::FOREGROUND);
     AddEntity(std::make_shared<PathPoint>(), mono::BACKGROUND);
+    AddEntity(std::make_shared<Morpher>(), mono::FOREGROUND);
     
     AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
 

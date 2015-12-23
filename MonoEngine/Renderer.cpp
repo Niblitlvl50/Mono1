@@ -22,6 +22,7 @@
 #include "ShaderFunctions.h"
 #include "ITextureShader.h"
 #include "IColorShader.h"
+#include "IMorphingShader.h"
 
 
 using namespace mono;
@@ -32,6 +33,7 @@ Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
 {
     mColorShader = GetShaderFactory()->CreateColorShader();
     mTextureShader = GetShaderFactory()->CreateTextureShader();
+    m_morphShader = GetShaderFactory()->CreateMorphingShader();
 }
 
 void Renderer::PrepareDraw()
@@ -50,6 +52,9 @@ void Renderer::PrepareDraw()
 
     mTextureShader->Use();
     mTextureShader->LoadProjectionMatrix(mProjection);
+
+    m_morphShader->Use();
+    m_morphShader->LoadProjectionMatrix(mProjection);
 }
 
 void Renderer::EndDraw()
@@ -95,12 +100,12 @@ void Renderer::Update(unsigned int milliseconds)
         updatable->doUpdate(milliseconds);
 }
 
-void Renderer::AddDrawable(IDrawablePtr drawable)
+void Renderer::AddDrawable(const IDrawablePtr& drawable)
 {
     mDrawables.push_back(drawable);
 }
 
-void Renderer::AddUpdatable(IUpdatablePtr updatable)
+void Renderer::AddUpdatable(const IUpdatablePtr& updatable)
 {
     mUpdatables.push_back(updatable);
 }
@@ -170,6 +175,15 @@ void Renderer::DrawCircle(const math::Vector2f& pos, float radie, int segments, 
     mColorShader->LoadModelViewMatrix(mCurrentTransform);
 
     ::DrawCircle(pos, radie, segments, lineWidth, color, mColorShader);
+}
+
+void Renderer::DrawShape(const std::vector<math::Vector2f>& shape1, const std::vector<math::Vector2f>& shape2, float morphGrade, const mono::Color::RGBA& color)
+{
+    m_morphShader->Use();
+    m_morphShader->LoadModelViewMatrix(mCurrentTransform);
+    m_morphShader->SetMorphGrade(morphGrade);
+
+    ::DrawShape(shape1, shape2, color, m_morphShader);
 }
 
 void Renderer::PushNewTransform(const math::Matrix& transform)

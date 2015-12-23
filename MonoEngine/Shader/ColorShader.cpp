@@ -16,9 +16,7 @@ namespace
 {
     constexpr const char* vertexSource =
 
-  //  "#version 140"
-
-//    "precision mediump float;"
+    //"precision mediump float;"
     "attribute vec2 vertexPosition;"
     "attribute vec4 vertexColor;"
 
@@ -37,9 +35,7 @@ namespace
 
     constexpr const char* fragmentSource =
 
-  //  "#version 140"
-
-  //  "precision mediump float;"
+    //"precision mediump float;"
     "varying vec4 color;"
 
     "void main()"

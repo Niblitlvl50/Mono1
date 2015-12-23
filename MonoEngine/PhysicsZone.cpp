@@ -109,7 +109,7 @@ void PhysicsZone::ForEachBody(const std::function<void (cm::IBodyPtr)>& func)
     mPhysics->mSpace.ForEachBody(func);
 }
 
-void PhysicsZone::AddPhysicsEntity(mono::IPhysicsEntityPtr entity, int layer)
+void PhysicsZone::AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer)
 {
     AddDrawable(entity, layer);
     
@@ -122,7 +122,7 @@ void PhysicsZone::AddPhysicsEntity(mono::IPhysicsEntityPtr entity, int layer)
     mPhysicsEntities.push_back(entity);
 }
 
-void PhysicsZone::RemovePhysicsEntity(mono::IPhysicsEntityPtr entity)
+void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
 {
     RemoveDrawable(entity);
 
@@ -140,13 +140,13 @@ void PhysicsZone::RemovePhysicsEntity(mono::IPhysicsEntityPtr entity)
         throw std::runtime_error("PhysicsZone - Unable to remove physics entity");
 }
 
-void PhysicsZone::AddEntity(mono::IEntityPtr entity, int layer)
+void PhysicsZone::AddEntity(const mono::IEntityPtr& entity, int layer)
 {
     AddDrawable(entity, layer);
     mEntities.push_back(entity);
 }
 
-void PhysicsZone::RemoveEntity(mono::IEntityPtr entity)
+void PhysicsZone::RemoveEntity(const mono::IEntityPtr& entity)
 {
     RemoveDrawable(entity);
     
@@ -155,7 +155,7 @@ void PhysicsZone::RemoveEntity(mono::IEntityPtr entity)
         throw std::runtime_error("PhysicsZone - Unable to remove entity");
 }
 
-void PhysicsZone::AddDrawable(mono::IDrawablePtr drawable, int layer)
+void PhysicsZone::AddDrawable(const mono::IDrawablePtr& drawable, int layer)
 {
     auto layerIt = mDrawables.find(layer);
     if(layerIt == mDrawables.end())
@@ -164,7 +164,7 @@ void PhysicsZone::AddDrawable(mono::IDrawablePtr drawable, int layer)
     layerIt->second.push_back(drawable);
 }
 
-void PhysicsZone::RemoveDrawable(mono::IDrawablePtr drawable)
+void PhysicsZone::RemoveDrawable(const mono::IDrawablePtr& drawable)
 {
     bool result = false;
     for(auto& layer : mDrawables)
@@ -178,12 +178,12 @@ void PhysicsZone::RemoveDrawable(mono::IDrawablePtr drawable)
         throw std::runtime_error("PhysicsZone - Unable to remove drawable");
 }
 
-void PhysicsZone::AddUpdatable(mono::IUpdatablePtr updatable)
+void PhysicsZone::AddUpdatable(const mono::IUpdatablePtr& updatable)
 {
     mUpdatables.push_back(updatable);
 }
 
-void PhysicsZone::RemoveUpdatable(mono::IUpdatablePtr updatable)
+void PhysicsZone::RemoveUpdatable(const mono::IUpdatablePtr& updatable)
 {
     const bool result = mono::FindAndRemove(mUpdatables, updatable);
     if(!result)
