@@ -19,28 +19,23 @@
 using namespace game;
 
 StandardWeapon::StandardWeapon(mono::EventHandler& eventHandler)
-    : mEventHandler(eventHandler)
+    : BaseWeapon(eventHandler)
 { }
 
-void StandardWeapon::Fire(const math::Vector2f& position, float direction)
+void StandardWeapon::DoFire(const math::Vector2f& position, float direction) const
 {
     const math::Vector2f unit(-std::sin(math::ToRadians(direction)),
-                               std::cos(math::ToRadians(direction)));
+                              std::cos(math::ToRadians(direction)));
     const math::Vector2f& new_position = position + (unit * 20.0f);
     const math::Vector2f& impulse = unit * 500.0f;
 
-    auto bullet = std::make_shared<FireBullet>(new_position, direction, mEventHandler);
+    auto bullet = std::make_shared<FireBullet>(new_position, direction, m_eventHandler);
     bullet->GetPhysics().body->ApplyImpulse(impulse, math::zeroVec);
 
-    mEventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
+    m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
 }
 
 int StandardWeapon::RoundsPerSecond() const
 {
     return 10;
-}
-
-const char* StandardWeapon::SpriteFile() const
-{
-    return "StandardWeaponSprite.sprite";
 }

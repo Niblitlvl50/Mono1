@@ -240,6 +240,8 @@
 		911840571A5C8E74006301E2 /* ITextureShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA6031A4DE55E000132B7 /* ITextureShader.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		911840581A5C8E7A006301E2 /* IColorShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA6041A4DE60C000132B7 /* IColorShader.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		911840591A5C8E81006301E2 /* IShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 914FA60D1A4E06DE000132B7 /* IShaderFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9120D36C1C2B3DA2005E67D1 /* BaseWeapon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9120D36A1C2B3DA2005E67D1 /* BaseWeapon.cpp */; };
+		9120D36F1C2B41CD005E67D1 /* CacoPlasma.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9120D36D1C2B41CD005E67D1 /* CacoPlasma.cpp */; };
 		912584621BB07EB9006692A9 /* ColorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912584611BB07EB9006692A9 /* ColorTest.cpp */; };
 		912584641BB09271006692A9 /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912584631BB09271006692A9 /* Color.cpp */; };
 		9141B7031826E5BA003B4BDD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9141B7021826E5BA003B4BDD /* main.cpp */; };
@@ -705,6 +707,10 @@
 		91157C371A46F18D0095CBE4 /* IShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IShader.h; path = ../MonoEngine/Shader/IShader.h; sourceTree = SOURCE_ROOT; };
 		91203C301826F02900C5B323 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = "../External Libs/stb_truetype/stb_truetype.h"; sourceTree = "<group>"; };
 		91203C321826F8D100C5B323 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9120D36A1C2B3DA2005E67D1 /* BaseWeapon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseWeapon.cpp; path = ../Game/Weapons/BaseWeapon.cpp; sourceTree = "<group>"; };
+		9120D36B1C2B3DA2005E67D1 /* BaseWeapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseWeapon.h; path = ../Game/Weapons/BaseWeapon.h; sourceTree = "<group>"; };
+		9120D36D1C2B41CD005E67D1 /* CacoPlasma.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CacoPlasma.cpp; path = ../Game/Weapons/CacoPlasma.cpp; sourceTree = "<group>"; };
+		9120D36E1C2B41CD005E67D1 /* CacoPlasma.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CacoPlasma.h; path = ../Game/Weapons/CacoPlasma.h; sourceTree = "<group>"; };
 		912584611BB07EB9006692A9 /* ColorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorTest.cpp; path = ../UnitTests/ColorTest.cpp; sourceTree = SOURCE_ROOT; };
 		912584631BB09271006692A9 /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Color.cpp; path = ../MonoEngine/Color.cpp; sourceTree = SOURCE_ROOT; };
 		9141B7021826E5BA003B4BDD /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../Game/main.cpp; sourceTree = "<group>"; };
@@ -1663,6 +1669,10 @@
 				91ABBDE01B5BB8EA0097667E /* WeaponTypes.h */,
 				91526EA91B5BFEC6009F46E7 /* RocketLauncher.cpp */,
 				91526EAA1B5BFEC6009F46E7 /* RocketLauncher.h */,
+				9120D36A1C2B3DA2005E67D1 /* BaseWeapon.cpp */,
+				9120D36B1C2B3DA2005E67D1 /* BaseWeapon.h */,
+				9120D36D1C2B41CD005E67D1 /* CacoPlasma.cpp */,
+				9120D36E1C2B41CD005E67D1 /* CacoPlasma.h */,
 			);
 			name = Weapons;
 			sourceTree = "<group>";
@@ -2092,6 +2102,7 @@
 				9141B7031826E5BA003B4BDD /* main.cpp in Sources */,
 				2BC214751535E6B40063834F /* AnimatedDudeController.cpp in Sources */,
 				2BAA30E815435599003BF117 /* Explosion.cpp in Sources */,
+				9120D36C1C2B3DA2005E67D1 /* BaseWeapon.cpp in Sources */,
 				918A19B11A190FF90067BB36 /* Rocket.cpp in Sources */,
 				2BD392D315E8DE1500C010B7 /* Shuttle.cpp in Sources */,
 				91ABBDDF1B5BAE7F0097667E /* StandardWeapon.cpp in Sources */,
@@ -2101,6 +2112,7 @@
 				2B0BEEE31621955B00A96003 /* Moon.cpp in Sources */,
 				2B75E94316B52A4100B84A26 /* Meteor.cpp in Sources */,
 				2BFF8979170762BB00499D08 /* FireBullet.cpp in Sources */,
+				9120D36F1C2B41CD005E67D1 /* CacoPlasma.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,22 +8,19 @@
 
 #pragma once
 
-#include "IWeaponSystem.h"
-#include "MonoFwd.h"
+#include "BaseWeapon.h"
 
 namespace game
 {
-    class RocketLauncher : public IWeaponSystem
+    class RocketLauncher : public BaseWeapon
     {
     public:
-        RocketLauncher(mono::EventHandler& handler);
 
-        virtual void Fire(const math::Vector2f& position, float direction);
-        virtual int RoundsPerSecond() const;
-        virtual const char* SpriteFile() const;
+        RocketLauncher(mono::EventHandler& eventHandler);
 
     private:
-
-        mono::EventHandler& mEventHandler;
+        
+        virtual int RoundsPerSecond() const;
+        virtual void DoFire(const math::Vector2f& position, float direction) const;
     };
 }

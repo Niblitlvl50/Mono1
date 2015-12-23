@@ -23,7 +23,6 @@ namespace game
     public:
         
         Shuttle(float x, float y, mono::EventHandler& eventHandler);
-        virtual ~Shuttle();
 
     private:
 
@@ -55,7 +54,6 @@ namespace game
         mono::EventHandler& mEventHandler;
 
         bool m_fire;
-        unsigned int m_lastFireTimestamp;
     };
 }
 

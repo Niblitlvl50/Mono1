@@ -13,6 +13,7 @@ namespace game
     enum class WeaponType
     {
         STANDARD,
-        ROCKET
+        ROCKET,
+        CACOPLASMA
     };
 }

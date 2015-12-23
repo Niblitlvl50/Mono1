@@ -106,6 +106,8 @@ void ShuttleController::OnKeyDown(const Event::KeyDownEvent& event)
         mShuttle->SelectWeapon(WeaponType::STANDARD);
     else if(event.key == Key::TWO)
         mShuttle->SelectWeapon(WeaponType::ROCKET);
+    else if(event.key == Key::THREE)
+        mShuttle->SelectWeapon(WeaponType::CACOPLASMA);
 }
 
 void ShuttleController::HandleOnShuttlePress()

@@ -1,8 +1,8 @@
 //
-//  StandardWeapon.h
+//  CacoPlasma.hpp
 //  MonoOSX
 //
-//  Created by Niklas Damberg on 19/07/15.
+//  Created by Niklas Damberg on 23/12/15.
 //
 //
 
@@ -12,11 +12,11 @@
 
 namespace game
 {
-    class StandardWeapon : public BaseWeapon
+    class CacoPlasma : public BaseWeapon
     {
     public:
 
-        StandardWeapon(mono::EventHandler& eventHandler);
+        CacoPlasma(mono::EventHandler& eventHandler);
 
     private:
         
@@ -24,3 +24,4 @@ namespace game
         virtual int RoundsPerSecond() const;
     };
 }
+

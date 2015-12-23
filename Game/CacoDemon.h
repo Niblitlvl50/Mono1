@@ -11,6 +11,7 @@
 #include "PhysicsEntityBase.h"
 #include "Sprite.h"
 #include "CacoDemonController.h"
+#include "IWeaponSystem.h"
 
 namespace game
 {
@@ -23,14 +24,11 @@ namespace game
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
 
-        void Fire();
-
     private:
 
         mono::EventHandler& m_eventHandler;
         mono::Sprite m_sprite;
         CacoDemonController m_controller;
-
-        unsigned int m_lastFire;
+        std::unique_ptr<IWeaponSystem> m_weapon;
     };
 }

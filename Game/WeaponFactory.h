@@ -17,9 +17,9 @@
 namespace game
 {
     class IWeaponSystem;
-}
 
-namespace Factory
-{
-    std::unique_ptr<game::IWeaponSystem> CreateWeapon(game::WeaponType weapon, mono::EventHandler& eventHandler);
+    namespace Factory
+    {
+        std::unique_ptr<IWeaponSystem> CreateWeapon(WeaponType weapon, mono::EventHandler& eventHandler);
+    }
 }
