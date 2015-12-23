@@ -39,7 +39,7 @@ Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
 void Renderer::PrepareDraw()
 {
     const math::Quad& viewport = mCamera->GetViewport();
-    mProjection = math::Ortho(0.0f, viewport.mB.x, 0.0f, viewport.mB.y, -10.0f, 10.0f);
+    const math::Matrix& projection = math::Ortho(0.0f, viewport.mB.x, 0.0f, viewport.mB.y, -10.0f, 10.0f);
 
     math::Identity(mModelView);
     math::Translate(mModelView, -viewport.mA);
@@ -48,13 +48,13 @@ void Renderer::PrepareDraw()
 
     // Setup the shaders with the correct projection matrix
     mColorShader->Use();
-    mColorShader->LoadProjectionMatrix(mProjection);
+    mColorShader->LoadProjectionMatrix(projection);
 
     mTextureShader->Use();
-    mTextureShader->LoadProjectionMatrix(mProjection);
+    mTextureShader->LoadProjectionMatrix(projection);
 
     m_morphShader->Use();
-    m_morphShader->LoadProjectionMatrix(mProjection);
+    m_morphShader->LoadProjectionMatrix(projection);
 }
 
 void Renderer::EndDraw()

@@ -53,7 +53,6 @@ namespace mono
         ICameraPtr mCamera;
         IWindowPtr mWindow;
         
-        math::Matrix mProjection;
         math::Matrix mModelView;
         math::Matrix mCurrentTransform;
 
