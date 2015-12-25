@@ -25,7 +25,7 @@ namespace mono
         PhysicsZone(const math::Vector2f& gravity);
         virtual void Accept(IRenderer& renderer);
         
-        virtual void ForEachBody(const std::function<void (cm::IBodyPtr)>& func);
+        virtual void ForEachBody(const cm::BodyFunc& func);
 
         virtual void AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer);
         virtual void RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity);

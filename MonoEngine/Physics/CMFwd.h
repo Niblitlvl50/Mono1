@@ -10,6 +10,7 @@
 #pragma once
 
 #include <memory>
+#include <functional>
 
 struct cpBody;
 struct cpShape;
@@ -23,4 +24,6 @@ namespace cm
 
     struct IShape;
     typedef std::shared_ptr<IShape> IShapePtr;
+
+    typedef std::function<void (const IBodyPtr&)> BodyFunc;
 }

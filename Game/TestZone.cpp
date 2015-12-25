@@ -59,7 +59,7 @@ namespace
             mZone->ForEachBody(std::bind(&GravityUpdater::GravityFunc, this, _1));
             mElapsedTime = 0;
         }
-        void GravityFunc(cm::IBodyPtr body)
+        void GravityFunc(const cm::IBodyPtr& body)
         {
             math::Vector2f impulse;
             
@@ -98,7 +98,7 @@ namespace
         unsigned int mElapsedTime;
     };
 
-    void ApplyShockwave(cm::IBodyPtr body, const math::Vector2f& position, float magnitude)
+    void ApplyShockwave(const cm::IBodyPtr& body, const math::Vector2f& position, float magnitude)
     {
         math::Vector2f unit = body->GetPosition() - position;
         const float length = math::Length(unit);

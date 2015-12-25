@@ -32,13 +32,12 @@ namespace mono
         
         virtual void AddDrawable(const IDrawablePtr& drawable, int layer);
         virtual void RemoveDrawable(const IDrawablePtr& drawable);
-        
-        virtual void ClearEntities();
 
     private:
         
-        std::map<int, std::vector<IDrawablePtr>> mLayersDrawables;
-        std::map<int, std::vector<IEntityPtr>> mLayersEntities;
+        std::map<int, std::vector<IDrawablePtr>> mDrawables;
+        
+        std::vector<IEntityPtr> mEntities;
         std::vector<IUpdatablePtr> mUpdatables;
     };
     

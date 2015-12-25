@@ -31,8 +31,8 @@ namespace
     public:
 
         CacoExplosion(const math::Vector2f& position)
-        : m_sprite("cacoexplosion.sprite"),
-        m_removeMe(false)
+            : m_sprite("cacoexplosion.sprite"),
+              m_removeMe(false)
         {
             mPosition = position;
             mScale = math::Vector2f(40, 40);
@@ -68,9 +68,9 @@ namespace
     public:
 
         CacoBullet(const math::Vector2f& position, mono::EventHandler& eventHandler)
-        : m_eventHandler(eventHandler),
-        m_sprite("cacobullet.sprite"),
-        m_removeMe(false)
+            : m_eventHandler(eventHandler),
+              m_sprite("cacobullet.sprite"),
+              m_removeMe(false)
         {
             mScale = math::Vector2f(20.0f, 20.0f);
 

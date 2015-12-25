@@ -12,7 +12,6 @@
 #include "CMSpace.h"
 #include "CMObject.h"
 #include "CMIShape.h"
-#include "Vector2f.h"
 #include "IPhysicsEntity.h"
 
 #include "Utils.h"
@@ -35,8 +34,10 @@ struct PhysicsZone::PhysicsImpl : IUpdatable
 PhysicsZone::PhysicsZone(const math::Vector2f& gravity)
     : mPhysics(new PhysicsImpl(gravity))
 {
+    // Add space physics as an updatable
+    mUpdatables.push_back(mPhysics);
+
     // Make sure the three layers exists.
-    
     mDrawables[BACKGROUND]   = std::vector<IDrawablePtr>();
     mDrawables[MIDDLEGROUND] = std::vector<IDrawablePtr>();
     mDrawables[FOREGROUND]   = std::vector<IDrawablePtr>();
@@ -45,34 +46,30 @@ PhysicsZone::PhysicsZone(const math::Vector2f& gravity)
 void PhysicsZone::Accept(IRenderer& renderer)
 {
     DoPreAccept();
-    
-    // Add space physics
-    renderer.AddUpdatable(mPhysics);
 
-    const auto addDrawableFunc = [&renderer](IDrawablePtr drawable) {
+    const auto addDrawableFunc = [&renderer](const IDrawablePtr& drawable) {
         renderer.AddDrawable(drawable);
     };
     
-    const auto addUpdatableFunc = [&renderer](IUpdatablePtr updatable) {
+    const auto addUpdatableFunc = [&renderer](const IUpdatablePtr& updatable) {
         renderer.AddUpdatable(updatable);
     };
     
-    std::for_each(mDrawables[BACKGROUND].begin(), mDrawables[BACKGROUND].end(), addDrawableFunc);
+    std::for_each(mDrawables[BACKGROUND].begin(),   mDrawables[BACKGROUND].end(),   addDrawableFunc);
     std::for_each(mDrawables[MIDDLEGROUND].begin(), mDrawables[MIDDLEGROUND].end(), addDrawableFunc);
-    std::for_each(mDrawables[FOREGROUND].begin(), mDrawables[FOREGROUND].end(), addDrawableFunc);
+    std::for_each(mDrawables[FOREGROUND].begin(),   mDrawables[FOREGROUND].end(),   addDrawableFunc);
     
-    std::for_each(mPhysicsEntities.begin(), mPhysicsEntities.end(), addUpdatableFunc);
-    std::for_each(mEntities.begin(), mEntities.end(), addUpdatableFunc);
     std::for_each(mUpdatables.begin(), mUpdatables.end(), addUpdatableFunc);
 }
 
 void PhysicsZone::DoPreAccept()
 {    
-    const auto removeFunc = [](mono::IEntityPtr entity) {
+    const auto removeFunc = [](const mono::IEntityPtr& entity) {
         return entity->RemoveMe();
     };
     
-    // Handle clean up for physics entities
+    // Handle clean up for physics entities, do this in two stages just to remove
+    // the drawables first and then erase the entries from the mEntities vector.
     for(auto& entity : mPhysicsEntities)
     {
         if(!entity->RemoveMe())
@@ -85,6 +82,7 @@ void PhysicsZone::DoPreAccept()
             mPhysics->mSpace.RemoveShape(shape);
 
         RemoveDrawable(entity);
+        RemoveUpdatable(entity);
     }
     
     const auto physIt = std::remove_if(mPhysicsEntities.begin(), mPhysicsEntities.end(), removeFunc);
@@ -92,11 +90,15 @@ void PhysicsZone::DoPreAccept()
         mPhysicsEntities.erase(physIt, mPhysicsEntities.end());
     
     
-    // Handle clean up for entities
+    // Handle clean up for entities, do this in two stages just to remove
+    // the drawables first and then erase the entries from the mEntities vector.
     for(auto& entity : mEntities)
     {
-        if(entity->RemoveMe())
-            RemoveDrawable(entity);
+        if(!entity->RemoveMe())
+            continue;
+
+        RemoveDrawable(entity);
+        RemoveUpdatable(entity);
     }
     
     const auto removeIt = std::remove_if(mEntities.begin(), mEntities.end(), removeFunc);
@@ -104,7 +106,7 @@ void PhysicsZone::DoPreAccept()
         mEntities.erase(removeIt, mEntities.end());
 }
 
-void PhysicsZone::ForEachBody(const std::function<void (cm::IBodyPtr)>& func)
+void PhysicsZone::ForEachBody(const cm::BodyFunc& func)
 {
     mPhysics->mSpace.ForEachBody(func);
 }
@@ -112,6 +114,7 @@ void PhysicsZone::ForEachBody(const std::function<void (cm::IBodyPtr)>& func)
 void PhysicsZone::AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer)
 {
     AddDrawable(entity, layer);
+    AddUpdatable(entity);
     
     const cm::Object& object = entity->GetPhysics();
     mPhysics->mSpace.AddBody(object.body);
@@ -125,6 +128,7 @@ void PhysicsZone::AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int la
 void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
 {
     RemoveDrawable(entity);
+    RemoveUpdatable(entity);
 
     const bool result = FindAndRemove(mPhysicsEntities, entity);
     if(result)
@@ -135,20 +139,24 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
         for(auto& shape : object.shapes)
             mPhysics->mSpace.RemoveShape(shape);
     }
-    
-    if(!result)
+    else
+    {
         throw std::runtime_error("PhysicsZone - Unable to remove physics entity");
+    }
 }
 
 void PhysicsZone::AddEntity(const mono::IEntityPtr& entity, int layer)
 {
     AddDrawable(entity, layer);
+    AddUpdatable(entity);
+
     mEntities.push_back(entity);
 }
 
 void PhysicsZone::RemoveEntity(const mono::IEntityPtr& entity)
 {
     RemoveDrawable(entity);
+    RemoveUpdatable(entity);
     
     const bool result = FindAndRemove(mEntities, entity);
     if(!result)

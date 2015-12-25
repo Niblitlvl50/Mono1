@@ -28,13 +28,13 @@ namespace cm
         
         void Tick(float delta);
         
-        void AddBody(IBodyPtr body);
-        void RemoveBody(IBodyPtr body);
+        void AddBody(const IBodyPtr& body);
+        void RemoveBody(const IBodyPtr& body);
         
-        void AddShape(IShapePtr shape);
-        void RemoveShape(IShapePtr shape);
+        void AddShape(const IShapePtr& shape);
+        void RemoveShape(const IShapePtr& shape);
         
-        void ForEachBody(const std::function<void (IBodyPtr)>& func);
+        void ForEachBody(const BodyFunc& func);
         
     private:
         
@@ -42,7 +42,8 @@ namespace cm
         void OnPostStep(void* object, void* data);
         
         void DoForEachFuncOnBody(cpBody* body);
-        std::function<void (IBodyPtr)> mForEachFunc;
+
+        BodyFunc mForEachFunc;
         
         cpSpace* mSpace;
         std::vector<IBodyPtr> mBodies;        

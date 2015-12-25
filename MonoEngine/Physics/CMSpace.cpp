@@ -42,14 +42,14 @@ void Space::Tick(float delta)
     cpSpaceStep(mSpace, delta);
 }
 
-void Space::AddBody(IBodyPtr body)
+void Space::AddBody(const IBodyPtr& body)
 {
     if(!body->IsStatic())
         cpSpaceAddBody(mSpace, body->Body());
     mBodies.push_back(body);
 }
 
-void Space::RemoveBody(IBodyPtr body)
+void Space::RemoveBody(const IBodyPtr& body)
 {
     if(!body->IsStatic())
         cpSpaceRemoveBody(mSpace, body->Body());
@@ -59,17 +59,17 @@ void Space::RemoveBody(IBodyPtr body)
         throw std::runtime_error("Unable to remove body from collection");
 }
 
-void Space::AddShape(IShapePtr shape)
+void Space::AddShape(const IShapePtr& shape)
 {
     cpSpaceAddShape(mSpace, shape->Shape());
 }
 
-void Space::RemoveShape(IShapePtr shape)
+void Space::RemoveShape(const IShapePtr& shape)
 {
     cpSpaceRemoveShape(mSpace, shape->Shape());
 }
 
-void Space::ForEachBody(const std::function<void (IBodyPtr)>& func)
+void Space::ForEachBody(const BodyFunc& func)
 {
     const auto forEachBody = [](cpBody* body, void* data) {
         static_cast<Space*>(data)->DoForEachFuncOnBody(body);
