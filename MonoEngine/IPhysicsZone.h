@@ -14,10 +14,9 @@
 
 namespace mono
 {
-    struct IPhysicsZone : public IZone
+    struct IPhysicsZone : public virtual IZone
     {
         virtual void ForEachBody(const cm::BodyFunc& func) = 0;
-
         virtual void AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer) = 0;
         virtual void RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity) = 0;
     };

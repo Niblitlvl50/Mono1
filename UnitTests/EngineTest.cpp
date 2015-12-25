@@ -105,17 +105,19 @@ namespace
         {
             mOnUnloadCalled = true;
         }
-        virtual void AddEntity(mono::IEntityPtr entity, int layer)
+        virtual void CreateLayer(int layer)
         { }
-        virtual void RemoveEntity(mono::IEntityPtr entity)
+        virtual void AddEntity(const mono::IEntityPtr& entity, int layer)
         { }
-        virtual void AddDrawable(mono::IDrawablePtr drawable, int layer)
+        virtual void RemoveEntity(const mono::IEntityPtr& entity)
         { }
-        virtual void RemoveDrawable(mono::IDrawablePtr drawable)
+        virtual void AddDrawable(const mono::IDrawablePtr& drawable, int layer)
         { }
-        virtual void AddUpdatable(mono::IUpdatablePtr updatable)
+        virtual void RemoveDrawable(const mono::IDrawablePtr& drawable)
         { }
-        virtual void RemoveUpdatable(mono::IUpdatablePtr updatable)
+        virtual void AddUpdatable(const mono::IUpdatablePtr& updatable)
+        { }
+        virtual void RemoveUpdatable(const mono::IUpdatablePtr& updatable)
         { }
         
         bool mAcceptCalled = false;

@@ -15,15 +15,15 @@
 namespace mono
 {
 
-    class ZoneBase : public IZone
+    class ZoneBase : public virtual IZone
     {
     protected:
-        
-        ZoneBase();
-        
+
         virtual void Accept(IRenderer& renderer);
         virtual void DoPreAccept();
-        
+
+        virtual void CreateLayer(int layer);
+
         virtual void AddEntity(const IEntityPtr& entity, int layer);
         virtual void RemoveEntity(const IEntityPtr& entity);
         
@@ -35,10 +35,9 @@ namespace mono
 
     private:
         
-        std::map<int, std::vector<IDrawablePtr>> mDrawables;
-        
         std::vector<IEntityPtr> mEntities;
         std::vector<IUpdatablePtr> mUpdatables;
+        std::map<int, std::vector<IDrawablePtr>> mDrawables;
     };
     
 }

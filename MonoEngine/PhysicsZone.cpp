@@ -35,46 +35,27 @@ PhysicsZone::PhysicsZone(const math::Vector2f& gravity)
     : mPhysics(new PhysicsImpl(gravity))
 {
     // Add space physics as an updatable
-    mUpdatables.push_back(mPhysics);
-
-    // Make sure the three layers exists.
-    mDrawables[BACKGROUND]   = std::vector<IDrawablePtr>();
-    mDrawables[MIDDLEGROUND] = std::vector<IDrawablePtr>();
-    mDrawables[FOREGROUND]   = std::vector<IDrawablePtr>();
-}
-
-void PhysicsZone::Accept(IRenderer& renderer)
-{
-    DoPreAccept();
-
-    const auto addDrawableFunc = [&renderer](const IDrawablePtr& drawable) {
-        renderer.AddDrawable(drawable);
-    };
-    
-    const auto addUpdatableFunc = [&renderer](const IUpdatablePtr& updatable) {
-        renderer.AddUpdatable(updatable);
-    };
-    
-    std::for_each(mDrawables[BACKGROUND].begin(),   mDrawables[BACKGROUND].end(),   addDrawableFunc);
-    std::for_each(mDrawables[MIDDLEGROUND].begin(), mDrawables[MIDDLEGROUND].end(), addDrawableFunc);
-    std::for_each(mDrawables[FOREGROUND].begin(),   mDrawables[FOREGROUND].end(),   addDrawableFunc);
-    
-    std::for_each(mUpdatables.begin(), mUpdatables.end(), addUpdatableFunc);
+    AddUpdatable(mPhysics);
 }
 
 void PhysicsZone::DoPreAccept()
-{    
-    const auto removeFunc = [](const mono::IEntityPtr& entity) {
-        return entity->RemoveMe();
+{
+    ZoneBase::DoPreAccept();
+
+    const auto func = [](const mono::IEntityPtr& entity) {
+        return !entity->RemoveMe();
     };
+
+    auto part_it = std::partition(mPhysicsEntities.begin(), mPhysicsEntities.end(), func);
+    if(part_it == mPhysicsEntities.end())
+        return;
     
     // Handle clean up for physics entities, do this in two stages just to remove
     // the drawables first and then erase the entries from the mEntities vector.
-    for(auto& entity : mPhysicsEntities)
+    for(auto it = part_it, end = mPhysicsEntities.end(); it != end; ++it)
     {
-        if(!entity->RemoveMe())
-            continue;
-        
+        IPhysicsEntityPtr entity = *it;
+
         cm::Object& object = entity->GetPhysics();
         mPhysics->mSpace.RemoveBody(object.body);
 
@@ -84,26 +65,8 @@ void PhysicsZone::DoPreAccept()
         RemoveDrawable(entity);
         RemoveUpdatable(entity);
     }
-    
-    const auto physIt = std::remove_if(mPhysicsEntities.begin(), mPhysicsEntities.end(), removeFunc);
-    if(physIt != mPhysicsEntities.end())
-        mPhysicsEntities.erase(physIt, mPhysicsEntities.end());
-    
-    
-    // Handle clean up for entities, do this in two stages just to remove
-    // the drawables first and then erase the entries from the mEntities vector.
-    for(auto& entity : mEntities)
-    {
-        if(!entity->RemoveMe())
-            continue;
 
-        RemoveDrawable(entity);
-        RemoveUpdatable(entity);
-    }
-    
-    const auto removeIt = std::remove_if(mEntities.begin(), mEntities.end(), removeFunc);
-    if(removeIt != mEntities.end())
-        mEntities.erase(removeIt, mEntities.end());
+    mPhysicsEntities.erase(part_it, mPhysicsEntities.end());
 }
 
 void PhysicsZone::ForEachBody(const cm::BodyFunc& func)
@@ -144,60 +107,6 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
         throw std::runtime_error("PhysicsZone - Unable to remove physics entity");
     }
 }
-
-void PhysicsZone::AddEntity(const mono::IEntityPtr& entity, int layer)
-{
-    AddDrawable(entity, layer);
-    AddUpdatable(entity);
-
-    mEntities.push_back(entity);
-}
-
-void PhysicsZone::RemoveEntity(const mono::IEntityPtr& entity)
-{
-    RemoveDrawable(entity);
-    RemoveUpdatable(entity);
-    
-    const bool result = FindAndRemove(mEntities, entity);
-    if(!result)
-        throw std::runtime_error("PhysicsZone - Unable to remove entity");
-}
-
-void PhysicsZone::AddDrawable(const mono::IDrawablePtr& drawable, int layer)
-{
-    auto layerIt = mDrawables.find(layer);
-    if(layerIt == mDrawables.end())
-        throw std::runtime_error("PhysicsZone - Adding drawable to missing layer");
-    
-    layerIt->second.push_back(drawable);
-}
-
-void PhysicsZone::RemoveDrawable(const mono::IDrawablePtr& drawable)
-{
-    bool result = false;
-    for(auto& layer : mDrawables)
-    {
-        result = FindAndRemove(layer.second, drawable);
-        if(result)
-            break;
-    }
-    
-    if(!result)
-        throw std::runtime_error("PhysicsZone - Unable to remove drawable");
-}
-
-void PhysicsZone::AddUpdatable(const mono::IUpdatablePtr& updatable)
-{
-    mUpdatables.push_back(updatable);
-}
-
-void PhysicsZone::RemoveUpdatable(const mono::IUpdatablePtr& updatable)
-{
-    const bool result = mono::FindAndRemove(mUpdatables, updatable);
-    if(!result)
-        throw std::runtime_error("PhysicsZone - Unable to remove updatable");
-}
-
 
 
 

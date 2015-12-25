@@ -42,6 +42,13 @@ using namespace std::placeholders;
 
 namespace
 {
+    enum LayerId
+    {
+        BACKGROUND,
+        MIDDLEGROUND,
+        FOREGROUND
+    };
+
     struct GravityUpdater : mono::IUpdatable
     {
         GravityUpdater(mono::IPhysicsZone* zone, mono::IEntityPtr moon1, mono::IEntityPtr moon2)
@@ -129,7 +136,7 @@ namespace
             auto entity = std::make_shared<Meteor>(posx, posy);
             const math::Vector2f impulse;
             entity->GetPhysics().body->ApplyImpulse(impulse, math::zeroVec);
-            zone->AddPhysicsEntity(entity, mono::FOREGROUND);
+            zone->AddPhysicsEntity(entity, FOREGROUND);
         }
     }
 
@@ -140,6 +147,10 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
       mEventHandler(eventHandler),
       m_spawner(eventHandler)
 {
+    CreateLayer(BACKGROUND);
+    CreateLayer(MIDDLEGROUND);
+    CreateLayer(FOREGROUND);
+
     const game::SpawnEntityFunc spawnEntityFunc = std::bind(&TestZone::SpawnEntity, this, _1);
     mSpawnEntityToken = mEventHandler.AddListener(spawnEntityFunc);
     
@@ -166,32 +177,32 @@ TestZone::~TestZone()
 
 void TestZone::OnLoad(mono::ICameraPtr camera)
 {
-    AddEntity(std::make_shared<AnimatedDude>(100.0f, 50.0f, mEventHandler), mono::MIDDLEGROUND);
+    AddEntity(std::make_shared<AnimatedDude>(100.0f, 50.0f, mEventHandler), MIDDLEGROUND);
     
     std::shared_ptr<PhysicsGrid> bounds = std::make_shared<PhysicsGrid>(math::Quad(-1000.0f, -1000.0f, 1000.0f, 1000.0f));
-    AddPhysicsEntity(bounds, mono::BACKGROUND);
+    AddPhysicsEntity(bounds, BACKGROUND);
         
     std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(-100.0f, 0.0f, mEventHandler);
-    AddPhysicsEntity(shuttle, mono::FOREGROUND);
+    AddPhysicsEntity(shuttle, FOREGROUND);
 
     std::shared_ptr<Moon> moon1 = std::make_shared<Moon>(550.0f, 300.0f, 100.0f);
-    AddPhysicsEntity(moon1, mono::FOREGROUND);
+    AddPhysicsEntity(moon1, FOREGROUND);
     
     std::shared_ptr<Moon> moon2 = std::make_shared<Moon>(-400.0f, 400.0f, 50.0f);
-    AddPhysicsEntity(moon2, mono::FOREGROUND);
+    AddPhysicsEntity(moon2, FOREGROUND);
 
-    AddPhysicsEntity(std::make_shared<game::CacoDemon>(mEventHandler), mono::FOREGROUND);
+    AddPhysicsEntity(std::make_shared<game::CacoDemon>(mEventHandler), FOREGROUND);
 
-    AddEntity(std::make_shared<InvaderGroup>(), mono::BACKGROUND);
-    AddEntity(std::make_shared<DotEntity>(), mono::FOREGROUND);
-    AddEntity(std::make_shared<PathPoint>(), mono::BACKGROUND);
-    AddEntity(std::make_shared<Morpher>(), mono::FOREGROUND);
+    AddEntity(std::make_shared<InvaderGroup>(), BACKGROUND);
+    AddEntity(std::make_shared<DotEntity>(), FOREGROUND);
+    AddEntity(std::make_shared<PathPoint>(), BACKGROUND);
+    AddEntity(std::make_shared<Morpher>(), FOREGROUND);
     
     AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
 
     AddMeteorCluster(this);
 
-    AddEntity(std::make_shared<game::CubeSwarm>(), mono::FOREGROUND);
+    AddEntity(std::make_shared<game::CubeSwarm>(), FOREGROUND);
 
     camera->SetPosition(shuttle->Position());
     camera->Follow(shuttle, math::Vector2f(0, -100));
@@ -202,12 +213,12 @@ void TestZone::OnUnload()
 
 void TestZone::SpawnEntity(const game::SpawnEntityEvent& event)
 {
-    AddEntity(event.mEntity, mono::FOREGROUND);
+    AddEntity(event.mEntity, FOREGROUND);
 }
 
 void TestZone::SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event)
 {
-    AddPhysicsEntity(event.mEntity, mono::FOREGROUND);
+    AddPhysicsEntity(event.mEntity, FOREGROUND);
 }
 
 void TestZone::RemoveEntity(const game::RemoveEntityEvent& event)

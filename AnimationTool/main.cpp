@@ -119,6 +119,8 @@ namespace
         Zone(mono::EventHandler& eventHandler, const std::string& file)
             : m_eventHandler(eventHandler)
         {
+            CreateLayer(0);
+
             using namespace std::placeholders;
             const Event::KeyDownEventFunc func = std::bind(&Zone::OnDownUp, this, _1);
             m_keyDownToken = eventHandler.AddListener(func);
@@ -128,9 +130,9 @@ namespace
 
         virtual void OnLoad(mono::ICameraPtr camera)
         {
-            AddDrawable(std::make_shared<Label>("hello", math::Vector2f(50, 50)), mono::FOREGROUND);
+            AddDrawable(std::make_shared<Label>("hello", math::Vector2f(50, 50)), 0);
 
-            AddEntity(m_sprite, mono::FOREGROUND);
+            AddEntity(m_sprite, 0);
             camera->Follow(m_sprite, math::zeroVec);
             camera->SetPosition(m_sprite->Position());
         }

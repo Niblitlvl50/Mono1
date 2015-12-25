@@ -15,37 +15,24 @@
 
 using namespace mono;
 
-ZoneBase::ZoneBase()
-{
-    // Make sure the three layers exists.
-    mDrawables[BACKGROUND]   = std::vector<IDrawablePtr>();
-    mDrawables[MIDDLEGROUND] = std::vector<IDrawablePtr>();
-    mDrawables[FOREGROUND]   = std::vector<IDrawablePtr>();
-}
-
 void ZoneBase::Accept(IRenderer& renderer)
 {
     DoPreAccept();
-    
-    const auto addDrawableFunc = [&renderer](const IDrawablePtr& drawable) {
-        renderer.AddDrawable(drawable);
-    };
 
-    const auto addUpdatableFunc = [&renderer](const IUpdatablePtr& updatable) {
+    for(auto& layer : mDrawables)
+    {
+        for(auto& drawable : layer.second)
+            renderer.AddDrawable(drawable);
+    }
+
+    for(auto& updatable : mUpdatables)
         renderer.AddUpdatable(updatable);
-    };
-    
-    std::for_each(mDrawables[BACKGROUND].begin(),   mDrawables[BACKGROUND].end(),   addDrawableFunc);
-    std::for_each(mDrawables[MIDDLEGROUND].begin(), mDrawables[MIDDLEGROUND].end(), addDrawableFunc);
-    std::for_each(mDrawables[FOREGROUND].begin(),   mDrawables[FOREGROUND].end(),   addDrawableFunc);
-
-    std::for_each(mUpdatables.begin(), mUpdatables.end(), addUpdatableFunc);
 }
 
 void ZoneBase::DoPreAccept()
 {
     const auto func = [](const IEntityPtr& entity) {
-        return entity->RemoveMe();
+        return !entity->RemoveMe();
     };
 
     auto part_it = std::partition(mEntities.begin(), mEntities.end(), func);
@@ -59,6 +46,11 @@ void ZoneBase::DoPreAccept()
     }
 
     mEntities.erase(part_it, mEntities.end());
+}
+
+void ZoneBase::CreateLayer(int layer)
+{
+    mDrawables.insert(std::make_pair(layer, std::vector<IDrawablePtr>()));
 }
 
 void ZoneBase::AddEntity(const IEntityPtr& entity, int layer)
