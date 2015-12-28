@@ -76,6 +76,9 @@ float math::Length(const math::Vector2f& vector)
 void math::Normalize(math::Vector2f& vector)
 {
     const float length = Length(vector);
+    if(length == 0.0f)
+        return;
+
     vector.x /= length;
     vector.y /= length;
 }
