@@ -13,7 +13,6 @@
 
 namespace
 {
-    void SynchronizedCallback(void* data);
     Uint32 CallbackFunc(Uint32 interval, void* data);
 
     class Timer : public Time::ITimer
