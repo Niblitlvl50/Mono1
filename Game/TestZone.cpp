@@ -147,10 +147,6 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
       mEventHandler(eventHandler),
       m_spawner(eventHandler)
 {
-    CreateLayer(BACKGROUND);
-    CreateLayer(MIDDLEGROUND);
-    CreateLayer(FOREGROUND);
-
     const game::SpawnEntityFunc spawnEntityFunc = std::bind(&TestZone::SpawnEntity, this, _1);
     mSpawnEntityToken = mEventHandler.AddListener(spawnEntityFunc);
     

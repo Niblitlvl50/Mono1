@@ -19,11 +19,8 @@ void ZoneBase::Accept(IRenderer& renderer)
 {
     DoPreAccept();
 
-    for(auto& layer : mDrawables)
-    {
-        for(auto& drawable : layer.second)
-            renderer.AddDrawable(drawable);
-    }
+    for(auto& pair : mDrawables)
+        renderer.AddDrawable(pair.second);
 
     for(auto& updatable : mUpdatables)
         renderer.AddUpdatable(updatable);
@@ -46,11 +43,6 @@ void ZoneBase::DoPreAccept()
     }
 
     mEntities.erase(part_it, mEntities.end());
-}
-
-void ZoneBase::CreateLayer(int layer)
-{
-    mDrawables.insert(std::make_pair(layer, std::vector<IDrawablePtr>()));
 }
 
 void ZoneBase::AddEntity(const IEntityPtr& entity, int layer)
@@ -85,23 +77,28 @@ void ZoneBase::RemoveUpdatable(const IUpdatablePtr& updatable)
 
 void ZoneBase::AddDrawable(const IDrawablePtr& drawable, int layer)
 {
-    auto layerIt = mDrawables.find(layer);
-    if(layerIt == mDrawables.end())
-        throw std::runtime_error("ZoneBase - Adding drawable to missing layer");
-    
-    layerIt->second.push_back(drawable);
+    mDrawables.push_back(std::make_pair(layer, drawable));
+
+    // Keep the drawable vector sorted so that we draw everything
+    // in the correct order according to layers
+
+    const auto func = [](const std::pair<int, IDrawablePtr>& first,
+                         const std::pair<int, IDrawablePtr>& second) {
+        return first.first < second.first;
+    };
+
+    std::sort(mDrawables.begin(), mDrawables.end(), func);
 }
 
 void ZoneBase::RemoveDrawable(const IDrawablePtr& drawable)
 {
-    bool result = false;
-    for(auto& layer : mDrawables)
-    {
-        result = mono::FindAndRemove(layer.second, drawable);
-        if(result)
-            break;
-    }
-    
-    if(!result)
+    const auto func = [drawable](const std::pair<int, IDrawablePtr>& pair) {
+        return pair.second == drawable;
+    };
+
+    auto it = std::find_if(mDrawables.begin(), mDrawables.end(), func);
+    if(it == mDrawables.end())
         throw std::runtime_error("ZoneBase - Unable to remove drawable");
+
+    mDrawables.erase(it);
 }
