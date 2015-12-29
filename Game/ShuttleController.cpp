@@ -92,10 +92,7 @@ void ShuttleController::OnMouseMotion(const Event::MouseMotionEvent& event)
     math::Vector2f force = current - mMouseDownPosition;
     math::Normalize(force);
 
-    //const float angle = std::atan2(force.y, force.x);
-
     mShuttle->ApplyImpulse(force * 100);
-    //mShuttle->SetRotation(angle);
 
     mMouseDownPosition = current;
 }

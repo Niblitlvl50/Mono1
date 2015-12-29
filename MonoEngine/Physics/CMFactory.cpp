@@ -34,7 +34,7 @@ namespace
         }
         bool IsStatic() const
         {
-            return cpBodyIsStatic(mBody);
+            return cpBodyGetType(mBody) == CP_BODY_TYPE_STATIC;
         }
         void SetMass(float mass)
         {
@@ -62,27 +62,36 @@ namespace
         }
         void SetPosition(const math::Vector2f& position)
         {
-            cpBodySetPos(mBody, cpv(position.x, position.y));
+            cpBodySetPosition(mBody, cpv(position.x, position.y));
         }
         math::Vector2f GetPosition() const
         {
-            return math::Vector2f(mBody->p.x, mBody->p.y);
+            const cpVect& position = cpBodyGetPosition(mBody);
+            return math::Vector2f(position.x, position.y);
         }
         void ApplyForce(const math::Vector2f& force, const math::Vector2f& offset)
         {
-            cpBodyApplyForce(mBody, cpv(force.y, force.y), cpv(offset.x, offset.y));
+            cpBodyApplyForceAtWorldPoint(mBody, cpv(force.y, force.y), cpv(offset.x, offset.y));
+        }
+        void ApplyLocalForce(const math::Vector2f& force, const math::Vector2f& offset)
+        {
+            cpBodyApplyForceAtLocalPoint(mBody, cpv(force.y, force.y), cpv(offset.x, offset.y));
         }
         void ApplyImpulse(const math::Vector2f& impulse, const math::Vector2f& offset)
         {
-            cpBodyApplyImpulse(mBody, cpv(impulse.x, impulse.y), cpv(offset.x, offset.y));
+            cpBodyApplyImpulseAtWorldPoint(mBody, cpv(impulse.x, impulse.y), cpv(offset.x, offset.y));
+        }
+        virtual void ApplyLocalImpulse(const math::Vector2f& impulse, const math::Vector2f& offset)
+        {
+            cpBodyApplyImpulseAtLocalPoint(mBody, cpv(impulse.x, impulse.y), cpv(offset.x, offset.y));
         }
         void SetVelocity(const math::Vector2f& velocity)
         {
-            cpBodySetVel(mBody, cpv(velocity.x, velocity.y));
+            cpBodySetVelocity(mBody, cpv(velocity.x, velocity.y));
         }
         void ResetForces()
         {
-            cpBodyResetForces(mBody);
+            cpBodySetForce(mBody, cpvzero);
         }
         void SetCollisionHandler(cm::ICollisionHandler* handler)
         {
@@ -116,13 +125,13 @@ namespace
         }
         CMShape(cm::IBodyPtr body, float width, float height)
         {
-            mShape = cpBoxShapeNew(body->Body(), width, height);
+            mShape = cpBoxShapeNew(body->Body(), width, height, 1.0f);
             mInertiaValue = cpMomentForBox(body->GetMass(), width, height);
         }
         CMShape(cm::IBodyPtr body, const math::Vector2f& first, const math::Vector2f& second, float radius)
         {
             mShape = cpSegmentShapeNew(body->Body(), cpv(first.x, first.y), cpv(second.x, second.y), radius);
-            mInertiaValue = cpMomentForSegment(body->GetMass(), cpv(first.x, first.y), cpv(second.x, second.y));
+            mInertiaValue = cpMomentForSegment(body->GetMass(), cpv(first.x, first.y), cpv(second.x, second.y), radius);
         }
         CMShape(cm::IBodyPtr body, const std::vector<math::Vector2f>& vertices, const math::Vector2f& offset)
         {
@@ -133,8 +142,8 @@ namespace
             std::vector<cpVect> vects(vertices.size());
             std::transform(vertices.begin(), vertices.end(), vects.begin(), transformFunc);
             
-            mShape = cpPolyShapeNew(body->Body(), int(vects.size()), vects.data(), cpv(offset.x, offset.y));
-            mInertiaValue = cpMomentForPoly(body->GetMass(), int(vects.size()), vects.data(), cpv(offset.x, offset.y));
+            mShape = cpPolyShapeNewRaw(body->Body(), int(vects.size()), vects.data(), 1.0f);
+            mInertiaValue = cpMomentForPoly(body->GetMass(), int(vects.size()), vects.data(), cpv(offset.x, offset.y), 1.0f);
         }
         ~CMShape()
         {

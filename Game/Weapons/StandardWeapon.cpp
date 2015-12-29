@@ -29,7 +29,7 @@ void StandardWeapon::DoFire(const math::Vector2f& position, float direction) con
     const math::Vector2f& impulse = unit * 500.0f;
 
     auto bullet = std::make_shared<FireBullet>(new_position, direction, m_eventHandler);
-    bullet->GetPhysics().body->ApplyImpulse(impulse, math::zeroVec);
+    bullet->GetPhysics().body->ApplyImpulse(impulse, new_position);
 
     m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
 }

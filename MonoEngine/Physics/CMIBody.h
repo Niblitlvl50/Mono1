@@ -67,12 +67,22 @@ namespace cm
         //! @param force The force
         //! @param offset From where to apply it
         virtual void ApplyForce(const math::Vector2f& force, const math::Vector2f& offset) = 0;
+
+        //! Apply a local force to the body
+        //! @param force The force
+        //! @param offset From where to apply it
+        virtual void ApplyLocalForce(const math::Vector2f& force, const math::Vector2f& offset) = 0;
         
         //! Apply an impulse to the body
         //! @param impulse The impulse
         //! @param offset From where to apply it
         virtual void ApplyImpulse(const math::Vector2f& impulse, const math::Vector2f& offset) = 0;
-        
+
+        //! Apply a local impulse to the body
+        //! @param impulse The impulse
+        //! @param offset From where to apply it
+        virtual void ApplyLocalImpulse(const math::Vector2f& impulse, const math::Vector2f& offset) = 0;
+
         //! Sets a velocity to the body
         //! @param velocity A velocity vector
         virtual void SetVelocity(const math::Vector2f& velocity) = 0;

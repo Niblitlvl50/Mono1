@@ -104,39 +104,9 @@
 		2BA8E10D1618BFBE00C17873 /* ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E10C1618BFBE00C17873 /* ryu.sprite */; };
 		2BA8E10E1618BFBE00C17873 /* ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E10C1618BFBE00C17873 /* ryu.sprite */; };
 		2BBA5A3D1607B56800D8D38E /* SysVideo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A3C1607B56800D8D38E /* SysVideo.cpp */; };
-		2BBA5ABE160A5EDA00D8D38E /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A9E160A5EDA00D8D38E /* chipmunk.c */; };
-		2BBA5AC0160A5EDA00D8D38E /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA1160A5EDA00D8D38E /* cpConstraint.c */; };
-		2BBA5AC1160A5EDA00D8D38E /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA2160A5EDA00D8D38E /* cpDampedRotarySpring.c */; };
-		2BBA5AC2160A5EDA00D8D38E /* cpDampedSpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA3160A5EDA00D8D38E /* cpDampedSpring.c */; };
-		2BBA5AC3160A5EDA00D8D38E /* cpGearJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA4160A5EDA00D8D38E /* cpGearJoint.c */; };
-		2BBA5AC4160A5EDA00D8D38E /* cpGrooveJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA5160A5EDA00D8D38E /* cpGrooveJoint.c */; };
-		2BBA5AC5160A5EDA00D8D38E /* cpPinJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA6160A5EDA00D8D38E /* cpPinJoint.c */; };
-		2BBA5AC6160A5EDA00D8D38E /* cpPivotJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA7160A5EDA00D8D38E /* cpPivotJoint.c */; };
-		2BBA5AC7160A5EDA00D8D38E /* cpRatchetJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA8160A5EDA00D8D38E /* cpRatchetJoint.c */; };
-		2BBA5AC8160A5EDA00D8D38E /* cpRotaryLimitJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA9160A5EDA00D8D38E /* cpRotaryLimitJoint.c */; };
-		2BBA5AC9160A5EDA00D8D38E /* cpSimpleMotor.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AAA160A5EDA00D8D38E /* cpSimpleMotor.c */; };
-		2BBA5ACA160A5EDA00D8D38E /* cpSlideJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AAB160A5EDA00D8D38E /* cpSlideJoint.c */; };
-		2BBA5ACB160A5EDA00D8D38E /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AAC160A5EDA00D8D38E /* cpArbiter.c */; };
-		2BBA5ACC160A5EDA00D8D38E /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AAD160A5EDA00D8D38E /* cpArray.c */; };
-		2BBA5ACD160A5EDA00D8D38E /* cpBB.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AAE160A5EDA00D8D38E /* cpBB.c */; };
-		2BBA5ACE160A5EDA00D8D38E /* cpBBTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AAF160A5EDA00D8D38E /* cpBBTree.c */; };
-		2BBA5ACF160A5EDA00D8D38E /* cpBody.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB0160A5EDA00D8D38E /* cpBody.c */; };
-		2BBA5AD0160A5EDA00D8D38E /* cpCollision.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB1160A5EDA00D8D38E /* cpCollision.c */; };
-		2BBA5AD1160A5EDA00D8D38E /* cpHashSet.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB2160A5EDA00D8D38E /* cpHashSet.c */; };
-		2BBA5AD2160A5EDA00D8D38E /* cpPolyShape.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB3160A5EDA00D8D38E /* cpPolyShape.c */; };
-		2BBA5AD3160A5EDA00D8D38E /* cpShape.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB4160A5EDA00D8D38E /* cpShape.c */; };
-		2BBA5AD4160A5EDA00D8D38E /* cpSpace.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB5160A5EDA00D8D38E /* cpSpace.c */; };
-		2BBA5AD5160A5EDA00D8D38E /* cpSpaceComponent.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB6160A5EDA00D8D38E /* cpSpaceComponent.c */; };
-		2BBA5AD6160A5EDA00D8D38E /* cpSpaceHash.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB7160A5EDA00D8D38E /* cpSpaceHash.c */; };
-		2BBA5AD7160A5EDA00D8D38E /* cpSpaceQuery.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB8160A5EDA00D8D38E /* cpSpaceQuery.c */; };
-		2BBA5AD8160A5EDA00D8D38E /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB9160A5EDA00D8D38E /* cpSpaceStep.c */; };
-		2BBA5AD9160A5EDA00D8D38E /* cpSpatialIndex.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5ABA160A5EDA00D8D38E /* cpSpatialIndex.c */; };
-		2BBA5ADA160A5EDA00D8D38E /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5ABB160A5EDA00D8D38E /* cpSweep1D.c */; };
-		2BBA5ADB160A5EDA00D8D38E /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5ABC160A5EDA00D8D38E /* cpVect.c */; };
 		2BD3CBAA160BB2B30043156E /* pixelette.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DB3B15FD3165001E9748 /* pixelette.ttf */; };
 		2BD3CBAB160BB2B30043156E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07C0E26BD8C00F39101 /* Icon.png */; };
 		2BD3CBAC160BB2B30043156E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07E0E26BDA900F39101 /* Default.png */; };
-		2BD3CBAD160BB2B30043156E /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA5A9F160A5EDA00D8D38E /* CMakeLists.txt */; };
 		2BD3CBAF160BB2B30043156E /* CameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D69E15FD2BB5001E9748 /* CameraController.cpp */; };
 		2BD3CBB0160BB2B30043156E /* TraceCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A015FD2BB5001E9748 /* TraceCamera.cpp */; };
 		2BD3CBB1160BB2B30043156E /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A215FD2BB5001E9748 /* Engine.cpp */; };
@@ -219,35 +189,6 @@
 		2BD3CC15160BB2B30043156E /* Shuttle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7915FD3281001E9748 /* Shuttle.cpp */; };
 		2BD3CC17160BB2B30043156E /* TestZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7D15FD3281001E9748 /* TestZone.cpp */; };
 		2BD3CC1A160BB2B30043156E /* SysVideo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A3C1607B56800D8D38E /* SysVideo.cpp */; };
-		2BD3CC1B160BB2B30043156E /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A9E160A5EDA00D8D38E /* chipmunk.c */; };
-		2BD3CC1C160BB2B30043156E /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA1160A5EDA00D8D38E /* cpConstraint.c */; };
-		2BD3CC1D160BB2B30043156E /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA2160A5EDA00D8D38E /* cpDampedRotarySpring.c */; };
-		2BD3CC1E160BB2B30043156E /* cpDampedSpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA3160A5EDA00D8D38E /* cpDampedSpring.c */; };
-		2BD3CC1F160BB2B30043156E /* cpGearJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA4160A5EDA00D8D38E /* cpGearJoint.c */; };
-		2BD3CC20160BB2B30043156E /* cpGrooveJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA5160A5EDA00D8D38E /* cpGrooveJoint.c */; };
-		2BD3CC21160BB2B30043156E /* cpPinJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA6160A5EDA00D8D38E /* cpPinJoint.c */; };
-		2BD3CC22160BB2B30043156E /* cpPivotJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA7160A5EDA00D8D38E /* cpPivotJoint.c */; };
-		2BD3CC23160BB2B30043156E /* cpRatchetJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA8160A5EDA00D8D38E /* cpRatchetJoint.c */; };
-		2BD3CC24160BB2B30043156E /* cpRotaryLimitJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AA9160A5EDA00D8D38E /* cpRotaryLimitJoint.c */; };
-		2BD3CC25160BB2B30043156E /* cpSimpleMotor.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AAA160A5EDA00D8D38E /* cpSimpleMotor.c */; };
-		2BD3CC26160BB2B30043156E /* cpSlideJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AAB160A5EDA00D8D38E /* cpSlideJoint.c */; };
-		2BD3CC27160BB2B30043156E /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AAC160A5EDA00D8D38E /* cpArbiter.c */; };
-		2BD3CC28160BB2B30043156E /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AAD160A5EDA00D8D38E /* cpArray.c */; };
-		2BD3CC29160BB2B30043156E /* cpBB.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AAE160A5EDA00D8D38E /* cpBB.c */; };
-		2BD3CC2A160BB2B30043156E /* cpBBTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AAF160A5EDA00D8D38E /* cpBBTree.c */; };
-		2BD3CC2B160BB2B30043156E /* cpBody.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB0160A5EDA00D8D38E /* cpBody.c */; };
-		2BD3CC2C160BB2B30043156E /* cpCollision.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB1160A5EDA00D8D38E /* cpCollision.c */; };
-		2BD3CC2D160BB2B30043156E /* cpHashSet.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB2160A5EDA00D8D38E /* cpHashSet.c */; };
-		2BD3CC2E160BB2B30043156E /* cpPolyShape.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB3160A5EDA00D8D38E /* cpPolyShape.c */; };
-		2BD3CC2F160BB2B30043156E /* cpShape.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB4160A5EDA00D8D38E /* cpShape.c */; };
-		2BD3CC30160BB2B30043156E /* cpSpace.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB5160A5EDA00D8D38E /* cpSpace.c */; };
-		2BD3CC31160BB2B30043156E /* cpSpaceComponent.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB6160A5EDA00D8D38E /* cpSpaceComponent.c */; };
-		2BD3CC32160BB2B30043156E /* cpSpaceHash.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB7160A5EDA00D8D38E /* cpSpaceHash.c */; };
-		2BD3CC33160BB2B30043156E /* cpSpaceQuery.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB8160A5EDA00D8D38E /* cpSpaceQuery.c */; };
-		2BD3CC34160BB2B30043156E /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5AB9160A5EDA00D8D38E /* cpSpaceStep.c */; };
-		2BD3CC35160BB2B30043156E /* cpSpatialIndex.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5ABA160A5EDA00D8D38E /* cpSpatialIndex.c */; };
-		2BD3CC36160BB2B30043156E /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5ABB160A5EDA00D8D38E /* cpSweep1D.c */; };
-		2BD3CC37160BB2B30043156E /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5ABC160A5EDA00D8D38E /* cpVect.c */; };
 		2BDD2C8F171C9F540041CB18 /* PhysicsEntityBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C8B171C9F540041CB18 /* PhysicsEntityBase.cpp */; };
 		2BDD2C90171C9F540041CB18 /* PhysicsEntityBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C8B171C9F540041CB18 /* PhysicsEntityBase.cpp */; };
 		2BDD2C91171C9F540041CB18 /* RenderUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C8D171C9F540041CB18 /* RenderUtils.cpp */; };
@@ -268,6 +209,7 @@
 		9166E1771C31C4FD00A5C82D /* CacoPlasma.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9166E1741C31C4FD00A5C82D /* CacoPlasma.cpp */; };
 		9166E17B1C31C51D00A5C82D /* MorphingShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9166E1791C31C51D00A5C82D /* MorphingShader.cpp */; };
 		9166E17E1C31C54300A5C82D /* Morpher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9166E17C1C31C54300A5C82D /* Morpher.cpp */; };
+		9166E1801C3317F700A5C82D /* libChipmunk-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9166E17F1C3317F700A5C82D /* libChipmunk-iOS.a */; };
 		91791D2B18269CB9007A705A /* Moon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B95CF1C162F37C6006769BF /* Moon.cpp */; };
 		91791D2C18269CC0007A705A /* ShuttleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B95CF1E162F37C6006769BF /* ShuttleController.cpp */; };
 		918157251826E5E600C66F2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 918157241826E5E600C66F2B /* main.cpp */; };
@@ -448,31 +390,6 @@
 		2B26D70415FD2BB5001E9748 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		2B26D70515FD2BB5001E9748 /* ZoneBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZoneBase.cpp; sourceTree = "<group>"; };
 		2B26D70615FD2BB5001E9748 /* ZoneBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoneBase.h; sourceTree = "<group>"; };
-		2B26D72B15FD2BD8001E9748 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
-		2B26D72C15FD2BD8001E9748 /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
-		2B26D72D15FD2BD8001E9748 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
-		2B26D72E15FD2BD8001E9748 /* chipmunk_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_types.h; sourceTree = "<group>"; };
-		2B26D72F15FD2BD8001E9748 /* chipmunk_unsafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_unsafe.h; sourceTree = "<group>"; };
-		2B26D73115FD2BD8001E9748 /* cpConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpConstraint.h; sourceTree = "<group>"; };
-		2B26D73215FD2BD8001E9748 /* cpDampedRotarySpring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpDampedRotarySpring.h; sourceTree = "<group>"; };
-		2B26D73315FD2BD8001E9748 /* cpDampedSpring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpDampedSpring.h; sourceTree = "<group>"; };
-		2B26D73415FD2BD8001E9748 /* cpGearJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpGearJoint.h; sourceTree = "<group>"; };
-		2B26D73515FD2BD8001E9748 /* cpGrooveJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpGrooveJoint.h; sourceTree = "<group>"; };
-		2B26D73615FD2BD8001E9748 /* cpPinJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpPinJoint.h; sourceTree = "<group>"; };
-		2B26D73715FD2BD8001E9748 /* cpPivotJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpPivotJoint.h; sourceTree = "<group>"; };
-		2B26D73815FD2BD8001E9748 /* cpRatchetJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpRatchetJoint.h; sourceTree = "<group>"; };
-		2B26D73915FD2BD8001E9748 /* cpRotaryLimitJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpRotaryLimitJoint.h; sourceTree = "<group>"; };
-		2B26D73A15FD2BD8001E9748 /* cpSimpleMotor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpSimpleMotor.h; sourceTree = "<group>"; };
-		2B26D73B15FD2BD8001E9748 /* cpSlideJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpSlideJoint.h; sourceTree = "<group>"; };
-		2B26D73C15FD2BD8001E9748 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
-		2B26D73D15FD2BD8001E9748 /* cpArbiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpArbiter.h; sourceTree = "<group>"; };
-		2B26D73E15FD2BD8001E9748 /* cpBB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpBB.h; sourceTree = "<group>"; };
-		2B26D73F15FD2BD8001E9748 /* cpBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpBody.h; sourceTree = "<group>"; };
-		2B26D74015FD2BD8001E9748 /* cpPolyShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpPolyShape.h; sourceTree = "<group>"; };
-		2B26D74115FD2BD8001E9748 /* cpShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpShape.h; sourceTree = "<group>"; };
-		2B26D74215FD2BD8001E9748 /* cpSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpSpace.h; sourceTree = "<group>"; };
-		2B26D74315FD2BD8001E9748 /* cpSpatialIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpSpatialIndex.h; sourceTree = "<group>"; };
-		2B26D74415FD2BD8001E9748 /* cpVect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpVect.h; sourceTree = "<group>"; };
 		2B26D7A815FD2BD8001E9748 /* example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = example.c; sourceTree = "<group>"; };
 		2B26D7AA15FD2BD8001E9748 /* libpng-config.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "libpng-config.in"; sourceTree = "<group>"; };
 		2B26D7AD15FD2BD8001E9748 /* libpng.pc.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libpng.pc.in; sourceTree = "<group>"; };
@@ -588,37 +505,6 @@
 		2BBA5A3B1607A59300D8D38E /* MultiGestureEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiGestureEvent.h; sourceTree = "<group>"; };
 		2BBA5A3C1607B56800D8D38E /* SysVideo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysVideo.cpp; sourceTree = "<group>"; };
 		2BBA5A3E1607B57A00D8D38E /* SysVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysVideo.h; sourceTree = "<group>"; };
-		2BBA5A9E160A5EDA00D8D38E /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
-		2BBA5A9F160A5EDA00D8D38E /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		2BBA5AA1160A5EDA00D8D38E /* cpConstraint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpConstraint.c; sourceTree = "<group>"; };
-		2BBA5AA2160A5EDA00D8D38E /* cpDampedRotarySpring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpDampedRotarySpring.c; sourceTree = "<group>"; };
-		2BBA5AA3160A5EDA00D8D38E /* cpDampedSpring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpDampedSpring.c; sourceTree = "<group>"; };
-		2BBA5AA4160A5EDA00D8D38E /* cpGearJoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpGearJoint.c; sourceTree = "<group>"; };
-		2BBA5AA5160A5EDA00D8D38E /* cpGrooveJoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpGrooveJoint.c; sourceTree = "<group>"; };
-		2BBA5AA6160A5EDA00D8D38E /* cpPinJoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpPinJoint.c; sourceTree = "<group>"; };
-		2BBA5AA7160A5EDA00D8D38E /* cpPivotJoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpPivotJoint.c; sourceTree = "<group>"; };
-		2BBA5AA8160A5EDA00D8D38E /* cpRatchetJoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpRatchetJoint.c; sourceTree = "<group>"; };
-		2BBA5AA9160A5EDA00D8D38E /* cpRotaryLimitJoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpRotaryLimitJoint.c; sourceTree = "<group>"; };
-		2BBA5AAA160A5EDA00D8D38E /* cpSimpleMotor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSimpleMotor.c; sourceTree = "<group>"; };
-		2BBA5AAB160A5EDA00D8D38E /* cpSlideJoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSlideJoint.c; sourceTree = "<group>"; };
-		2BBA5AAC160A5EDA00D8D38E /* cpArbiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpArbiter.c; sourceTree = "<group>"; };
-		2BBA5AAD160A5EDA00D8D38E /* cpArray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpArray.c; sourceTree = "<group>"; };
-		2BBA5AAE160A5EDA00D8D38E /* cpBB.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpBB.c; sourceTree = "<group>"; };
-		2BBA5AAF160A5EDA00D8D38E /* cpBBTree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpBBTree.c; sourceTree = "<group>"; };
-		2BBA5AB0160A5EDA00D8D38E /* cpBody.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpBody.c; sourceTree = "<group>"; };
-		2BBA5AB1160A5EDA00D8D38E /* cpCollision.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpCollision.c; sourceTree = "<group>"; };
-		2BBA5AB2160A5EDA00D8D38E /* cpHashSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpHashSet.c; sourceTree = "<group>"; };
-		2BBA5AB3160A5EDA00D8D38E /* cpPolyShape.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpPolyShape.c; sourceTree = "<group>"; };
-		2BBA5AB4160A5EDA00D8D38E /* cpShape.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpShape.c; sourceTree = "<group>"; };
-		2BBA5AB5160A5EDA00D8D38E /* cpSpace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpace.c; sourceTree = "<group>"; };
-		2BBA5AB6160A5EDA00D8D38E /* cpSpaceComponent.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceComponent.c; sourceTree = "<group>"; };
-		2BBA5AB7160A5EDA00D8D38E /* cpSpaceHash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceHash.c; sourceTree = "<group>"; };
-		2BBA5AB8160A5EDA00D8D38E /* cpSpaceQuery.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceQuery.c; sourceTree = "<group>"; };
-		2BBA5AB9160A5EDA00D8D38E /* cpSpaceStep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceStep.c; sourceTree = "<group>"; };
-		2BBA5ABA160A5EDA00D8D38E /* cpSpatialIndex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpatialIndex.c; sourceTree = "<group>"; };
-		2BBA5ABB160A5EDA00D8D38E /* cpSweep1D.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSweep1D.c; sourceTree = "<group>"; };
-		2BBA5ABC160A5EDA00D8D38E /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
-		2BBA5ABD160A5EDA00D8D38E /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
 		2BD3CC44160BB2B30043156E /* MonoiOS Simulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MonoiOS Simulator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BDD2C8A171C9EB10041CB18 /* PauseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseEvent.h; sourceTree = "<group>"; };
 		2BDD2C8B171C9F540041CB18 /* PhysicsEntityBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsEntityBase.cpp; sourceTree = "<group>"; };
@@ -649,6 +535,7 @@
 		9166E17A1C31C51D00A5C82D /* MorphingShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MorphingShader.h; path = Shader/MorphingShader.h; sourceTree = "<group>"; };
 		9166E17C1C31C54300A5C82D /* Morpher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Morpher.cpp; sourceTree = "<group>"; };
 		9166E17D1C31C54300A5C82D /* Morpher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Morpher.h; sourceTree = "<group>"; };
+		9166E17F1C3317F700A5C82D /* libChipmunk-iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libChipmunk-iOS.a"; path = "../External Libs/Chipmunk-7.0.1/debug/libChipmunk-iOS.a"; sourceTree = "<group>"; };
 		918157241826E5E600C66F2B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9181E51F183A8D1600678586 /* EventFuncFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFuncFwd.h; sourceTree = "<group>"; };
 		9181E520183A8D2900678586 /* MonoPtrFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonoPtrFwd.h; sourceTree = "<group>"; };
@@ -759,6 +646,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9166E1801C3317F700A5C82D /* libChipmunk-iOS.a in Frameworks */,
 				91B63FA317DC9F7E004F1868 /* libSDL2.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -839,6 +727,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9166E17F1C3317F700A5C82D /* libChipmunk-iOS.a */,
 				FDB8BFC50E5A0F6A00980157 /* CoreGraphics.framework */,
 				FD77A0840E26BDB800F39101 /* AudioToolbox.framework */,
 				FD779EDD0E26BA1200F39101 /* CoreAudio.framework */,
@@ -1076,7 +965,6 @@
 		2B26D72715FD2BD8001E9748 /* External Libs */ = {
 			isa = PBXGroup;
 			children = (
-				2B26D72815FD2BD8001E9748 /* chipmunk-6.1.1 */,
 				2B26D74615FD2BD8001E9748 /* lpng156 */,
 				2B26D82715FD2BD8001E9748 /* Lua-5.1.4 */,
 				2B26D85F15FD2BD8001E9748 /* stb_truetype */,
@@ -1086,63 +974,6 @@
 			);
 			name = "External Libs";
 			path = "../External Libs";
-			sourceTree = "<group>";
-		};
-		2B26D72815FD2BD8001E9748 /* chipmunk-6.1.1 */ = {
-			isa = PBXGroup;
-			children = (
-				2B26D72915FD2BD8001E9748 /* include */,
-				2BBA5A9D160A5EDA00D8D38E /* src */,
-			);
-			path = "chipmunk-6.1.1";
-			sourceTree = "<group>";
-		};
-		2B26D72915FD2BD8001E9748 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				2B26D72A15FD2BD8001E9748 /* chipmunk */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		2B26D72A15FD2BD8001E9748 /* chipmunk */ = {
-			isa = PBXGroup;
-			children = (
-				2B26D72B15FD2BD8001E9748 /* chipmunk.h */,
-				2B26D72C15FD2BD8001E9748 /* chipmunk_ffi.h */,
-				2B26D72D15FD2BD8001E9748 /* chipmunk_private.h */,
-				2B26D72E15FD2BD8001E9748 /* chipmunk_types.h */,
-				2B26D72F15FD2BD8001E9748 /* chipmunk_unsafe.h */,
-				2B26D73015FD2BD8001E9748 /* constraints */,
-				2B26D73D15FD2BD8001E9748 /* cpArbiter.h */,
-				2B26D73E15FD2BD8001E9748 /* cpBB.h */,
-				2B26D73F15FD2BD8001E9748 /* cpBody.h */,
-				2B26D74015FD2BD8001E9748 /* cpPolyShape.h */,
-				2B26D74115FD2BD8001E9748 /* cpShape.h */,
-				2B26D74215FD2BD8001E9748 /* cpSpace.h */,
-				2B26D74315FD2BD8001E9748 /* cpSpatialIndex.h */,
-				2B26D74415FD2BD8001E9748 /* cpVect.h */,
-			);
-			path = chipmunk;
-			sourceTree = "<group>";
-		};
-		2B26D73015FD2BD8001E9748 /* constraints */ = {
-			isa = PBXGroup;
-			children = (
-				2B26D73115FD2BD8001E9748 /* cpConstraint.h */,
-				2B26D73215FD2BD8001E9748 /* cpDampedRotarySpring.h */,
-				2B26D73315FD2BD8001E9748 /* cpDampedSpring.h */,
-				2B26D73415FD2BD8001E9748 /* cpGearJoint.h */,
-				2B26D73515FD2BD8001E9748 /* cpGrooveJoint.h */,
-				2B26D73615FD2BD8001E9748 /* cpPinJoint.h */,
-				2B26D73715FD2BD8001E9748 /* cpPivotJoint.h */,
-				2B26D73815FD2BD8001E9748 /* cpRatchetJoint.h */,
-				2B26D73915FD2BD8001E9748 /* cpRotaryLimitJoint.h */,
-				2B26D73A15FD2BD8001E9748 /* cpSimpleMotor.h */,
-				2B26D73B15FD2BD8001E9748 /* cpSlideJoint.h */,
-				2B26D73C15FD2BD8001E9748 /* util.h */,
-			);
-			path = constraints;
 			sourceTree = "<group>";
 		};
 		2B26D74615FD2BD8001E9748 /* lpng156 */ = {
@@ -1266,23 +1097,16 @@
 		2B26DB3D15FD3280001E9748 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				9166E17C1C31C54300A5C82D /* Morpher.cpp */,
-				9166E17D1C31C54300A5C82D /* Morpher.h */,
 				2BDD2C93171C9F7F0041CB18 /* Events */,
 				91D71F091BF8AEC80097AEA0 /* Weapons */,
 				91D71EFD1BF8AEC20097AEA0 /* PhysicsGrid.cpp */,
 				91D71EFE1BF8AEC20097AEA0 /* PhysicsGrid.h */,
-				91D71EFF1BF8AEC20097AEA0 /* Rocket.cpp */,
-				91D71F001BF8AEC20097AEA0 /* Rocket.h */,
 				91D71F011BF8AEC20097AEA0 /* Spawner.cpp */,
 				91D71F021BF8AEC20097AEA0 /* Spawner.h */,
-				91D71F031BF8AEC20097AEA0 /* WeaponFactory.cpp */,
-				91D71F041BF8AEC20097AEA0 /* WeaponFactory.h */,
 				91D71EF61BF8AEB50097AEA0 /* InvaderEntity.cpp */,
 				91D71EF71BF8AEB50097AEA0 /* InvaderEntity.h */,
 				91D71EF81BF8AEB50097AEA0 /* InvaderGroup.cpp */,
 				91D71EF91BF8AEB50097AEA0 /* InvaderGroup.h */,
-				91D71EFA1BF8AEB50097AEA0 /* IWeaponSystem.h */,
 				91D71EF01BF8AEAB0097AEA0 /* CubeSwarm.cpp */,
 				91D71EF11BF8AEAB0097AEA0 /* CubeSwarm.h */,
 				91D71EF21BF8AEAB0097AEA0 /* DotEntity.cpp */,
@@ -1294,10 +1118,10 @@
 				2B26DB3F15FD3280001E9748 /* AnimatedDude.h */,
 				2B26DB4015FD3280001E9748 /* AnimatedDudeController.cpp */,
 				2B26DB4115FD3280001E9748 /* AnimatedDudeController.h */,
+				9166E17C1C31C54300A5C82D /* Morpher.cpp */,
+				9166E17D1C31C54300A5C82D /* Morpher.h */,
 				2B26DB4215FD3280001E9748 /* Explosion.cpp */,
 				2B26DB4315FD3280001E9748 /* Explosion.h */,
-				2BDD2C98171C9FBE0041CB18 /* FireBullet.cpp */,
-				2BDD2C99171C9FBE0041CB18 /* FireBullet.h */,
 				2BDD2C9A171C9FBE0041CB18 /* Meteor.cpp */,
 				2BDD2C9B171C9FBE0041CB18 /* Meteor.h */,
 				2B95CF1C162F37C6006769BF /* Moon.cpp */,
@@ -1315,52 +1139,6 @@
 			);
 			name = Game;
 			path = ../Game;
-			sourceTree = "<group>";
-		};
-		2BBA5A9D160A5EDA00D8D38E /* src */ = {
-			isa = PBXGroup;
-			children = (
-				2BBA5A9E160A5EDA00D8D38E /* chipmunk.c */,
-				2BBA5A9F160A5EDA00D8D38E /* CMakeLists.txt */,
-				2BBA5AA0160A5EDA00D8D38E /* constraints */,
-				2BBA5AAC160A5EDA00D8D38E /* cpArbiter.c */,
-				2BBA5AAD160A5EDA00D8D38E /* cpArray.c */,
-				2BBA5AAE160A5EDA00D8D38E /* cpBB.c */,
-				2BBA5AAF160A5EDA00D8D38E /* cpBBTree.c */,
-				2BBA5AB0160A5EDA00D8D38E /* cpBody.c */,
-				2BBA5AB1160A5EDA00D8D38E /* cpCollision.c */,
-				2BBA5AB2160A5EDA00D8D38E /* cpHashSet.c */,
-				2BBA5AB3160A5EDA00D8D38E /* cpPolyShape.c */,
-				2BBA5AB4160A5EDA00D8D38E /* cpShape.c */,
-				2BBA5AB5160A5EDA00D8D38E /* cpSpace.c */,
-				2BBA5AB6160A5EDA00D8D38E /* cpSpaceComponent.c */,
-				2BBA5AB7160A5EDA00D8D38E /* cpSpaceHash.c */,
-				2BBA5AB8160A5EDA00D8D38E /* cpSpaceQuery.c */,
-				2BBA5AB9160A5EDA00D8D38E /* cpSpaceStep.c */,
-				2BBA5ABA160A5EDA00D8D38E /* cpSpatialIndex.c */,
-				2BBA5ABB160A5EDA00D8D38E /* cpSweep1D.c */,
-				2BBA5ABC160A5EDA00D8D38E /* cpVect.c */,
-				2BBA5ABD160A5EDA00D8D38E /* prime.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		2BBA5AA0160A5EDA00D8D38E /* constraints */ = {
-			isa = PBXGroup;
-			children = (
-				2BBA5AA1160A5EDA00D8D38E /* cpConstraint.c */,
-				2BBA5AA2160A5EDA00D8D38E /* cpDampedRotarySpring.c */,
-				2BBA5AA3160A5EDA00D8D38E /* cpDampedSpring.c */,
-				2BBA5AA4160A5EDA00D8D38E /* cpGearJoint.c */,
-				2BBA5AA5160A5EDA00D8D38E /* cpGrooveJoint.c */,
-				2BBA5AA6160A5EDA00D8D38E /* cpPinJoint.c */,
-				2BBA5AA7160A5EDA00D8D38E /* cpPivotJoint.c */,
-				2BBA5AA8160A5EDA00D8D38E /* cpRatchetJoint.c */,
-				2BBA5AA9160A5EDA00D8D38E /* cpRotaryLimitJoint.c */,
-				2BBA5AAA160A5EDA00D8D38E /* cpSimpleMotor.c */,
-				2BBA5AAB160A5EDA00D8D38E /* cpSlideJoint.c */,
-			);
-			path = constraints;
 			sourceTree = "<group>";
 		};
 		2BDD2C93171C9F7F0041CB18 /* Events */ = {
@@ -1423,14 +1201,21 @@
 		91D71F091BF8AEC80097AEA0 /* Weapons */ = {
 			isa = PBXGroup;
 			children = (
+				91D71EFF1BF8AEC20097AEA0 /* Rocket.cpp */,
+				91D71F001BF8AEC20097AEA0 /* Rocket.h */,
+				91D71F031BF8AEC20097AEA0 /* WeaponFactory.cpp */,
+				91D71F041BF8AEC20097AEA0 /* WeaponFactory.h */,
 				9166E1721C31C4FD00A5C82D /* BaseWeapon.cpp */,
 				9166E1731C31C4FD00A5C82D /* BaseWeapon.h */,
 				9166E1741C31C4FD00A5C82D /* CacoPlasma.cpp */,
 				9166E1751C31C4FD00A5C82D /* CacoPlasma.h */,
 				91D71F0A1BF8AED80097AEA0 /* RocketLauncher.cpp */,
 				91D71F0B1BF8AED80097AEA0 /* RocketLauncher.h */,
+				2BDD2C98171C9FBE0041CB18 /* FireBullet.cpp */,
+				2BDD2C99171C9FBE0041CB18 /* FireBullet.h */,
 				91D71F0C1BF8AED80097AEA0 /* StandardWeapon.cpp */,
 				91D71F0D1BF8AED80097AEA0 /* StandardWeapon.h */,
+				91D71EFA1BF8AEB50097AEA0 /* IWeaponSystem.h */,
 				91D71F0E1BF8AED80097AEA0 /* WeaponTypes.h */,
 			);
 			name = Weapons;
@@ -1561,7 +1346,6 @@
 				2BD3CBAA160BB2B30043156E /* pixelette.ttf in Resources */,
 				2BD3CBAB160BB2B30043156E /* Icon.png in Resources */,
 				2BD3CBAC160BB2B30043156E /* Default.png in Resources */,
-				2BD3CBAD160BB2B30043156E /* CMakeLists.txt in Resources */,
 				2BA8E1091618BE5E00C17873 /* shuttle.sprite in Resources */,
 				2BA8E10E1618BFBE00C17873 /* ryu.sprite in Resources */,
 				2BDD2CA3171CA01F0041CB18 /* firebullet.sprite in Resources */,
@@ -1681,42 +1465,13 @@
 				91D71F071BF8AEC20097AEA0 /* Spawner.cpp in Sources */,
 				2BBA5A3D1607B56800D8D38E /* SysVideo.cpp in Sources */,
 				918157251826E5E600C66F2B /* main.cpp in Sources */,
-				2BBA5ABE160A5EDA00D8D38E /* chipmunk.c in Sources */,
-				2BBA5AC0160A5EDA00D8D38E /* cpConstraint.c in Sources */,
-				2BBA5AC1160A5EDA00D8D38E /* cpDampedRotarySpring.c in Sources */,
-				2BBA5AC2160A5EDA00D8D38E /* cpDampedSpring.c in Sources */,
-				2BBA5AC3160A5EDA00D8D38E /* cpGearJoint.c in Sources */,
-				2BBA5AC4160A5EDA00D8D38E /* cpGrooveJoint.c in Sources */,
 				91D71F241BF8AF6F0097AEA0 /* ColorShader.cpp in Sources */,
 				91C41E491826E2A50035E778 /* MathFwd.cpp in Sources */,
 				9166E17E1C31C54300A5C82D /* Morpher.cpp in Sources */,
-				2BBA5AC5160A5EDA00D8D38E /* cpPinJoint.c in Sources */,
-				2BBA5AC6160A5EDA00D8D38E /* cpPivotJoint.c in Sources */,
-				2BBA5AC7160A5EDA00D8D38E /* cpRatchetJoint.c in Sources */,
-				2BBA5AC8160A5EDA00D8D38E /* cpRotaryLimitJoint.c in Sources */,
-				2BBA5AC9160A5EDA00D8D38E /* cpSimpleMotor.c in Sources */,
 				9166E1771C31C4FD00A5C82D /* CacoPlasma.cpp in Sources */,
-				2BBA5ACA160A5EDA00D8D38E /* cpSlideJoint.c in Sources */,
-				2BBA5ACB160A5EDA00D8D38E /* cpArbiter.c in Sources */,
-				2BBA5ACC160A5EDA00D8D38E /* cpArray.c in Sources */,
-				2BBA5ACD160A5EDA00D8D38E /* cpBB.c in Sources */,
-				2BBA5ACE160A5EDA00D8D38E /* cpBBTree.c in Sources */,
-				2BBA5ACF160A5EDA00D8D38E /* cpBody.c in Sources */,
 				91D71F131BF8AF110097AEA0 /* SysKeycodes.cpp in Sources */,
-				2BBA5AD0160A5EDA00D8D38E /* cpCollision.c in Sources */,
-				2BBA5AD1160A5EDA00D8D38E /* cpHashSet.c in Sources */,
-				2BBA5AD2160A5EDA00D8D38E /* cpPolyShape.c in Sources */,
-				2BBA5AD3160A5EDA00D8D38E /* cpShape.c in Sources */,
 				91D6465C186F2D0D00FA6CB5 /* PathFactory.cpp in Sources */,
-				2BBA5AD4160A5EDA00D8D38E /* cpSpace.c in Sources */,
-				2BBA5AD5160A5EDA00D8D38E /* cpSpaceComponent.c in Sources */,
-				2BBA5AD6160A5EDA00D8D38E /* cpSpaceHash.c in Sources */,
-				2BBA5AD7160A5EDA00D8D38E /* cpSpaceQuery.c in Sources */,
-				2BBA5AD8160A5EDA00D8D38E /* cpSpaceStep.c in Sources */,
-				2BBA5AD9160A5EDA00D8D38E /* cpSpatialIndex.c in Sources */,
 				91D71EFB1BF8AEB50097AEA0 /* InvaderEntity.cpp in Sources */,
-				2BBA5ADA160A5EDA00D8D38E /* cpSweep1D.c in Sources */,
-				2BBA5ADB160A5EDA00D8D38E /* cpVect.c in Sources */,
 				2B95CF20162F37C6006769BF /* Moon.cpp in Sources */,
 				2B95CF21162F37C6006769BF /* ShuttleController.cpp in Sources */,
 				2BDD2C8F171C9F540041CB18 /* PhysicsEntityBase.cpp in Sources */,
@@ -1833,40 +1588,11 @@
 				2BD3CC17160BB2B30043156E /* TestZone.cpp in Sources */,
 				2BD3CC1A160BB2B30043156E /* SysVideo.cpp in Sources */,
 				918157261826E5E600C66F2B /* main.cpp in Sources */,
-				2BD3CC1B160BB2B30043156E /* chipmunk.c in Sources */,
-				2BD3CC1C160BB2B30043156E /* cpConstraint.c in Sources */,
-				2BD3CC1D160BB2B30043156E /* cpDampedRotarySpring.c in Sources */,
-				2BD3CC1E160BB2B30043156E /* cpDampedSpring.c in Sources */,
-				2BD3CC1F160BB2B30043156E /* cpGearJoint.c in Sources */,
-				2BD3CC20160BB2B30043156E /* cpGrooveJoint.c in Sources */,
 				91C41E4A1826E2A50035E778 /* MathFwd.cpp in Sources */,
-				2BD3CC21160BB2B30043156E /* cpPinJoint.c in Sources */,
-				2BD3CC22160BB2B30043156E /* cpPivotJoint.c in Sources */,
-				2BD3CC23160BB2B30043156E /* cpRatchetJoint.c in Sources */,
 				91A8775C1C022CD800DF77B5 /* CacoDemon.cpp in Sources */,
-				2BD3CC24160BB2B30043156E /* cpRotaryLimitJoint.c in Sources */,
-				2BD3CC25160BB2B30043156E /* cpSimpleMotor.c in Sources */,
-				2BD3CC26160BB2B30043156E /* cpSlideJoint.c in Sources */,
-				2BD3CC27160BB2B30043156E /* cpArbiter.c in Sources */,
-				2BD3CC28160BB2B30043156E /* cpArray.c in Sources */,
-				2BD3CC29160BB2B30043156E /* cpBB.c in Sources */,
-				2BD3CC2A160BB2B30043156E /* cpBBTree.c in Sources */,
-				2BD3CC2B160BB2B30043156E /* cpBody.c in Sources */,
 				91791D2C18269CC0007A705A /* ShuttleController.cpp in Sources */,
-				2BD3CC2C160BB2B30043156E /* cpCollision.c in Sources */,
-				2BD3CC2D160BB2B30043156E /* cpHashSet.c in Sources */,
-				2BD3CC2E160BB2B30043156E /* cpPolyShape.c in Sources */,
 				91D6465D186F2D0D00FA6CB5 /* PathFactory.cpp in Sources */,
-				2BD3CC2F160BB2B30043156E /* cpShape.c in Sources */,
 				91791D2B18269CB9007A705A /* Moon.cpp in Sources */,
-				2BD3CC30160BB2B30043156E /* cpSpace.c in Sources */,
-				2BD3CC31160BB2B30043156E /* cpSpaceComponent.c in Sources */,
-				2BD3CC32160BB2B30043156E /* cpSpaceHash.c in Sources */,
-				2BD3CC33160BB2B30043156E /* cpSpaceQuery.c in Sources */,
-				2BD3CC34160BB2B30043156E /* cpSpaceStep.c in Sources */,
-				2BD3CC35160BB2B30043156E /* cpSpatialIndex.c in Sources */,
-				2BD3CC36160BB2B30043156E /* cpSweep1D.c in Sources */,
-				2BD3CC37160BB2B30043156E /* cpVect.c in Sources */,
 				2BDD2C90171C9F540041CB18 /* PhysicsEntityBase.cpp in Sources */,
 				2BDD2C92171C9F540041CB18 /* RenderUtils.cpp in Sources */,
 				2BDD2C9D171C9FBE0041CB18 /* FireBullet.cpp in Sources */,
@@ -1906,16 +1632,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../External Libs/chipmunk-6.1.1/include/chipmunk\"",
 					"\"$(SRCROOT)/../External Libs/SDL2/include\"",
+					"\"$(SRCROOT)/../External Libs/Chipmunk-7.0.1/include/chipmunk\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/SDL/lib\"",
-					"\"$(SRCROOT)/../External Libs/chipmunk-6.1.1\"",
 					"\"$(SRCROOT)/../External Libs/SDL2/ios/debug\"",
+					"\"$(SRCROOT)/../External Libs/Chipmunk-7.0.1/debug\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = MonoiOS;
@@ -1937,16 +1662,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../External Libs/chipmunk-6.1.1/include/chipmunk\"",
 					"\"$(SRCROOT)/../External Libs/SDL2/include\"",
+					"\"$(SRCROOT)/../External Libs/Chipmunk-7.0.1/include/chipmunk\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/SDL/lib\"",
-					"\"$(SRCROOT)/../External Libs/chipmunk-6.1.1\"",
 					"\"$(SRCROOT)/../External Libs/SDL2/ios/debug\"",
+					"\"$(SRCROOT)/../External Libs/Chipmunk-7.0.1/debug\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = MonoiOS;

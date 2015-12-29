@@ -96,7 +96,8 @@ namespace
                 impulse += newPos2;
             }
             
-            body->ApplyImpulse(impulse, math::zeroVec);
+            //body->ApplyImpulse(impulse, math::zeroVec);
+            body->ApplyImpulse(impulse, body->GetPosition());
         }
         
         mono::IPhysicsZone* mZone;

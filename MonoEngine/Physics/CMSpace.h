@@ -35,6 +35,7 @@ namespace cm
         void RemoveShape(const IShapePtr& shape);
         
         void ForEachBody(const BodyFunc& func);
+        IBodyPtr QueryFirst(const math::Vector2f& start, const math::Vector2f& end);
         
     private:
         

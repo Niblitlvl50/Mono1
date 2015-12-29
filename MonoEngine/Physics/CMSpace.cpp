@@ -22,14 +22,17 @@ using namespace cm;
 
 Space::Space(const math::Vector2f& gravity, float damping)
 {
+    mSpace = cpSpaceNew();
+    cpSpaceSetGravity(mSpace, cpv(gravity.x, gravity.y));
+    cpSpaceSetDamping(mSpace, damping);
+
     const auto beginFunc = [](cpArbiter* arb, cpSpace*, void* data) -> cpBool {
         return static_cast<Space*>(data)->OnCollision(arb);
     };
 
-    mSpace = cpSpaceNew();
-    cpSpaceSetGravity(mSpace, cpv(gravity.x, gravity.y));
-    cpSpaceSetDamping(mSpace, damping);
-    cpSpaceAddCollisionHandler(mSpace, 0, 0, beginFunc, 0, 0, 0, this);
+    cpCollisionHandler* ch = cpSpaceAddDefaultCollisionHandler(mSpace);
+    ch->beginFunc = beginFunc;
+    ch->userData = this;
 }
 
 Space::~Space()
@@ -92,6 +95,29 @@ void Space::DoForEachFuncOnBody(cpBody* body)
             break;
         }
     }
+}
+
+IBodyPtr Space::QueryFirst(const math::Vector2f& start, const math::Vector2f& end)
+{
+    /*
+    cpShape* shape = cpSpaceSegmentQueryFirst(mSpace, cpv(start.x, start.y), cpv(end.x, end.y), 0, 0, nullptr);
+    if(!shape)
+        return nullptr;
+
+    cpBody* body = shape->body;
+
+    auto func = [body](const IBodyPtr& bodyPtr) {
+        return bodyPtr->Body() == body;
+    };
+
+    auto it = std::find_if(mBodies.begin(), mBodies.end(), func);
+    if(it == mBodies.end())
+        return nullptr;
+
+    return *it;
+     */
+
+    return nullptr;
 }
 
 bool Space::OnCollision(cpArbiter* arb)

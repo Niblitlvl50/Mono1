@@ -129,7 +129,7 @@ void CacoPlasma::DoFire(const math::Vector2f& position, float direction) const
     const math::Vector2f& impulse = unit * 300.0f;
 
     auto bullet = std::make_shared<CacoBullet>(new_position, m_eventHandler);
-    bullet->GetPhysics().body->ApplyImpulse(impulse, math::zeroVec);
+    bullet->GetPhysics().body->ApplyImpulse(impulse, new_position);
 
     m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
 }

@@ -105,7 +105,8 @@ void Shuttle::ApplyThrustForce(float force)
 
 void Shuttle::ApplyImpulse(const math::Vector2f& force)
 {
-    mPhysicsObject.body->ApplyImpulse(force, math::zeroVec);
+    //mPhysicsObject.body->ApplyImpulse(force, math::zeroVec);
+    mPhysicsObject.body->ApplyImpulse(force, mPosition);
 }
 
 void Shuttle::Fire()
