@@ -12,12 +12,14 @@
 
 using namespace game;
 
-Explosion::Explosion(const math::Vector2f& position, float scale)
+Explosion::Explosion(const math::Vector2f& position, float scale, float rotation)
     : mSprite("explosion.sprite"),
       mRemoveMe(false)
 {
     mPosition = position;
     mScale = math::Vector2f(scale, scale);
+    mRotation = rotation;
+    
     mSprite.SetAnimation(0, std::bind(&Explosion::OnFinished, this));
 }
 

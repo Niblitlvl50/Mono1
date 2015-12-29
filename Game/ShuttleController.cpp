@@ -66,7 +66,7 @@ void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
     }
     
     mMouseDown = true;
-    mMouseDownPosition = math::Vector2f(event.screenX, event.screenY);
+    mMouseDownPosition = math::Vector2f(event.screenX, -event.screenY);
     mShuttle->StartThrusting();
 }
 
@@ -87,11 +87,17 @@ void ShuttleController::OnMouseMotion(const Event::MouseMotionEvent& event)
     // Reset forces first.
     mShuttle->mPhysicsObject.body->ResetForces();
 
-    const math::Vector2f current(event.worldX, event.worldY);
-    math::Vector2f force = current - mShuttle->mPosition;
+    const math::Vector2f current(event.screenX, -event.screenY);
+
+    math::Vector2f force = current - mMouseDownPosition;
     math::Normalize(force);
 
+    //const float angle = std::atan2(force.y, force.x);
+
     mShuttle->ApplyImpulse(force * 100);
+    //mShuttle->SetRotation(angle);
+
+    mMouseDownPosition = current;
 }
 
 void ShuttleController::OnMultiGesture(const Event::MultiGestureEvent& event)

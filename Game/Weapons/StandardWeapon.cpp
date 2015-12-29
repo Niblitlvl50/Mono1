@@ -24,8 +24,7 @@ StandardWeapon::StandardWeapon(mono::EventHandler& eventHandler)
 
 void StandardWeapon::DoFire(const math::Vector2f& position, float direction) const
 {
-    const math::Vector2f unit(-std::sin(math::ToRadians(direction)),
-                              std::cos(math::ToRadians(direction)));
+    const math::Vector2f unit(-std::sin(direction), std::cos(direction));
     const math::Vector2f& new_position = position + (unit * 20.0f);
     const math::Vector2f& impulse = unit * 500.0f;
 

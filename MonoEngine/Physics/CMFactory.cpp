@@ -10,6 +10,8 @@
 #include "CMIBody.h"
 #include "CMIShape.h"
 #include "Vector2f.h"
+#include "MathFunctions.h"
+
 #include "chipmunk.h"
 
 namespace

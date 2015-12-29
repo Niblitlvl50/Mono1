@@ -35,7 +35,7 @@ void EntityBase::doDraw(IRenderer& renderer) const
     matrix *= translation;
 
     math::Matrix rotation;
-    math::RotateZ(rotation, math::ToRadians(mRotation));
+    math::RotateZ(rotation, mRotation);
     matrix *= rotation;
 
     math::Matrix translateRotation;
@@ -90,6 +90,11 @@ float EntityBase::Rotation() const
 void EntityBase::SetPosition(const math::Vector2f& position)
 {
     mPosition = position;
+}
+
+void EntityBase::SetRotation(float rotation)
+{
+    mRotation = rotation;
 }
 
 math::Quad EntityBase::BoundingBox() const

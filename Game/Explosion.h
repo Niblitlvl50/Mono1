@@ -18,7 +18,7 @@ namespace game
     {
     public:
         
-        Explosion(const math::Vector2f& position, float scale = 20.0);
+        Explosion(const math::Vector2f& position, float scale = 20, float rotation = 0);
         
         virtual void Update(unsigned int delta);
         virtual void Draw(mono::IRenderer& renderer) const;

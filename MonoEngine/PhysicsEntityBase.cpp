@@ -35,6 +35,12 @@ void PhysicsEntityBase::SetPosition(const math::Vector2f& position)
     mPhysicsObject.body->SetPosition(position);
 }
 
+void PhysicsEntityBase::SetRotation(float rotation)
+{
+    mRotation = rotation;
+    mPhysicsObject.body->SetAngle(rotation);
+}
+
 math::Quad PhysicsEntityBase::BoundingBox() const
 {
     const math::Vector2f& halfScale = mScale / 2.0f;
@@ -59,7 +65,7 @@ void PhysicsEntityBase::doDraw(IRenderer& renderer) const
     math::Translate(translation, mPosition);
 
     math::Matrix rotation;
-    math::RotateZ(rotation, math::ToRadians(mRotation));
+    math::RotateZ(rotation, mRotation);
 
     math::Matrix scale;
     math::ScaleXY(scale, mScale);

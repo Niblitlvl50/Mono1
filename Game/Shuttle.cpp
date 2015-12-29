@@ -98,8 +98,7 @@ void Shuttle::ApplyRotationForce(float force)
 void Shuttle::ApplyThrustForce(float force)
 {
     const float rotation = Rotation();
-    const math::Vector2f unit(-std::sin(math::ToRadians(rotation)),
-                               std::cos(math::ToRadians(rotation)));
+    const math::Vector2f unit(-std::sin(rotation), std::cos(rotation));
 
     mPhysicsObject.body->ApplyForce(unit * force, math::zeroVec);
 }

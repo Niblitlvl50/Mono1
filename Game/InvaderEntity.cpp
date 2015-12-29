@@ -9,6 +9,7 @@
 
 #include "InvaderEntity.h"
 #include "IRenderer.h"
+#include "MathFunctions.h"
 
 using namespace game;
 
@@ -26,9 +27,11 @@ void InvaderEntity::Draw(mono::IRenderer& renderer) const
 
 void InvaderEntity::Update(unsigned int delta)
 {
-    mRotation -= (delta * 0.1f);
-    if(mRotation < -360.0f)
-        mRotation += 360.0f;
+    constexpr float TWO_PI = math::PI() * 2.0;
+
+    mRotation -= (delta * 0.001f);
+    if(mRotation < -TWO_PI)
+        mRotation += TWO_PI;
 
     mColor.hue += (delta * 0.0005f);
     if(mColor.hue > 1.0f)

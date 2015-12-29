@@ -10,6 +10,7 @@
 #include "InvaderGroup.h"
 #include "InvaderEntity.h"
 #include "IRenderer.h"
+#include "MathFunctions.h"
 
 using namespace game;
 
@@ -33,7 +34,9 @@ void InvaderGroup::Draw(mono::IRenderer& renderer) const
 
 void InvaderGroup::Update(unsigned int delta)
 {
-    mRotation += (delta * 0.1f);
-    if(mRotation > 360.0f)
-        mRotation -= 360.0f;
+    constexpr float TWO_PI = math::PI() * 2.0;
+
+    mRotation += (delta * 0.001f);
+    if(mRotation > TWO_PI)
+        mRotation -= TWO_PI;
 }

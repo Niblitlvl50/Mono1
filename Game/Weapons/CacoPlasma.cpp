@@ -124,8 +124,7 @@ CacoPlasma::CacoPlasma(mono::EventHandler& eventHandler)
 
 void CacoPlasma::DoFire(const math::Vector2f& position, float direction) const
 {
-    const math::Vector2f unit(-std::sin(math::ToRadians(direction)),
-                              std::cos(math::ToRadians(direction)));
+    const math::Vector2f unit(-std::sin(direction), std::cos(direction));
     const math::Vector2f& new_position = position + (unit * 60.0f);
     const math::Vector2f& impulse = unit * 300.0f;
 

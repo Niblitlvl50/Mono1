@@ -18,6 +18,8 @@
 
 #include "Math.h"
 
+#include "Utils.h"
+
 using namespace game;
 
 FireBullet::FireBullet(const math::Vector2f& start, float rotation, mono::EventHandler& eventHandler)
@@ -55,7 +57,8 @@ bool FireBullet::RemoveMe() const
 
 void FireBullet::OnCollideWith(cm::IBodyPtr body)
 {
-    const game::SpawnEntityEvent event(std::make_shared<Explosion>(mPosition));
+    const float rotation = mono::Random() * 360.0;
+    const game::SpawnEntityEvent event(std::make_shared<Explosion>(mPosition, 20, rotation));
     mEventHandler.DispatchEvent(event);
 
     mRemoveMe = true;

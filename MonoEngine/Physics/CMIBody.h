@@ -39,11 +39,11 @@ namespace cm
         //! @return float The mass
         virtual float GetMass() const = 0;
         
-        //! Sets the angle
+        //! Sets the angle in radians
         //! @param angle New angle
         virtual void SetAngle(float angle) = 0;
         
-        //! Gets the angle
+        //! Gets the angle in radians
         //! @return float Angle
         virtual float GetAngle() const = 0;
         
