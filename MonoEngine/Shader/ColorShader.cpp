@@ -16,7 +16,10 @@ namespace
 {
     constexpr const char* vertexSource =
 
-    //"precision mediump float;"
+#ifdef __IPHONEOS__
+    "precision mediump float;"
+#endif
+
     "attribute vec2 vertexPosition;"
     "attribute vec4 vertexColor;"
 
@@ -35,7 +38,10 @@ namespace
 
     constexpr const char* fragmentSource =
 
-    //"precision mediump float;"
+#ifdef __IPHONEOS__
+    "precision mediump float;"
+#endif
+
     "varying vec4 color;"
 
     "void main()"
