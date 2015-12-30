@@ -29,6 +29,7 @@
 #include "TextFunctions.h"
 
 #include <algorithm>
+#include <iostream>
 
 namespace
 {
@@ -119,8 +120,6 @@ namespace
         Zone(mono::EventHandler& eventHandler, const std::string& file)
             : m_eventHandler(eventHandler)
         {
-            CreateLayer(0);
-
             using namespace std::placeholders;
             const Event::KeyDownEventFunc func = std::bind(&Zone::OnDownUp, this, _1);
             m_keyDownToken = eventHandler.AddListener(func);
@@ -188,7 +187,10 @@ namespace
 int main(int argc, const char * argv[])
 {
     if(argc < 2)
+    {
+        std::cout << "You need to supply a argument" << std::endl;
         return 1;
+    }
 
     // This is assumed to be the file argument
     const std::string file = argv[1];
