@@ -99,25 +99,21 @@ void Space::DoForEachFuncOnBody(cpBody* body)
 
 IBodyPtr Space::QueryFirst(const math::Vector2f& start, const math::Vector2f& end)
 {
-    /*
-    cpShape* shape = cpSpaceSegmentQueryFirst(mSpace, cpv(start.x, start.y), cpv(end.x, end.y), 0, 0, nullptr);
+    const cpShape* shape = cpSpaceSegmentQueryFirst(mSpace, cpv(start.x, start.y), cpv(end.x, end.y), 1, CP_SHAPE_FILTER_ALL, nullptr);
     if(!shape)
         return nullptr;
 
-    cpBody* body = shape->body;
+    const cpBody* body = cpShapeGetBody(shape);
 
-    auto func = [body](const IBodyPtr& bodyPtr) {
+    const auto func = [body](const IBodyPtr& bodyPtr) {
         return bodyPtr->Body() == body;
     };
 
-    auto it = std::find_if(mBodies.begin(), mBodies.end(), func);
+    const auto& it = std::find_if(mBodies.begin(), mBodies.end(), func);
     if(it == mBodies.end())
         return nullptr;
 
     return *it;
-     */
-
-    return nullptr;
 }
 
 bool Space::OnCollision(cpArbiter* arb)
