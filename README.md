@@ -1,21 +1,18 @@
 Mono1
 =====
 
-A 2D SDL2 game engine
-
-
 ## Usage
 
 ```C++
 // First init the library
 Libs::Init();
 
-// Declare an instance of the mono::EventHandler, this is used to pass events 
+// Declare an instance of the mono::EventHandler, this is used to pass events
 // between objects.
 mono::EventHandler eventHandler;
 
 // Create a window, the last parameter is if you want the window fullscreen or not,
-// although this is disabled for now. 
+// although this is disabled for now.
 mono::IWindowPtr window = mono::CreateWindow("GameWindow", 800, 600, false);
 
 // Create a camera, there is a "TraceCamera" object in the library but you can
@@ -51,4 +48,3 @@ Building on OSX you need to link against the following frameworks:
 * ForceFeedback.framework
 * IOKit.framework
 * OpenGL.framework
-
