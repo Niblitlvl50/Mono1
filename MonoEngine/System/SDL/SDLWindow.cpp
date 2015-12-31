@@ -53,6 +53,13 @@ namespace
         
         glDisable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
+
+#ifndef __IPHONEOS__
+        // To be able to use gl_PointSize in a vertex shader on regular
+        // GLSL, we need to enable this thing, and its not avalible on
+        // GLSL ES, that's why ifndef.
+        glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+#endif
         //glEnable(GL_POINT_SMOOTH);
         //glEnable(GL_LINE_SMOOTH);
     }
