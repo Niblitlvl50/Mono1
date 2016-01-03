@@ -15,6 +15,8 @@
 #include "IWeaponSystem.h"
 #include "WeaponFactory.h"
 
+#include "AudioFactory.h"
+
 #include "MathFunctions.h"
 #include <cmath>
 
@@ -53,6 +55,8 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
 
     // Make sure we have a weapon
     SelectWeapon(WeaponType::STANDARD);
+
+    m_sound = mono::AudioFactory::CreateSound("laser.wav");
 }
 
 void Shuttle::Draw(mono::IRenderer& renderer) const
@@ -72,6 +76,8 @@ void Shuttle::OnCollideWith(cm::IBodyPtr body)
 {
     //body->IsStatic();
     //mPhysicsObject.body->GetMoment();
+
+    m_sound->Play();
 }
 
 void Shuttle::OnPostStep()

@@ -25,15 +25,15 @@ namespace
     {
         const GLubyte* vendor = glGetString(GL_VENDOR);
         if(vendor)
-            std::cout << "Vendor: " << vendor << std::endl;
+            std::cout << "OpenGL vendor: " << vendor << std::endl;
 
         const GLubyte* renderer = glGetString(GL_RENDERER);
         if(renderer)
-            std::cout << "Renderer: " << renderer << std::endl;
+            std::cout << "OpenGL renderer: " << renderer << std::endl;
 
         const GLubyte* version = glGetString(GL_VERSION);
         if(version)
-            std::cout << "Version: " << version << std::endl;
+            std::cout << "OpenGL version: " << version << std::endl;
 
         const GLubyte* glslversion = glGetString(GL_SHADING_LANGUAGE_VERSION);
         if(glslversion)

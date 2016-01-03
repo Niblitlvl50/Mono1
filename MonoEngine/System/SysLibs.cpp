@@ -7,11 +7,13 @@
 //
 
 #include "SysLibs.h"
+#include "SysSound.h"
 #include "TextFunctions.h"
 #include "ShaderFunctions.h"
 #include "SDL.h"
 #include <stdexcept>
 #include <cstdio>
+
 
 void System::Init()
 {
@@ -19,7 +21,7 @@ void System::Init()
     const int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
     if(result != 0)
     {
-        const std::string error = "Couldn't initialize SDL" + std::string(SDL_GetError());
+        const std::string error = "Couldn't initialize libSDL" + std::string(SDL_GetError());
         throw std::runtime_error(error);
     }
 
@@ -28,6 +30,7 @@ void System::Init()
 
     std::printf("Initiated libSDL, version: %d.%d.%d\n", version.major, version.minor, version.patch);
 
+    Sound::Init();
     mono::LoadDefaultShaderFactory();
 }
 
@@ -35,6 +38,7 @@ void System::Exit()
 {
     mono::UnloadShaderFactory();
     mono::UnloadFont();
+    Sound::Exit();
 
     SDL_Quit();
 }

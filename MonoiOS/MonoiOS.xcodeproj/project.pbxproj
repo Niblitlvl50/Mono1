@@ -455,6 +455,19 @@
 		91AAE3811C35837F001FE1FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		91B63FA217D3D2FE004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63FA117D3D2FE004F1868 /* libSDL2.a */; };
 		91B746FC1C00E73000F257CC /* laser.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91B746FB1C00E73000F257CC /* laser.sprite */; };
+		91B8125A1C37DE4E00BDF407 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B812591C37DE4E00BDF407 /* OpenAL.framework */; };
+		91B8125E1C37DEB400BDF407 /* AudioFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91B8125C1C37DEB400BDF407 /* AudioFactory.cpp */; };
+		91B8125F1C37DEB400BDF407 /* AudioFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91B8125C1C37DEB400BDF407 /* AudioFactory.cpp */; };
+		91B812601C37DEB400BDF407 /* AudioFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B8125D1C37DEB400BDF407 /* AudioFactory.h */; };
+		91B812631C38376C00BDF407 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B812621C38376C00BDF407 /* OpenAL.framework */; };
+		91B812661C387BFA00BDF407 /* SysSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91B812641C387BFA00BDF407 /* SysSound.cpp */; };
+		91B812671C387BFA00BDF407 /* SysSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91B812641C387BFA00BDF407 /* SysSound.cpp */; };
+		91B812681C387BFA00BDF407 /* SysSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B812651C387BFA00BDF407 /* SysSound.h */; };
+		91B8126A1C397DD000BDF407 /* SoundTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91B812691C397DD000BDF407 /* SoundTest.cpp */; };
+		91B8126B1C397E2D00BDF407 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B812591C37DE4E00BDF407 /* OpenAL.framework */; };
+		91B8126D1C397E5F00BDF407 /* a.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91B8126C1C397E5F00BDF407 /* a.wav */; };
+		91B812711C39B77C00BDF407 /* laser.wav in Resources */ = {isa = PBXBuildFile; fileRef = 91B812701C39B77C00BDF407 /* laser.wav */; };
+		91B812721C39B79200BDF407 /* laser.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91B812701C39B77C00BDF407 /* laser.wav */; };
 		91C41E4A1826E2A50035E778 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91C41E471826E2A50035E778 /* MathFwd.cpp */; };
 		91D6465D186F2D0D00FA6CB5 /* PathFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465A186F2D0D00FA6CB5 /* PathFactory.cpp */; };
 		91D64660186F2D2C00FA6CB5 /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */; };
@@ -515,6 +528,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				91B812721C39B79200BDF407 /* laser.wav in CopyFiles */,
 				9166E2C81C3453AD00A5C82D /* cacobullet.sprite in CopyFiles */,
 				9166E2C91C3453AD00A5C82D /* cacodemon.png in CopyFiles */,
 				9166E2CA1C3453AD00A5C82D /* cacodemon.sprite in CopyFiles */,
@@ -556,6 +570,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				91B8126D1C397E5F00BDF407 /* a.wav in CopyFiles */,
 				9166E3471C348F9900A5C82D /* luaconfig.lua in CopyFiles */,
 				9166E3481C348F9900A5C82D /* rektangel.path in CopyFiles */,
 			);
@@ -904,6 +919,16 @@
 		91A877661C02631A00DF77B5 /* cacoexplosion.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = cacoexplosion.sprite; path = ../Game/res/cacoexplosion.sprite; sourceTree = "<group>"; };
 		91B63FA117D3D2FE004F1868 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = SDL2/ios/debug/libSDL2.a; sourceTree = "<group>"; };
 		91B746FB1C00E73000F257CC /* laser.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = laser.sprite; path = ../Game/res/laser.sprite; sourceTree = "<group>"; };
+		91B812591C37DE4E00BDF407 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenAL.framework; sourceTree = DEVELOPER_DIR; };
+		91B8125C1C37DEB400BDF407 /* AudioFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioFactory.cpp; path = Audio/AudioFactory.cpp; sourceTree = "<group>"; };
+		91B8125D1C37DEB400BDF407 /* AudioFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioFactory.h; path = Audio/AudioFactory.h; sourceTree = "<group>"; };
+		91B812611C38268000BDF407 /* ISound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ISound.h; path = Audio/ISound.h; sourceTree = "<group>"; };
+		91B812621C38376C00BDF407 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		91B812641C387BFA00BDF407 /* SysSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysSound.cpp; sourceTree = "<group>"; };
+		91B812651C387BFA00BDF407 /* SysSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysSound.h; sourceTree = "<group>"; };
+		91B812691C397DD000BDF407 /* SoundTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundTest.cpp; path = ../UnitTests/SoundTest.cpp; sourceTree = "<group>"; };
+		91B8126C1C397E5F00BDF407 /* a.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = a.wav; path = ../UnitTests/TestFiles/a.wav; sourceTree = "<group>"; };
+		91B812701C39B77C00BDF407 /* laser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = laser.wav; path = ../Game/res/laser.wav; sourceTree = "<group>"; };
 		91C41E471826E2A50035E778 /* MathFwd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathFwd.cpp; sourceTree = "<group>"; };
 		91C41E481826E2A50035E778 /* MathFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathFwd.h; sourceTree = "<group>"; };
 		91D64659186F2D0D00FA6CB5 /* IPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPath.h; path = Paths/IPath.h; sourceTree = "<group>"; };
@@ -971,6 +996,7 @@
 				FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */,
 				FDB8BFC60E5A0F6A00980157 /* CoreGraphics.framework in Frameworks */,
 				91AAE3811C35837F001FE1FF /* Foundation.framework in Frameworks */,
+				91B812631C38376C00BDF407 /* OpenAL.framework in Frameworks */,
 				28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */,
 				9166E34D1C3497B100A5C82D /* QuartzCore.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -1003,6 +1029,7 @@
 				9166E1F41C341F6300A5C82D /* CoreAudio.framework in Frameworks */,
 				9166E1F61C341F6800A5C82D /* ForceFeedback.framework in Frameworks */,
 				9166E1F81C341F7E00A5C82D /* IOKit.framework in Frameworks */,
+				91B8125A1C37DE4E00BDF407 /* OpenAL.framework in Frameworks */,
 				9166E1E81C341EB800A5C82D /* OpenGL.framework in Frameworks */,
 				9166E22C1C3422FA00A5C82D /* liblibMonoOSX.a in Frameworks */,
 			);
@@ -1051,6 +1078,7 @@
 				9166E3271C348DE200A5C82D /* CoreAudio.framework in Frameworks */,
 				9166E32A1C348DF900A5C82D /* ForceFeedback.framework in Frameworks */,
 				9166E3281C348DEB00A5C82D /* IOKit.framework in Frameworks */,
+				91B8126B1C397E2D00BDF407 /* OpenAL.framework in Frameworks */,
 				9166E32D1C348E1500A5C82D /* OpenGL.framework in Frameworks */,
 				9166E3251C348DB000A5C82D /* liblibMonoOSX.a in Frameworks */,
 			);
@@ -1076,6 +1104,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				91B812701C39B77C00BDF407 /* laser.wav */,
+				91B8126C1C397E5F00BDF407 /* a.wav */,
 				9166E2BA1C3453AD00A5C82D /* cacobullet.sprite */,
 				9166E2BB1C3453AD00A5C82D /* cacodemon.png */,
 				9166E2BC1C3453AD00A5C82D /* cacodemon.sprite */,
@@ -1131,6 +1161,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				91B812621C38376C00BDF407 /* OpenAL.framework */,
+				91B812591C37DE4E00BDF407 /* OpenAL.framework */,
 				9166E22A1C3422AC00A5C82D /* libChipmunk-Mac.a */,
 				9166E1F71C341F7E00A5C82D /* IOKit.framework */,
 				9166E1F51C341F6800A5C82D /* ForceFeedback.framework */,
@@ -1158,6 +1190,7 @@
 		2B26D69C15FD2BB5001E9748 /* MonoEngine */ = {
 			isa = PBXGroup;
 			children = (
+				91B8125B1C37DE6200BDF407 /* Audio */,
 				91D71F171BF8AF610097AEA0 /* Shaders */,
 				91D64658186F2CF900FA6CB5 /* Paths */,
 				2B26D69D15FD2BB5001E9748 /* Camera */,
@@ -1334,6 +1367,8 @@
 				2B26D6F915FD2BB5001E9748 /* WindowFactory.h */,
 				2BBA5A3C1607B56800D8D38E /* SysVideo.cpp */,
 				2BBA5A3E1607B57A00D8D38E /* SysVideo.h */,
+				91B812641C387BFA00BDF407 /* SysSound.cpp */,
+				91B812651C387BFA00BDF407 /* SysSound.h */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -1591,6 +1626,7 @@
 				9166E30E1C346F0800A5C82D /* ObjectMatrixTest.cpp */,
 				9166E30F1C346F0800A5C82D /* PathTest.cpp */,
 				9166E3101C346F0800A5C82D /* RandomTest.cpp */,
+				91B812691C397DD000BDF407 /* SoundTest.cpp */,
 			);
 			name = UnitTests;
 			sourceTree = "<group>";
@@ -1682,6 +1718,16 @@
 			name = "zlib-1.2.8";
 			sourceTree = "<group>";
 		};
+		91B8125B1C37DE6200BDF407 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				91B812611C38268000BDF407 /* ISound.h */,
+				91B8125D1C37DEB400BDF407 /* AudioFactory.h */,
+				91B8125C1C37DEB400BDF407 /* AudioFactory.cpp */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
 		91D64658186F2CF900FA6CB5 /* Paths */ = {
 			isa = PBXGroup;
 			children = (
@@ -1744,6 +1790,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91B812681C387BFA00BDF407 /* SysSound.h in Headers */,
+				91B812601C37DEB400BDF407 /* AudioFactory.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1932,6 +1980,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91B812711C39B77C00BDF407 /* laser.wav in Resources */,
 				91A877671C02631A00DF77B5 /* cacobullet.sprite in Resources */,
 				91A877681C02631A00DF77B5 /* cacoexplosion.sprite in Resources */,
 				91A8775F1C0230F500DF77B5 /* cacodemon.png in Resources */,
@@ -2171,6 +2220,7 @@
 				9166E2B61C34530F00A5C82D /* inftrees.c in Sources */,
 				9166E2B71C34530F00A5C82D /* trees.c in Sources */,
 				9166E2B81C34530F00A5C82D /* uncompr.c in Sources */,
+				91B8125E1C37DEB400BDF407 /* AudioFactory.cpp in Sources */,
 				9166E2B91C34530F00A5C82D /* zutil.c in Sources */,
 				9166E20A1C34225700A5C82D /* lapi.c in Sources */,
 				9166E20B1C34225700A5C82D /* lauxlib.c in Sources */,
@@ -2261,6 +2311,7 @@
 				9166E1DB1C341C5800A5C82D /* PhysicsZone.cpp in Sources */,
 				9166E1DC1C341C5800A5C82D /* Renderer.cpp in Sources */,
 				9166E1DD1C341C5800A5C82D /* RenderUtils.cpp in Sources */,
+				91B812661C387BFA00BDF407 /* SysSound.cpp in Sources */,
 				9166E1DE1C341C5800A5C82D /* Utils.cpp in Sources */,
 				9166E1DF1C341C5800A5C82D /* ZoneBase.cpp in Sources */,
 			);
@@ -2337,6 +2388,7 @@
 				9166E23D1C34395E00A5C82D /* ShaderFunctions.cpp in Sources */,
 				9166E23E1C34395E00A5C82D /* TextureShader.cpp in Sources */,
 				9166E23F1C34395E00A5C82D /* PathFactory.cpp in Sources */,
+				91B812671C387BFA00BDF407 /* SysSound.cpp in Sources */,
 				9166E2401C34395E00A5C82D /* CameraController.cpp in Sources */,
 				9166E2411C34395E00A5C82D /* TraceCamera.cpp in Sources */,
 				9166E2421C34395E00A5C82D /* LuaFunctions.cpp in Sources */,
@@ -2345,6 +2397,7 @@
 				9166E2451C34395E00A5C82D /* Matrix.cpp in Sources */,
 				9166E2461C34395E00A5C82D /* Point.cpp in Sources */,
 				9166E2471C34395E00A5C82D /* MathFwd.cpp in Sources */,
+				91B8125F1C37DEB400BDF407 /* AudioFactory.cpp in Sources */,
 				9166E2481C34395E00A5C82D /* MathFunctions.cpp in Sources */,
 				9166E2491C34395E00A5C82D /* Quad.cpp in Sources */,
 				9166E24A1C34395E00A5C82D /* Vector2f.cpp in Sources */,
@@ -2391,6 +2444,7 @@
 			files = (
 				9166E34A1C3490FD00A5C82D /* gtest_main.cc in Sources */,
 				9166E3441C348F1300A5C82D /* gtest-all.cc in Sources */,
+				91B8126A1C397DD000BDF407 /* SoundTest.cpp in Sources */,
 				9166E3201C346F1F00A5C82D /* MathTest.cpp in Sources */,
 				9166E31F1C346F1F00A5C82D /* LuaTest.cpp in Sources */,
 				9166E31B1C346F1100A5C82D /* EngineTest.cpp in Sources */,
@@ -2772,6 +2826,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Debug;
 		};
@@ -2815,6 +2870,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

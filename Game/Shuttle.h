@@ -13,6 +13,8 @@
 #include "ShuttleController.h"
 #include "CMIBody.h"
 
+#include "ISound.h"
+
 namespace game
 {
     class IWeaponSystem;
@@ -54,6 +56,8 @@ namespace game
         mono::EventHandler& mEventHandler;
 
         bool m_fire;
+
+        mono::ISoundPtr m_sound;
     };
 }
 
