@@ -9,6 +9,7 @@
 #pragma once
 
 #include "BaseWeapon.h"
+#include "MonoPtrFwd.h"
 
 namespace game
 {
@@ -22,5 +23,7 @@ namespace game
         
         virtual void DoFire(const math::Vector2f& position, float direction) const;
         virtual int RoundsPerSecond() const;
+
+        mono::ISoundPtr m_sound;
     };
 }

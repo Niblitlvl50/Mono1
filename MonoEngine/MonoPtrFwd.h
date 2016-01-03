@@ -24,4 +24,5 @@ namespace mono
     typedef std::shared_ptr<IZone> IZonePtr;
     typedef std::shared_ptr<ITexture> ITexturePtr;
     typedef std::shared_ptr<IAction> IActionPtr;
+    typedef std::shared_ptr<ISound> ISoundPtr;
 }

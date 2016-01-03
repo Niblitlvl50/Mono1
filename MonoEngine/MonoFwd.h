@@ -24,6 +24,7 @@ namespace mono
     struct IAction;
     struct IPath;
     class ISprite;
+    class ISound;
 
     class EventHandler;
 

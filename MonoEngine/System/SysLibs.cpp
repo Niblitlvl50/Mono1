@@ -11,6 +11,7 @@
 #include "TextFunctions.h"
 #include "ShaderFunctions.h"
 #include "SDL.h"
+
 #include <stdexcept>
 #include <cstdio>
 
@@ -20,15 +21,12 @@ void System::Init()
     // Init SDL video subsystem
     const int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
     if(result != 0)
-    {
-        const std::string error = "Couldn't initialize libSDL" + std::string(SDL_GetError());
-        throw std::runtime_error(error);
-    }
+        throw std::runtime_error("Couldn't initialize libSDL" + std::string(SDL_GetError()));
 
     SDL_version version;
     SDL_GetVersion(&version);
 
-    std::printf("Initiated libSDL, version: %d.%d.%d\n", version.major, version.minor, version.patch);
+    std::printf("Initiated libSDL, version: %u.%u.%u\n", version.major, version.minor, version.patch);
 
     Sound::Init();
     mono::LoadDefaultShaderFactory();

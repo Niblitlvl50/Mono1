@@ -8,8 +8,6 @@
 
 #pragma once
 
-#include <memory>
-
 namespace mono
 {
     class ISound
@@ -23,6 +21,4 @@ namespace mono
         virtual void Pause() = 0;
         virtual void Stop() = 0;
     };
-
-    typedef std::shared_ptr<ISound> ISoundPtr;
 }

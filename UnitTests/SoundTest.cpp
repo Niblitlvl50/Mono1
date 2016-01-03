@@ -10,11 +10,16 @@
 
 #include "AudioFactory.h"
 
-TEST(Sound, LoadWave)
+TEST(Sound, LoadWaveAndExpectSuccess)
 {
     const mono::SoundFile& file = mono::AudioFactory::LoadFile("a.wav");
 
-    EXPECT_EQ(file.format, 4352);
+    EXPECT_EQ(file.format, mono::SoundFormat::MONO_8BIT);
     EXPECT_EQ(file.frequency, 11025);
     EXPECT_EQ(file.data.size(), 1793);
+}
+
+TEST(Sound, LoadMissingFileExpectException)
+{
+    EXPECT_THROW(mono::AudioFactory::LoadFile("whatever.asdf"), std::runtime_error);
 }

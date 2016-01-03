@@ -11,29 +11,13 @@
 #include "IImage.h"
 #include "ImageFactory.h"
 
-#include <stdexcept>
 #include <iostream>
 #include <map>
 
 namespace
 {
-    typedef std::weak_ptr<mono::ITexture> ITextureWeakPtr; 
-    std::map<std::string, ITextureWeakPtr> textureStorage;
-
-    struct TextureDeleter
-    {
-        TextureDeleter(const std::string& source)
-            : mSource(source)
-        { }
-    
-        void operator()(mono::ITexture* tex) const
-        {
-            textureStorage.erase(mSource);
-            delete tex;
-        }
-        
-        const std::string mSource;
-    };
+    // This is where all the weak pointers goes, that points to the allocated textures!
+    std::map<std::string, std::weak_ptr<mono::ITexture>> textureStorage;
 }
 
 mono::ITexturePtr mono::CreateTexture(const std::string& source)
@@ -49,7 +33,15 @@ mono::ITexturePtr mono::CreateTexture(const std::string& source)
     }
     
     const mono::IImagePtr image = LoadImage(source);
-    mono::ITexturePtr texture(new Texture(image), TextureDeleter(source));
+
+    // Custom deleter that erases the texture from the map
+    // when all the references are gone.
+    const auto deleter = [source](mono::ITexture* ptr) {
+        textureStorage.erase(source);
+        delete ptr;
+    };
+
+    mono::ITexturePtr texture(new Texture(image), deleter);
     textureStorage[source] = texture;
     
     return texture;

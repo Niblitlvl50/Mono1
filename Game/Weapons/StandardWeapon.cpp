@@ -13,6 +13,7 @@
 #include "EventHandler.h"
 #include "Vector2f.h"
 #include "MathFunctions.h"
+#include "AudioFactory.h"
 
 #include <cmath>
 
@@ -20,7 +21,9 @@ using namespace game;
 
 StandardWeapon::StandardWeapon(mono::EventHandler& eventHandler)
     : BaseWeapon(eventHandler)
-{ }
+{
+    m_sound = mono::AudioFactory::CreateSound("laser.wav", false);
+}
 
 void StandardWeapon::DoFire(const math::Vector2f& position, float direction) const
 {
@@ -32,6 +35,7 @@ void StandardWeapon::DoFire(const math::Vector2f& position, float direction) con
     bullet->GetPhysics().body->ApplyImpulse(impulse, new_position);
 
     m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
+    m_sound->Play();
 }
 
 int StandardWeapon::RoundsPerSecond() const
