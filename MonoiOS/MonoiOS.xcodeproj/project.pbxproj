@@ -483,6 +483,7 @@
 		91D71F0F1BF8AED80097AEA0 /* RocketLauncher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F0A1BF8AED80097AEA0 /* RocketLauncher.cpp */; };
 		91D71F101BF8AED80097AEA0 /* StandardWeapon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F0C1BF8AED80097AEA0 /* StandardWeapon.cpp */; };
 		91D71F2C1BF913CA0097AEA0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D71F2B1BF913CA0097AEA0 /* Images.xcassets */; };
+		91D889951C3AEBB600AF27A8 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B812591C37DE4E00BDF407 /* OpenAL.framework */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
 		FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07C0E26BD8C00F39101 /* Icon.png */; };
 		FD77A07F0E26BDA900F39101 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07E0E26BDA900F39101 /* Default.png */; };
@@ -1063,6 +1064,7 @@
 				9166E2F41C346BAB00A5C82D /* CoreAudio.framework in Frameworks */,
 				9166E2F11C346B5E00A5C82D /* ForceFeedback.framework in Frameworks */,
 				9166E2F31C346B9C00A5C82D /* IOKit.framework in Frameworks */,
+				91D889951C3AEBB600AF27A8 /* OpenAL.framework in Frameworks */,
 				9166E2E81C346A3B00A5C82D /* OpenGL.framework in Frameworks */,
 				9166E2E71C3469D300A5C82D /* liblibMonoOSX.a in Frameworks */,
 			);
