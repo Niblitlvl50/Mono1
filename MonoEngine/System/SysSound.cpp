@@ -8,6 +8,7 @@
 
 #include "SysSound.h"
 #include "OpenAL/alc.h"
+#include "OpenAL/al.h"
 
 #include <stdexcept>
 #include <cstdio>
@@ -31,14 +32,16 @@ void Sound::Init()
 
     alcMakeContextCurrent(context);
 
-    const ALCchar* bytes = alcGetString(device, ALC_DEFAULT_DEVICE_SPECIFIER);
+    const ALCchar* defaultDevice = alcGetString(device, ALC_DEFAULT_DEVICE_SPECIFIER);
+    const ALchar* vendor = alGetString(AL_VENDOR);
+    const ALchar* version = alGetString(AL_VERSION);
+    const ALchar* renderer = alGetString(AL_RENDERER);
 
-    ALCint major;
-    ALCint minor;
-    alcGetIntegerv(device, ALC_MAJOR_VERSION, 1, &major);
-    alcGetIntegerv(device, ALC_MINOR_VERSION, 1, &minor);
-
-    std::printf("OpenAL device: %s, version: %i.%i\n", bytes, major, minor);
+    std::printf("OpenAL\n"
+                "\tvendor: %s\n"
+                "\tdevice: %s\n"
+                "\trenderer: %s\n"
+                "\tversion: %s\n", vendor, defaultDevice, renderer, version);
 }
 
 void Sound::Exit()

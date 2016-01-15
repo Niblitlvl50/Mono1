@@ -47,8 +47,9 @@ namespace game
         mono::EventToken<game::ShockwaveEvent> mShockwaveEventToken;
         
         mono::EventHandler& mEventHandler;
-
         Spawner m_spawner;
+        
+        mono::ISoundPtr m_backgroundMusic;
     };
 }
 

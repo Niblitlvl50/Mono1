@@ -88,9 +88,10 @@ namespace
         {
             alGenSources(1, &m_source);
             alSourcei(m_source, AL_BUFFER, m_data->BufferId());
-            alSourcef(m_source, AL_PITCH, 1.0f);
-            alSourcef(m_source, AL_GAIN, 1.0f);
             alSourcei(m_source, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
+
+            Pitch(1.0f);
+            Gain(1.0f);
         }
         ~SoundImpl()
         {
@@ -108,6 +109,14 @@ namespace
         void Stop()
         {
             alSourceStop(m_source);
+        }
+        void Pitch(float pitch)
+        {
+            alSourcef(m_source, AL_PITCH, pitch);
+        }
+        void Gain(float gain)
+        {
+            alSourcef(m_source, AL_GAIN, gain);
         }
 
         std::shared_ptr<SoundData> m_data;

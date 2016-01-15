@@ -8,6 +8,7 @@
 
 #include "TestZone.h"
 #include "ICamera.h"
+#include "AudioFactory.h"
 
 #include "PhysicsGrid.h"
 #include "InvaderGroup.h"
@@ -162,6 +163,8 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
 
     const game::ShockwaveEventFunc shockwaveFunc = std::bind(&TestZone::OnShockwaveEvent, this, _1);
     mShockwaveEventToken = mEventHandler.AddListener(shockwaveFunc);
+
+    m_backgroundMusic = mono::AudioFactory::CreateSound("InGame_Phoenix.wav", true);
 }
 
 TestZone::~TestZone()
@@ -203,6 +206,8 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
 
     camera->SetPosition(shuttle->Position());
     camera->Follow(shuttle, math::Vector2f(0, -100));
+
+    m_backgroundMusic->Play();
 }
 
 void TestZone::OnUnload()

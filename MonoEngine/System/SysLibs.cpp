@@ -15,7 +15,6 @@
 #include <stdexcept>
 #include <cstdio>
 
-
 void System::Init()
 {
     // Init SDL video subsystem

@@ -11,11 +11,10 @@
 #include "SysOpenGL.h"
 #include "Color.h"
 
-#include <stdexcept>
-#include <string>
-#include <iostream>
-
 #include "SDL_video.h"
+
+#include <stdexcept>
+#include <cstdio>
 
 using namespace mono;
 
@@ -24,26 +23,16 @@ namespace
     void PrintOpenGLInfo()
     {
         const GLubyte* vendor = glGetString(GL_VENDOR);
-        if(vendor)
-            std::cout << "OpenGL vendor: " << vendor << std::endl;
-
         const GLubyte* renderer = glGetString(GL_RENDERER);
-        if(renderer)
-            std::cout << "OpenGL renderer: " << renderer << std::endl;
-
         const GLubyte* version = glGetString(GL_VERSION);
-        if(version)
-            std::cout << "OpenGL version: " << version << std::endl;
-
         const GLubyte* glslversion = glGetString(GL_SHADING_LANGUAGE_VERSION);
-        if(glslversion)
-            std::cout << "GLSL version: " << glslversion << std::endl;
+        //const GLubyte* extensions = glGetString(GL_EXTENSIONS);
 
-        /*
-        const GLubyte* extensions = glGetString(GL_EXTENSIONS);
-        if(extensions)
-            std::cout << "Extensions: " << extensions << std::endl;
-         */
+        std::printf("OpenGL\n"
+                    "\tvendor: %s\n"
+                    "\trenderer: %s\n"
+                    "\tversion: %s\n"
+                    "\tglsl: %s\n", vendor, renderer, version, glslversion);
     }
 
     void SetupOpenGL()
@@ -92,7 +81,7 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool)
     //const unsigned int screenflag = fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE;
     const unsigned int flags = SDL_WINDOW_SHOWN |
                                SDL_WINDOW_OPENGL |
-    SDL_WINDOW_BORDERLESS; //| SDL_WINDOW_ALLOW_HIGHDPI; // | screenflag;
+                               SDL_WINDOW_BORDERLESS; //| SDL_WINDOW_ALLOW_HIGHDPI; // | screenflag;
 
     // Create our window centered and with the given resolution
     mWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
