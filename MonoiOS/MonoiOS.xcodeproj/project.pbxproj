@@ -484,6 +484,8 @@
 		91D71F101BF8AED80097AEA0 /* StandardWeapon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F0C1BF8AED80097AEA0 /* StandardWeapon.cpp */; };
 		91D71F2C1BF913CA0097AEA0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D71F2B1BF913CA0097AEA0 /* Images.xcassets */; };
 		91D889951C3AEBB600AF27A8 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B812591C37DE4E00BDF407 /* OpenAL.framework */; };
+		91D889971C3AFBE400AF27A8 /* InGame_Phoenix.wav in Resources */ = {isa = PBXBuildFile; fileRef = 91D889961C3AFBE400AF27A8 /* InGame_Phoenix.wav */; };
+		91D889981C3AFC7C00AF27A8 /* InGame_Phoenix.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91D889961C3AFBE400AF27A8 /* InGame_Phoenix.wav */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
 		FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07C0E26BD8C00F39101 /* Icon.png */; };
 		FD77A07F0E26BDA900F39101 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07E0E26BDA900F39101 /* Default.png */; };
@@ -529,6 +531,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				91D889981C3AFC7C00AF27A8 /* InGame_Phoenix.wav in CopyFiles */,
 				91B812721C39B79200BDF407 /* laser.wav in CopyFiles */,
 				9166E2C81C3453AD00A5C82D /* cacobullet.sprite in CopyFiles */,
 				9166E2C91C3453AD00A5C82D /* cacodemon.png in CopyFiles */,
@@ -981,6 +984,7 @@
 		91D71F281BF8B3120097AEA0 /* ShockwaveEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShockwaveEvent.h; path = Events/ShockwaveEvent.h; sourceTree = "<group>"; };
 		91D71F291BF8E1D60097AEA0 /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
 		91D71F2B1BF913CA0097AEA0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "MonoiOS Device/Images.xcassets"; sourceTree = "<group>"; };
+		91D889961C3AFBE400AF27A8 /* InGame_Phoenix.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = InGame_Phoenix.wav; path = res/InGame_Phoenix.wav; sourceTree = "<group>"; };
 		FD779EDD0E26BA1200F39101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		FD77A07C0E26BD8C00F39101 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		FD77A07E0E26BDA900F39101 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -1581,6 +1585,7 @@
 		915373D01C39D43200FF0C67 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				91D889961C3AFBE400AF27A8 /* InGame_Phoenix.wav */,
 				91B812701C39B77C00BDF407 /* laser.wav */,
 				9166E2BA1C3453AD00A5C82D /* cacobullet.sprite */,
 				9166E2BB1C3453AD00A5C82D /* cacodemon.png */,
@@ -2007,6 +2012,7 @@
 				2B95CF28162F38AA006769BF /* explosion.sprite in Resources */,
 				2B95CF29162F38AA006769BF /* invader.sprite in Resources */,
 				2BDD2CA2171CA01F0041CB18 /* firebullet.sprite in Resources */,
+				91D889971C3AFBE400AF27A8 /* InGame_Phoenix.wav in Resources */,
 				2BDD2CA4171CA01F0041CB18 /* meteorite.sprite in Resources */,
 				9199F5CB17DCDB6B0001FE28 /* Default-568h@2x.png in Resources */,
 			);
