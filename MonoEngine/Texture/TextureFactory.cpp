@@ -11,7 +11,7 @@
 #include "IImage.h"
 #include "ImageFactory.h"
 
-#include <iostream>
+#include <cstdio>
 #include <map>
 
 namespace
@@ -29,7 +29,7 @@ mono::ITexturePtr mono::CreateTexture(const std::string& source)
         if(texture)
             return texture;
 
-        std::cout << "Error when trying to create a shared_ptr from weak_ptr using source: " << source << std::endl;
+        std::printf("Error when trying to create a shared_ptr from weak_ptr using source: %s\n", source.c_str());
     }
     
     const mono::IImagePtr image = LoadImage(source);

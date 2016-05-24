@@ -11,7 +11,6 @@
 #include "png.h"
 #include "SysFile.h"
 #include <stdexcept>
-#include <iostream>
 
 
 namespace

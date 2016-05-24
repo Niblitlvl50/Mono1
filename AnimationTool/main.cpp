@@ -29,7 +29,7 @@
 #include "TextFunctions.h"
 
 #include <algorithm>
-#include <iostream>
+#include <cstdio>
 
 namespace
 {
@@ -188,7 +188,7 @@ int main(int argc, const char * argv[])
 {
     if(argc < 2)
     {
-        std::cout << "You need to supply a argument" << std::endl;
+        std::printf("You need to supply an argument");
         return 1;
     }
 

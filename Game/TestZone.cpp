@@ -35,6 +35,8 @@
 #include "Utils.h"
 
 #include <cmath>
+#include <thread>
+#include <cstdio>
 
 
 using namespace game;
@@ -165,6 +167,29 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
     mShockwaveEventToken = mEventHandler.AddListener(shockwaveFunc);
 
     m_backgroundMusic = mono::AudioFactory::CreateSound("InGame_Phoenix.wav", true);
+
+    m_socket = Network::OpenUDPSocket("127.0.0.1", 5001, false);
+    m_outSocket = Network::OpenUDPSocket("", 7777, true);
+
+    /*
+    auto func = [this]() {
+
+        std::vector<byte> buffer;
+        buffer.resize(300);
+
+        while(true)
+        {
+            m_outSocket->Receive(buffer);
+            if(!buffer.empty())
+            {
+                std::printf("%s\n", buffer.data());
+                std::fill(buffer.begin(), buffer.begin() + buffer.size(), '\0');
+            }
+        }
+    };
+
+    new std::thread(func);
+     */
 }
 
 TestZone::~TestZone()
@@ -237,6 +262,10 @@ void TestZone::OnShockwaveEvent(const game::ShockwaveEvent& event)
 {
     const auto func = std::bind(ApplyShockwave, _1, event.mPosition, event.mMagnitude);
     this->ForEachBody(func);
+
+
+    const std::vector<byte> data = { 'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!' };
+    m_socket->Send(data);
 }
 
 

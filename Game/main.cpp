@@ -14,7 +14,7 @@
 int main(int argc, char* argv[])
 {
     constexpr math::Vector2f iPhone6SSize(750.0f, 1334.0f);
-
+    
     System::Init();
 
     // The "global" event handler used throughout the game

@@ -14,6 +14,8 @@
 
 #include "Spawner.h"
 
+#include "SysNetwork.h"
+
 namespace game
 {
     struct SpawnEntityEvent;
@@ -50,6 +52,8 @@ namespace game
         Spawner m_spawner;
         
         mono::ISoundPtr m_backgroundMusic;
+        std::shared_ptr<Network::ISocket> m_socket;
+        std::shared_ptr<Network::ISocket> m_outSocket;
     };
 }
 

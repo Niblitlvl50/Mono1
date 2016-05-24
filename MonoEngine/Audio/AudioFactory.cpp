@@ -13,7 +13,7 @@
 #include "OpenAL/al.h"
 
 #include <map>
-#include <iostream>
+#include <cstdio>
 
 namespace
 {
@@ -148,7 +148,7 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const std::string& file, bool lo
         if(data)
             return std::make_shared<SoundImpl>(data, loop);
 
-        std::cout << "Unable to create a shared from a weak pointer, will reload the data. Source: " << file << std::endl;
+        std::printf("Unable to create a shared from a weak pointer, will reload the data. Source: %s", file.c_str());
     }
 
     const mono::SoundFile& soundFile = LoadFile(file);

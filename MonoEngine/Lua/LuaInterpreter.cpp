@@ -8,7 +8,6 @@
  */
 
 #include "LuaInterpreter.h"
-#include <iostream>
 #include <stdexcept>
 #include <map>
 

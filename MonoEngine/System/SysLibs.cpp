@@ -8,6 +8,7 @@
 
 #include "SysLibs.h"
 #include "SysSound.h"
+#include "SysNetwork.h"
 #include "TextFunctions.h"
 #include "ShaderFunctions.h"
 #include "SDL.h"
@@ -25,9 +26,11 @@ void System::Init()
     SDL_version version;
     SDL_GetVersion(&version);
 
-    std::printf("Initiated libSDL, version: %u.%u.%u\n", version.major, version.minor, version.patch);
+    std::printf("SDL\n");
+    std::printf("\tversion: %u.%u.%u\n", version.major, version.minor, version.patch);
 
     Sound::Init();
+    Network::Init();
     mono::LoadDefaultShaderFactory();
 }
 
@@ -36,6 +39,7 @@ void System::Exit()
     mono::UnloadShaderFactory();
     mono::UnloadFont();
     Sound::Exit();
+    Network::Exit();
 
     SDL_Quit();
 }
