@@ -12,7 +12,7 @@
 
 #include "OpenAL/al.h"
 
-#include <map>
+#include <unordered_map>
 #include <cstdio>
 
 namespace
@@ -118,6 +118,10 @@ namespace
         {
             alSourcef(m_source, AL_GAIN, gain);
         }
+        void Position(float x, float y)
+        {
+            alSource3f(m_source, AL_POSITION, x, y, 0.0f);
+        }
 
         std::shared_ptr<SoundData> m_data;
         ALuint m_source;
@@ -136,7 +140,7 @@ namespace
     }
 
     // The sound data repository, this is where all the sounds are stored!
-    std::map<std::string, std::weak_ptr<SoundData>> repository;
+    std::unordered_map<std::string, std::weak_ptr<SoundData>> repository;
 }
 
 mono::ISoundPtr mono::AudioFactory::CreateSound(const std::string& file, bool loop)
@@ -171,7 +175,7 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const std::string& file, bool lo
 
 mono::SoundFile mono::AudioFactory::LoadFile(const std::string& fileName)
 {
-    File::FilePtr soundFile = File::OpenBinaryFile(fileName);
+    File::FilePtr soundFile = File::OpenBinaryFile(fileName.c_str());
 
     std::vector<byte> bytes;
     File::FileRead(soundFile, bytes);

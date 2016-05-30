@@ -9,7 +9,7 @@
 #include "WindowFactory.h"
 #include "SDLWindow.h"
 
-mono::IWindowPtr mono::CreateWindow(const std::string& title, int width, int height, bool fullscreen)
+mono::IWindowPtr mono::CreateWindow(const char* title, int width, int height, bool fullscreen)
 {
     return std::make_shared<SDLWindow>(title, width, height, fullscreen);
 }

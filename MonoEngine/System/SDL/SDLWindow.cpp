@@ -55,7 +55,7 @@ namespace
 }
 
 
-SDLWindow::SDLWindow(const std::string& title, int width, int height, bool)
+SDLWindow::SDLWindow(const char* title, int width, int height, bool)
     : mSize(width, height),
       mWindow(nullptr),
       mContext(nullptr)
@@ -84,7 +84,7 @@ SDLWindow::SDLWindow(const std::string& title, int width, int height, bool)
                                SDL_WINDOW_BORDERLESS; //| SDL_WINDOW_ALLOW_HIGHDPI; // | screenflag;
 
     // Create our window centered and with the given resolution
-    mWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
+    mWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
     if(mWindow == 0)
         throw std::runtime_error("Unable to create SDL window");
 

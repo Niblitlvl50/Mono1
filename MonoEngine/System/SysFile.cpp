@@ -7,19 +7,20 @@
 //
 
 #include "SysFile.h"
-#include <string>
 #include <stdexcept>
+#include <string>
+#include <cstdio>
 
-File::FilePtr File::OpenBinaryFile(const std::string& source)
+File::FilePtr File::OpenBinaryFile(const char* source)
 {
-    std::FILE* file = std::fopen(source.c_str(), "rb");
+    std::FILE* file = std::fopen(source, "rb");
     if(!file)
-        throw std::runtime_error("Unable to open binary file: " + source);
+        throw std::runtime_error("Unable to open binary file: " + std::string(source));
     
     return File::FilePtr(file, std::fclose);
 }
 
-long File::FileSize(const FilePtr file)
+long File::FileSize(const FilePtr& file)
 {
     std::fseek(file.get(), 0, SEEK_END);
 	const long size = std::ftell(file.get());
@@ -28,7 +29,7 @@ long File::FileSize(const FilePtr file)
     return size;
 }
 
-void File::FileRead(FilePtr file, std::vector<byte>& bytes)
+void File::FileRead(const FilePtr& file, std::vector<byte>& bytes)
 {
     const long filesize = File::FileSize(file);
     

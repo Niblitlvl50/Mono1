@@ -10,7 +10,7 @@
 
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 
 namespace lua
@@ -23,17 +23,17 @@ namespace lua
     typedef std::vector<bool> BoolTable;
     typedef std::vector<std::string> StringTable;
     
-    typedef std::map<std::string, IntTable> MapIntTable;
-    typedef std::map<std::string, DoubleTable> MapDoubleTable;
-    typedef std::map<std::string, FloatTable> MapFloatTable;
-    typedef std::map<std::string, BoolTable> MapBoolTable;
-    typedef std::map<std::string, StringTable> MapStringTable;
+    typedef std::unordered_map<std::string, IntTable> MapIntTable;
+    typedef std::unordered_map<std::string, DoubleTable> MapDoubleTable;
+    typedef std::unordered_map<std::string, FloatTable> MapFloatTable;
+    typedef std::unordered_map<std::string, BoolTable> MapBoolTable;
+    typedef std::unordered_map<std::string, StringTable> MapStringTable;
 
-    typedef std::map<int, IntTable> MapIntIntTable;
-    typedef std::map<int, DoubleTable> MapIntDoubleTable;
-    typedef std::map<int, FloatTable> MapIntFloatTable;
-    typedef std::map<int, BoolTable> MapIntBoolTable;
-    typedef std::map<int, StringTable> MapIntStringTable;
+    typedef std::unordered_map<int, IntTable> MapIntIntTable;
+    typedef std::unordered_map<int, DoubleTable> MapIntDoubleTable;
+    typedef std::unordered_map<int, FloatTable> MapIntFloatTable;
+    typedef std::unordered_map<int, BoolTable> MapIntBoolTable;
+    typedef std::unordered_map<int, StringTable> MapIntStringTable;
 
     void Get(LuaState& L, int& value);
     void Get(LuaState& L, double& value);
@@ -84,10 +84,10 @@ namespace lua
     }
     
     template <typename K, typename T>
-    std::map<K, std::vector<T> > GetTableMap(LuaState& lua, const std::string& name)
+    std::unordered_map<K, std::vector<T> > GetTableMap(LuaState& lua, const std::string& name)
     {
         lua::GetGlobal(lua, name);
-        std::map<K, std::vector<T> > values;
+        std::unordered_map<K, std::vector<T> > values;
 
         try
         {

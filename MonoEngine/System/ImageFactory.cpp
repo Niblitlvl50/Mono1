@@ -67,7 +67,7 @@ mono::IImagePtr mono::LoadImage(const std::string& source)
     
     const std::string& extension = source.substr(dotpos +1);
     if(extension == "png")
-        return std::make_shared<libpng::PNGImage>(source);
+        return std::make_shared<libpng::PNGImage>(source.c_str());
 
     // If we end up here, the image is unsupported.
     throw std::runtime_error("Unsupported image");

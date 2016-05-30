@@ -12,12 +12,12 @@
 #include "ImageFactory.h"
 
 #include <cstdio>
-#include <map>
+#include <unordered_map>
 
 namespace
 {
     // This is where all the weak pointers goes, that points to the allocated textures!
-    std::map<std::string, std::weak_ptr<mono::ITexture>> textureStorage;
+    std::unordered_map<std::string, std::weak_ptr<mono::ITexture>> textureStorage;
 }
 
 mono::ITexturePtr mono::CreateTexture(const std::string& source)

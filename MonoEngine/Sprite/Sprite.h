@@ -43,7 +43,7 @@
 #include "Color.h"
 
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <functional>
 
 namespace mono
@@ -97,6 +97,8 @@ namespace mono
         //! @return int
         virtual int GetDefinedAnimations() const;
 
+        //! Returns the current active animation
+        //! @return int
         virtual int GetActiveAnimation() const;
 
         virtual void doUpdate(unsigned int delta);
@@ -108,7 +110,7 @@ namespace mono
         ITexturePtr mTexture;
         
         std::vector<math::Quad> mTextureCoordinates;
-        std::map<int, AnimationSequence> mDefinedAnimations;
+        std::unordered_map<int, AnimationSequence> mDefinedAnimations;
 
         Color::RGBA mColor;
     };

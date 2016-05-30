@@ -39,15 +39,14 @@ namespace
 
 using namespace libpng;
 
-PNGImage::PNGImage(const std::string& source)
-    : mSource(source)
+PNGImage::PNGImage(const char* source)
 {
-    ReadSource();
+    ReadSource(source);
 }
 
-void PNGImage::ReadSource()
+void PNGImage::ReadSource(const char* source)
 {
-    File::FilePtr file = File::OpenBinaryFile(mSource);
+    File::FilePtr file = File::OpenBinaryFile(source);
     
     unsigned char header[PNG_HEADER_SIZE];
     fread(header, 1, PNG_HEADER_SIZE, file.get());

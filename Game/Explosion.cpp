@@ -8,7 +8,6 @@
 
 #include "Explosion.h"
 #include "IRenderer.h"
-#include <functional>
 
 using namespace game;
 
@@ -19,8 +18,12 @@ Explosion::Explosion(const math::Vector2f& position, float scale, float rotation
     mPosition = position;
     mScale = math::Vector2f(scale, scale);
     mRotation = rotation;
+
+    const auto func = [this] {
+        mRemoveMe = true;
+    };
     
-    mSprite.SetAnimation(0, std::bind(&Explosion::OnFinished, this));
+    mSprite.SetAnimation(0, func);
 }
 
 void Explosion::Update(unsigned int delta)
@@ -36,9 +39,4 @@ void Explosion::Draw(mono::IRenderer& renderer) const
 bool Explosion::RemoveMe() const
 {
     return mRemoveMe;
-}
-
-void Explosion::OnFinished()
-{
-    mRemoveMe = true;
 }

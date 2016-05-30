@@ -9,17 +9,16 @@
 #pragma once
 
 #include "IImage.h"
-#include <string>
 
 namespace libpng
 {
     struct PNGImage : mono::IImage
     {
-        PNGImage(const std::string& source);
+        PNGImage(const char* source);
         
     private:
         
-        void ReadSource();
+        void ReadSource(const char* source);
 
         virtual const byte* Data() const;
         virtual unsigned int Width() const;
@@ -28,7 +27,6 @@ namespace libpng
         virtual unsigned int TargetFormat() const;
         virtual bool HasAlpha() const;
         
-        const std::string mSource;
         unsigned int mWidth;
         unsigned int mHeight;
         unsigned char mColorType;

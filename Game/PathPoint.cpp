@@ -19,12 +19,16 @@ PathPoint::PathPoint()
     : mElapsedTime(0)
 {
     mScale = math::Vector2f(10, 10);
-    const std::vector<math::Vector2f> points = { math::Vector2f(0, 0),
-                                                 math::Vector2f(0, 100),
-                                                 math::Vector2f(50, 100),
-                                                 math::Vector2f(250, 200),
-                                                 math::Vector2f(30, 30),
-                                                 math::Vector2f(0, 0) };
+
+    const std::vector<math::Vector2f> points = {
+        math::Vector2f(0, 0),
+        math::Vector2f(0, 100),
+        math::Vector2f(50, 100),
+        math::Vector2f(250, 200),
+        math::Vector2f(30, 30),
+        math::Vector2f(0, 0)
+    };
+
     mPath = mono::CreatePath(points);
 }
 

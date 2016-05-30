@@ -54,7 +54,7 @@ namespace
     }
     
     template <typename T>
-    void GetLuaMap(lua::LuaState& L, std::map< std::string, std::vector<T> >& values)
+    void GetLuaMap(lua::LuaState& L, std::unordered_map< std::string, std::vector<T> >& values)
     {
         const bool result = (lua_istable(L, -1) != 0);
         if(!result)
@@ -63,7 +63,7 @@ namespace
         lua_pushnil(L);
         while(lua_next(L, -2) != 0)
         {
-            const std::string key = lua_tostring(L, -2);
+            const std::string& key = lua_tostring(L, -2);
             std::vector<T> table;
             GetLuaTable(L, table);
             
@@ -74,7 +74,7 @@ namespace
     }
     
     template <typename T>
-    void GetLuaIntMap(lua::LuaState& L, std::map<int, std::vector<T> >& values)
+    void GetLuaIntMap(lua::LuaState& L, std::unordered_map<int, std::vector<T> >& values)
     {
         const bool result = (lua_istable(L, -1) != 0);
         if(!result)

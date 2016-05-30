@@ -23,5 +23,7 @@ namespace mono
 
         virtual void Pitch(float pitch) = 0;
         virtual void Gain(float gain) = 0;
+
+        virtual void Position(float x, float y) = 0;
     };
 }

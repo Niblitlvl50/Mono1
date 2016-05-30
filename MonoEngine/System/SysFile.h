@@ -19,15 +19,15 @@ namespace File
     typedef std::shared_ptr<FILE> FilePtr;
 
     //! Opens a binary file
-    FilePtr OpenBinaryFile(const std::string& source);
+    FilePtr OpenBinaryFile(const char* source);
 
     //! Calculates the size of a file
     //! \param file Input file
     //! \return Size of the file
-    long FileSize(const FilePtr file);
+    long FileSize(const FilePtr& file);
 
     //! Read the file into a buffer
     //! \param file The file to read from
     //! \param bytes Buffer that will hold the data
-    void FileRead(FilePtr file, std::vector<byte>& bytes);
+    void FileRead(const FilePtr& file, std::vector<byte>& bytes);
 }

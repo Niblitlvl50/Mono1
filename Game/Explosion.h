@@ -26,8 +26,6 @@ namespace game
         
     private:
 
-        void OnFinished();
-        
         mono::Sprite mSprite;
         bool mRemoveMe;
     };

@@ -35,6 +35,8 @@ void StandardWeapon::DoFire(const math::Vector2f& position, float direction) con
     bullet->GetPhysics().body->ApplyImpulse(impulse, new_position);
 
     m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
+
+    m_sound->Position(position.x, position.y);
     m_sound->Play();
 }
 

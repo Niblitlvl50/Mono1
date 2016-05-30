@@ -15,4 +15,7 @@ namespace Sound
 
     // Exit the sound system
     void Exit();
+
+    // Set the listener position
+    void ListenerPosition(float x, float y);
 }

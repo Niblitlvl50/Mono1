@@ -67,8 +67,7 @@ void EntityBase::doUpdate(unsigned int delta)
         action->Update(delta);
     
     // Check if any actions has finished and remove them if that is the case
-    using namespace std::placeholders;
-    const auto removeFunc = std::bind(&IAction::Finished, _1);
+    const auto removeFunc = std::bind(&IAction::Finished, std::placeholders::_1);
     const auto it = std::remove_if(mActions.begin(), mActions.end(), removeFunc);
     if(it != mActions.end())
         mActions.erase(it, mActions.end());

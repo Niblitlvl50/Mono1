@@ -16,7 +16,7 @@
 #define STB_TRUETYPE_IMPLEMENTATION
 #include "stb_truetype.h"
 
-#include <map>
+#include <unordered_map>
 
 
 namespace
@@ -36,12 +36,12 @@ namespace
     };
 
     static mono::ITexturePtr fontTexture;
-    static std::map<char, CharData> charMap;
+    static std::unordered_map<char, CharData> charMap;
 }
 
 void mono::LoadFont(const std::string& font, float size, float scale)
 {
-    File::FilePtr fontfile = File::OpenBinaryFile(font);
+    File::FilePtr fontfile = File::OpenBinaryFile(font.c_str());
     
     std::vector<byte> fontbuffer;
     File::FileRead(fontfile, fontbuffer);

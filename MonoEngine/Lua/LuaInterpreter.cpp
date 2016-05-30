@@ -9,7 +9,7 @@
 
 #include "LuaInterpreter.h"
 #include <stdexcept>
-#include <map>
+#include <unordered_map>
 
 extern "C"
 {
@@ -22,7 +22,7 @@ using namespace mono;
 
 namespace
 {
-    std::map<std::string, LuaFunction> mLuaFunctions;
+    std::unordered_map<std::string, LuaFunction> mLuaFunctions;
     
     int LuaCallbackFunc(lua_State* state)
     {
