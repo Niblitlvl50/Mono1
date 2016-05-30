@@ -23,7 +23,7 @@ namespace cm
     {
     public:
         
-        Space(const math::Vector2f& gravity, float damping = 1.0f);
+        Space(const math::Vector2f& gravity, float damping);
         ~Space();
         
         void Tick(float delta);

@@ -147,7 +147,7 @@ namespace
 }
 
 TestZone::TestZone(mono::EventHandler& eventHandler)
-    : PhysicsZone(math::Vector2f(0.0f, 0.0f)),
+    : PhysicsZone(math::Vector2f(0.0f, 0.0f), 0.9f),
       mEventHandler(eventHandler),
       m_spawner(eventHandler)
 {

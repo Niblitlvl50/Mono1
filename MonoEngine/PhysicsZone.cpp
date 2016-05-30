@@ -20,8 +20,8 @@ using namespace mono;
 
 struct PhysicsZone::PhysicsImpl : IUpdatable
 {
-    PhysicsImpl(const math::Vector2f& gravity)
-        : mSpace(gravity)
+    PhysicsImpl(const math::Vector2f& gravity, float damping)
+        : mSpace(gravity, damping)
     { }
     void doUpdate(unsigned int delta)
     {
@@ -31,8 +31,8 @@ struct PhysicsZone::PhysicsImpl : IUpdatable
     cm::Space mSpace;
 };
 
-PhysicsZone::PhysicsZone(const math::Vector2f& gravity)
-    : mPhysics(new PhysicsImpl(gravity))
+PhysicsZone::PhysicsZone(const math::Vector2f& gravity, float damping)
+    : mPhysics(new PhysicsImpl(gravity, damping))
 {
     // Add space physics as an updatable
     AddUpdatable(mPhysics);

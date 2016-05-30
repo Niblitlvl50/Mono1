@@ -22,7 +22,7 @@ namespace mono
     {
     protected:
         
-        PhysicsZone(const math::Vector2f& gravity);
+        PhysicsZone(const math::Vector2f& gravity, float damping);
 
         virtual void DoPreAccept();
         virtual void ForEachBody(const cm::BodyFunc& func);
