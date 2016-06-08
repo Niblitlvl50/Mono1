@@ -76,9 +76,9 @@ namespace
     };
 }
 
-std::shared_ptr<mono::IPath> mono::CreatePath(const std::string& pathFile)
+std::shared_ptr<mono::IPath> mono::CreatePath(const char* path_file)
 {
-    lua::LuaState config(pathFile);
+    lua::LuaState config(path_file);
     const lua::MapIntFloatTable& table = lua::GetTableMap<int, float>(config, "path");
 
     std::vector<math::Vector2f> coords;

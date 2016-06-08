@@ -16,6 +16,6 @@ namespace mono
 {
     struct IPath;
     
-    std::shared_ptr<mono::IPath> CreatePath(const std::string& pathFile);
+    std::shared_ptr<mono::IPath> CreatePath(const char* path_file);
     std::shared_ptr<mono::IPath> CreatePath(const std::vector<math::Vector2f>& coords);
 }

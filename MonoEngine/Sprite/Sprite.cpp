@@ -62,9 +62,9 @@ namespace
 
 }
 
-Sprite::Sprite(const std::string& file)
+Sprite::Sprite(const char* sprite_file)
 {
-    lua::LuaState config(file);
+    lua::LuaState config(sprite_file);
 
     const std::string& texture = lua::GetValue<std::string>(config, "texture");
     mTexture = mono::CreateTexture(texture);
@@ -82,8 +82,8 @@ Sprite::Sprite(const std::string& file)
     
     GenerateTextureCoordinates(data, mTextureCoordinates);    
 
-    const lua::MapIntIntTable animations = lua::GetTableMap<int, int>(config, "animations");
-    const lua::MapIntStringTable attributes = lua::GetTableMap<int, std::string>(config, "attributes");
+    const lua::MapIntIntTable& animations = lua::GetTableMap<int, int>(config, "animations");
+    const lua::MapIntStringTable& attributes = lua::GetTableMap<int, std::string>(config, "attributes");
     
     for(const auto& animation : animations)
     {

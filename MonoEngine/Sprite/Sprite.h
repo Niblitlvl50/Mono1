@@ -54,7 +54,7 @@ namespace mono
 
         //! Constructs a sprite object.
         //! @param[in] file The .sprite file to use.
-        Sprite(const std::string& file);
+        Sprite(const char* sprite_file);
         
         //! Gets the sprites texture
         //! @return ITexturePtr A shared pointer to the texture.

@@ -7,6 +7,7 @@
 //
 
 #include "LuaState.h"
+#include <string>
 #include <stdexcept>
 
 extern "C"
@@ -25,14 +26,14 @@ LuaState::LuaState()
     luaL_openlibs(L);
 }
 
-LuaState::LuaState(const std::string& file)
+LuaState::LuaState(const char* file)
 {
     L = lua_open();
     luaL_openlibs(L);
 
-    const bool failed = luaL_dofile(L, file.c_str());
+    const bool failed = luaL_dofile(L, file);
     if(failed)
-        throw std::runtime_error("Unable to load file: " + file);
+        throw std::runtime_error("Unable to load file: " + std::string(file));
 }
 
 LuaState::~LuaState()

@@ -9,8 +9,6 @@
 
 #pragma once
 
-#include <string>
-
 struct lua_State;
 
 namespace lua
@@ -18,7 +16,7 @@ namespace lua
     struct LuaState
     {
         LuaState();
-        LuaState(const std::string& file);
+        LuaState(const char* file);
         
         ~LuaState();
         
