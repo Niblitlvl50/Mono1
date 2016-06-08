@@ -22,6 +22,8 @@ namespace cm
         static IBodyPtr CreateStaticBody();
 
         //! Body
+        //! Inertia is the body's resistance to change in rotation, pass in INFINITY
+        //! if no rotation is wanted.
         static IBodyPtr CreateBody(float mass, float inertia);
         
         //! Circle shape

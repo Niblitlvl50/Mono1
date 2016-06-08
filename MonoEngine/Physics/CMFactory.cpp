@@ -19,12 +19,12 @@ namespace
     struct CMBody : cm::IBody
     {        
         CMBody()
-            : mHandler(0)
+            : mHandler(nullptr)
         {
             mBody = cpBodyNewStatic();
         }
         CMBody(float mass, float inertia)
-            : mHandler(0)
+            : mHandler(nullptr)
         {
             mBody = cpBodyNew(mass, inertia);
         }

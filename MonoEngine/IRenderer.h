@@ -33,6 +33,8 @@ namespace mono
         virtual void DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const Color::RGBA& color) const = 0;
         virtual void DrawShape(const std::vector<math::Vector2f>& shape1, const std::vector<math::Vector2f>& shape2, float morphGrade, const Color::RGBA& color) = 0;
 
+        virtual void UseShader(const IShaderPtr& shader) const = 0;
+
         virtual void PushNewTransform(const math::Matrix& transform) = 0;
         virtual const math::Matrix& GetCurrentTransform() const = 0;
     };

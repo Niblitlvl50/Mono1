@@ -40,6 +40,8 @@ namespace mono
         virtual void DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const;
         virtual void DrawShape(const std::vector<math::Vector2f>& shape1, const std::vector<math::Vector2f>& shape2, float morphGrade, const Color::RGBA& color);
 
+        virtual void UseShader(const IShaderPtr& shader) const;
+
         virtual void PushNewTransform(const math::Matrix& transform);
         virtual const math::Matrix& GetCurrentTransform() const;
 
@@ -52,7 +54,8 @@ namespace mono
 
         ICameraPtr mCamera;
         IWindowPtr mWindow;
-        
+
+        math::Matrix mProjectionMatrix;
         math::Matrix mModelView;
         math::Matrix mCurrentTransform;
 

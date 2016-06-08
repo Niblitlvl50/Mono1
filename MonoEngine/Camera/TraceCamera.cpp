@@ -48,7 +48,7 @@ void TraceCamera::Update(unsigned int delta)
     }
 }
 
-void TraceCamera::Follow(const mono::IEntityPtr entity, const math::Vector2f& offset)
+void TraceCamera::Follow(const mono::IEntityPtr& entity, const math::Vector2f& offset)
 {
     mEntity = entity;
     m_offset = offset;

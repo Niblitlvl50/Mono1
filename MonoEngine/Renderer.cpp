@@ -39,22 +39,12 @@ Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
 void Renderer::PrepareDraw()
 {
     const math::Quad& viewport = mCamera->GetViewport();
-    const math::Matrix& projection = math::Ortho(0.0f, viewport.mB.x, 0.0f, viewport.mB.y, -10.0f, 10.0f);
+    mProjectionMatrix = math::Ortho(0.0f, viewport.mB.x, 0.0f, viewport.mB.y, -10.0f, 10.0f);
 
     math::Identity(mModelView);
     math::Translate(mModelView, -viewport.mA);
 
     mWindow->MakeCurrent();
-
-    // Setup the shaders with the correct projection matrix
-    mColorShader->Use();
-    mColorShader->LoadProjectionMatrix(projection);
-
-    mTextureShader->Use();
-    mTextureShader->LoadProjectionMatrix(projection);
-
-    m_morphShader->Use();
-    m_morphShader->LoadProjectionMatrix(projection);
 }
 
 void Renderer::EndDraw()
@@ -123,67 +113,59 @@ void Renderer::doDrawTexts() const
 {
     mono::UseFont();
 
-    mTextureShader->Use();
-    mTextureShader->LoadModelViewMatrix(mCurrentTransform);
-
+    UseShader(mTextureShader);
     ::DrawTexts(mTexts, mTextureShader);
 }
 
 void Renderer::DrawSprite(const ISprite& sprite) const
 {
-    mTextureShader->Use();
-    mTextureShader->LoadModelViewMatrix(mCurrentTransform);
-
+    UseShader(mTextureShader);
     ::DrawSprite(sprite, mTextureShader);
 }
 
 void Renderer::DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color::RGBA& color, float size) const
 {
-    mColorShader->Use();
-    mColorShader->LoadModelViewMatrix(mCurrentTransform);
-
+    UseShader(mColorShader);
     ::DrawPoints(points, color, size, mColorShader);
 }
 
 void Renderer::DrawLines(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const
 {
-    mColorShader->Use();
-    mColorShader->LoadModelViewMatrix(mCurrentTransform);
-
+    UseShader(mColorShader);
     ::DrawLines(linePoints, color, width, mColorShader);
 }
 
 void Renderer::DrawPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const
 {
-    mColorShader->Use();
-    mColorShader->LoadModelViewMatrix(mCurrentTransform);
-
+    UseShader(mColorShader);
     ::DrawLine(linePoints, color, width, mColorShader);
 }
 
 void Renderer::DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const
 {
-    mColorShader->Use();
-    mColorShader->LoadModelViewMatrix(mCurrentTransform);
-
+    UseShader(mColorShader);
     ::DrawQuad(quad, color, width, mColorShader);
 }
 
 void Renderer::DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const
 {
-    mColorShader->Use();
-    mColorShader->LoadModelViewMatrix(mCurrentTransform);
-
+    UseShader(mColorShader);
     ::DrawCircle(pos, radie, segments, lineWidth, color, mColorShader);
 }
 
 void Renderer::DrawShape(const std::vector<math::Vector2f>& shape1, const std::vector<math::Vector2f>& shape2, float morphGrade, const mono::Color::RGBA& color)
 {
-    m_morphShader->Use();
-    m_morphShader->LoadModelViewMatrix(mCurrentTransform);
-    m_morphShader->SetMorphGrade(morphGrade);
+    UseShader(m_morphShader);
 
+    m_morphShader->SetMorphGrade(morphGrade);
     ::DrawShape(shape1, shape2, color, m_morphShader);
+}
+
+void Renderer::UseShader(const IShaderPtr& shader) const
+{
+    shader->Use();
+    shader->LoadModelViewMatrix(mCurrentTransform);
+    shader->LoadProjectionMatrix(mProjectionMatrix);
 }
 
 void Renderer::PushNewTransform(const math::Matrix& transform)

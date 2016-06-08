@@ -18,7 +18,7 @@ namespace mono
     class Engine
     {
     public:
-        Engine(IWindowPtr view, ICameraPtr camera, EventHandler& eventHandler);
+        Engine(const IWindowPtr& view, const ICameraPtr& camera, EventHandler& eventHandler);
         ~Engine();
 		
         void Run(IZonePtr zone);

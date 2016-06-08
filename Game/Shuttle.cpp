@@ -40,16 +40,15 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     mPosition = math::Vector2f(x, y);
     mScale = math::Vector2f(20.0f, 20.0f);
     
-    mPhysicsObject.body = cm::Factory::CreateBody(10.0f, 1.0f);
+    mPhysicsObject.body = cm::Factory::CreateBody(10.0f, INFINITY);
     mPhysicsObject.body->SetPosition(mPosition);
     mPhysicsObject.body->SetCollisionHandler(this);
 
     cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, mScale.x, mScale.y);
     shape->SetElasticity(0.1f);
     
-    mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
-    mPhysicsObject.shapes.push_back(shape);    
-    
+    mPhysicsObject.shapes.push_back(shape);
+
     mSprite.SetAnimation(constants::IDLE);
 
     // Make sure we have a weapon

@@ -53,7 +53,7 @@ namespace Func
 }
 
 
-Engine::Engine(IWindowPtr window, ICameraPtr camera, EventHandler& eventHandler)
+Engine::Engine(const IWindowPtr& window, const ICameraPtr& camera, EventHandler& eventHandler)
     : mPause(false),
       mQuit(false),
       mUpdateLastTime(false),

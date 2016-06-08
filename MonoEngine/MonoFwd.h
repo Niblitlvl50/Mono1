@@ -25,6 +25,7 @@ namespace mono
     struct IPath;
     class ISprite;
     class ISound;
+    class IShader;
 
     class EventHandler;
 

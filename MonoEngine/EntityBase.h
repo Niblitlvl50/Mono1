@@ -28,10 +28,10 @@ namespace mono
         virtual math::Quad BoundingBox() const;
         virtual bool RemoveMe() const;
         
-        void AddChild(IEntityPtr child);
-        void RemoveChild(IEntityPtr child);
+        void AddChild(const IEntityPtr& child);
+        void RemoveChild(const IEntityPtr& child);
         
-        void AddAction(IActionPtr action);
+        void AddAction(const IActionPtr& action);
     
     protected:
         

@@ -117,17 +117,17 @@ bool EntityBase::RemoveMe() const
     return false;
 }
 
-void EntityBase::AddChild(IEntityPtr child)
+void EntityBase::AddChild(const IEntityPtr& child)
 {
     mChildren.push_back(child);
 }
 
-void EntityBase::RemoveChild(IEntityPtr child)
+void EntityBase::RemoveChild(const IEntityPtr& child)
 {
     FindAndRemove(mChildren, child);
 }
 
-void EntityBase::AddAction(IActionPtr action)
+void EntityBase::AddAction(const IActionPtr& action)
 {
     mActions.push_back(action);
 }
