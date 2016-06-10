@@ -30,10 +30,13 @@ namespace mono
         void OnApplication(const Event::ApplicationEvent& event);
         void OnSurfaceChanged(const Event::SurfaceChangedEvent& event);
         void OnActivated(const Event::ActivatedEvent& event);
+        void OnTimeScale(const event::TimeScaleEvent& event);
 
         bool mPause;
         bool mQuit;
         bool mUpdateLastTime;
+
+        float mTimeScale;
 
         IWindowPtr mWindow;
         ICameraPtr mCamera;
@@ -45,6 +48,7 @@ namespace mono
         EventToken<Event::ApplicationEvent> mApplicationToken;
         EventToken<Event::SurfaceChangedEvent> mSurfaceChangedToken;
         EventToken<Event::ActivatedEvent> mActivatedToken;
+        EventToken<event::TimeScaleEvent> mTimeScaleToken;
     };
 }
 

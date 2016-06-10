@@ -24,6 +24,7 @@
 #include "ApplicationEvent.h"
 #include "SurfaceChangedEvent.h"
 #include "ActivatedEvent.h"
+#include "TimeScaleEvent.h"
 
 #include "Renderer.h"
 
@@ -57,11 +58,13 @@ Engine::Engine(const IWindowPtr& window, const ICameraPtr& camera, EventHandler&
     : mPause(false),
       mQuit(false),
       mUpdateLastTime(false),
+      mTimeScale(1.0f),
       mWindow(window),
       mCamera(camera),
       mEventHandler(eventHandler)
 {
     using namespace std::placeholders;
+    
     const auto func = std::bind(Func::ScreenToWorld, _1, _2, mWindow, mCamera);
     mInputHandler = std::make_shared<InputHandler>(func, mEventHandler);
     
@@ -79,6 +82,9 @@ Engine::Engine(const IWindowPtr& window, const ICameraPtr& camera, EventHandler&
 	
     const Event::ActivatedEventFunc activatedFunc = std::bind(&Engine::OnActivated, this, _1);
     mActivatedToken = mEventHandler.AddListener(activatedFunc);
+
+    const event::TimeScaleEventFunc timeScaleFunc = std::bind(&Engine::OnTimeScale, this, _1);
+    mTimeScaleToken = mEventHandler.AddListener(timeScaleFunc);
 }
 
 Engine::~Engine()
@@ -88,6 +94,7 @@ Engine::~Engine()
     mEventHandler.RemoveListener(mApplicationToken);
     mEventHandler.RemoveListener(mSurfaceChangedToken);
     mEventHandler.RemoveListener(mActivatedToken);
+    mEventHandler.RemoveListener(mTimeScaleToken);
 }
 
 void Engine::Run(IZonePtr zone)
@@ -110,7 +117,7 @@ void Engine::Run(IZonePtr zone)
         }
 
         const unsigned int beforeTime = Time::GetMilliseconds();
-        const unsigned int delta = beforeTime - lastTime;
+        const unsigned int delta = (beforeTime - lastTime) * mTimeScale;
 
         // Handle input events
         Events::ProcessSystemEvents(mInputHandler);
@@ -172,6 +179,11 @@ void Engine::OnSurfaceChanged(const Event::SurfaceChangedEvent& event)
 void Engine::OnActivated(const Event::ActivatedEvent& event)
 {
     mWindow->Activated(event.gain);
+}
+
+void Engine::OnTimeScale(const event::TimeScaleEvent& event)
+{
+    mTimeScale = event.time_scale;
 }
 
 

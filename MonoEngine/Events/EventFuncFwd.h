@@ -26,3 +26,8 @@ namespace Event
     typedef std::function<void (const MouseWheelEvent&)> MouseWheelEventFunc;
     typedef std::function<void (const MultiGestureEvent&)> MultiGestureEventFunc;
 }
+
+namespace event
+{
+    typedef std::function<void (const TimeScaleEvent&)> TimeScaleEventFunc;
+}

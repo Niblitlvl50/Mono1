@@ -24,3 +24,8 @@ namespace Event
     struct MultiGestureEvent;
 }
 
+namespace event
+{
+    struct TimeScaleEvent;
+}
+
