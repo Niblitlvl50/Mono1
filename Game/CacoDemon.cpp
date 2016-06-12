@@ -13,6 +13,9 @@
 #include "CMIShape.h"
 #include "CMFactory.h"
 
+#include "EntityFlags.h"
+#include "Utils.h"
+
 using namespace game;
 
 namespace
@@ -34,7 +37,11 @@ CacoDemon::CacoDemon(mono::EventHandler& eventHandler)
     mPosition = math::Vector2f(0, -200);
     mScale = math::Vector2f(100.0f, 100.0f);
 
-    mPhysicsObject.body = cm::Factory::CreateBody(50.0f, 1.0f);
+    uint flags = 0;
+    mono::SetBitFlag(flags, EntityFlags::DAMAGABLE);
+    SetFlags(flags);
+
+    mPhysicsObject.body = cm::Factory::CreateBody(500.0f, 1.0f);
     mPhysicsObject.body->SetPosition(mPosition);
 
     mPhysicsObject.body->SetCollisionHandler(&m_controller);

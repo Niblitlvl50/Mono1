@@ -11,6 +11,7 @@
 
 #include "IDrawable.h"
 #include "IUpdatable.h"
+#include "SysTypes.h"
 
 namespace mono
 {
@@ -26,7 +27,11 @@ namespace mono
         virtual float Rotation() const = 0;
         virtual void SetRotation(float rotation) = 0;
 
-        virtual bool RemoveMe() const = 0;
+        // Unique id
+        virtual uint Id() const = 0;
+
+        virtual uint Flags() const = 0;
+        virtual void SetFlags(uint flags) = 0;
     };
 }
 

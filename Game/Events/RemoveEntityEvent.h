@@ -19,6 +19,16 @@ namespace game
         { }
         const mono::IEntityPtr mEntity;
     };
+
+    struct RemoveEntityByIdEvent
+    {
+        constexpr RemoveEntityByIdEvent(uint id)
+            : id(id)
+        { }
+
+        const uint id;
+    };
     
     typedef std::function<void (const game::RemoveEntityEvent& event)> RemoveEntityFunc;
+    typedef std::function<void (const game::RemoveEntityByIdEvent& event)> RemoveEntityByIdFunc;
 }

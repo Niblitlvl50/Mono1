@@ -43,7 +43,7 @@ namespace game
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
         
-        virtual void OnCollideWith(cm::IBodyPtr body);
+        virtual void OnCollideWith(const cm::IBodyPtr& body);
         virtual void OnPostStep();
 
         std::unique_ptr<IWeaponSystem> mWeapon;

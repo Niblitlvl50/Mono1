@@ -26,8 +26,10 @@ namespace mono
         virtual void SetPosition(const math::Vector2f& position);
         virtual void SetRotation(float rotation);
         virtual math::Quad BoundingBox() const;
-        virtual bool RemoveMe() const;
-        
+        virtual uint Id() const;
+        virtual uint Flags() const;
+        virtual void SetFlags(uint flags);
+
         void AddChild(const IEntityPtr& child);
         void RemoveChild(const IEntityPtr& child);
         
@@ -42,7 +44,10 @@ namespace mono
 
         virtual void doDraw(IRenderer& renderer) const;
         virtual void doUpdate(unsigned int delta);
-		
+
+        const uint m_uid;
+        uint m_flags;
+
         math::Vector2f mPosition;
         math::Vector2f mBasePoint;
         math::Vector2f mScale;

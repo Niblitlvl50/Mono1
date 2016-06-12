@@ -28,21 +28,10 @@ void ZoneBase::Accept(IRenderer& renderer)
 
 void ZoneBase::DoPreAccept()
 {
-    const auto func = [](const IEntityPtr& entity) {
-        return !entity->RemoveMe();
-    };
+    for(const auto& task : m_preFrameTasks)
+        task();
 
-    auto part_it = std::partition(mEntities.begin(), mEntities.end(), func);
-    if(part_it == mEntities.end())
-        return;
-
-    for(auto it = part_it, end = mEntities.end(); it != end; ++it)
-    {
-        RemoveDrawable(*it);
-        RemoveUpdatable(*it);
-    }
-
-    mEntities.erase(part_it, mEntities.end());
+    m_preFrameTasks.clear();
 }
 
 void ZoneBase::AddEntity(const IEntityPtr& entity, int layer)
@@ -102,3 +91,22 @@ void ZoneBase::RemoveDrawable(const IDrawablePtr& drawable)
 
     mDrawables.erase(it);
 }
+
+mono::IEntityPtr ZoneBase::FindEntityFromId(uint id) const
+{
+    const auto find_func = [id](const mono::IEntityPtr& entity) {
+        return id == entity->Id();
+    };
+
+    const auto& it = std::find_if(mEntities.begin(), mEntities.end(), find_func);
+    if(it != mEntities.end())
+        return *it;
+
+    return nullptr;
+}
+
+void ZoneBase::SchedulePreFrameTask(const std::function<void ()>& task)
+{
+    m_preFrameTasks.push_back(task);
+}
+

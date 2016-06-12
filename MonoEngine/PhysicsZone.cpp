@@ -38,37 +38,6 @@ PhysicsZone::PhysicsZone(const math::Vector2f& gravity, float damping)
     AddUpdatable(mPhysics);
 }
 
-void PhysicsZone::DoPreAccept()
-{
-    ZoneBase::DoPreAccept();
-
-    const auto func = [](const mono::IEntityPtr& entity) {
-        return !entity->RemoveMe();
-    };
-
-    auto part_it = std::partition(mPhysicsEntities.begin(), mPhysicsEntities.end(), func);
-    if(part_it == mPhysicsEntities.end())
-        return;
-    
-    // Handle clean up for physics entities, do this in two stages just to remove
-    // the drawables first and then erase the entries from the mEntities vector.
-    for(auto it = part_it, end = mPhysicsEntities.end(); it != end; ++it)
-    {
-        IPhysicsEntityPtr entity = *it;
-
-        cm::Object& object = entity->GetPhysics();
-        mPhysics->mSpace.RemoveBody(object.body);
-
-        for(auto& shape : object.shapes)
-            mPhysics->mSpace.RemoveShape(shape);
-
-        RemoveDrawable(entity);
-        RemoveUpdatable(entity);
-    }
-
-    mPhysicsEntities.erase(part_it, mPhysicsEntities.end());
-}
-
 void PhysicsZone::ForEachBody(const cm::BodyFunc& func)
 {
     mPhysics->mSpace.ForEachBody(func);
@@ -106,6 +75,28 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
     {
         throw std::runtime_error("PhysicsZone - Unable to remove physics entity");
     }
+}
+
+IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromBody(const cm::IBodyPtr& body) const
+{
+    for(auto& entity : mPhysicsEntities)
+    {
+        if(entity->GetPhysics().body == body)
+            return entity;
+    }
+
+    return nullptr;
+}
+
+IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromId(uint id) const
+{
+    for(auto& entity : mPhysicsEntities)
+    {
+        if(entity->Id() == id)
+            return entity;
+    }
+
+    return nullptr;
 }
 
 

@@ -40,7 +40,7 @@ namespace cm
     private:
         
         bool OnCollision(cpArbiter* arb);
-        void OnPostStep(void* object, void* data);
+        void OnPostStep(cpArbiter* arb);
         
         void DoForEachFuncOnBody(cpBody* body);
 

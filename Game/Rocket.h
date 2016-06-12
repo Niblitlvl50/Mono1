@@ -22,16 +22,12 @@ namespace game
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
 
-        virtual void OnCollideWith(cm::IBodyPtr body);
+        virtual void OnCollideWith(const cm::IBodyPtr& body);
         virtual void OnPostStep();
-
-        virtual bool RemoveMe() const;
 
     private:
 
         mono::Sprite mSprite;
         mono::EventHandler& mEventHandler;
-        bool mRemoveMe;
-
     };
 }

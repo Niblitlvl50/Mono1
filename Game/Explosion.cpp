@@ -8,19 +8,22 @@
 
 #include "Explosion.h"
 #include "IRenderer.h"
+#include "RemoveEntityEvent.h"
+#include "EventHandler.h"
 
 using namespace game;
 
-Explosion::Explosion(const math::Vector2f& position, float scale, float rotation)
-    : mSprite("explosion.sprite"),
-      mRemoveMe(false)
+Explosion::Explosion(mono::EventHandler& event_handler, const math::Vector2f& position, float scale, float rotation)
+    : mSprite("explosion.sprite")
 {
     mPosition = position;
     mScale = math::Vector2f(scale, scale);
     mRotation = rotation;
 
-    const auto func = [this] {
-        mRemoveMe = true;
+    const uint id = Id();
+
+    const auto func = [&event_handler, id] {
+        event_handler.DispatchEvent(game::RemoveEntityByIdEvent(id));
     };
     
     mSprite.SetAnimation(0, func);
@@ -34,9 +37,4 @@ void Explosion::Update(unsigned int delta)
 void Explosion::Draw(mono::IRenderer& renderer) const
 {
     renderer.DrawSprite(mSprite);
-}
-
-bool Explosion::RemoveMe() const
-{
-    return mRemoveMe;
 }

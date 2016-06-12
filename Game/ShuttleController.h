@@ -32,8 +32,6 @@ namespace game
         
     private:
         
-        void HandleOnShuttlePress();
-        
         Shuttle* mShuttle;
         mono::EventHandler& mEventHandler;
         

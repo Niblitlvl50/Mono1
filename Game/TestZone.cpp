@@ -28,15 +28,15 @@
 #include "SpawnEntityEvent.h"
 #include "SpawnPhysicsEntityEvent.h"
 #include "RemoveEntityEvent.h"
-#include "RemovePhysicsEntityEvent.h"
 #include "ShockwaveEvent.h"
+#include "DamageEvent.h"
 
 #include "MathFunctions.h"
 #include "Utils.h"
+#include "EntityFlags.h"
 
 #include <cmath>
 #include <thread>
-#include <cstdio>
 
 
 using namespace game;
@@ -156,15 +156,15 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
     
     const game::SpawnPhysicsEntityFunc spawnPhysicsFunc = std::bind(&TestZone::SpawnPhysicsEntity, this, _1);
     mSpawnPhysicsEntityToken = mEventHandler.AddListener(spawnPhysicsFunc);
-    
-    const game::RemoveEntityFunc removeEntityFunc = std::bind(&TestZone::RemoveEntity, this, _1);
-    mRemoveEntityToken = mEventHandler.AddListener(removeEntityFunc);
-    
-    const game::RemovePhysicsEntityFunc removePhysicsFunc = std::bind(&TestZone::RemovePhysicsEntity, this, _1);
-    mRemovePhysicsEntityToken = mEventHandler.AddListener(removePhysicsFunc);
+
+    const game::RemoveEntityByIdFunc& removeByIdFunc = std::bind(&TestZone::OnRemoveEntityById, this, _1);
+    mRemoveEntityByIdToken = mEventHandler.AddListener(removeByIdFunc);
 
     const game::ShockwaveEventFunc shockwaveFunc = std::bind(&TestZone::OnShockwaveEvent, this, _1);
     mShockwaveEventToken = mEventHandler.AddListener(shockwaveFunc);
+
+    const std::function<void (const game::DamageEvent&)>& damageFunc = std::bind(&TestZone::OnDamageEvent, this, _1);
+    mDamageEventToken = mEventHandler.AddListener(damageFunc);
 
     m_backgroundMusic = mono::AudioFactory::CreateSound("InGame_Phoenix.wav", true);
 
@@ -196,38 +196,34 @@ TestZone::~TestZone()
 {
     mEventHandler.RemoveListener(mSpawnEntityToken);
     mEventHandler.RemoveListener(mSpawnPhysicsEntityToken);
-    mEventHandler.RemoveListener(mRemoveEntityToken);
-    mEventHandler.RemoveListener(mRemovePhysicsEntityToken);
+    mEventHandler.RemoveListener(mRemoveEntityByIdToken);
+    mEventHandler.RemoveListener(mDamageEventToken);
 }
 
 void TestZone::OnLoad(mono::ICameraPtr camera)
 {
-    AddEntity(std::make_shared<AnimatedDude>(100.0f, 50.0f, mEventHandler), MIDDLEGROUND);
-    
     std::shared_ptr<PhysicsGrid> bounds = std::make_shared<PhysicsGrid>(math::Quad(-1000.0f, -1000.0f, 1000.0f, 1000.0f));
     AddPhysicsEntity(bounds, BACKGROUND);
-        
+
+    std::shared_ptr<Moon> moon1 = std::make_shared<Moon>(550.0f, 300.0f, 100.0f);
+    std::shared_ptr<Moon> moon2 = std::make_shared<Moon>(-400.0f, 400.0f, 50.0f);
+    AddPhysicsEntity(moon1, FOREGROUND);
+    AddPhysicsEntity(moon2, FOREGROUND);
+    AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
+
     std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(-100.0f, 0.0f, mEventHandler);
     AddPhysicsEntity(shuttle, FOREGROUND);
 
-    std::shared_ptr<Moon> moon1 = std::make_shared<Moon>(550.0f, 300.0f, 100.0f);
-    AddPhysicsEntity(moon1, FOREGROUND);
-    
-    std::shared_ptr<Moon> moon2 = std::make_shared<Moon>(-400.0f, 400.0f, 50.0f);
-    AddPhysicsEntity(moon2, FOREGROUND);
-
     AddPhysicsEntity(std::make_shared<game::CacoDemon>(mEventHandler), FOREGROUND);
 
+    AddEntity(std::make_shared<AnimatedDude>(100.0f, 50.0f, mEventHandler), MIDDLEGROUND);
     AddEntity(std::make_shared<InvaderGroup>(), BACKGROUND);
     AddEntity(std::make_shared<DotEntity>(), FOREGROUND);
     AddEntity(std::make_shared<PathPoint>(), BACKGROUND);
     AddEntity(std::make_shared<Morpher>(), FOREGROUND);
-    
-    AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
+    AddEntity(std::make_shared<game::CubeSwarm>(), FOREGROUND);
 
     AddMeteorCluster(this);
-
-    AddEntity(std::make_shared<game::CubeSwarm>(), FOREGROUND);
 
     camera->SetPosition(shuttle->Position());
     camera->Follow(shuttle, math::Vector2f(0, -100));
@@ -248,14 +244,18 @@ void TestZone::SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event)
     AddPhysicsEntity(event.mEntity, FOREGROUND);
 }
 
-void TestZone::RemoveEntity(const game::RemoveEntityEvent& event)
+void TestZone::OnRemoveEntityById(const game::RemoveEntityByIdEvent& event)
 {
-    RemoveEntity(event.mEntity);
-}
+    mono::IPhysicsEntityPtr physics_entity = FindPhysicsEntityFromId(event.id);
+    if(physics_entity)
+    {
+        SchedulePreFrameTask(std::bind(&TestZone::RemovePhysicsEntity, this, physics_entity));
+        return;
+    }
 
-void TestZone::RemovePhysicsEntity(const game::RemovePhysicsEntityEvent& event)
-{
-    RemovePhysicsEntity(event.mEntity);
+    mono::IEntityPtr entity = FindEntityFromId(event.id);
+    if(entity)
+        SchedulePreFrameTask(std::bind(&TestZone::RemoveEntity, this, entity));
 }
 
 void TestZone::OnShockwaveEvent(const game::ShockwaveEvent& event)
@@ -266,6 +266,59 @@ void TestZone::OnShockwaveEvent(const game::ShockwaveEvent& event)
 
     const std::vector<byte> data = { 'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!' };
     m_socket->Send(data);
+}
+
+void TestZone::OnDamageEvent(const game::DamageEvent& event)
+{
+    mono::IPhysicsEntityPtr entity = FindPhysicsEntityFromBody(event.body);
+    if(!entity)
+        return;
+
+    const DamageResult& result = m_damageController.ApplyDamage(entity->Id(), event.damage);
+    if(!result.success)
+        return;
+
+    if(result.health_left <= 0)
+    {
+        m_damageController.RemoveRecord(entity->Id());
+        SchedulePreFrameTask(std::bind(&TestZone::RemovePhysicsEntity, this, entity));
+    }
+}
+
+void TestZone::AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer)
+{
+    const bool damagable = mono::IsBitFlagSet(entity->Flags(), EntityFlags::DAMAGABLE);
+    if(damagable)
+        m_damageController.CreateRecord(entity->Id());
+
+    PhysicsZone::AddPhysicsEntity(entity, layer);
+}
+
+void TestZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
+{
+    const bool damagable = mono::IsBitFlagSet(entity->Flags(), EntityFlags::DAMAGABLE);
+    if(damagable)
+        m_damageController.RemoveRecord(entity->Id());
+
+    PhysicsZone::RemovePhysicsEntity(entity);
+}
+
+void TestZone::AddEntity(const mono::IEntityPtr& entity, int layer)
+{
+    PhysicsZone::AddEntity(entity, layer);
+
+    const bool damagable = mono::IsBitFlagSet(entity->Flags(), EntityFlags::DAMAGABLE);
+    if(damagable)
+        m_damageController.CreateRecord(entity->Id());
+}
+
+void TestZone::RemoveEntity(const mono::IEntityPtr& entity)
+{
+    PhysicsZone::RemoveEntity(entity);
+
+    const bool damagable = mono::IsBitFlagSet(entity->Flags(), EntityFlags::DAMAGABLE);
+    if(damagable)
+        m_damageController.RemoveRecord(entity->Id());
 }
 
 

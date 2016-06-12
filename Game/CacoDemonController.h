@@ -20,7 +20,7 @@ namespace game
 
         CacoDemonController(CacoDemon* demon);
 
-        virtual void OnCollideWith(cm::IBodyPtr body);
+        virtual void OnCollideWith(const cm::IBodyPtr& body);
         virtual void OnPostStep();
 
     private:

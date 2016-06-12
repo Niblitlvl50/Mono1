@@ -16,7 +16,7 @@ CacoDemonController::CacoDemonController(CacoDemon* demon)
 
 }
 
-void CacoDemonController::OnCollideWith(cm::IBodyPtr body)
+void CacoDemonController::OnCollideWith(const cm::IBodyPtr& body)
 {
 
 }

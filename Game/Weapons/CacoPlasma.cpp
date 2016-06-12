@@ -20,6 +20,7 @@
 #include "CMFactory.h"
 
 #include "SpawnEntityEvent.h"
+#include "RemoveEntityEvent.h"
 #include "SpawnPhysicsEntityEvent.h"
 
 #include <cmath>
@@ -30,13 +31,19 @@ namespace
     {
     public:
 
-        CacoExplosion(const math::Vector2f& position)
-            : m_sprite("cacoexplosion.sprite"),
-              m_removeMe(false)
+        CacoExplosion(mono::EventHandler& event_handler, const math::Vector2f& position)
+            : m_sprite("cacoexplosion.sprite")
         {
             mPosition = position;
             mScale = math::Vector2f(40, 40);
-            m_sprite.SetAnimation(0, std::bind(&CacoExplosion::OnFinished, this));
+
+            const uint id = Id();
+
+            const auto func = [&event_handler, id]() {
+                event_handler.DispatchEvent(game::RemoveEntityByIdEvent(id));
+            };
+
+            m_sprite.SetAnimation(0, func);
         }
 
         virtual void Draw(mono::IRenderer& renderer) const
@@ -49,18 +56,7 @@ namespace
             m_sprite.doUpdate(delta);
         }
 
-        virtual bool RemoveMe() const
-        {
-            return m_removeMe;
-        }
-
-        void OnFinished()
-        {
-            m_removeMe = true;
-        }
-
         mono::Sprite m_sprite;
-        bool m_removeMe;
     };
 
     class CacoBullet : public mono::PhysicsEntityBase, public cm::ICollisionHandler
@@ -69,8 +65,7 @@ namespace
 
         CacoBullet(const math::Vector2f& position, mono::EventHandler& eventHandler)
             : m_eventHandler(eventHandler),
-              m_sprite("cacobullet.sprite"),
-              m_removeMe(false)
+              m_sprite("cacobullet.sprite")
         {
             mScale = math::Vector2f(20.0f, 20.0f);
 
@@ -94,17 +89,11 @@ namespace
             m_sprite.doUpdate(delta);
         }
 
-        virtual bool RemoveMe() const
+        virtual void OnCollideWith(const cm::IBodyPtr& body)
         {
-            return m_removeMe;
-        }
-
-        virtual void OnCollideWith(cm::IBodyPtr body)
-        {
-            const game::SpawnEntityEvent event(std::make_shared<CacoExplosion>(mPosition));
+            const game::SpawnEntityEvent event(std::make_shared<CacoExplosion>(m_eventHandler, mPosition));
             m_eventHandler.DispatchEvent(event);
-
-            m_removeMe = true;
+            m_eventHandler.DispatchEvent(game::RemoveEntityByIdEvent(Id()));
         }
 
         virtual void OnPostStep()
@@ -112,7 +101,6 @@ namespace
 
         mono::EventHandler& m_eventHandler;
         mono::Sprite m_sprite;
-        bool m_removeMe;
     };
 }
 

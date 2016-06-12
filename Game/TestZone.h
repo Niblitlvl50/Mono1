@@ -13,6 +13,7 @@
 #include "EventToken.h"
 
 #include "Spawner.h"
+#include "DamageController.h"
 
 #include "SysNetwork.h"
 
@@ -20,9 +21,9 @@ namespace game
 {
     struct SpawnEntityEvent;
     struct SpawnPhysicsEntityEvent;
-    struct RemoveEntityEvent;
-    struct RemovePhysicsEntityEvent;
+    struct RemoveEntityByIdEvent;
     struct ShockwaveEvent;
+    struct DamageEvent;
     
     class TestZone : public mono::PhysicsZone
     {
@@ -36,20 +37,27 @@ namespace game
         
         void SpawnEntity(const game::SpawnEntityEvent& event);
         void SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event);
-        void RemoveEntity(const game::RemoveEntityEvent& event);
-        void RemovePhysicsEntity(const game::RemovePhysicsEntityEvent& event);
+        void OnRemoveEntityById(const game::RemoveEntityByIdEvent& event);
         void OnShockwaveEvent(const game::ShockwaveEvent& event);
+        void OnDamageEvent(const game::DamageEvent& event);
 
     private:
-                
+
+        virtual void AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer);
+        virtual void RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity);
+        virtual void AddEntity(const mono::IEntityPtr& entity, int layer);
+        virtual void RemoveEntity(const mono::IEntityPtr& entity);
+
+
         mono::EventToken<game::SpawnEntityEvent> mSpawnEntityToken;
         mono::EventToken<game::SpawnPhysicsEntityEvent> mSpawnPhysicsEntityToken;
-        mono::EventToken<game::RemoveEntityEvent> mRemoveEntityToken;
-        mono::EventToken<game::RemovePhysicsEntityEvent> mRemovePhysicsEntityToken;
+        mono::EventToken<game::RemoveEntityByIdEvent> mRemoveEntityByIdToken;
         mono::EventToken<game::ShockwaveEvent> mShockwaveEventToken;
+        mono::EventToken<game::DamageEvent> mDamageEventToken;
         
         mono::EventHandler& mEventHandler;
         Spawner m_spawner;
+        DamageController m_damageController;
         
         mono::ISoundPtr m_backgroundMusic;
         std::shared_ptr<Network::ISocket> m_socket;

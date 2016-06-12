@@ -14,12 +14,16 @@
 #include "IAction.h"
 #include "IRenderer.h"
 
+#include "SysUID.h"
+
 #include <functional>
 
 using namespace mono;
 
 EntityBase::EntityBase()
-    : mRotation(0.0f),
+    : m_uid(system::CreateUID()),
+      m_flags(0),
+      mRotation(0.0f),
       mScale(1.0f, 1.0f)
 { }
 
@@ -112,9 +116,19 @@ math::Quad EntityBase::BoundingBox() const
     return thisbb;
 }
 
-bool EntityBase::RemoveMe() const
+uint EntityBase::Id() const
 {
-    return false;
+    return m_uid;
+}
+
+uint EntityBase::Flags() const
+{
+    return m_flags;
+}
+
+void EntityBase::SetFlags(uint flags)
+{
+    m_flags = flags;
 }
 
 void EntityBase::AddChild(const IEntityPtr& child)

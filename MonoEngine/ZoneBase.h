@@ -30,11 +30,16 @@ namespace mono
         virtual void AddDrawable(const IDrawablePtr& drawable, int layer);
         virtual void RemoveDrawable(const IDrawablePtr& drawable);
 
+        virtual mono::IEntityPtr FindEntityFromId(uint id) const;
+        virtual void SchedulePreFrameTask(const std::function<void ()>& task);
+
     private:
         
         std::vector<IEntityPtr> mEntities;
         std::vector<IUpdatablePtr> mUpdatables;
         std::vector<std::pair<int, IDrawablePtr>> mDrawables;
+
+        std::vector<std::function<void ()>> m_preFrameTasks;
     };
     
 }

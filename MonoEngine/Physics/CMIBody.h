@@ -18,7 +18,7 @@ namespace cm
         virtual ~ICollisionHandler()
         { }
         
-        virtual void OnCollideWith(cm::IBodyPtr body) = 0;
+        virtual void OnCollideWith(const cm::IBodyPtr& body) = 0;
         virtual void OnPostStep() = 0;
     };
         
@@ -97,7 +97,8 @@ namespace cm
         //! Called by the framework when a collision occures
         //! @param body The other body of the collision
         virtual void OnCollideWith(IBodyPtr body) = 0;
-        
+
+        //! Called by the framework when a collison has been calculated
         virtual void OnPostStep() = 0;
         
         //! Gets the underlying cpBody object, dont use this one

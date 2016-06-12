@@ -26,12 +26,17 @@ Space::Space(const math::Vector2f& gravity, float damping)
     cpSpaceSetGravity(mSpace, cpv(gravity.x, gravity.y));
     cpSpaceSetDamping(mSpace, damping);
 
-    const auto beginFunc = [](cpArbiter* arb, cpSpace*, void* data) -> cpBool {
+    const auto beginFunc = [](cpArbiter* arb, cpSpace*, cpDataPointer data) -> cpBool {
         return static_cast<Space*>(data)->OnCollision(arb);
+    };
+
+    const auto postSolve = [](cpArbiter* arb, cpSpace*, cpDataPointer userData) {
+        static_cast<Space*>(userData)->OnPostStep(arb);
     };
 
     cpCollisionHandler* ch = cpSpaceAddDefaultCollisionHandler(mSpace);
     ch->beginFunc = beginFunc;
+    ch->postSolveFunc = postSolve;
     ch->userData = this;
 }
 
@@ -145,15 +150,30 @@ bool Space::OnCollision(cpArbiter* arb)
     return true;
 }
 
-void Space::OnPostStep(void* object, void*)
+void Space::OnPostStep(cpArbiter* arb)
 {
+    cpBody* b1 = nullptr;
+    cpBody* b2 = nullptr;
+    cpArbiterGetBodies(arb, &b1, &b2);
+
+    IBodyPtr first = nullptr;
+    IBodyPtr second = nullptr;
+
     for(auto& body : mBodies)
     {
-        if(object == body->Body())
-        {
-            body->OnPostStep();
+        if(body->Body() == b1)
+            first = body;
+        else if(body->Body() == b2)
+            second = body;
+
+        if(first && second)
             break;
-        }
+    }
+
+    if(first && second)
+    {
+        first->OnPostStep();
+        second->OnPostStep();
     }
 }
 

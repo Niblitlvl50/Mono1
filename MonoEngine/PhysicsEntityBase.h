@@ -24,8 +24,10 @@ namespace mono
         virtual void SetRotation(float rotation);
         virtual math::Quad BoundingBox() const;
         virtual cm::Object& GetPhysics();
-        virtual bool RemoveMe() const;
-        
+        virtual uint Id() const;
+        virtual uint Flags() const;
+        virtual void SetFlags(uint flags);
+
     protected:
         
         PhysicsEntityBase();
@@ -35,6 +37,9 @@ namespace mono
         
         virtual void Draw(mono::IRenderer& renderer) const = 0;
         virtual void Update(unsigned int delta) = 0;
+
+        const uint m_uid;
+        uint m_flags;
         
         math::Vector2f mPosition;
         math::Vector2f mScale;

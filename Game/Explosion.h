@@ -18,15 +18,16 @@ namespace game
     {
     public:
         
-        Explosion(const math::Vector2f& position, float scale = 20, float rotation = 0);
+        Explosion(mono::EventHandler& event_handler,
+                  const math::Vector2f& position,
+                  float scale = 20,
+                  float rotation = 0);
         
         virtual void Update(unsigned int delta);
         virtual void Draw(mono::IRenderer& renderer) const;
-        virtual bool RemoveMe() const;
-        
+
     private:
 
         mono::Sprite mSprite;
-        bool mRemoveMe;
     };
 }

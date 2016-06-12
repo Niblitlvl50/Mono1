@@ -15,12 +15,9 @@
 #include "MouseMotionEvent.h"
 #include "MultiGestureEvent.h"
 #include "KeyDownEvent.h"
-#include "CMIBody.h"
 #include "SysKeycodes.h"
 #include "WeaponTypes.h"
 #include "MathFunctions.h"
-
-#include <cmath>
 
 
 using namespace game;
@@ -58,16 +55,11 @@ ShuttleController::~ShuttleController()
 
 void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
 {
-    const bool result = math::PointInsideQuad(math::Vector2f(event.worldX, event.worldY), mShuttle->BoundingBox());
-    if(result)
-    {
-        HandleOnShuttlePress();
-        return;
-    }
-    
-    mMouseDown = true;
+    mShuttle->Fire();
+
     mMouseDownPosition = math::Vector2f(event.screenX, -event.screenY);
     mShuttle->StartThrusting();
+    mMouseDown = true;
 }
 
 void ShuttleController::OnMouseUp(const Event::MouseUpEvent& event)
@@ -111,9 +103,4 @@ void ShuttleController::OnKeyDown(const Event::KeyDownEvent& event)
         mShuttle->SelectWeapon(WeaponType::ROCKET);
     else if(event.key == Key::THREE)
         mShuttle->SelectWeapon(WeaponType::CACOPLASMA);
-}
-
-void ShuttleController::HandleOnShuttlePress()
-{
-    mShuttle->Fire();
 }

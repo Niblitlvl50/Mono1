@@ -11,11 +11,14 @@
 #include "Matrix.h"
 #include "CMIBody.h"
 #include "IRenderer.h"
+#include "SysUID.h"
 
 using namespace mono;
 
 PhysicsEntityBase::PhysicsEntityBase()
-    : mRotation(0.0f),
+    : m_uid(system::CreateUID()),
+      m_flags(0),
+      mRotation(0.0f),
       mScale(1.0f, 1.0f)
 { }
 
@@ -52,9 +55,19 @@ cm::Object& PhysicsEntityBase::GetPhysics()
     return mPhysicsObject;
 }
 
-bool PhysicsEntityBase::RemoveMe() const
+uint PhysicsEntityBase::Id() const
 {
-    return false;
+    return m_uid;
+}
+
+uint PhysicsEntityBase::Flags() const
+{
+    return m_flags;
+}
+
+void PhysicsEntityBase::SetFlags(uint flags)
+{
+    m_flags = flags;
 }
 
 void PhysicsEntityBase::doDraw(IRenderer& renderer) const

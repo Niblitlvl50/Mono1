@@ -8,12 +8,13 @@
 
 #pragma once
 
+#include "SysTypes.h"
 #include <vector>
 
 namespace mono
 {    
     template <typename T>
-    bool FindAndRemove(std::vector<std::shared_ptr<T>>& collection, const std::shared_ptr<T>& object)
+    inline bool FindAndRemove(std::vector<std::shared_ptr<T>>& collection, const std::shared_ptr<T>& object)
     {
         const auto it = std::find(collection.begin(), collection.end(), object);
         if(it != collection.end())
@@ -45,6 +46,17 @@ namespace mono
     };
 
     //! Generates a random float between 0.0 and 1.0
-    //! @return float
     float Random();
+
+    //! Check if a flag is set in a bit set
+    inline bool IsBitFlagSet(uint bit_flags, uint flag)
+    {
+        return bit_flags & flag;
+    }
+
+    //! Set a flag in a bit set
+    inline void SetBitFlag(uint& bit_flags, uint flag)
+    {
+        bit_flags |= flag;
+    }
 }

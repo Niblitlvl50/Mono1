@@ -11,6 +11,8 @@
 #include "EventHandler.h"
 #include "IWindow.h"
 
+#include "GameContext.h"
+
 int main(int argc, char* argv[])
 {
     constexpr math::Vector2f iPhone6SSize(750.0f, 1334.0f);
@@ -19,6 +21,8 @@ int main(int argc, char* argv[])
 
     // The "global" event handler used throughout the game
     mono::EventHandler eventHandler;
+
+    game::context.event_handler = &eventHandler;
 
     const math::Vector2f& nativeSize = Video::GetCurrentWindowSize();
     const float ratio = nativeSize.y / iPhone6SSize.y;

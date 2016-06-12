@@ -10,6 +10,8 @@
 #include "IRenderer.h"
 #include "Explosion.h"
 #include "SpawnEntityEvent.h"
+#include "RemoveEntityEvent.h"
+#include "DamageEvent.h"
 #include "EventHandler.h"
 
 #include "CMIBody.h"
@@ -24,9 +26,10 @@ using namespace game;
 
 FireBullet::FireBullet(const math::Vector2f& start, float rotation, mono::EventHandler& eventHandler)
     : mSprite("firebullet.sprite"),
-      mEventHandler(eventHandler),
-      mRemoveMe(false)
+      mEventHandler(eventHandler)
 {
+    dead = false;
+
     mScale = math::Vector2f(15.0f, 15.0f);
     
     mPhysicsObject.body = cm::Factory::CreateBody(1.0f, 1.0f);
@@ -34,7 +37,7 @@ FireBullet::FireBullet(const math::Vector2f& start, float rotation, mono::EventH
     mPhysicsObject.body->SetAngle(rotation);
     mPhysicsObject.body->SetCollisionHandler(this);
     
-    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, 7.0f, math::Vector2f(0.0f, 0.0f));
+    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, 5.0f, math::Vector2f(0.0f, 0.0f));
     
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());    
     mPhysicsObject.shapes.push_back(shape);        
@@ -50,23 +53,23 @@ void FireBullet::Draw(mono::IRenderer& renderer) const
     renderer.DrawSprite(mSprite);
 }
 
-bool FireBullet::RemoveMe() const
+void FireBullet::OnCollideWith(const cm::IBodyPtr& body)
 {
-    return mRemoveMe;
-}
-
-void FireBullet::OnCollideWith(cm::IBodyPtr body)
-{
-    const float rotation = mono::Random() * 360.0;
-    const game::SpawnEntityEvent event(std::make_shared<Explosion>(mPosition, 20, rotation));
-    mEventHandler.DispatchEvent(event);
-
-    mRemoveMe = true;
+    mEventHandler.DispatchEvent(game::DamageEvent(body, 20));
 }
 
 void FireBullet::OnPostStep()
 {
-    //mRemoveMe = true;
+    if(dead)
+        return;
+
+    const float rotation = mono::Random() * 360.0;
+    const game::SpawnEntityEvent event(std::make_shared<Explosion>(mEventHandler, mPosition, 20, rotation));
+    mEventHandler.DispatchEvent(event);
+
+    mEventHandler.DispatchEvent(game::RemoveEntityByIdEvent(Id()));
+
+    dead = true;
 }
 
 

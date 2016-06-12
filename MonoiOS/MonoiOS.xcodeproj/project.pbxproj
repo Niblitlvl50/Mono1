@@ -489,6 +489,13 @@
 		91D889951C3AEBB600AF27A8 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B812591C37DE4E00BDF407 /* OpenAL.framework */; };
 		91D889971C3AFBE400AF27A8 /* InGame_Phoenix.wav in Resources */ = {isa = PBXBuildFile; fileRef = 91D889961C3AFBE400AF27A8 /* InGame_Phoenix.wav */; };
 		91D889981C3AFC7C00AF27A8 /* InGame_Phoenix.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91D889961C3AFBE400AF27A8 /* InGame_Phoenix.wav */; };
+		91F32F5C1D0B565A008457CA /* TimeScaleEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 91F32F5B1D0B565A008457CA /* TimeScaleEvent.h */; };
+		91F32F601D0C5B3D008457CA /* DamageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91F32F5E1D0C5B3D008457CA /* DamageController.cpp */; };
+		91F32F611D0C5B3D008457CA /* DamageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91F32F5E1D0C5B3D008457CA /* DamageController.cpp */; };
+		91F32F621D0C5B3D008457CA /* DamageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91F32F5E1D0C5B3D008457CA /* DamageController.cpp */; };
+		91F32F651D0C5C3A008457CA /* SysUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91F32F631D0C5C3A008457CA /* SysUID.cpp */; };
+		91F32F661D0C5C3A008457CA /* SysUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91F32F631D0C5C3A008457CA /* SysUID.cpp */; };
+		91F32F671D0C5C3A008457CA /* SysUID.h in Headers */ = {isa = PBXBuildFile; fileRef = 91F32F641D0C5C3A008457CA /* SysUID.h */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
 		FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07C0E26BD8C00F39101 /* Icon.png */; };
 		FD77A07F0E26BDA900F39101 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07E0E26BDA900F39101 /* Default.png */; };
@@ -991,6 +998,14 @@
 		91D71F291BF8E1D60097AEA0 /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
 		91D71F2B1BF913CA0097AEA0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "MonoiOS Device/Images.xcassets"; sourceTree = "<group>"; };
 		91D889961C3AFBE400AF27A8 /* InGame_Phoenix.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = InGame_Phoenix.wav; path = res/InGame_Phoenix.wav; sourceTree = "<group>"; };
+		91F32F5A1D0B45CE008457CA /* GameContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameContext.h; sourceTree = "<group>"; };
+		91F32F5B1D0B565A008457CA /* TimeScaleEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeScaleEvent.h; sourceTree = "<group>"; };
+		91F32F5D1D0C48CE008457CA /* DamageEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DamageEvent.h; path = Events/DamageEvent.h; sourceTree = "<group>"; };
+		91F32F5E1D0C5B3D008457CA /* DamageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DamageController.cpp; sourceTree = "<group>"; };
+		91F32F5F1D0C5B3D008457CA /* DamageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DamageController.h; sourceTree = "<group>"; };
+		91F32F631D0C5C3A008457CA /* SysUID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysUID.cpp; sourceTree = "<group>"; };
+		91F32F641D0C5C3A008457CA /* SysUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysUID.h; sourceTree = "<group>"; };
+		91F32F681D0DFD72008457CA /* EntityFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityFlags.h; sourceTree = "<group>"; };
 		FD779EDD0E26BA1200F39101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		FD77A07C0E26BD8C00F39101 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		FD77A07E0E26BDA900F39101 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -1261,6 +1276,7 @@
 				2BBA5A3B1607A59300D8D38E /* MultiGestureEvent.h */,
 				911BFF5717FA07DB002EE7ED /* TouchEvent.h */,
 				9166036C1C14426100D1C0AC /* ApplicationEvent.h */,
+				91F32F5B1D0B565A008457CA /* TimeScaleEvent.h */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -1353,6 +1369,8 @@
 				91B812651C387BFA00BDF407 /* SysSound.h */,
 				912D56991C52D1BD003ACC77 /* SysNetwork.cpp */,
 				912D569A1C52D1BD003ACC77 /* SysNetwork.h */,
+				91F32F631D0C5C3A008457CA /* SysUID.cpp */,
+				91F32F641D0C5C3A008457CA /* SysUID.h */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -1574,6 +1592,10 @@
 				91A8775A1C022CD800DF77B5 /* CacoDemon.h */,
 				91A877611C0236B800DF77B5 /* CacoDemonController.cpp */,
 				91A877621C0236B800DF77B5 /* CacoDemonController.h */,
+				91F32F5A1D0B45CE008457CA /* GameContext.h */,
+				91F32F5E1D0C5B3D008457CA /* DamageController.cpp */,
+				91F32F5F1D0C5B3D008457CA /* DamageController.h */,
+				91F32F681D0DFD72008457CA /* EntityFlags.h */,
 			);
 			name = Game;
 			path = ../Game;
@@ -1587,6 +1609,7 @@
 				2BDD2C95171C9F970041CB18 /* RemovePhysicsEntityEvent.h */,
 				2BDD2C96171C9F970041CB18 /* SpawnEntityEvent.h */,
 				2BDD2C97171C9F970041CB18 /* SpawnPhysicsEntityEvent.h */,
+				91F32F5D1D0C48CE008457CA /* DamageEvent.h */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -1822,9 +1845,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91F32F671D0C5C3A008457CA /* SysUID.h in Headers */,
 				912D569D1C52D1BD003ACC77 /* SysNetwork.h in Headers */,
 				91B812681C387BFA00BDF407 /* SysSound.h in Headers */,
 				91B812601C37DEB400BDF407 /* AudioFactory.h in Headers */,
+				91F32F5C1D0B565A008457CA /* TimeScaleEvent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2067,6 +2092,7 @@
 				91D71F0F1BF8AED80097AEA0 /* RocketLauncher.cpp in Sources */,
 				91D71EFC1BF8AEB50097AEA0 /* InvaderGroup.cpp in Sources */,
 				91D71F061BF8AEC20097AEA0 /* Rocket.cpp in Sources */,
+				91F32F601D0C5B3D008457CA /* DamageController.cpp in Sources */,
 				91A8775B1C022CD800DF77B5 /* CacoDemon.cpp in Sources */,
 				2B26DB8115FD3281001E9748 /* AnimatedDude.cpp in Sources */,
 				91D71EF41BF8AEAB0097AEA0 /* CubeSwarm.cpp in Sources */,
@@ -2100,6 +2126,7 @@
 				2BD3CBB5160BB2B30043156E /* LuaFunctions.cpp in Sources */,
 				2BD3CBB6160BB2B30043156E /* LuaInterpreter.cpp in Sources */,
 				2BD3CBB7160BB2B30043156E /* LuaState.cpp in Sources */,
+				91F32F611D0C5B3D008457CA /* DamageController.cpp in Sources */,
 				2BD3CBB8160BB2B30043156E /* MathFunctions.cpp in Sources */,
 				2BD3CBB9160BB2B30043156E /* CMFactory.cpp in Sources */,
 				2BD3CBBA160BB2B30043156E /* CMSpace.cpp in Sources */,
@@ -2218,6 +2245,7 @@
 				9166E1931C341B0500A5C82D /* FireBullet.cpp in Sources */,
 				9166E1941C341B0500A5C82D /* StandardWeapon.cpp in Sources */,
 				9166E1951C341B0500A5C82D /* InvaderEntity.cpp in Sources */,
+				91F32F621D0C5B3D008457CA /* DamageController.cpp in Sources */,
 				9166E1961C341B0500A5C82D /* InvaderGroup.cpp in Sources */,
 				9166E1971C341B0500A5C82D /* CubeSwarm.cpp in Sources */,
 				9166E1981C341B0500A5C82D /* DotEntity.cpp in Sources */,
@@ -2315,6 +2343,7 @@
 				9166E1BC1C341C5800A5C82D /* TraceCamera.cpp in Sources */,
 				9166E1BD1C341C5800A5C82D /* LuaFunctions.cpp in Sources */,
 				9166E1BE1C341C5800A5C82D /* LuaInterpreter.cpp in Sources */,
+				91F32F651D0C5C3A008457CA /* SysUID.cpp in Sources */,
 				9166E1BF1C341C5800A5C82D /* LuaState.cpp in Sources */,
 				9166E1C01C341C5800A5C82D /* Matrix.cpp in Sources */,
 				9166E1C11C341C5800A5C82D /* Point.cpp in Sources */,
@@ -2444,6 +2473,7 @@
 				9166E2501C34395E00A5C82D /* SDLWindow.cpp in Sources */,
 				9166E2511C34395E00A5C82D /* ImageFactory.cpp in Sources */,
 				912D569C1C52D1BD003ACC77 /* SysNetwork.cpp in Sources */,
+				91F32F661D0C5C3A008457CA /* SysUID.cpp in Sources */,
 				9166E2521C34395E00A5C82D /* SysEvents.cpp in Sources */,
 				9166E2531C34395E00A5C82D /* SysFile.cpp in Sources */,
 				9166E2541C34395E00A5C82D /* SysKeycodes.cpp in Sources */,
@@ -3090,6 +3120,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
@@ -3108,6 +3139,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;

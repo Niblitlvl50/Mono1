@@ -16,14 +16,14 @@
 #include "EventHandler.h"
 #include "ShockwaveEvent.h"
 #include "SpawnEntityEvent.h"
+#include "RemoveEntityEvent.h"
 #include "Explosion.h"
 
 using namespace game;
 
 Rocket::Rocket(const math::Vector2f& start, float rotation, mono::EventHandler& eventHandler)
     : mSprite("laser.sprite"),
-      mEventHandler(eventHandler),
-      mRemoveMe(false)
+      mEventHandler(eventHandler)
 {
     mScale = math::Vector2f(25.0f, 25.0f);
 
@@ -48,19 +48,14 @@ void Rocket::Update(unsigned int delta)
     mSprite.doUpdate(delta);
 }
 
-void Rocket::OnCollideWith(cm::IBodyPtr body)
+void Rocket::OnCollideWith(const cm::IBodyPtr& body)
 {
-    const game::SpawnEntityEvent event(std::make_shared<Explosion>(mPosition, 60));
+    const game::SpawnEntityEvent event(std::make_shared<Explosion>(mEventHandler, mPosition, 60));
     mEventHandler.DispatchEvent(event);
 
-    mEventHandler.DispatchEvent(ShockwaveEvent(mPosition, 100));
-    mRemoveMe = true;
+    mEventHandler.DispatchEvent(game::ShockwaveEvent(mPosition, 100));
+    mEventHandler.DispatchEvent(game::RemoveEntityByIdEvent(Id()));
 }
 
 void Rocket::OnPostStep()
 { }
-
-bool Rocket::RemoveMe() const
-{
-    return mRemoveMe;
-}

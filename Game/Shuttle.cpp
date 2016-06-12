@@ -69,7 +69,7 @@ void Shuttle::Update(unsigned int delta)
         mWeapon->Fire(mPosition, mRotation);
 }
 
-void Shuttle::OnCollideWith(cm::IBodyPtr body)
+void Shuttle::OnCollideWith(const cm::IBodyPtr& body)
 {
     //body->IsStatic();
     //mPhysicsObject.body->GetMoment();
