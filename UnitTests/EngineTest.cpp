@@ -69,7 +69,7 @@ namespace
         {
             mUpdateCalled = true;
         }
-        virtual void Follow(const mono::IEntityPtr entity, const math::Vector2f& offset)
+        virtual void Follow(const mono::IEntityPtr& entity, const math::Vector2f& offset)
         { }
         virtual void Unfollow()
         {
@@ -119,7 +119,13 @@ namespace
         { }
         virtual void RemoveUpdatable(const mono::IUpdatablePtr& updatable)
         { }
-        
+        virtual mono::IEntityPtr FindEntityFromId(uint id) const
+        {
+            return nullptr;
+        }
+        virtual void SchedulePreFrameTask(const std::function<void ()>& task)
+        { }
+
         bool mAcceptCalled = false;
         bool mOnLoadCalled = false;
         bool mOnUnloadCalled = false;

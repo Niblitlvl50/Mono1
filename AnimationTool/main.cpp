@@ -67,7 +67,7 @@ namespace
     {
     public:
 
-        SpriteDrawable(const std::string& file)
+        SpriteDrawable(const char* file)
             : m_sprite(file)
         {
             mPosition = math::Vector2f(100, 100);
@@ -117,7 +117,7 @@ namespace
     {
     public:
 
-        Zone(mono::EventHandler& eventHandler, const std::string& file)
+        Zone(mono::EventHandler& eventHandler, const char* file)
             : m_eventHandler(eventHandler)
         {
             using namespace std::placeholders;
@@ -193,7 +193,7 @@ int main(int argc, const char * argv[])
     }
 
     // This is assumed to be the file argument
-    const std::string file = argv[1];
+    const char* file = argv[1];
 
     System::Init();
 

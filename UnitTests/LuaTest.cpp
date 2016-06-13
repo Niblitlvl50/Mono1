@@ -74,8 +74,7 @@ TEST(LuaTest, MemberFunction)
 
 TEST(LuaTest, LoadFileAndFetchData)
 {
-    const std::string file = "luaconfig.lua";
-    lua::LuaState config(file);
+    lua::LuaState config("luaconfig.lua");
     
     const int width = lua::GetValue<int>(config, "width");
     EXPECT_EQ(400, width);
@@ -95,8 +94,7 @@ TEST(LuaTest, LoadFileAndFetchData)
 
 TEST(LuaTest, GetWrongValue_ShouldThrow)
 {
-    const std::string file = "luaconfig.lua";
-    lua::LuaState config(file);
+    lua::LuaState config("luaconfig.lua");
     
     try
     {
@@ -117,8 +115,7 @@ TEST(LuaTest, GetWrongValue_ShouldThrow)
 
 TEST(LuaTest, GetLuaTableAsVector)
 {
-    const std::string file = "luaconfig.lua";
-    lua::LuaState config(file);
+    lua::LuaState config("luaconfig.lua");
     
     const lua::IntTable intValues = lua::GetTable<int>(config, "intTable");
     EXPECT_EQ(5, intValues.size());
@@ -159,8 +156,7 @@ TEST(LuaTest, GetLuaTableAsVector)
 
 TEST(LuaTest, GetLuaMapTable)
 {
-    const std::string file = "luaconfig.lua";
-    lua::LuaState config(file);
+    lua::LuaState config("luaconfig.lua");
     
     const lua::MapIntTable intMap = lua::GetTableMap<std::string, int>(config, "definedAnimations");
     EXPECT_EQ(2, intMap.size());
