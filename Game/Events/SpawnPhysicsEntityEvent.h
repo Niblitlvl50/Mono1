@@ -15,7 +15,7 @@ namespace game
 {
     struct SpawnPhysicsEntityEvent
     {
-        SpawnPhysicsEntityEvent(mono::IPhysicsEntityPtr entity)
+        SpawnPhysicsEntityEvent(const mono::IPhysicsEntityPtr& entity)
             : mEntity(entity)
         { }
         mono::IPhysicsEntityPtr mEntity;

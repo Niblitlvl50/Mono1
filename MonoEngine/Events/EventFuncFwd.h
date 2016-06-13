@@ -11,7 +11,7 @@
 #include "EventFwd.h"
 #include <functional>
 
-namespace Event
+namespace event
 {
     typedef std::function<void (const PauseEvent&)> PauseEventFunc;
     typedef std::function<void (const QuitEvent&)> QuitEventFunc;
@@ -25,9 +25,5 @@ namespace Event
     typedef std::function<void (const MouseMotionEvent&)> MouseMotionEventFunc;
     typedef std::function<void (const MouseWheelEvent&)> MouseWheelEventFunc;
     typedef std::function<void (const MultiGestureEvent&)> MultiGestureEventFunc;
-}
-
-namespace event
-{
     typedef std::function<void (const TimeScaleEvent&)> TimeScaleEventFunc;
 }

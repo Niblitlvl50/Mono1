@@ -121,7 +121,7 @@ namespace
             : m_eventHandler(eventHandler)
         {
             using namespace std::placeholders;
-            const Event::KeyDownEventFunc func = std::bind(&Zone::OnDownUp, this, _1);
+            const event::KeyDownEventFunc func = std::bind(&Zone::OnDownUp, this, _1);
             m_keyDownToken = eventHandler.AddListener(func);
 
             m_sprite = std::make_shared<SpriteDrawable>(file);
@@ -139,7 +139,7 @@ namespace
         virtual void OnUnload()
         { }
 
-        void OnDownUp(const Event::KeyDownEvent& event)
+        void OnDownUp(const event::KeyDownEvent& event)
         {
             if(event.key == Key::LEFT)
             {
@@ -179,7 +179,7 @@ namespace
         }
 
         mono::EventHandler& m_eventHandler;
-        mono::EventToken<Event::KeyDownEvent> m_keyDownToken;
+        mono::EventToken<event::KeyDownEvent> m_keyDownToken;
         std::shared_ptr<SpriteDrawable> m_sprite;
     };
 }

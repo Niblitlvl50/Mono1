@@ -40,7 +40,7 @@ namespace
         virtual void SwapBuffers() const
         {
             mSwapBuffersCalled = true;
-            mHandler.DispatchEvent(Event::QuitEvent());
+            mHandler.DispatchEvent(event::QuitEvent());
         }
         virtual void MakeCurrent()
         {

@@ -807,7 +807,6 @@
 		2BDD2C8D171C9F540041CB18 /* RenderUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderUtils.cpp; sourceTree = "<group>"; };
 		2BDD2C8E171C9F540041CB18 /* RenderUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderUtils.h; sourceTree = "<group>"; };
 		2BDD2C94171C9F970041CB18 /* RemoveEntityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemoveEntityEvent.h; path = Events/RemoveEntityEvent.h; sourceTree = "<group>"; };
-		2BDD2C95171C9F970041CB18 /* RemovePhysicsEntityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemovePhysicsEntityEvent.h; path = Events/RemovePhysicsEntityEvent.h; sourceTree = "<group>"; };
 		2BDD2C96171C9F970041CB18 /* SpawnEntityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpawnEntityEvent.h; path = Events/SpawnEntityEvent.h; sourceTree = "<group>"; };
 		2BDD2C97171C9F970041CB18 /* SpawnPhysicsEntityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpawnPhysicsEntityEvent.h; path = Events/SpawnPhysicsEntityEvent.h; sourceTree = "<group>"; };
 		2BDD2C98171C9FBE0041CB18 /* FireBullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FireBullet.cpp; sourceTree = "<group>"; };
@@ -1606,7 +1605,6 @@
 			children = (
 				91D71F281BF8B3120097AEA0 /* ShockwaveEvent.h */,
 				2BDD2C94171C9F970041CB18 /* RemoveEntityEvent.h */,
-				2BDD2C95171C9F970041CB18 /* RemovePhysicsEntityEvent.h */,
 				2BDD2C96171C9F970041CB18 /* SpawnEntityEvent.h */,
 				2BDD2C97171C9F970041CB18 /* SpawnPhysicsEntityEvent.h */,
 				91F32F5D1D0C48CE008457CA /* DamageEvent.h */,

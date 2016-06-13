@@ -22,7 +22,7 @@ namespace mono
             : mId(++currentId)
         { }
 
-        bool operator < (const EventToken<Event>& other) const
+        inline bool operator < (const EventToken<Event>& other) const
         {
             return mId < other.mId;
         }

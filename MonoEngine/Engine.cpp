@@ -68,19 +68,19 @@ Engine::Engine(const IWindowPtr& window, const ICameraPtr& camera, EventHandler&
     const auto func = std::bind(Func::ScreenToWorld, _1, _2, mWindow, mCamera);
     mInputHandler = std::make_shared<InputHandler>(func, mEventHandler);
     
-    const Event::PauseEventFunc pauseFunc = std::bind(&Engine::OnPause, this, _1);
+    const event::PauseEventFunc pauseFunc = std::bind(&Engine::OnPause, this, _1);
     mPauseToken = mEventHandler.AddListener(pauseFunc);
     
-    const Event::QuitEventFunc quitFunc = std::bind(&Engine::OnQuit, this, _1);
+    const event::QuitEventFunc quitFunc = std::bind(&Engine::OnQuit, this, _1);
     mQuitToken = mEventHandler.AddListener(quitFunc);
 
-    const Event::ApplicationEventFunc appFunc = std::bind(&Engine::OnApplication, this, _1);
+    const event::ApplicationEventFunc appFunc = std::bind(&Engine::OnApplication, this, _1);
     mApplicationToken = mEventHandler.AddListener(appFunc);
 
-    const Event::SurfaceChangedEventFunc surfaceChangedFunc = std::bind(&Engine::OnSurfaceChanged, this, _1);
+    const event::SurfaceChangedEventFunc surfaceChangedFunc = std::bind(&Engine::OnSurfaceChanged, this, _1);
     mSurfaceChangedToken = mEventHandler.AddListener(surfaceChangedFunc);
 	
-    const Event::ActivatedEventFunc activatedFunc = std::bind(&Engine::OnActivated, this, _1);
+    const event::ActivatedEventFunc activatedFunc = std::bind(&Engine::OnActivated, this, _1);
     mActivatedToken = mEventHandler.AddListener(activatedFunc);
 
     const event::TimeScaleEventFunc timeScaleFunc = std::bind(&Engine::OnTimeScale, this, _1);
@@ -148,35 +148,35 @@ void Engine::Run(IZonePtr zone)
     mUpdateLastTime = false;
 }
 
-void Engine::OnPause(const Event::PauseEvent& event)
+void Engine::OnPause(const event::PauseEvent& event)
 {
     mPause = event.pause;
 }
 
-void Engine::OnQuit(const Event::QuitEvent&)
+void Engine::OnQuit(const event::QuitEvent&)
 {
     mQuit = true;
 }
 
-void Engine::OnApplication(const Event::ApplicationEvent& event)
+void Engine::OnApplication(const event::ApplicationEvent& event)
 {
-    if(event.state == Event::ApplicationState::ENTER_BACKGROUND)
+    if(event.state == event::ApplicationState::ENTER_BACKGROUND)
     {
         mPause = true;
     }
-    else if(event.state == Event::ApplicationState::ENTER_FOREGROUND)
+    else if(event.state == event::ApplicationState::ENTER_FOREGROUND)
     {
         mPause = false;
         mUpdateLastTime = true;
     }
 }
 
-void Engine::OnSurfaceChanged(const Event::SurfaceChangedEvent& event)
+void Engine::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 {
     mWindow->SurfaceChanged(event.width, event.height);
 }
 
-void Engine::OnActivated(const Event::ActivatedEvent& event)
+void Engine::OnActivated(const event::ActivatedEvent& event)
 {
     mWindow->Activated(event.gain);
 }

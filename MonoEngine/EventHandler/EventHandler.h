@@ -27,21 +27,21 @@ namespace mono
         std::map<EventToken<Event>, ListenerCallback> mListeners;
 
 
-        EventToken<Event> AddListener(const ListenerCallback& listener)
+        inline EventToken<Event> AddListener(const ListenerCallback& listener)
         {
             EventToken<Event> token;
             mListeners.insert(std::make_pair(token, listener));
             return token;
         }
 
-        void RemoveListener(const EventToken<Event>& token)
+        inline void RemoveListener(const EventToken<Event>& token)
         {
             auto it = mListeners.find(token);
             if(it != mListeners.end())
                 mListeners.erase(it);
         }
 
-        void DispatchEvent(const Event& event)
+        inline void DispatchEvent(const Event& event)
         {
             for(auto& listener : mListeners)
                 listener.second(event);
@@ -56,7 +56,7 @@ namespace mono
     public:
         
         template<typename Event>
-        EventToken<Event> AddListener(const std::function<void (const Event& event)>& listener)
+        inline EventToken<Event> AddListener(const std::function<void (const Event& event)>& listener)
         {
             const char* eventName = typeid(Event).name();
             auto it = events.find(eventName);
@@ -70,7 +70,7 @@ namespace mono
         }
         
         template<typename Event>
-        void RemoveListener(const EventToken<Event>& token)
+        inline void RemoveListener(const EventToken<Event>& token)
         {
             const char* eventName = typeid(Event).name();
             const auto it = events.find(eventName);
@@ -82,7 +82,7 @@ namespace mono
         }
         
         template<typename Event>
-        void DispatchEvent(const Event& event)
+        inline void DispatchEvent(const Event& event)
         {
             const char* eventName = typeid(Event).name();
             const auto it = events.find(eventName);

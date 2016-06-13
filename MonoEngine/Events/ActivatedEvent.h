@@ -9,7 +9,7 @@
 
 #pragma once
 
-namespace Event
+namespace event
 {
     struct ActivatedEvent
     {

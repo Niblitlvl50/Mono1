@@ -8,7 +8,7 @@
 
 #pragma once
 
-namespace Event
+namespace event
 {
     enum class ApplicationState
     {

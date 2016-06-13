@@ -40,7 +40,7 @@ namespace
             const uint id = Id();
 
             const auto func = [&event_handler, id]() {
-                event_handler.DispatchEvent(game::RemoveEntityByIdEvent(id));
+                event_handler.DispatchEvent(game::RemoveEntityEvent(id));
             };
 
             m_sprite.SetAnimation(0, func);
@@ -93,7 +93,7 @@ namespace
         {
             const game::SpawnEntityEvent event(std::make_shared<CacoExplosion>(m_eventHandler, mPosition));
             m_eventHandler.DispatchEvent(event);
-            m_eventHandler.DispatchEvent(game::RemoveEntityByIdEvent(Id()));
+            m_eventHandler.DispatchEvent(game::RemoveEntityEvent(Id()));
         }
 
         virtual void OnPostStep()

@@ -14,7 +14,7 @@ namespace game
 {
     struct SpawnEntityEvent
     {
-        SpawnEntityEvent(const mono::IEntityPtr entity)
+        SpawnEntityEvent(const mono::IEntityPtr& entity)
             : mEntity(entity)
         { }
         const mono::IEntityPtr mEntity;

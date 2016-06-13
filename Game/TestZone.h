@@ -21,7 +21,7 @@ namespace game
 {
     struct SpawnEntityEvent;
     struct SpawnPhysicsEntityEvent;
-    struct RemoveEntityByIdEvent;
+    struct RemoveEntityEvent;
     struct ShockwaveEvent;
     struct DamageEvent;
     
@@ -37,7 +37,7 @@ namespace game
         
         void SpawnEntity(const game::SpawnEntityEvent& event);
         void SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event);
-        void OnRemoveEntityById(const game::RemoveEntityByIdEvent& event);
+        void OnRemoveEntity(const game::RemoveEntityEvent& event);
         void OnShockwaveEvent(const game::ShockwaveEvent& event);
         void OnDamageEvent(const game::DamageEvent& event);
 
@@ -51,7 +51,7 @@ namespace game
 
         mono::EventToken<game::SpawnEntityEvent> mSpawnEntityToken;
         mono::EventToken<game::SpawnPhysicsEntityEvent> mSpawnPhysicsEntityToken;
-        mono::EventToken<game::RemoveEntityByIdEvent> mRemoveEntityByIdToken;
+        mono::EventToken<game::RemoveEntityEvent> mRemoveEntityByIdToken;
         mono::EventToken<game::ShockwaveEvent> mShockwaveEventToken;
         mono::EventToken<game::DamageEvent> mDamageEventToken;
         

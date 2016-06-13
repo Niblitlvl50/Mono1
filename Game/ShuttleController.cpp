@@ -29,16 +29,16 @@ ShuttleController::ShuttleController(game::Shuttle* shuttle, mono::EventHandler&
 {
     using namespace std::placeholders;
 
-    const Event::MouseUpEventFunc mouseUpFunc = std::bind(&ShuttleController::OnMouseUp, this, _1);
+    const event::MouseUpEventFunc mouseUpFunc = std::bind(&ShuttleController::OnMouseUp, this, _1);
     mMouseUpToken = mEventHandler.AddListener(mouseUpFunc);
 
-    const Event::MouseDownEventFunc mouseDownFunc = std::bind(&ShuttleController::OnMouseDown, this, _1);
+    const event::MouseDownEventFunc mouseDownFunc = std::bind(&ShuttleController::OnMouseDown, this, _1);
     mMouseDownToken = mEventHandler.AddListener(mouseDownFunc);
     
-    const Event::MouseMotionEventFunc mouseMotionFunc = std::bind(&ShuttleController::OnMouseMotion, this, _1);
+    const event::MouseMotionEventFunc mouseMotionFunc = std::bind(&ShuttleController::OnMouseMotion, this, _1);
     mMouseMotionToken = mEventHandler.AddListener(mouseMotionFunc);
 
-    const Event::KeyDownEventFunc keyDownFunc = std::bind(&ShuttleController::OnKeyDown, this, _1);
+    const event::KeyDownEventFunc keyDownFunc = std::bind(&ShuttleController::OnKeyDown, this, _1);
     mKeyDownToken = mEventHandler.AddListener(keyDownFunc);
 
     //const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&ShuttleController::OnMultiGesture, this, _1);
@@ -53,7 +53,7 @@ ShuttleController::~ShuttleController()
     //mEventHandler.RemoveListener(mMultiGestureToken);
 }
 
-void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
+void ShuttleController::OnMouseDown(const event::MouseDownEvent& event)
 {
     mShuttle->Fire();
 
@@ -62,7 +62,7 @@ void ShuttleController::OnMouseDown(const Event::MouseDownEvent& event)
     mMouseDown = true;
 }
 
-void ShuttleController::OnMouseUp(const Event::MouseUpEvent& event)
+void ShuttleController::OnMouseUp(const event::MouseUpEvent& event)
 {
     mShuttle->StopFire();
     
@@ -71,7 +71,7 @@ void ShuttleController::OnMouseUp(const Event::MouseUpEvent& event)
     mMouseDown = false;
 }
 
-void ShuttleController::OnMouseMotion(const Event::MouseMotionEvent& event)
+void ShuttleController::OnMouseMotion(const event::MouseMotionEvent& event)
 {
     if(!mMouseDown)
         return;
@@ -89,13 +89,13 @@ void ShuttleController::OnMouseMotion(const Event::MouseMotionEvent& event)
     mMouseDownPosition = current;
 }
 
-void ShuttleController::OnMultiGesture(const Event::MultiGestureEvent& event)
+void ShuttleController::OnMultiGesture(const event::MultiGestureEvent& event)
 {
     const float force = event.theta * 1000;
     mShuttle->ApplyRotationForce(force);
 }
 
-void ShuttleController::OnKeyDown(const Event::KeyDownEvent& event)
+void ShuttleController::OnKeyDown(const event::KeyDownEvent& event)
 {
     if(event.key == Key::ONE)
         mShuttle->SelectWeapon(WeaponType::STANDARD);

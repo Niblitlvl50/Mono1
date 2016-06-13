@@ -23,7 +23,7 @@ Explosion::Explosion(mono::EventHandler& event_handler, const math::Vector2f& po
     const uint id = Id();
 
     const auto func = [&event_handler, id] {
-        event_handler.DispatchEvent(game::RemoveEntityByIdEvent(id));
+        event_handler.DispatchEvent(game::RemoveEntityEvent(id));
     };
     
     mSprite.SetAnimation(0, func);

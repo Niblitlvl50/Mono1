@@ -21,7 +21,7 @@ AnimatedDudeController::AnimatedDudeController(AnimatedDude* dude, mono::EventHa
 {
     using namespace std::placeholders;
     
-    const Event::KeyDownEventFunc keyDownFunc = std::bind(&AnimatedDudeController::OnKeyDown, this, _1);
+    const event::KeyDownEventFunc keyDownFunc = std::bind(&AnimatedDudeController::OnKeyDown, this, _1);
     mKeyDownToken = mEventHandler.AddListener(keyDownFunc);
 }
 
@@ -30,7 +30,7 @@ AnimatedDudeController::~AnimatedDudeController()
     mEventHandler.RemoveListener(mKeyDownToken);
 }
 
-void AnimatedDudeController::OnKeyDown(const Event::KeyDownEvent& event)
+void AnimatedDudeController::OnKeyDown(const event::KeyDownEvent& event)
 {
     if(event.key == Key::RIGHT)
         mDude->mTarget.x += 20.0f;

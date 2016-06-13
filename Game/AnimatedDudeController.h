@@ -24,12 +24,12 @@ namespace game
         AnimatedDudeController(AnimatedDude* dude, mono::EventHandler& eventHandler);
         ~AnimatedDudeController();
         
-        void OnKeyDown(const Event::KeyDownEvent& event);
+        void OnKeyDown(const event::KeyDownEvent& event);
         
     private:
         
         AnimatedDude* mDude;
         mono::EventHandler& mEventHandler;        
-        mono::EventToken<Event::KeyDownEvent> mKeyDownToken;
+        mono::EventToken<event::KeyDownEvent> mKeyDownToken;
     };
 }

@@ -27,7 +27,7 @@ CameraController::CameraController(ICamera* cam, EventHandler& eventHandler)
 {
     using namespace std::placeholders;
     
-    const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&CameraController::OnMultiGesture, this, _1);
+    const event::MultiGestureEventFunc multiGestureFunc = std::bind(&CameraController::OnMultiGesture, this, _1);
     mMultiGestureToken = mEventHandler.AddListener(multiGestureFunc);
 }
 
@@ -36,7 +36,7 @@ CameraController::~CameraController()
     mEventHandler.RemoveListener(mMultiGestureToken);
 }
 
-void CameraController::OnMultiGesture(const Event::MultiGestureEvent& event)
+void CameraController::OnMultiGesture(const event::MultiGestureEvent& event)
 {
     if(!mEnabled)
         return;

@@ -157,8 +157,8 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
     const game::SpawnPhysicsEntityFunc spawnPhysicsFunc = std::bind(&TestZone::SpawnPhysicsEntity, this, _1);
     mSpawnPhysicsEntityToken = mEventHandler.AddListener(spawnPhysicsFunc);
 
-    const game::RemoveEntityByIdFunc& removeByIdFunc = std::bind(&TestZone::OnRemoveEntityById, this, _1);
-    mRemoveEntityByIdToken = mEventHandler.AddListener(removeByIdFunc);
+    const game::RemoveEntityFunc& removeFunc = std::bind(&TestZone::OnRemoveEntity, this, _1);
+    mRemoveEntityByIdToken = mEventHandler.AddListener(removeFunc);
 
     const game::ShockwaveEventFunc shockwaveFunc = std::bind(&TestZone::OnShockwaveEvent, this, _1);
     mShockwaveEventToken = mEventHandler.AddListener(shockwaveFunc);
@@ -244,7 +244,7 @@ void TestZone::SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event)
     AddPhysicsEntity(event.mEntity, FOREGROUND);
 }
 
-void TestZone::OnRemoveEntityById(const game::RemoveEntityByIdEvent& event)
+void TestZone::OnRemoveEntity(const game::RemoveEntityEvent& event)
 {
     mono::IPhysicsEntityPtr physics_entity = FindPhysicsEntityFromId(event.id);
     if(physics_entity)

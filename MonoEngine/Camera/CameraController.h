@@ -24,12 +24,12 @@ namespace mono
         
     private:
         
-        void OnMultiGesture(const Event::MultiGestureEvent& event);
+        void OnMultiGesture(const event::MultiGestureEvent& event);
         
         ICamera* mCam;
         EventHandler& mEventHandler;
         bool mEnabled;
         
-        mono::EventToken<Event::MultiGestureEvent> mMultiGestureToken;
+        mono::EventToken<event::MultiGestureEvent> mMultiGestureToken;
     };
 }

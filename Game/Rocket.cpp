@@ -54,7 +54,7 @@ void Rocket::OnCollideWith(const cm::IBodyPtr& body)
     mEventHandler.DispatchEvent(event);
 
     mEventHandler.DispatchEvent(game::ShockwaveEvent(mPosition, 100));
-    mEventHandler.DispatchEvent(game::RemoveEntityByIdEvent(Id()));
+    mEventHandler.DispatchEvent(game::RemoveEntityEvent(Id()));
 }
 
 void Rocket::OnPostStep()

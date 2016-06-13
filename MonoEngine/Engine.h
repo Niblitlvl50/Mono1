@@ -25,11 +25,11 @@ namespace mono
 		
     private:
 		
-        void OnPause(const Event::PauseEvent& event);
-        void OnQuit(const Event::QuitEvent& event);
-        void OnApplication(const Event::ApplicationEvent& event);
-        void OnSurfaceChanged(const Event::SurfaceChangedEvent& event);
-        void OnActivated(const Event::ActivatedEvent& event);
+        void OnPause(const event::PauseEvent& event);
+        void OnQuit(const event::QuitEvent& event);
+        void OnApplication(const event::ApplicationEvent& event);
+        void OnSurfaceChanged(const event::SurfaceChangedEvent& event);
+        void OnActivated(const event::ActivatedEvent& event);
         void OnTimeScale(const event::TimeScaleEvent& event);
 
         bool mPause;
@@ -43,11 +43,11 @@ namespace mono
         EventHandler& mEventHandler;
         IInputHandlerPtr mInputHandler;
 
-        EventToken<Event::PauseEvent> mPauseToken;
-        EventToken<Event::QuitEvent> mQuitToken;
-        EventToken<Event::ApplicationEvent> mApplicationToken;
-        EventToken<Event::SurfaceChangedEvent> mSurfaceChangedToken;
-        EventToken<Event::ActivatedEvent> mActivatedToken;
+        EventToken<event::PauseEvent> mPauseToken;
+        EventToken<event::QuitEvent> mQuitToken;
+        EventToken<event::ApplicationEvent> mApplicationToken;
+        EventToken<event::SurfaceChangedEvent> mSurfaceChangedToken;
+        EventToken<event::ActivatedEvent> mActivatedToken;
         EventToken<event::TimeScaleEvent> mTimeScaleToken;
     };
 }

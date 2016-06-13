@@ -8,7 +8,7 @@
 
 #pragma once
 
-namespace Event
+namespace event
 {
     struct PauseEvent;
     struct QuitEvent;
@@ -22,10 +22,6 @@ namespace Event
     struct MouseMotionEvent;
     struct MouseWheelEvent;
     struct MultiGestureEvent;
-}
-
-namespace event
-{
     struct TimeScaleEvent;
 }
 

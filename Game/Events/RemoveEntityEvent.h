@@ -8,21 +8,11 @@
 
 #pragma once
 
-#include "MonoFwd.h"
-
 namespace game
 {
     struct RemoveEntityEvent
     {
-        RemoveEntityEvent(const mono::IEntityPtr entity)
-            : mEntity(entity)
-        { }
-        const mono::IEntityPtr mEntity;
-    };
-
-    struct RemoveEntityByIdEvent
-    {
-        constexpr RemoveEntityByIdEvent(uint id)
+        constexpr RemoveEntityEvent(uint id)
             : id(id)
         { }
 
@@ -30,5 +20,4 @@ namespace game
     };
     
     typedef std::function<void (const game::RemoveEntityEvent& event)> RemoveEntityFunc;
-    typedef std::function<void (const game::RemoveEntityByIdEvent& event)> RemoveEntityByIdFunc;
 }

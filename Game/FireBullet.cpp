@@ -67,7 +67,7 @@ void FireBullet::OnPostStep()
     const game::SpawnEntityEvent event(std::make_shared<Explosion>(mEventHandler, mPosition, 20, rotation));
     mEventHandler.DispatchEvent(event);
 
-    mEventHandler.DispatchEvent(game::RemoveEntityByIdEvent(Id()));
+    mEventHandler.DispatchEvent(game::RemoveEntityEvent(Id()));
 
     dead = true;
 }
