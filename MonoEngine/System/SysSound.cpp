@@ -50,9 +50,3 @@ void Sound::Exit()
     alcCloseDevice(device);
 }
 
-void Sound::ListenerPosition(float x, float y)
-{
-    alListener3f(AL_POSITION, x, y, 0.0f);
-}
-
-

@@ -125,6 +125,9 @@
 		912D569B1C52D1BD003ACC77 /* SysNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912D56991C52D1BD003ACC77 /* SysNetwork.cpp */; };
 		912D569C1C52D1BD003ACC77 /* SysNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912D56991C52D1BD003ACC77 /* SysNetwork.cpp */; };
 		912D569D1C52D1BD003ACC77 /* SysNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 912D569A1C52D1BD003ACC77 /* SysNetwork.h */; };
+		91451A241D10B14100F17B05 /* AudioListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91451A221D10B14100F17B05 /* AudioListener.cpp */; };
+		91451A251D10B14100F17B05 /* AudioListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91451A221D10B14100F17B05 /* AudioListener.cpp */; };
+		91451A261D10B14100F17B05 /* AudioListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 91451A231D10B14100F17B05 /* AudioListener.h */; };
 		9166E1761C31C4FD00A5C82D /* BaseWeapon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9166E1721C31C4FD00A5C82D /* BaseWeapon.cpp */; };
 		9166E1771C31C4FD00A5C82D /* CacoPlasma.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9166E1741C31C4FD00A5C82D /* CacoPlasma.cpp */; };
 		9166E17E1C31C54300A5C82D /* Morpher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9166E17C1C31C54300A5C82D /* Morpher.cpp */; };
@@ -823,6 +826,8 @@
 		912D56991C52D1BD003ACC77 /* SysNetwork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysNetwork.cpp; sourceTree = "<group>"; };
 		912D569A1C52D1BD003ACC77 /* SysNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysNetwork.h; sourceTree = "<group>"; };
 		91451A211D10ADA400F17B05 /* RenderLayers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderLayers.h; sourceTree = "<group>"; };
+		91451A221D10B14100F17B05 /* AudioListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioListener.cpp; path = Audio/AudioListener.cpp; sourceTree = "<group>"; };
+		91451A231D10B14100F17B05 /* AudioListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioListener.h; path = Audio/AudioListener.h; sourceTree = "<group>"; };
 		9166036C1C14426100D1C0AC /* ApplicationEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationEvent.h; sourceTree = "<group>"; };
 		9166E1721C31C4FD00A5C82D /* BaseWeapon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseWeapon.cpp; path = Weapons/BaseWeapon.cpp; sourceTree = "<group>"; };
 		9166E1731C31C4FD00A5C82D /* BaseWeapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseWeapon.h; path = Weapons/BaseWeapon.h; sourceTree = "<group>"; };
@@ -1779,6 +1784,8 @@
 				91B812611C38268000BDF407 /* ISound.h */,
 				91B8125D1C37DEB400BDF407 /* AudioFactory.h */,
 				91B8125C1C37DEB400BDF407 /* AudioFactory.cpp */,
+				91451A231D10B14100F17B05 /* AudioListener.h */,
+				91451A221D10B14100F17B05 /* AudioListener.cpp */,
 			);
 			name = Audio;
 			sourceTree = "<group>";
@@ -1850,6 +1857,7 @@
 				91B812681C387BFA00BDF407 /* SysSound.h in Headers */,
 				91B812601C37DEB400BDF407 /* AudioFactory.h in Headers */,
 				91F32F5C1D0B565A008457CA /* TimeScaleEvent.h in Headers */,
+				91451A261D10B14100F17B05 /* AudioListener.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2297,6 +2305,7 @@
 				9166E2131C34225700A5C82D /* lgc.c in Sources */,
 				9166E2141C34225700A5C82D /* linit.c in Sources */,
 				9166E2151C34225700A5C82D /* liolib.c in Sources */,
+				91451A241D10B14100F17B05 /* AudioListener.cpp in Sources */,
 				9166E2161C34225700A5C82D /* llex.c in Sources */,
 				9166E2171C34225700A5C82D /* lmathlib.c in Sources */,
 				9166E2181C34225700A5C82D /* lmem.c in Sources */,
@@ -2415,6 +2424,7 @@
 				9166E27F1C3439AF00A5C82D /* linit.c in Sources */,
 				9166E2801C3439AF00A5C82D /* liolib.c in Sources */,
 				9166E2811C3439AF00A5C82D /* llex.c in Sources */,
+				91451A251D10B14100F17B05 /* AudioListener.cpp in Sources */,
 				9166E2821C3439AF00A5C82D /* lmathlib.c in Sources */,
 				9166E2831C3439AF00A5C82D /* lmem.c in Sources */,
 				9166E2841C3439AF00A5C82D /* loadlib.c in Sources */,

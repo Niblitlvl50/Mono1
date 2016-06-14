@@ -16,7 +16,7 @@
 #include "WeaponFactory.h"
 
 #include "MathFunctions.h"
-#include "SysSound.h"
+#include "AudioListener.h"
 
 
 using namespace game;
@@ -63,7 +63,7 @@ void Shuttle::Draw(mono::IRenderer& renderer) const
 void Shuttle::Update(unsigned int delta)
 {
     mSprite.doUpdate(delta);
-    Sound::ListenerPosition(mPosition.x, mPosition.y);
+    mono::ListenerPosition(mPosition);
 
     if(m_fire)
         mWeapon->Fire(mPosition, mRotation);
