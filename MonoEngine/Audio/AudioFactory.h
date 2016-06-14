@@ -12,7 +12,6 @@
 #include "SysTypes.h"
 #include "MonoPtrFwd.h"
 
-#include <string>
 #include <vector>
 
 namespace mono
@@ -35,9 +34,9 @@ namespace mono
     namespace AudioFactory
     {
         // Create a sound to use, only supports WAV at the moment
-        mono::ISoundPtr CreateSound(const std::string& file, bool loop);
+        mono::ISoundPtr CreateSound(const char* fileName, bool loop);
 
         // Load a sound file from disk, only supports WAV at the moment
-        SoundFile LoadFile(const std::string& file);
+        SoundFile LoadFile(const char* fileName);
     }
 };

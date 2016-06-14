@@ -140,42 +140,42 @@ namespace
     }
 
     // The sound data repository, this is where all the sounds are stored!
-    std::unordered_map<std::string, std::weak_ptr<SoundData>> repository;
+    std::unordered_map<const char*, std::weak_ptr<SoundData>> repository;
 }
 
-mono::ISoundPtr mono::AudioFactory::CreateSound(const std::string& file, bool loop)
+mono::ISoundPtr mono::AudioFactory::CreateSound(const char* fileName, bool loop)
 {
-    auto it = repository.find(file);
+    auto it = repository.find(fileName);
     if(it != repository.end())
     {
         auto data = it->second.lock();
         if(data)
             return std::make_shared<SoundImpl>(data, loop);
 
-        std::printf("Unable to create a shared from a weak pointer, will reload the data. Source: %s", file.c_str());
+        std::printf("Unable to create a shared from a weak pointer, will reload the data. Source: %s", fileName);
     }
 
-    const mono::SoundFile& soundFile = LoadFile(file);
+    const mono::SoundFile& soundFile = LoadFile(fileName);
     const ALenum format = SoundFormatToALFormat(soundFile.format);
 
     // Custom deleter to actualy erase the file from the repository
     // when the last reference goes out of scope.
-    const auto deleter = [file](SoundData* ptr) {
-        repository.erase(file);
+    const auto deleter = [fileName](SoundData* ptr) {
+        repository.erase(fileName);
         delete ptr;
     };
 
     auto data = std::shared_ptr<SoundData>(new SoundData(soundFile.data, format, soundFile.frequency), deleter);
 
     // Store it in the repository for others to retreive
-    repository[file] = data;
+    repository[fileName] = data;
 
     return std::make_shared<SoundImpl>(data, loop);
 }
 
-mono::SoundFile mono::AudioFactory::LoadFile(const std::string& fileName)
+mono::SoundFile mono::AudioFactory::LoadFile(const char* fileName)
 {
-    File::FilePtr soundFile = File::OpenBinaryFile(fileName.c_str());
+    File::FilePtr soundFile = File::OpenBinaryFile(fileName);
 
     std::vector<byte> bytes;
     File::FileRead(soundFile, bytes);
