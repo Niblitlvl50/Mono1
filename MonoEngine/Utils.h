@@ -47,16 +47,4 @@ namespace mono
 
     //! Generates a random float between 0.0 and 1.0
     float Random();
-
-    //! Check if a flag is set in a bit set
-    inline bool IsBitFlagSet(uint bit_flags, uint flag)
-    {
-        return bit_flags & flag;
-    }
-
-    //! Set a flag in a bit set
-    inline void SetBitFlag(uint& bit_flags, uint flag)
-    {
-        bit_flags |= flag;
-    }
 }

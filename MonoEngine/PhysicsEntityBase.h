@@ -25,8 +25,8 @@ namespace mono
         virtual math::Quad BoundingBox() const;
         virtual cm::Object& GetPhysics();
         virtual uint Id() const;
-        virtual uint Flags() const;
-        virtual void SetFlags(uint flags);
+        virtual void SetProperty(uint property);
+        virtual bool HasProperty(uint property) const;
 
     protected:
         
@@ -39,7 +39,7 @@ namespace mono
         virtual void Update(unsigned int delta) = 0;
 
         const uint m_uid;
-        uint m_flags;
+        uint m_properties;
         
         math::Vector2f mPosition;
         math::Vector2f mScale;

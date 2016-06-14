@@ -15,10 +15,12 @@ namespace game
 {
     struct SpawnPhysicsEntityEvent
     {
-        SpawnPhysicsEntityEvent(const mono::IPhysicsEntityPtr& entity)
-            : mEntity(entity)
+        SpawnPhysicsEntityEvent(const mono::IPhysicsEntityPtr& entity, int layer)
+            : mEntity(entity),
+              layer(layer)
         { }
         mono::IPhysicsEntityPtr mEntity;
+        const int layer;
     };
     
     typedef std::function<void (const game::SpawnPhysicsEntityEvent& event)> SpawnPhysicsEntityFunc;

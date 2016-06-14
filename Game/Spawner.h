@@ -19,11 +19,8 @@ namespace game
 
         Spawner(mono::EventHandler& eventHandler);
 
-        void OnSpawnEntity();
-
     private:
 
-        mono::EventHandler& m_eventHandler;
         Time::ITimerPtr m_timer;
     };
 }

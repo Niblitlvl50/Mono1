@@ -28,11 +28,11 @@ void DamageController::RemoveRecord(uint record_id)
     m_DamageRecords.erase(record_id);
 }
 
-DamageResult DamageController::ApplyDamage(uint id, int damage)
+DamageResult DamageController::ApplyDamage(uint record_id, int damage)
 {
     DamageResult result = { false, 0 };
 
-    auto it = m_DamageRecords.find(id);
+    auto it = m_DamageRecords.find(record_id);
     if(it != m_DamageRecords.end())
     {
         DamageRecord& record = it->second;

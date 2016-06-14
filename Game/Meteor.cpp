@@ -12,8 +12,7 @@
 #include "CMIShape.h"
 #include "CMFactory.h"
 
-#include "EntityFlags.h"
-#include "Utils.h"
+#include "EntityProperties.h"
 
 using namespace game;
 
@@ -23,9 +22,7 @@ Meteor::Meteor(float x, float y)
     mPosition = math::Vector2f(x, y);
     mScale = math::Vector2f(20.0f, 20.0f);
 
-    uint flags = 0;
-    mono::SetBitFlag(flags, EntityFlags::DAMAGABLE);
-    SetFlags(flags);
+    SetProperty(EntityProperties::DAMAGABLE);
     
     mPhysicsObject.body = cm::Factory::CreateBody(15.0f, 1.0f);
     mPhysicsObject.body->SetPosition(mPosition);    

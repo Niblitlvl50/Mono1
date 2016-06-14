@@ -17,7 +17,7 @@ using namespace mono;
 
 PhysicsEntityBase::PhysicsEntityBase()
     : m_uid(system::CreateUID()),
-      m_flags(0),
+      m_properties(0),
       mRotation(0.0f),
       mScale(1.0f, 1.0f)
 { }
@@ -60,14 +60,14 @@ uint PhysicsEntityBase::Id() const
     return m_uid;
 }
 
-uint PhysicsEntityBase::Flags() const
+void PhysicsEntityBase::SetProperty(uint property)
 {
-    return m_flags;
+    m_properties |= property;
 }
 
-void PhysicsEntityBase::SetFlags(uint flags)
+bool PhysicsEntityBase::HasProperty(uint property) const
 {
-    m_flags = flags;
+    return m_properties & property;
 }
 
 void PhysicsEntityBase::doDraw(IRenderer& renderer) const

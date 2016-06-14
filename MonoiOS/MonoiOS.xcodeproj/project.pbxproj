@@ -822,6 +822,7 @@
 		912D56981C52D178003ACC77 /* zed_net.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zed_net.h; path = zed_net/zed_net.h; sourceTree = "<group>"; };
 		912D56991C52D1BD003ACC77 /* SysNetwork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysNetwork.cpp; sourceTree = "<group>"; };
 		912D569A1C52D1BD003ACC77 /* SysNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysNetwork.h; sourceTree = "<group>"; };
+		91451A211D10ADA400F17B05 /* RenderLayers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderLayers.h; sourceTree = "<group>"; };
 		9166036C1C14426100D1C0AC /* ApplicationEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationEvent.h; sourceTree = "<group>"; };
 		9166E1721C31C4FD00A5C82D /* BaseWeapon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseWeapon.cpp; path = Weapons/BaseWeapon.cpp; sourceTree = "<group>"; };
 		9166E1731C31C4FD00A5C82D /* BaseWeapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseWeapon.h; path = Weapons/BaseWeapon.h; sourceTree = "<group>"; };
@@ -1004,7 +1005,7 @@
 		91F32F5F1D0C5B3D008457CA /* DamageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DamageController.h; sourceTree = "<group>"; };
 		91F32F631D0C5C3A008457CA /* SysUID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysUID.cpp; sourceTree = "<group>"; };
 		91F32F641D0C5C3A008457CA /* SysUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysUID.h; sourceTree = "<group>"; };
-		91F32F681D0DFD72008457CA /* EntityFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityFlags.h; sourceTree = "<group>"; };
+		91F32F681D0DFD72008457CA /* EntityProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityProperties.h; sourceTree = "<group>"; };
 		FD779EDD0E26BA1200F39101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		FD77A07C0E26BD8C00F39101 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		FD77A07E0E26BDA900F39101 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -1594,7 +1595,8 @@
 				91F32F5A1D0B45CE008457CA /* GameContext.h */,
 				91F32F5E1D0C5B3D008457CA /* DamageController.cpp */,
 				91F32F5F1D0C5B3D008457CA /* DamageController.h */,
-				91F32F681D0DFD72008457CA /* EntityFlags.h */,
+				91F32F681D0DFD72008457CA /* EntityProperties.h */,
+				91451A211D10ADA400F17B05 /* RenderLayers.h */,
 			);
 			name = Game;
 			path = ../Game;

@@ -30,8 +30,8 @@ namespace mono
         // Unique id
         virtual uint Id() const = 0;
 
-        virtual uint Flags() const = 0;
-        virtual void SetFlags(uint flags) = 0;
+        virtual void SetProperty(uint property) = 0;
+        virtual bool HasProperty(uint property) const = 0;
     };
 }
 

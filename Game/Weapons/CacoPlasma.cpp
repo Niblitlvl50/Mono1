@@ -23,6 +23,8 @@
 #include "RemoveEntityEvent.h"
 #include "SpawnPhysicsEntityEvent.h"
 
+#include "RenderLayers.h"
+
 #include <cmath>
 
 namespace
@@ -119,7 +121,7 @@ void CacoPlasma::DoFire(const math::Vector2f& position, float direction) const
     auto bullet = std::make_shared<CacoBullet>(new_position, m_eventHandler);
     bullet->GetPhysics().body->ApplyImpulse(impulse, new_position);
 
-    m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
+    m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet, BACKGROUND));
 }
 
 int CacoPlasma::RoundsPerSecond() const

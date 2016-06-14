@@ -14,6 +14,7 @@
 #include "Vector2f.h"
 #include "MathFunctions.h"
 #include "AudioFactory.h"
+#include "RenderLayers.h"
 
 #include <cmath>
 
@@ -34,7 +35,7 @@ void StandardWeapon::DoFire(const math::Vector2f& position, float direction) con
     auto bullet = std::make_shared<FireBullet>(new_position, direction, m_eventHandler);
     bullet->GetPhysics().body->ApplyImpulse(impulse, new_position);
 
-    m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
+    m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet, BACKGROUND));
 
     m_sound->Position(position.x, position.y);
     m_sound->Play();

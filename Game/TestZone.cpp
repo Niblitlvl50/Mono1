@@ -33,7 +33,8 @@
 
 #include "MathFunctions.h"
 #include "Utils.h"
-#include "EntityFlags.h"
+#include "EntityProperties.h"
+#include "RenderLayers.h"
 
 #include <cmath>
 #include <thread>
@@ -45,13 +46,6 @@ using namespace std::placeholders;
 
 namespace
 {
-    enum LayerId
-    {
-        BACKGROUND,
-        MIDDLEGROUND,
-        FOREGROUND
-    };
-
     struct GravityUpdater : mono::IUpdatable
     {
         GravityUpdater(mono::IPhysicsZone* zone, mono::IEntityPtr moon1, mono::IEntityPtr moon2)
@@ -99,7 +93,6 @@ namespace
                 impulse += newPos2;
             }
             
-            //body->ApplyImpulse(impulse, math::zeroVec);
             body->ApplyImpulse(impulse, body->GetPosition());
         }
         
@@ -138,8 +131,6 @@ namespace
             const float posy = cosiney * radius + y;
 
             auto entity = std::make_shared<Meteor>(posx, posy);
-            const math::Vector2f impulse;
-            entity->GetPhysics().body->ApplyImpulse(impulse, math::zeroVec);
             zone->AddPhysicsEntity(entity, FOREGROUND);
         }
     }
@@ -287,7 +278,7 @@ void TestZone::OnDamageEvent(const game::DamageEvent& event)
 
 void TestZone::AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer)
 {
-    const bool damagable = mono::IsBitFlagSet(entity->Flags(), EntityFlags::DAMAGABLE);
+    const bool damagable = entity->HasProperty(EntityProperties::DAMAGABLE);
     if(damagable)
         m_damageController.CreateRecord(entity->Id());
 
@@ -296,7 +287,7 @@ void TestZone::AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer
 
 void TestZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
 {
-    const bool damagable = mono::IsBitFlagSet(entity->Flags(), EntityFlags::DAMAGABLE);
+    const bool damagable = entity->HasProperty(EntityProperties::DAMAGABLE);
     if(damagable)
         m_damageController.RemoveRecord(entity->Id());
 
@@ -307,7 +298,7 @@ void TestZone::AddEntity(const mono::IEntityPtr& entity, int layer)
 {
     PhysicsZone::AddEntity(entity, layer);
 
-    const bool damagable = mono::IsBitFlagSet(entity->Flags(), EntityFlags::DAMAGABLE);
+    const bool damagable = entity->HasProperty(EntityProperties::DAMAGABLE);
     if(damagable)
         m_damageController.CreateRecord(entity->Id());
 }
@@ -316,7 +307,7 @@ void TestZone::RemoveEntity(const mono::IEntityPtr& entity)
 {
     PhysicsZone::RemoveEntity(entity);
 
-    const bool damagable = mono::IsBitFlagSet(entity->Flags(), EntityFlags::DAMAGABLE);
+    const bool damagable = entity->HasProperty(EntityProperties::DAMAGABLE);
     if(damagable)
         m_damageController.RemoveRecord(entity->Id());
 }

@@ -11,20 +11,19 @@
 #include "SpawnPhysicsEntityEvent.h"
 #include "Meteor.h"
 #include "Utils.h"
+#include "RenderLayers.h"
 
 using namespace game;
 
 Spawner::Spawner(mono::EventHandler& eventHandler)
-    : m_eventHandler(eventHandler)
 {
-    m_timer = Time::CreateRepeatingTimer(1000, std::bind(&Spawner::OnSpawnEntity, this));
-}
+    const auto spawn_func = [&eventHandler]() {
+        const float x = mono::Random() * 1000 - 500;
+        const float y = mono::Random() * 1000 - 500;
 
-void Spawner::OnSpawnEntity()
-{
-    const float x = mono::Random() * 1000 - 500;
-    const float y = mono::Random() * 1000 - 500;
-    
-    game::SpawnPhysicsEntityEvent event(std::make_shared<Meteor>(x, y));
-    m_eventHandler.DispatchEvent(event);
+        const game::SpawnPhysicsEntityEvent event(std::make_shared<Meteor>(x, y), BACKGROUND);
+        eventHandler.DispatchEvent(event);
+    };
+
+    m_timer = Time::CreateRepeatingTimer(1000, spawn_func);
 }

@@ -13,6 +13,7 @@
 #include "SpawnPhysicsEntityEvent.h"
 #include "Vector2f.h"
 #include "MathFunctions.h"
+#include "RenderLayers.h"
 
 #include <cmath>
 
@@ -31,7 +32,7 @@ void RocketLauncher::DoFire(const math::Vector2f& position, float direction) con
     auto bullet = std::make_shared<Rocket>(new_position, direction, m_eventHandler);
     bullet->GetPhysics().body->ApplyImpulse(impulse, new_position);
 
-    m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet));
+    m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet, BACKGROUND));
 }
 
 int RocketLauncher::RoundsPerSecond() const

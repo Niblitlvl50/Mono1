@@ -34,7 +34,7 @@ namespace game
         DamageRecord& CreateRecord(uint record_id);
         void RemoveRecord(uint record_id);
 
-        DamageResult ApplyDamage(uint id, int damage);
+        DamageResult ApplyDamage(uint record_id, int damage);
 
     private:
 

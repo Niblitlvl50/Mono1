@@ -27,8 +27,8 @@ namespace mono
         virtual void SetRotation(float rotation);
         virtual math::Quad BoundingBox() const;
         virtual uint Id() const;
-        virtual uint Flags() const;
-        virtual void SetFlags(uint flags);
+        virtual void SetProperty(uint property);
+        virtual bool HasProperty(uint property) const;
 
         void AddChild(const IEntityPtr& child);
         void RemoveChild(const IEntityPtr& child);
@@ -46,7 +46,7 @@ namespace mono
         virtual void doUpdate(unsigned int delta);
 
         const uint m_uid;
-        uint m_flags;
+        uint m_properties;
 
         math::Vector2f mPosition;
         math::Vector2f mBasePoint;
