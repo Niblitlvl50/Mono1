@@ -14,7 +14,7 @@
 namespace mono
 {
     //! Create a texture from disk, only PNG is supported at the moment
-    ITexturePtr CreateTexture(const std::string& source);
+    ITexturePtr CreateTexture(const char* source);
 
     //! Create a texture from memory
     ITexturePtr CreateTexture(const byte* data, int width, int height, int colorComponents, unsigned int targetFormat);

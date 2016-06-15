@@ -8,6 +8,7 @@
 
 #include "ImageFactory.h"
 #include <stdexcept>
+#include <string>
 
 #include "PNGImage.h"
 
@@ -59,15 +60,17 @@ namespace
 }
 
 
-mono::IImagePtr mono::LoadImage(const std::string& source)
+mono::IImagePtr mono::LoadImage(const char* source)
 {
-    const size_t dotpos = source.find_last_of(".");
+    const std::string file_path(source);
+
+    const size_t dotpos = file_path.find_last_of(".");
     if(dotpos == std::string::npos)
         throw std::runtime_error("Unable to determine extension");
     
-    const std::string& extension = source.substr(dotpos +1);
+    const std::string& extension = file_path.substr(dotpos +1);
     if(extension == "png")
-        return std::make_shared<libpng::PNGImage>(source.c_str());
+        return std::make_shared<libpng::PNGImage>(source);
 
     // If we end up here, the image is unsupported.
     throw std::runtime_error("Unsupported image");

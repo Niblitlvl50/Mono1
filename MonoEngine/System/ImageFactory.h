@@ -9,14 +9,13 @@
 #pragma once
 
 #include "IImage.h"
-#include <string>
 
 namespace mono
 {
     //! Load an image from disk, right now only PNG is supported
     //! \param source Where the image is located
     //! \return A smart image pointer
-    IImagePtr LoadImage(const std::string& source);
+    IImagePtr LoadImage(const char* source);
 
     //! Create an image from memory
     //!

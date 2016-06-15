@@ -17,10 +17,10 @@
 namespace
 {
     // This is where all the weak pointers goes, that points to the allocated textures!
-    std::unordered_map<std::string, std::weak_ptr<mono::ITexture>> textureStorage;
+    std::unordered_map<const char*, std::weak_ptr<mono::ITexture>> textureStorage;
 }
 
-mono::ITexturePtr mono::CreateTexture(const std::string& source)
+mono::ITexturePtr mono::CreateTexture(const char* source)
 {
     auto it = textureStorage.find(source);
     if(it != textureStorage.end())
@@ -29,7 +29,7 @@ mono::ITexturePtr mono::CreateTexture(const std::string& source)
         if(texture)
             return texture;
 
-        std::printf("Error when trying to create a shared_ptr from weak_ptr using source: %s\n", source.c_str());
+        std::printf("Error when trying to create a shared_ptr from weak_ptr using source: %s\n", source);
     }
     
     const mono::IImagePtr image = LoadImage(source);

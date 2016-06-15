@@ -18,7 +18,7 @@ namespace mono
     //! @param font Font file to use
     //! @param size Size of the font on the generated bitmap
     //! @param scale Scale of font when drawing with opengl (small font sizes can produce bad quality)
-    void LoadFont(const std::string& font, float size, float scale = 1.0f);
+    void LoadFont(const char* font, float size, float scale = 1.0f);
 
     //! Use the loaded font
     void UseFont();

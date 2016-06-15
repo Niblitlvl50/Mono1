@@ -39,9 +39,9 @@ namespace
     static std::unordered_map<char, CharData> charMap;
 }
 
-void mono::LoadFont(const std::string& font, float size, float scale)
+void mono::LoadFont(const char* font, float size, float scale)
 {
-    File::FilePtr fontfile = File::OpenBinaryFile(font.c_str());
+    File::FilePtr fontfile = File::OpenBinaryFile(font);
     
     std::vector<byte> fontbuffer;
     File::FileRead(fontfile, fontbuffer);

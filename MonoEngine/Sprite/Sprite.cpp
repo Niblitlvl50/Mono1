@@ -67,7 +67,7 @@ Sprite::Sprite(const char* sprite_file)
     lua::LuaState config(sprite_file);
 
     const std::string& texture = lua::GetValue<std::string>(config, "texture");
-    mTexture = mono::CreateTexture(texture);
+    mTexture = mono::CreateTexture(texture.c_str());
     
     TextureData data;
     data.rows    = lua::GetValue<int>(config, "rows");
