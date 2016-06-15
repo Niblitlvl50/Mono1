@@ -18,6 +18,6 @@ namespace mono
         virtual ~IPhysicsEntity()
         { }
         
-        virtual cm::Object& GetPhysics() = 0;
+        virtual mono::Object& GetPhysics() = 0;
     };
 }

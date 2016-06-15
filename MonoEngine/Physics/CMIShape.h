@@ -10,7 +10,7 @@
 
 #include "CMFwd.h"
 
-namespace cm
+namespace mono
 {
     struct IShape
     {

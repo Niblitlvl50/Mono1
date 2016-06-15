@@ -11,14 +11,14 @@
 #include "CMFwd.h"
 #include "MathFwd.h"
 
-namespace cm
+namespace mono
 {
     struct ICollisionHandler
     {
         virtual ~ICollisionHandler()
         { }
         
-        virtual void OnCollideWith(const cm::IBodyPtr& body) = 0;
+        virtual void OnCollideWith(const mono::IBodyPtr& body) = 0;
         virtual void OnPostStep() = 0;
     };
         
@@ -92,7 +92,7 @@ namespace cm
         
         //! Sets a collision handler to the body
         //! @param handler A pointer to a collision handler
-        virtual void SetCollisionHandler(cm::ICollisionHandler* handler) = 0;
+        virtual void SetCollisionHandler(mono::ICollisionHandler* handler) = 0;
         
         //! Called by the framework when a collision occures
         //! @param body The other body of the collision

@@ -16,7 +16,7 @@
 
 namespace
 {
-    struct CMBody : cm::IBody
+    struct CMBody : mono::IBody
     {        
         CMBody()
             : mHandler(nullptr)
@@ -93,11 +93,11 @@ namespace
         {
             cpBodySetForce(mBody, cpvzero);
         }
-        void SetCollisionHandler(cm::ICollisionHandler* handler)
+        void SetCollisionHandler(mono::ICollisionHandler* handler)
         {
             mHandler = handler;
         }
-        void OnCollideWith(cm::IBodyPtr body)
+        void OnCollideWith(mono::IBodyPtr body)
         {
             if(mHandler)
                 mHandler->OnCollideWith(body);
@@ -112,28 +112,28 @@ namespace
             return mBody;
         }
         
-        cm::ICollisionHandler* mHandler;
+        mono::ICollisionHandler* mHandler;
         cpBody* mBody;
     };
     
-    struct CMShape : cm::IShape
+    struct CMShape : mono::IShape
     {
-        CMShape(cm::IBodyPtr body, float radius, const math::Vector2f& offset)
+        CMShape(mono::IBodyPtr body, float radius, const math::Vector2f& offset)
         {
             mShape = cpCircleShapeNew(body->Body(), radius, cpv(offset.x, offset.y));
             mInertiaValue = cpMomentForCircle(body->GetMass(), 0.0f, radius, cpv(offset.x, offset.y));
         }
-        CMShape(cm::IBodyPtr body, float width, float height)
+        CMShape(mono::IBodyPtr body, float width, float height)
         {
             mShape = cpBoxShapeNew(body->Body(), width, height, 1.0f);
             mInertiaValue = cpMomentForBox(body->GetMass(), width, height);
         }
-        CMShape(cm::IBodyPtr body, const math::Vector2f& first, const math::Vector2f& second, float radius)
+        CMShape(mono::IBodyPtr body, const math::Vector2f& first, const math::Vector2f& second, float radius)
         {
             mShape = cpSegmentShapeNew(body->Body(), cpv(first.x, first.y), cpv(second.x, second.y), radius);
             mInertiaValue = cpMomentForSegment(body->GetMass(), cpv(first.x, first.y), cpv(second.x, second.y), radius);
         }
-        CMShape(cm::IBodyPtr body, const std::vector<math::Vector2f>& vertices, const math::Vector2f& offset)
+        CMShape(mono::IBodyPtr body, const std::vector<math::Vector2f>& vertices, const math::Vector2f& offset)
         {
             const auto transformFunc = [](const math::Vector2f& position) {
                 return cpv(position.x, position.y);
@@ -171,32 +171,32 @@ namespace
     };
 }
 
-cm::IBodyPtr cm::Factory::CreateStaticBody()
+mono::IBodyPtr mono::PhysicsFactory::CreateStaticBody()
 {
     return std::make_shared<CMBody>();
 }
 
-cm::IBodyPtr cm::Factory::CreateBody(float mass, float inertia)
+mono::IBodyPtr mono::PhysicsFactory::CreateBody(float mass, float inertia)
 {
     return std::make_shared<CMBody>(mass, inertia);
 }
 
-cm::IShapePtr cm::Factory::CreateShape(cm::IBodyPtr body, float radius, const math::Vector2f& offset)
+mono::IShapePtr mono::PhysicsFactory::CreateShape(mono::IBodyPtr body, float radius, const math::Vector2f& offset)
 {
     return std::make_shared<CMShape>(body, radius, offset);
 }
 
-cm::IShapePtr cm::Factory::CreateShape(cm::IBodyPtr body, float width, float height)
+mono::IShapePtr mono::PhysicsFactory::CreateShape(mono::IBodyPtr body, float width, float height)
 {
     return std::make_shared<CMShape>(body, width, height);
 }
 
-cm::IShapePtr cm::Factory::CreateShape(cm::IBodyPtr body, const math::Vector2f& first, const math::Vector2f& second, float radius)
+mono::IShapePtr mono::PhysicsFactory::CreateShape(mono::IBodyPtr body, const math::Vector2f& first, const math::Vector2f& second, float radius)
 {
     return std::make_shared<CMShape>(body, first, second, radius);
 }
 
-cm::IShapePtr cm::Factory::CreateShape(cm::IBodyPtr body, const std::vector<math::Vector2f>& vertices, const math::Vector2f& offset)
+mono::IShapePtr mono::PhysicsFactory::CreateShape(mono::IBodyPtr body, const std::vector<math::Vector2f>& vertices, const math::Vector2f& offset)
 {
     return std::make_shared<CMShape>(body, vertices, offset);
 }

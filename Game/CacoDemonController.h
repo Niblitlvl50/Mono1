@@ -14,13 +14,13 @@ namespace game
 {
     class CacoDemon;
 
-    class CacoDemonController : public cm::ICollisionHandler
+    class CacoDemonController : public mono::ICollisionHandler
     {
     public:
 
         CacoDemonController(CacoDemon* demon);
 
-        virtual void OnCollideWith(const cm::IBodyPtr& body);
+        virtual void OnCollideWith(const mono::IBodyPtr& body);
         virtual void OnPostStep();
 
     private:

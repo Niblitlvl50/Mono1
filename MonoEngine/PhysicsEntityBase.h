@@ -23,7 +23,7 @@ namespace mono
         virtual void SetPosition(const math::Vector2f& position);
         virtual void SetRotation(float rotation);
         virtual math::Quad BoundingBox() const;
-        virtual cm::Object& GetPhysics();
+        virtual mono::Object& GetPhysics();
         virtual uint Id() const;
         virtual void SetProperty(uint property);
         virtual bool HasProperty(uint property) const;
@@ -45,7 +45,7 @@ namespace mono
         math::Vector2f mScale;
         float mRotation;
         
-        cm::Object mPhysicsObject;
+        mono::Object mPhysicsObject;
     };
 }
 

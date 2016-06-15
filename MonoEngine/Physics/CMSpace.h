@@ -17,7 +17,7 @@
 struct cpSpace;
 struct cpArbiter;
 
-namespace cm
+namespace mono
 {
     class Space
     {

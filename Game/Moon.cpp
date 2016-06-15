@@ -22,10 +22,10 @@ Moon::Moon(float x, float y, float radius)
     mPosition = math::Vector2f(x, y);
     mScale = math::Vector2f(radius, radius) * 2.0f;
     
-    mPhysicsObject.body = cm::Factory::CreateStaticBody();
+    mPhysicsObject.body = mono::PhysicsFactory::CreateStaticBody();
     mPhysicsObject.body->SetPosition(mPosition);
 
-    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, radius, math::zeroVec);
+    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, radius, math::zeroVec);
     shape->SetElasticity(0.9f);
     
     mPhysicsObject.shapes.push_back(shape);

@@ -14,7 +14,7 @@
 
 namespace game
 {
-    class FireBullet : public mono::PhysicsEntityBase, public cm::ICollisionHandler
+    class FireBullet : public mono::PhysicsEntityBase, public mono::ICollisionHandler
     {
     public:
         
@@ -22,7 +22,7 @@ namespace game
         void Update(unsigned int delta);
         void Draw(mono::IRenderer& renderer) const;
         
-        virtual void OnCollideWith(const cm::IBodyPtr& body);
+        virtual void OnCollideWith(const mono::IBodyPtr& body);
         virtual void OnPostStep();
         
     private:

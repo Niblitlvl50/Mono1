@@ -24,10 +24,10 @@ Meteor::Meteor(float x, float y)
 
     SetProperty(EntityProperties::DAMAGABLE);
     
-    mPhysicsObject.body = cm::Factory::CreateBody(15.0f, 1.0f);
+    mPhysicsObject.body = mono::PhysicsFactory::CreateBody(15.0f, 1.0f);
     mPhysicsObject.body->SetPosition(mPosition);    
 
-    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, 10.0f, 10.0f);
+    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, 10.0f, 10.0f);
     shape->SetElasticity(0.9f);
     
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());

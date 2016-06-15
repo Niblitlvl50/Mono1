@@ -14,12 +14,12 @@ namespace game
 {
     struct DamageEvent
     {
-        DamageEvent(const cm::IBodyPtr& body, int damage)
+        DamageEvent(const mono::IBodyPtr& body, int damage)
             : body(body),
               damage(damage)
         { }
 
-        const cm::IBodyPtr body;
+        const mono::IBodyPtr body;
         const int damage;
     };
 }

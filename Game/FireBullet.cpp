@@ -32,12 +32,12 @@ FireBullet::FireBullet(const math::Vector2f& start, float rotation, mono::EventH
 
     mScale = math::Vector2f(15.0f, 15.0f);
     
-    mPhysicsObject.body = cm::Factory::CreateBody(1.0f, 1.0f);
+    mPhysicsObject.body = mono::PhysicsFactory::CreateBody(1.0f, 1.0f);
     mPhysicsObject.body->SetPosition(start);  
     mPhysicsObject.body->SetAngle(rotation);
     mPhysicsObject.body->SetCollisionHandler(this);
     
-    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, 5.0f, math::Vector2f(0.0f, 0.0f));
+    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, 5.0f, math::Vector2f(0.0f, 0.0f));
     
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());    
     mPhysicsObject.shapes.push_back(shape);        
@@ -53,7 +53,7 @@ void FireBullet::Draw(mono::IRenderer& renderer) const
     renderer.DrawSprite(mSprite);
 }
 
-void FireBullet::OnCollideWith(const cm::IBodyPtr& body)
+void FireBullet::OnCollideWith(const mono::IBodyPtr& body)
 {
     mEventHandler.DispatchEvent(game::DamageEvent(body, 20));
 }

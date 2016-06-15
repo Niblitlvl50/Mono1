@@ -40,11 +40,11 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     mPosition = math::Vector2f(x, y);
     mScale = math::Vector2f(20.0f, 20.0f);
     
-    mPhysicsObject.body = cm::Factory::CreateBody(10.0f, INFINITY);
+    mPhysicsObject.body = mono::PhysicsFactory::CreateBody(10.0f, INFINITY);
     mPhysicsObject.body->SetPosition(mPosition);
     mPhysicsObject.body->SetCollisionHandler(this);
 
-    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, mScale.x, mScale.y);
+    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, mScale.x, mScale.y);
     shape->SetElasticity(0.1f);
     
     mPhysicsObject.shapes.push_back(shape);
@@ -69,7 +69,7 @@ void Shuttle::Update(unsigned int delta)
         mWeapon->Fire(mPosition, mRotation);
 }
 
-void Shuttle::OnCollideWith(const cm::IBodyPtr& body)
+void Shuttle::OnCollideWith(const mono::IBodyPtr& body)
 {
     //body->IsStatic();
     //mPhysicsObject.body->GetMoment();

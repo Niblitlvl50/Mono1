@@ -50,7 +50,7 @@ math::Quad PhysicsEntityBase::BoundingBox() const
     return math::Quad(mPosition - halfScale, mPosition + halfScale);
 }
 
-cm::Object& PhysicsEntityBase::GetPhysics()
+mono::Object& PhysicsEntityBase::GetPhysics()
 {
     return mPhysicsObject;
 }

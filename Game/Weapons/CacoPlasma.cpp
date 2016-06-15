@@ -61,7 +61,7 @@ namespace
         mono::Sprite m_sprite;
     };
 
-    class CacoBullet : public mono::PhysicsEntityBase, public cm::ICollisionHandler
+    class CacoBullet : public mono::PhysicsEntityBase, public mono::ICollisionHandler
     {
     public:
 
@@ -71,11 +71,11 @@ namespace
         {
             mScale = math::Vector2f(20.0f, 20.0f);
 
-            mPhysicsObject.body = cm::Factory::CreateBody(1.0f, 1.0f);
+            mPhysicsObject.body = mono::PhysicsFactory::CreateBody(1.0f, 1.0f);
             mPhysicsObject.body->SetPosition(position);
             mPhysicsObject.body->SetCollisionHandler(this);
 
-            cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, 7.0f, math::Vector2f(0.0f, 0.0f));
+            mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, 7.0f, math::Vector2f(0.0f, 0.0f));
 
             mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
             mPhysicsObject.shapes.push_back(shape);
@@ -91,7 +91,7 @@ namespace
             m_sprite.doUpdate(delta);
         }
 
-        virtual void OnCollideWith(const cm::IBodyPtr& body)
+        virtual void OnCollideWith(const mono::IBodyPtr& body)
         {
             const game::SpawnEntityEvent event(std::make_shared<CacoExplosion>(m_eventHandler, mPosition));
             m_eventHandler.DispatchEvent(event);

@@ -27,12 +27,12 @@ Rocket::Rocket(const math::Vector2f& start, float rotation, mono::EventHandler& 
 {
     mScale = math::Vector2f(25.0f, 25.0f);
 
-    mPhysicsObject.body = cm::Factory::CreateBody(1.0f, 1.0f);
+    mPhysicsObject.body = mono::PhysicsFactory::CreateBody(1.0f, 1.0f);
     mPhysicsObject.body->SetPosition(start);
     mPhysicsObject.body->SetAngle(rotation);
     mPhysicsObject.body->SetCollisionHandler(this);
 
-    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, 7.0f, math::Vector2f(0.0f, 0.0f));
+    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, 7.0f, math::Vector2f(0.0f, 0.0f));
 
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
     mPhysicsObject.shapes.push_back(shape);
@@ -48,7 +48,7 @@ void Rocket::Update(unsigned int delta)
     mSprite.doUpdate(delta);
 }
 
-void Rocket::OnCollideWith(const cm::IBodyPtr& body)
+void Rocket::OnCollideWith(const mono::IBodyPtr& body)
 {
     const game::SpawnEntityEvent event(std::make_shared<Explosion>(mEventHandler, mPosition, 60));
     mEventHandler.DispatchEvent(event);

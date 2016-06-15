@@ -38,12 +38,12 @@ CacoDemon::CacoDemon(mono::EventHandler& eventHandler)
 
     SetProperty(EntityProperties::DAMAGABLE);
 
-    mPhysicsObject.body = cm::Factory::CreateBody(500.0f, 1.0f);
+    mPhysicsObject.body = mono::PhysicsFactory::CreateBody(500.0f, 1.0f);
     mPhysicsObject.body->SetPosition(mPosition);
 
     mPhysicsObject.body->SetCollisionHandler(&m_controller);
 
-    cm::IShapePtr shape = cm::Factory::CreateShape(mPhysicsObject.body, 80, 80);
+    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, 80, 80);
     shape->SetElasticity(0.1f);
 
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());

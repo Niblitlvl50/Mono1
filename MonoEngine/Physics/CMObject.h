@@ -11,7 +11,7 @@
 #include "CMFwd.h"
 #include <vector>
 
-namespace cm
+namespace mono
 {
     struct Object
     {

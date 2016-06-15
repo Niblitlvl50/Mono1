@@ -17,7 +17,7 @@
 
 #include <stdexcept>
 
-using namespace cm;
+using namespace mono;
 
 
 Space::Space(const math::Vector2f& gravity, float damping)

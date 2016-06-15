@@ -18,7 +18,7 @@ namespace game
     class IWeaponSystem;
     enum class WeaponType;
 
-    class Shuttle : public mono::PhysicsEntityBase, public cm::ICollisionHandler
+    class Shuttle : public mono::PhysicsEntityBase, public mono::ICollisionHandler
     {
     public:
         
@@ -43,7 +43,7 @@ namespace game
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
         
-        virtual void OnCollideWith(const cm::IBodyPtr& body);
+        virtual void OnCollideWith(const mono::IBodyPtr& body);
         virtual void OnPostStep();
 
         std::unique_ptr<IWeaponSystem> mWeapon;

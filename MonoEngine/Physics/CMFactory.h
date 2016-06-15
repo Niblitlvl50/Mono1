@@ -12,9 +12,9 @@
 #include "MathFwd.h"
 #include <vector>
 
-namespace cm
+namespace mono
 {            
-    class Factory
+    class PhysicsFactory
     {
     public:
         

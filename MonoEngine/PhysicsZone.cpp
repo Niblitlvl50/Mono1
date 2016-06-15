@@ -28,7 +28,7 @@ struct PhysicsZone::PhysicsImpl : IUpdatable
         const float floatDelta = delta;
         mSpace.Tick(floatDelta / 1000.0f);
     }
-    cm::Space mSpace;
+    mono::Space mSpace;
 };
 
 PhysicsZone::PhysicsZone(const math::Vector2f& gravity, float damping)
@@ -38,7 +38,7 @@ PhysicsZone::PhysicsZone(const math::Vector2f& gravity, float damping)
     AddUpdatable(mPhysics);
 }
 
-void PhysicsZone::ForEachBody(const cm::BodyFunc& func)
+void PhysicsZone::ForEachBody(const mono::BodyFunc& func)
 {
     mPhysics->mSpace.ForEachBody(func);
 }
@@ -48,7 +48,7 @@ void PhysicsZone::AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int la
     AddDrawable(entity, layer);
     AddUpdatable(entity);
     
-    const cm::Object& object = entity->GetPhysics();
+    const mono::Object& object = entity->GetPhysics();
     mPhysics->mSpace.AddBody(object.body);
     
     for(auto& shape : object.shapes)
@@ -65,7 +65,7 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
     const bool result = FindAndRemove(mPhysicsEntities, entity);
     if(result)
     {
-        cm::Object& object = entity->GetPhysics();
+        mono::Object& object = entity->GetPhysics();
         mPhysics->mSpace.RemoveBody(object.body);
         
         for(auto& shape : object.shapes)
@@ -77,7 +77,7 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
     }
 }
 
-IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromBody(const cm::IBodyPtr& body) const
+IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromBody(const mono::IBodyPtr& body) const
 {
     for(auto& entity : mPhysicsEntities)
     {

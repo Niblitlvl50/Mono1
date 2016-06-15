@@ -14,7 +14,7 @@
 
 namespace game
 {
-    class Rocket :  public mono::PhysicsEntityBase, public cm::ICollisionHandler
+    class Rocket :  public mono::PhysicsEntityBase, public mono::ICollisionHandler
     {
     public:
         Rocket(const math::Vector2f& start, float rotation, mono::EventHandler& eventHandler);
@@ -22,7 +22,7 @@ namespace game
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
 
-        virtual void OnCollideWith(const cm::IBodyPtr& body);
+        virtual void OnCollideWith(const mono::IBodyPtr& body);
         virtual void OnPostStep();
 
     private:

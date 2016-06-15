@@ -53,7 +53,7 @@ namespace
 PhysicsGrid::PhysicsGrid(const math::Quad& bounds)
     : mBounds(bounds)
 {
-    mPhysicsObject.body = cm::Factory::CreateStaticBody();
+    mPhysicsObject.body = mono::PhysicsFactory::CreateStaticBody();
 
     constexpr float radius = 2.0f;
 
@@ -62,16 +62,16 @@ PhysicsGrid::PhysicsGrid(const math::Quad& bounds)
     const math::Vector2f third = mBounds.mB;
     const math::Vector2f fourth = math::Vector2f(mBounds.mB.x, mBounds.mA.y);
 
-    mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, first, second, radius));
-    mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, second, third, radius));
-    mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, third, fourth, radius));
-    mPhysicsObject.shapes.push_back(cm::Factory::CreateShape(mPhysicsObject.body, fourth, first, radius));
+    mPhysicsObject.shapes.push_back(mono::PhysicsFactory::CreateShape(mPhysicsObject.body, first, second, radius));
+    mPhysicsObject.shapes.push_back(mono::PhysicsFactory::CreateShape(mPhysicsObject.body, second, third, radius));
+    mPhysicsObject.shapes.push_back(mono::PhysicsFactory::CreateShape(mPhysicsObject.body, third, fourth, radius));
+    mPhysicsObject.shapes.push_back(mono::PhysicsFactory::CreateShape(mPhysicsObject.body, fourth, first, radius));
 
     using namespace std::placeholders;
 
     std::for_each(mPhysicsObject.shapes.begin(),
                   mPhysicsObject.shapes.end(),
-                  std::bind(&cm::IShape::SetElasticity, _1, 0.9f));
+                  std::bind(&mono::IShape::SetElasticity, _1, 0.9f));
 
     mGridVertices = BuildGridVertices(mBounds);
 }
