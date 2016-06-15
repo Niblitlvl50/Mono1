@@ -10,8 +10,6 @@
 #include "IRenderer.h"
 #include "Color.h"
 
-#include <string>
-
 using namespace game;
 
 Morpher::Morpher()

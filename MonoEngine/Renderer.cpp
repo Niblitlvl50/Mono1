@@ -100,7 +100,7 @@ void Renderer::AddUpdatable(const IUpdatablePtr& updatable)
     mUpdatables.push_back(updatable);
 }
 
-void Renderer::DrawText(const std::string& text, const math::Vector2f& pos, bool center, const mono::Color::RGBA& color)
+void Renderer::DrawText(const char* text, const math::Vector2f& pos, bool center, const mono::Color::RGBA& color)
 {
     TextDefinition def = mono::GenerateVertexDataFromString(text, pos, center);
     def.color = color;

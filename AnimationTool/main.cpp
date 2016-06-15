@@ -37,7 +37,7 @@ namespace
     {
     public:
 
-        Label(const std::string& text, const math::Vector2f& position)
+        Label(const char* text, const math::Vector2f& position)
             : m_text(text),
               m_position(position),
               m_size(mono::MeasureString(text))
@@ -58,7 +58,7 @@ namespace
             return bb;
         }
 
-        const std::string m_text;
+        const char* m_text;
         const math::Vector2f m_position;
         const math::Vector2f m_size;
     };

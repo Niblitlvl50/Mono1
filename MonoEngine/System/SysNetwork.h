@@ -11,7 +11,6 @@
 #include "SysTypes.h"
 #include <vector>
 #include <memory>
-#include <string>
 
 namespace Network
 {
@@ -39,5 +38,5 @@ namespace Network
     };
 
     //! Create a UDP socket...
-    std::shared_ptr<ISocket> OpenUDPSocket(const std::string& address, int port, bool blocking);
+    std::shared_ptr<ISocket> OpenUDPSocket(const char* address, int port, bool blocking);
 }

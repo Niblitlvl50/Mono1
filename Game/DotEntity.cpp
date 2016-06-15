@@ -11,7 +11,6 @@
 #include "IRenderer.h"
 #include "Color.h"
 
-#include <string>
 #include <cmath>
 
 using namespace game;

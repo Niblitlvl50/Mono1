@@ -10,7 +10,6 @@
 
 #include "TextDefinition.h"
 #include "MathFwd.h"
-#include <string>
 
 namespace mono
 {    
@@ -31,11 +30,11 @@ namespace mono
     //! @param pos The position...
     //! @param center If the text should be horizontally centered to the position
     //! @return TextDefinition
-    TextDefinition GenerateVertexDataFromString(const std::string& text, const math::Vector2f& pos, bool center);
+    TextDefinition GenerateVertexDataFromString(const char* text, const math::Vector2f& pos, bool center);
     
     //! Measures a string
     //! @param text The text to measure
     //! @return Size of the string
-    math::Vector2f MeasureString(const std::string& text);
+    math::Vector2f MeasureString(const char* text);
 }
 

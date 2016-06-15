@@ -101,10 +101,10 @@ void mono::UnloadFont()
     charMap.clear();
 }
 
-mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text, const math::Vector2f& pos, bool center)
+mono::TextDefinition mono::GenerateVertexDataFromString(const char* text, const math::Vector2f& pos, bool center)
 {
     mono::TextDefinition textDef;
-    textDef.chars = static_cast<unsigned int>(text.length());
+    textDef.chars = static_cast<unsigned int>(std::strlen(text));
     textDef.color = mono::Color::RGBA(1.0f, 1.0f, 1.0f);
     textDef.vertices.reserve(textDef.chars * 12);
     textDef.texcoords.reserve(textDef.chars * 12);
@@ -115,13 +115,13 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text,
     if(center)
         xposition -= MeasureString(text).x / 2.0f;
 
-    for(const char& currentChar : text)
+    //for(const char& currentChar : text)
+    while(*text != '\0')
     {
         // Look up char in map.
-        const auto foundChar = charMap.find(currentChar);
-        if(foundChar == charMap.end())
-            continue;
-        
+        const auto foundChar = charMap.find(*text);
+        assert(foundChar != charMap.end());
+
         const CharData& data = foundChar->second;
         
         const float x0 = xposition + data.xoffset;
@@ -163,25 +163,28 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const std::string& text,
         
         // Add x size of char so that the next char is placed a little bit to the right.
         xposition += data.xadvance;
+
+        text++;
     }
     
     return textDef;
 }
 
-math::Vector2f mono::MeasureString(const std::string& text)
+math::Vector2f mono::MeasureString(const char* text)
 {
     math::Vector2f size;
     
-    for(const char& currentChar : text)
+    while(*text != '\0')
     {
         // Look up char in map.
-        const auto foundChar = charMap.find(currentChar);
-        if(foundChar == charMap.end())
-            continue;
-        
+        const auto foundChar = charMap.find(*text);
+        assert(foundChar != charMap.end());
+
         const CharData& data = foundChar->second;
         size.x += data.xadvance;
         size.y = std::max(data.height, size.y);
+
+        text++;
     }
     
     return size;

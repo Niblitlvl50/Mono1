@@ -15,6 +15,7 @@
 
 #include <stdexcept>
 #include <cstdio>
+#include <string>
 
 void System::Init()
 {

@@ -24,7 +24,7 @@ namespace mono
         virtual void AddDrawable(const IDrawablePtr& drawable) = 0;
         virtual void AddUpdatable(const IUpdatablePtr& updatable) = 0;
         
-        virtual void DrawText(const std::string& text, const math::Vector2f& pos, bool center, const Color::RGBA& color) = 0;
+        virtual void DrawText(const char* text, const math::Vector2f& pos, bool center, const Color::RGBA& color) = 0;
         virtual void DrawSprite(const ISprite& sprite) const = 0;
         virtual void DrawPoints(const std::vector<math::Vector2f>& points, const Color::RGBA& color, float size) const = 0;
         virtual void DrawLines(const std::vector<math::Vector2f>& linePoints, const Color::RGBA& color, float width) const = 0;

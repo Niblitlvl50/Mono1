@@ -8,6 +8,7 @@
 
 #include "SysNetwork.h"
 #include <stdexcept>
+#include <string>
 
 #define ZED_NET_IMPLEMENTATION
 #define ZED_NET_STATIC
@@ -21,9 +22,9 @@ namespace
     {
     public:
 
-        UDPSocket(const std::string& address, int port, bool blocking)
+        UDPSocket(const char* address, int port, bool blocking)
         {
-            zed_net_get_address(&m_address, address.c_str(), port);
+            zed_net_get_address(&m_address, address, port);
             m_handle = zed_net_udp_socket_open(port, blocking);
             if(!m_handle)
                 throw std::runtime_error("Unable to open UDP socket, error: " + std::string(zed_net_get_error()));
@@ -66,7 +67,7 @@ void Network::Exit()
     zed_net_shutdown();
 }
 
-std::shared_ptr<Network::ISocket> Network::OpenUDPSocket(const std::string& address, int port, bool blocking)
+std::shared_ptr<Network::ISocket> Network::OpenUDPSocket(const char* address, int port, bool blocking)
 {
     return std::make_shared<UDPSocket>(address, port, blocking);
 }
