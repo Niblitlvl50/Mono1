@@ -79,5 +79,10 @@ void TraceCamera::SetPosition(const math::Vector2f& position)
     mViewport.mA = xy;
 }
 
+math::Vector2f TraceCamera::GetPosition() const
+{
+    return mViewport.mA + (mViewport.mB * 0.5f);
+}
+
 
 

@@ -29,6 +29,7 @@ namespace mono
         
         virtual void SetTargetViewport(const math::Quad& target) = 0;
         virtual void SetPosition(const math::Vector2f& position) = 0;
+        virtual math::Vector2f GetPosition() const = 0;
     };
     
 }

@@ -35,6 +35,7 @@
 #include "Utils.h"
 #include "EntityProperties.h"
 #include "RenderLayers.h"
+#include "AudioListener.h"
 
 #include <cmath>
 #include <thread>
@@ -100,6 +101,22 @@ namespace
         mono::IEntityPtr mMoon1;
         mono::IEntityPtr mMoon2;
         unsigned int mElapsedTime;
+    };
+
+    class ListenerPositionUpdater : public mono::IUpdatable
+    {
+    public:
+
+        ListenerPositionUpdater(const mono::ICameraPtr& camera)
+            : m_camera(camera)
+        { }
+
+        virtual void doUpdate(unsigned int delta)
+        {
+            mono::ListenerPosition(m_camera->GetPosition());
+        }
+
+        mono::ICameraPtr m_camera;
     };
 
     void ApplyShockwave(const cm::IBodyPtr& body, const math::Vector2f& position, float magnitude)

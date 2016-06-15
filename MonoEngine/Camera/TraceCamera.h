@@ -27,10 +27,11 @@ namespace mono
         virtual void Unfollow();
         
         virtual math::Quad GetViewport() const;
+        virtual math::Vector2f GetPosition() const;
 
         virtual void SetTargetViewport(const math::Quad& target);
         virtual void SetPosition(const math::Vector2f& position);
-                        
+
     private:
 
         CameraController mController;
