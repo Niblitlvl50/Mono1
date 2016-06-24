@@ -421,6 +421,23 @@
 		9166E34A1C3490FD00A5C82D /* gtest_main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9166E3331C348EBD00A5C82D /* gtest_main.cc */; };
 		9166E34B1C34930D00A5C82D /* liblibMonoiOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9166E2311C3438F900A5C82D /* liblibMonoiOS.a */; };
 		9166E34D1C3497B100A5C82D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
+		916B542B1D15D31C00AD54A1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54291D15D31300AD54A1 /* main.cpp */; };
+		916B54351D15D91A00AD54A1 /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B542F1D15D90C00AD54A1 /* imgui.cpp */; };
+		916B54381D15D95A00AD54A1 /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54361D15D95600AD54A1 /* imgui_draw.cpp */; };
+		916B54391D15DA7B00AD54A1 /* liblibMonoOSX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9166E1AA1C341BBA00A5C82D /* liblibMonoOSX.a */; };
+		916B543A1D15DA8800AD54A1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9166E1EB1C341F3E00A5C82D /* AudioToolbox.framework */; };
+		916B543B1D15DA9200AD54A1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9166E1EF1C341F4C00A5C82D /* Carbon.framework */; };
+		916B543C1D15DA9900AD54A1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9166E1F11C341F5100A5C82D /* Cocoa.framework */; };
+		916B543D1D15DAA300AD54A1 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9166E1F31C341F6300A5C82D /* CoreAudio.framework */; };
+		916B543E1D15DAAF00AD54A1 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9166E1F51C341F6800A5C82D /* ForceFeedback.framework */; };
+		916B543F1D15DAB500AD54A1 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9166E1F71C341F7E00A5C82D /* IOKit.framework */; };
+		916B54401D15DABE00AD54A1 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B812591C37DE4E00BDF407 /* OpenAL.framework */; };
+		916B54411D15DAC300AD54A1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9166E1E71C341EB800A5C82D /* OpenGL.framework */; };
+		916B54461D17219600AD54A1 /* ImGuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54441D17219600AD54A1 /* ImGuiShader.cpp */; };
+		916B54491D186BC400AD54A1 /* ImGuiRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54471D186BC400AD54A1 /* ImGuiRenderer.cpp */; };
+		916B544C1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B544A1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.cpp */; };
+		916B544E1D18746400AD54A1 /* imgui_demo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B544D1D18746400AD54A1 /* imgui_demo.cpp */; };
+		916B54521D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54501D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp */; };
 		91791D2B18269CB9007A705A /* Moon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B95CF1C162F37C6006769BF /* Moon.cpp */; };
 		91791D2C18269CC0007A705A /* ShuttleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B95CF1E162F37C6006769BF /* ShuttleController.cpp */; };
 		918157251826E5E600C66F2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 918157241826E5E600C66F2B /* main.cpp */; };
@@ -535,6 +552,13 @@
 			remoteGlobalIDString = 9166E1A91C341BBA00A5C82D;
 			remoteInfo = libMonoOSX;
 		};
+		916B54421D15DB7D00AD54A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9166E1A91C341BBA00A5C82D;
+			remoteInfo = libMonoOSX;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -592,6 +616,15 @@
 				9166E3481C348F9900A5C82D /* rektangel.path in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		916B541E1D15D2C000AD54A1 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -894,6 +927,26 @@
 		9166E3421C348EF200A5C82D /* gtest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gtest.h; path = "gtest-1.7.0/include/gtest/gtest.h"; sourceTree = "<group>"; };
 		9166E3451C348F9900A5C82D /* luaconfig.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = luaconfig.lua; path = ../UnitTests/TestFiles/luaconfig.lua; sourceTree = "<group>"; };
 		9166E3461C348F9900A5C82D /* rektangel.path */ = {isa = PBXFileReference; lastKnownFileType = text; name = rektangel.path; path = ../UnitTests/TestFiles/rektangel.path; sourceTree = "<group>"; };
+		916B54201D15D2C000AD54A1 /* Editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Editor; sourceTree = BUILT_PRODUCTS_DIR; };
+		916B54291D15D31300AD54A1 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../Editor/main.cpp; sourceTree = "<group>"; };
+		916B542D1D15D90C00AD54A1 /* imconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = imconfig.h; path = imgui/imconfig.h; sourceTree = "<group>"; };
+		916B542E1D15D90C00AD54A1 /* imgui_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = imgui_internal.h; path = imgui/imgui_internal.h; sourceTree = "<group>"; };
+		916B542F1D15D90C00AD54A1 /* imgui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = imgui.cpp; path = imgui/imgui.cpp; sourceTree = "<group>"; };
+		916B54301D15D90C00AD54A1 /* imgui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = imgui.h; path = imgui/imgui.h; sourceTree = "<group>"; };
+		916B54311D15D90C00AD54A1 /* stb_rect_pack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_rect_pack.h; path = imgui/stb_rect_pack.h; sourceTree = "<group>"; };
+		916B54321D15D90C00AD54A1 /* stb_textedit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_textedit.h; path = imgui/stb_textedit.h; sourceTree = "<group>"; };
+		916B54331D15D90C00AD54A1 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = imgui/stb_truetype.h; sourceTree = "<group>"; };
+		916B54361D15D95600AD54A1 /* imgui_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = imgui_draw.cpp; path = imgui/imgui_draw.cpp; sourceTree = "<group>"; };
+		916B54441D17219600AD54A1 /* ImGuiShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImGuiShader.cpp; path = Editor/ImGuiShader.cpp; sourceTree = "<group>"; };
+		916B54451D17219600AD54A1 /* ImGuiShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiShader.h; path = Editor/ImGuiShader.h; sourceTree = "<group>"; };
+		916B54471D186BC400AD54A1 /* ImGuiRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImGuiRenderer.cpp; path = Editor/ImGuiRenderer.cpp; sourceTree = "<group>"; };
+		916B54481D186BC400AD54A1 /* ImGuiRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiRenderer.h; path = Editor/ImGuiRenderer.h; sourceTree = "<group>"; };
+		916B544A1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImGuiInterfaceDrawer.cpp; path = Editor/ImGuiInterfaceDrawer.cpp; sourceTree = "<group>"; };
+		916B544B1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiInterfaceDrawer.h; path = Editor/ImGuiInterfaceDrawer.h; sourceTree = "<group>"; };
+		916B544D1D18746400AD54A1 /* imgui_demo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = imgui_demo.cpp; path = imgui/imgui_demo.cpp; sourceTree = "<group>"; };
+		916B544F1D1C65C800AD54A1 /* TextInputEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextInputEvent.h; sourceTree = "<group>"; };
+		916B54501D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImGuiInputHandler.cpp; path = Editor/ImGuiInputHandler.cpp; sourceTree = "<group>"; };
+		916B54511D1DA4DB00AD54A1 /* ImGuiInputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiInputHandler.h; path = Editor/ImGuiInputHandler.h; sourceTree = "<group>"; };
 		918157241826E5E600C66F2B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9181E51F183A8D1600678586 /* EventFuncFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFuncFwd.h; sourceTree = "<group>"; };
 		9181E520183A8D2900678586 /* MonoPtrFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonoPtrFwd.h; sourceTree = "<group>"; };
@@ -1116,6 +1169,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		916B541D1D15D2C000AD54A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				916B543A1D15DA8800AD54A1 /* AudioToolbox.framework in Frameworks */,
+				916B543B1D15DA9200AD54A1 /* Carbon.framework in Frameworks */,
+				916B543C1D15DA9900AD54A1 /* Cocoa.framework in Frameworks */,
+				916B543D1D15DAA300AD54A1 /* CoreAudio.framework in Frameworks */,
+				916B543E1D15DAAF00AD54A1 /* ForceFeedback.framework in Frameworks */,
+				916B543F1D15DAB500AD54A1 /* IOKit.framework in Frameworks */,
+				916B54401D15DABE00AD54A1 /* OpenAL.framework in Frameworks */,
+				916B54411D15DAC300AD54A1 /* OpenGL.framework in Frameworks */,
+				916B54391D15DA7B00AD54A1 /* liblibMonoOSX.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -1129,6 +1198,7 @@
 				9166E2311C3438F900A5C82D /* liblibMonoiOS.a */,
 				9166E2DA1C34696600A5C82D /* AnimationTool */,
 				9166E2FD1C346EB900A5C82D /* UnitTests */,
+				916B54201D15D2C000AD54A1 /* Editor */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1139,6 +1209,7 @@
 				2B26D72715FD2BD8001E9748 /* External Libs */,
 				2B26DB3D15FD3280001E9748 /* Game */,
 				2B26D69C15FD2BB5001E9748 /* MonoEngine */,
+				916B541B1D15D24F00AD54A1 /* Editor */,
 				9166E2E31C34699F00A5C82D /* AnimationTool */,
 				9166E3061C346EEC00A5C82D /* UnitTests */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -1282,6 +1353,7 @@
 				911BFF5717FA07DB002EE7ED /* TouchEvent.h */,
 				9166036C1C14426100D1C0AC /* ApplicationEvent.h */,
 				91F32F5B1D0B565A008457CA /* TimeScaleEvent.h */,
+				916B544F1D1C65C800AD54A1 /* TextInputEvent.h */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -1423,6 +1495,7 @@
 		2B26D72715FD2BD8001E9748 /* External Libs */ = {
 			isa = PBXGroup;
 			children = (
+				916B542C1D15D89600AD54A1 /* imgui */,
 				912D56971C52D169003ACC77 /* zed_net */,
 				9166E32E1C348E6A00A5C82D /* gtest-1.7.0 */,
 				2B26D74615FD2BD8001E9748 /* lpng156 */,
@@ -1743,6 +1816,38 @@
 			name = TestFiles;
 			sourceTree = "<group>";
 		};
+		916B541B1D15D24F00AD54A1 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				916B54291D15D31300AD54A1 /* main.cpp */,
+				916B54441D17219600AD54A1 /* ImGuiShader.cpp */,
+				916B54451D17219600AD54A1 /* ImGuiShader.h */,
+				916B54471D186BC400AD54A1 /* ImGuiRenderer.cpp */,
+				916B54481D186BC400AD54A1 /* ImGuiRenderer.h */,
+				916B544A1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.cpp */,
+				916B544B1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.h */,
+				916B54501D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp */,
+				916B54511D1DA4DB00AD54A1 /* ImGuiInputHandler.h */,
+			);
+			name = Editor;
+			sourceTree = "<group>";
+		};
+		916B542C1D15D89600AD54A1 /* imgui */ = {
+			isa = PBXGroup;
+			children = (
+				916B544D1D18746400AD54A1 /* imgui_demo.cpp */,
+				916B54361D15D95600AD54A1 /* imgui_draw.cpp */,
+				916B542D1D15D90C00AD54A1 /* imconfig.h */,
+				916B542E1D15D90C00AD54A1 /* imgui_internal.h */,
+				916B542F1D15D90C00AD54A1 /* imgui.cpp */,
+				916B54301D15D90C00AD54A1 /* imgui.h */,
+				916B54311D15D90C00AD54A1 /* stb_rect_pack.h */,
+				916B54321D15D90C00AD54A1 /* stb_textedit.h */,
+				916B54331D15D90C00AD54A1 /* stb_truetype.h */,
+			);
+			name = imgui;
+			sourceTree = "<group>";
+		};
 		9199F5CC17E3A9A00001FE28 /* zlib-1.2.8 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1987,6 +2092,24 @@
 			productReference = 9166E2FD1C346EB900A5C82D /* UnitTests */;
 			productType = "com.apple.product-type.tool";
 		};
+		916B541F1D15D2C000AD54A1 /* Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 916B54241D15D2C000AD54A1 /* Build configuration list for PBXNativeTarget "Editor" */;
+			buildPhases = (
+				916B541C1D15D2C000AD54A1 /* Sources */,
+				916B541D1D15D2C000AD54A1 /* Frameworks */,
+				916B541E1D15D2C000AD54A1 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				916B54431D15DB7D00AD54A1 /* PBXTargetDependency */,
+			);
+			name = Editor;
+			productName = Editor;
+			productReference = 916B54201D15D2C000AD54A1 /* Editor */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2014,6 +2137,9 @@
 					9166E2FC1C346EB900A5C82D = {
 						CreatedOnToolsVersion = 7.2;
 					};
+					916B541F1D15D2C000AD54A1 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
 				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MonoiOS" */;
@@ -2034,6 +2160,7 @@
 				2BD3CBA2160BB2B30043156E /* MonoiOS Simulator */,
 				9166E1841C341A9600A5C82D /* GameOSX */,
 				9166E2D91C34696600A5C82D /* AnimationTool */,
+				916B541F1D15D2C000AD54A1 /* Editor */,
 				9166E2FC1C346EB900A5C82D /* UnitTests */,
 				9166E1A91C341BBA00A5C82D /* libMonoOSX */,
 				9166E2301C3438F900A5C82D /* libMonoiOS */,
@@ -2532,6 +2659,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		916B541C1D15D2C000AD54A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				916B544C1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.cpp in Sources */,
+				916B54381D15D95A00AD54A1 /* imgui_draw.cpp in Sources */,
+				916B54491D186BC400AD54A1 /* ImGuiRenderer.cpp in Sources */,
+				916B542B1D15D31C00AD54A1 /* main.cpp in Sources */,
+				916B54461D17219600AD54A1 /* ImGuiShader.cpp in Sources */,
+				916B544E1D18746400AD54A1 /* imgui_demo.cpp in Sources */,
+				916B54351D15D91A00AD54A1 /* imgui.cpp in Sources */,
+				916B54521D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2554,6 +2696,11 @@
 			isa = PBXTargetDependency;
 			target = 9166E1A91C341BBA00A5C82D /* libMonoOSX */;
 			targetProxy = 9166E3041C346EC600A5C82D /* PBXContainerItemProxy */;
+		};
+		916B54431D15DB7D00AD54A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9166E1A91C341BBA00A5C82D /* libMonoOSX */;
+			targetProxy = 916B54421D15DB7D00AD54A1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3117,6 +3264,85 @@
 			};
 			name = Release;
 		};
+		916B54251D15D2C000AD54A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../External Libs/SDL2/include\"";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+			};
+			name = Debug;
+		};
+		916B54261D15D2C000AD54A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../External Libs/SDL2/include\"";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+			};
+			name = Release;
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3221,6 +3447,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		916B54241D15D2C000AD54A1 /* Build configuration list for PBXNativeTarget "Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				916B54251D15D2C000AD54A1 /* Debug */,
+				916B54261D15D2C000AD54A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MonoiOS" */ = {
 			isa = XCConfigurationList;

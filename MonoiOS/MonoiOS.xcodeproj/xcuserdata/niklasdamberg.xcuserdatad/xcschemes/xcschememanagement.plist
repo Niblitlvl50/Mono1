@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>Editor.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
 		<key>GameOSX.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -73,6 +78,11 @@
 			<true/>
 		</dict>
 		<key>9166E2FC1C346EB900A5C82D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>916B541F1D15D2C000AD54A1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
