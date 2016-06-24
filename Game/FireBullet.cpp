@@ -8,8 +8,6 @@
 
 #include "FireBullet.h"
 #include "IRenderer.h"
-#include "Explosion.h"
-#include "SpawnEntityEvent.h"
 #include "RemoveEntityEvent.h"
 #include "DamageEvent.h"
 #include "EventHandler.h"
@@ -17,10 +15,6 @@
 #include "CMIBody.h"
 #include "CMIShape.h"
 #include "CMFactory.h"
-
-#include "Math.h"
-
-#include "Utils.h"
 
 using namespace game;
 
@@ -63,12 +57,7 @@ void FireBullet::OnPostStep()
     if(dead)
         return;
 
-    const float rotation = mono::Random() * 360.0;
-    const game::SpawnEntityEvent event(std::make_shared<Explosion>(mEventHandler, mPosition, 20, rotation));
-    mEventHandler.DispatchEvent(event);
-
     mEventHandler.DispatchEvent(game::RemoveEntityEvent(Id()));
-
     dead = true;
 }
 

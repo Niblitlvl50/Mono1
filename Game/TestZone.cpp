@@ -17,6 +17,7 @@
 #include "Shuttle.h"
 #include "Moon.h"
 #include "Meteor.h"
+#include "Explosion.h"
 #include "PathPoint.h"
 #include "CubeSwarm.h"
 #include "CacoDemon.h"
@@ -290,6 +291,9 @@ void TestZone::OnDamageEvent(const game::DamageEvent& event)
     {
         m_damageController.RemoveRecord(entity->Id());
         SchedulePreFrameTask(std::bind(&TestZone::RemovePhysicsEntity, this, entity));
+
+        const float rotation = mono::Random() * math::PI() * 2.0f;
+        AddEntity(std::make_shared<Explosion>(mEventHandler, entity->Position(), 20, rotation), FOREGROUND);
     }
 }
 
