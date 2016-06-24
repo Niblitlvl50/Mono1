@@ -17,6 +17,7 @@
 #include "ActivatedEvent.h"
 #include "KeyDownEvent.h"
 #include "KeyUpEvent.h"
+#include "TextInputEvent.h"
 #include "MouseDownEvent.h"
 #include "MouseUpEvent.h"
 #include "MouseMotionEvent.h"
@@ -48,6 +49,12 @@ void InputHandler::OnKeyUp(int key)
     }
 
     const event::KeyUpEvent event(key);
+    mEventHandler.DispatchEvent(event);
+}
+
+void InputHandler::OnTextInput(const char* text)
+{
+    const event::TextInputEvent event(text);
     mEventHandler.DispatchEvent(event);
 }
 

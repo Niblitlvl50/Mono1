@@ -17,6 +17,7 @@ namespace event
     struct ActivatedEvent;
     struct KeyDownEvent;
     struct KeyUpEvent;
+    struct TextInputEvent;
     struct MouseDownEvent;
     struct MouseUpEvent;
     struct MouseMotionEvent;

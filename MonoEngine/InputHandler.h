@@ -27,6 +27,7 @@ namespace mono
         
         virtual void OnKeyDown(int key);
         virtual void OnKeyUp(int key);
+        virtual void OnTextInput(const char* text);
         virtual void OnMouseDown(unsigned int button, int x, int y);
         virtual void OnMouseUp(unsigned int button, int x, int y);
         virtual void OnMouseMotion(int x, int y);

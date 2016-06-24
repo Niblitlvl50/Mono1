@@ -23,6 +23,7 @@ namespace mono
         
     private:
         virtual void Use() const;
+        virtual unsigned int Id() const;
         virtual unsigned int Width() const;
         virtual unsigned int Height() const;
         

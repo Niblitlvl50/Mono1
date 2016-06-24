@@ -51,7 +51,7 @@ Texture::Texture(IImagePtr image)
     
     const GLenum error = glGetError();
     if(error != GL_NO_ERROR)
-        std::printf("Open GL error in Texture. Error no: %X", error);
+        std::printf("Open GL error in Texture. Error no: %X\n", error);
 }
 
 Texture::~Texture()
@@ -66,6 +66,11 @@ void Texture::Use() const
         glBindTexture(GL_TEXTURE_2D, mTextureId);
         sBoundTexture = mTextureId;
     }
+}
+
+unsigned int Texture::Id() const
+{
+    return mTextureId;
 }
 
 unsigned int Texture::Width() const

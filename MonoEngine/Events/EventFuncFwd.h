@@ -20,6 +20,7 @@ namespace event
     typedef std::function<void (const ActivatedEvent&)> ActivatedEventFunc;
     typedef std::function<void (const KeyDownEvent&)> KeyDownEventFunc;
     typedef std::function<void (const KeyUpEvent&)> KeyUpEventFunc;
+    typedef std::function<void (const TextInputEvent&)> TextInputEventFunc;
     typedef std::function<void (const MouseDownEvent&)> MouseDownEventFunc;
     typedef std::function<void (const MouseUpEvent&)> MouseUpEventFunc;
     typedef std::function<void (const MouseMotionEvent&)> MouseMotionEventFunc;

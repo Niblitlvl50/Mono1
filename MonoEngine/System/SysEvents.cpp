@@ -85,6 +85,10 @@ void Events::ProcessSystemEvents(const mono::IInputHandlerPtr& handler)
                 handler->OnKeyUp(event.key.keysym.sym);
                 break;
 
+            case SDL_TEXTINPUT:
+                handler->OnTextInput(event.text.text);
+                break;
+
             case SDL_MOUSEBUTTONDOWN:
                 handler->OnMouseDown(event.button.button, event.button.x, event.button.y);
                 break;

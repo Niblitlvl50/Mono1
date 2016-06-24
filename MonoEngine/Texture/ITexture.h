@@ -19,6 +19,9 @@ namespace mono
         //! Use the texture
         virtual void Use() const = 0;
 
+        //! Get the internal texture id
+        virtual unsigned int Id() const = 0;
+
         //! Get the width of the texture
         //! \return int
         virtual unsigned int Width() const = 0;

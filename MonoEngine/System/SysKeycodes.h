@@ -28,5 +28,17 @@ namespace Key
     extern const int RIGHT;
     extern const int UP;
     extern const int DOWN;
+
+    extern const int TAB;
+    extern const int ENTER;
+    extern const int SPACE;
+    extern const int BACKSPACE;
+    extern const int DELETE;
 }
 
+namespace MouseButton
+{
+    extern const int LEFT;
+    extern const int MIDDLE;
+    extern const int RIGHT;
+}
