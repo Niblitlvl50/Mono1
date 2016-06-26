@@ -13,7 +13,7 @@
 #include "EventFuncFwd.h"
 #include "MouseUpEvent.h"
 #include "MouseDownEvent.h"
-#include "KeyUpEvent.h"
+#include "MouseMotionEvent.h"
 
 #include "IWindow.h"
 #include "ICamera.h"
@@ -72,11 +72,11 @@ namespace
 
             const event::MouseUpEventFunc& mouse_up = std::bind(&EditorZone::OnMouseUp, this, _1);
             const event::MouseDownEventFunc& mouse_down = std::bind(&EditorZone::OnMouseDown, this, _1);
-            const event::KeyUpEventFunc& key_up = std::bind(&EditorZone::OnKeyUp, this, _1);
+            const event::MouseMotionEventFunc& mouse_move = std::bind(&EditorZone::OnMouseMove, this, _1);
 
             m_mouseUpToken = m_eventHandler.AddListener(mouse_up);
             m_mouseDownToken = m_eventHandler.AddListener(mouse_down);
-            m_keyUpToken = m_eventHandler.AddListener(key_up);
+            m_mouseMoveToken = m_eventHandler.AddListener(mouse_move);
 
             m_polygonIndex = -1;
 
@@ -89,13 +89,15 @@ namespace
             m_context.polygonCallback = std::bind(&EditorZone::OnSelectedPolygon, this, _1);
 
             m_interfaceDrawer = std::make_shared<editor::ImGuiInterfaceDrawer>(m_context);
+
+            m_translate = false;
         }
 
         virtual ~EditorZone()
         {
             m_eventHandler.RemoveListener(m_mouseUpToken);
             m_eventHandler.RemoveListener(m_mouseDownToken);
-            m_eventHandler.RemoveListener(m_keyUpToken);
+            m_eventHandler.RemoveListener(m_mouseMoveToken);
         }
 
         virtual void OnLoad(mono::ICameraPtr camera)
@@ -113,11 +115,17 @@ namespace
 
         bool OnMouseDown(const event::MouseDownEvent& event)
         {
+            m_translate = true;
+            m_translateDelta.x = event.screenX;
+            m_translateDelta.y = m_windowSize.y - event.screenY;
+
             return false;
         }
 
         bool OnMouseUp(const event::MouseUpEvent& event)
         {
+            m_translate = false;
+
             if(event.key != MouseButton::LEFT && event.key != MouseButton::RIGHT)
                 return false;
 
@@ -137,8 +145,24 @@ namespace
             return true;
         }
 
-        bool OnKeyUp(const event::KeyUpEvent& event)
+        bool OnMouseMove(const event::MouseMotionEvent& event)
         {
+            if(!m_translate)
+                return false;
+
+            const math::Vector2f move(event.screenX, m_windowSize.y - event.screenY);
+            const math::Vector2f& delta = move - m_translateDelta;
+
+            const math::Quad& viewport = m_camera->GetViewport();
+            const math::Vector2f& scale = viewport.mB / m_windowSize;
+
+            const math::Vector2f& cam_pos = m_camera->GetPosition();
+            const math::Vector2f& new_pos = cam_pos - (delta * scale);
+
+            m_camera->SetPosition(new_pos);
+
+            m_translateDelta = move;
+
             return false;
         }
 
@@ -174,19 +198,22 @@ namespace
 
         mono::EventToken<event::MouseUpEvent> m_mouseUpToken;
         mono::EventToken<event::MouseDownEvent> m_mouseDownToken;
-        mono::EventToken<event::KeyUpEvent> m_keyUpToken;
+        mono::EventToken<event::MouseMotionEvent> m_mouseMoveToken;
 
         mono::ICameraPtr m_camera;
         std::shared_ptr<mono::CameraController> m_cameraController;
 
         size_t m_polygonIndex;
         std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
+
+        bool m_translate;
+        math::Vector2f m_translateDelta;
     };
 }
 
 int main()
 {
-    constexpr math::Vector2f window_size(1200.0f, 800.0f);
+    constexpr math::Vector2f window_size(1200.0f, 700.0f);
 
     System::Init();
 
