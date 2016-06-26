@@ -141,6 +141,12 @@ void Renderer::DrawPolyline(const std::vector<math::Vector2f>& linePoints, const
     ::DrawLine(linePoints, color, width, mColorShader);
 }
 
+void Renderer::DrawClosedPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const
+{
+    UseShader(mColorShader);
+    ::DrawClosedLine(linePoints, color, width, mColorShader);
+}
+
 void Renderer::DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const
 {
     UseShader(mColorShader);

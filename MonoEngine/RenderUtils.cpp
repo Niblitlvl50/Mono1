@@ -148,6 +148,27 @@ void mono::DrawLine(const std::vector<math::Vector2f>& vertices,
     glDisableVertexAttribArray(1);
 }
 
+void mono::DrawClosedLine(const std::vector<math::Vector2f>& vertices,
+                          const mono::Color::RGBA& color,
+                          float width,
+                          const std::shared_ptr<IColorShader>& shader)
+{
+    std::vector<mono::Color::RGBA> colors(vertices.size());
+    std::fill(colors.begin(), colors.end(), color);
+
+    glLineWidth(width);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, vertices.data());
+    glVertexAttribPointer(shader->GetColorAttributeLocation(), 4, GL_FLOAT, GL_FALSE, 0, colors.data());
+
+    glDrawArrays(GL_LINE_LOOP, 0, static_cast<int>(vertices.size()));
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+}
 
 void mono::DrawLines(const std::vector<math::Vector2f>& vertices,
                      const mono::Color::RGBA& color,

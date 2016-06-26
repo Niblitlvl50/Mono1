@@ -139,17 +139,17 @@ namespace
         virtual void OnUnload()
         { }
 
-        void OnDownUp(const event::KeyDownEvent& event)
+        bool OnDownUp(const event::KeyDownEvent& event)
         {
             if(event.key == Key::LEFT)
             {
                 m_sprite->PreviousAnimation();
-                return;
+                return true;
             }
             else if(event.key == Key::RIGHT)
             {
                 m_sprite->NextAnimation();
-                return;
+                return true;
             }
 
             int animation = -1;
@@ -176,6 +176,8 @@ namespace
                 animation = 9;
 
             m_sprite->SetAnimation(animation);
+
+            return true;
         }
 
         mono::EventHandler& m_eventHandler;
@@ -203,7 +205,7 @@ int main(int argc, const char * argv[])
     auto window = mono::CreateWindow("AnimationTool", 800, 600, false);
     window->SetBackgroundColor(mono::Color::RGBA(0.6, 0.6, 0.6));
 
-    mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(300, 200, eventHandler);
+    mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(300, 200);
     mono::LoadFont("pixelette.ttf", 10.0f);
 
     mono::Engine engine(window, camera, eventHandler);

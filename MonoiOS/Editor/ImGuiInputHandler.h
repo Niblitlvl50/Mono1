@@ -23,13 +23,14 @@ namespace editor
 
     private:
 
-        void OnKeyDown(const event::KeyDownEvent& event);
-        void OnKeyUp(const event::KeyUpEvent& event);
-        void OnTextInput(const event::TextInputEvent& event);
-        void OnMouseDown(const event::MouseDownEvent& event);
-        void OnMouseUp(const event::MouseUpEvent& event);
-        void OnMouseMove(const event::MouseMotionEvent& event);
-        void OnMouseWheel(const event::MouseWheelEvent& event);
+        bool OnKeyDown(const event::KeyDownEvent& event);
+        bool OnKeyUp(const event::KeyUpEvent& event);
+        bool OnTextInput(const event::TextInputEvent& event);
+        bool OnMouseDown(const event::MouseDownEvent& event);
+        bool OnMouseUp(const event::MouseUpEvent& event);
+        bool OnMouseMove(const event::MouseMotionEvent& event);
+        bool OnMouseWheel(const event::MouseWheelEvent& event);
+        bool OnMultiGesture(const event::MultiGestureEvent& event);
 
         mono::EventHandler& m_eventHandler;
         mono::EventToken<event::KeyDownEvent> m_keyDownToken;
@@ -39,5 +40,6 @@ namespace editor
         mono::EventToken<event::MouseUpEvent> m_mouseUpToken;
         mono::EventToken<event::MouseMotionEvent> m_mouseMoveToken;
         mono::EventToken<event::MouseWheelEvent> m_mouseWheelToken;
+        mono::EventToken<event::MultiGestureEvent> m_multiGestureToken;
     };
 }

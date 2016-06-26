@@ -22,7 +22,7 @@ namespace mono
     template<typename Event>
     struct EventListeners
     {
-        typedef std::function<void (const Event& event)> ListenerCallback;
+        typedef std::function<bool (const Event& event)> ListenerCallback;
         //std::unordered_map<EventToken<Event>, ListenerCallback> mListeners;
         std::map<EventToken<Event>, ListenerCallback> mListeners;
 
@@ -44,7 +44,11 @@ namespace mono
         inline void DispatchEvent(const Event& event)
         {
             for(auto& listener : mListeners)
-                listener.second(event);
+            {
+                const bool handled = listener.second(event);
+                if(handled)
+                    break;
+            }
         }
     };    
     
@@ -56,7 +60,7 @@ namespace mono
     public:
         
         template<typename Event>
-        inline EventToken<Event> AddListener(const std::function<void (const Event& event)>& listener)
+        inline EventToken<Event> AddListener(const std::function<bool (const Event& event)>& listener)
         {
             const char* eventName = typeid(Event).name();
             auto it = events.find(eventName);

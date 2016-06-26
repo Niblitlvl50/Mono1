@@ -41,6 +41,8 @@ namespace math
     //!
     void operator |= (Quad& left, const Quad& right);
 
+    void operator |= (Quad& left, const Vector2f& right);
+
     bool operator == (const Quad& left, const Quad& right);
 
     //! Zero quad defined for convenience

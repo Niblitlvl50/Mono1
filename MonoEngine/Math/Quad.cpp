@@ -28,6 +28,15 @@ void math::operator |= (math::Quad& left, const math::Quad& right)
     left.mB.y = std::max(left.mB.y, right.mB.y);
 }
 
+void math::operator |= (math::Quad& left, const math::Vector2f& right)
+{
+    left.mA.x = std::min(left.mA.x, right.x);
+    left.mA.y = std::min(left.mA.y, right.y);
+
+    left.mB.x = std::max(left.mB.x, right.x);
+    left.mB.y = std::max(left.mB.y, right.y);
+}
+
 bool math::operator == (const math::Quad& left, const math::Quad& right)
 {
     return left.mA == right.mA && left.mB == right.mB;

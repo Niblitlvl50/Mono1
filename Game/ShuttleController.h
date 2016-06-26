@@ -24,11 +24,11 @@ namespace game
         ShuttleController(game::Shuttle* shuttle, mono::EventHandler& eventHandler);
         ~ShuttleController();
         
-        void OnMouseDown(const event::MouseDownEvent& even);
-        void OnMouseUp(const event::MouseUpEvent& event);
-        void OnMouseMotion(const event::MouseMotionEvent& event);
-        void OnMultiGesture(const event::MultiGestureEvent& event);
-        void OnKeyDown(const event::KeyDownEvent& event);
+        bool OnMouseDown(const event::MouseDownEvent& even);
+        bool OnMouseUp(const event::MouseUpEvent& event);
+        bool OnMouseMotion(const event::MouseMotionEvent& event);
+        bool OnMultiGesture(const event::MultiGestureEvent& event);
+        bool OnKeyDown(const event::KeyDownEvent& event);
         
     private:
         

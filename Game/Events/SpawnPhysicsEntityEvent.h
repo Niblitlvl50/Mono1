@@ -23,5 +23,5 @@ namespace game
         const int layer;
     };
     
-    typedef std::function<void (const game::SpawnPhysicsEntityEvent& event)> SpawnPhysicsEntityFunc;
+    typedef std::function<bool (const game::SpawnPhysicsEntityEvent& event)> SpawnPhysicsEntityFunc;
 }

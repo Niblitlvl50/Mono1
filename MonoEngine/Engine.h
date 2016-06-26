@@ -25,12 +25,12 @@ namespace mono
 		
     private:
 		
-        void OnPause(const event::PauseEvent& event);
-        void OnQuit(const event::QuitEvent& event);
-        void OnApplication(const event::ApplicationEvent& event);
-        void OnSurfaceChanged(const event::SurfaceChangedEvent& event);
-        void OnActivated(const event::ActivatedEvent& event);
-        void OnTimeScale(const event::TimeScaleEvent& event);
+        bool OnPause(const event::PauseEvent& event);
+        bool OnQuit(const event::QuitEvent& event);
+        bool OnApplication(const event::ApplicationEvent& event);
+        bool OnSurfaceChanged(const event::SurfaceChangedEvent& event);
+        bool OnActivated(const event::ActivatedEvent& event);
+        bool OnTimeScale(const event::TimeScaleEvent& event);
 
         bool mPause;
         bool mQuit;

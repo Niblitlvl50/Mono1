@@ -36,13 +36,13 @@ CameraController::~CameraController()
     mEventHandler.RemoveListener(mMultiGestureToken);
 }
 
-void CameraController::OnMultiGesture(const event::MultiGestureEvent& event)
+bool CameraController::OnMultiGesture(const event::MultiGestureEvent& event)
 {
     if(!mEnabled)
-        return;
+        return false;
 
     if(std::fabs(event.distance) < 1e-3)
-        return;
+        return false;
 
     math::Quad quad = mCam->GetViewport();
 
@@ -52,5 +52,7 @@ void CameraController::OnMultiGesture(const event::MultiGestureEvent& event)
     math::ResizeQuad(quad, resizeValue, aspect);
 
     mCam->SetTargetViewport(quad);
+
+    return true;
 }
 

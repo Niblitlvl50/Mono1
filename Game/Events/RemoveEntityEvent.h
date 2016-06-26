@@ -19,5 +19,5 @@ namespace game
         const uint id;
     };
     
-    typedef std::function<void (const game::RemoveEntityEvent& event)> RemoveEntityFunc;
+    typedef std::function<bool (const game::RemoveEntityEvent& event)> RemoveEntityFunc;
 }

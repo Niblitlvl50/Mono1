@@ -24,5 +24,5 @@ namespace game
         const float mMagnitude;
     };
 
-    typedef std::function<void (const game::ShockwaveEvent&)> ShockwaveEventFunc;
+    typedef std::function<bool (const game::ShockwaveEvent&)> ShockwaveEventFunc;
 }

@@ -53,28 +53,32 @@ ShuttleController::~ShuttleController()
     //mEventHandler.RemoveListener(mMultiGestureToken);
 }
 
-void ShuttleController::OnMouseDown(const event::MouseDownEvent& event)
+bool ShuttleController::OnMouseDown(const event::MouseDownEvent& event)
 {
     mShuttle->Fire();
 
     mMouseDownPosition = math::Vector2f(event.screenX, -event.screenY);
     mShuttle->StartThrusting();
     mMouseDown = true;
+
+    return true;
 }
 
-void ShuttleController::OnMouseUp(const event::MouseUpEvent& event)
+bool ShuttleController::OnMouseUp(const event::MouseUpEvent& event)
 {
     mShuttle->StopFire();
     
     mShuttle->mPhysicsObject.body->ResetForces();
     mShuttle->StopThrusting();
     mMouseDown = false;
+
+    return true;
 }
 
-void ShuttleController::OnMouseMotion(const event::MouseMotionEvent& event)
+bool ShuttleController::OnMouseMotion(const event::MouseMotionEvent& event)
 {
     if(!mMouseDown)
-        return;
+        return false;
 
     // Reset forces first.
     mShuttle->mPhysicsObject.body->ResetForces();
@@ -87,20 +91,29 @@ void ShuttleController::OnMouseMotion(const event::MouseMotionEvent& event)
     mShuttle->ApplyImpulse(force * 100);
 
     mMouseDownPosition = current;
+
+    return false;
 }
 
-void ShuttleController::OnMultiGesture(const event::MultiGestureEvent& event)
+bool ShuttleController::OnMultiGesture(const event::MultiGestureEvent& event)
 {
     const float force = event.theta * 1000;
     mShuttle->ApplyRotationForce(force);
+
+    return true;
 }
 
-void ShuttleController::OnKeyDown(const event::KeyDownEvent& event)
+bool ShuttleController::OnKeyDown(const event::KeyDownEvent& event)
 {
+    if(event.key != Key::ONE && event.key != Key::TWO && event.key != Key::THREE)
+        return false;
+
     if(event.key == Key::ONE)
-        mShuttle->SelectWeapon(WeaponType::STANDARD);
+       mShuttle->SelectWeapon(WeaponType::STANDARD);
     else if(event.key == Key::TWO)
         mShuttle->SelectWeapon(WeaponType::ROCKET);
-    else if(event.key == Key::THREE)
+    else
         mShuttle->SelectWeapon(WeaponType::CACOPLASMA);
+
+    return true;
 }

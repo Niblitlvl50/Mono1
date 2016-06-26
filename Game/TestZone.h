@@ -35,11 +35,11 @@ namespace game
         virtual void OnLoad(mono::ICameraPtr camera);
         virtual void OnUnload();
         
-        void SpawnEntity(const game::SpawnEntityEvent& event);
-        void SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event);
-        void OnRemoveEntity(const game::RemoveEntityEvent& event);
-        void OnShockwaveEvent(const game::ShockwaveEvent& event);
-        void OnDamageEvent(const game::DamageEvent& event);
+        bool SpawnEntity(const game::SpawnEntityEvent& event);
+        bool SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event);
+        bool OnRemoveEntity(const game::RemoveEntityEvent& event);
+        bool OnShockwaveEvent(const game::ShockwaveEvent& event);
+        bool OnDamageEvent(const game::DamageEvent& event);
 
     private:
 

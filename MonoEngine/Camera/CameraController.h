@@ -24,7 +24,7 @@ namespace mono
         
     private:
         
-        void OnMultiGesture(const event::MultiGestureEvent& event);
+        bool OnMultiGesture(const event::MultiGestureEvent& event);
         
         ICamera* mCam;
         EventHandler& mEventHandler;

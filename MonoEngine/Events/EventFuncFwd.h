@@ -13,18 +13,18 @@
 
 namespace event
 {
-    typedef std::function<void (const PauseEvent&)> PauseEventFunc;
-    typedef std::function<void (const QuitEvent&)> QuitEventFunc;
-    typedef std::function<void (const ApplicationEvent&)> ApplicationEventFunc;
-    typedef std::function<void (const SurfaceChangedEvent&)> SurfaceChangedEventFunc;
-    typedef std::function<void (const ActivatedEvent&)> ActivatedEventFunc;
-    typedef std::function<void (const KeyDownEvent&)> KeyDownEventFunc;
-    typedef std::function<void (const KeyUpEvent&)> KeyUpEventFunc;
-    typedef std::function<void (const TextInputEvent&)> TextInputEventFunc;
-    typedef std::function<void (const MouseDownEvent&)> MouseDownEventFunc;
-    typedef std::function<void (const MouseUpEvent&)> MouseUpEventFunc;
-    typedef std::function<void (const MouseMotionEvent&)> MouseMotionEventFunc;
-    typedef std::function<void (const MouseWheelEvent&)> MouseWheelEventFunc;
-    typedef std::function<void (const MultiGestureEvent&)> MultiGestureEventFunc;
-    typedef std::function<void (const TimeScaleEvent&)> TimeScaleEventFunc;
+    typedef std::function<bool (const PauseEvent&)> PauseEventFunc;
+    typedef std::function<bool (const QuitEvent&)> QuitEventFunc;
+    typedef std::function<bool (const ApplicationEvent&)> ApplicationEventFunc;
+    typedef std::function<bool (const SurfaceChangedEvent&)> SurfaceChangedEventFunc;
+    typedef std::function<bool (const ActivatedEvent&)> ActivatedEventFunc;
+    typedef std::function<bool (const KeyDownEvent&)> KeyDownEventFunc;
+    typedef std::function<bool (const KeyUpEvent&)> KeyUpEventFunc;
+    typedef std::function<bool (const TextInputEvent&)> TextInputEventFunc;
+    typedef std::function<bool (const MouseDownEvent&)> MouseDownEventFunc;
+    typedef std::function<bool (const MouseUpEvent&)> MouseUpEventFunc;
+    typedef std::function<bool (const MouseMotionEvent&)> MouseMotionEventFunc;
+    typedef std::function<bool (const MouseWheelEvent&)> MouseWheelEventFunc;
+    typedef std::function<bool (const MultiGestureEvent&)> MultiGestureEventFunc;
+    typedef std::function<bool (const TimeScaleEvent&)> TimeScaleEventFunc;
 }

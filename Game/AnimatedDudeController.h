@@ -24,7 +24,7 @@ namespace game
         AnimatedDudeController(AnimatedDude* dude, mono::EventHandler& eventHandler);
         ~AnimatedDudeController();
         
-        void OnKeyDown(const event::KeyDownEvent& event);
+        bool OnKeyDown(const event::KeyDownEvent& event);
         
     private:
         

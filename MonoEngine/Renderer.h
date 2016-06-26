@@ -36,6 +36,7 @@ namespace mono
         virtual void DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color::RGBA& color, float size) const;
         virtual void DrawLines(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const;
         virtual void DrawPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const;
+        virtual void DrawClosedPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const;
         virtual void DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const;
         virtual void DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const;
         virtual void DrawShape(const std::vector<math::Vector2f>& shape1, const std::vector<math::Vector2f>& shape2, float morphGrade, const Color::RGBA& color);

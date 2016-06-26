@@ -141,24 +141,26 @@ void Engine::Run(IZonePtr zone)
     mCamera->Unfollow();
     zone->OnUnload();
 
-    // Reset the quit and pause flag for when you want
+    // Reset the quit, pause and updateLastTime flag for when you want
     // to reuse the engine for another zone.
     mQuit = false;
     mPause = false;
     mUpdateLastTime = false;
 }
 
-void Engine::OnPause(const event::PauseEvent& event)
+bool Engine::OnPause(const event::PauseEvent& event)
 {
     mPause = event.pause;
+    return true;
 }
 
-void Engine::OnQuit(const event::QuitEvent&)
+bool Engine::OnQuit(const event::QuitEvent&)
 {
     mQuit = true;
+    return true;
 }
 
-void Engine::OnApplication(const event::ApplicationEvent& event)
+bool Engine::OnApplication(const event::ApplicationEvent& event)
 {
     if(event.state == event::ApplicationState::ENTER_BACKGROUND)
     {
@@ -169,21 +171,26 @@ void Engine::OnApplication(const event::ApplicationEvent& event)
         mPause = false;
         mUpdateLastTime = true;
     }
+
+    return true;
 }
 
-void Engine::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
+bool Engine::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 {
     mWindow->SurfaceChanged(event.width, event.height);
+    return true;
 }
 
-void Engine::OnActivated(const event::ActivatedEvent& event)
+bool Engine::OnActivated(const event::ActivatedEvent& event)
 {
     mWindow->Activated(event.gain);
+    return true;
 }
 
-void Engine::OnTimeScale(const event::TimeScaleEvent& event)
+bool Engine::OnTimeScale(const event::TimeScaleEvent& event)
 {
     mTimeScale = event.time_scale;
+    return true;
 }
 
 

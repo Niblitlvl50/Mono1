@@ -11,7 +11,6 @@
 #include "ICamera.h"
 #include "MonoFwd.h"
 #include "Quad.h"
-#include "CameraController.h"
 
 namespace mono
 {
@@ -19,7 +18,7 @@ namespace mono
     {
     public:
         
-        TraceCamera(int width, int height, EventHandler& eventHandler);
+        TraceCamera(int width, int height);
         
         virtual void Update(unsigned int delta);
         
@@ -34,8 +33,6 @@ namespace mono
 
     private:
 
-        CameraController mController;
-        
         IEntityPtr mEntity;
         math::Vector2f m_offset;
         math::Quad mViewport;

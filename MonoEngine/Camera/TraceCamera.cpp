@@ -20,9 +20,8 @@ namespace constants
     constexpr float SPEED = 0.01f;
 }
 
-TraceCamera::TraceCamera(int width, int height, EventHandler& eventHandler)
-    : mController(this, eventHandler),
-      mViewport(0.0f, 0.0f, width, height),
+TraceCamera::TraceCamera(int width, int height)
+    : mViewport(0.0f, 0.0f, width, height),
       mTargetViewport(mViewport),
       m_offset(math::zeroVec)
 { }

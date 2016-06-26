@@ -23,14 +23,16 @@ namespace
     
     struct TestClass
     {
-        void OnEventFunc(const TestEvent1& event)
+        bool OnEventFunc(const TestEvent1& event)
         {
             receivedEvent = true;
+            return true;
         }
         
-        void OnAnohterEvent(const TestEvent2& event)
+        bool OnAnohterEvent(const TestEvent2& event)
         {
             receivedAnotherEvent = true;
+            return true;
         }
         
         bool receivedEvent = false;
@@ -42,8 +44,8 @@ TEST(EventHandlerTest, RegisterListener)
 {
     TestClass object;
     
-    std::function<void (const TestEvent1&)> func1 = std::bind(&TestClass::OnEventFunc, &object, _1);
-    std::function<void (const TestEvent2&)> func2 = std::bind(&TestClass::OnAnohterEvent, &object, _1);
+    std::function<bool (const TestEvent1&)> func1 = std::bind(&TestClass::OnEventFunc, &object, _1);
+    std::function<bool (const TestEvent2&)> func2 = std::bind(&TestClass::OnAnohterEvent, &object, _1);
 
     mono::EventHandler handler;
     handler.AddListener(func1);

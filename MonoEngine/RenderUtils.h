@@ -47,6 +47,11 @@ namespace mono
                   float width,
                   const std::shared_ptr<IColorShader>& shader);
 
+    void DrawClosedLine(const std::vector<math::Vector2f>& vertices,
+                        const mono::Color::RGBA& color,
+                        float width,
+                        const std::shared_ptr<IColorShader>& shader);
+
     //! Draws lines, not connected to each other
     void DrawLines(const std::vector<math::Vector2f>& vertices,
                    const mono::Color::RGBA& color,

@@ -172,7 +172,7 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
     const game::ShockwaveEventFunc shockwaveFunc = std::bind(&TestZone::OnShockwaveEvent, this, _1);
     mShockwaveEventToken = mEventHandler.AddListener(shockwaveFunc);
 
-    const std::function<void (const game::DamageEvent&)>& damageFunc = std::bind(&TestZone::OnDamageEvent, this, _1);
+    const std::function<bool (const game::DamageEvent&)>& damageFunc = std::bind(&TestZone::OnDamageEvent, this, _1);
     mDamageEventToken = mEventHandler.AddListener(damageFunc);
 
     m_backgroundMusic = mono::AudioFactory::CreateSound("InGame_Phoenix.wav", true);
@@ -243,49 +243,54 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
 void TestZone::OnUnload()
 { }
 
-void TestZone::SpawnEntity(const game::SpawnEntityEvent& event)
+bool TestZone::SpawnEntity(const game::SpawnEntityEvent& event)
 {
     AddEntity(event.mEntity, FOREGROUND);
+    return true;
 }
 
-void TestZone::SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event)
+bool TestZone::SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event)
 {
     AddPhysicsEntity(event.mEntity, FOREGROUND);
+    return true;
 }
 
-void TestZone::OnRemoveEntity(const game::RemoveEntityEvent& event)
+bool TestZone::OnRemoveEntity(const game::RemoveEntityEvent& event)
 {
     mono::IPhysicsEntityPtr physics_entity = FindPhysicsEntityFromId(event.id);
     if(physics_entity)
     {
         SchedulePreFrameTask(std::bind(&TestZone::RemovePhysicsEntity, this, physics_entity));
-        return;
+        return true;
     }
 
     mono::IEntityPtr entity = FindEntityFromId(event.id);
     if(entity)
         SchedulePreFrameTask(std::bind(&TestZone::RemoveEntity, this, entity));
+
+    return true;
 }
 
-void TestZone::OnShockwaveEvent(const game::ShockwaveEvent& event)
+bool TestZone::OnShockwaveEvent(const game::ShockwaveEvent& event)
 {
     const auto func = std::bind(ApplyShockwave, _1, event.mPosition, event.mMagnitude);
     this->ForEachBody(func);
 
-
     const std::vector<byte> data = { 'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!' };
     m_socket->Send(data);
+
+    return true;
 }
 
-void TestZone::OnDamageEvent(const game::DamageEvent& event)
+bool TestZone::OnDamageEvent(const game::DamageEvent& event)
 {
     mono::IPhysicsEntityPtr entity = FindPhysicsEntityFromBody(event.body);
     if(!entity)
-        return;
+        return false;
 
     const DamageResult& result = m_damageController.ApplyDamage(entity->Id(), event.damage);
     if(!result.success)
-        return;
+        return false;
 
     if(result.health_left <= 0)
     {
@@ -295,6 +300,8 @@ void TestZone::OnDamageEvent(const game::DamageEvent& event)
         const float rotation = mono::Random() * math::PI() * 2.0f;
         AddEntity(std::make_shared<Explosion>(mEventHandler, entity->Position(), 20, rotation), FOREGROUND);
     }
+
+    return true;
 }
 
 void TestZone::AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer)

@@ -30,7 +30,7 @@ AnimatedDudeController::~AnimatedDudeController()
     mEventHandler.RemoveListener(mKeyDownToken);
 }
 
-void AnimatedDudeController::OnKeyDown(const event::KeyDownEvent& event)
+bool AnimatedDudeController::OnKeyDown(const event::KeyDownEvent& event)
 {
     if(event.key == Key::RIGHT)
         mDude->mTarget.x += 20.0f;
@@ -41,6 +41,8 @@ void AnimatedDudeController::OnKeyDown(const event::KeyDownEvent& event)
         mDude->mTarget.y += 20.0f;
     else if(event.key == Key::DOWN)
         mDude->mTarget.y -= 20.0f;
+
+    return true;
 }
 
 
