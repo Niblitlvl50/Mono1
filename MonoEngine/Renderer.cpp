@@ -24,12 +24,16 @@
 #include "IColorShader.h"
 #include "IMorphingShader.h"
 
+#include "ISprite.h"
+#include "ITexture.h"
+
 
 using namespace mono;
 
 Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
     : mCamera(camera),
-      mWindow(window)
+      mWindow(window),
+      m_currentTextureId(-1)
 {
     mColorShader = GetShaderFactory()->CreateColorShader();
     mTextureShader = GetShaderFactory()->CreateTextureShader();
@@ -120,6 +124,7 @@ void Renderer::doDrawTexts() const
 void Renderer::DrawSprite(const ISprite& sprite) const
 {
     UseShader(mTextureShader);
+    UseTexture(sprite.GetTexture());
     ::DrawSprite(sprite, mTextureShader);
 }
 
@@ -172,6 +177,22 @@ void Renderer::UseShader(const IShaderPtr& shader) const
     shader->Use();
     shader->LoadModelViewMatrix(mCurrentTransform);
     shader->LoadProjectionMatrix(mProjectionMatrix);
+}
+
+void Renderer::UseTexture(const ITexturePtr& texture) const
+{
+    const unsigned int id = texture->Id();
+    if(id == m_currentTextureId)
+        return;
+
+    texture->Use();
+    m_currentTextureId = texture->Id();
+}
+
+void Renderer::ClearTexture()
+{
+
+    m_currentTextureId = -1;
 }
 
 void Renderer::PushNewTransform(const math::Matrix& transform)

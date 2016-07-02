@@ -35,6 +35,8 @@ namespace mono
         virtual void DrawShape(const std::vector<math::Vector2f>& shape1, const std::vector<math::Vector2f>& shape2, float morphGrade, const Color::RGBA& color) = 0;
 
         virtual void UseShader(const IShaderPtr& shader) const = 0;
+        virtual void UseTexture(const ITexturePtr& texture) const = 0;
+        virtual void ClearTexture() = 0;
 
         virtual void PushNewTransform(const math::Matrix& transform) = 0;
         virtual const math::Matrix& GetCurrentTransform() const = 0;

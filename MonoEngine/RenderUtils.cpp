@@ -84,7 +84,7 @@ void mono::DrawSprite(const mono::ISprite& sprite, const std::shared_ptr<ITextur
     shader->SetShade(sprite.GetShade());
     shader->SetAlphaTexture(false);
     
-    sprite.GetTexture()->Use();
+    //sprite.GetTexture()->Use();
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);

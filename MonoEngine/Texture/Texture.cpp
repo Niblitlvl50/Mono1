@@ -9,7 +9,6 @@
 #include "Texture.h"
 #include "SysOpenGL.h"
 #include <cstdio>
-#include <limits>
 
 using namespace mono;
 
@@ -23,14 +22,10 @@ namespace
 
         return val;
     }
-
-    constexpr unsigned int NO_BOUND_TEXTURE = std::numeric_limits<unsigned int>::max();
 }
 
-unsigned int mono::Texture::sBoundTexture = NO_BOUND_TEXTURE;
-
 Texture::Texture(IImagePtr image)
-    : mTextureId(NO_BOUND_TEXTURE),
+    : mTextureId(-1),
       mWidth(image->Width()),
       mHeight(image->Height())
 {
@@ -61,11 +56,7 @@ Texture::~Texture()
 
 void Texture::Use() const
 {
-    if(sBoundTexture != mTextureId)
-    {
-        glBindTexture(GL_TEXTURE_2D, mTextureId);
-        sBoundTexture = mTextureId;
-    }
+    glBindTexture(GL_TEXTURE_2D, mTextureId);
 }
 
 unsigned int Texture::Id() const

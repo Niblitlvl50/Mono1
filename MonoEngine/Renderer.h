@@ -42,6 +42,8 @@ namespace mono
         virtual void DrawShape(const std::vector<math::Vector2f>& shape1, const std::vector<math::Vector2f>& shape2, float morphGrade, const Color::RGBA& color);
 
         virtual void UseShader(const IShaderPtr& shader) const;
+        virtual void UseTexture(const ITexturePtr& texture) const;
+        virtual void ClearTexture();
 
         virtual void PushNewTransform(const math::Matrix& transform);
         virtual const math::Matrix& GetCurrentTransform() const;
@@ -59,6 +61,8 @@ namespace mono
         math::Matrix mProjectionMatrix;
         math::Matrix mModelView;
         math::Matrix mCurrentTransform;
+
+        mutable unsigned int m_currentTextureId;
 
         std::shared_ptr<IColorShader> mColorShader;
         std::shared_ptr<ITextureShader> mTextureShader;

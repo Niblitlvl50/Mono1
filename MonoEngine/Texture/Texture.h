@@ -30,9 +30,6 @@ namespace mono
         unsigned int mTextureId;
         unsigned int mWidth;
         unsigned int mHeight;
-        
-        static unsigned int sBoundTexture;
     };
-    
 }
 
