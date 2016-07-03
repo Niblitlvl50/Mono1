@@ -17,7 +17,7 @@
 using namespace editor;
 
 PolygonEntity::PolygonEntity()
-    : m_selected(true)
+    : m_selected(false)
 { }
 
 void PolygonEntity::Draw(mono::IRenderer& renderer) const

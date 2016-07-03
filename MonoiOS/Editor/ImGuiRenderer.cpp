@@ -13,6 +13,7 @@
 #include "ImGuiShader.h"
 #include "ITexture.h"
 #include "TextureFactory.h"
+#include "IRenderer.h"
 
 #include "imgui.h"
 
@@ -21,10 +22,28 @@ using namespace editor;
 #define OFFSETOF(TYPE, ELEMENT) ((size_t)&(((TYPE *)0)->ELEMENT))
 
 ImGuiRenderer::ImGuiRenderer(const math::Vector2f& window_size)
-    : m_windowSize(window_size),
-      m_shader(std::make_shared<editor::ImGuiShader>())
+    : m_windowSize(window_size)
 {
-    m_projection = math::Ortho(0.0f, window_size.x, window_size.y, 0.0f, -10.0f, 10.0f);
+    Initialize();
+}
+
+ImGuiRenderer::ImGuiRenderer(const math::Vector2f& window_size, const std::unordered_map<unsigned int, mono::ITexturePtr>& textures)
+    : m_windowSize(window_size),
+      m_textures(textures)
+{
+    Initialize();
+}
+
+ImGuiRenderer::~ImGuiRenderer()
+{
+    ImGui::Shutdown();
+}
+
+void ImGuiRenderer::Initialize()
+{
+    m_shader = std::make_shared<editor::ImGuiShader>();
+
+    m_projection = math::Ortho(0.0f, m_windowSize.x, m_windowSize.y, 0.0f, -10.0f, 10.0f);
     math::Identity(m_modelView);
 
     int width;
@@ -32,15 +51,11 @@ ImGuiRenderer::ImGuiRenderer(const math::Vector2f& window_size)
     byte* pixels;
     ImGui::GetIO().Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
-    m_texture = mono::CreateTexture(pixels, width, height, GL_RGBA, GL_RGBA);
+    mono::ITexturePtr font_texture = mono::CreateTexture(pixels, width, height, GL_RGBA, GL_RGBA);
+    m_textures.insert(std::make_pair(font_texture->Id(), font_texture));
 
-    ImGui::GetIO().Fonts->TexID = (void *)(intptr_t)m_texture->Id();
-    ImGui::GetIO().DisplaySize = ImVec2(window_size.x, window_size.y);
-}
-
-ImGuiRenderer::~ImGuiRenderer()
-{
-    ImGui::Shutdown();
+    ImGui::GetIO().Fonts->TexID = (void *)(intptr_t)font_texture->Id();
+    ImGui::GetIO().DisplaySize = ImVec2(m_windowSize.x, m_windowSize.y);
 }
 
 void ImGuiRenderer::doDraw(mono::IRenderer& renderer) const
@@ -80,12 +95,20 @@ void ImGuiRenderer::doDraw(mono::IRenderer& renderer) const
             }
             else
             {
-                m_texture->Use();
+                const void* id = pcmd->TextureId;
+                const auto it = m_textures.find((unsigned int)(intptr_t)id);
+                if(it != m_textures.end())
+                    renderer.UseTexture(it->second);
+                else
+                    renderer.ClearTexture();
+
                 glScissor((int)pcmd->ClipRect.x,
                           (int)(m_windowSize.y - pcmd->ClipRect.w),
                           (int)(pcmd->ClipRect.z - pcmd->ClipRect.x),
                           (int)(pcmd->ClipRect.w - pcmd->ClipRect.y));
-                glDrawElements(GL_TRIANGLES, (GLsizei)pcmd->ElemCount, sizeof(ImDrawIdx) == 2 ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT, idx_buffer);
+                
+                constexpr GLenum data_type = sizeof(ImDrawIdx) == 2 ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
+                glDrawElements(GL_TRIANGLES, (GLsizei)pcmd->ElemCount, data_type, idx_buffer);
             }
             
             idx_buffer += pcmd->ElemCount;

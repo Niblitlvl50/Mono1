@@ -14,6 +14,7 @@
 #include "MonoPtrFwd.h"
 
 #include <memory>
+#include <unordered_map>
 
 namespace editor
 {
@@ -24,9 +25,12 @@ namespace editor
     public:
 
         ImGuiRenderer(const math::Vector2f& window_size);
+        ImGuiRenderer(const math::Vector2f& window_size, const std::unordered_map<unsigned int, mono::ITexturePtr>& textures);
         virtual ~ImGuiRenderer();
 
     private:
+
+        void Initialize();
 
         virtual void doDraw(mono::IRenderer& renderer) const;
         virtual math::Quad BoundingBox() const;
@@ -36,6 +40,6 @@ namespace editor
         math::Matrix m_modelView;
 
         std::shared_ptr<editor::ImGuiShader> m_shader;
-        mono::ITexturePtr m_texture;
+        std::unordered_map<unsigned int, mono::ITexturePtr> m_textures;
     };
 }

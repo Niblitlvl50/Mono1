@@ -15,11 +15,6 @@
 
 namespace editor
 {
-    struct Polygon
-    {
-        std::vector<math::Vector2f> points;
-    };
-
     class PolygonEntity : public mono::EntityBase
     {
     public:

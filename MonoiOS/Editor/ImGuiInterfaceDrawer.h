@@ -16,6 +16,12 @@
 
 namespace editor
 {
+    struct Notification
+    {
+        int image;
+        std::string text;
+    };
+
     struct UIContext
     {
         bool showContextMenu;
@@ -24,7 +30,13 @@ namespace editor
 
         int selectedPolygonIndex;
         std::vector<std::string> polygonItems;
-        std::function<void (int)> polygonCallback;
+        std::function<void (int)> polygonSelected;
+        std::function<void (int)> polygonDeleted;
+
+        std::vector<Notification> notifications;
+
+        std::function<void (int)> editorMenuCallback;
+        std::function<void (int)> toolsMenuCallback;
     };
 
     class ImGuiInterfaceDrawer : public mono::IUpdatable
