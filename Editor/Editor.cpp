@@ -7,18 +7,8 @@
 //
 
 #include "Editor.h"
-#include "SysKeycodes.h"
 
 #include "IRenderer.h"
-
-#include "EventHandler.h"
-#include "EventToken.h"
-#include "EventFwd.h"
-#include "EventFuncFwd.h"
-
-#include "MouseDownEvent.h"
-#include "MouseUpEvent.h"
-#include "MouseMotionEVent.h"
 
 #include "TextureFactory.h"
 #include "ITexture.h"
@@ -26,7 +16,7 @@
 #include "ZoneBase.h"
 #include "Sprite.h"
 #include "EntityBase.h"
-#include "EditorCameraController.h"
+#include "UserInputController.h"
 
 #include "ImGuiInputHandler.h"
 #include "ImGuiInterfaceDrawer.h"
@@ -65,21 +55,9 @@ using namespace editor;
 EditorZone::EditorZone(const math::Vector2f& window_size, mono::EventHandler& event_handler)
     : m_windowSize(window_size),
       m_eventHandler(event_handler),
-      m_inputHandler(event_handler),
-      m_polygonTool(this),
-      m_rotateTool(this),
-      m_activeTool(&m_polygonTool)
+      m_inputHandler(event_handler)
 {
     using namespace std::placeholders;
-
-    const event::MouseDownEventFunc& mouse_down = std::bind(&EditorZone::OnMouseDown, this, _1);
-    m_mouseDownToken = m_eventHandler.AddListener(mouse_down);
-
-    const event::MouseUpEventFunc& mouse_up = std::bind(&EditorZone::OnMouseUp, this, _1);
-    m_mouseUpToken = m_eventHandler.AddListener(mouse_up);
-
-    const event::MouseMotionEventFunc& mouse_move = std::bind(&EditorZone::OnMouseMove, this, _1);
-    m_mouseMoveToken = m_eventHandler.AddListener(mouse_move);
 
     m_context.showContextMenu = false;
     m_context.contextMenuCallback = std::bind(&EditorZone::OnContextMenu, this, _1);
@@ -98,16 +76,11 @@ EditorZone::EditorZone(const math::Vector2f& window_size, mono::EventHandler& ev
 }
 
 EditorZone::~EditorZone()
-{
-    m_eventHandler.RemoveListener(m_mouseDownToken);
-    m_eventHandler.RemoveListener(m_mouseUpToken);
-    m_eventHandler.RemoveListener(m_mouseMoveToken);
-}
+{ }
 
 void EditorZone::OnLoad(mono::ICameraPtr camera)
 {
-    m_camera = camera;
-    m_cameraController = std::make_shared<editor::CameraController>(m_camera, m_windowSize, m_eventHandler);
+    m_userInputController = std::make_shared<editor::UserInputController>(camera, this, &m_context, m_windowSize, m_eventHandler);
 
     mono::ITexturePtr texture = mono::CreateTexture("cacodemon.png");
 
@@ -124,45 +97,14 @@ void EditorZone::OnUnload()
 
 void EditorZone::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
 {
-    AddEntity(polygon, 1);
+    AddEntity(polygon, 0);
     m_polygons.push_back(polygon);
     m_context.polygonItems.push_back("Polygon: " + std::to_string(m_polygons.size()));
 }
 
-bool EditorZone::OnMouseDown(const event::MouseDownEvent& event)
-{
-    if(event.key == MouseButton::LEFT)
-    {
-        m_activeTool->HandleMouseDown(math::Vector2f(event.worldX, event.worldY));
-    }
-
-    return m_activeTool->IsActive();
-}
-
-bool EditorZone::OnMouseUp(const event::MouseUpEvent& event)
-{
-    if(event.key == MouseButton::LEFT)
-    {
-        m_activeTool->HandleMouseUp(math::Vector2f(event.worldX, event.worldY));
-    }
-    else if(event.key == MouseButton::RIGHT)
-    {
-        m_context.showContextMenu = true;
-    }
-
-    return m_activeTool->IsActive();
-}
-
-bool EditorZone::OnMouseMove(const event::MouseMotionEvent& event)
-{
-    m_activeTool->HandleMousePosition(math::Vector2f(event.worldX, event.worldY));
-    return m_activeTool->IsActive();
-}
-
 void EditorZone::OnContextMenu(int index)
 {
-    if(index == 0)
-        m_activeTool->IsActive() ? m_activeTool->End() : m_activeTool->Start();
+    m_userInputController->HandleContextMenu(index);
 }
 
 void EditorZone::OnSelectedPolygon(int index)
@@ -194,8 +136,5 @@ void EditorZone::EditorMenuCallback(int index)
 
 void EditorZone::ToolsMenuCallback(int index)
 {
-    if(index == 0)
-        m_activeTool = &m_polygonTool;
-    else if(index == 1)
-        m_activeTool = &m_rotateTool;
+    m_userInputController->SelectTool(index);
 }

@@ -9,20 +9,17 @@
 #pragma once
 
 #include "ZoneBase.h"
-
-#include "Polygon.h"
-#include "PolygonTool.h"
-#include "RotateTool.h"
-
 #include "EventFwd.h"
 
 #include "ImGuiInterfaceDrawer.h"
 #include "ImGuiInputHandler.h"
 
+#include "Polygon.h"
+
 
 namespace editor
 {
-    class CameraController;
+    class UserInputController;
 
     class EditorZone : public mono::ZoneBase
     {
@@ -36,9 +33,6 @@ namespace editor
 
         void AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon);
 
-        bool OnMouseDown(const event::MouseDownEvent& event);
-        bool OnMouseUp(const event::MouseUpEvent& event);
-        bool OnMouseMove(const event::MouseMotionEvent& event);
         void OnContextMenu(int index);
         void OnSelectedPolygon(int index);
         void OnDeletePolygon(int index);
@@ -52,18 +46,7 @@ namespace editor
 
         editor::UIContext m_context;
         std::shared_ptr<editor::ImGuiInterfaceDrawer> m_interfaceDrawer;
-        
-        mono::EventToken<event::MouseDownEvent> m_mouseDownToken;
-        mono::EventToken<event::MouseUpEvent> m_mouseUpToken;
-        mono::EventToken<event::MouseMotionEvent> m_mouseMoveToken;
-        
-        mono::ICameraPtr m_camera;
-        std::shared_ptr<editor::CameraController> m_cameraController;
-        
+        std::shared_ptr<editor::UserInputController> m_userInputController;
         std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
-
-        editor::PolygonTool m_polygonTool;
-        editor::RotateTool m_rotateTool;
-        editor::ITool* m_activeTool;
     };
 }

@@ -440,10 +440,11 @@
 		916B54521D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54501D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp */; };
 		916B54551D1E802400AD54A1 /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54541D1E802400AD54A1 /* Polygon.cpp */; };
 		916B54561D1ED7FD00AD54A1 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91C41E471826E2A50035E778 /* MathFwd.cpp */; };
-		916B54591D20652500AD54A1 /* EditorCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54571D20652500AD54A1 /* EditorCameraController.cpp */; };
+		916B54591D20652500AD54A1 /* UserInputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54571D20652500AD54A1 /* UserInputController.cpp */; };
 		916B545D1D281B6100AD54A1 /* PolygonTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B545B1D281B6100AD54A1 /* PolygonTool.cpp */; };
 		916B54601D28276100AD54A1 /* Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B545E1D28276100AD54A1 /* Editor.cpp */; };
 		916B54631D28766800AD54A1 /* RotateTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54611D28766800AD54A1 /* RotateTool.cpp */; };
+		916B54671D29064900AD54A1 /* CameraTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54651D29064900AD54A1 /* CameraTool.cpp */; };
 		91791D2B18269CB9007A705A /* Moon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B95CF1C162F37C6006769BF /* Moon.cpp */; };
 		91791D2C18269CC0007A705A /* ShuttleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B95CF1E162F37C6006769BF /* ShuttleController.cpp */; };
 		918157251826E5E600C66F2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 918157241826E5E600C66F2B /* main.cpp */; };
@@ -954,8 +955,8 @@
 		916B54511D1DA4DB00AD54A1 /* ImGuiInputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiInputHandler.h; path = Editor/ImGuiInputHandler.h; sourceTree = "<group>"; };
 		916B54531D1E7DFB00AD54A1 /* Polygon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = Editor/Polygon.h; sourceTree = "<group>"; };
 		916B54541D1E802400AD54A1 /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Polygon.cpp; path = Editor/Polygon.cpp; sourceTree = "<group>"; };
-		916B54571D20652500AD54A1 /* EditorCameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EditorCameraController.cpp; path = Editor/EditorCameraController.cpp; sourceTree = "<group>"; };
-		916B54581D20652500AD54A1 /* EditorCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditorCameraController.h; path = Editor/EditorCameraController.h; sourceTree = "<group>"; };
+		916B54571D20652500AD54A1 /* UserInputController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserInputController.cpp; path = Editor/UserInputController.cpp; sourceTree = "<group>"; };
+		916B54581D20652500AD54A1 /* UserInputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInputController.h; path = Editor/UserInputController.h; sourceTree = "<group>"; };
 		916B545B1D281B6100AD54A1 /* PolygonTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PolygonTool.cpp; path = ../Editor/Tools/PolygonTool.cpp; sourceTree = "<group>"; };
 		916B545C1D281B6100AD54A1 /* PolygonTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PolygonTool.h; path = ../Editor/Tools/PolygonTool.h; sourceTree = "<group>"; };
 		916B545E1D28276100AD54A1 /* Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Editor.cpp; path = ../Editor/Editor.cpp; sourceTree = "<group>"; };
@@ -963,6 +964,8 @@
 		916B54611D28766800AD54A1 /* RotateTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RotateTool.cpp; path = ../Editor/Tools/RotateTool.cpp; sourceTree = "<group>"; };
 		916B54621D28766800AD54A1 /* RotateTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RotateTool.h; path = ../Editor/Tools/RotateTool.h; sourceTree = "<group>"; };
 		916B54641D287CE000AD54A1 /* ITool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ITool.h; path = ../Editor/Tools/ITool.h; sourceTree = "<group>"; };
+		916B54651D29064900AD54A1 /* CameraTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraTool.cpp; path = ../Editor/Tools/CameraTool.cpp; sourceTree = "<group>"; };
+		916B54661D29064900AD54A1 /* CameraTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraTool.h; path = ../Editor/Tools/CameraTool.h; sourceTree = "<group>"; };
 		918157241826E5E600C66F2B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9181E51F183A8D1600678586 /* EventFuncFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFuncFwd.h; sourceTree = "<group>"; };
 		9181E520183A8D2900678586 /* MonoPtrFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonoPtrFwd.h; sourceTree = "<group>"; };
@@ -1847,8 +1850,8 @@
 				916B54511D1DA4DB00AD54A1 /* ImGuiInputHandler.h */,
 				916B54531D1E7DFB00AD54A1 /* Polygon.h */,
 				916B54541D1E802400AD54A1 /* Polygon.cpp */,
-				916B54571D20652500AD54A1 /* EditorCameraController.cpp */,
-				916B54581D20652500AD54A1 /* EditorCameraController.h */,
+				916B54571D20652500AD54A1 /* UserInputController.cpp */,
+				916B54581D20652500AD54A1 /* UserInputController.h */,
 				916B545E1D28276100AD54A1 /* Editor.cpp */,
 				916B545F1D28276100AD54A1 /* Editor.h */,
 			);
@@ -1879,6 +1882,8 @@
 				916B54611D28766800AD54A1 /* RotateTool.cpp */,
 				916B54621D28766800AD54A1 /* RotateTool.h */,
 				916B54641D287CE000AD54A1 /* ITool.h */,
+				916B54651D29064900AD54A1 /* CameraTool.cpp */,
+				916B54661D29064900AD54A1 /* CameraTool.h */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -2708,8 +2713,9 @@
 				916B54601D28276100AD54A1 /* Editor.cpp in Sources */,
 				916B54551D1E802400AD54A1 /* Polygon.cpp in Sources */,
 				916B544E1D18746400AD54A1 /* imgui_demo.cpp in Sources */,
-				916B54591D20652500AD54A1 /* EditorCameraController.cpp in Sources */,
+				916B54591D20652500AD54A1 /* UserInputController.cpp in Sources */,
 				916B54351D15D91A00AD54A1 /* imgui.cpp in Sources */,
+				916B54671D29064900AD54A1 /* CameraTool.cpp in Sources */,
 				916B54521D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

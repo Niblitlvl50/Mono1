@@ -43,6 +43,9 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
         if(ImGui::MenuItem("Rotate"))
             m_context.toolsMenuCallback(1);
+
+        if(ImGui::MenuItem("Camera"))
+            m_context.toolsMenuCallback(2);
         
         ImGui::EndMenu();
     }
