@@ -38,14 +38,17 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
     if(ImGui::BeginMenu("Tools"))
     {
-        if(ImGui::MenuItem("Translate"))
+        if(ImGui::MenuItem("Polygon"))
             m_context.toolsMenuCallback(0);
 
-        if(ImGui::MenuItem("Rotate"))
+        if(ImGui::MenuItem("Translate"))
             m_context.toolsMenuCallback(1);
 
-        if(ImGui::MenuItem("Camera"))
+        if(ImGui::MenuItem("Rotate"))
             m_context.toolsMenuCallback(2);
+
+        if(ImGui::MenuItem("Camera"))
+            m_context.toolsMenuCallback(3);
         
         ImGui::EndMenu();
     }
@@ -113,14 +116,15 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
         ImGuiWindowFlags_NoMove |
         ImGuiWindowFlags_NoSavedSettings;
 
-    const ImVec2 window_size = ImVec2(140.0f, 50.0f);
+    const ImVec2 window_size = ImVec2(160.0f, 50.0f);
     const float window_position = ImGui::GetIO().DisplaySize.x - window_size.x;
     const ImColor tint = ImColor(255, 255, 255, 255);
     const ImColor border = ImColor(0, 0, 0, 255);
 
     for(int index = 0; index < m_context.notifications.size(); ++index)
     {
-        const Notification& note = m_context.notifications[index];
+        Notification& note = m_context.notifications[index];
+        note.time_left -= delta;
 
         char window_id[16];
         std::sprintf(window_id, "overlay: %u", index);
@@ -133,6 +137,13 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
         ImGui::Text("%s", note.text.c_str());
         ImGui::End();
     }
+
+    const auto remove_notification_func = [](const Notification& note) {
+        return note.time_left <= 0;
+    };
+
+    const auto it = std::remove_if(m_context.notifications.begin(), m_context.notifications.end(), remove_notification_func);
+    m_context.notifications.erase(it, m_context.notifications.end());
 
     ImGui::ShowTestWindow();
 

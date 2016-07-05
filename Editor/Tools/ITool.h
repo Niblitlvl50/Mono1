@@ -12,6 +12,12 @@
 
 namespace editor
 {
+    enum class Coordinate
+    {
+        SCREEN,
+        WORLD
+    };
+
     class ITool
     {
     public:
@@ -19,7 +25,9 @@ namespace editor
         virtual ~ITool()
         { }
 
-        virtual void Start() = 0;
+        virtual Coordinate CoordinateSystem() const = 0;
+
+        virtual void Begin() = 0;
         virtual void End() = 0;
         virtual bool IsActive() const = 0;
         virtual void HandleMouseDown(const math::Vector2f& world_pos) = 0;

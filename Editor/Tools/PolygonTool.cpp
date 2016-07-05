@@ -16,7 +16,12 @@ PolygonTool::PolygonTool(EditorZone* editor)
     : m_editor(editor)
 { }
 
-void PolygonTool::Start()
+Coordinate PolygonTool::CoordinateSystem() const
+{
+    return Coordinate::WORLD;
+}
+
+void PolygonTool::Begin()
 {
     m_polygon = std::make_shared<editor::PolygonEntity>();
     m_editor->AddPolygon(m_polygon);

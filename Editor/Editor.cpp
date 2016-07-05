@@ -70,8 +70,6 @@ EditorZone::EditorZone(const math::Vector2f& window_size, mono::EventHandler& ev
     m_context.editorMenuCallback = std::bind(&EditorZone::EditorMenuCallback, this, _1);
     m_context.toolsMenuCallback = std::bind(&EditorZone::ToolsMenuCallback, this, _1);
 
-    m_context.notifications = { { 1, "Hello" }, { 1, "Yeah" }, { 1, "Apa" } };
-
     m_interfaceDrawer = std::make_shared<editor::ImGuiInterfaceDrawer>(m_context);
 }
 

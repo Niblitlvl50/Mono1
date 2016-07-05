@@ -16,10 +16,16 @@
 using namespace editor;
 
 CameraTool::CameraTool(const mono::ICameraPtr& camera)
-    : m_camera(camera)
+    : m_camera(camera),
+      m_translate(false)
 { }
 
-void CameraTool::Start()
+Coordinate CameraTool::CoordinateSystem() const
+{
+    return Coordinate::WORLD;
+}
+
+void CameraTool::Begin()
 { }
 
 void CameraTool::End()
@@ -55,7 +61,10 @@ void CameraTool::HandleMousePosition(const math::Vector2f& world_pos)
     //const math::Vector2f& scale = viewport.mB / m_windowSize;
 
     const math::Vector2f& delta = world_pos - m_startPosition;
+
+    //const math::Vector2f& new_pos = m_startPosition - delta;
     const math::Vector2f& new_pos = m_cameraStartPosition - delta;
+
 
     //const math::Vector2f move(event.screenX, m_windowSize.y - event.screenY);
     //const math::Vector2f& delta = (move - m_translateDelta) * scale;

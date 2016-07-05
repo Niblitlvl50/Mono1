@@ -1,12 +1,12 @@
 //
-//  RotateTool.cpp
+//  TranslateTool.cpp
 //  MonoiOS
 //
 //  Created by Niklas Damberg on 03/07/16.
 //
 //
 
-#include "RotateTool.h"
+#include "TranslateTool.h"
 #include "Editor.h"
 #include "MathFunctions.h"
 #include "Vector2f.h"
@@ -16,19 +16,19 @@
 using namespace editor;
 
 
-RotateTool::RotateTool(EditorZone* editor)
+TranslateTool::TranslateTool(EditorZone* editor)
     : m_editor(editor)
 { }
 
-Coordinate RotateTool::CoordinateSystem() const
+Coordinate TranslateTool::CoordinateSystem() const
 {
     return Coordinate::WORLD;
 }
 
-void RotateTool::Begin()
+void TranslateTool::Begin()
 { }
 
-void RotateTool::End()
+void TranslateTool::End()
 {
     if(m_polygon)
     {
@@ -37,12 +37,12 @@ void RotateTool::End()
     }
 }
 
-bool RotateTool::IsActive() const
+bool TranslateTool::IsActive() const
 {
     return m_polygon != nullptr;
 }
 
-void RotateTool::HandleMouseDown(const math::Vector2f& world_pos)
+void TranslateTool::HandleMouseDown(const math::Vector2f& world_pos)
 {
     for(auto& polygon : m_editor->m_polygons)
         polygon->m_selected = false;
@@ -53,28 +53,28 @@ void RotateTool::HandleMouseDown(const math::Vector2f& world_pos)
         const bool found_polygon = math::PointInsideQuad(world_pos, bb);
         if(found_polygon)
         {
-            polygon->m_selected = true;
             m_polygon = polygon;
-            m_initialRotation = polygon->Rotation();
+            m_polygon->m_selected = true;
+            m_beginTranslate = world_pos;
             break;
         }
     }
 }
 
-void RotateTool::HandleMouseUp(const math::Vector2f& world_pos)
+void TranslateTool::HandleMouseUp(const math::Vector2f& world_pos)
 {
     End();
 }
 
-void RotateTool::HandleMousePosition(const math::Vector2f& world_pos)
+void TranslateTool::HandleMousePosition(const math::Vector2f& world_pos)
 {
     if(!m_polygon)
         return;
 
-    const math::Vector2f& position = m_polygon->Position();
-    const float angle = math::ToRadians(math::AngleBetweenPoints(position, world_pos));
+    const math::Vector2f& delta = m_beginTranslate - world_pos;
+    const math::Vector2f& new_pos = m_beginTranslate - delta;
 
-    m_polygon->SetRotation(angle - m_initialRotation);
+    m_polygon->SetPosition(new_pos);
 }
 
 

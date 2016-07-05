@@ -1,5 +1,5 @@
 //
-//  RotateTool.hpp
+//  TranslateTool.hpp
 //  MonoiOS
 //
 //  Created by Niklas Damberg on 03/07/16.
@@ -9,6 +9,7 @@
 #pragma once
 
 #include "ITool.h"
+#include "Vector2f.h"
 #include <memory>
 
 namespace editor
@@ -16,12 +17,12 @@ namespace editor
     class EditorZone;
     class PolygonEntity;
 
-    class RotateTool : public ITool
+    class TranslateTool : public ITool
     {
     public:
 
-        RotateTool(EditorZone* editor);
-
+        TranslateTool(EditorZone* editor);
+        
         virtual Coordinate CoordinateSystem() const;
         virtual void Begin();
         virtual void End();
@@ -32,6 +33,6 @@ namespace editor
 
         EditorZone* m_editor;
         std::shared_ptr<editor::PolygonEntity> m_polygon;
-        float m_initialRotation;
+        math::Vector2f m_beginTranslate;
     };
 }

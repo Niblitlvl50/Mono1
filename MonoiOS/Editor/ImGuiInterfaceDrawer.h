@@ -18,8 +18,18 @@ namespace editor
 {
     struct Notification
     {
+        Notification()
+        { }
+
+        Notification(int image, const std::string& text, int time_left)
+            : image(image),
+              text(text),
+              time_left(time_left)
+        { }
+
         int image;
         std::string text;
+        int time_left;
     };
 
     struct UIContext

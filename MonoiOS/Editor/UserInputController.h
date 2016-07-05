@@ -13,6 +13,7 @@
 #include "EventToken.h"
 
 #include "PolygonTool.h"
+#include "TranslateTool.h"
 #include "RotateTool.h"
 #include "CameraTool.h"
 
@@ -52,6 +53,7 @@ namespace editor
 
         editor::CameraTool m_cameraTool;
         editor::PolygonTool m_polygonTool;
+        editor::TranslateTool m_translateTool;
         editor::RotateTool m_rotateTool;
         editor::ITool* m_activeTool;
     };
