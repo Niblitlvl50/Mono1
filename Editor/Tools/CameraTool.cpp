@@ -12,6 +12,8 @@
 #include "Quad.h"
 #include "MathFunctions.h"
 
+#include <cmath>
+
 using namespace editor;
 
 CameraTool::CameraTool(const mono::ICameraPtr& camera, const math::Vector2f& window_size)
@@ -62,19 +64,17 @@ void CameraTool::HandleMousePosition(const math::Vector2f& world_pos)
     m_translateDelta = world_pos;
 }
 
-void CameraTool::HandleMultiGesture()
+void CameraTool::HandleMultiGesture(const math::Vector2f& screen_position, float distance)
 {
-    /*
-    if(std::fabs(event.distance) < 1e-3)
-        return false;
+    if(std::fabs(distance) < 1e-3)
+        return;
 
     math::Quad quad = m_camera->GetViewport();
 
-    const float multiplier = (event.distance < 0.0f) ? 1.0f : -1.0f;
+    const float multiplier = (distance < 0.0f) ? 1.0f : -1.0f;
     const float resizeValue = quad.mB.x * 0.15f * multiplier;
     const float aspect = quad.mB.x / quad.mB.y;
     math::ResizeQuad(quad, resizeValue, aspect);
 
     m_camera->SetTargetViewport(quad);
-*/
 }

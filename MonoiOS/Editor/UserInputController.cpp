@@ -127,6 +127,6 @@ bool UserInputController::OnMouseMove(const event::MouseMotionEvent& event)
 
 bool UserInputController::OnMultiGesture(const event::MultiGestureEvent& event)
 {
-
+    m_cameraTool.HandleMultiGesture(math::Vector2f(event.x, event.y), event.distance);
     return true;
 }
