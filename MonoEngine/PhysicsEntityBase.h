@@ -22,6 +22,7 @@ namespace mono
         virtual float Rotation() const;
         virtual void SetPosition(const math::Vector2f& position);
         virtual void SetRotation(float rotation);
+        virtual void SetScale(const math::Vector2f& scale);
         virtual math::Quad BoundingBox() const;
         virtual mono::Object& GetPhysics();
         virtual uint Id() const;

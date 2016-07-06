@@ -44,6 +44,11 @@ void PhysicsEntityBase::SetRotation(float rotation)
     mPhysicsObject.body->SetAngle(rotation);
 }
 
+void PhysicsEntityBase::SetScale(const math::Vector2f& scale)
+{
+    mScale = scale;
+}
+
 math::Quad PhysicsEntityBase::BoundingBox() const
 {
     const math::Vector2f& halfScale = mScale / 2.0f;
