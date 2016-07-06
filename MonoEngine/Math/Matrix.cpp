@@ -7,6 +7,7 @@
 //
 
 #include "Matrix.h"
+#include "MathFunctions.h"
 #include "Vector2f.h"
 #include <cmath>
 
@@ -75,6 +76,12 @@ void math::Position(Matrix& matrix, const Vector2f& position)
     //matrix.data[14] += 0.0f;
 }
 
+math::Vector2f math::GetPosition(const Matrix& matrix)
+{
+    return math::Vector2f(matrix.data[12], matrix.data[13]);
+}
+
+
 void math::RotateZ(Matrix& matrix, float radians)
 {
     const float sine = std::sin(radians);
@@ -103,6 +110,11 @@ void math::RotateZ(Matrix& matrix, float radians)
     matrix.data[13] = m12 * sine   + m13 * cosine;
 }
 
+float math::GetZRotation(const Matrix& matrix)
+{
+    return 0.0f;
+}
+
 void math::ScaleXY(Matrix& matrix, const Vector2f& scale)
 {
     // The elements of the matrix are stored as column major order.
@@ -125,6 +137,11 @@ void math::ScaleXY(Matrix& matrix, const Vector2f& scale)
     //matrix.data[6] *= scale.mZ;
     //matrix.data[10] *= scale.mZ;
     //matrix.data[14] *= scale.mZ;
+}
+
+math::Vector2f math::GetXYScale(const Matrix& matrix)
+{
+    return math::zeroVec;
 }
 
 void math::Transpose(Matrix& matrix)
@@ -181,6 +198,13 @@ void math::operator *= (Matrix& left, const Matrix& right)
     left.data[13] = m1 * right.data[12] + m5 * right.data[13] + m9  * right.data[14] + m13 * right.data[15];
     left.data[14] = m2 * right.data[12] + m6 * right.data[13] + m10 * right.data[14] + m14 * right.data[15];
     left.data[15] = m3 * right.data[12] + m7 * right.data[13] + m11 * right.data[14] + m15 * right.data[15];
+}
+
+math::Matrix math::operator * (const math::Matrix& left, const math::Matrix& right)
+{
+    math::Matrix result = left;
+    result *= right;
+    return result;
 }
 
 math::Matrix math::Ortho(float left, float right, float bottom, float top, float near, float far)

@@ -22,7 +22,6 @@ namespace editor
 
         PolygonTool(EditorZone* editor);
 
-        virtual Coordinate CoordinateSystem() const;
         virtual void Begin();
         virtual void End();
         virtual bool IsActive() const;

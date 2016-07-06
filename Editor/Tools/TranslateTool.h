@@ -23,7 +23,6 @@ namespace editor
 
         TranslateTool(EditorZone* editor);
         
-        virtual Coordinate CoordinateSystem() const;
         virtual void Begin();
         virtual void End();
         virtual bool IsActive() const;
@@ -34,5 +33,6 @@ namespace editor
         EditorZone* m_editor;
         std::shared_ptr<editor::PolygonEntity> m_polygon;
         math::Vector2f m_beginTranslate;
+        math::Vector2f m_positionDiff;
     };
 }

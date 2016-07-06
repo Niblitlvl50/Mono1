@@ -12,20 +12,12 @@
 
 namespace editor
 {
-    enum class Coordinate
-    {
-        SCREEN,
-        WORLD
-    };
-
     class ITool
     {
     public:
 
         virtual ~ITool()
         { }
-
-        virtual Coordinate CoordinateSystem() const = 0;
 
         virtual void Begin() = 0;
         virtual void End() = 0;

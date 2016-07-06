@@ -20,11 +20,6 @@ TranslateTool::TranslateTool(EditorZone* editor)
     : m_editor(editor)
 { }
 
-Coordinate TranslateTool::CoordinateSystem() const
-{
-    return Coordinate::WORLD;
-}
-
 void TranslateTool::Begin()
 { }
 
@@ -56,6 +51,7 @@ void TranslateTool::HandleMouseDown(const math::Vector2f& world_pos)
             m_polygon = polygon;
             m_polygon->m_selected = true;
             m_beginTranslate = world_pos;
+            m_positionDiff = m_polygon->Position() - world_pos;
             break;
         }
     }
@@ -74,7 +70,7 @@ void TranslateTool::HandleMousePosition(const math::Vector2f& world_pos)
     const math::Vector2f& delta = m_beginTranslate - world_pos;
     const math::Vector2f& new_pos = m_beginTranslate - delta;
 
-    m_polygon->SetPosition(new_pos);
+    m_polygon->SetPosition(new_pos + m_positionDiff);
 }
 
 

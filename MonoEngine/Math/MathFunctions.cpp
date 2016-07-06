@@ -52,8 +52,7 @@ void math::ResizeQuad(math::Quad& quad, float value, float aspect)
 
 float math::AngleBetweenPoints(const math::Vector2f& first, const math::Vector2f& second)
 {
-    const float angle = std::atan2(second.y - first.y, second.x - first.x);
-    return ToDegrees(angle);
+    return std::atan2(second.y - first.y, second.x - first.x);
 }
 
 

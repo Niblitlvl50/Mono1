@@ -20,8 +20,10 @@ namespace mono
         virtual ~IEntity()
         { }
         
-        virtual const math::Vector2f& Position() const = 0;
+        virtual const math::Vector2f Position() const = 0;
         virtual void SetPosition(const math::Vector2f& position) = 0;
+
+        virtual void SetScale(const math::Vector2f& scale) = 0;
 
         // Rotation in radians
         virtual float Rotation() const = 0;

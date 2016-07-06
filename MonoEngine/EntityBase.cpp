@@ -11,12 +11,10 @@
 #include "Utils.h"
 #include "Quad.h"
 #include "Matrix.h"
-#include "IAction.h"
 #include "IRenderer.h"
 
 #include "SysUID.h"
 
-#include <functional>
 
 using namespace mono;
 
@@ -29,6 +27,8 @@ EntityBase::EntityBase()
 
 void EntityBase::doDraw(IRenderer& renderer) const
 {
+    //math::Matrix matrix = m_transform * renderer.GetCurrentTransform();
+
     const math::Vector2f& rotationPoint = mBasePoint * mScale;
     const math::Vector2f& translate = mPosition + rotationPoint;
 
@@ -65,43 +65,45 @@ void EntityBase::doUpdate(unsigned int delta)
     // Updadate children
     for(auto& child : mChildren)
         child->doUpdate(delta);
-    
-    // Update actions
-    for(auto& action : mActions)
-        action->Update(delta);
-    
-    // Check if any actions has finished and remove them if that is the case
-    const auto removeFunc = std::bind(&IAction::Finished, std::placeholders::_1);
-    const auto it = std::remove_if(mActions.begin(), mActions.end(), removeFunc);
-    if(it != mActions.end())
-        mActions.erase(it, mActions.end());
-    
+
     // Update this object
     Update(delta);
 }
 
-const math::Vector2f& EntityBase::Position() const
+const math::Vector2f EntityBase::Position() const
 {
+    //return math::GetPosition(m_transform);
     return mPosition;
+}
+
+void EntityBase::SetScale(const math::Vector2f& scale)
+{
+    //math::ScaleXY(m_transform, scale);
+    mScale = scale;
 }
 
 float EntityBase::Rotation() const
 {
+    //return math::GetZRotation(m_transform);
     return mRotation;
 }
 
 void EntityBase::SetPosition(const math::Vector2f& position)
 {
+    //math::Position(m_transform, position);
     mPosition = position;
 }
 
 void EntityBase::SetRotation(float rotation)
 {
+    //math::RotateZ(m_transform, rotation);
     mRotation = rotation;
 }
 
 math::Quad EntityBase::BoundingBox() const
 {
+    //return math::Quad(-10, -10, 10, 10);
+
     const math::Vector2f& halfScale = mScale / 2.0f;
     math::Quad thisbb(mPosition - halfScale, mPosition + halfScale);
 
@@ -139,10 +141,5 @@ void EntityBase::AddChild(const IEntityPtr& child)
 void EntityBase::RemoveChild(const IEntityPtr& child)
 {
     FindAndRemove(mChildren, child);
-}
-
-void EntityBase::AddAction(const IActionPtr& action)
-{
-    mActions.push_back(action);
 }
 

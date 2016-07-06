@@ -30,7 +30,12 @@ void PolygonEntity::Draw(mono::IRenderer& renderer) const
     renderer.DrawPoints(m_points, point_color, 3.0f);
 
     if(m_selected)
-        renderer.DrawQuad(BoundingBox(), selected_color, 1.0f);
+    {
+        math::Quad bb = BoundingBox();
+        bb.mA -= Position();
+        bb.mB -= Position();
+        renderer.DrawQuad(bb, selected_color, 1.0f);
+    }
 }
 
 void PolygonEntity::Update(unsigned int delta)
@@ -41,7 +46,7 @@ math::Quad PolygonEntity::BoundingBox() const
     math::Quad bb(math::INF, math::INF, -math::INF, -math::INF);
 
     for(auto& point : m_points)
-        bb |= point;
+        bb |= (point + Position());
 
     return bb;
 }

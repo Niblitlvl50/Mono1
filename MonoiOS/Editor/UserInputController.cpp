@@ -29,7 +29,7 @@ UserInputController::UserInputController(const mono::ICameraPtr& camera,
                                          mono::EventHandler& event_handler)
     : m_eventHandler(event_handler),
       m_context(context),
-      m_cameraTool(camera),
+      m_cameraTool(camera, window_size),
       m_polygonTool(editor),
       m_translateTool(editor),
       m_rotateTool(editor),
@@ -87,13 +87,10 @@ bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)
 {
     if(event.key == MouseButton::LEFT)
     {
-        const bool world = (m_activeTool->CoordinateSystem() == Coordinate::WORLD);
-        const math::Vector2f& position = world ? math::Vector2f(event.worldX, event.worldY) : math::Vector2f(event.screenX, event.screenY);
-
-        m_activeTool->HandleMouseDown(position);
+        m_activeTool->HandleMouseDown(math::Vector2f(event.worldX, event.worldY));
         const bool tool_active = m_activeTool->IsActive();
         if(!tool_active)
-            m_cameraTool.HandleMouseDown(position);
+            m_cameraTool.HandleMouseDown(math::Vector2f(event.screenX, event.screenY));
 
         return true;
     }
@@ -105,13 +102,10 @@ bool UserInputController::OnMouseUp(const event::MouseUpEvent& event)
 {
     if(event.key == MouseButton::LEFT)
     {
-        const bool world = (m_activeTool->CoordinateSystem() == Coordinate::WORLD);
-        const math::Vector2f& position = world ? math::Vector2f(event.worldX, event.worldY) : math::Vector2f(event.screenX, event.screenY);
-
-        m_activeTool->HandleMouseUp(position);
+        m_activeTool->HandleMouseUp(math::Vector2f(event.worldX, event.worldY));
         const bool tool_active = m_activeTool->IsActive();
         if(!tool_active)
-            m_cameraTool.HandleMouseUp(position);
+            m_cameraTool.HandleMouseUp(math::Vector2f(event.screenX, event.screenY));
     }
     else if(event.key == MouseButton::RIGHT)
     {
@@ -123,13 +117,10 @@ bool UserInputController::OnMouseUp(const event::MouseUpEvent& event)
 
 bool UserInputController::OnMouseMove(const event::MouseMotionEvent& event)
 {
-    const bool world = (m_activeTool->CoordinateSystem() == Coordinate::WORLD);
-    const math::Vector2f& position = world ? math::Vector2f(event.worldX, event.worldY) : math::Vector2f(event.screenX, event.screenY);
-
-    m_activeTool->HandleMousePosition(position);
+    m_activeTool->HandleMousePosition(math::Vector2f(event.worldX, event.worldY));
     const bool tool_active = m_activeTool->IsActive();
     if(!tool_active)
-        m_cameraTool.HandleMousePosition(position);
+        m_cameraTool.HandleMousePosition(math::Vector2f(event.screenX, event.screenY));
 
     return true;
 }

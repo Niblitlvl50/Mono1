@@ -50,6 +50,12 @@ void math::operator *= (math::Vector2f& left, float value)
     left.y *= value;
 }
 
+void math::operator *= (math::Vector2f& left, const math::Vector2f& right)
+{
+    left.x *= right.x;
+    left.y *= right.y;
+}
+
 void math::operator += (math::Vector2f& left, const math::Vector2f& right)
 {
     left.x += right.x;

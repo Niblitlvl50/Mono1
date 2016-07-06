@@ -37,6 +37,7 @@ namespace math
 
     // Assigment operators!
     void operator *= (Vector2f& left, float value);
+    void operator *= (Vector2f& left, const Vector2f& right);
     void operator += (Vector2f& left, const Vector2f& right);
     void operator -= (Vector2f& left, const Vector2f& right);
 

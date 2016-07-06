@@ -22,7 +22,7 @@ PhysicsEntityBase::PhysicsEntityBase()
       mScale(1.0f, 1.0f)
 { }
 
-const math::Vector2f& PhysicsEntityBase::Position() const
+const math::Vector2f PhysicsEntityBase::Position() const
 {
     return mPosition;
 }

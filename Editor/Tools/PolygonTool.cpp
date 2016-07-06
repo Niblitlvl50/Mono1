@@ -16,11 +16,6 @@ PolygonTool::PolygonTool(EditorZone* editor)
     : m_editor(editor)
 { }
 
-Coordinate PolygonTool::CoordinateSystem() const
-{
-    return Coordinate::WORLD;
-}
-
 void PolygonTool::Begin()
 {
     m_polygon = std::make_shared<editor::PolygonEntity>();
@@ -42,7 +37,16 @@ void PolygonTool::HandleMouseDown(const math::Vector2f& world_pos)
     if(!m_polygon)
         return;
 
-    m_polygon->m_points.push_back(world_pos);
+    if(m_polygon->m_points.empty())
+    {
+        m_polygon->SetPosition(world_pos);
+        m_polygon->m_points.push_back(math::zeroVec);
+    }
+    else
+    {
+        const math::Vector2f& position = m_polygon->Position();
+        m_polygon->m_points.push_back(world_pos - position);
+    }
 }
 
 void PolygonTool::HandleMouseUp(const math::Vector2f& world_pos)

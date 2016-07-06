@@ -18,9 +18,7 @@ namespace editor
     {
     public:
 
-        CameraTool(const mono::ICameraPtr& camera);
-
-        virtual Coordinate CoordinateSystem() const;
+        CameraTool(const mono::ICameraPtr& camera, const math::Vector2f& window_size);
 
         virtual void Begin();
         virtual void End();
@@ -36,8 +34,5 @@ namespace editor
 
         bool m_translate;
         math::Vector2f m_translateDelta;
-
-        math::Vector2f m_startPosition;
-        math::Vector2f m_cameraStartPosition;
     };
 }

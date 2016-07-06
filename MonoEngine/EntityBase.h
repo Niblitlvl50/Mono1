@@ -12,6 +12,7 @@
 #include "IEntity.h"
 #include "MonoPtrFwd.h"
 #include "Vector2f.h"
+#include "Matrix.h"
 #include <vector>
 
 namespace mono
@@ -21,7 +22,10 @@ namespace mono
     {
     public:
     
-        virtual const math::Vector2f& Position() const;
+        virtual const math::Vector2f Position() const;
+
+        virtual void SetScale(const math::Vector2f& scale);
+
         virtual float Rotation() const;
         virtual void SetPosition(const math::Vector2f& position);
         virtual void SetRotation(float rotation);
@@ -32,8 +36,6 @@ namespace mono
 
         void AddChild(const IEntityPtr& child);
         void RemoveChild(const IEntityPtr& child);
-        
-        void AddAction(const IActionPtr& action);
     
     protected:
         
@@ -52,9 +54,10 @@ namespace mono
         math::Vector2f mBasePoint;
         math::Vector2f mScale;
         float mRotation;
+
+        //math::Matrix m_transform;
         
         std::vector<IEntityPtr> mChildren;
-        std::vector<IActionPtr> mActions;
     };
     
 }

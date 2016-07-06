@@ -18,7 +18,7 @@ namespace mono
     {
     public:
         
-        virtual const math::Vector2f& Position() const;
+        virtual const math::Vector2f Position() const;
         virtual float Rotation() const;
         virtual void SetPosition(const math::Vector2f& position);
         virtual void SetRotation(float rotation);

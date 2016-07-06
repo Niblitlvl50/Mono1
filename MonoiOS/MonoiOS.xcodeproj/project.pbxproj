@@ -1886,8 +1886,8 @@
 				916B54621D28766800AD54A1 /* RotateTool.h */,
 				916B54641D287CE000AD54A1 /* ITool.h */,
 				916B54651D29064900AD54A1 /* CameraTool.cpp */,
-				916B54681D296FCD00AD54A1 /* TranslateTool.cpp */,
 				916B54661D29064900AD54A1 /* CameraTool.h */,
+				916B54681D296FCD00AD54A1 /* TranslateTool.cpp */,
 				916B54691D296FCD00AD54A1 /* TranslateTool.h */,
 			);
 			name = Tools;

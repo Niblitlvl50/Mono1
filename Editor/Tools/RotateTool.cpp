@@ -20,11 +20,6 @@ RotateTool::RotateTool(EditorZone* editor)
     : m_editor(editor)
 { }
 
-Coordinate RotateTool::CoordinateSystem() const
-{
-    return Coordinate::WORLD;
-}
-
 void RotateTool::Begin()
 { }
 
@@ -53,9 +48,13 @@ void RotateTool::HandleMouseDown(const math::Vector2f& world_pos)
         const bool found_polygon = math::PointInsideQuad(world_pos, bb);
         if(found_polygon)
         {
-            polygon->m_selected = true;
             m_polygon = polygon;
-            m_initialRotation = polygon->Rotation();
+            m_polygon->m_selected = true;
+
+            const math::Vector2f& position = m_polygon->Position();
+            const float rotation = m_polygon->Rotation();
+            m_rotationDiff = rotation - math::AngleBetweenPoints(position, world_pos);
+
             break;
         }
     }
@@ -72,9 +71,9 @@ void RotateTool::HandleMousePosition(const math::Vector2f& world_pos)
         return;
 
     const math::Vector2f& position = m_polygon->Position();
-    const float angle = math::ToRadians(math::AngleBetweenPoints(position, world_pos));
+    const float angle = math::AngleBetweenPoints(position, world_pos);
 
-    m_polygon->SetRotation(angle - m_initialRotation);
+    m_polygon->SetRotation(angle + m_rotationDiff);
 }
 
 

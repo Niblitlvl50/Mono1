@@ -11,19 +11,14 @@
 #include "ICamera.h"
 #include "Quad.h"
 #include "MathFunctions.h"
-#include "SysKeycodes.h"
 
 using namespace editor;
 
-CameraTool::CameraTool(const mono::ICameraPtr& camera)
+CameraTool::CameraTool(const mono::ICameraPtr& camera, const math::Vector2f& window_size)
     : m_camera(camera),
+      m_windowSize(window_size),
       m_translate(false)
 { }
-
-Coordinate CameraTool::CoordinateSystem() const
-{
-    return Coordinate::WORLD;
-}
 
 void CameraTool::Begin()
 { }
@@ -39,12 +34,7 @@ bool CameraTool::IsActive() const
 void CameraTool::HandleMouseDown(const math::Vector2f& world_pos)
 {
     m_translate = true;
-    m_startPosition = world_pos;
-    m_cameraStartPosition = m_camera->GetPosition();
-
-
-    //m_translateDelta.x = event.screenX;
-    //m_translateDelta.y = m_windowSize.y - event.screenY;
+    m_translateDelta = world_pos;
 }
 
 void CameraTool::HandleMouseUp(const math::Vector2f& world_pos)
@@ -57,23 +47,19 @@ void CameraTool::HandleMousePosition(const math::Vector2f& world_pos)
     if(!m_translate)
         return;
 
-    //const math::Quad& viewport = m_camera->GetViewport();
-    //const math::Vector2f& scale = viewport.mB / m_windowSize;
+    const math::Quad& viewport = m_camera->GetViewport();
+    const math::Vector2f& scale = viewport.mB / m_windowSize;
 
-    const math::Vector2f& delta = world_pos - m_startPosition;
+    math::Vector2f delta = (world_pos - m_translateDelta);
+    delta.y = -delta.y;
+    delta *= scale;
 
-    //const math::Vector2f& new_pos = m_startPosition - delta;
-    const math::Vector2f& new_pos = m_cameraStartPosition - delta;
-
-
-    //const math::Vector2f move(event.screenX, m_windowSize.y - event.screenY);
-    //const math::Vector2f& delta = (move - m_translateDelta) * scale;
-
-    //const math::Vector2f& cam_pos = m_camera->GetPosition();
-    //const math::Vector2f& new_pos = cam_pos - delta;
+    const math::Vector2f& cam_pos = m_camera->GetPosition();
+    const math::Vector2f& new_pos = cam_pos - delta;
 
     m_camera->SetPosition(new_pos);
-    //m_translateDelta = move;
+
+    m_translateDelta = world_pos;
 }
 
 void CameraTool::HandleMultiGesture()

@@ -22,7 +22,6 @@ namespace editor
 
         RotateTool(EditorZone* editor);
 
-        virtual Coordinate CoordinateSystem() const;
         virtual void Begin();
         virtual void End();
         virtual bool IsActive() const;
@@ -32,6 +31,6 @@ namespace editor
 
         EditorZone* m_editor;
         std::shared_ptr<editor::PolygonEntity> m_polygon;
-        float m_initialRotation;
+        float m_rotationDiff;
     };
 }

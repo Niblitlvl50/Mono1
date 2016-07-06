@@ -31,8 +31,8 @@ namespace
         SpriteDrawable(const char* file)
         : m_sprite(file)
         {
-            mPosition = math::Vector2f(0, 0);
-            mScale = math::Vector2f(50, 50);
+            SetPosition(math::Vector2f(100, 100));
+            SetScale(math::Vector2f(50, 50));
             m_sprite.SetAnimation(0);
         }
 
