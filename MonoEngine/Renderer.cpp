@@ -115,7 +115,11 @@ void Renderer::DrawText(const char* text, const math::Vector2f& pos, bool center
 
 void Renderer::doDrawTexts() const
 {
-    mono::UseFont();
+    const mono::ITexturePtr& texture = mono::GetFontTexture();
+    if(!texture)
+        return;
+
+    UseTexture(texture);
 
     UseShader(mTextureShader);
     ::DrawTexts(mTexts, mTextureShader);

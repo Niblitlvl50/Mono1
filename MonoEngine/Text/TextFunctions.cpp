@@ -87,12 +87,9 @@ void mono::LoadFont(const char* font, float size, float scale)
     }
 }
 
-void mono::UseFont()
+mono::ITexturePtr mono::GetFontTexture()
 {
-    if(!fontTexture)
-        return;
-
-    fontTexture->Use();
+    return fontTexture;
 }
 
 void mono::UnloadFont()

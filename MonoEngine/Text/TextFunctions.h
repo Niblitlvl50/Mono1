@@ -10,6 +10,7 @@
 
 #include "TextDefinition.h"
 #include "MathFwd.h"
+#include "MonoPtrFwd.h"
 
 namespace mono
 {    
@@ -19,8 +20,8 @@ namespace mono
     //! @param scale Scale of font when drawing with opengl (small font sizes can produce bad quality)
     void LoadFont(const char* font, float size, float scale = 1.0f);
 
-    //! Use the loaded font
-    void UseFont();
+    //! Get the loaded font texture, might be nullptr if no texture is loaded.
+    ITexturePtr GetFontTexture();
 
     //! Clear the loaded font
     void UnloadFont();

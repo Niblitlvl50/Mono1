@@ -39,6 +39,7 @@ namespace
         virtual void Draw(mono::IRenderer& renderer) const
         {
             renderer.DrawSprite(m_sprite);
+            renderer.DrawText("hello", Position(), true, mono::Color::RGBA(1, 0, 1, 1));
         }
 
         virtual void Update(unsigned int delta)
