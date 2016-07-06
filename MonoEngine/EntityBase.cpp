@@ -27,27 +27,25 @@ EntityBase::EntityBase()
 
 void EntityBase::doDraw(IRenderer& renderer) const
 {
-    //math::Matrix matrix = m_transform * renderer.GetCurrentTransform();
-
     const math::Vector2f& rotationPoint = mBasePoint * mScale;
     const math::Vector2f& translate = mPosition + rotationPoint;
 
-    math::Matrix matrix = renderer.GetCurrentTransform();
-
     math::Matrix translation;
     math::Translate(translation, translate);
-    matrix *= translation;
 
     math::Matrix rotation;
     math::RotateZ(rotation, mRotation);
-    matrix *= rotation;
 
     math::Matrix translateRotation;
     math::Translate(translateRotation, -rotationPoint);
-    matrix *= translateRotation;
 
     math::Matrix scale;
     math::ScaleXY(scale, mScale);
+
+    math::Matrix matrix = renderer.GetCurrentTransform();
+    matrix *= translation;
+    matrix *= rotation;
+    matrix *= translateRotation;
     matrix *= scale;
 
     for(const auto& child : mChildren)
@@ -72,38 +70,31 @@ void EntityBase::doUpdate(unsigned int delta)
 
 const math::Vector2f EntityBase::Position() const
 {
-    //return math::GetPosition(m_transform);
     return mPosition;
 }
 
 void EntityBase::SetScale(const math::Vector2f& scale)
 {
-    //math::ScaleXY(m_transform, scale);
     mScale = scale;
 }
 
 float EntityBase::Rotation() const
 {
-    //return math::GetZRotation(m_transform);
     return mRotation;
 }
 
 void EntityBase::SetPosition(const math::Vector2f& position)
 {
-    //math::Position(m_transform, position);
     mPosition = position;
 }
 
 void EntityBase::SetRotation(float rotation)
 {
-    //math::RotateZ(m_transform, rotation);
     mRotation = rotation;
 }
 
 math::Quad EntityBase::BoundingBox() const
 {
-    //return math::Quad(-10, -10, 10, 10);
-
     const math::Vector2f& halfScale = mScale / 2.0f;
     math::Quad thisbb(mPosition - halfScale, mPosition + halfScale);
 

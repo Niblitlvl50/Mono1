@@ -77,8 +77,6 @@ bool PhysicsEntityBase::HasProperty(uint property) const
 
 void PhysicsEntityBase::doDraw(IRenderer& renderer) const
 {
-    math::Matrix transform = renderer.GetCurrentTransform();
-
     math::Matrix translation;
     math::Translate(translation, mPosition);
 
@@ -88,6 +86,7 @@ void PhysicsEntityBase::doDraw(IRenderer& renderer) const
     math::Matrix scale;
     math::ScaleXY(scale, mScale);
 
+    math::Matrix transform = renderer.GetCurrentTransform();
     transform *= translation;
     transform *= rotation;
     transform *= scale;
