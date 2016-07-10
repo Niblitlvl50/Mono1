@@ -27,7 +27,7 @@ void TranslateTool::End()
 {
     if(m_polygon)
     {
-        m_polygon->m_selected = false;
+        m_polygon->SetSelected(false);
         m_polygon = nullptr;
     }
 }
@@ -40,7 +40,7 @@ bool TranslateTool::IsActive() const
 void TranslateTool::HandleMouseDown(const math::Vector2f& world_pos)
 {
     for(auto& polygon : m_editor->m_polygons)
-        polygon->m_selected = false;
+        polygon->SetSelected(false);
 
     for(auto& polygon : m_editor->m_polygons)
     {
@@ -49,7 +49,7 @@ void TranslateTool::HandleMouseDown(const math::Vector2f& world_pos)
         if(found_polygon)
         {
             m_polygon = polygon;
-            m_polygon->m_selected = true;
+            m_polygon->SetSelected(true);
             m_beginTranslate = world_pos;
             m_positionDiff = m_polygon->Position() - world_pos;
             break;

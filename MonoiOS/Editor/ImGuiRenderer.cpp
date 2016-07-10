@@ -124,5 +124,5 @@ void ImGuiRenderer::doDraw(mono::IRenderer& renderer) const
 
 math::Quad ImGuiRenderer::BoundingBox() const
 {
-    return math::Quad(math::zeroVec, m_windowSize);
+    return math::Quad(-FLT_MAX, -FLT_MAX, FLT_MAX, FLT_MAX);
 }

@@ -111,7 +111,7 @@ void EditorZone::OnSelectedPolygon(int index)
     m_context.selectedPolygonIndex = index;
 
     for(int polygon_index = 0; polygon_index < m_polygons.size(); ++polygon_index)
-        m_polygons[polygon_index]->m_selected = (polygon_index == index);
+        m_polygons[polygon_index]->SetSelected(polygon_index == index);
 }
 
 void EditorZone::OnDeletePolygon(int index)

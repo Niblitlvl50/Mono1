@@ -22,9 +22,14 @@ PhysicsEntityBase::PhysicsEntityBase()
       mScale(1.0f, 1.0f)
 { }
 
-const math::Vector2f PhysicsEntityBase::Position() const
+const math::Vector2f& PhysicsEntityBase::Position() const
 {
     return mPosition;
+}
+
+const math::Vector2f& PhysicsEntityBase::BasePoint() const
+{
+    return math::zeroVec;
 }
 
 float PhysicsEntityBase::Rotation() const
@@ -77,20 +82,7 @@ bool PhysicsEntityBase::HasProperty(uint property) const
 
 void PhysicsEntityBase::doDraw(IRenderer& renderer) const
 {
-    math::Matrix translation;
-    math::Translate(translation, mPosition);
-
-    math::Matrix rotation;
-    math::RotateZ(rotation, mRotation);
-
-    math::Matrix scale;
-    math::ScaleXY(scale, mScale);
-
-    math::Matrix transform = renderer.GetCurrentTransform();
-    transform *= translation;
-    transform *= rotation;
-    transform *= scale;
-
+    const math::Matrix& transform = renderer.GetCurrentTransform() * Transformation();
     renderer.PushNewTransform(transform);
 
     Draw(renderer);
@@ -103,4 +95,24 @@ void PhysicsEntityBase::doUpdate(unsigned int delta)
     
     Update(delta);
 }
+
+math::Matrix PhysicsEntityBase::Transformation() const
+{
+    math::Matrix translation;
+    math::Translate(translation, mPosition);
+
+    math::Matrix rotation;
+    math::RotateZ(rotation, mRotation);
+
+    math::Matrix scale;
+    math::ScaleXY(scale, mScale);
+
+    math::Matrix transform;
+    transform *= translation;
+    transform *= rotation;
+    transform *= scale;
+
+    return transform;
+}
+
 

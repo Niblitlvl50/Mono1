@@ -55,5 +55,32 @@ float math::AngleBetweenPoints(const math::Vector2f& first, const math::Vector2f
     return std::atan2(second.y - first.y, second.x - first.x);
 }
 
+math::Vector2f math::CentroidOfPolygon(const std::vector<math::Vector2f>& points)
+{
+    math::Vector2f centroid;
+    float area = 0.0f;
+
+    const auto func = [&centroid, &area](const math::Vector2f& first, const math::Vector2f& second) {
+        const float partial_area = first.x * second.y - second.x * first.y;
+
+        area += partial_area;
+
+        centroid.x += (first.x + second.x) * partial_area;
+        centroid.y += (first.y + second.y) * partial_area;
+    };
+
+
+    for(int point_index = 0; point_index < points.size() -1; ++point_index)
+        func(points.at(point_index), points.at(point_index +1));
+
+    func(points.back(), points.front());
+
+    area *= 0.5;
+    centroid.x /= (6.0 * area);
+    centroid.y /= (6.0 * area);
+
+    return centroid;
+}
+
 
 

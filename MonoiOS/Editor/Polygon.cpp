@@ -13,6 +13,7 @@
 #include "Quad.h"
 
 #include "MathFwd.h"
+#include "MathFunctions.h"
 
 using namespace editor;
 
@@ -29,11 +30,11 @@ void PolygonEntity::Draw(mono::IRenderer& renderer) const
     renderer.DrawClosedPolyline(m_points, line_color, 2.0f);
     renderer.DrawPoints(m_points, point_color, 3.0f);
 
+    renderer.DrawPoints({ m_centroid }, point_color, 4.0f);
+
     if(m_selected)
     {
-        math::Quad bb = BoundingBox();
-        bb.mA -= Position();
-        bb.mB -= Position();
+        const math::Quad& bb = LocalBoundingBox();
         renderer.DrawQuad(bb, selected_color, 1.0f);
     }
 }
@@ -43,10 +44,38 @@ void PolygonEntity::Update(unsigned int delta)
 
 math::Quad PolygonEntity::BoundingBox() const
 {
+    const math::Matrix& transform = Transformation();
+
     math::Quad bb(math::INF, math::INF, -math::INF, -math::INF);
 
     for(auto& point : m_points)
-        bb |= (point + Position());
+        bb |= math::Transform(transform, point);
+
+    return bb;
+}
+
+void PolygonEntity::AddVertex(const math::Vector2f& vertex)
+{
+    m_points.push_back(vertex);
+
+    if(m_points.size() > 2)
+    {
+        m_centroid = math::CentroidOfPolygon(m_points);
+        mBasePoint = m_centroid;
+    }
+}
+
+void PolygonEntity::SetSelected(bool selected)
+{
+    m_selected = selected;
+}
+
+math::Quad PolygonEntity::LocalBoundingBox() const
+{
+    math::Quad bb(math::INF, math::INF, -math::INF, -math::INF);
+
+    for(auto& point : m_points)
+        bb |= point;
 
     return bb;
 }

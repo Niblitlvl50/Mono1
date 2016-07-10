@@ -20,6 +20,7 @@ void PolygonTool::Begin()
 {
     m_polygon = std::make_shared<editor::PolygonEntity>();
     m_editor->AddPolygon(m_polygon);
+    m_firstPoint = true;
 }
 
 void PolygonTool::End()
@@ -37,15 +38,17 @@ void PolygonTool::HandleMouseDown(const math::Vector2f& world_pos)
     if(!m_polygon)
         return;
 
-    if(m_polygon->m_points.empty())
+    if(m_firstPoint)
     {
         m_polygon->SetPosition(world_pos);
-        m_polygon->m_points.push_back(math::zeroVec);
+        m_polygon->AddVertex(math::zeroVec);
+
+        m_firstPoint = false;
     }
     else
     {
         const math::Vector2f& position = m_polygon->Position();
-        m_polygon->m_points.push_back(world_pos - position);
+        m_polygon->AddVertex(world_pos - position);
     }
 }
 

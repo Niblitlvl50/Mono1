@@ -27,7 +27,7 @@ void RotateTool::End()
 {
     if(m_polygon)
     {
-        m_polygon->m_selected = false;
+        m_polygon->SetSelected(false);
         m_polygon = nullptr;
     }
 }
@@ -40,7 +40,7 @@ bool RotateTool::IsActive() const
 void RotateTool::HandleMouseDown(const math::Vector2f& world_pos)
 {
     for(auto& polygon : m_editor->m_polygons)
-        polygon->m_selected = false;
+        polygon->SetSelected(false);
 
     for(auto& polygon : m_editor->m_polygons)
     {
@@ -49,9 +49,9 @@ void RotateTool::HandleMouseDown(const math::Vector2f& world_pos)
         if(found_polygon)
         {
             m_polygon = polygon;
-            m_polygon->m_selected = true;
+            m_polygon->SetSelected(true);
 
-            const math::Vector2f& position = m_polygon->Position();
+            const math::Vector2f& position = m_polygon->Position() + m_polygon->BasePoint();
             const float rotation = m_polygon->Rotation();
             m_rotationDiff = rotation - math::AngleBetweenPoints(position, world_pos);
 
@@ -70,7 +70,7 @@ void RotateTool::HandleMousePosition(const math::Vector2f& world_pos)
     if(!m_polygon)
         return;
 
-    const math::Vector2f& position = m_polygon->Position();
+    const math::Vector2f& position = m_polygon->Position() + m_polygon->BasePoint();
     const float angle = math::AngleBetweenPoints(position, world_pos);
 
     m_polygon->SetRotation(angle + m_rotationDiff);

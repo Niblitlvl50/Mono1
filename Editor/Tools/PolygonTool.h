@@ -31,5 +31,6 @@ namespace editor
 
         EditorZone* m_editor;
         std::shared_ptr<editor::PolygonEntity> m_polygon;
+        bool m_firstPoint;
     };
 }

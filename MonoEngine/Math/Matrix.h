@@ -30,17 +30,13 @@ namespace math
 
     void Identity(Matrix& matrix);
     void Translate(Matrix& matrix, const Vector2f& vector);
-
     void Position(Matrix& matrix, const Vector2f& position);
-    math::Vector2f GetPosition(const Matrix& matrix);
-
     void RotateZ(Matrix& matrix, float radians);
-    float GetZRotation(const Matrix& matrix);
-
+    void RotateZ(Matrix& matrix, float radians, const Vector2f& offset);
     void ScaleXY(Matrix& matrix, const Vector2f& scale);
-    math::Vector2f GetXYScale(const Matrix& matrix);
-
     void Transpose(Matrix& matrix);
+
+    math::Vector2f Transform(const Matrix& matrix, const math::Vector2f& vector);
 
     void operator *= (Matrix& left, const Matrix& right);
     math::Matrix operator * (const math::Matrix& left, const math::Matrix& right);

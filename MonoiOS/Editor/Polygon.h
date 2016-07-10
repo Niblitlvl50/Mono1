@@ -25,7 +25,15 @@ namespace editor
         virtual void Update(unsigned int delta);
         virtual math::Quad BoundingBox() const;
 
+        void AddVertex(const math::Vector2f& vertex);
+        void SetSelected(bool selected);
+
+    private:
+
+        math::Quad LocalBoundingBox() const;
+
         bool m_selected;
         std::vector<math::Vector2f> m_points;
+        math::Vector2f m_centroid;
     };
 }

@@ -76,12 +76,6 @@ void math::Position(Matrix& matrix, const Vector2f& position)
     //matrix.data[14] += 0.0f;
 }
 
-math::Vector2f math::GetPosition(const Matrix& matrix)
-{
-    return math::Vector2f(matrix.data[12], matrix.data[13]);
-}
-
-
 void math::RotateZ(Matrix& matrix, float radians)
 {
     const float sine = std::sin(radians);
@@ -110,9 +104,32 @@ void math::RotateZ(Matrix& matrix, float radians)
     matrix.data[13] = m12 * sine   + m13 * cosine;
 }
 
-float math::GetZRotation(const Matrix& matrix)
+void math::RotateZ(math::Matrix& matrix, float radians, const math::Vector2f& offset)
 {
-    return 0.0f;
+    const float sine = std::sin(radians);
+    const float cosine = std::cos(radians);
+
+    const float m0 = matrix.data[0];
+    const float m4 = matrix.data[4];
+    const float m8 = matrix.data[8];
+    const float m12 = matrix.data[12];
+
+    const float m1 = matrix.data[1];
+    const float m5 = matrix.data[5];
+    const float m9 = matrix.data[9];
+    const float m13 = matrix.data[13];
+
+    matrix.data[0] = m0 * cosine + m1 * -sine;
+    matrix.data[1] = m0 * sine   + m1 * cosine;
+
+    matrix.data[4] = m4 * cosine + m5 * -sine;
+    matrix.data[5] = m4 * sine   + m5 * cosine;
+
+    matrix.data[8] = m8 * cosine + m9 * -sine;
+    matrix.data[9] = m8 * sine   + m9 * cosine;
+
+    matrix.data[12] = m12 * cosine + m13 * -sine;
+    matrix.data[13] = m12 * sine   + m13 * cosine;
 }
 
 void math::ScaleXY(Matrix& matrix, const Vector2f& scale)
@@ -139,11 +156,6 @@ void math::ScaleXY(Matrix& matrix, const Vector2f& scale)
     //matrix.data[14] *= scale.mZ;
 }
 
-math::Vector2f math::GetXYScale(const Matrix& matrix)
-{
-    return math::zeroVec;
-}
-
 void math::Transpose(Matrix& matrix)
 {
     std::swap(matrix.data[1], matrix.data[4]);
@@ -156,6 +168,12 @@ void math::Transpose(Matrix& matrix)
     std::swap(matrix.data[11], matrix.data[14]);
 }
 
+math::Vector2f math::Transform(const Matrix& matrix, const math::Vector2f& vector)
+{
+    const float x = matrix.data[0] * vector.x + matrix.data[1] * -vector.y + matrix.data[12];
+    const float y = matrix.data[4] * -vector.x + matrix.data[5] * vector.y + matrix.data[13];
+    return math::Vector2f(x, y);
+}
 
 void math::operator *= (Matrix& left, const Matrix& right)
 {

@@ -9,6 +9,7 @@
 #pragma once
 
 #include "MathFwd.h"
+#include <vector>
 
 namespace math
 {    
@@ -18,6 +19,9 @@ namespace math
 
     // Return angle in radians
     float AngleBetweenPoints(const math::Vector2f& first, const math::Vector2f& second);
+
+    // Pass in at least 3 points, else you will get "nan nan" back.
+    math::Vector2f CentroidOfPolygon(const std::vector<math::Vector2f>& points);
 
     constexpr float PI()
     {
