@@ -14,6 +14,7 @@
 #include "MouseUpEvent.h"
 #include "MouseMotionEvent.h"
 #include "MultiGestureEvent.h"
+#include "KeyDownEvent.h"
 
 #include "SysKeycodes.h"
 
@@ -41,11 +42,13 @@ UserInputController::UserInputController(const mono::ICameraPtr& camera,
     const event::MouseUpEventFunc& mouse_up = std::bind(&UserInputController::OnMouseUp, this, _1);
     const event::MouseMotionEventFunc& mouse_move = std::bind(&UserInputController::OnMouseMove, this, _1);
     const event::MultiGestureEventFunc& multi_gesture = std::bind(&UserInputController::OnMultiGesture, this, _1);
+    const event::KeyDownEventFunc& key_down = std::bind(&UserInputController::OnKeyDown, this, _1);
 
     m_mouseDownToken = m_eventHandler.AddListener(mouse_down);
     m_mouseUpToken = m_eventHandler.AddListener(mouse_up);
     m_mouseMoveToken = m_eventHandler.AddListener(mouse_move);
     m_multiGestureToken = m_eventHandler.AddListener(multi_gesture);
+    m_keyDownToken = m_eventHandler.AddListener(key_down);
 }
 
 UserInputController::~UserInputController()
@@ -54,6 +57,7 @@ UserInputController::~UserInputController()
     m_eventHandler.RemoveListener(m_mouseUpToken);
     m_eventHandler.RemoveListener(m_mouseMoveToken);
     m_eventHandler.RemoveListener(m_multiGestureToken);
+    m_eventHandler.RemoveListener(m_keyDownToken);
 }
 
 void UserInputController::HandleContextMenu(int item_index)
@@ -85,32 +89,28 @@ void UserInputController::SelectTool(int tool_index)
 
 bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)
 {
+    bool handled = false;
+
     if(event.key == MouseButton::LEFT)
     {
         m_activeTool->HandleMouseDown(math::Vector2f(event.worldX, event.worldY));
-        const bool tool_active = m_activeTool->IsActive();
-        if(!tool_active)
-            m_cameraTool.HandleMouseDown(math::Vector2f(event.screenX, event.screenY));
-
-        return true;
+        handled = m_activeTool->IsActive();
     }
 
-    return false;
+    if(!handled)
+        m_cameraTool.HandleMouseDown(math::Vector2f(event.screenX, event.screenY));
+
+    return true;
 }
 
 bool UserInputController::OnMouseUp(const event::MouseUpEvent& event)
 {
     if(event.key == MouseButton::LEFT)
-    {
         m_activeTool->HandleMouseUp(math::Vector2f(event.worldX, event.worldY));
-        const bool tool_active = m_activeTool->IsActive();
-        if(!tool_active)
-            m_cameraTool.HandleMouseUp(math::Vector2f(event.screenX, event.screenY));
-    }
     else if(event.key == MouseButton::RIGHT)
-    {
         m_context->showContextMenu = true;
-    }
+
+    m_cameraTool.HandleMouseUp(math::Vector2f(event.screenX, event.screenY));
 
     return true;
 }
@@ -118,9 +118,7 @@ bool UserInputController::OnMouseUp(const event::MouseUpEvent& event)
 bool UserInputController::OnMouseMove(const event::MouseMotionEvent& event)
 {
     m_activeTool->HandleMousePosition(math::Vector2f(event.worldX, event.worldY));
-    const bool tool_active = m_activeTool->IsActive();
-    if(!tool_active)
-        m_cameraTool.HandleMousePosition(math::Vector2f(event.screenX, event.screenY));
+    m_cameraTool.HandleMousePosition(math::Vector2f(event.screenX, event.screenY));
 
     return true;
 }
@@ -130,3 +128,16 @@ bool UserInputController::OnMultiGesture(const event::MultiGestureEvent& event)
     m_cameraTool.HandleMultiGesture(math::Vector2f(event.x, event.y), event.distance);
     return true;
 }
+
+bool UserInputController::OnKeyDown(const event::KeyDownEvent& event)
+{
+    if(event.key == Key::ONE)
+        SelectTool(0);
+    else if(event.key == Key::TWO)
+        SelectTool(1);
+    else if(event.key == Key::THREE)
+        SelectTool(2);
+
+    return false;
+}
+
