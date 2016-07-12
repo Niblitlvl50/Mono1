@@ -118,12 +118,21 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
     const ImVec2 window_size = ImVec2(160.0f, 50.0f);
     const float window_position = ImGui::GetIO().DisplaySize.x - window_size.x;
-    const ImColor tint = ImColor(255, 255, 255, 255);
-    const ImColor border = ImColor(0, 0, 0, 255);
 
     for(int index = 0; index < m_context.notifications.size(); ++index)
     {
         Notification& note = m_context.notifications[index];
+
+        float window_alpha = 0.6f;
+        ImColor tint = ImColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+        if(note.time_left < 500)
+        {
+            const float alpha_scale = float(note.time_left) / 500.0f;
+            window_alpha *= alpha_scale;
+            tint.Value.w *= alpha_scale;
+        }
+
         note.time_left -= delta;
 
         char window_id[16];
@@ -131,10 +140,10 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
         ImGui::SetNextWindowPos(ImVec2(window_position - 10, index * 60 + 30));
 
-        ImGui::Begin(window_id, nullptr, window_size, 0.6f, notification_window_flags);
-        ImGui::Image(reinterpret_cast<void*>(note.image), ImVec2(32.0f, 32.0f), ImVec2(0.0f, 1.0f), ImVec2(0.15f, 0.85f), tint, border);
+        ImGui::Begin(window_id, nullptr, window_size, window_alpha, notification_window_flags);
+        ImGui::Image(reinterpret_cast<void*>(note.image), ImVec2(32.0f, 32.0f), ImVec2(0.0f, 1.0f), ImVec2(0.15f, 0.85f), tint);
         ImGui::SameLine();
-        ImGui::Text("%s", note.text.c_str());
+        ImGui::TextColored(tint, "%s", note.text.c_str());
         ImGui::End();
     }
 
@@ -145,7 +154,7 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
     const auto it = std::remove_if(m_context.notifications.begin(), m_context.notifications.end(), remove_notification_func);
     m_context.notifications.erase(it, m_context.notifications.end());
 
-    ImGui::ShowTestWindow();
+    //ImGui::ShowTestWindow();
 
     ImGui::Render();
 }
