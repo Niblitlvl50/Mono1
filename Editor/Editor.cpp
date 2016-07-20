@@ -22,6 +22,10 @@
 #include "ImGuiInterfaceDrawer.h"
 #include "ImGuiRenderer.h"
 
+#include "EventFuncFwd.h"
+#include "EventHandler.h"
+#include "SurfaceChangedEvent.h"
+
 namespace
 {
     class SpriteDrawable : public mono::EntityBase
@@ -53,10 +57,13 @@ namespace
 
 using namespace editor;
 
-EditorZone::EditorZone(const math::Vector2f& window_size, mono::EventHandler& event_handler)
+EditorZone::EditorZone(const math::Vector2f& window_size,
+                       mono::EventHandler& event_handler,
+                       const std::vector<std::shared_ptr<editor::PolygonEntity>>& polygon_data)
     : m_windowSize(window_size),
       m_eventHandler(event_handler),
-      m_inputHandler(event_handler)
+      m_inputHandler(event_handler),
+      m_polygons(polygon_data)
 {
     using namespace std::placeholders;
 
@@ -72,27 +79,41 @@ EditorZone::EditorZone(const math::Vector2f& window_size, mono::EventHandler& ev
     m_context.toolsMenuCallback = std::bind(&EditorZone::ToolsMenuCallback, this, _1);
 
     m_interfaceDrawer = std::make_shared<editor::ImGuiInterfaceDrawer>(m_context);
+
+    mono::ITexturePtr texture = mono::CreateTexture("cacodemon.png");
+    std::unordered_map<unsigned int, mono::ITexturePtr> textures;
+    textures.insert(std::make_pair(texture->Id(), texture));
+
+    m_guiRenderer = std::make_shared<editor::ImGuiRenderer>(m_windowSize, textures);
+
+    const event::SurfaceChangedEventFunc surface_func = std::bind(&EditorZone::OnSurfaceChanged, this, _1);
+    m_surfaceChangedToken = m_eventHandler.AddListener(surface_func);
 }
 
 EditorZone::~EditorZone()
-{ }
+{
+    m_eventHandler.RemoveListener(m_surfaceChangedToken);
+}
 
 void EditorZone::OnLoad(mono::ICameraPtr camera)
 {
     m_userInputController = std::make_shared<editor::UserInputController>(camera, this, &m_context, m_windowSize, m_eventHandler);
 
-    mono::ITexturePtr texture = mono::CreateTexture("cacodemon.png");
-
-    std::unordered_map<unsigned int, mono::ITexturePtr> textures;
-    textures.insert(std::make_pair(texture->Id(), texture));
-
     AddUpdatable(m_interfaceDrawer);
-    AddDrawable(std::make_shared<editor::ImGuiRenderer>(m_windowSize, textures), 1);
+    AddDrawable(m_guiRenderer, 1);
     AddEntity(std::make_shared<SpriteDrawable>("shuttle.sprite"), 0);
 }
 
 void EditorZone::OnUnload()
 { }
+
+bool EditorZone::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
+{
+    if(event.width > 0 && event.height > 0)
+        m_guiRenderer->SetWindowSize(math::Vector2f(event.width, event.height));
+
+    return false;
+}
 
 void EditorZone::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
 {

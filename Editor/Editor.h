@@ -10,6 +10,7 @@
 
 #include "ZoneBase.h"
 #include "EventFwd.h"
+#include "EventToken.h"
 
 #include "ImGuiInterfaceDrawer.h"
 #include "ImGuiInputHandler.h"
@@ -19,17 +20,22 @@
 
 namespace editor
 {
+    class ImGuiRenderer;
     class UserInputController;
 
     class EditorZone : public mono::ZoneBase
     {
     public:
 
-        EditorZone(const math::Vector2f& window_size, mono::EventHandler& event_handler);
+        EditorZone(const math::Vector2f& window_size,
+                   mono::EventHandler& event_handler,
+                   const std::vector<std::shared_ptr<editor::PolygonEntity>>& polygon_data);
         virtual ~EditorZone();
 
         virtual void OnLoad(mono::ICameraPtr camera);
         virtual void OnUnload();
+
+        bool OnSurfaceChanged(const event::SurfaceChangedEvent& event);
 
         void AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon);
 
@@ -46,7 +52,10 @@ namespace editor
 
         editor::UIContext m_context;
         std::shared_ptr<editor::ImGuiInterfaceDrawer> m_interfaceDrawer;
+        std::shared_ptr<editor::ImGuiRenderer> m_guiRenderer;
         std::shared_ptr<editor::UserInputController> m_userInputController;
         std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
+
+        mono::EventToken<event::SurfaceChangedEvent> m_surfaceChangedToken;
     };
 }

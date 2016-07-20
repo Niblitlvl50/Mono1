@@ -8,6 +8,7 @@
 
 #include "ImGuiRenderer.h"
 #include "Quad.h"
+#include "Matrix.h"
 #include "SysOpenGL.h"
 #include "SysTypes.h"
 #include "ImGuiShader.h"
@@ -41,10 +42,9 @@ ImGuiRenderer::~ImGuiRenderer()
 
 void ImGuiRenderer::Initialize()
 {
-    m_shader = std::make_shared<editor::ImGuiShader>();
+    ImGui::GetIO().DisplaySize = ImVec2(m_windowSize.x, m_windowSize.y);
 
-    m_projection = math::Ortho(0.0f, m_windowSize.x, m_windowSize.y, 0.0f, -10.0f, 10.0f);
-    math::Identity(m_modelView);
+    m_shader = std::make_shared<editor::ImGuiShader>();
 
     int width;
     int height;
@@ -55,14 +55,18 @@ void ImGuiRenderer::Initialize()
     m_textures.insert(std::make_pair(font_texture->Id(), font_texture));
 
     ImGui::GetIO().Fonts->TexID = (void *)(intptr_t)font_texture->Id();
-    ImGui::GetIO().DisplaySize = ImVec2(m_windowSize.x, m_windowSize.y);
 }
 
 void ImGuiRenderer::doDraw(mono::IRenderer& renderer) const
 {
+    ImGui::GetIO().DisplaySize = ImVec2(m_windowSize.x, m_windowSize.y);
+    
+    const math::Matrix& projection = math::Ortho(0.0f, m_windowSize.x, m_windowSize.y, 0.0f, -10.0f, 10.0f);
+    constexpr math::Matrix model_view;
+
     m_shader->Use();
-    m_shader->LoadProjectionMatrix(m_projection);
-    m_shader->LoadModelViewMatrix(m_modelView);
+    m_shader->LoadProjectionMatrix(projection);
+    m_shader->LoadModelViewMatrix(model_view);
 
     glEnable(GL_SCISSOR_TEST);
 
@@ -126,3 +130,9 @@ math::Quad ImGuiRenderer::BoundingBox() const
 {
     return math::Quad(-FLT_MAX, -FLT_MAX, FLT_MAX, FLT_MAX);
 }
+
+void ImGuiRenderer::SetWindowSize(const math::Vector2f& window_size)
+{
+    m_windowSize = window_size;
+}
+

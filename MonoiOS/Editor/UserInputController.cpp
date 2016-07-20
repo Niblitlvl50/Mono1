@@ -71,17 +71,17 @@ void UserInputController::SelectTool(int tool_index)
     if(tool_index == 0)
     {
         m_activeTool = &m_polygonTool;
-        m_context->notifications.push_back(Notification(1, "Polygon tool", 2000));
+        m_context->notifications.push_back(Notification(2, "Polygon tool", 2000));
     }
     else if(tool_index == 1)
     {
         m_activeTool = &m_translateTool;
-        m_context->notifications.push_back(Notification(1, "Translate tool", 2000));
+        m_context->notifications.push_back(Notification(2, "Translate tool", 2000));
     }
     else if(tool_index == 2)
     {
         m_activeTool = &m_rotateTool;
-        m_context->notifications.push_back(Notification(1, "Rotate tool", 2000));
+        m_context->notifications.push_back(Notification(2, "Rotate tool", 2000));
     }
     //else if(tool_index == 2)
     //    m_activeTool = &m_cameraTool;

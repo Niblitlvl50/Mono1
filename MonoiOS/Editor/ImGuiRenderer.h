@@ -10,7 +10,6 @@
 
 #include "IDrawable.h"
 #include "Vector2f.h"
-#include "Matrix.h"
 #include "MonoPtrFwd.h"
 
 #include <memory>
@@ -28,6 +27,8 @@ namespace editor
         ImGuiRenderer(const math::Vector2f& window_size, const std::unordered_map<unsigned int, mono::ITexturePtr>& textures);
         virtual ~ImGuiRenderer();
 
+        void SetWindowSize(const math::Vector2f& window_size);
+
     private:
 
         void Initialize();
@@ -36,8 +37,6 @@ namespace editor
         virtual math::Quad BoundingBox() const;
 
         math::Vector2f m_windowSize;
-        math::Matrix m_projection;
-        math::Matrix m_modelView;
 
         std::shared_ptr<editor::ImGuiShader> m_shader;
         std::unordered_map<unsigned int, mono::ITexturePtr> m_textures;
