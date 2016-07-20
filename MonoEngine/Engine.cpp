@@ -157,7 +157,7 @@ bool Engine::OnPause(const event::PauseEvent& event)
 bool Engine::OnQuit(const event::QuitEvent&)
 {
     mQuit = true;
-    return true;
+    return false;
 }
 
 bool Engine::OnApplication(const event::ApplicationEvent& event)
@@ -172,25 +172,25 @@ bool Engine::OnApplication(const event::ApplicationEvent& event)
         mUpdateLastTime = true;
     }
 
-    return true;
+    return false;
 }
 
 bool Engine::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 {
     mWindow->SurfaceChanged(event.width, event.height);
-    return true;
+    return false;
 }
 
 bool Engine::OnActivated(const event::ActivatedEvent& event)
 {
     mWindow->Activated(event.gain);
-    return true;
+    return false;
 }
 
 bool Engine::OnTimeScale(const event::TimeScaleEvent& event)
 {
     mTimeScale = event.time_scale;
-    return true;
+    return false;
 }
 
 
