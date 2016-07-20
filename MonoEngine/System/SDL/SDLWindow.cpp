@@ -79,9 +79,7 @@ SDLWindow::SDLWindow(const char* title, int width, int height, bool)
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
     //const unsigned int screenflag = fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE;
-    const unsigned int flags = SDL_WINDOW_SHOWN |
-                               SDL_WINDOW_OPENGL |
-                               SDL_WINDOW_BORDERLESS; //| SDL_WINDOW_ALLOW_HIGHDPI; // | screenflag;
+    const unsigned int flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE; // | SDL_WINDOW_BORDERLESS; //| SDL_WINDOW_ALLOW_HIGHDPI; // | screenflag;
 
     // Create our window centered and with the given resolution
     mWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
