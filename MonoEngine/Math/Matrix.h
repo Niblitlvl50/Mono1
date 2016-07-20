@@ -14,6 +14,9 @@ namespace math
 {
     struct Matrix
     {
+        constexpr Matrix()
+        { }
+        
         //
         // Stored column-major
         //
