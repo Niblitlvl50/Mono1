@@ -12,11 +12,15 @@
 #include "CMFactory.h"
 
 #include "IRenderer.h"
+#include "ISprite.h"
+#include "SpriteFactory.h"
 #include "IWeaponSystem.h"
 #include "WeaponFactory.h"
 
 #include "MathFunctions.h"
 #include "AudioListener.h"
+
+#include <cmath>
 
 
 using namespace game;
@@ -32,8 +36,7 @@ namespace constants
 
 
 Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
-    : mSprite("shuttle.sprite"),
-      mController(this, eventHandler),
+    : mController(this, eventHandler),
       mEventHandler(eventHandler),
       m_fire(false)
 {
@@ -49,7 +52,8 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     
     mPhysicsObject.shapes.push_back(shape);
 
-    mSprite.SetAnimation(constants::IDLE);
+    mSprite = mono::CreateSprite("shuttle.sprite");
+    mSprite->SetAnimation(constants::IDLE);
 
     // Make sure we have a weapon
     SelectWeapon(WeaponType::STANDARD);
@@ -57,12 +61,12 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
 
 void Shuttle::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(mSprite);
+    renderer.DrawSprite(*mSprite.get());
 }
 
 void Shuttle::Update(unsigned int delta)
 {
-    mSprite.doUpdate(delta);
+    mSprite->doUpdate(delta);
     mono::ListenerPosition(mPosition);
 
     if(m_fire)
@@ -122,12 +126,12 @@ void Shuttle::StopFire()
 
 void Shuttle::StartThrusting()
 {
-    mSprite.SetAnimation(constants::THRUSTING);
+    mSprite->SetAnimation(constants::THRUSTING);
 }
 
 void Shuttle::StopThrusting()
 {
-    mSprite.SetAnimation(constants::IDLE);
+    mSprite->SetAnimation(constants::IDLE);
 }
 
 

@@ -8,6 +8,8 @@
 
 #include "CacoDemon.h"
 #include "IRenderer.h"
+#include "ISprite.h"
+#include "SpriteFactory.h"
 #include "WeaponFactory.h"
 #include "CMIBody.h"
 #include "CMIShape.h"
@@ -30,7 +32,6 @@ namespace
 
 CacoDemon::CacoDemon(mono::EventHandler& eventHandler)
     : m_eventHandler(eventHandler),
-      m_sprite("cacodemon.sprite"),
       m_controller(this)
 {
     mPosition = math::Vector2f(0, -200);
@@ -49,18 +50,19 @@ CacoDemon::CacoDemon(mono::EventHandler& eventHandler)
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
     mPhysicsObject.shapes.push_back(shape);
 
-    m_sprite.SetAnimation(ATTACK);
+    m_sprite = mono::CreateSprite("cacodemon.sprite");
+    m_sprite->SetAnimation(ATTACK);
 
     m_weapon = Factory::CreateWeapon(game::WeaponType::CACOPLASMA, m_eventHandler);
 }
 
 void CacoDemon::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(m_sprite);
+    renderer.DrawSprite(*m_sprite.get());
 }
 
 void CacoDemon::Update(unsigned int delta)
 {
-    m_sprite.doUpdate(delta);
+    m_sprite->doUpdate(delta);
     m_weapon->Fire(mPosition, mRotation);
 }

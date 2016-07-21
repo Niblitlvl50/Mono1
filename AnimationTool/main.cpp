@@ -23,7 +23,8 @@
 #include "ZoneBase.h"
 #include "Engine.h"
 #include "Color.h"
-#include "Sprite.h"
+#include "ISprite.h"
+#include "SpriteFactory.h"
 #include "EntityBase.h"
 #include "IRenderer.h"
 #include "TextFunctions.h"
@@ -68,49 +69,49 @@ namespace
     public:
 
         SpriteDrawable(const char* file)
-            : m_sprite(file)
         {
+            m_sprite = mono::CreateSprite(file);
             mPosition = math::Vector2f(100, 100);
             mScale = math::Vector2f(50, 50);
         }
 
         virtual void Draw(mono::IRenderer& renderer) const
         {
-            renderer.DrawSprite(m_sprite);
+            renderer.DrawSprite(*m_sprite.get());
         }
 
         virtual void Update(unsigned int delta)
         {
-            m_sprite.doUpdate(delta);
+            m_sprite->doUpdate(delta);
         }
 
         void SetAnimation(int id)
         {
-            const unsigned int animations = m_sprite.GetDefinedAnimations();
+            const unsigned int animations = m_sprite->GetDefinedAnimations();
             if(id < animations)
-                m_sprite.SetAnimation(id);
+                m_sprite->SetAnimation(id);
         }
 
         void NextAnimation()
         {
-            int id = m_sprite.GetActiveAnimation();
+            int id = m_sprite->GetActiveAnimation();
 
             id++;
 
-            id = std::min(id, m_sprite.GetDefinedAnimations() -1);
-            m_sprite.SetAnimation(id);
+            id = std::min(id, m_sprite->GetDefinedAnimations() -1);
+            m_sprite->SetAnimation(id);
         }
 
         void PreviousAnimation()
         {
-            int id = m_sprite.GetActiveAnimation();
+            int id = m_sprite->GetActiveAnimation();
             id--;
 
             id = std::max(id, 0);
-            m_sprite.SetAnimation(id);
+            m_sprite->SetAnimation(id);
         }
 
-        mono::Sprite m_sprite;
+        mono::ISpritePtr m_sprite;
     };
     
     class Zone : public mono::ZoneBase

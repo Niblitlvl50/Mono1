@@ -125,6 +125,9 @@
 		912D569B1C52D1BD003ACC77 /* SysNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912D56991C52D1BD003ACC77 /* SysNetwork.cpp */; };
 		912D569C1C52D1BD003ACC77 /* SysNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912D56991C52D1BD003ACC77 /* SysNetwork.cpp */; };
 		912D569D1C52D1BD003ACC77 /* SysNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 912D569A1C52D1BD003ACC77 /* SysNetwork.h */; };
+		9143AF611D40CEC400E28D53 /* SpriteFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9143AF5F1D40CEC400E28D53 /* SpriteFactory.cpp */; };
+		9143AF621D40CEC400E28D53 /* SpriteFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9143AF5F1D40CEC400E28D53 /* SpriteFactory.cpp */; };
+		9143AF631D40CEC400E28D53 /* SpriteFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9143AF601D40CEC400E28D53 /* SpriteFactory.h */; };
 		91451A241D10B14100F17B05 /* AudioListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91451A221D10B14100F17B05 /* AudioListener.cpp */; };
 		91451A251D10B14100F17B05 /* AudioListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91451A221D10B14100F17B05 /* AudioListener.cpp */; };
 		91451A261D10B14100F17B05 /* AudioListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 91451A231D10B14100F17B05 /* AudioListener.h */; };
@@ -499,6 +502,7 @@
 		91B8126D1C397E5F00BDF407 /* a.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91B8126C1C397E5F00BDF407 /* a.wav */; };
 		91B812711C39B77C00BDF407 /* laser.wav in Resources */ = {isa = PBXBuildFile; fileRef = 91B812701C39B77C00BDF407 /* laser.wav */; };
 		91B812721C39B79200BDF407 /* laser.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91B812701C39B77C00BDF407 /* laser.wav */; };
+		91C3FB8A1D36E5E400CD5925 /* level1.world in Resources */ = {isa = PBXBuildFile; fileRef = 91C3FB891D36E5E400CD5925 /* level1.world */; };
 		91D6465D186F2D0D00FA6CB5 /* PathFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465A186F2D0D00FA6CB5 /* PathFactory.cpp */; };
 		91D64660186F2D2C00FA6CB5 /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */; };
 		91D64661186F2D2C00FA6CB5 /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */; };
@@ -865,6 +869,8 @@
 		912D56981C52D178003ACC77 /* zed_net.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zed_net.h; path = zed_net/zed_net.h; sourceTree = "<group>"; };
 		912D56991C52D1BD003ACC77 /* SysNetwork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysNetwork.cpp; sourceTree = "<group>"; };
 		912D569A1C52D1BD003ACC77 /* SysNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysNetwork.h; sourceTree = "<group>"; };
+		9143AF5F1D40CEC400E28D53 /* SpriteFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteFactory.cpp; sourceTree = "<group>"; };
+		9143AF601D40CEC400E28D53 /* SpriteFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteFactory.h; sourceTree = "<group>"; };
 		91451A211D10ADA400F17B05 /* RenderLayers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderLayers.h; sourceTree = "<group>"; };
 		91451A221D10B14100F17B05 /* AudioListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioListener.cpp; path = Audio/AudioListener.cpp; sourceTree = "<group>"; };
 		91451A231D10B14100F17B05 /* AudioListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioListener.h; path = Audio/AudioListener.h; sourceTree = "<group>"; };
@@ -1026,6 +1032,7 @@
 		91B812691C397DD000BDF407 /* SoundTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundTest.cpp; path = ../UnitTests/SoundTest.cpp; sourceTree = "<group>"; };
 		91B8126C1C397E5F00BDF407 /* a.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = a.wav; path = ../UnitTests/TestFiles/a.wav; sourceTree = "<group>"; };
 		91B812701C39B77C00BDF407 /* laser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = laser.wav; path = res/laser.wav; sourceTree = "<group>"; };
+		91C3FB891D36E5E400CD5925 /* level1.world */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = level1.world; path = res/level1.world; sourceTree = "<group>"; };
 		91C41E471826E2A50035E778 /* MathFwd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathFwd.cpp; sourceTree = "<group>"; };
 		91C41E481826E2A50035E778 /* MathFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathFwd.h; sourceTree = "<group>"; };
 		91D64659186F2D0D00FA6CB5 /* IPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPath.h; path = Paths/IPath.h; sourceTree = "<group>"; };
@@ -1436,6 +1443,8 @@
 				2B26D6DF15FD2BB5001E9748 /* AnimationSequence.h */,
 				2B26D6E015FD2BB5001E9748 /* Sprite.cpp */,
 				2B26D6E115FD2BB5001E9748 /* Sprite.h */,
+				9143AF5F1D40CEC400E28D53 /* SpriteFactory.cpp */,
+				9143AF601D40CEC400E28D53 /* SpriteFactory.h */,
 			);
 			path = Sprite;
 			sourceTree = "<group>";
@@ -1725,6 +1734,7 @@
 		915373D01C39D43200FF0C67 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				91C3FB891D36E5E400CD5925 /* level1.world */,
 				91D889961C3AFBE400AF27A8 /* InGame_Phoenix.wav */,
 				91B812701C39B77C00BDF407 /* laser.wav */,
 				9166E2BA1C3453AD00A5C82D /* cacobullet.sprite */,
@@ -2005,6 +2015,7 @@
 				91F32F671D0C5C3A008457CA /* SysUID.h in Headers */,
 				912D569D1C52D1BD003ACC77 /* SysNetwork.h in Headers */,
 				91B812681C387BFA00BDF407 /* SysSound.h in Headers */,
+				9143AF631D40CEC400E28D53 /* SpriteFactory.h in Headers */,
 				91B812601C37DEB400BDF407 /* AudioFactory.h in Headers */,
 				91F32F5C1D0B565A008457CA /* TimeScaleEvent.h in Headers */,
 				91451A261D10B14100F17B05 /* AudioListener.h in Headers */,
@@ -2221,6 +2232,7 @@
 				91B812711C39B77C00BDF407 /* laser.wav in Resources */,
 				91A877671C02631A00DF77B5 /* cacobullet.sprite in Resources */,
 				91A877681C02631A00DF77B5 /* cacoexplosion.sprite in Resources */,
+				91C3FB8A1D36E5E400CD5925 /* level1.world in Resources */,
 				91A8775F1C0230F500DF77B5 /* cacodemon.png in Resources */,
 				91A877601C0230F500DF77B5 /* cacodemon.sprite in Resources */,
 				91B746FC1C00E73000F257CC /* laser.sprite in Resources */,
@@ -2549,6 +2561,7 @@
 				9166E1D51C341C5800A5C82D /* TextureFactory.cpp in Sources */,
 				9166E1D61C341C5800A5C82D /* Color.cpp in Sources */,
 				9166E1D71C341C5800A5C82D /* Engine.cpp in Sources */,
+				9143AF611D40CEC400E28D53 /* SpriteFactory.cpp in Sources */,
 				9166E1D81C341C5800A5C82D /* EntityBase.cpp in Sources */,
 				9166E1D91C341C5800A5C82D /* InputHandler.cpp in Sources */,
 				9166E1DA1C341C5800A5C82D /* PhysicsEntityBase.cpp in Sources */,
@@ -2665,6 +2678,7 @@
 				9166E2581C34395E00A5C82D /* SysVideo.cpp in Sources */,
 				9166E2591C34395E00A5C82D /* TextFunctions.cpp in Sources */,
 				9166E25A1C34395E00A5C82D /* Texture.cpp in Sources */,
+				9143AF621D40CEC400E28D53 /* SpriteFactory.cpp in Sources */,
 				9166E25B1C34395E00A5C82D /* TextureFactory.cpp in Sources */,
 				9166E25C1C34395E00A5C82D /* Color.cpp in Sources */,
 				9166E25D1C34395E00A5C82D /* Engine.cpp in Sources */,
@@ -3507,6 +3521,7 @@
 				916B54261D15D2C000AD54A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MonoiOS" */ = {
 			isa = XCConfigurationList;

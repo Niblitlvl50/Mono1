@@ -13,6 +13,8 @@
 #include "CMFactory.h"
 
 #include "IRenderer.h"
+#include "ISprite.h"
+#include "SpriteFactory.h"
 #include "EventHandler.h"
 #include "ShockwaveEvent.h"
 #include "SpawnEntityEvent.h"
@@ -22,8 +24,7 @@
 using namespace game;
 
 Rocket::Rocket(const math::Vector2f& start, float rotation, mono::EventHandler& eventHandler)
-    : mSprite("laser.sprite"),
-      mEventHandler(eventHandler)
+    : mEventHandler(eventHandler)
 {
     mScale = math::Vector2f(25.0f, 25.0f);
 
@@ -36,16 +37,18 @@ Rocket::Rocket(const math::Vector2f& start, float rotation, mono::EventHandler& 
 
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
     mPhysicsObject.shapes.push_back(shape);
+
+    mSprite = mono::CreateSprite("laser.sprite");
 }
 
 void Rocket::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(mSprite);
+    renderer.DrawSprite(*mSprite.get());
 }
 
 void Rocket::Update(unsigned int delta)
 {
-    mSprite.doUpdate(delta);
+    mSprite->doUpdate(delta);
 }
 
 void Rocket::OnCollideWith(const mono::IBodyPtr& body)

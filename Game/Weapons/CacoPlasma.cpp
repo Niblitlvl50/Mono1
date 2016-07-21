@@ -12,7 +12,8 @@
 
 #include "EntityBase.h"
 #include "PhysicsEntityBase.h"
-#include "Sprite.h"
+#include "ISprite.h"
+#include "SpriteFactory.h"
 #include "IRenderer.h"
 #include "EventHandler.h"
 #include "CMIBody.h"
@@ -34,7 +35,6 @@ namespace
     public:
 
         CacoExplosion(mono::EventHandler& event_handler, const math::Vector2f& position)
-            : m_sprite("cacoexplosion.sprite")
         {
             mPosition = position;
             mScale = math::Vector2f(40, 40);
@@ -45,20 +45,21 @@ namespace
                 event_handler.DispatchEvent(game::RemoveEntityEvent(id));
             };
 
-            m_sprite.SetAnimation(0, func);
+            m_sprite = mono::CreateSprite("cacoexplosion.sprite");
+            m_sprite->SetAnimation(0, func);
         }
 
         virtual void Draw(mono::IRenderer& renderer) const
         {
-            renderer.DrawSprite(m_sprite);
+            renderer.DrawSprite(*m_sprite.get());
         }
 
         virtual void Update(unsigned int delta)
         {
-            m_sprite.doUpdate(delta);
+            m_sprite->doUpdate(delta);
         }
 
-        mono::Sprite m_sprite;
+        mono::ISpritePtr m_sprite;
     };
 
     class CacoBullet : public mono::PhysicsEntityBase, public mono::ICollisionHandler
@@ -66,8 +67,7 @@ namespace
     public:
 
         CacoBullet(const math::Vector2f& position, mono::EventHandler& eventHandler)
-            : m_eventHandler(eventHandler),
-              m_sprite("cacobullet.sprite")
+            : m_eventHandler(eventHandler)
         {
             mScale = math::Vector2f(20.0f, 20.0f);
 
@@ -79,16 +79,18 @@ namespace
 
             mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
             mPhysicsObject.shapes.push_back(shape);
+
+            m_sprite = mono::CreateSprite("cacobullet.sprite");
         }
 
         virtual void Draw(mono::IRenderer& renderer) const
         {
-            renderer.DrawSprite(m_sprite);
+            renderer.DrawSprite(*m_sprite.get());
         }
 
         virtual void Update(unsigned int delta)
         {
-            m_sprite.doUpdate(delta);
+            m_sprite->doUpdate(delta);
         }
 
         virtual void OnCollideWith(const mono::IBodyPtr& body)
@@ -102,7 +104,7 @@ namespace
         { }
 
         mono::EventHandler& m_eventHandler;
-        mono::Sprite m_sprite;
+        mono::ISpritePtr m_sprite;
     };
 }
 

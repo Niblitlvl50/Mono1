@@ -9,20 +9,22 @@
 
 #include "InvaderEntity.h"
 #include "IRenderer.h"
+#include "ISprite.h"
+#include "SpriteFactory.h"
 #include "MathFunctions.h"
 
 using namespace game;
 
 InvaderEntity::InvaderEntity(float x, float y)
-    : mSprite("invader.sprite"),
-      mColor(0.0f, 0.5f, 0.5f)
+    : mColor(0.0f, 0.5f, 0.5f)
 {
+    mSprite = mono::CreateSprite("invader.sprite");
     mPosition = math::Vector2f(x, y);
 }
 
 void InvaderEntity::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(mSprite);
+    renderer.DrawSprite(*mSprite.get());
 }
 
 void InvaderEntity::Update(unsigned int delta)
@@ -37,5 +39,5 @@ void InvaderEntity::Update(unsigned int delta)
     if(mColor.hue > 1.0f)
         mColor.hue = 0.0f;
 
-    mSprite.SetShade(mono::Color::ToRGBA(mColor));
+    mSprite->SetShade(mono::Color::ToRGBA(mColor));
 }

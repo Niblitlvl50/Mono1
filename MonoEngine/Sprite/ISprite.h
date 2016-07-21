@@ -48,11 +48,11 @@ namespace mono
         virtual void SetAnimation(int id, const std::function<void ()>& func) = 0;
 
         //! Returns the number of defined animations for this sprite
-        //! @return unsigned int
+        //! @return int
         virtual int GetDefinedAnimations() const = 0;
 
         //! Returns the current active animation
-        //! @return unsigned int
+        //! @return int
         virtual int GetActiveAnimation() const = 0;
     };
 }

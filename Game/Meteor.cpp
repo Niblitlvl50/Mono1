@@ -13,12 +13,15 @@
 #include "CMFactory.h"
 
 #include "EntityProperties.h"
+#include "ISprite.h"
+#include "SpriteFactory.h"
 
 using namespace game;
 
 Meteor::Meteor(float x, float y)
-    : mSprite("meteorite.sprite")
 {
+    mSprite = mono::CreateSprite("meteorite.sprite");
+
     mPosition = math::Vector2f(x, y);
     mScale = math::Vector2f(20.0f, 20.0f);
 
@@ -37,7 +40,7 @@ Meteor::Meteor(float x, float y)
 
 void Meteor::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(mSprite);
+    renderer.DrawSprite(*mSprite.get());
 }
 
 void Meteor::Update(unsigned int delta)

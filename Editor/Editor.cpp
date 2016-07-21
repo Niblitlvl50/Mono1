@@ -14,8 +14,11 @@
 #include "ITexture.h"
 
 #include "ZoneBase.h"
-#include "Sprite.h"
+#include "ISprite.h"
+#include "SpriteFactory.h"
 #include "EntityBase.h"
+#include "Color.h"
+
 #include "UserInputController.h"
 
 #include "ImGuiInputHandler.h"
@@ -33,25 +36,24 @@ namespace
     public:
 
         SpriteDrawable(const char* file)
-        : m_sprite(file)
         {
+            m_sprite = mono::CreateSprite(file);
             SetPosition(math::Vector2f(100, 100));
             SetScale(math::Vector2f(50, 50));
-            m_sprite.SetAnimation(0);
         }
 
         virtual void Draw(mono::IRenderer& renderer) const
         {
-            renderer.DrawSprite(m_sprite);
+            renderer.DrawSprite(*m_sprite.get());
             renderer.DrawText("hello", Position(), true, mono::Color::RGBA(1, 0, 1, 1));
         }
 
         virtual void Update(unsigned int delta)
         {
-            m_sprite.doUpdate(delta);
+            m_sprite->doUpdate(delta);
         }
 
-        mono::Sprite m_sprite;
+        mono::ISpritePtr m_sprite;
     };
 }
 

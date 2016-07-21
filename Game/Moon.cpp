@@ -12,13 +12,15 @@
 #include "CMIShape.h"
 #include "CMFactory.h"
 #include "IRenderer.h"
+#include "ISprite.h"
+#include "SpriteFactory.h"
 
 using namespace game;
 
 
 Moon::Moon(float x, float y, float radius)
-    : mSprite("moon.sprite")
 {
+    mSprite = mono::CreateSprite("moon.sprite");
     mPosition = math::Vector2f(x, y);
     mScale = math::Vector2f(radius, radius) * 2.0f;
     
@@ -33,7 +35,7 @@ Moon::Moon(float x, float y, float radius)
 
 void Moon::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(mSprite);
+    renderer.DrawSprite(*mSprite.get());
 }
 
 void Moon::Update(unsigned int delta)

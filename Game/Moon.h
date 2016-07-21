@@ -9,7 +9,7 @@
 #pragma once
 
 #include "PhysicsEntityBase.h"
-#include "Sprite.h"
+#include "MonoPtrFwd.h"
 
 namespace game
 {
@@ -22,6 +22,6 @@ namespace game
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
 
-        mono::Sprite mSprite;
+        mono::ISpritePtr mSprite;
     };
 }

@@ -8,8 +8,8 @@
 
 #pragma once
 
+#include "MonoPtrFwd.h"
 #include "PhysicsEntityBase.h"
-#include "Sprite.h"
 #include "ShuttleController.h"
 #include "CMIBody.h"
 
@@ -48,7 +48,7 @@ namespace game
 
         std::unique_ptr<IWeaponSystem> mWeapon;
 
-        mono::Sprite mSprite;
+        mono::ISpritePtr mSprite;
         //mono::Sprite mWeaponSprite;
         ShuttleController mController;
         mono::EventHandler& mEventHandler;

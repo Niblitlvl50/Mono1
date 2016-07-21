@@ -8,6 +8,8 @@
 
 #include "FireBullet.h"
 #include "IRenderer.h"
+#include "ISprite.h"
+#include "SpriteFactory.h"
 #include "RemoveEntityEvent.h"
 #include "DamageEvent.h"
 #include "EventHandler.h"
@@ -19,8 +21,7 @@
 using namespace game;
 
 FireBullet::FireBullet(const math::Vector2f& start, float rotation, mono::EventHandler& eventHandler)
-    : mSprite("firebullet.sprite"),
-      mEventHandler(eventHandler)
+    : mEventHandler(eventHandler)
 {
     dead = false;
 
@@ -35,16 +36,18 @@ FireBullet::FireBullet(const math::Vector2f& start, float rotation, mono::EventH
     
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());    
     mPhysicsObject.shapes.push_back(shape);        
+
+    mSprite = mono::CreateSprite("firebullet.sprite");
 }
 
 void FireBullet::Update(unsigned int delta)
 {
-    mSprite.doUpdate(delta);
+    mSprite->doUpdate(delta);
 }
 
 void FireBullet::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(mSprite);
+    renderer.DrawSprite(*mSprite.get());
 }
 
 void FireBullet::OnCollideWith(const mono::IBodyPtr& body)

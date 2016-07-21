@@ -10,7 +10,6 @@
 
 #include "EntityBase.h"
 #include "Vector2f.h"
-#include "Sprite.h"
 #include "AnimatedDudeController.h"
 
 namespace game
@@ -29,7 +28,7 @@ namespace game
         virtual void Update(unsigned int delta);
         
         math::Vector2f mTarget;
-        mono::Sprite mSprite;
+        mono::ISpritePtr mSprite;
         AnimatedDudeController mController;        
     };
 }

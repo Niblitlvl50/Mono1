@@ -6,33 +6,6 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-//! This is an example of a sprite file that you pass to this sprite class
-
-//! 
-//! texture = "sheet.png"
-//! rows = 3
-//! columns = 4
-//!
-//! x = 1
-//! y = 1
-//! u = 128
-//! v = 98
-//!
-//! animations = { }
-//! animations[0] = { 0, -1 }
-//! animations[1] = { 1, 100, 2, 100, 3, 100 }
-//! animations[2] = { 4, 100, 5, 100, 6, 100, 7, 100 }
-//! animations[3] = { 8, 100, 9, 100, 10, 100, 11, 100 }
-//!
-
-//!
-//! An image with 2 rows and 5 columns and their indices. 
-//!  _ _ _ _ _ 
-//! |0|1|2|3|4|
-//!  - - - - - 
-//! |5|6|7|8|9|
-//!  - - - - -
-//!
 
 
 #pragma once
@@ -42,7 +15,6 @@
 #include "Quad.h"
 #include "Color.h"
 
-#include <string>
 #include <unordered_map>
 #include <functional>
 
@@ -52,9 +24,10 @@ namespace mono
     {
     public:
 
-        //! Constructs a sprite object.
-        //! @param[in] file The .sprite file to use.
-        Sprite(const char* sprite_file);
+        //! Constructs a sprite object
+        //! @param[in] texture The texture to use for this sprite.
+        //! @param[in] coordinates The texture coordinates
+        Sprite(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates);
         
         //! Gets the sprites texture
         //! @return ITexturePtr A shared pointer to the texture.
@@ -105,14 +78,14 @@ namespace mono
 
     private:
                 
-        int mActiveAnimationId;
-        std::function<void ()> mCallbackFunction;
-        ITexturePtr mTexture;
+        int m_activeAnimationId;
+        std::function<void ()> m_callbackFunction;
+        ITexturePtr m_texture;
         
-        std::vector<math::Quad> mTextureCoordinates;
-        std::unordered_map<int, AnimationSequence> mDefinedAnimations;
+        std::vector<math::Quad> m_textureCoordinates;
+        std::unordered_map<int, AnimationSequence> m_definedAnimations;
 
-        Color::RGBA mColor;
+        Color::RGBA m_color;
     };
 }
 

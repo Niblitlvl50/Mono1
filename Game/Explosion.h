@@ -10,7 +10,6 @@
 #pragma once
 
 #include "EntityBase.h"
-#include "Sprite.h"
 
 namespace game
 {
@@ -28,6 +27,6 @@ namespace game
 
     private:
 
-        mono::Sprite mSprite;
+        mono::ISpritePtr mSprite;
     };
 }

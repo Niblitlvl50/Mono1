@@ -8,8 +8,8 @@
 
 #pragma once
 
+#include "MonoPtrFwd.h"
 #include "PhysicsEntityBase.h"
-#include "Sprite.h"
 #include "CMIBody.h"
 
 namespace game
@@ -27,7 +27,7 @@ namespace game
         
     private:
         
-        mono::Sprite mSprite;
+        mono::ISpritePtr mSprite;
         mono::EventHandler& mEventHandler;
         bool dead;
     };

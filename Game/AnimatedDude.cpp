@@ -9,6 +9,9 @@
 #include "AnimatedDude.h"
 #include "SysTime.h"
 #include "IRenderer.h"
+#include "ISprite.h"
+#include "SpriteFactory.h"
+#include "Color.h"
 #include <cmath>
 
 using namespace game;
@@ -28,21 +31,21 @@ namespace constants
 
 AnimatedDude::AnimatedDude(float x, float y, mono::EventHandler& eventHandler)
     : mTarget(x, y),
-      mSprite("ryu.sprite"),
       mController(this, eventHandler)
 {
     mPosition = math::Vector2f(x, y);
     mScale = math::Vector2f(30.0f, 30.0f);
-        
-    mSprite.SetAnimation(constants::IDLE);
-    //mSprite.SetAnimation(constants::RUNNING);
-    //mSprite.SetAnimation(constants::JUMPING);
-    //mSprite.SetAnimation(constants::FIGHTING);
+
+    mSprite = mono::CreateSprite("ryu.sprite");
+    mSprite->SetAnimation(constants::IDLE);
+    //mSprite->SetAnimation(constants::RUNNING);
+    //mSprite->SetAnimation(constants::JUMPING);
+    //mSprite->SetAnimation(constants::FIGHTING);
 }
 
 void AnimatedDude::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(mSprite);
+    renderer.DrawSprite(*mSprite.get());
     
     const math::Vector2f& textPosition = mPosition + math::Vector2f(0.0f, 25.0f);
     constexpr mono::Color::RGBA color(0.5f, 1.0f, 0.0f);
@@ -73,9 +76,9 @@ void AnimatedDude::Update(unsigned int delta)
     }
     
     if(xzero && yzero)
-        mSprite.SetAnimation(constants::IDLE);
+        mSprite->SetAnimation(constants::IDLE);
     else
-        mSprite.SetAnimation(constants::RUNNING);    
+        mSprite->SetAnimation(constants::RUNNING);
     
-    mSprite.doUpdate(delta);
+    mSprite->doUpdate(delta);
 }

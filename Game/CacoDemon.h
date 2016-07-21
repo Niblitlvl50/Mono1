@@ -8,8 +8,8 @@
 
 #pragma once
 
+#include "MonoPtrFwd.h"
 #include "PhysicsEntityBase.h"
-#include "Sprite.h"
 #include "CacoDemonController.h"
 #include "IWeaponSystem.h"
 
@@ -27,7 +27,7 @@ namespace game
     private:
 
         mono::EventHandler& m_eventHandler;
-        mono::Sprite m_sprite;
+        mono::ISpritePtr m_sprite;
         CacoDemonController m_controller;
         std::unique_ptr<IWeaponSystem> m_weapon;
     };

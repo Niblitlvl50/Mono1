@@ -9,6 +9,7 @@
 #include <gtest/gtest.h>
 #include "Matrix.h"
 #include "Vector2f.h"
+#include "MathFunctions.h"
 
 TEST(MatrixTest, VerifyIdentityOnCreation)
 {
