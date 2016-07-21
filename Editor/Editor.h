@@ -27,9 +27,7 @@ namespace editor
     {
     public:
 
-        EditorZone(const math::Vector2f& window_size,
-                   mono::EventHandler& event_handler,
-                   const std::vector<std::shared_ptr<editor::PolygonEntity>>& polygon_data);
+        EditorZone(const math::Vector2f& window_size, mono::EventHandler& event_handler, const char* file_name);
         virtual ~EditorZone();
 
         virtual void OnLoad(mono::ICameraPtr camera);
@@ -49,6 +47,8 @@ namespace editor
         const math::Vector2f m_windowSize;
         mono::EventHandler& m_eventHandler;
         editor::ImGuiInputHandler m_inputHandler;
+
+        const char* m_fileName;
 
         editor::UIContext m_context;
         std::shared_ptr<editor::ImGuiInterfaceDrawer> m_interfaceDrawer;

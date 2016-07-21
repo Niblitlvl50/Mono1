@@ -21,6 +21,9 @@ namespace File
     //! Opens a binary file
     FilePtr OpenBinaryFile(const char* source);
 
+    //! Creates a binary file, will overwrite if already exists
+    FilePtr CreateBinaryFile(const char* file_name);
+
     //! Calculates the size of a file
     //! \param file Input file
     //! \return Size of the file

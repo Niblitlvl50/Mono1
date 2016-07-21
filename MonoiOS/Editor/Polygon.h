@@ -26,6 +26,8 @@ namespace editor
         virtual math::Quad BoundingBox() const;
 
         void AddVertex(const math::Vector2f& vertex);
+        const std::vector<math::Vector2f>& GetVertices() const;
+
         void SetSelected(bool selected);
 
     private:

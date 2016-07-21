@@ -65,6 +65,11 @@ void PolygonEntity::AddVertex(const math::Vector2f& vertex)
     }
 }
 
+const std::vector<math::Vector2f>& PolygonEntity::GetVertices() const
+{
+    return m_points;
+}
+
 void PolygonEntity::SetSelected(bool selected)
 {
     m_selected = selected;

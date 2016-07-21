@@ -29,6 +29,8 @@
 #include "EventHandler.h"
 #include "SurfaceChangedEvent.h"
 
+#include "WorldFile.h"
+
 namespace
 {
     class SpriteDrawable : public mono::EntityBase
@@ -55,17 +57,68 @@ namespace
 
         mono::ISpritePtr m_sprite;
     };
+
+
+    std::vector<std::shared_ptr<editor::PolygonEntity>> LoadPolygons(const char* file_name)
+    {
+        std::vector<std::shared_ptr<editor::PolygonEntity>> polygon_data;
+
+        if(!file_name)
+            return polygon_data;
+        
+        File::FilePtr file = File::OpenBinaryFile(file_name);
+
+        world::LevelFileHeader level_data;
+        world::ReadWorld(file, level_data);
+
+        polygon_data.reserve(level_data.polygons.size());
+
+        for(const world::PolygonData& polygon : level_data.polygons)
+        {
+            std::shared_ptr<editor::PolygonEntity> polygon_entity = std::make_shared<editor::PolygonEntity>();
+            polygon_entity->SetPosition(polygon.position);
+            polygon_entity->SetRotation(polygon.rotation);
+
+            for(const math::Vector2f& vertex : polygon.vertices)
+                polygon_entity->AddVertex(vertex);
+
+            polygon_data.push_back(polygon_entity);
+        }
+
+        return polygon_data;
+    }
+
+    void SavePolygons(const char* file_name, const std::vector<std::shared_ptr<editor::PolygonEntity>>& polygons)
+    {
+        if(!file_name)
+            return;
+
+        world::LevelFileHeader world_data;
+        world_data.version = 1;
+        world_data.polygons.resize(polygons.size());
+
+        for(int index = 0; index < polygons.size(); ++index)
+        {
+            const auto& polygon_entity = polygons[index];
+            world::PolygonData& polygon_data = world_data.polygons[index];
+
+            polygon_data.position = polygon_entity->Position();
+            polygon_data.rotation = polygon_entity->Rotation();
+            polygon_data.vertices = polygon_entity->GetVertices();
+        }
+
+        File::FilePtr file = File::CreateBinaryFile(file_name);
+        world::WriteWorld(file, world_data);
+    }
 }
 
 using namespace editor;
 
-EditorZone::EditorZone(const math::Vector2f& window_size,
-                       mono::EventHandler& event_handler,
-                       const std::vector<std::shared_ptr<editor::PolygonEntity>>& polygon_data)
+EditorZone::EditorZone(const math::Vector2f& window_size, mono::EventHandler& event_handler, const char* file_name)
     : m_windowSize(window_size),
       m_eventHandler(event_handler),
       m_inputHandler(event_handler),
-      m_polygons(polygon_data)
+      m_fileName(file_name)
 {
     using namespace std::placeholders;
 
@@ -90,6 +143,10 @@ EditorZone::EditorZone(const math::Vector2f& window_size,
 
     const event::SurfaceChangedEventFunc surface_func = std::bind(&EditorZone::OnSurfaceChanged, this, _1);
     m_surfaceChangedToken = m_eventHandler.AddListener(surface_func);
+
+    const auto& polygons = LoadPolygons(m_fileName);
+    for(auto& polygon : polygons)
+        AddPolygon(polygon);
 }
 
 EditorZone::~EditorZone()
@@ -153,7 +210,8 @@ void EditorZone::OnDeletePolygon(int index)
 
 void EditorZone::EditorMenuCallback(int index)
 {
-    std::printf("Editor %u\n", index);
+    if(index == 1)
+        SavePolygons(m_fileName, m_polygons);
 }
 
 void EditorZone::ToolsMenuCallback(int index)

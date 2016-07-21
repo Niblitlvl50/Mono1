@@ -128,6 +128,7 @@
 		9143AF611D40CEC400E28D53 /* SpriteFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9143AF5F1D40CEC400E28D53 /* SpriteFactory.cpp */; };
 		9143AF621D40CEC400E28D53 /* SpriteFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9143AF5F1D40CEC400E28D53 /* SpriteFactory.cpp */; };
 		9143AF631D40CEC400E28D53 /* SpriteFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9143AF601D40CEC400E28D53 /* SpriteFactory.h */; };
+		9143AF661D411F6800E28D53 /* WorldFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9143AF641D411F6800E28D53 /* WorldFile.cpp */; };
 		91451A241D10B14100F17B05 /* AudioListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91451A221D10B14100F17B05 /* AudioListener.cpp */; };
 		91451A251D10B14100F17B05 /* AudioListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91451A221D10B14100F17B05 /* AudioListener.cpp */; };
 		91451A261D10B14100F17B05 /* AudioListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 91451A231D10B14100F17B05 /* AudioListener.h */; };
@@ -813,15 +814,6 @@
 		2B26D85D15FD2BD8001E9748 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lzio.h; sourceTree = "<group>"; };
 		2B26D85E15FD2BD8001E9748 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = print.c; sourceTree = "<group>"; };
 		2B26D86015FD2BD8001E9748 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_truetype.h; sourceTree = "<group>"; };
-		2B26D86B15FD2BD8001E9748 /* ticpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ticpp.cpp; sourceTree = "<group>"; };
-		2B26D86C15FD2BD8001E9748 /* ticpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ticpp.h; sourceTree = "<group>"; };
-		2B26D86F15FD2BD8001E9748 /* ticpprc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ticpprc.h; sourceTree = "<group>"; };
-		2B26D87015FD2BD8001E9748 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinystr.cpp; sourceTree = "<group>"; };
-		2B26D87115FD2BD8001E9748 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinystr.h; sourceTree = "<group>"; };
-		2B26D87215FD2BD8001E9748 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
-		2B26D87315FD2BD8001E9748 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
-		2B26D87415FD2BD8001E9748 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
-		2B26D87515FD2BD8001E9748 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
 		2B26DB3B15FD3165001E9748 /* pixelette.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = pixelette.ttf; path = res/pixelette.ttf; sourceTree = "<group>"; };
 		2B26DB3E15FD3280001E9748 /* AnimatedDude.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedDude.cpp; sourceTree = "<group>"; };
 		2B26DB3F15FD3280001E9748 /* AnimatedDude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedDude.h; sourceTree = "<group>"; };
@@ -871,6 +863,8 @@
 		912D569A1C52D1BD003ACC77 /* SysNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysNetwork.h; sourceTree = "<group>"; };
 		9143AF5F1D40CEC400E28D53 /* SpriteFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteFactory.cpp; sourceTree = "<group>"; };
 		9143AF601D40CEC400E28D53 /* SpriteFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteFactory.h; sourceTree = "<group>"; };
+		9143AF641D411F6800E28D53 /* WorldFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldFile.cpp; path = ../Editor/WorldFile.cpp; sourceTree = "<group>"; };
+		9143AF651D411F6800E28D53 /* WorldFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldFile.h; path = ../Editor/WorldFile.h; sourceTree = "<group>"; };
 		91451A211D10ADA400F17B05 /* RenderLayers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderLayers.h; sourceTree = "<group>"; };
 		91451A221D10B14100F17B05 /* AudioListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioListener.cpp; path = Audio/AudioListener.cpp; sourceTree = "<group>"; };
 		91451A231D10B14100F17B05 /* AudioListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioListener.h; path = Audio/AudioListener.h; sourceTree = "<group>"; };
@@ -1532,7 +1526,6 @@
 				2B26D74615FD2BD8001E9748 /* lpng156 */,
 				2B26D82715FD2BD8001E9748 /* Lua-5.1.4 */,
 				2B26D85F15FD2BD8001E9748 /* stb_truetype */,
-				2B26D86115FD2BD8001E9748 /* ticpp */,
 				9199F5CC17E3A9A00001FE28 /* zlib-1.2.8 */,
 				91B63FA117D3D2FE004F1868 /* libSDL2.a */,
 			);
@@ -1640,22 +1633,6 @@
 				2B26D86015FD2BD8001E9748 /* stb_truetype.h */,
 			);
 			path = stb_truetype;
-			sourceTree = "<group>";
-		};
-		2B26D86115FD2BD8001E9748 /* ticpp */ = {
-			isa = PBXGroup;
-			children = (
-				2B26D86B15FD2BD8001E9748 /* ticpp.cpp */,
-				2B26D86C15FD2BD8001E9748 /* ticpp.h */,
-				2B26D86F15FD2BD8001E9748 /* ticpprc.h */,
-				2B26D87015FD2BD8001E9748 /* tinystr.cpp */,
-				2B26D87115FD2BD8001E9748 /* tinystr.h */,
-				2B26D87215FD2BD8001E9748 /* tinyxml.cpp */,
-				2B26D87315FD2BD8001E9748 /* tinyxml.h */,
-				2B26D87415FD2BD8001E9748 /* tinyxmlerror.cpp */,
-				2B26D87515FD2BD8001E9748 /* tinyxmlparser.cpp */,
-			);
-			path = ticpp;
 			sourceTree = "<group>";
 		};
 		2B26DB3D15FD3280001E9748 /* Game */ = {
@@ -1867,6 +1844,8 @@
 				916B54581D20652500AD54A1 /* UserInputController.h */,
 				916B545E1D28276100AD54A1 /* Editor.cpp */,
 				916B545F1D28276100AD54A1 /* Editor.h */,
+				9143AF641D411F6800E28D53 /* WorldFile.cpp */,
+				9143AF651D411F6800E28D53 /* WorldFile.h */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -2728,6 +2707,7 @@
 				916B54631D28766800AD54A1 /* RotateTool.cpp in Sources */,
 				916B54491D186BC400AD54A1 /* ImGuiRenderer.cpp in Sources */,
 				916B542B1D15D31C00AD54A1 /* main.cpp in Sources */,
+				9143AF661D411F6800E28D53 /* WorldFile.cpp in Sources */,
 				916B54461D17219600AD54A1 /* ImGuiShader.cpp in Sources */,
 				916B54601D28276100AD54A1 /* Editor.cpp in Sources */,
 				916B54551D1E802400AD54A1 /* Polygon.cpp in Sources */,
