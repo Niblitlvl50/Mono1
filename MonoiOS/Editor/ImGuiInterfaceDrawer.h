@@ -9,6 +9,7 @@
 #pragma once
 
 #include "IUpdatable.h"
+#include "MainMenuOptions.h"
 
 #include <functional>
 #include <vector>
@@ -45,8 +46,8 @@ namespace editor
 
         std::vector<Notification> notifications;
 
-        std::function<void (int)> editorMenuCallback;
-        std::function<void (int)> toolsMenuCallback;
+        std::function<void (EditorMenuOptions option)> editorMenuCallback;
+        std::function<void (ToolsMenuOptions option)> toolsMenuCallback;
     };
 
     class ImGuiInterfaceDrawer : public mono::IUpdatable

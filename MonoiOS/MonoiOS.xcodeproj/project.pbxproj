@@ -865,6 +865,7 @@
 		9143AF601D40CEC400E28D53 /* SpriteFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteFactory.h; sourceTree = "<group>"; };
 		9143AF641D411F6800E28D53 /* WorldFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldFile.cpp; path = ../Editor/WorldFile.cpp; sourceTree = "<group>"; };
 		9143AF651D411F6800E28D53 /* WorldFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldFile.h; path = ../Editor/WorldFile.h; sourceTree = "<group>"; };
+		9143AF671D44C5C000E28D53 /* MainMenuOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainMenuOptions.h; path = Editor/MainMenuOptions.h; sourceTree = "<group>"; };
 		91451A211D10ADA400F17B05 /* RenderLayers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderLayers.h; sourceTree = "<group>"; };
 		91451A221D10B14100F17B05 /* AudioListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioListener.cpp; path = Audio/AudioListener.cpp; sourceTree = "<group>"; };
 		91451A231D10B14100F17B05 /* AudioListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioListener.h; path = Audio/AudioListener.h; sourceTree = "<group>"; };
@@ -1846,6 +1847,7 @@
 				916B545F1D28276100AD54A1 /* Editor.h */,
 				9143AF641D411F6800E28D53 /* WorldFile.cpp */,
 				9143AF651D411F6800E28D53 /* WorldFile.h */,
+				9143AF671D44C5C000E28D53 /* MainMenuOptions.h */,
 			);
 			name = Editor;
 			sourceTree = "<group>";

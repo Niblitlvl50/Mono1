@@ -66,25 +66,34 @@ void UserInputController::HandleContextMenu(int item_index)
         m_activeTool->IsActive() ? m_activeTool->End() : m_activeTool->Begin();
 }
 
-void UserInputController::SelectTool(int tool_index)
+void UserInputController::SelectTool(ToolsMenuOptions option)
 {
-    if(tool_index == 0)
+    switch(option)
     {
-        m_activeTool = &m_polygonTool;
-        m_context->notifications.push_back(Notification(2, "Polygon tool", 2000));
+        case ToolsMenuOptions::POLYGON_TOOL:
+        {
+            m_activeTool = &m_polygonTool;
+            m_context->notifications.push_back(Notification(2, "Polygon tool", 2000));
+            break;
+        }
+
+        case ToolsMenuOptions::TRANSLATE_TOOL:
+        {
+            m_activeTool = &m_translateTool;
+            m_context->notifications.push_back(Notification(2, "Translate tool", 2000));
+            break;
+        }
+
+        case ToolsMenuOptions::ROTATE_TOOL:
+        {
+            m_activeTool = &m_rotateTool;
+            m_context->notifications.push_back(Notification(2, "Rotate tool", 2000));
+            break;
+        }
+
+        case ToolsMenuOptions::CAMERA_TOOL:
+            break;
     }
-    else if(tool_index == 1)
-    {
-        m_activeTool = &m_translateTool;
-        m_context->notifications.push_back(Notification(2, "Translate tool", 2000));
-    }
-    else if(tool_index == 2)
-    {
-        m_activeTool = &m_rotateTool;
-        m_context->notifications.push_back(Notification(2, "Rotate tool", 2000));
-    }
-    //else if(tool_index == 2)
-    //    m_activeTool = &m_cameraTool;
 }
 
 bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)
@@ -132,11 +141,11 @@ bool UserInputController::OnMultiGesture(const event::MultiGestureEvent& event)
 bool UserInputController::OnKeyDown(const event::KeyDownEvent& event)
 {
     if(event.key == Key::ONE)
-        SelectTool(0);
+        SelectTool(ToolsMenuOptions::POLYGON_TOOL);
     else if(event.key == Key::TWO)
-        SelectTool(1);
+        SelectTool(ToolsMenuOptions::TRANSLATE_TOOL);
     else if(event.key == Key::THREE)
-        SelectTool(2);
+        SelectTool(ToolsMenuOptions::ROTATE_TOOL);
 
     return false;
 }

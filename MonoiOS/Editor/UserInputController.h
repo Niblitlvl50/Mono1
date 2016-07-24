@@ -12,6 +12,8 @@
 #include "EventFwd.h"
 #include "EventToken.h"
 
+#include "MainMenuOptions.h"
+
 #include "PolygonTool.h"
 #include "TranslateTool.h"
 #include "RotateTool.h"
@@ -33,7 +35,7 @@ namespace editor
         ~UserInputController();
 
         void HandleContextMenu(int item_index);
-        void SelectTool(int tool_index);
+        void SelectTool(ToolsMenuOptions option);
 
     private:
 

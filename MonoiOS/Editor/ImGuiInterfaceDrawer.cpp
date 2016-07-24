@@ -25,13 +25,13 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
     if(ImGui::BeginMenu("Editor"))
     {
         if(ImGui::MenuItem("Open"))
-            m_context.editorMenuCallback(0);
+            m_context.editorMenuCallback(EditorMenuOptions::OPEN);
 
         if(ImGui::MenuItem("Save"))
-            m_context.editorMenuCallback(1);
+            m_context.editorMenuCallback(EditorMenuOptions::SAVE);
 
         if(ImGui::MenuItem("Export"))
-            m_context.editorMenuCallback(2);
+            m_context.editorMenuCallback(EditorMenuOptions::EXPORT);
 
         ImGui::EndMenu();
     }
@@ -39,16 +39,16 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
     if(ImGui::BeginMenu("Tools"))
     {
         if(ImGui::MenuItem("Polygon"))
-            m_context.toolsMenuCallback(0);
+            m_context.toolsMenuCallback(ToolsMenuOptions::POLYGON_TOOL);
 
         if(ImGui::MenuItem("Translate"))
-            m_context.toolsMenuCallback(1);
+            m_context.toolsMenuCallback(ToolsMenuOptions::TRANSLATE_TOOL);
 
         if(ImGui::MenuItem("Rotate"))
-            m_context.toolsMenuCallback(2);
+            m_context.toolsMenuCallback(ToolsMenuOptions::ROTATE_TOOL);
 
         if(ImGui::MenuItem("Camera"))
-            m_context.toolsMenuCallback(3);
+            m_context.toolsMenuCallback(ToolsMenuOptions::CAMERA_TOOL);
         
         ImGui::EndMenu();
     }

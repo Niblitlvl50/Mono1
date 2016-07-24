@@ -152,6 +152,8 @@ EditorZone::EditorZone(const math::Vector2f& window_size, mono::EventHandler& ev
 EditorZone::~EditorZone()
 {
     m_eventHandler.RemoveListener(m_surfaceChangedToken);
+
+    SavePolygons(m_fileName, m_polygons);
 }
 
 void EditorZone::OnLoad(mono::ICameraPtr camera)
@@ -208,13 +210,13 @@ void EditorZone::OnDeletePolygon(int index)
     SchedulePreFrameTask(remove_polygon_func);
 }
 
-void EditorZone::EditorMenuCallback(int index)
+void EditorZone::EditorMenuCallback(EditorMenuOptions option)
 {
-    if(index == 1)
+    if(option == EditorMenuOptions::SAVE)
         SavePolygons(m_fileName, m_polygons);
 }
 
-void EditorZone::ToolsMenuCallback(int index)
+void EditorZone::ToolsMenuCallback(ToolsMenuOptions option)
 {
-    m_userInputController->SelectTool(index);
+    m_userInputController->SelectTool(option);
 }

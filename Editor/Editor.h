@@ -41,8 +41,8 @@ namespace editor
         void OnSelectedPolygon(int index);
         void OnDeletePolygon(int index);
 
-        void EditorMenuCallback(int index);
-        void ToolsMenuCallback(int index);
+        void EditorMenuCallback(EditorMenuOptions index);
+        void ToolsMenuCallback(ToolsMenuOptions index);
 
         const math::Vector2f m_windowSize;
         mono::EventHandler& m_eventHandler;
