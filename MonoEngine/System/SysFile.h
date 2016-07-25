@@ -18,13 +18,16 @@ namespace File
     //! A smart file handle
     typedef std::shared_ptr<FILE> FilePtr;
 
-    //! Opens a binary file
-    FilePtr OpenBinaryFile(const char* source);
+    //! Opens a binary file for reading
+    FilePtr OpenBinaryFile(const char* file_name);
 
-    //! Creates a binary file, will overwrite if already exists
+    //! Opens a ascii file for reading
+    FilePtr OpenAsciiFile(const char* file_name);
+
+    //! Creates a binary file for writing, will overwrite if already exists
     FilePtr CreateBinaryFile(const char* file_name);
 
-    //! Create an ascii file, will overwrite of already exists
+    //! Create an ascii file for writing, will overwrite of already exists
     FilePtr CreateAsciiFile(const char* file_name);
 
     //! Calculates the size of a file

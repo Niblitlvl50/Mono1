@@ -11,31 +11,36 @@
 #include <string>
 #include <cstdio>
 
-File::FilePtr File::OpenBinaryFile(const char* source)
+namespace
 {
-    std::FILE* file = std::fopen(source, "rb");
-    if(!file)
-        throw std::runtime_error("Unable to open binary file: " + std::string(source));
-    
-    return File::FilePtr(file, std::fclose);
+    File::FilePtr OpenFile(const char* file_name, const char* mode)
+    {
+        std::FILE* file = std::fopen(file_name, mode);
+        if(!file)
+            throw std::runtime_error("Unable to open file: " + std::string(file_name) + " ,with mode: " + std::string(mode));
+
+        return File::FilePtr(file, std::fclose);
+    }
+}
+
+File::FilePtr File::OpenBinaryFile(const char* file_name)
+{
+    return OpenFile(file_name, "rb");
+}
+
+File::FilePtr File::OpenAsciiFile(const char* file_name)
+{
+    return OpenFile(file_name, "r");
 }
 
 File::FilePtr File::CreateBinaryFile(const char* file_name)
 {
-    std::FILE* file = std::fopen(file_name, "wb");
-    if(!file)
-        throw std::runtime_error("Unable to create binary file: " + std::string(file_name));
-
-    return File::FilePtr(file, std::fclose);
+    return OpenFile(file_name, "wb");
 }
 
 File::FilePtr File::CreateAsciiFile(const char* file_name)
 {
-    std::FILE* file = std::fopen(file_name, "w");
-    if(!file)
-        throw std::runtime_error("Unable to create ascii file: " + std::string(file_name));
-
-    return File::FilePtr(file, std::fclose);
+    return OpenFile(file_name, "w");
 }
 
 long File::FileSize(const FilePtr& file)
