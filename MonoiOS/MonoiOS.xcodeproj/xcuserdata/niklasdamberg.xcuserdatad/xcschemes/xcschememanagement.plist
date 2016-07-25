@@ -12,19 +12,14 @@
 		<key>Editor.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>7</integer>
-		</dict>
-		<key>GameOSX.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>MonoiOS Device.xcscheme</key>
+		<key>Game Device.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>MonoiOS Simulator.xcscheme</key>
+		<key>Game OSX.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
@@ -37,12 +32,12 @@
 		<key>libMonoOSX.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>6</integer>
 		</dict>
 		<key>libMonoiOS.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>6</integer>
+			<integer>5</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>

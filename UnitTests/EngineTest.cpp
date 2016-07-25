@@ -83,6 +83,8 @@ namespace
         {
             return mViewport.mA + (mViewport.mB * 0.5f);
         }
+        virtual void SetViewport(const math::Quad& viewport)
+        { }
         virtual void SetTargetViewport(const math::Quad& target)
         { }
         virtual void SetPosition(const math::Vector2f& position)

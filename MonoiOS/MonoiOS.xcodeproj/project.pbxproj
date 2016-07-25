@@ -22,106 +22,11 @@
 		2B95CF28162F38AA006769BF /* explosion.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B95CF26162F38AA006769BF /* explosion.sprite */; };
 		2B95CF29162F38AA006769BF /* invader.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2B95CF27162F38AA006769BF /* invader.sprite */; };
 		2BA8E1081618BE5E00C17873 /* shuttle.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E1051618BE5E00C17873 /* shuttle.sprite */; };
-		2BA8E1091618BE5E00C17873 /* shuttle.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E1051618BE5E00C17873 /* shuttle.sprite */; };
 		2BA8E10D1618BFBE00C17873 /* ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E10C1618BFBE00C17873 /* ryu.sprite */; };
-		2BA8E10E1618BFBE00C17873 /* ryu.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BA8E10C1618BFBE00C17873 /* ryu.sprite */; };
-		2BD3CBAA160BB2B30043156E /* pixelette.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B26DB3B15FD3165001E9748 /* pixelette.ttf */; };
-		2BD3CBAB160BB2B30043156E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07C0E26BD8C00F39101 /* Icon.png */; };
-		2BD3CBAC160BB2B30043156E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD77A07E0E26BDA900F39101 /* Default.png */; };
-		2BD3CBAF160BB2B30043156E /* CameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D69E15FD2BB5001E9748 /* CameraController.cpp */; };
-		2BD3CBB0160BB2B30043156E /* TraceCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A015FD2BB5001E9748 /* TraceCamera.cpp */; };
-		2BD3CBB1160BB2B30043156E /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A215FD2BB5001E9748 /* Engine.cpp */; };
-		2BD3CBB2160BB2B30043156E /* EntityBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6A415FD2BB5001E9748 /* EntityBase.cpp */; };
-		2BD3CBB4160BB2B30043156E /* InputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6B915FD2BB5001E9748 /* InputHandler.cpp */; };
-		2BD3CBB5160BB2B30043156E /* LuaFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6C015FD2BB5001E9748 /* LuaFunctions.cpp */; };
-		2BD3CBB6160BB2B30043156E /* LuaInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6C215FD2BB5001E9748 /* LuaInterpreter.cpp */; };
-		2BD3CBB7160BB2B30043156E /* LuaState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6C415FD2BB5001E9748 /* LuaState.cpp */; };
-		2BD3CBB8160BB2B30043156E /* MathFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6C715FD2BB5001E9748 /* MathFunctions.cpp */; };
-		2BD3CBB9160BB2B30043156E /* CMFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6D115FD2BB5001E9748 /* CMFactory.cpp */; };
-		2BD3CBBA160BB2B30043156E /* CMSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6D715FD2BB5001E9748 /* CMSpace.cpp */; };
-		2BD3CBBB160BB2B30043156E /* PhysicsZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6D915FD2BB5001E9748 /* PhysicsZone.cpp */; };
-		2BD3CBBC160BB2B30043156E /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6DB15FD2BB5001E9748 /* Renderer.cpp */; };
-		2BD3CBBD160BB2B30043156E /* AnimationSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6DE15FD2BB5001E9748 /* AnimationSequence.cpp */; };
-		2BD3CBBE160BB2B30043156E /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6E015FD2BB5001E9748 /* Sprite.cpp */; };
-		2BD3CBBF160BB2B30043156E /* ImageFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6E415FD2BB5001E9748 /* ImageFactory.cpp */; };
-		2BD3CBC0160BB2B30043156E /* PNGImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6E715FD2BB5001E9748 /* PNGImage.cpp */; };
-		2BD3CBC1160BB2B30043156E /* SDLWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6EA15FD2BB5001E9748 /* SDLWindow.cpp */; };
-		2BD3CBC2160BB2B30043156E /* SysEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6EC15FD2BB5001E9748 /* SysEvents.cpp */; };
-		2BD3CBC3160BB2B30043156E /* SysFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6EE15FD2BB5001E9748 /* SysFile.cpp */; };
-		2BD3CBC4160BB2B30043156E /* SysLibs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6F115FD2BB5001E9748 /* SysLibs.cpp */; };
-		2BD3CBC6160BB2B30043156E /* SysTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6F515FD2BB5001E9748 /* SysTime.cpp */; };
-		2BD3CBC7160BB2B30043156E /* WindowFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6F815FD2BB5001E9748 /* WindowFactory.cpp */; };
-		2BD3CBC8160BB2B30043156E /* TextFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6FB15FD2BB5001E9748 /* TextFunctions.cpp */; };
-		2BD3CBC9160BB2B30043156E /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D6FF15FD2BB5001E9748 /* Texture.cpp */; };
-		2BD3CBCA160BB2B30043156E /* TextureFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D70115FD2BB5001E9748 /* TextureFactory.cpp */; };
-		2BD3CBCB160BB2B30043156E /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D70315FD2BB5001E9748 /* Utils.cpp */; };
-		2BD3CBCC160BB2B30043156E /* ZoneBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D70515FD2BB5001E9748 /* ZoneBase.cpp */; };
-		2BD3CBCD160BB2B30043156E /* example.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7A815FD2BD8001E9748 /* example.c */; };
-		2BD3CBCE160BB2B30043156E /* png.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7B115FD2BD8001E9748 /* png.c */; };
-		2BD3CBCF160BB2B30043156E /* pngerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7B715FD2BD8001E9748 /* pngerror.c */; };
-		2BD3CBD0160BB2B30043156E /* pngget.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7B815FD2BD8001E9748 /* pngget.c */; };
-		2BD3CBD1160BB2B30043156E /* pngmem.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7BB15FD2BD8001E9748 /* pngmem.c */; };
-		2BD3CBD2160BB2B30043156E /* pngpread.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7BD15FD2BD8001E9748 /* pngpread.c */; };
-		2BD3CBD3160BB2B30043156E /* pngread.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7BF15FD2BD8001E9748 /* pngread.c */; };
-		2BD3CBD4160BB2B30043156E /* pngrio.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7C015FD2BD8001E9748 /* pngrio.c */; };
-		2BD3CBD5160BB2B30043156E /* pngrtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7C115FD2BD8001E9748 /* pngrtran.c */; };
-		2BD3CBD6160BB2B30043156E /* pngrutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7C215FD2BD8001E9748 /* pngrutil.c */; };
-		2BD3CBD7160BB2B30043156E /* pngset.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7C315FD2BD8001E9748 /* pngset.c */; };
-		2BD3CBD8160BB2B30043156E /* pngtrans.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7C715FD2BD8001E9748 /* pngtrans.c */; };
-		2BD3CBD9160BB2B30043156E /* pngwio.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7C915FD2BD8001E9748 /* pngwio.c */; };
-		2BD3CBDA160BB2B30043156E /* pngwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7CA15FD2BD8001E9748 /* pngwrite.c */; };
-		2BD3CBDB160BB2B30043156E /* pngwtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7CB15FD2BD8001E9748 /* pngwtran.c */; };
-		2BD3CBDC160BB2B30043156E /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D7CC15FD2BD8001E9748 /* pngwutil.c */; };
-		2BD3CBDD160BB2B30043156E /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D82815FD2BD8001E9748 /* lapi.c */; };
-		2BD3CBDE160BB2B30043156E /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D82A15FD2BD8001E9748 /* lauxlib.c */; };
-		2BD3CBDF160BB2B30043156E /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D82C15FD2BD8001E9748 /* lbaselib.c */; };
-		2BD3CBE0160BB2B30043156E /* lcode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D82D15FD2BD8001E9748 /* lcode.c */; };
-		2BD3CBE1160BB2B30043156E /* ldblib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D82F15FD2BD8001E9748 /* ldblib.c */; };
-		2BD3CBE2160BB2B30043156E /* ldebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D83015FD2BD8001E9748 /* ldebug.c */; };
-		2BD3CBE3160BB2B30043156E /* ldo.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D83215FD2BD8001E9748 /* ldo.c */; };
-		2BD3CBE4160BB2B30043156E /* ldump.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D83415FD2BD8001E9748 /* ldump.c */; };
-		2BD3CBE5160BB2B30043156E /* lfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D83515FD2BD8001E9748 /* lfunc.c */; };
-		2BD3CBE6160BB2B30043156E /* lgc.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D83715FD2BD8001E9748 /* lgc.c */; };
-		2BD3CBE7160BB2B30043156E /* linit.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D83915FD2BD8001E9748 /* linit.c */; };
-		2BD3CBE8160BB2B30043156E /* liolib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D83A15FD2BD8001E9748 /* liolib.c */; };
-		2BD3CBE9160BB2B30043156E /* llex.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D83B15FD2BD8001E9748 /* llex.c */; };
-		2BD3CBEA160BB2B30043156E /* lmathlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D83E15FD2BD8001E9748 /* lmathlib.c */; };
-		2BD3CBEB160BB2B30043156E /* lmem.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D83F15FD2BD8001E9748 /* lmem.c */; };
-		2BD3CBEC160BB2B30043156E /* loadlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D84115FD2BD8001E9748 /* loadlib.c */; };
-		2BD3CBED160BB2B30043156E /* lobject.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D84215FD2BD8001E9748 /* lobject.c */; };
-		2BD3CBEE160BB2B30043156E /* lopcodes.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D84415FD2BD8001E9748 /* lopcodes.c */; };
-		2BD3CBEF160BB2B30043156E /* loslib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D84615FD2BD8001E9748 /* loslib.c */; };
-		2BD3CBF0160BB2B30043156E /* lparser.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D84715FD2BD8001E9748 /* lparser.c */; };
-		2BD3CBF1160BB2B30043156E /* lstate.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D84915FD2BD8001E9748 /* lstate.c */; };
-		2BD3CBF2160BB2B30043156E /* lstring.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D84B15FD2BD8001E9748 /* lstring.c */; };
-		2BD3CBF3160BB2B30043156E /* lstrlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D84D15FD2BD8001E9748 /* lstrlib.c */; };
-		2BD3CBF4160BB2B30043156E /* ltable.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D84E15FD2BD8001E9748 /* ltable.c */; };
-		2BD3CBF5160BB2B30043156E /* ltablib.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D85015FD2BD8001E9748 /* ltablib.c */; };
-		2BD3CBF6160BB2B30043156E /* ltm.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D85115FD2BD8001E9748 /* ltm.c */; };
-		2BD3CBF7160BB2B30043156E /* lua.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D85315FD2BD8001E9748 /* lua.c */; };
-		2BD3CBF8160BB2B30043156E /* luac.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D85515FD2BD8001E9748 /* luac.c */; };
-		2BD3CBF9160BB2B30043156E /* lundump.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D85815FD2BD8001E9748 /* lundump.c */; };
-		2BD3CBFA160BB2B30043156E /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D85A15FD2BD8001E9748 /* lvm.c */; };
-		2BD3CBFB160BB2B30043156E /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D85C15FD2BD8001E9748 /* lzio.c */; };
-		2BD3CBFC160BB2B30043156E /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B26D85E15FD2BD8001E9748 /* print.c */; };
-		2BD3CC11160BB2B30043156E /* AnimatedDude.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB3E15FD3280001E9748 /* AnimatedDude.cpp */; };
-		2BD3CC12160BB2B30043156E /* AnimatedDudeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB4015FD3280001E9748 /* AnimatedDudeController.cpp */; };
-		2BD3CC13160BB2B30043156E /* Explosion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB4215FD3280001E9748 /* Explosion.cpp */; };
-		2BD3CC15160BB2B30043156E /* Shuttle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7915FD3281001E9748 /* Shuttle.cpp */; };
-		2BD3CC17160BB2B30043156E /* TestZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B26DB7D15FD3281001E9748 /* TestZone.cpp */; };
-		2BD3CC1A160BB2B30043156E /* SysVideo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA5A3C1607B56800D8D38E /* SysVideo.cpp */; };
-		2BDD2C90171C9F540041CB18 /* PhysicsEntityBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C8B171C9F540041CB18 /* PhysicsEntityBase.cpp */; };
-		2BDD2C92171C9F540041CB18 /* RenderUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C8D171C9F540041CB18 /* RenderUtils.cpp */; };
 		2BDD2C9C171C9FBE0041CB18 /* FireBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C98171C9FBE0041CB18 /* FireBullet.cpp */; };
-		2BDD2C9D171C9FBE0041CB18 /* FireBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C98171C9FBE0041CB18 /* FireBullet.cpp */; };
 		2BDD2C9E171C9FBE0041CB18 /* Meteor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C9A171C9FBE0041CB18 /* Meteor.cpp */; };
-		2BDD2C9F171C9FBE0041CB18 /* Meteor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C9A171C9FBE0041CB18 /* Meteor.cpp */; };
 		2BDD2CA2171CA01F0041CB18 /* firebullet.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA0171CA01F0041CB18 /* firebullet.sprite */; };
-		2BDD2CA3171CA01F0041CB18 /* firebullet.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA0171CA01F0041CB18 /* firebullet.sprite */; };
 		2BDD2CA4171CA01F0041CB18 /* meteorite.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA1171CA01F0041CB18 /* meteorite.sprite */; };
-		2BDD2CA5171CA01F0041CB18 /* meteorite.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA1171CA01F0041CB18 /* meteorite.sprite */; };
-		91282D1B1826759E00B80892 /* Quad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91282D191826759E00B80892 /* Quad.cpp */; };
-		91282D1E1826764500B80892 /* Vector2f.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91282D1C1826764500B80892 /* Vector2f.cpp */; };
 		912D569B1C52D1BD003ACC77 /* SysNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912D56991C52D1BD003ACC77 /* SysNetwork.cpp */; };
 		912D569C1C52D1BD003ACC77 /* SysNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912D56991C52D1BD003ACC77 /* SysNetwork.cpp */; };
 		912D569D1C52D1BD003ACC77 /* SysNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 912D569A1C52D1BD003ACC77 /* SysNetwork.h */; };
@@ -453,45 +358,15 @@
 		916B54631D28766800AD54A1 /* RotateTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54611D28766800AD54A1 /* RotateTool.cpp */; };
 		916B54671D29064900AD54A1 /* CameraTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54651D29064900AD54A1 /* CameraTool.cpp */; };
 		916B546A1D296FCD00AD54A1 /* TranslateTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54681D296FCD00AD54A1 /* TranslateTool.cpp */; };
-		91791D2B18269CB9007A705A /* Moon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B95CF1C162F37C6006769BF /* Moon.cpp */; };
-		91791D2C18269CC0007A705A /* ShuttleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B95CF1E162F37C6006769BF /* ShuttleController.cpp */; };
 		918157251826E5E600C66F2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 918157241826E5E600C66F2B /* main.cpp */; };
-		918157261826E5E600C66F2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 918157241826E5E600C66F2B /* main.cpp */; };
-		91823EA917D0FA5F00649773 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
-		91823EAA17D0FA7F00649773 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
-		91823EAD17D276D700649773 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
-		91823EAE17D276E800649773 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB8BFC50E5A0F6A00980157 /* CoreGraphics.framework */; };
-		91823EAF17D276E800649773 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD77A0840E26BDB800F39101 /* AudioToolbox.framework */; };
-		91823EB017D276E800649773 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		91823EB117D276E800649773 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		9199F5CB17DCDB6B0001FE28 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9199F5CA17DCDB6B0001FE28 /* Default-568h@2x.png */; };
-		9199F5EA17E3AA0F0001FE28 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5CD17E3AA0F0001FE28 /* adler32.c */; };
-		9199F5EC17E3AA0F0001FE28 /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5CE17E3AA0F0001FE28 /* compress.c */; };
-		9199F5EE17E3AA0F0001FE28 /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5CF17E3AA0F0001FE28 /* crc32.c */; };
-		9199F5F017E3AA0F0001FE28 /* deflate.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5D117E3AA0F0001FE28 /* deflate.c */; };
-		9199F5F217E3AA0F0001FE28 /* gzclose.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5D317E3AA0F0001FE28 /* gzclose.c */; };
-		9199F5F417E3AA0F0001FE28 /* gzlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5D517E3AA0F0001FE28 /* gzlib.c */; };
-		9199F5F617E3AA0F0001FE28 /* gzread.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5D617E3AA0F0001FE28 /* gzread.c */; };
-		9199F5F817E3AA0F0001FE28 /* gzwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5D717E3AA0F0001FE28 /* gzwrite.c */; };
-		9199F5FA17E3AA0F0001FE28 /* infback.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5D817E3AA0F0001FE28 /* infback.c */; };
-		9199F5FC17E3AA0F0001FE28 /* inffast.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5D917E3AA0F0001FE28 /* inffast.c */; };
-		9199F5FE17E3AA0F0001FE28 /* inflate.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5DC17E3AA0F0001FE28 /* inflate.c */; };
-		9199F60017E3AA0F0001FE28 /* inftrees.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5DE17E3AA0F0001FE28 /* inftrees.c */; };
-		9199F60217E3AA0F0001FE28 /* trees.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5E017E3AA0F0001FE28 /* trees.c */; };
-		9199F60417E3AA0F0001FE28 /* uncompr.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5E217E3AA0F0001FE28 /* uncompr.c */; };
-		9199F60617E3AA0F0001FE28 /* zconf.h.in in Resources */ = {isa = PBXBuildFile; fileRef = 9199F5E417E3AA0F0001FE28 /* zconf.h.in */; };
-		9199F60817E3AA0F0001FE28 /* zlib.pc.in in Resources */ = {isa = PBXBuildFile; fileRef = 9199F5E617E3AA0F0001FE28 /* zlib.pc.in */; };
-		9199F60A17E3AA0F0001FE28 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 9199F5E717E3AA0F0001FE28 /* zutil.c */; };
 		91A8775B1C022CD800DF77B5 /* CacoDemon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91A877591C022CD800DF77B5 /* CacoDemon.cpp */; };
-		91A8775C1C022CD800DF77B5 /* CacoDemon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91A877591C022CD800DF77B5 /* CacoDemon.cpp */; };
 		91A8775F1C0230F500DF77B5 /* cacodemon.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A8775D1C0230F500DF77B5 /* cacodemon.png */; };
 		91A877601C0230F500DF77B5 /* cacodemon.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91A8775E1C0230F500DF77B5 /* cacodemon.sprite */; };
 		91A877631C0236B800DF77B5 /* CacoDemonController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91A877611C0236B800DF77B5 /* CacoDemonController.cpp */; };
-		91A877641C0236B800DF77B5 /* CacoDemonController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91A877611C0236B800DF77B5 /* CacoDemonController.cpp */; };
 		91A877671C02631A00DF77B5 /* cacobullet.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91A877651C02631A00DF77B5 /* cacobullet.sprite */; };
 		91A877681C02631A00DF77B5 /* cacoexplosion.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91A877661C02631A00DF77B5 /* cacoexplosion.sprite */; };
 		91AAE3811C35837F001FE1FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		91B63FA217D3D2FE004F1868 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B63FA117D3D2FE004F1868 /* libSDL2.a */; };
 		91B746FC1C00E73000F257CC /* laser.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91B746FB1C00E73000F257CC /* laser.sprite */; };
 		91B8125A1C37DE4E00BDF407 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B812591C37DE4E00BDF407 /* OpenAL.framework */; };
 		91B8125E1C37DEB400BDF407 /* AudioFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91B8125C1C37DEB400BDF407 /* AudioFactory.cpp */; };
@@ -507,9 +382,7 @@
 		91B812711C39B77C00BDF407 /* laser.wav in Resources */ = {isa = PBXBuildFile; fileRef = 91B812701C39B77C00BDF407 /* laser.wav */; };
 		91B812721C39B79200BDF407 /* laser.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91B812701C39B77C00BDF407 /* laser.wav */; };
 		91C3FB8A1D36E5E400CD5925 /* level1.world in Resources */ = {isa = PBXBuildFile; fileRef = 91C3FB891D36E5E400CD5925 /* level1.world */; };
-		91D6465D186F2D0D00FA6CB5 /* PathFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465A186F2D0D00FA6CB5 /* PathFactory.cpp */; };
 		91D64660186F2D2C00FA6CB5 /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */; };
-		91D64661186F2D2C00FA6CB5 /* PathPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D6465E186F2D2C00FA6CB5 /* PathPoint.cpp */; };
 		91D71EF41BF8AEAB0097AEA0 /* CubeSwarm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71EF01BF8AEAB0097AEA0 /* CubeSwarm.cpp */; };
 		91D71EF51BF8AEAB0097AEA0 /* DotEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71EF21BF8AEAB0097AEA0 /* DotEntity.cpp */; };
 		91D71EFB1BF8AEB50097AEA0 /* InvaderEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71EF61BF8AEB50097AEA0 /* InvaderEntity.cpp */; };
@@ -526,7 +399,6 @@
 		91D889981C3AFC7C00AF27A8 /* InGame_Phoenix.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91D889961C3AFBE400AF27A8 /* InGame_Phoenix.wav */; };
 		91F32F5C1D0B565A008457CA /* TimeScaleEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 91F32F5B1D0B565A008457CA /* TimeScaleEvent.h */; };
 		91F32F601D0C5B3D008457CA /* DamageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91F32F5E1D0C5B3D008457CA /* DamageController.cpp */; };
-		91F32F611D0C5B3D008457CA /* DamageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91F32F5E1D0C5B3D008457CA /* DamageController.cpp */; };
 		91F32F621D0C5B3D008457CA /* DamageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91F32F5E1D0C5B3D008457CA /* DamageController.cpp */; };
 		91F32F651D0C5C3A008457CA /* SysUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91F32F631D0C5C3A008457CA /* SysUID.cpp */; };
 		91F32F661D0C5C3A008457CA /* SysUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91F32F631D0C5C3A008457CA /* SysUID.cpp */; };
@@ -842,7 +714,6 @@
 		2BBA5A3B1607A59300D8D38E /* MultiGestureEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiGestureEvent.h; sourceTree = "<group>"; };
 		2BBA5A3C1607B56800D8D38E /* SysVideo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SysVideo.cpp; sourceTree = "<group>"; };
 		2BBA5A3E1607B57A00D8D38E /* SysVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysVideo.h; sourceTree = "<group>"; };
-		2BD3CC44160BB2B30043156E /* MonoiOS Simulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MonoiOS Simulator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BDD2C8A171C9EB10041CB18 /* PauseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseEvent.h; sourceTree = "<group>"; };
 		2BDD2C8B171C9F540041CB18 /* PhysicsEntityBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsEntityBase.cpp; sourceTree = "<group>"; };
 		2BDD2C8C171C9F540041CB18 /* PhysicsEntityBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsEntityBase.h; sourceTree = "<group>"; };
@@ -1119,21 +990,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2BD3CC38160BB2B30043156E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				91B63FA217D3D2FE004F1868 /* libSDL2.a in Frameworks */,
-				91823EAA17D0FA7F00649773 /* CoreAudio.framework in Frameworks */,
-				91823EA917D0FA5F00649773 /* OpenGLES.framework in Frameworks */,
-				91823EAD17D276D700649773 /* QuartzCore.framework in Frameworks */,
-				91823EAE17D276E800649773 /* CoreGraphics.framework in Frameworks */,
-				91823EAF17D276E800649773 /* AudioToolbox.framework in Frameworks */,
-				91823EB017D276E800649773 /* UIKit.framework in Frameworks */,
-				91823EB117D276E800649773 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9166E1821C341A9600A5C82D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1223,7 +1079,6 @@
 			isa = PBXGroup;
 			children = (
 				2B26D69A15F7DF3D001E9748 /* MonoiOS.app */,
-				2BD3CC44160BB2B30043156E /* MonoiOS Simulator.app */,
 				9166E1851C341A9600A5C82D /* GameOSX */,
 				9166E1AA1C341BBA00A5C82D /* liblibMonoOSX.a */,
 				9166E2311C3438F900A5C82D /* liblibMonoiOS.a */,
@@ -2043,23 +1898,6 @@
 			productReference = 2B26D69A15F7DF3D001E9748 /* MonoiOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2BD3CBA2160BB2B30043156E /* MonoiOS Simulator */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2BD3CC41160BB2B30043156E /* Build configuration list for PBXNativeTarget "MonoiOS Simulator" */;
-			buildPhases = (
-				2BD3CBA3160BB2B30043156E /* Resources */,
-				2BD3CBAE160BB2B30043156E /* Sources */,
-				2BD3CC38160BB2B30043156E /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "MonoiOS Simulator";
-			productName = "___PROJECTNAME___";
-			productReference = 2BD3CC44160BB2B30043156E /* MonoiOS Simulator.app */;
-			productType = "com.apple.product-type.application";
-		};
 		9166E1841C341A9600A5C82D /* GameOSX */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9166E1891C341A9600A5C82D /* Build configuration list for PBXNativeTarget "GameOSX" */;
@@ -2213,7 +2051,6 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* MonoiOS Device */,
-				2BD3CBA2160BB2B30043156E /* MonoiOS Simulator */,
 				9166E1841C341A9600A5C82D /* GameOSX */,
 				9166E2D91C34696600A5C82D /* AnimationTool */,
 				916B541F1D15D2C000AD54A1 /* Editor */,
@@ -2253,22 +2090,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2BD3CBA3160BB2B30043156E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2BD3CBAA160BB2B30043156E /* pixelette.ttf in Resources */,
-				2BD3CBAB160BB2B30043156E /* Icon.png in Resources */,
-				2BD3CBAC160BB2B30043156E /* Default.png in Resources */,
-				2BA8E1091618BE5E00C17873 /* shuttle.sprite in Resources */,
-				2BA8E10E1618BFBE00C17873 /* ryu.sprite in Resources */,
-				2BDD2CA3171CA01F0041CB18 /* firebullet.sprite in Resources */,
-				2BDD2CA5171CA01F0041CB18 /* meteorite.sprite in Resources */,
-				9199F60617E3AA0F0001FE28 /* zconf.h.in in Resources */,
-				9199F60817E3AA0F0001FE28 /* zlib.pc.in in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2303,124 +2124,6 @@
 				2BDD2C9C171C9FBE0041CB18 /* FireBullet.cpp in Sources */,
 				2BDD2C9E171C9FBE0041CB18 /* Meteor.cpp in Sources */,
 				9166E1761C31C4FD00A5C82D /* BaseWeapon.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2BD3CBAE160BB2B30043156E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2BD3CBAF160BB2B30043156E /* CameraController.cpp in Sources */,
-				2BD3CBB0160BB2B30043156E /* TraceCamera.cpp in Sources */,
-				2BD3CBB1160BB2B30043156E /* Engine.cpp in Sources */,
-				2BD3CBB2160BB2B30043156E /* EntityBase.cpp in Sources */,
-				2BD3CBB4160BB2B30043156E /* InputHandler.cpp in Sources */,
-				2BD3CBB5160BB2B30043156E /* LuaFunctions.cpp in Sources */,
-				2BD3CBB6160BB2B30043156E /* LuaInterpreter.cpp in Sources */,
-				2BD3CBB7160BB2B30043156E /* LuaState.cpp in Sources */,
-				91F32F611D0C5B3D008457CA /* DamageController.cpp in Sources */,
-				2BD3CBB8160BB2B30043156E /* MathFunctions.cpp in Sources */,
-				2BD3CBB9160BB2B30043156E /* CMFactory.cpp in Sources */,
-				2BD3CBBA160BB2B30043156E /* CMSpace.cpp in Sources */,
-				2BD3CBBB160BB2B30043156E /* PhysicsZone.cpp in Sources */,
-				2BD3CBBC160BB2B30043156E /* Renderer.cpp in Sources */,
-				91D64661186F2D2C00FA6CB5 /* PathPoint.cpp in Sources */,
-				2BD3CBBD160BB2B30043156E /* AnimationSequence.cpp in Sources */,
-				2BD3CBBE160BB2B30043156E /* Sprite.cpp in Sources */,
-				2BD3CBBF160BB2B30043156E /* ImageFactory.cpp in Sources */,
-				2BD3CBC0160BB2B30043156E /* PNGImage.cpp in Sources */,
-				2BD3CBC1160BB2B30043156E /* SDLWindow.cpp in Sources */,
-				2BD3CBC2160BB2B30043156E /* SysEvents.cpp in Sources */,
-				2BD3CBC3160BB2B30043156E /* SysFile.cpp in Sources */,
-				2BD3CBC4160BB2B30043156E /* SysLibs.cpp in Sources */,
-				2BD3CBC6160BB2B30043156E /* SysTime.cpp in Sources */,
-				2BD3CBC7160BB2B30043156E /* WindowFactory.cpp in Sources */,
-				2BD3CBC8160BB2B30043156E /* TextFunctions.cpp in Sources */,
-				2BD3CBC9160BB2B30043156E /* Texture.cpp in Sources */,
-				2BD3CBCA160BB2B30043156E /* TextureFactory.cpp in Sources */,
-				2BD3CBCB160BB2B30043156E /* Utils.cpp in Sources */,
-				2BD3CBCC160BB2B30043156E /* ZoneBase.cpp in Sources */,
-				2BD3CBCD160BB2B30043156E /* example.c in Sources */,
-				91282D1E1826764500B80892 /* Vector2f.cpp in Sources */,
-				2BD3CBCE160BB2B30043156E /* png.c in Sources */,
-				2BD3CBCF160BB2B30043156E /* pngerror.c in Sources */,
-				2BD3CBD0160BB2B30043156E /* pngget.c in Sources */,
-				2BD3CBD1160BB2B30043156E /* pngmem.c in Sources */,
-				2BD3CBD2160BB2B30043156E /* pngpread.c in Sources */,
-				2BD3CBD3160BB2B30043156E /* pngread.c in Sources */,
-				2BD3CBD4160BB2B30043156E /* pngrio.c in Sources */,
-				2BD3CBD5160BB2B30043156E /* pngrtran.c in Sources */,
-				2BD3CBD6160BB2B30043156E /* pngrutil.c in Sources */,
-				2BD3CBD7160BB2B30043156E /* pngset.c in Sources */,
-				2BD3CBD8160BB2B30043156E /* pngtrans.c in Sources */,
-				2BD3CBD9160BB2B30043156E /* pngwio.c in Sources */,
-				2BD3CBDA160BB2B30043156E /* pngwrite.c in Sources */,
-				2BD3CBDB160BB2B30043156E /* pngwtran.c in Sources */,
-				2BD3CBDC160BB2B30043156E /* pngwutil.c in Sources */,
-				2BD3CBDD160BB2B30043156E /* lapi.c in Sources */,
-				2BD3CBDE160BB2B30043156E /* lauxlib.c in Sources */,
-				2BD3CBDF160BB2B30043156E /* lbaselib.c in Sources */,
-				2BD3CBE0160BB2B30043156E /* lcode.c in Sources */,
-				2BD3CBE1160BB2B30043156E /* ldblib.c in Sources */,
-				2BD3CBE2160BB2B30043156E /* ldebug.c in Sources */,
-				2BD3CBE3160BB2B30043156E /* ldo.c in Sources */,
-				2BD3CBE4160BB2B30043156E /* ldump.c in Sources */,
-				2BD3CBE5160BB2B30043156E /* lfunc.c in Sources */,
-				2BD3CBE6160BB2B30043156E /* lgc.c in Sources */,
-				2BD3CBE7160BB2B30043156E /* linit.c in Sources */,
-				2BD3CBE8160BB2B30043156E /* liolib.c in Sources */,
-				2BD3CBE9160BB2B30043156E /* llex.c in Sources */,
-				2BD3CBEA160BB2B30043156E /* lmathlib.c in Sources */,
-				2BD3CBEB160BB2B30043156E /* lmem.c in Sources */,
-				2BD3CBEC160BB2B30043156E /* loadlib.c in Sources */,
-				2BD3CBED160BB2B30043156E /* lobject.c in Sources */,
-				2BD3CBEE160BB2B30043156E /* lopcodes.c in Sources */,
-				2BD3CBEF160BB2B30043156E /* loslib.c in Sources */,
-				2BD3CBF0160BB2B30043156E /* lparser.c in Sources */,
-				2BD3CBF1160BB2B30043156E /* lstate.c in Sources */,
-				2BD3CBF2160BB2B30043156E /* lstring.c in Sources */,
-				2BD3CBF3160BB2B30043156E /* lstrlib.c in Sources */,
-				2BD3CBF4160BB2B30043156E /* ltable.c in Sources */,
-				2BD3CBF5160BB2B30043156E /* ltablib.c in Sources */,
-				2BD3CBF6160BB2B30043156E /* ltm.c in Sources */,
-				2BD3CBF7160BB2B30043156E /* lua.c in Sources */,
-				2BD3CBF8160BB2B30043156E /* luac.c in Sources */,
-				2BD3CBF9160BB2B30043156E /* lundump.c in Sources */,
-				2BD3CBFA160BB2B30043156E /* lvm.c in Sources */,
-				2BD3CBFB160BB2B30043156E /* lzio.c in Sources */,
-				2BD3CBFC160BB2B30043156E /* print.c in Sources */,
-				2BD3CC11160BB2B30043156E /* AnimatedDude.cpp in Sources */,
-				2BD3CC12160BB2B30043156E /* AnimatedDudeController.cpp in Sources */,
-				91282D1B1826759E00B80892 /* Quad.cpp in Sources */,
-				2BD3CC13160BB2B30043156E /* Explosion.cpp in Sources */,
-				2BD3CC15160BB2B30043156E /* Shuttle.cpp in Sources */,
-				2BD3CC17160BB2B30043156E /* TestZone.cpp in Sources */,
-				2BD3CC1A160BB2B30043156E /* SysVideo.cpp in Sources */,
-				918157261826E5E600C66F2B /* main.cpp in Sources */,
-				91A8775C1C022CD800DF77B5 /* CacoDemon.cpp in Sources */,
-				91791D2C18269CC0007A705A /* ShuttleController.cpp in Sources */,
-				91D6465D186F2D0D00FA6CB5 /* PathFactory.cpp in Sources */,
-				91791D2B18269CB9007A705A /* Moon.cpp in Sources */,
-				2BDD2C90171C9F540041CB18 /* PhysicsEntityBase.cpp in Sources */,
-				2BDD2C92171C9F540041CB18 /* RenderUtils.cpp in Sources */,
-				2BDD2C9D171C9FBE0041CB18 /* FireBullet.cpp in Sources */,
-				2BDD2C9F171C9FBE0041CB18 /* Meteor.cpp in Sources */,
-				9199F5EA17E3AA0F0001FE28 /* adler32.c in Sources */,
-				9199F5EC17E3AA0F0001FE28 /* compress.c in Sources */,
-				9199F5EE17E3AA0F0001FE28 /* crc32.c in Sources */,
-				9199F5F017E3AA0F0001FE28 /* deflate.c in Sources */,
-				9199F5F217E3AA0F0001FE28 /* gzclose.c in Sources */,
-				9199F5F417E3AA0F0001FE28 /* gzlib.c in Sources */,
-				9199F5F617E3AA0F0001FE28 /* gzread.c in Sources */,
-				9199F5F817E3AA0F0001FE28 /* gzwrite.c in Sources */,
-				9199F5FA17E3AA0F0001FE28 /* infback.c in Sources */,
-				9199F5FC17E3AA0F0001FE28 /* inffast.c in Sources */,
-				9199F5FE17E3AA0F0001FE28 /* inflate.c in Sources */,
-				9199F60017E3AA0F0001FE28 /* inftrees.c in Sources */,
-				9199F60217E3AA0F0001FE28 /* trees.c in Sources */,
-				91A877641C0236B800DF77B5 /* CacoDemonController.cpp in Sources */,
-				9199F60417E3AA0F0001FE28 /* uncompr.c in Sources */,
-				9199F60A17E3AA0F0001FE28 /* zutil.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2824,74 +2527,6 @@
 				STRIP_PNG_TEXT = NO;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		2BD3CC42160BB2B30043156E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Niklas Damberg (KE6DZTA6CM)";
-				COMPRESS_PNG_FILES = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_INPUT_FILETYPE = automatic;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_PREFIX_HEADER = "";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../External Libs/chipmunk-6.1.1/include/chipmunk\"",
-					"\"$(SRCROOT)/../External Libs/SDL2/include\"",
-				);
-				INFOPLIST_FILE = "MonoiOS copy-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../External Libs/chipmunk-6.1.1\"",
-					"\"$(SRCROOT)/../External Libs/SDL2/ios/debug\"",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:identifier}";
-				PRODUCT_NAME = "MonoiOS Simulator";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A6F143AC-AFC9-4B76-9B6D-ACCD84A87832";
-				SUPPORTED_PLATFORMS = iphonesimulator;
-				TARGETED_DEVICE_FAMILY = 2;
-			};
-			name = Debug;
-		};
-		2BD3CC43160BB2B30043156E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Niklas Damberg (KE6DZTA6CM)";
-				COMPRESS_PNG_FILES = NO;
-				COPY_PHASE_STRIP = YES;
-				GCC_INPUT_FILETYPE = automatic;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_PREFIX_HEADER = "";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../External Libs/chipmunk-6.1.1/include/chipmunk\"",
-					"\"$(SRCROOT)/../External Libs/SDL2/include\"",
-				);
-				INFOPLIST_FILE = "MonoiOS copy-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../External Libs/chipmunk-6.1.1\"",
-					"\"$(SRCROOT)/../External Libs/SDL2/ios/debug\"",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:identifier}";
-				PRODUCT_NAME = "MonoiOS Simulator";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A6F143AC-AFC9-4B76-9B6D-ACCD84A87832";
-				SUPPORTED_PLATFORMS = iphonesimulator;
-				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
@@ -3460,15 +3095,6 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2BD3CC41160BB2B30043156E /* Build configuration list for PBXNativeTarget "MonoiOS Simulator" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2BD3CC42160BB2B30043156E /* Debug */,
-				2BD3CC43160BB2B30043156E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
