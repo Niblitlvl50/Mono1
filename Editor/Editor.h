@@ -57,5 +57,7 @@ namespace editor
         std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
 
         mono::EventToken<event::SurfaceChangedEvent> m_surfaceChangedToken;
+
+        mono::ICameraPtr m_camera;
     };
 }

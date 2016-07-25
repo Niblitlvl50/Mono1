@@ -26,8 +26,10 @@ namespace mono
         virtual void Unfollow() = 0;
         
         virtual math::Quad GetViewport() const = 0;
-        
+
+        virtual void SetViewport(const math::Quad& viewport) = 0;
         virtual void SetTargetViewport(const math::Quad& target) = 0;
+
         virtual void SetPosition(const math::Vector2f& position) = 0;
         virtual math::Vector2f GetPosition() const = 0;
     };

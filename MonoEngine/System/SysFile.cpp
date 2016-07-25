@@ -29,6 +29,15 @@ File::FilePtr File::CreateBinaryFile(const char* file_name)
     return File::FilePtr(file, std::fclose);
 }
 
+File::FilePtr File::CreateAsciiFile(const char* file_name)
+{
+    std::FILE* file = std::fopen(file_name, "w");
+    if(!file)
+        throw std::runtime_error("Unable to create ascii file: " + std::string(file_name));
+
+    return File::FilePtr(file, std::fclose);
+}
+
 long File::FileSize(const FilePtr& file)
 {
     std::fseek(file.get(), 0, SEEK_END);

@@ -9,6 +9,7 @@
 #include "Editor.h"
 
 #include "IRenderer.h"
+#include "ICamera.h"
 
 #include "TextureFactory.h"
 #include "ITexture.h"
@@ -30,6 +31,7 @@
 #include "SurfaceChangedEvent.h"
 
 #include "WorldFile.h"
+#include "EditorConfig.h"
 
 namespace
 {
@@ -40,13 +42,12 @@ namespace
         SpriteDrawable(const char* file)
         {
             m_sprite = mono::CreateSprite(file);
-            SetPosition(math::Vector2f(100, 100));
             SetScale(math::Vector2f(50, 50));
         }
 
         virtual void Draw(mono::IRenderer& renderer) const
         {
-            renderer.DrawSprite(*m_sprite.get());
+            renderer.DrawSprite(*m_sprite);
             renderer.DrawText("hello", Position(), true, mono::Color::RGBA(1, 0, 1, 1));
         }
 
@@ -154,10 +155,26 @@ EditorZone::~EditorZone()
     m_eventHandler.RemoveListener(m_surfaceChangedToken);
 
     SavePolygons(m_fileName, m_polygons);
+
+    editor::Config config;
+    config.cameraPosition = m_camera->GetPosition();
+    config.cameraViewport = m_camera->GetViewport();
+
+    editor::SaveConfig("editor.config", config);
 }
 
 void EditorZone::OnLoad(mono::ICameraPtr camera)
 {
+    m_camera = camera;
+    
+    editor::Config config;
+    const bool config_loaded = editor::LoadConfig("editor.config", config);
+    if(config_loaded)
+    {
+        camera->SetPosition(config.cameraPosition);
+        camera->SetViewport(config.cameraViewport);
+    }
+
     m_userInputController = std::make_shared<editor::UserInputController>(camera, this, &m_context, m_windowSize, m_eventHandler);
 
     AddUpdatable(m_interfaceDrawer);

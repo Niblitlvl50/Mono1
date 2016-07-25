@@ -129,6 +129,9 @@
 		9143AF621D40CEC400E28D53 /* SpriteFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9143AF5F1D40CEC400E28D53 /* SpriteFactory.cpp */; };
 		9143AF631D40CEC400E28D53 /* SpriteFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9143AF601D40CEC400E28D53 /* SpriteFactory.h */; };
 		9143AF661D411F6800E28D53 /* WorldFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9143AF641D411F6800E28D53 /* WorldFile.cpp */; };
+		9143AF6A1D44CAAB00E28D53 /* EditorConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9143AF681D44CAAB00E28D53 /* EditorConfig.cpp */; };
+		9143AF6F1D44D3F300E28D53 /* luatables.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9143AF6C1D44D39400E28D53 /* luatables.cc */; };
+		9143AF701D44D3F400E28D53 /* luatables.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9143AF6C1D44D39400E28D53 /* luatables.cc */; };
 		91451A241D10B14100F17B05 /* AudioListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91451A221D10B14100F17B05 /* AudioListener.cpp */; };
 		91451A251D10B14100F17B05 /* AudioListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91451A221D10B14100F17B05 /* AudioListener.cpp */; };
 		91451A261D10B14100F17B05 /* AudioListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 91451A231D10B14100F17B05 /* AudioListener.h */; };
@@ -866,6 +869,10 @@
 		9143AF641D411F6800E28D53 /* WorldFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldFile.cpp; path = ../Editor/WorldFile.cpp; sourceTree = "<group>"; };
 		9143AF651D411F6800E28D53 /* WorldFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldFile.h; path = ../Editor/WorldFile.h; sourceTree = "<group>"; };
 		9143AF671D44C5C000E28D53 /* MainMenuOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainMenuOptions.h; path = Editor/MainMenuOptions.h; sourceTree = "<group>"; };
+		9143AF681D44CAAB00E28D53 /* EditorConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EditorConfig.cpp; path = ../Editor/EditorConfig.cpp; sourceTree = "<group>"; };
+		9143AF691D44CAAB00E28D53 /* EditorConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditorConfig.h; path = ../Editor/EditorConfig.h; sourceTree = "<group>"; };
+		9143AF6C1D44D39400E28D53 /* luatables.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = luatables.cc; path = "luatables++/luatables.cc"; sourceTree = "<group>"; };
+		9143AF6D1D44D39400E28D53 /* luatables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luatables.h; path = "luatables++/luatables.h"; sourceTree = "<group>"; };
 		91451A211D10ADA400F17B05 /* RenderLayers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderLayers.h; sourceTree = "<group>"; };
 		91451A221D10B14100F17B05 /* AudioListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioListener.cpp; path = Audio/AudioListener.cpp; sourceTree = "<group>"; };
 		91451A231D10B14100F17B05 /* AudioListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioListener.h; path = Audio/AudioListener.h; sourceTree = "<group>"; };
@@ -1521,6 +1528,7 @@
 		2B26D72715FD2BD8001E9748 /* External Libs */ = {
 			isa = PBXGroup;
 			children = (
+				9143AF6B1D44D38300E28D53 /* luatables++ */,
 				916B542C1D15D89600AD54A1 /* imgui */,
 				912D56971C52D169003ACC77 /* zed_net */,
 				9166E32E1C348E6A00A5C82D /* gtest-1.7.0 */,
@@ -1709,6 +1717,15 @@
 			name = zed_net;
 			sourceTree = "<group>";
 		};
+		9143AF6B1D44D38300E28D53 /* luatables++ */ = {
+			isa = PBXGroup;
+			children = (
+				9143AF6C1D44D39400E28D53 /* luatables.cc */,
+				9143AF6D1D44D39400E28D53 /* luatables.h */,
+			);
+			name = "luatables++";
+			sourceTree = "<group>";
+		};
 		915373D01C39D43200FF0C67 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1848,6 +1865,8 @@
 				9143AF641D411F6800E28D53 /* WorldFile.cpp */,
 				9143AF651D411F6800E28D53 /* WorldFile.h */,
 				9143AF671D44C5C000E28D53 /* MainMenuOptions.h */,
+				9143AF681D44CAAB00E28D53 /* EditorConfig.cpp */,
+				9143AF691D44CAAB00E28D53 /* EditorConfig.h */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -2466,6 +2485,7 @@
 				9166E2101C34225700A5C82D /* ldo.c in Sources */,
 				9166E2111C34225700A5C82D /* ldump.c in Sources */,
 				9166E2121C34225700A5C82D /* lfunc.c in Sources */,
+				9143AF6F1D44D3F300E28D53 /* luatables.cc in Sources */,
 				9166E2131C34225700A5C82D /* lgc.c in Sources */,
 				9166E2141C34225700A5C82D /* linit.c in Sources */,
 				9166E2151C34225700A5C82D /* liolib.c in Sources */,
@@ -2583,6 +2603,7 @@
 				9166E2781C3439AF00A5C82D /* lcode.c in Sources */,
 				9166E2791C3439AF00A5C82D /* ldblib.c in Sources */,
 				9166E27A1C3439AF00A5C82D /* ldebug.c in Sources */,
+				9143AF701D44D3F400E28D53 /* luatables.cc in Sources */,
 				9166E27B1C3439AF00A5C82D /* ldo.c in Sources */,
 				9166E27C1C3439AF00A5C82D /* ldump.c in Sources */,
 				9166E27D1C3439AF00A5C82D /* lfunc.c in Sources */,
@@ -2711,6 +2732,7 @@
 				916B542B1D15D31C00AD54A1 /* main.cpp in Sources */,
 				9143AF661D411F6800E28D53 /* WorldFile.cpp in Sources */,
 				916B54461D17219600AD54A1 /* ImGuiShader.cpp in Sources */,
+				9143AF6A1D44CAAB00E28D53 /* EditorConfig.cpp in Sources */,
 				916B54601D28276100AD54A1 /* Editor.cpp in Sources */,
 				916B54551D1E802400AD54A1 /* Polygon.cpp in Sources */,
 				916B544E1D18746400AD54A1 /* imgui_demo.cpp in Sources */,

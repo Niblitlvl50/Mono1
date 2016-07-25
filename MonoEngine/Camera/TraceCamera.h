@@ -28,6 +28,7 @@ namespace mono
         virtual math::Quad GetViewport() const;
         virtual math::Vector2f GetPosition() const;
 
+        virtual void SetViewport(const math::Quad& viewport);
         virtual void SetTargetViewport(const math::Quad& target);
         virtual void SetPosition(const math::Vector2f& position);
 
