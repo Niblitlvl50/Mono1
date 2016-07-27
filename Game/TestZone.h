@@ -15,8 +15,6 @@
 #include "Spawner.h"
 #include "DamageController.h"
 
-#include "SysNetwork.h"
-
 namespace game
 {
     struct SpawnEntityEvent;
@@ -60,8 +58,6 @@ namespace game
         DamageController m_damageController;
         
         mono::ISoundPtr m_backgroundMusic;
-        std::shared_ptr<Network::ISocket> m_socket;
-        std::shared_ptr<Network::ISocket> m_outSocket;
     };
 }
 
