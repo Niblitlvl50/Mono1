@@ -17,6 +17,7 @@ namespace world
     struct PolygonData
     {
         math::Vector2f position;
+        math::Vector2f local_offset;
         float rotation = 0.0f;
         std::vector<math::Vector2f> vertices;
     };

@@ -38,6 +38,7 @@ namespace math
     void RotateZ(Matrix& matrix, float radians, const Vector2f& offset);
     void ScaleXY(Matrix& matrix, const Vector2f& scale);
     void Transpose(Matrix& matrix);
+    void Inverse(Matrix& matrix);
 
     math::Vector2f Transform(const Matrix& matrix, const math::Vector2f& vector);
 

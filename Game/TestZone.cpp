@@ -38,6 +38,9 @@
 #include "RenderLayers.h"
 #include "AudioListener.h"
 
+#include "WorldFile.h"
+#include "World.h"
+
 #include <cmath>
 #include <thread>
 
@@ -211,6 +214,12 @@ TestZone::~TestZone()
 
 void TestZone::OnLoad(mono::ICameraPtr camera)
 {
+    File::FilePtr world_file = File::OpenBinaryFile("world.world");
+    
+    world::LevelFileHeader world_header;
+    world::ReadWorld(world_file, world_header);
+    game::LoadWorld(this, world_header.polygons);
+
     std::shared_ptr<PhysicsGrid> bounds = std::make_shared<PhysicsGrid>(math::Quad(-1000.0f, -1000.0f, 1000.0f, 1000.0f));
     AddPhysicsEntity(bounds, BACKGROUND);
 

@@ -11,6 +11,7 @@
 #include "IRenderer.h"
 #include "Color.h"
 #include "Quad.h"
+#include "Matrix.h"
 
 #include "MathFwd.h"
 #include "MathFunctions.h"

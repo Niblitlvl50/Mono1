@@ -19,6 +19,7 @@
 #include "SpriteFactory.h"
 #include "EntityBase.h"
 #include "Color.h"
+#include "Matrix.h"
 
 #include "UserInputController.h"
 
@@ -66,8 +67,17 @@ namespace
 
         if(!file_name)
             return polygon_data;
-        
-        File::FilePtr file = File::OpenBinaryFile(file_name);
+
+        File::FilePtr file;
+
+        try
+        {
+            file = File::OpenBinaryFile(file_name);
+        }
+        catch(...)
+        {
+            return polygon_data;
+        }
 
         world::LevelFileHeader level_data;
         world::ReadWorld(file, level_data);
@@ -78,10 +88,14 @@ namespace
         {
             std::shared_ptr<editor::PolygonEntity> polygon_entity = std::make_shared<editor::PolygonEntity>();
             polygon_entity->SetPosition(polygon.position);
+            polygon_entity->SetBasePoint(polygon.local_offset);
             polygon_entity->SetRotation(polygon.rotation);
 
+            math::Matrix invert_transform = polygon_entity->Transformation();
+            math::Inverse(invert_transform);
+
             for(const math::Vector2f& vertex : polygon.vertices)
-                polygon_entity->AddVertex(vertex);
+                polygon_entity->AddVertex(math::Transform(invert_transform, vertex));
 
             polygon_data.push_back(polygon_entity);
         }
@@ -104,8 +118,13 @@ namespace
             world::PolygonData& polygon_data = world_data.polygons[index];
 
             polygon_data.position = polygon_entity->Position();
+            polygon_data.local_offset = polygon_entity->BasePoint();
             polygon_data.rotation = polygon_entity->Rotation();
-            polygon_data.vertices = polygon_entity->GetVertices();
+
+            const math::Matrix& transform = polygon_entity->Transformation();
+
+            for(const math::Vector2f& vertex : polygon_entity->GetVertices())
+                polygon_data.vertices.push_back(math::Transform(transform, vertex));
         }
 
         File::FilePtr file = File::CreateBinaryFile(file_name);

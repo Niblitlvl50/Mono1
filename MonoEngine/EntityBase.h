@@ -12,7 +12,6 @@
 #include "IEntity.h"
 #include "MonoPtrFwd.h"
 #include "Vector2f.h"
-#include "Matrix.h"
 #include <vector>
 
 namespace mono
@@ -27,6 +26,7 @@ namespace mono
         virtual float Rotation() const;
 
         virtual void SetPosition(const math::Vector2f& position);
+        virtual void SetBasePoint(const math::Vector2f& base_point);
         virtual void SetRotation(float rotation);
         virtual void SetScale(const math::Vector2f& scale);
 
@@ -56,8 +56,6 @@ namespace mono
         math::Vector2f mBasePoint;
         math::Vector2f mScale;
         float mRotation;
-
-        //math::Matrix m_transform;
         
         std::vector<IEntityPtr> mChildren;
     };

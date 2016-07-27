@@ -20,6 +20,7 @@ namespace mono
     struct IUpdatable;
     struct IInputHandler;
     struct IZone;
+    struct IPhysicsZone;
     struct ITexture;
     struct IAction;
     struct IPath;

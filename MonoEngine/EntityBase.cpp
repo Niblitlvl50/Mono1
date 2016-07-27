@@ -41,11 +41,9 @@ void EntityBase::doDraw(IRenderer& renderer) const
 
 void EntityBase::doUpdate(unsigned int delta)
 {
-    // Updadate children
     for(auto& child : mChildren)
         child->doUpdate(delta);
 
-    // Update this object
     Update(delta);
 }
 
@@ -72,6 +70,11 @@ float EntityBase::Rotation() const
 void EntityBase::SetPosition(const math::Vector2f& position)
 {
     mPosition = position;
+}
+
+void EntityBase::SetBasePoint(const math::Vector2f& base_point)
+{
+    mBasePoint = base_point;
 }
 
 void EntityBase::SetRotation(float rotation)

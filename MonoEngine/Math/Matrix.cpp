@@ -38,35 +38,6 @@ void math::Translate(Matrix& matrix, const Vector2f& vector)
 {
     matrix.data[12] += vector.x;
     matrix.data[13] += vector.y;
-    //matrix.data[14] += 0.0f;
-
-    // The elements of the matrix are stored as column major order.
-    // |  0  4  8 12 |
-    // |  1  5  9 13 |
-    // |  2  6 10 14 |
-    // |  3  7 11 15 |
-
-    /*
-    const float x = vector.mX;
-    const float y = vector.mY;
-
-    matrix.m00 += matrix.m03 * x;
-    matrix.m10 += matrix.m13 * x;
-    matrix.m20 += matrix.m23 * x;
-    matrix.m30 += matrix.m33 * x;
-
-    matrix.m01 += matrix.m03 * y;
-    matrix.m11 += matrix.m13 * y;
-    matrix.m21 += matrix.m23 * y;
-    matrix.m31 += matrix.m33 * y;
-     */
-
-
-    /*
-    m[0] += m[3] * x;   m[4] += m[7] * x;   m[8] += m[11]* x;   m[12]+= m[15]* x;
-    m[1] += m[3] * y;   m[5] += m[7] * y;   m[9] += m[11]* y;   m[13]+= m[15]* y;
-    m[2] += m[3] * z;   m[6] += m[7] * z;   m[10]+= m[11]* z;   m[14]+= m[15]* z;
-     */
 }
 
 void math::Position(Matrix& matrix, const Vector2f& position)
@@ -166,6 +137,132 @@ void math::Transpose(Matrix& matrix)
     std::swap(matrix.data[7], matrix.data[13]);
 
     std::swap(matrix.data[11], matrix.data[14]);
+}
+
+void math::Inverse(math::Matrix& matrix)
+{
+    math::Matrix inv;
+
+    inv.data[0] = matrix.data[5]  * matrix.data[10] * matrix.data[15] -
+    matrix.data[5]  * matrix.data[11] * matrix.data[14] -
+    matrix.data[9]  * matrix.data[6]  * matrix.data[15] +
+    matrix.data[9]  * matrix.data[7]  * matrix.data[14] +
+    matrix.data[13] * matrix.data[6]  * matrix.data[11] -
+    matrix.data[13] * matrix.data[7]  * matrix.data[10];
+
+    inv.data[4] = -matrix.data[4]  * matrix.data[10] * matrix.data[15] +
+    matrix.data[4]  * matrix.data[11] * matrix.data[14] +
+    matrix.data[8]  * matrix.data[6]  * matrix.data[15] -
+    matrix.data[8]  * matrix.data[7]  * matrix.data[14] -
+    matrix.data[12] * matrix.data[6]  * matrix.data[11] +
+    matrix.data[12] * matrix.data[7]  * matrix.data[10];
+
+    inv.data[8] = matrix.data[4]  * matrix.data[9] * matrix.data[15] -
+    matrix.data[4]  * matrix.data[11] * matrix.data[13] -
+    matrix.data[8]  * matrix.data[5] * matrix.data[15] +
+    matrix.data[8]  * matrix.data[7] * matrix.data[13] +
+    matrix.data[12] * matrix.data[5] * matrix.data[11] -
+    matrix.data[12] * matrix.data[7] * matrix.data[9];
+
+    inv.data[12] = -matrix.data[4]  * matrix.data[9] * matrix.data[14] +
+    matrix.data[4]  * matrix.data[10] * matrix.data[13] +
+    matrix.data[8]  * matrix.data[5] * matrix.data[14] -
+    matrix.data[8]  * matrix.data[6] * matrix.data[13] -
+    matrix.data[12] * matrix.data[5] * matrix.data[10] +
+    matrix.data[12] * matrix.data[6] * matrix.data[9];
+
+    inv.data[1] = -matrix.data[1]  * matrix.data[10] * matrix.data[15] +
+    matrix.data[1]  * matrix.data[11] * matrix.data[14] +
+    matrix.data[9]  * matrix.data[2] * matrix.data[15] -
+    matrix.data[9]  * matrix.data[3] * matrix.data[14] -
+    matrix.data[13] * matrix.data[2] * matrix.data[11] +
+    matrix.data[13] * matrix.data[3] * matrix.data[10];
+
+    inv.data[5] = matrix.data[0]  * matrix.data[10] * matrix.data[15] -
+    matrix.data[0]  * matrix.data[11] * matrix.data[14] -
+    matrix.data[8]  * matrix.data[2] * matrix.data[15] +
+    matrix.data[8]  * matrix.data[3] * matrix.data[14] +
+    matrix.data[12] * matrix.data[2] * matrix.data[11] -
+    matrix.data[12] * matrix.data[3] * matrix.data[10];
+
+    inv.data[9] = -matrix.data[0]  * matrix.data[9] * matrix.data[15] +
+    matrix.data[0]  * matrix.data[11] * matrix.data[13] +
+    matrix.data[8]  * matrix.data[1] * matrix.data[15] -
+    matrix.data[8]  * matrix.data[3] * matrix.data[13] -
+    matrix.data[12] * matrix.data[1] * matrix.data[11] +
+    matrix.data[12] * matrix.data[3] * matrix.data[9];
+
+    inv.data[13] = matrix.data[0]  * matrix.data[9] * matrix.data[14] -
+    matrix.data[0]  * matrix.data[10] * matrix.data[13] -
+    matrix.data[8]  * matrix.data[1] * matrix.data[14] +
+    matrix.data[8]  * matrix.data[2] * matrix.data[13] +
+    matrix.data[12] * matrix.data[1] * matrix.data[10] -
+    matrix.data[12] * matrix.data[2] * matrix.data[9];
+
+    inv.data[2] = matrix.data[1]  * matrix.data[6] * matrix.data[15] -
+    matrix.data[1]  * matrix.data[7] * matrix.data[14] -
+    matrix.data[5]  * matrix.data[2] * matrix.data[15] +
+    matrix.data[5]  * matrix.data[3] * matrix.data[14] +
+    matrix.data[13] * matrix.data[2] * matrix.data[7] -
+    matrix.data[13] * matrix.data[3] * matrix.data[6];
+
+    inv.data[6] = -matrix.data[0]  * matrix.data[6] * matrix.data[15] +
+    matrix.data[0]  * matrix.data[7] * matrix.data[14] +
+    matrix.data[4]  * matrix.data[2] * matrix.data[15] -
+    matrix.data[4]  * matrix.data[3] * matrix.data[14] -
+    matrix.data[12] * matrix.data[2] * matrix.data[7] +
+    matrix.data[12] * matrix.data[3] * matrix.data[6];
+
+    inv.data[10] = matrix.data[0]  * matrix.data[5] * matrix.data[15] -
+    matrix.data[0]  * matrix.data[7] * matrix.data[13] -
+    matrix.data[4]  * matrix.data[1] * matrix.data[15] +
+    matrix.data[4]  * matrix.data[3] * matrix.data[13] +
+    matrix.data[12] * matrix.data[1] * matrix.data[7] -
+    matrix.data[12] * matrix.data[3] * matrix.data[5];
+
+    inv.data[14] = -matrix.data[0]  * matrix.data[5] * matrix.data[14] +
+    matrix.data[0]  * matrix.data[6] * matrix.data[13] +
+    matrix.data[4]  * matrix.data[1] * matrix.data[14] -
+    matrix.data[4]  * matrix.data[2] * matrix.data[13] -
+    matrix.data[12] * matrix.data[1] * matrix.data[6] +
+    matrix.data[12] * matrix.data[2] * matrix.data[5];
+
+    inv.data[3] = -matrix.data[1] * matrix.data[6] * matrix.data[11] +
+    matrix.data[1] * matrix.data[7] * matrix.data[10] +
+    matrix.data[5] * matrix.data[2] * matrix.data[11] -
+    matrix.data[5] * matrix.data[3] * matrix.data[10] -
+    matrix.data[9] * matrix.data[2] * matrix.data[7] +
+    matrix.data[9] * matrix.data[3] * matrix.data[6];
+
+    inv.data[7] = matrix.data[0] * matrix.data[6] * matrix.data[11] -
+    matrix.data[0] * matrix.data[7] * matrix.data[10] -
+    matrix.data[4] * matrix.data[2] * matrix.data[11] +
+    matrix.data[4] * matrix.data[3] * matrix.data[10] +
+    matrix.data[8] * matrix.data[2] * matrix.data[7] -
+    matrix.data[8] * matrix.data[3] * matrix.data[6];
+
+    inv.data[11] = -matrix.data[0] * matrix.data[5] * matrix.data[11] +
+    matrix.data[0] * matrix.data[7] * matrix.data[9] +
+    matrix.data[4] * matrix.data[1] * matrix.data[11] -
+    matrix.data[4] * matrix.data[3] * matrix.data[9] -
+    matrix.data[8] * matrix.data[1] * matrix.data[7] +
+    matrix.data[8] * matrix.data[3] * matrix.data[5];
+
+    inv.data[15] = matrix.data[0] * matrix.data[5] * matrix.data[10] -
+    matrix.data[0] * matrix.data[6] * matrix.data[9] -
+    matrix.data[4] * matrix.data[1] * matrix.data[10] +
+    matrix.data[4] * matrix.data[2] * matrix.data[9] +
+    matrix.data[8] * matrix.data[1] * matrix.data[6] -
+    matrix.data[8] * matrix.data[2] * matrix.data[5];
+
+    float det = (matrix.data[0] * inv.data[0]) + (matrix.data[1] * inv.data[4]) + (matrix.data[2] * inv.data[8]) + (matrix.data[3] * inv.data[12]);
+    if(det == 0.0f)
+        return;
+
+    det = 1.0f / det;
+
+    for(int i = 0; i < 16; i++)
+        matrix.data[i] = inv.data[i] * det;
 }
 
 math::Vector2f math::Transform(const Matrix& matrix, const math::Vector2f& vector)

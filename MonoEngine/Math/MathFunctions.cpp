@@ -82,5 +82,19 @@ math::Vector2f math::CentroidOfPolygon(const std::vector<math::Vector2f>& points
     return centroid;
 }
 
+bool math::IsPolygonClockwise(const std::vector<math::Vector2f>& points)
+{
+    float sum = 0.0f;
+
+    for(int point_index = 0; point_index < points.size(); ++point_index)
+    {
+        const math::Vector2f& v1 = points[point_index];
+        const math::Vector2f& v2 = points[(point_index + 1) % points.size()];
+
+        sum += (v2.x - v1.x) * (v2.y + v1.y);
+    }
+
+    return sum > 0.0f;
+}
 
 

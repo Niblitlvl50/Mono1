@@ -141,7 +141,11 @@ namespace
             
             std::vector<cpVect> vects(vertices.size());
             std::transform(vertices.begin(), vertices.end(), vects.begin(), transformFunc);
-            
+
+            const bool clockwice = math::IsPolygonClockwise(vertices);
+            if(clockwice)
+                std::reverse(vects.begin(), vects.end());
+
             mShape = cpPolyShapeNewRaw(body->Body(), int(vects.size()), vects.data(), 1.0f);
             mInertiaValue = cpMomentForPoly(body->GetMass(), int(vects.size()), vects.data(), cpv(offset.x, offset.y), 1.0f);
         }

@@ -23,6 +23,9 @@ namespace math
     // Pass in at least 3 points, else you will get "nan nan" back.
     math::Vector2f CentroidOfPolygon(const std::vector<math::Vector2f>& points);
 
+    // Check if a polygon is clockwise oriented or not
+    bool IsPolygonClockwise(const std::vector<math::Vector2f>& points);
+
     constexpr float PI()
     {
         return 3.14159265359f;
