@@ -27,6 +27,8 @@
 #include "ISprite.h"
 #include "ITexture.h"
 
+#include <cstdio>
+
 
 using namespace mono;
 
@@ -64,20 +66,31 @@ void Renderer::EndDraw()
 void Renderer::DrawFrame()
 {
     PrepareDraw();
-    
+
+    unsigned int draw_count = 0;
+
+    const math::Quad& viewport = mCamera->GetViewport();
+    const math::Quad camera_quad(viewport.mA, viewport.mA + viewport.mB);
+
     for(const auto& drawable : mDrawables)
     {
         mCurrentTransform = mModelView;
 
         const math::Quad& bounds = drawable->BoundingBox();
-        const math::Quad& viewport = mCamera->GetViewport();
-        const math::Quad camQuad(viewport.mA, viewport.mA + viewport.mB);
 
         // Make sure the entity is visible
-        const bool visible = math::QuadOverlaps(camQuad, bounds);
+        const bool visible = math::QuadOverlaps(camera_quad, bounds);
         if(visible)
             drawable->doDraw(*this);
+
+        draw_count += visible;
     }
+
+    char text_buffer[100];
+    std::snprintf(text_buffer, 100, "Drawables: %u", draw_count);
+    constexpr mono::Color::RGBA color(1.0f, 0.0f, 0.0f, 1.0f);
+
+    DrawText(text_buffer, viewport.mA + math::Vector2f(5.0f, viewport.mB.y - 10), false, color);
     
     // Draw all the texts after all the entities.
     mCurrentTransform = mModelView;
@@ -195,7 +208,6 @@ void Renderer::UseTexture(const ITexturePtr& texture) const
 
 void Renderer::ClearTexture()
 {
-
     m_currentTextureId = -1;
 }
 

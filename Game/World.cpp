@@ -31,23 +31,29 @@ namespace
         {
             mPhysicsObject.body = mono::PhysicsFactory::CreateStaticBody();
             mPhysicsObject.shapes.push_back(mono::PhysicsFactory::CreateShape(mPhysicsObject.body, polygon.vertices, math::zeroVec));
+
+            m_boundingBox = math::Quad(math::INF, math::INF, -math::INF, -math::INF);
+
+            for(const math::Vector2f& vertex : polygon.vertices)
+                m_boundingBox |= vertex;
         }
 
         virtual void Draw(mono::IRenderer& renderer) const
         {
             constexpr mono::Color::RGBA color(1.0f, 0.0f, 1.0f, 1.0f);
-            renderer.DrawClosedPolyline(m_vertices, color, 2.0f);
+            renderer.DrawClosedPolyline(m_vertices, color, 4.0f);
         }
 
         virtual math::Quad BoundingBox() const
         {
-            return math::Quad(-math::INF, -math::INF, math::INF, math::INF);
+            return m_boundingBox;
         }
 
         virtual void Update(unsigned int delta)
         { }
 
         const std::vector<math::Vector2f> m_vertices;
+        math::Quad m_boundingBox;
     };
 }
 
