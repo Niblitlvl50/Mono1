@@ -32,6 +32,7 @@ UserInputController::UserInputController(const mono::ICameraPtr& camera,
       m_context(context),
       m_cameraTool(camera, window_size),
       m_polygonTool(editor),
+      m_polygonBrushTool(editor),
       m_translateTool(editor),
       m_rotateTool(editor),
       m_activeTool(&m_polygonTool)
@@ -74,6 +75,13 @@ void UserInputController::SelectTool(ToolsMenuOptions option)
         {
             m_activeTool = &m_polygonTool;
             m_context->notifications.push_back(Notification(2, "Polygon tool", 2000));
+            break;
+        }
+
+        case ToolsMenuOptions::POLYGON_BRUSH_TOOL:
+        {
+            m_activeTool = &m_polygonBrushTool;
+            m_context->notifications.push_back(Notification(2, "Polygon Brush", 2000));
             break;
         }
 
@@ -143,8 +151,10 @@ bool UserInputController::OnKeyDown(const event::KeyDownEvent& event)
     if(event.key == Key::ONE)
         SelectTool(ToolsMenuOptions::POLYGON_TOOL);
     else if(event.key == Key::TWO)
-        SelectTool(ToolsMenuOptions::TRANSLATE_TOOL);
+        SelectTool(ToolsMenuOptions::POLYGON_BRUSH_TOOL);
     else if(event.key == Key::THREE)
+        SelectTool(ToolsMenuOptions::TRANSLATE_TOOL);
+    else if(event.key == Key::FOUR)
         SelectTool(ToolsMenuOptions::ROTATE_TOOL);
 
     return false;

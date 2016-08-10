@@ -41,6 +41,9 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
         if(ImGui::MenuItem("Polygon"))
             m_context.toolsMenuCallback(ToolsMenuOptions::POLYGON_TOOL);
 
+        if(ImGui::MenuItem("Polygon Brush"))
+            m_context.toolsMenuCallback(ToolsMenuOptions::POLYGON_BRUSH_TOOL);
+
         if(ImGui::MenuItem("Translate"))
             m_context.toolsMenuCallback(ToolsMenuOptions::TRANSLATE_TOOL);
 

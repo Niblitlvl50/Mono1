@@ -15,6 +15,7 @@
 #include "MainMenuOptions.h"
 
 #include "PolygonTool.h"
+#include "PolygonBrushTool.h"
 #include "TranslateTool.h"
 #include "RotateTool.h"
 #include "CameraTool.h"
@@ -57,6 +58,7 @@ namespace editor
 
         editor::CameraTool m_cameraTool;
         editor::PolygonTool m_polygonTool;
+        editor::PolygonBrushTool m_polygonBrushTool;
         editor::TranslateTool m_translateTool;
         editor::RotateTool m_rotateTool;
         editor::ITool* m_activeTool;

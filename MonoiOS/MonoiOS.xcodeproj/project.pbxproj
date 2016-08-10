@@ -371,6 +371,7 @@
 		91A877671C02631A00DF77B5 /* cacobullet.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91A877651C02631A00DF77B5 /* cacobullet.sprite */; };
 		91A877681C02631A00DF77B5 /* cacoexplosion.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91A877661C02631A00DF77B5 /* cacoexplosion.sprite */; };
 		91AAE3811C35837F001FE1FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		91B498791D5A517F0027DE06 /* PolygonBrushTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91B498771D5A517F0027DE06 /* PolygonBrushTool.cpp */; };
 		91B746FC1C00E73000F257CC /* laser.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 91B746FB1C00E73000F257CC /* laser.sprite */; };
 		91B8125A1C37DE4E00BDF407 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B812591C37DE4E00BDF407 /* OpenAL.framework */; };
 		91B8125E1C37DEB400BDF407 /* AudioFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91B8125C1C37DEB400BDF407 /* AudioFactory.cpp */; };
@@ -899,6 +900,8 @@
 		91A877621C0236B800DF77B5 /* CacoDemonController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacoDemonController.h; sourceTree = "<group>"; };
 		91A877651C02631A00DF77B5 /* cacobullet.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = cacobullet.sprite; path = res/cacobullet.sprite; sourceTree = "<group>"; };
 		91A877661C02631A00DF77B5 /* cacoexplosion.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = cacoexplosion.sprite; path = res/cacoexplosion.sprite; sourceTree = "<group>"; };
+		91B498771D5A517F0027DE06 /* PolygonBrushTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PolygonBrushTool.cpp; path = ../Editor/Tools/PolygonBrushTool.cpp; sourceTree = "<group>"; };
+		91B498781D5A517F0027DE06 /* PolygonBrushTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PolygonBrushTool.h; path = ../Editor/Tools/PolygonBrushTool.h; sourceTree = "<group>"; };
 		91B63FA117D3D2FE004F1868 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = SDL2/ios/debug/libSDL2.a; sourceTree = "<group>"; };
 		91B746FB1C00E73000F257CC /* laser.sprite */ = {isa = PBXFileReference; lastKnownFileType = text; name = laser.sprite; path = res/laser.sprite; sourceTree = "<group>"; };
 		91B812591C37DE4E00BDF407 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenAL.framework; sourceTree = DEVELOPER_DIR; };
@@ -1770,6 +1773,8 @@
 				916B54661D29064900AD54A1 /* CameraTool.h */,
 				916B54681D296FCD00AD54A1 /* TranslateTool.cpp */,
 				916B54691D296FCD00AD54A1 /* TranslateTool.h */,
+				91B498771D5A517F0027DE06 /* PolygonBrushTool.cpp */,
+				91B498781D5A517F0027DE06 /* PolygonBrushTool.h */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -2450,6 +2455,7 @@
 				916B544C1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.cpp in Sources */,
 				916B545D1D281B6100AD54A1 /* PolygonTool.cpp in Sources */,
 				9143AF741D4795F800E28D53 /* WorldFile.cpp in Sources */,
+				91B498791D5A517F0027DE06 /* PolygonBrushTool.cpp in Sources */,
 				916B54381D15D95A00AD54A1 /* imgui_draw.cpp in Sources */,
 				916B54631D28766800AD54A1 /* RotateTool.cpp in Sources */,
 				916B54491D186BC400AD54A1 /* ImGuiRenderer.cpp in Sources */,

@@ -20,6 +20,7 @@ namespace editor
     enum class ToolsMenuOptions
     {
         POLYGON_TOOL,
+        POLYGON_BRUSH_TOOL,
         TRANSLATE_TOOL,
         ROTATE_TOOL,
         CAMERA_TOOL
