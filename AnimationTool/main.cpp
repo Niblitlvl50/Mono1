@@ -77,7 +77,7 @@ namespace
 
         virtual void Draw(mono::IRenderer& renderer) const
         {
-            renderer.DrawSprite(*m_sprite.get());
+            renderer.DrawSprite(*m_sprite);
         }
 
         virtual void Update(unsigned int delta)
