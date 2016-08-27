@@ -61,7 +61,7 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
 
 void Shuttle::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(*mSprite.get());
+    renderer.DrawSprite(*mSprite);
 }
 
 void Shuttle::Update(unsigned int delta)

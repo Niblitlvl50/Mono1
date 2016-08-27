@@ -40,6 +40,9 @@ namespace mono
 
         virtual void PushNewTransform(const math::Matrix& transform) = 0;
         virtual const math::Matrix& GetCurrentTransform() const = 0;
+
+        virtual void PushNewProjection(const math::Matrix& projection) = 0;
+        virtual const math::Matrix& GetCurrentProjection() const = 0;
     };
 
 }

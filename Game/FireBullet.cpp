@@ -47,7 +47,7 @@ void FireBullet::Update(unsigned int delta)
 
 void FireBullet::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(*mSprite.get());
+    renderer.DrawSprite(*mSprite);
 }
 
 void FireBullet::OnCollideWith(const mono::IBodyPtr& body)

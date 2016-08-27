@@ -38,5 +38,5 @@ void Explosion::Update(unsigned int delta)
 
 void Explosion::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(*mSprite.get());
+    renderer.DrawSprite(*mSprite);
 }

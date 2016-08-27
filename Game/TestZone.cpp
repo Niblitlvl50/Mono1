@@ -197,8 +197,8 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     world::ReadWorld(world_file, world_header);
     game::LoadWorld(this, world_header.polygons);
 
-    std::shared_ptr<PhysicsGrid> bounds = std::make_shared<PhysicsGrid>(math::Quad(-1000.0f, -1000.0f, 1000.0f, 1000.0f));
-    AddPhysicsEntity(bounds, BACKGROUND);
+    //std::shared_ptr<PhysicsGrid> bounds = std::make_shared<PhysicsGrid>(math::Quad(-1000.0f, -1000.0f, 1000.0f, 1000.0f));
+    //AddPhysicsEntity(bounds, BACKGROUND);
 
     std::shared_ptr<Moon> moon1 = std::make_shared<Moon>(550.0f, 300.0f, 100.0f);
     std::shared_ptr<Moon> moon2 = std::make_shared<Moon>(-400.0f, 400.0f, 50.0f);

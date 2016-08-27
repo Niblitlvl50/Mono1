@@ -29,7 +29,7 @@ void DotEntity::Draw(mono::IRenderer& renderer) const
     constexpr float size = 4.0f;
 
     renderer.DrawPoints(points, color, size);
-    renderer.DrawText("dot...", mPosition + math::Vector2f(0.0f, 5.0f), true, color);
+    renderer.DrawText("dot...", math::Vector2f(0.0f, 5.0f), true, color);
 }
 
 void DotEntity::Update(unsigned int delta)

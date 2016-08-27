@@ -24,7 +24,7 @@ InvaderEntity::InvaderEntity(float x, float y)
 
 void InvaderEntity::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(*mSprite.get());
+    renderer.DrawSprite(*mSprite);
 }
 
 void InvaderEntity::Update(unsigned int delta)

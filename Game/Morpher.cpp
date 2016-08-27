@@ -15,7 +15,6 @@ using namespace game;
 Morpher::Morpher()
 {
     mPosition = math::Vector2f(-100, 50);
-    mScale = math::Vector2f(10, 10);
 
     m_shape1 = { math::Vector2f(-10, -10),
                  math::Vector2f(-10, 10),
@@ -39,7 +38,7 @@ void Morpher::Draw(mono::IRenderer& renderer) const
 {
     constexpr mono::Color::RGBA color(0, 1, 1);
     renderer.DrawShape(m_shape1, m_shape2, m_morphGrade, color);
-    renderer.DrawText("Here", mPosition, true, color);
+    renderer.DrawText("Here", math::zeroVec, true, color);
 }
 
 void Morpher::Update(unsigned int delta)

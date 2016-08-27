@@ -40,7 +40,7 @@ Meteor::Meteor(float x, float y)
 
 void Meteor::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(*mSprite.get());
+    renderer.DrawSprite(*mSprite);
 }
 
 void Meteor::Update(unsigned int delta)

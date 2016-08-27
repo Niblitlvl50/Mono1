@@ -27,14 +27,13 @@
 #include "ISprite.h"
 #include "ITexture.h"
 
-#include <cstdio>
-
 
 using namespace mono;
 
 Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
     : mCamera(camera),
       mWindow(window),
+      m_currentShaderId(-1),
       m_currentTextureId(-1)
 {
     mColorShader = GetShaderFactory()->CreateColorShader();
@@ -74,7 +73,8 @@ void Renderer::DrawFrame()
 
     for(const auto& drawable : mDrawables)
     {
-        mCurrentTransform = mModelView;
+        m_current_transform = mModelView;
+        m_current_projection = mProjectionMatrix;
 
         const math::Quad& bounds = drawable->BoundingBox();
 
@@ -86,15 +86,9 @@ void Renderer::DrawFrame()
         draw_count += visible;
     }
 
-    char text_buffer[100];
-    std::snprintf(text_buffer, 100, "Drawables: %u", draw_count);
-    constexpr mono::Color::RGBA color(1.0f, 0.0f, 0.0f, 1.0f);
-
-    DrawText(text_buffer, viewport.mA + math::Vector2f(5.0f, viewport.mB.y - 10), false, color);
-    
-    // Draw all the texts after all the entities.
-    mCurrentTransform = mModelView;
-    doDrawTexts();
+    // Restore the matrices
+    m_current_transform = mModelView;
+    m_current_projection = mProjectionMatrix;
 
     EndDraw();
 }
@@ -119,11 +113,22 @@ void Renderer::AddUpdatable(const IUpdatablePtr& updatable)
 
 void Renderer::DrawText(const char* text, const math::Vector2f& pos, bool center, const mono::Color::RGBA& color)
 {
+    const mono::ITexturePtr& texture = mono::GetFontTexture();
+    if(!texture)
+        return;
+
     TextDefinition def = mono::GenerateVertexDataFromString(text, pos, center);
     def.color = color;
 
+    const std::vector<TextDefinition> texts = { def };
+
+
+    UseTexture(texture);
+    UseShader(mTextureShader);
+    ::DrawTexts(texts, mTextureShader);
+
     // Save the text in the collection
-    mTexts.push_back(def);
+    //mTexts.push_back(def);
 }
 
 void Renderer::doDrawTexts() const
@@ -133,15 +138,15 @@ void Renderer::doDrawTexts() const
         return;
 
     UseTexture(texture);
-
     UseShader(mTextureShader);
+
     ::DrawTexts(mTexts, mTextureShader);
 }
 
 void Renderer::DrawSprite(const ISprite& sprite) const
 {
-    UseShader(mTextureShader);
     UseTexture(sprite.GetTexture());
+    UseShader(mTextureShader);
     ::DrawSprite(sprite, mTextureShader);
 }
 
@@ -191,19 +196,27 @@ void Renderer::DrawShape(const std::vector<math::Vector2f>& shape1, const std::v
 
 void Renderer::UseShader(const IShaderPtr& shader) const
 {
-    shader->Use();
-    shader->LoadModelViewMatrix(mCurrentTransform);
-    shader->LoadProjectionMatrix(mProjectionMatrix);
+    const unsigned int id = shader->GetShaderId();
+    if(id != m_currentShaderId)
+    {
+        shader->Use();
+        m_currentShaderId = id;
+    }
+
+    shader->LoadModelViewMatrix(m_current_transform);
+    shader->LoadProjectionMatrix(m_current_projection);
 }
 
 void Renderer::UseTexture(const ITexturePtr& texture) const
 {
     const unsigned int id = texture->Id();
-    if(id == m_currentTextureId)
-        return;
+    if(id != m_currentTextureId)
+    {
+        // This does not work! Why?
 
-    texture->Use();
-    m_currentTextureId = texture->Id();
+        texture->Use();
+        m_currentTextureId = id;
+    }
 }
 
 void Renderer::ClearTexture()
@@ -213,12 +226,21 @@ void Renderer::ClearTexture()
 
 void Renderer::PushNewTransform(const math::Matrix& transform)
 {
-    mCurrentTransform = transform;
+    m_current_transform = transform;
 }
 
 const math::Matrix& Renderer::GetCurrentTransform() const
 {
-    return mCurrentTransform;
+    return m_current_transform;
 }
 
+void Renderer::PushNewProjection(const math::Matrix& projection)
+{
+    m_current_projection = projection;
+}
+
+const math::Matrix& Renderer::GetCurrentProjection() const
+{
+    return m_current_projection;
+}
 

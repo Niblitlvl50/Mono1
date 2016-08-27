@@ -48,6 +48,9 @@ namespace mono
         virtual void PushNewTransform(const math::Matrix& transform);
         virtual const math::Matrix& GetCurrentTransform() const;
 
+        virtual void PushNewProjection(const math::Matrix& projection);
+        virtual const math::Matrix& GetCurrentProjection() const;
+
     private:
         
         void PrepareDraw();
@@ -60,8 +63,11 @@ namespace mono
 
         math::Matrix mProjectionMatrix;
         math::Matrix mModelView;
-        math::Matrix mCurrentTransform;
 
+        math::Matrix m_current_projection;
+        math::Matrix m_current_transform;
+
+        mutable unsigned int m_currentShaderId;
         mutable unsigned int m_currentTextureId;
 
         std::shared_ptr<IColorShader> mColorShader;

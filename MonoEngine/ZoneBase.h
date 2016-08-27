@@ -16,10 +16,8 @@ namespace mono
 
     class ZoneBase : public virtual IZone
     {
-    protected:
 
-        virtual void Accept(IRenderer& renderer);
-        virtual void DoPreAccept();
+    public:
 
         virtual void AddEntity(const IEntityPtr& entity, int layer);
         virtual void RemoveEntity(const IEntityPtr& entity);
@@ -32,6 +30,11 @@ namespace mono
 
         virtual mono::IEntityPtr FindEntityFromId(uint id) const;
         virtual void SchedulePreFrameTask(const std::function<void ()>& task);
+
+    protected:
+
+        virtual void Accept(IRenderer& renderer);
+        virtual void DoPreAccept();
 
     private:
         

@@ -35,7 +35,7 @@ Moon::Moon(float x, float y, float radius)
 
 void Moon::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(*mSprite.get());
+    renderer.DrawSprite(*mSprite);
 }
 
 void Moon::Update(unsigned int delta)

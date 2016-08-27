@@ -45,11 +45,10 @@ AnimatedDude::AnimatedDude(float x, float y, mono::EventHandler& eventHandler)
 
 void AnimatedDude::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(*mSprite.get());
+    renderer.DrawSprite(*mSprite);
     
-    const math::Vector2f& textPosition = mPosition + math::Vector2f(0.0f, 25.0f);
     constexpr mono::Color::RGBA color(0.5f, 1.0f, 0.0f);
-    renderer.DrawText("Ryu Hayabusa", textPosition, true, color);
+    renderer.DrawText("Ryu Hayabusa", math::Vector2f(0.0f, 5.0f), true, color);
 }
 
 void AnimatedDude::Update(unsigned int delta)

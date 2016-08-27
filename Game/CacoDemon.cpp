@@ -37,7 +37,7 @@ CacoDemon::CacoDemon(mono::EventHandler& eventHandler)
     mPosition = math::Vector2f(0, -200);
     mScale = math::Vector2f(100.0f, 100.0f);
 
-    SetProperty(EntityProperties::DAMAGABLE);
+    //SetProperty(EntityProperties::DAMAGABLE);
 
     mPhysicsObject.body = mono::PhysicsFactory::CreateBody(500.0f, 1.0f);
     mPhysicsObject.body->SetPosition(mPosition);
@@ -58,7 +58,7 @@ CacoDemon::CacoDemon(mono::EventHandler& eventHandler)
 
 void CacoDemon::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(*m_sprite.get());
+    renderer.DrawSprite(*m_sprite);
 }
 
 void CacoDemon::Update(unsigned int delta)

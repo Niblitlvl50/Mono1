@@ -112,7 +112,6 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const char* text, const 
     if(center)
         xposition -= MeasureString(text).x / 2.0f;
 
-    //for(const char& currentChar : text)
     while(*text != '\0')
     {
         // Look up char in map.

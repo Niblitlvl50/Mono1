@@ -17,8 +17,14 @@ namespace mono
     class Texture : public ITexture
     {
     public:
+
+        enum class TextureMode
+        {
+            REPEAT,
+            CLAMP
+        };
         
-        Texture(IImagePtr image);
+        Texture(const IImagePtr& image, TextureMode mode);
         ~Texture();
         
     private:

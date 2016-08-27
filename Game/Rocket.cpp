@@ -43,7 +43,7 @@ Rocket::Rocket(const math::Vector2f& start, float rotation, mono::EventHandler& 
 
 void Rocket::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(*mSprite.get());
+    renderer.DrawSprite(*mSprite);
 }
 
 void Rocket::Update(unsigned int delta)

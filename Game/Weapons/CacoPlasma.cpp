@@ -23,6 +23,7 @@
 #include "SpawnEntityEvent.h"
 #include "RemoveEntityEvent.h"
 #include "SpawnPhysicsEntityEvent.h"
+#include "DamageEvent.h"
 
 #include "RenderLayers.h"
 
@@ -51,7 +52,7 @@ namespace
 
         virtual void Draw(mono::IRenderer& renderer) const
         {
-            renderer.DrawSprite(*m_sprite.get());
+            renderer.DrawSprite(*m_sprite);
         }
 
         virtual void Update(unsigned int delta)
@@ -85,7 +86,7 @@ namespace
 
         virtual void Draw(mono::IRenderer& renderer) const
         {
-            renderer.DrawSprite(*m_sprite.get());
+            renderer.DrawSprite(*m_sprite);
         }
 
         virtual void Update(unsigned int delta)
@@ -97,11 +98,15 @@ namespace
         {
             const game::SpawnEntityEvent event(std::make_shared<CacoExplosion>(m_eventHandler, mPosition));
             m_eventHandler.DispatchEvent(event);
-            m_eventHandler.DispatchEvent(game::RemoveEntityEvent(Id()));
+            
+            m_eventHandler.DispatchEvent(game::DamageEvent(body, 20));
         }
 
         virtual void OnPostStep()
-        { }
+        {
+            printf("Remove with id: %u\n", Id());
+            m_eventHandler.DispatchEvent(game::RemoveEntityEvent(Id()));
+        }
 
         mono::EventHandler& m_eventHandler;
         mono::ISpritePtr m_sprite;
