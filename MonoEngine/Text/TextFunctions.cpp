@@ -58,10 +58,7 @@ void mono::LoadFont(const char* font, float size, float scale)
     // thats why a bit down the y texture coordinate is flipped.
     stbtt_BakeFontBitmap(fontbuffer.data(), 0, size, bitmap, width, height, base, chars, chardata);
 
-    // Same as GL_ALPHA!
-    constexpr unsigned int ALPHA = 0x1906;
-    fontTexture = mono::CreateTexture(bitmap, width, height, ALPHA, ALPHA);
-    
+    fontTexture = mono::CreateTexture(bitmap, width, height, 1);
 
     constexpr float texCoordXMulti = 1.0f / width;
     constexpr float texCoordYMulti = 1.0f / height;

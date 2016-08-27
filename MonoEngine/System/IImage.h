@@ -28,14 +28,8 @@ namespace mono
         //! Return the height
         virtual unsigned int Height() const = 0;
 
-        //! I dont know!
+        //! Number of color components in the data. 1 = alpha, 3 = rgb, 4 = rgba
         virtual int ColorComponents() const = 0;
-
-        //! I dont know!
-        virtual unsigned int TargetFormat() const = 0;
-
-        //! Check if the image has alpha channel
-        virtual bool HasAlpha() const = 0;
     };
     
     typedef std::shared_ptr<IImage> IImagePtr;

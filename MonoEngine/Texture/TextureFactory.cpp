@@ -47,9 +47,9 @@ mono::ITexturePtr mono::CreateTexture(const char* source)
     return texture;
 }
 
-mono::ITexturePtr mono::CreateTexture(const byte* data, int width, int height, int colorComponents, unsigned int targetFormat)
+mono::ITexturePtr mono::CreateTexture(const byte* data, int width, int height, int colorComponents)
 {
-    const mono::IImagePtr image = CreateImage(data, width, height, colorComponents, targetFormat);
+    const mono::IImagePtr image = CreateImage(data, width, height, colorComponents);
     return std::make_shared<Texture>(image, Texture::TextureMode::CLAMP);
 }
 

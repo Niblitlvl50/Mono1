@@ -17,5 +17,5 @@ namespace mono
     ITexturePtr CreateTexture(const char* source);
 
     //! Create a texture from memory
-    ITexturePtr CreateTexture(const byte* data, int width, int height, int colorComponents, unsigned int targetFormat);
+    ITexturePtr CreateTexture(const byte* data, int width, int height, int colorComponents);
 }

@@ -22,9 +22,8 @@ namespace mono
     //! \param data The image data
     //! \param width Image width
     //! \param height Image height
-    //! \param colorComponents ...
-    //! \param targetFormat ...
+    //! \param colorComponents 
     //!
     //! \return A smart image pointer
-    IImagePtr CreateImage(const byte* data, int width, int height, int colorComponents, unsigned int targetFormat);
+    IImagePtr CreateImage(const byte* data, int width, int height, int colorComponents);
 }

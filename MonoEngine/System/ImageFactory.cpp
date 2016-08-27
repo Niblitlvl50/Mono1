@@ -8,21 +8,19 @@
 
 #include "ImageFactory.h"
 #include <stdexcept>
-#include <string>
 
-#include "PNGImage.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 namespace
 {
     struct Bitmap : public mono::IImage
     {
-        Bitmap(const byte* data, unsigned int width, unsigned int height, int colorComponents, unsigned int targetFormat)
+        Bitmap(const byte* data, unsigned int width, unsigned int height, int colorComponents)
             : mData(data),
               mWidth(width),
               mHeight(height),
-              mColorComponents(colorComponents),
-              mTargetFormat(targetFormat),
-              mAlpha(false)
+              mColorComponents(colorComponents)
         { }
         
         virtual const byte* Data() const
@@ -41,42 +39,27 @@ namespace
         {
             return mColorComponents;
         }
-        virtual unsigned int TargetFormat() const
-        {
-            return mTargetFormat;
-        }
-        virtual bool HasAlpha() const
-        {
-            return mAlpha;
-        }
 
         const byte* mData;
         const unsigned int mWidth;
         const unsigned int mHeight;
         const int mColorComponents;
-        const unsigned int mTargetFormat;
-        const bool mAlpha;
     };
 }
 
-
 mono::IImagePtr mono::LoadImage(const char* source)
 {
-    const std::string file_path(source);
+    int width;
+    int height;
+    int components;
+    const unsigned char* data = stbi_load(source, &width, &height, &components, 0);
+    if(!data)
+        throw std::runtime_error("Unable to load image!");
 
-    const size_t dotpos = file_path.find_last_of(".");
-    if(dotpos == std::string::npos)
-        throw std::runtime_error("Unable to determine extension");
-    
-    const std::string& extension = file_path.substr(dotpos +1);
-    if(extension == "png")
-        return std::make_shared<libpng::PNGImage>(source);
-
-    // If we end up here, the image is unsupported.
-    throw std::runtime_error("Unsupported image");
+    return std::make_shared<Bitmap>(data, width, height, components);
 }
 
-mono::IImagePtr mono::CreateImage(const byte* data, int width, int height, int colorComponents, unsigned int targetFormat)
+mono::IImagePtr mono::CreateImage(const byte* data, int width, int height, int colorComponents)
 {
-    return std::make_shared<Bitmap>(data, width, height, colorComponents, targetFormat);
+    return std::make_shared<Bitmap>(data, width, height, colorComponents);
 }

@@ -64,8 +64,7 @@ void mono::DrawCircle(const math::Vector2f& position,
 
 void mono::DrawSprite(const mono::ISprite& sprite, const std::shared_ptr<ITextureShader>& shader)
 {
-    // The sprite can return zeroQuad as texture coordinates
-    // when the animation is finished
+    // The sprite can return zeroQuad as texture coordinates when the animation is finished
     const math::Quad& quad = sprite.GetTextureCoords();
     if(quad == math::zeroQuad)
         return;
@@ -83,8 +82,6 @@ void mono::DrawSprite(const mono::ISprite& sprite, const std::shared_ptr<ITextur
     
     shader->SetShade(sprite.GetShade());
     shader->SetAlphaTexture(false);
-    
-    //sprite.GetTexture()->Use();
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);

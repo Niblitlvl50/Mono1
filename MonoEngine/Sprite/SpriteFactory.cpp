@@ -67,23 +67,23 @@ namespace
 
         // +1 because the textures coordinates is zero indexed
         const float x1 = float(data.x +1) / float(data.textureSizeX);
-        const float y1 = float(data.textureSizeY - data.v) / float(data.textureSizeY);
+        const float y1 = float(data.y) / float(data.textureSizeY);
         const float x2 = float(data.u +1) / float(data.textureSizeX);
-        const float y2 = float(data.textureSizeY - data.y) / float(data.textureSizeY);
+        const float y2 = float(data.v) / float(data.textureSizeY);
         const float sizex = x2 - x1;
         const float sizey = y2 - y1;
 
         const float xstep = sizex / data.columns;
         const float ystep = sizey / data.rows;
 
-        for(int yindex = data.rows; yindex > 0; --yindex)
+        for(int yindex = 0; yindex < data.rows; ++yindex)
         {
             for(int xindex = 0; xindex < data.columns; ++xindex)
             {
                 const float x = xstep * float(xindex) + x1;
                 const float y = ystep * float(yindex) + y1;
 
-                coordinates.emplace_back(x, y - ystep, x + xstep, y);
+                coordinates.emplace_back(x, ystep + y, x + xstep, y);
             }
         }
     }
