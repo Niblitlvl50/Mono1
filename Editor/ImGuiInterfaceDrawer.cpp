@@ -144,7 +144,7 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
         ImGui::SetNextWindowPos(ImVec2(window_position - 10, index * 60 + 30));
 
         ImGui::Begin(window_id, nullptr, window_size, window_alpha, notification_window_flags);
-        ImGui::Image(reinterpret_cast<void*>(note.image), ImVec2(32.0f, 32.0f), ImVec2(0.0f, 1.0f), ImVec2(0.15f, 0.85f), tint);
+        ImGui::Image(reinterpret_cast<void*>(note.image), ImVec2(32.0f, 32.0f), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), tint);
         ImGui::SameLine();
         ImGui::TextColored(tint, "%s", note.text.c_str());
         ImGui::End();

@@ -51,7 +51,7 @@ void ImGuiRenderer::Initialize()
     byte* pixels;
     ImGui::GetIO().Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
-    mono::ITexturePtr font_texture = mono::CreateTexture(pixels, width, height, GL_RGBA, GL_RGBA);
+    mono::ITexturePtr font_texture = mono::CreateTexture(pixels, width, height, 4);
     m_textures.insert(std::make_pair(font_texture->Id(), font_texture));
 
     ImGui::GetIO().Fonts->TexID = (void *)(intptr_t)font_texture->Id();

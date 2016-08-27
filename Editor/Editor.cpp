@@ -155,7 +155,7 @@ EditorZone::EditorZone(const math::Vector2f& window_size, mono::EventHandler& ev
 
     m_interfaceDrawer = std::make_shared<editor::ImGuiInterfaceDrawer>(m_context);
 
-    mono::ITexturePtr texture = mono::CreateTexture("cacodemon.png");
+    mono::ITexturePtr texture = mono::CreateTexture("placeholder.png");
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
     textures.insert(std::make_pair(texture->Id(), texture));
 
