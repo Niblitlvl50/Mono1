@@ -9,6 +9,7 @@
 #pragma once
 
 #include "ITool.h"
+#include "Vector2f.h"
 #include <memory>
 
 namespace editor
@@ -32,5 +33,11 @@ namespace editor
         EditorZone* m_editor;
         std::shared_ptr<editor::PolygonEntity> m_polygon;
         bool m_firstPoint;
+
+        math::Vector2f m_lastAddedPoint;
+        math::Vector2f m_mousePosition;
+
+        class Visualizer;
+        std::shared_ptr<Visualizer> m_visualizer;
     };
 }

@@ -134,8 +134,11 @@ bool UserInputController::OnMouseUp(const event::MouseUpEvent& event)
 
 bool UserInputController::OnMouseMove(const event::MouseMotionEvent& event)
 {
-    m_activeTool->HandleMousePosition(math::Vector2f(event.worldX, event.worldY));
-    m_cameraTool.HandleMousePosition(math::Vector2f(event.screenX, event.screenY));
+    if(m_activeTool->IsActive())
+        m_activeTool->HandleMousePosition(math::Vector2f(event.worldX, event.worldY));
+
+    if(m_cameraTool.IsActive())
+        m_cameraTool.HandleMousePosition(math::Vector2f(event.screenX, event.screenY));
 
     return true;
 }

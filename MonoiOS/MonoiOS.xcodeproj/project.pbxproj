@@ -27,6 +27,7 @@
 		2BDD2C9E171C9FBE0041CB18 /* Meteor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD2C9A171C9FBE0041CB18 /* Meteor.cpp */; };
 		2BDD2CA2171CA01F0041CB18 /* firebullet.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA0171CA01F0041CB18 /* firebullet.sprite */; };
 		2BDD2CA4171CA01F0041CB18 /* meteorite.sprite in Resources */ = {isa = PBXBuildFile; fileRef = 2BDD2CA1171CA01F0041CB18 /* meteorite.sprite */; };
+		910C1CA31D5E668D006CDA63 /* GridVisualizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 910C1CA11D5E668D006CDA63 /* GridVisualizer.cpp */; };
 		912D569B1C52D1BD003ACC77 /* SysNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912D56991C52D1BD003ACC77 /* SysNetwork.cpp */; };
 		912D569C1C52D1BD003ACC77 /* SysNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912D56991C52D1BD003ACC77 /* SysNetwork.cpp */; };
 		912D569D1C52D1BD003ACC77 /* SysNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 912D569A1C52D1BD003ACC77 /* SysNetwork.h */; };
@@ -349,14 +350,8 @@
 		916B543F1D15DAB500AD54A1 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9166E1F71C341F7E00A5C82D /* IOKit.framework */; };
 		916B54401D15DABE00AD54A1 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B812591C37DE4E00BDF407 /* OpenAL.framework */; };
 		916B54411D15DAC300AD54A1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9166E1E71C341EB800A5C82D /* OpenGL.framework */; };
-		916B54461D17219600AD54A1 /* ImGuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54441D17219600AD54A1 /* ImGuiShader.cpp */; };
-		916B54491D186BC400AD54A1 /* ImGuiRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54471D186BC400AD54A1 /* ImGuiRenderer.cpp */; };
-		916B544C1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B544A1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.cpp */; };
 		916B544E1D18746400AD54A1 /* imgui_demo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B544D1D18746400AD54A1 /* imgui_demo.cpp */; };
-		916B54521D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54501D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp */; };
-		916B54551D1E802400AD54A1 /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54541D1E802400AD54A1 /* Polygon.cpp */; };
 		916B54561D1ED7FD00AD54A1 /* MathFwd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91C41E471826E2A50035E778 /* MathFwd.cpp */; };
-		916B54591D20652500AD54A1 /* UserInputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54571D20652500AD54A1 /* UserInputController.cpp */; };
 		916B545D1D281B6100AD54A1 /* PolygonTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B545B1D281B6100AD54A1 /* PolygonTool.cpp */; };
 		916B54601D28276100AD54A1 /* Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B545E1D28276100AD54A1 /* Editor.cpp */; };
 		916B54631D28766800AD54A1 /* RotateTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 916B54611D28766800AD54A1 /* RotateTool.cpp */; };
@@ -399,6 +394,13 @@
 		91D71F0F1BF8AED80097AEA0 /* RocketLauncher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F0A1BF8AED80097AEA0 /* RocketLauncher.cpp */; };
 		91D71F101BF8AED80097AEA0 /* StandardWeapon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D71F0C1BF8AED80097AEA0 /* StandardWeapon.cpp */; };
 		91D71F2C1BF913CA0097AEA0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91D71F2B1BF913CA0097AEA0 /* Images.xcassets */; };
+		91D7FABE1D71B55C00318388 /* ImGuiInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D7FAAB1D71B54C00318388 /* ImGuiInputHandler.cpp */; };
+		91D7FABF1D71B56D00318388 /* ImGuiInterfaceDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D7FAAD1D71B54C00318388 /* ImGuiInterfaceDrawer.cpp */; };
+		91D7FAC01D71B57500318388 /* ImGuiRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D7FAAF1D71B54C00318388 /* ImGuiRenderer.cpp */; };
+		91D7FAC11D71B57D00318388 /* ImGuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D7FAB11D71B54C00318388 /* ImGuiShader.cpp */; };
+		91D7FAC21D71B58100318388 /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D7FAB41D71B54C00318388 /* Polygon.cpp */; };
+		91D7FAC31D71B58600318388 /* UserInputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D7FAB61D71B54C00318388 /* UserInputController.cpp */; };
+		91D7FAC61D71B5D300318388 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D7FAC51D71B5D300318388 /* placeholder.png */; };
 		91D889951C3AEBB600AF27A8 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B812591C37DE4E00BDF407 /* OpenAL.framework */; };
 		91D889971C3AFBE400AF27A8 /* InGame_Phoenix.wav in Resources */ = {isa = PBXBuildFile; fileRef = 91D889961C3AFBE400AF27A8 /* InGame_Phoenix.wav */; };
 		91D889981C3AFC7C00AF27A8 /* InGame_Phoenix.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91D889961C3AFBE400AF27A8 /* InGame_Phoenix.wav */; };
@@ -734,6 +736,8 @@
 		2BDD2CA0171CA01F0041CB18 /* firebullet.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = firebullet.sprite; path = res/firebullet.sprite; sourceTree = "<group>"; };
 		2BDD2CA1171CA01F0041CB18 /* meteorite.sprite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = meteorite.sprite; path = res/meteorite.sprite; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		910C1CA11D5E668D006CDA63 /* GridVisualizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GridVisualizer.cpp; path = ../Editor/Visualizers/GridVisualizer.cpp; sourceTree = "<group>"; };
+		910C1CA21D5E668D006CDA63 /* GridVisualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridVisualizer.h; path = ../Editor/Visualizers/GridVisualizer.h; sourceTree = "<group>"; };
 		911BFF5717FA07DB002EE7ED /* TouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchEvent.h; sourceTree = "<group>"; };
 		91282D191826759E00B80892 /* Quad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quad.cpp; sourceTree = "<group>"; };
 		91282D1C1826764500B80892 /* Vector2f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector2f.cpp; sourceTree = "<group>"; };
@@ -742,7 +746,6 @@
 		912D569A1C52D1BD003ACC77 /* SysNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysNetwork.h; sourceTree = "<group>"; };
 		9143AF5F1D40CEC400E28D53 /* SpriteFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteFactory.cpp; sourceTree = "<group>"; };
 		9143AF601D40CEC400E28D53 /* SpriteFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteFactory.h; sourceTree = "<group>"; };
-		9143AF671D44C5C000E28D53 /* MainMenuOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainMenuOptions.h; path = Editor/MainMenuOptions.h; sourceTree = "<group>"; };
 		9143AF681D44CAAB00E28D53 /* EditorConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EditorConfig.cpp; path = ../Editor/EditorConfig.cpp; sourceTree = "<group>"; };
 		9143AF691D44CAAB00E28D53 /* EditorConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditorConfig.h; path = ../Editor/EditorConfig.h; sourceTree = "<group>"; };
 		9143AF6C1D44D39400E28D53 /* luatables.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = luatables.cc; path = "luatables++/luatables.cc"; sourceTree = "<group>"; };
@@ -830,20 +833,8 @@
 		916B54321D15D90C00AD54A1 /* stb_textedit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_textedit.h; path = imgui/stb_textedit.h; sourceTree = "<group>"; };
 		916B54331D15D90C00AD54A1 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = imgui/stb_truetype.h; sourceTree = "<group>"; };
 		916B54361D15D95600AD54A1 /* imgui_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = imgui_draw.cpp; path = imgui/imgui_draw.cpp; sourceTree = "<group>"; };
-		916B54441D17219600AD54A1 /* ImGuiShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImGuiShader.cpp; path = Editor/ImGuiShader.cpp; sourceTree = "<group>"; };
-		916B54451D17219600AD54A1 /* ImGuiShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiShader.h; path = Editor/ImGuiShader.h; sourceTree = "<group>"; };
-		916B54471D186BC400AD54A1 /* ImGuiRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImGuiRenderer.cpp; path = Editor/ImGuiRenderer.cpp; sourceTree = "<group>"; };
-		916B54481D186BC400AD54A1 /* ImGuiRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiRenderer.h; path = Editor/ImGuiRenderer.h; sourceTree = "<group>"; };
-		916B544A1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImGuiInterfaceDrawer.cpp; path = Editor/ImGuiInterfaceDrawer.cpp; sourceTree = "<group>"; };
-		916B544B1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiInterfaceDrawer.h; path = Editor/ImGuiInterfaceDrawer.h; sourceTree = "<group>"; };
 		916B544D1D18746400AD54A1 /* imgui_demo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = imgui_demo.cpp; path = imgui/imgui_demo.cpp; sourceTree = "<group>"; };
 		916B544F1D1C65C800AD54A1 /* TextInputEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextInputEvent.h; sourceTree = "<group>"; };
-		916B54501D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImGuiInputHandler.cpp; path = Editor/ImGuiInputHandler.cpp; sourceTree = "<group>"; };
-		916B54511D1DA4DB00AD54A1 /* ImGuiInputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiInputHandler.h; path = Editor/ImGuiInputHandler.h; sourceTree = "<group>"; };
-		916B54531D1E7DFB00AD54A1 /* Polygon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = Editor/Polygon.h; sourceTree = "<group>"; };
-		916B54541D1E802400AD54A1 /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Polygon.cpp; path = Editor/Polygon.cpp; sourceTree = "<group>"; };
-		916B54571D20652500AD54A1 /* UserInputController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserInputController.cpp; path = Editor/UserInputController.cpp; sourceTree = "<group>"; };
-		916B54581D20652500AD54A1 /* UserInputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInputController.h; path = Editor/UserInputController.h; sourceTree = "<group>"; };
 		916B545B1D281B6100AD54A1 /* PolygonTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PolygonTool.cpp; path = ../Editor/Tools/PolygonTool.cpp; sourceTree = "<group>"; };
 		916B545C1D281B6100AD54A1 /* PolygonTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PolygonTool.h; path = ../Editor/Tools/PolygonTool.h; sourceTree = "<group>"; };
 		916B545E1D28276100AD54A1 /* Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Editor.cpp; path = ../Editor/Editor.cpp; sourceTree = "<group>"; };
@@ -966,6 +957,20 @@
 		91D71F281BF8B3120097AEA0 /* ShockwaveEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShockwaveEvent.h; path = Events/ShockwaveEvent.h; sourceTree = "<group>"; };
 		91D71F291BF8E1D60097AEA0 /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
 		91D71F2B1BF913CA0097AEA0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "MonoiOS Device/Images.xcassets"; sourceTree = "<group>"; };
+		91D7FAAB1D71B54C00318388 /* ImGuiInputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImGuiInputHandler.cpp; path = ../Editor/ImGuiInputHandler.cpp; sourceTree = "<group>"; };
+		91D7FAAC1D71B54C00318388 /* ImGuiInputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiInputHandler.h; path = ../Editor/ImGuiInputHandler.h; sourceTree = "<group>"; };
+		91D7FAAD1D71B54C00318388 /* ImGuiInterfaceDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImGuiInterfaceDrawer.cpp; path = ../Editor/ImGuiInterfaceDrawer.cpp; sourceTree = "<group>"; };
+		91D7FAAE1D71B54C00318388 /* ImGuiInterfaceDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiInterfaceDrawer.h; path = ../Editor/ImGuiInterfaceDrawer.h; sourceTree = "<group>"; };
+		91D7FAAF1D71B54C00318388 /* ImGuiRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImGuiRenderer.cpp; path = ../Editor/ImGuiRenderer.cpp; sourceTree = "<group>"; };
+		91D7FAB01D71B54C00318388 /* ImGuiRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiRenderer.h; path = ../Editor/ImGuiRenderer.h; sourceTree = "<group>"; };
+		91D7FAB11D71B54C00318388 /* ImGuiShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImGuiShader.cpp; path = ../Editor/ImGuiShader.cpp; sourceTree = "<group>"; };
+		91D7FAB21D71B54C00318388 /* ImGuiShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImGuiShader.h; path = ../Editor/ImGuiShader.h; sourceTree = "<group>"; };
+		91D7FAB31D71B54C00318388 /* MainMenuOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenuOptions.h; path = ../Editor/MainMenuOptions.h; sourceTree = "<group>"; };
+		91D7FAB41D71B54C00318388 /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Polygon.cpp; path = ../Editor/Polygon.cpp; sourceTree = "<group>"; };
+		91D7FAB51D71B54C00318388 /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = ../Editor/Polygon.h; sourceTree = "<group>"; };
+		91D7FAB61D71B54C00318388 /* UserInputController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserInputController.cpp; path = ../Editor/UserInputController.cpp; sourceTree = "<group>"; };
+		91D7FAB71D71B54C00318388 /* UserInputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInputController.h; path = ../Editor/UserInputController.h; sourceTree = "<group>"; };
+		91D7FAC51D71B5D300318388 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeholder.png; path = ../Editor/Resources/placeholder.png; sourceTree = "<group>"; };
 		91D889961C3AFBE400AF27A8 /* InGame_Phoenix.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = InGame_Phoenix.wav; path = res/InGame_Phoenix.wav; sourceTree = "<group>"; };
 		91F32F5A1D0B45CE008457CA /* GameContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameContext.h; sourceTree = "<group>"; };
 		91F32F5B1D0B565A008457CA /* TimeScaleEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeScaleEvent.h; sourceTree = "<group>"; };
@@ -1187,7 +1192,6 @@
 				2B26D6B815FD2BB5001E9748 /* IInputHandler.h */,
 				2B26D6B915FD2BB5001E9748 /* InputHandler.cpp */,
 				2B26D6BA15FD2BB5001E9748 /* InputHandler.h */,
-				2B26D6BB15FD2BB5001E9748 /* IRenderer.h */,
 				2B26D6BC15FD2BB5001E9748 /* IUpdatable.h */,
 				2B26D6BD15FD2BB5001E9748 /* IWindow.h */,
 				2B26D6BE15FD2BB5001E9748 /* IZone.h */,
@@ -1196,6 +1200,7 @@
 				2BDD2C8C171C9F540041CB18 /* PhysicsEntityBase.h */,
 				2B26D6D915FD2BB5001E9748 /* PhysicsZone.cpp */,
 				2B26D6DA15FD2BB5001E9748 /* PhysicsZone.h */,
+				2B26D6BB15FD2BB5001E9748 /* IRenderer.h */,
 				2B26D6DB15FD2BB5001E9748 /* Renderer.cpp */,
 				2B26D6DC15FD2BB5001E9748 /* Renderer.h */,
 				2BDD2C8D171C9F540041CB18 /* RenderUtils.cpp */,
@@ -1576,6 +1581,15 @@
 			name = Events;
 			sourceTree = "<group>";
 		};
+		910C1CA01D5E6662006CDA63 /* Visualizers */ = {
+			isa = PBXGroup;
+			children = (
+				910C1CA21D5E668D006CDA63 /* GridVisualizer.h */,
+				910C1CA11D5E668D006CDA63 /* GridVisualizer.cpp */,
+			);
+			name = Visualizers;
+			sourceTree = "<group>";
+		};
 		912D56971C52D169003ACC77 /* zed_net */ = {
 			isa = PBXGroup;
 			children = (
@@ -1722,23 +1736,25 @@
 		916B541B1D15D24F00AD54A1 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				910C1CA01D5E6662006CDA63 /* Visualizers */,
 				916B545A1D281B4900AD54A1 /* Tools */,
+				91D7FAC41D71B5BA00318388 /* Resources */,
+				91D7FAAB1D71B54C00318388 /* ImGuiInputHandler.cpp */,
+				91D7FAAC1D71B54C00318388 /* ImGuiInputHandler.h */,
+				91D7FAAD1D71B54C00318388 /* ImGuiInterfaceDrawer.cpp */,
+				91D7FAAE1D71B54C00318388 /* ImGuiInterfaceDrawer.h */,
+				91D7FAAF1D71B54C00318388 /* ImGuiRenderer.cpp */,
+				91D7FAB01D71B54C00318388 /* ImGuiRenderer.h */,
+				91D7FAB11D71B54C00318388 /* ImGuiShader.cpp */,
+				91D7FAB21D71B54C00318388 /* ImGuiShader.h */,
+				91D7FAB31D71B54C00318388 /* MainMenuOptions.h */,
+				91D7FAB41D71B54C00318388 /* Polygon.cpp */,
+				91D7FAB51D71B54C00318388 /* Polygon.h */,
+				91D7FAB61D71B54C00318388 /* UserInputController.cpp */,
+				91D7FAB71D71B54C00318388 /* UserInputController.h */,
 				916B54291D15D31300AD54A1 /* main.cpp */,
-				916B54441D17219600AD54A1 /* ImGuiShader.cpp */,
-				916B54451D17219600AD54A1 /* ImGuiShader.h */,
-				916B54471D186BC400AD54A1 /* ImGuiRenderer.cpp */,
-				916B54481D186BC400AD54A1 /* ImGuiRenderer.h */,
-				916B544A1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.cpp */,
-				916B544B1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.h */,
-				916B54501D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp */,
-				916B54511D1DA4DB00AD54A1 /* ImGuiInputHandler.h */,
-				916B54531D1E7DFB00AD54A1 /* Polygon.h */,
-				916B54541D1E802400AD54A1 /* Polygon.cpp */,
-				916B54571D20652500AD54A1 /* UserInputController.cpp */,
-				916B54581D20652500AD54A1 /* UserInputController.h */,
 				916B545E1D28276100AD54A1 /* Editor.cpp */,
 				916B545F1D28276100AD54A1 /* Editor.h */,
-				9143AF671D44C5C000E28D53 /* MainMenuOptions.h */,
 				9143AF681D44CAAB00E28D53 /* EditorConfig.cpp */,
 				9143AF691D44CAAB00E28D53 /* EditorConfig.h */,
 			);
@@ -1879,6 +1895,14 @@
 				91D71F231BF8AF6F0097AEA0 /* TextureShader.h */,
 			);
 			name = Shaders;
+			sourceTree = "<group>";
+		};
+		91D7FAC41D71B5BA00318388 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				91D7FAC51D71B5D300318388 /* placeholder.png */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2096,6 +2120,7 @@
 				91B746FC1C00E73000F257CC /* laser.sprite in Resources */,
 				2B26DB3C15FD31D9001E9748 /* pixelette.ttf in Resources */,
 				FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */,
+				91D7FAC61D71B5D300318388 /* placeholder.png in Resources */,
 				FD77A07F0E26BDA900F39101 /* Default.png in Resources */,
 				91D71F2C1BF913CA0097AEA0 /* Images.xcassets in Resources */,
 				2BA8E1081618BE5E00C17873 /* shuttle.sprite in Resources */,
@@ -2452,24 +2477,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				916B544C1D1870AE00AD54A1 /* ImGuiInterfaceDrawer.cpp in Sources */,
 				916B545D1D281B6100AD54A1 /* PolygonTool.cpp in Sources */,
 				9143AF741D4795F800E28D53 /* WorldFile.cpp in Sources */,
 				91B498791D5A517F0027DE06 /* PolygonBrushTool.cpp in Sources */,
 				916B54381D15D95A00AD54A1 /* imgui_draw.cpp in Sources */,
+				91D7FAC01D71B57500318388 /* ImGuiRenderer.cpp in Sources */,
 				916B54631D28766800AD54A1 /* RotateTool.cpp in Sources */,
-				916B54491D186BC400AD54A1 /* ImGuiRenderer.cpp in Sources */,
 				916B542B1D15D31C00AD54A1 /* main.cpp in Sources */,
-				916B54461D17219600AD54A1 /* ImGuiShader.cpp in Sources */,
 				9143AF6A1D44CAAB00E28D53 /* EditorConfig.cpp in Sources */,
 				916B54601D28276100AD54A1 /* Editor.cpp in Sources */,
-				916B54551D1E802400AD54A1 /* Polygon.cpp in Sources */,
 				916B544E1D18746400AD54A1 /* imgui_demo.cpp in Sources */,
-				916B54591D20652500AD54A1 /* UserInputController.cpp in Sources */,
+				91D7FABF1D71B56D00318388 /* ImGuiInterfaceDrawer.cpp in Sources */,
+				91D7FABE1D71B55C00318388 /* ImGuiInputHandler.cpp in Sources */,
 				916B546A1D296FCD00AD54A1 /* TranslateTool.cpp in Sources */,
 				916B54351D15D91A00AD54A1 /* imgui.cpp in Sources */,
+				91D7FAC21D71B58100318388 /* Polygon.cpp in Sources */,
+				910C1CA31D5E668D006CDA63 /* GridVisualizer.cpp in Sources */,
 				916B54671D29064900AD54A1 /* CameraTool.cpp in Sources */,
-				916B54521D1DA4DB00AD54A1 /* ImGuiInputHandler.cpp in Sources */,
+				91D7FAC31D71B58600318388 /* UserInputController.cpp in Sources */,
+				91D7FAC11D71B57D00318388 /* ImGuiShader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2560,7 +2586,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -2603,7 +2629,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -2641,7 +2667,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -2693,7 +2719,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -2740,7 +2766,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -2790,7 +2816,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -2835,7 +2861,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -2877,7 +2903,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -2914,7 +2940,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -2959,7 +2985,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -3000,7 +3026,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -3042,7 +3068,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -3077,7 +3103,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
@@ -3098,7 +3124,7 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;

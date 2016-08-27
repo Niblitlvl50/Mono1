@@ -34,6 +34,8 @@
 #include "WorldFile.h"
 #include "EditorConfig.h"
 
+#include "GridVisualizer.h"
+
 namespace
 {
     class SpriteDrawable : public mono::EntityBase
@@ -49,7 +51,6 @@ namespace
         virtual void Draw(mono::IRenderer& renderer) const
         {
             renderer.DrawSprite(*m_sprite);
-            renderer.DrawText("hello", Position(), true, mono::Color::RGBA(1, 0, 1, 1));
         }
 
         virtual void Update(unsigned int delta)
@@ -59,7 +60,6 @@ namespace
 
         mono::ISpritePtr m_sprite;
     };
-
 
     std::vector<std::shared_ptr<editor::PolygonEntity>> LoadPolygons(const char* file_name)
     {
@@ -197,7 +197,10 @@ void EditorZone::OnLoad(mono::ICameraPtr camera)
     m_userInputController = std::make_shared<editor::UserInputController>(camera, this, &m_context, m_windowSize, m_eventHandler);
 
     AddUpdatable(m_interfaceDrawer);
-    AddDrawable(m_guiRenderer, 1);
+
+    AddDrawable(m_guiRenderer, 2);
+    AddDrawable(std::make_shared<GridVisualizer>(camera), 0);
+
     AddEntity(std::make_shared<SpriteDrawable>("shuttle.sprite"), 0);
 }
 
@@ -214,7 +217,7 @@ bool EditorZone::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 
 void EditorZone::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
 {
-    AddEntity(polygon, 0);
+    AddEntity(polygon, 1);
     m_polygons.push_back(polygon);
     m_context.polygonItems.push_back("Polygon: " + std::to_string(m_polygons.size()));
 }

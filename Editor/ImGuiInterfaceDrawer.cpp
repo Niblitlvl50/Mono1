@@ -38,19 +38,19 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
     if(ImGui::BeginMenu("Tools"))
     {
-        if(ImGui::MenuItem("Polygon"))
+        if(ImGui::MenuItem("Polygon", "1"))
             m_context.toolsMenuCallback(ToolsMenuOptions::POLYGON_TOOL);
 
-        if(ImGui::MenuItem("Polygon Brush"))
+        if(ImGui::MenuItem("Polygon Brush", "2"))
             m_context.toolsMenuCallback(ToolsMenuOptions::POLYGON_BRUSH_TOOL);
 
-        if(ImGui::MenuItem("Translate"))
+        if(ImGui::MenuItem("Translate", "3"))
             m_context.toolsMenuCallback(ToolsMenuOptions::TRANSLATE_TOOL);
 
-        if(ImGui::MenuItem("Rotate"))
+        if(ImGui::MenuItem("Rotate", "4", true))
             m_context.toolsMenuCallback(ToolsMenuOptions::ROTATE_TOOL);
 
-        if(ImGui::MenuItem("Camera"))
+        if(ImGui::MenuItem("Camera", "5", false, false))
             m_context.toolsMenuCallback(ToolsMenuOptions::CAMERA_TOOL);
         
         ImGui::EndMenu();

@@ -11,6 +11,7 @@
 #include "ITool.h"
 #include "Vector2f.h"
 #include <memory>
+#include <vector>
 
 namespace editor
 {
@@ -37,5 +38,10 @@ namespace editor
         math::Vector2f m_previouslyAddedPoint;
         math::Vector2f m_previousPoint;
         float m_direction;
+
+        class Visualizer;
+        std::shared_ptr<Visualizer> m_visualizer;
+
+        std::vector<math::Vector2f> m_drawnPoints;
     };
 }
