@@ -3,14 +3,20 @@ cmake_minimum_required(VERSION 2.6)
 
 project(mono1)
 
-add_subdirectory("External Libs/Chipmunk2D")
-
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/modules/")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wextra -Wno-long-long -pedantic -Wno-unused-parameter -Wno-unused-variable -Wno-format-pedantic")
+
+# Chipmunk2D
+set(BUILD_DEMOS OFF)
+set(BUILD_SHARED OFF)
+set(BUILD_STATIC ON)
+set(LIB_INSTALL_DIR ${LIBRARY_OUTPUT_PATH})
+add_subdirectory("External Libs/Chipmunk2D")
+
 
 include_directories("External Libs" "MonoEngine" "Shared")
 include_directories(${chipmunk_SOURCE_DIR}/include)
@@ -55,8 +61,8 @@ add_library(shared STATIC ${shared_source_files})
 # Mono
 file(GLOB_RECURSE engine_source_files "MonoEngine/*.cpp")
 add_library(mono STATIC ${engine_source_files})
-add_dependencies(mono lua chipmunk)
-target_link_libraries(mono lua chipmunk ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENAL_LIBRARY})
+add_dependencies(mono lua chipmunk_static)
+target_link_libraries(mono lua chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENAL_LIBRARY})
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "UnitTests/*.cpp")
