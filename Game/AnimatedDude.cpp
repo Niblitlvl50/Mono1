@@ -36,7 +36,7 @@ AnimatedDude::AnimatedDude(float x, float y, mono::EventHandler& eventHandler)
     mPosition = math::Vector2f(x, y);
     mScale = math::Vector2f(30.0f, 30.0f);
 
-    mSprite = mono::CreateSprite("ryu.sprite");
+    mSprite = mono::CreateSprite("sprites/ryu.sprite");
     mSprite->SetAnimation(constants::IDLE);
     //mSprite->SetAnimation(constants::RUNNING);
     //mSprite->SetAnimation(constants::JUMPING);

@@ -50,7 +50,7 @@ CacoDemon::CacoDemon(mono::EventHandler& eventHandler)
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
     mPhysicsObject.shapes.push_back(shape);
 
-    m_sprite = mono::CreateSprite("cacodemon.sprite");
+    m_sprite = mono::CreateSprite("sprites/cacodemon.sprite");
     m_sprite->SetAnimation(ATTACK);
 
     m_weapon = Factory::CreateWeapon(game::WeaponType::CACOPLASMA, m_eventHandler);

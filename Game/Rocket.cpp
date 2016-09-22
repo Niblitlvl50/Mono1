@@ -38,7 +38,7 @@ Rocket::Rocket(const math::Vector2f& start, float rotation, mono::EventHandler& 
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
     mPhysicsObject.shapes.push_back(shape);
 
-    mSprite = mono::CreateSprite("laser.sprite");
+    mSprite = mono::CreateSprite("sprites/laser.sprite");
 }
 
 void Rocket::Draw(mono::IRenderer& renderer) const

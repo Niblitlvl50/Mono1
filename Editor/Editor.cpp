@@ -222,7 +222,7 @@ void EditorZone::OnLoad(mono::ICameraPtr camera)
     AddDrawable(m_guiRenderer, 2);
     AddDrawable(std::make_shared<GridVisualizer>(camera), 0);
 
-    AddEntity(std::make_shared<SpriteDrawable>("shuttle.sprite"), 0);
+    AddEntity(std::make_shared<SpriteDrawable>("sprites/shuttle.sprite"), 0);
 }
 
 void EditorZone::OnUnload()

@@ -23,7 +23,7 @@ using namespace game;
 StandardWeapon::StandardWeapon(mono::EventHandler& eventHandler)
     : BaseWeapon(eventHandler)
 {
-    m_sound = mono::AudioFactory::CreateSound("laser.wav", false);
+    m_sound = mono::AudioFactory::CreateSound("sound/laser.wav", false);
 }
 
 void StandardWeapon::DoFire(const math::Vector2f& position, float direction) const

@@ -27,7 +27,7 @@ Explosion::Explosion(mono::EventHandler& event_handler, const math::Vector2f& po
         event_handler.DispatchEvent(game::RemoveEntityEvent(id));
     };
     
-    mSprite = mono::CreateSprite("explosion.sprite");
+    mSprite = mono::CreateSprite("sprites/explosion.sprite");
     mSprite->SetAnimation(0, func);
 }
 

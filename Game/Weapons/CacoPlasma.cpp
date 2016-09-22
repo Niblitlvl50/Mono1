@@ -46,7 +46,7 @@ namespace
                 event_handler.DispatchEvent(game::RemoveEntityEvent(id));
             };
 
-            m_sprite = mono::CreateSprite("cacoexplosion.sprite");
+            m_sprite = mono::CreateSprite("sprites/cacoexplosion.sprite");
             m_sprite->SetAnimation(0, func);
         }
 
@@ -81,7 +81,7 @@ namespace
             mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
             mPhysicsObject.shapes.push_back(shape);
 
-            m_sprite = mono::CreateSprite("cacobullet.sprite");
+            m_sprite = mono::CreateSprite("sprites/cacobullet.sprite");
         }
 
         virtual void Draw(mono::IRenderer& renderer) const

@@ -52,7 +52,7 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     
     mPhysicsObject.shapes.push_back(shape);
 
-    mSprite = mono::CreateSprite("shuttle.sprite");
+    mSprite = mono::CreateSprite("sprites/shuttle.sprite");
     mSprite->SetAnimation(constants::IDLE);
 
     // Make sure we have a weapon

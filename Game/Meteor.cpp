@@ -20,7 +20,7 @@ using namespace game;
 
 Meteor::Meteor(float x, float y)
 {
-    mSprite = mono::CreateSprite("meteorite.sprite");
+    mSprite = mono::CreateSprite("sprites/meteorite.sprite");
 
     mPosition = math::Vector2f(x, y);
     mScale = math::Vector2f(20.0f, 20.0f);

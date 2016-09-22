@@ -20,7 +20,7 @@ using namespace game;
 
 Moon::Moon(float x, float y, float radius)
 {
-    mSprite = mono::CreateSprite("moon.sprite");
+    mSprite = mono::CreateSprite("sprites/moon.sprite");
     mPosition = math::Vector2f(x, y);
     mScale = math::Vector2f(radius, radius) * 2.0f;
     

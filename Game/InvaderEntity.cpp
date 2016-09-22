@@ -18,7 +18,7 @@ using namespace game;
 InvaderEntity::InvaderEntity(float x, float y)
     : mColor(0.0f, 0.5f, 0.5f)
 {
-    mSprite = mono::CreateSprite("invader.sprite");
+    mSprite = mono::CreateSprite("sprites/invader.sprite");
     mPosition = math::Vector2f(x, y);
 }
 

@@ -37,7 +37,7 @@ FireBullet::FireBullet(const math::Vector2f& start, float rotation, mono::EventH
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());    
     mPhysicsObject.shapes.push_back(shape);        
 
-    mSprite = mono::CreateSprite("firebullet.sprite");
+    mSprite = mono::CreateSprite("sprites/firebullet.sprite");
 }
 
 void FireBullet::Update(unsigned int delta)

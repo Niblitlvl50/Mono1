@@ -178,7 +178,7 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
     const std::function<bool (const game::DamageEvent&)>& damageFunc = std::bind(&TestZone::OnDamageEvent, this, _1);
     mDamageEventToken = mEventHandler.AddListener(damageFunc);
 
-    m_backgroundMusic = mono::AudioFactory::CreateSound("InGame_Phoenix.wav", true);
+    m_backgroundMusic = mono::AudioFactory::CreateSound("sound/InGame_Phoenix.wav", true);
 }
 
 TestZone::~TestZone()
