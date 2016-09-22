@@ -8,7 +8,7 @@
  */
 
 #include "SDLWindow.h"
-#include "SysOpenGL.h"
+#include "System/SysOpenGL.h"
 #include "Color.h"
 
 #include "SDL_video.h"
@@ -49,8 +49,8 @@ namespace
         // GLSL ES, that's why ifndef.
         glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 #endif
-        //glEnable(GL_POINT_SMOOTH);
-        //glEnable(GL_LINE_SMOOTH);
+        glEnable(GL_POINT_SMOOTH);
+        glEnable(GL_LINE_SMOOTH);
     }
 }
 
@@ -89,8 +89,6 @@ SDLWindow::SDLWindow(const char* title, int width, int height, bool)
     mContext = SDL_GL_CreateContext(mWindow);
     if(!mContext)
         throw std::runtime_error("Unable to create OpenGL context");
-
-    //SDL_ShowCursor(SDL_DISABLE);
     	        
     SetupOpenGL();
     MakeCurrent();

@@ -7,8 +7,8 @@
 //
 
 #include "Spawner.h"
-#include "EventHandler.h"
-#include "SpawnPhysicsEntityEvent.h"
+#include "EventHandler/EventHandler.h"
+#include "Events/SpawnPhysicsEntityEvent.h"
 #include "Meteor.h"
 #include "Utils.h"
 #include "RenderLayers.h"

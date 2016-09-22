@@ -13,9 +13,9 @@
 
 extern "C"
 {
-    #include "lua.h"
-    #include "lauxlib.h"
-    #include "lualib.h"
+    #include "Lua-5.1.4/lua.h"
+    #include "Lua-5.1.4/lauxlib.h"
+    #include "Lua-5.1.4/lualib.h"
 }
 
 using namespace mono;

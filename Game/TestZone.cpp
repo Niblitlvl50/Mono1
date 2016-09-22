@@ -8,7 +8,7 @@
 
 #include "TestZone.h"
 #include "ICamera.h"
-#include "AudioFactory.h"
+#include "Audio/AudioFactory.h"
 
 #include "PhysicsGrid.h"
 #include "InvaderGroup.h"
@@ -23,20 +23,20 @@
 #include "CacoDemon.h"
 #include "Morpher.h"
 
-#include "Quad.h"
+#include "Math/Quad.h"
 
-#include "EventHandler.h"
-#include "SpawnEntityEvent.h"
-#include "SpawnPhysicsEntityEvent.h"
-#include "RemoveEntityEvent.h"
-#include "ShockwaveEvent.h"
-#include "DamageEvent.h"
+#include "EventHandler/EventHandler.h"
+#include "Events/SpawnEntityEvent.h"
+#include "Events/SpawnPhysicsEntityEvent.h"
+#include "Events/RemoveEntityEvent.h"
+#include "Events/ShockwaveEvent.h"
+#include "Events/DamageEvent.h"
 
-#include "MathFunctions.h"
+#include "Math/MathFunctions.h"
 #include "Utils.h"
 #include "EntityProperties.h"
 #include "RenderLayers.h"
-#include "AudioListener.h"
+#include "Audio/AudioListener.h"
 
 #include "WorldFile.h"
 #include "World.h"
@@ -206,7 +206,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(moon2, FOREGROUND);
     AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
 
-    std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(-100.0f, 0.0f, mEventHandler);
+    std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(0.0f, 0.0f, mEventHandler);
     AddPhysicsEntity(shuttle, FOREGROUND);
 
     AddPhysicsEntity(std::make_shared<game::CacoDemon>(mEventHandler), FOREGROUND);

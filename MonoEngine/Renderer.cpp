@@ -11,21 +11,21 @@
 #include "IEntity.h"
 #include "ICamera.h"
 #include "IWindow.h"
-#include "Vector2f.h"
-#include "Quad.h"
-#include "Matrix.h"
-#include "MathFunctions.h"
+#include "Math/Vector2f.h"
+#include "Math/Quad.h"
+#include "Math/Matrix.h"
+#include "Math/MathFunctions.h"
 #include "RenderUtils.h"
-#include "TextFunctions.h"
+#include "Text/TextFunctions.h"
 
-#include "IShaderFactory.h"
-#include "ShaderFunctions.h"
-#include "ITextureShader.h"
-#include "IColorShader.h"
-#include "IMorphingShader.h"
+#include "Shader/IShaderFactory.h"
+#include "Shader/ShaderFunctions.h"
+#include "Shader/ITextureShader.h"
+#include "Shader/IColorShader.h"
+#include "Shader/IMorphingShader.h"
 
-#include "ISprite.h"
-#include "ITexture.h"
+#include "Sprite/ISprite.h"
+#include "Texture/ITexture.h"
 
 
 using namespace mono;
@@ -194,6 +194,14 @@ void Renderer::DrawShape(const std::vector<math::Vector2f>& shape1, const std::v
     ::DrawShape(shape1, shape2, color, m_morphShader);
 }
 
+void Renderer::DrawGeometry(const std::vector<math::Vector2f>& vertices, const std::vector<math::Vector2f>& texture_coordinates, const std::vector<unsigned short>& indices, const ITexturePtr& texture)
+{
+    UseTexture(texture);
+    UseShader(mTextureShader);
+
+    ::DrawTexturedGeometry(vertices, texture_coordinates, indices, mTextureShader);
+}
+
 void Renderer::UseShader(const IShaderPtr& shader) const
 {
     const unsigned int id = shader->GetShaderId();
@@ -210,7 +218,7 @@ void Renderer::UseShader(const IShaderPtr& shader) const
 void Renderer::UseTexture(const ITexturePtr& texture) const
 {
     const unsigned int id = texture->Id();
-    if(id != m_currentTextureId)
+    //if(id != m_currentTextureId)
     {
         // This does not work! Why?
 

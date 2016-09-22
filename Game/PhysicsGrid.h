@@ -9,7 +9,7 @@
 #pragma once
 
 #include "PhysicsEntityBase.h"
-#include "Quad.h"
+#include "Math/Quad.h"
 
 namespace game
 {

@@ -7,21 +7,21 @@
 //
 
 #include "ImGuiInputHandler.h"
-#include "EventFuncFwd.h"
-#include "EventHandler.h"
+#include "Events/EventFuncFwd.h"
+#include "EventHandler/EventHandler.h"
 
-#include "SysKeycodes.h"
+#include "System/SysKeycodes.h"
 
-#include "KeyUpEvent.h"
-#include "KeyDownEvent.h"
-#include "TextInputEvent.h"
-#include "MouseDownEvent.h"
-#include "MouseUpEvent.h"
-#include "MouseMotionEvent.h"
-#include "MouseWheelEvent.h"
-#include "MultiGestureEvent.h"
+#include "Events/KeyUpEvent.h"
+#include "Events/KeyDownEvent.h"
+#include "Events/TextInputEvent.h"
+#include "Events/MouseDownEvent.h"
+#include "Events/MouseUpEvent.h"
+#include "Events/MouseMotionEvent.h"
+#include "Events/MouseWheelEvent.h"
+#include "Events/MultiGestureEvent.h"
 
-#include "imgui.h"
+#include "imgui/imgui.h"
 
 using namespace editor;
 

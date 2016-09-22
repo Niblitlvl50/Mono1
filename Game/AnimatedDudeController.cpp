@@ -8,10 +8,10 @@
 
 #include "AnimatedDudeController.h"
 #include "AnimatedDude.h"
-#include "EventHandler.h"
-#include "EventFuncFwd.h"
-#include "KeyDownEvent.h"
-#include "SysKeycodes.h"
+#include "EventHandler/EventHandler.h"
+#include "Events/EventFuncFwd.h"
+#include "Events/KeyDownEvent.h"
+#include "System/SysKeycodes.h"
 
 using namespace game;
 

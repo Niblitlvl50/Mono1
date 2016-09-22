@@ -7,8 +7,8 @@
 //
 
 #include "PathPoint.h"
-#include "PathFactory.h"
-#include "IPath.h"
+#include "Paths/PathFactory.h"
+#include "Paths/IPath.h"
 #include "IRenderer.h"
 #include "Color.h"
 

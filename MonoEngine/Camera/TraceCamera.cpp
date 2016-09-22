@@ -8,8 +8,8 @@
 
 #include "TraceCamera.h"
 #include "IEntity.h"
-#include "Vector2f.h"
-#include "MathFunctions.h"
+#include "Math/Vector2f.h"
+#include "Math/MathFunctions.h"
 
 #include <cmath>
 
@@ -21,9 +21,9 @@ namespace constants
 }
 
 TraceCamera::TraceCamera(int width, int height)
-    : mViewport(0.0f, 0.0f, width, height),
-      mTargetViewport(mViewport),
-      m_offset(math::zeroVec)
+    : m_offset(math::zeroVec),
+      mViewport(0.0f, 0.0f, width, height),
+      mTargetViewport(mViewport)
 { }
 
 void TraceCamera::Update(unsigned int delta)

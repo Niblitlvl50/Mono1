@@ -9,7 +9,7 @@
 #pragma once
 
 #include "ITexture.h"
-#include "IImage.h"
+#include "System/IImage.h"
 
 namespace mono
 {
@@ -18,13 +18,7 @@ namespace mono
     {
     public:
 
-        enum class TextureMode
-        {
-            REPEAT,
-            CLAMP
-        };
-        
-        Texture(const IImagePtr& image, TextureMode mode);
+        Texture(const IImagePtr& image);
         ~Texture();
         
     private:

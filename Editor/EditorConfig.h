@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include "Vector2f.h"
-#include "Quad.h"
+#include "Math/Vector2f.h"
+#include "Math/Quad.h"
 
 namespace editor
 {

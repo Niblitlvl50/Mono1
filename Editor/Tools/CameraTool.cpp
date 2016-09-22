@@ -9,8 +9,8 @@
 #include "CameraTool.h"
 
 #include "ICamera.h"
-#include "Quad.h"
-#include "MathFunctions.h"
+#include "Math/Quad.h"
+#include "Math/MathFunctions.h"
 
 #include <cmath>
 
@@ -64,17 +64,23 @@ void CameraTool::HandleMousePosition(const math::Vector2f& world_pos)
     m_translateDelta = world_pos;
 }
 
-void CameraTool::HandleMultiGesture(const math::Vector2f& screen_position, float distance)
+void CameraTool::HandleMouseWheel(float x, float y)
 {
-    if(std::fabs(distance) < 1e-3)
-        return;
-
     math::Quad quad = m_camera->GetViewport();
 
-    const float multiplier = (distance < 0.0f) ? 1.0f : -1.0f;
+    const float multiplier = (y < 0.0f) ? 1.0f : -1.0f;
     const float resizeValue = quad.mB.x * 0.15f * multiplier;
     const float aspect = quad.mB.x / quad.mB.y;
     math::ResizeQuad(quad, resizeValue, aspect);
 
     m_camera->SetTargetViewport(quad);
+}
+
+void CameraTool::HandleMultiGesture(const math::Vector2f& screen_position, float distance)
+{
+    if(std::fabs(distance) < 1e-3)
+        return;
+
+    const float multiplier = (distance < 0.0f) ? -1.0f : 1.0f;
+    HandleMouseWheel(0.0f, multiplier);
 }

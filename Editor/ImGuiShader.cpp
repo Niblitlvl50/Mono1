@@ -7,9 +7,9 @@
 //
 
 #include "ImGuiShader.h"
-#include "ShaderFunctions.h"
-#include "SysOpenGL.h"
-#include "Matrix.h"
+#include "Shader/ShaderFunctions.h"
+#include "System/SysOpenGL.h"
+#include "Math/Matrix.h"
 
 using namespace editor;
 

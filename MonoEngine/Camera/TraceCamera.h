@@ -10,7 +10,7 @@
 
 #include "ICamera.h"
 #include "MonoFwd.h"
-#include "Quad.h"
+#include "Math/Quad.h"
 
 namespace mono
 {

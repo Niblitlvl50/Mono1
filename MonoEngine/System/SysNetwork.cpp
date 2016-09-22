@@ -13,7 +13,7 @@
 #define ZED_NET_IMPLEMENTATION
 #define ZED_NET_STATIC
 
-#include "zed_net.h"
+#include "zed_net/zed_net.h"
 
 
 namespace

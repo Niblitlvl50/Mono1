@@ -26,6 +26,8 @@ namespace math
     // Check if a polygon is clockwise oriented or not
     bool IsPolygonClockwise(const std::vector<math::Vector2f>& points);
 
+    math::Vector2f MapVectorInQuad(const math::Vector2f& point, const math::Quad& quad);
+
     constexpr float PI()
     {
         return 3.14159265359f;

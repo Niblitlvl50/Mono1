@@ -8,16 +8,17 @@
 
 #include "TextureFactory.h"
 #include "Texture.h"
-#include "IImage.h"
-#include "ImageFactory.h"
+#include "System/IImage.h"
+#include "System/ImageFactory.h"
 
 #include <cstdio>
 #include <unordered_map>
+#include <string>
 
 namespace
 {
     // This is where all the weak pointers goes, that points to the allocated textures!
-    std::unordered_map<const char*, std::weak_ptr<mono::ITexture>> textureStorage;
+    std::unordered_map<std::string, std::weak_ptr<mono::ITexture>> textureStorage;
 }
 
 mono::ITexturePtr mono::CreateTexture(const char* source)
@@ -41,7 +42,7 @@ mono::ITexturePtr mono::CreateTexture(const char* source)
         delete ptr;
     };
 
-    mono::ITexturePtr texture(new Texture(image, Texture::TextureMode::CLAMP), deleter);
+    mono::ITexturePtr texture(new Texture(image), deleter);
     textureStorage[source] = texture;
     
     return texture;
@@ -50,7 +51,7 @@ mono::ITexturePtr mono::CreateTexture(const char* source)
 mono::ITexturePtr mono::CreateTexture(const byte* data, int width, int height, int colorComponents)
 {
     const mono::IImagePtr image = CreateImage(data, width, height, colorComponents);
-    return std::make_shared<Texture>(image, Texture::TextureMode::CLAMP);
+    return std::make_shared<Texture>(image);
 }
 
 

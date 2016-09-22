@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "WeaponTypes.h"
+#include "Weapons/WeaponTypes.h"
 #include "MonoFwd.h"
 
 #include <memory>

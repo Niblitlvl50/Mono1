@@ -7,7 +7,7 @@
 //
 
 #include "BaseWeapon.h"
-#include "SysTime.h"
+#include "System/SysTime.h"
 
 using namespace game;
 
@@ -18,8 +18,8 @@ BaseWeapon::BaseWeapon(mono::EventHandler& eventHandler)
 
 void BaseWeapon::Fire(const math::Vector2f& position, float direction)
 {
-    const float rpsHz = 1.0 / RoundsPerSecond();
-    const unsigned int weaponDelta = rpsHz * 1000;
+    const float rpsHz = 1.0f / RoundsPerSecond();
+    const unsigned int weaponDelta = rpsHz * 1000.0f;
 
     const unsigned int now = Time::GetMilliseconds();
     const unsigned int delta = now - m_lastFireTimestamp;

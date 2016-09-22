@@ -7,54 +7,34 @@
 //
 
 #include "TranslateTool.h"
-#include "Editor.h"
-#include "MathFunctions.h"
-#include "Vector2f.h"
-#include "Quad.h"
-#include "Polygon.h"
+#include "IEntity.h"
+#include "Math/Vector2f.h"
+#include "Math/Quad.h"
 
 using namespace editor;
 
-
-TranslateTool::TranslateTool(EditorZone* editor)
-    : m_editor(editor)
-{ }
 
 void TranslateTool::Begin()
 { }
 
 void TranslateTool::End()
 {
-    if(m_polygon)
-    {
-        m_polygon->SetSelected(false);
-        m_polygon = nullptr;
-    }
+    m_entity = nullptr;
 }
 
 bool TranslateTool::IsActive() const
 {
-    return m_polygon != nullptr;
+    return m_entity != nullptr;
 }
 
-void TranslateTool::HandleMouseDown(const math::Vector2f& world_pos)
+void TranslateTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
 {
-    for(auto& polygon : m_editor->m_polygons)
-        polygon->SetSelected(false);
-
-    for(auto& polygon : m_editor->m_polygons)
-    {
-        const math::Quad& bb = polygon->BoundingBox();
-        const bool found_polygon = math::PointInsideQuad(world_pos, bb);
-        if(found_polygon)
-        {
-            m_polygon = polygon;
-            m_polygon->SetSelected(true);
-            m_beginTranslate = world_pos;
-            m_positionDiff = m_polygon->Position() - world_pos;
-            break;
-        }
-    }
+    m_entity = entity;
+    if(!m_entity)
+        return;
+    
+    m_beginTranslate = world_pos;
+    m_positionDiff = m_entity->Position() - world_pos;
 }
 
 void TranslateTool::HandleMouseUp(const math::Vector2f& world_pos)
@@ -64,13 +44,13 @@ void TranslateTool::HandleMouseUp(const math::Vector2f& world_pos)
 
 void TranslateTool::HandleMousePosition(const math::Vector2f& world_pos)
 {
-    if(!m_polygon)
+    if(!m_entity)
         return;
 
     const math::Vector2f& delta = m_beginTranslate - world_pos;
     const math::Vector2f& new_pos = m_beginTranslate - delta;
 
-    m_polygon->SetPosition(new_pos + m_positionDiff);
+    m_entity->SetPosition(new_pos + m_positionDiff);
 }
 
 

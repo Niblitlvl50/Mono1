@@ -10,7 +10,7 @@
 #include "InvaderGroup.h"
 #include "InvaderEntity.h"
 #include "IRenderer.h"
-#include "MathFunctions.h"
+#include "Math/MathFunctions.h"
 
 using namespace game;
 

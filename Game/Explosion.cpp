@@ -8,10 +8,10 @@
 
 #include "Explosion.h"
 #include "IRenderer.h"
-#include "ISprite.h"
-#include "SpriteFactory.h"
-#include "RemoveEntityEvent.h"
-#include "EventHandler.h"
+#include "Sprite/ISprite.h"
+#include "Sprite/SpriteFactory.h"
+#include "Events/RemoveEntityEvent.h"
+#include "EventHandler/EventHandler.h"
 
 using namespace game;
 

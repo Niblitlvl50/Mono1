@@ -7,14 +7,14 @@
 //
 
 #include "TextFunctions.h"
-#include "SysFile.h"
-#include "SysTypes.h"
-#include "ITexture.h"
-#include "TextureFactory.h"
-#include "Vector2f.h"
+#include "System/SysFile.h"
+#include "System/SysTypes.h"
+#include "Texture/ITexture.h"
+#include "Texture/TextureFactory.h"
+#include "Math/Vector2f.h"
 
 #define STB_TRUETYPE_IMPLEMENTATION
-#include "stb_truetype.h"
+#include "stb_truetype/stb_truetype.h"
 
 #include <unordered_map>
 

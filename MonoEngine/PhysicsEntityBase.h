@@ -9,8 +9,8 @@
 #pragma once
 
 #include "IPhysicsEntity.h"
-#include "Vector2f.h"
-#include "CMObject.h"
+#include "Math/Vector2f.h"
+#include "Physics/CMObject.h"
 
 namespace mono
 {

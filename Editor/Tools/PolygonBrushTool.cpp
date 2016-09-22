@@ -10,11 +10,11 @@
 #include "Editor.h"
 #include "Polygon.h"
 
-#include "MathFunctions.h"
+#include "Math/MathFunctions.h"
+#include "Math/Quad.h"
 
 #include "IDrawable.h"
 #include "IRenderer.h"
-#include "Quad.h"
 #include "Color.h"
 
 #include <cmath>
@@ -80,7 +80,7 @@ bool PolygonBrushTool::IsActive() const
     return m_painting;
 }
 
-void PolygonBrushTool::HandleMouseDown(const math::Vector2f& world_pos)
+void PolygonBrushTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
 {
     if(!m_polygon)
         return;

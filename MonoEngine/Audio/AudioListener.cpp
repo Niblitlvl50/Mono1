@@ -7,7 +7,7 @@
 //
 
 #include "AudioListener.h"
-#include "Vector2f.h"
+#include "Math/Vector2f.h"
 #include "OpenAL/al.h"
 
 void mono::ListenerPosition(const math::Vector2f& position)

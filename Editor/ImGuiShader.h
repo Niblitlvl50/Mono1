@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "IShader.h"
+#include "Shader/IShader.h"
 
 namespace editor
 {

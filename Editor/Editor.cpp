@@ -11,15 +11,16 @@
 #include "IRenderer.h"
 #include "ICamera.h"
 
-#include "TextureFactory.h"
-#include "ITexture.h"
+#include "Texture/TextureFactory.h"
+#include "Texture/ITexture.h"
 
 #include "ZoneBase.h"
-#include "ISprite.h"
-#include "SpriteFactory.h"
+#include "Sprite/ISprite.h"
+#include "Sprite/SpriteFactory.h"
 #include "EntityBase.h"
 #include "Color.h"
-#include "Matrix.h"
+#include "Math/Matrix.h"
+#include "Math/MathFunctions.h"
 
 #include "UserInputController.h"
 
@@ -27,14 +28,14 @@
 #include "ImGuiInterfaceDrawer.h"
 #include "ImGuiRenderer.h"
 
-#include "EventFuncFwd.h"
-#include "EventHandler.h"
-#include "SurfaceChangedEvent.h"
+#include "Events/EventFuncFwd.h"
+#include "Events/SurfaceChangedEvent.h"
+#include "EventHandler/EventHandler.h"
 
 #include "WorldFile.h"
 #include "EditorConfig.h"
 
-#include "GridVisualizer.h"
+#include "Visualizers/GridVisualizer.h"
 
 namespace
 {
@@ -90,6 +91,8 @@ namespace
             polygon_entity->SetPosition(polygon.position);
             polygon_entity->SetBasePoint(polygon.local_offset);
             polygon_entity->SetRotation(polygon.rotation);
+            polygon_entity->SetTextureRepeate(polygon.texture_repeate);
+            polygon_entity->SetTexture(polygon.texture);
 
             math::Matrix invert_transform = polygon_entity->Transformation();
             math::Inverse(invert_transform);
@@ -112,7 +115,7 @@ namespace
         world_data.version = 1;
         world_data.polygons.resize(polygons.size());
 
-        for(int index = 0; index < polygons.size(); ++index)
+        for(size_t index = 0; index < polygons.size(); ++index)
         {
             const auto& polygon_entity = polygons[index];
             world::PolygonData& polygon_data = world_data.polygons[index];
@@ -120,6 +123,12 @@ namespace
             polygon_data.position = polygon_entity->Position();
             polygon_data.local_offset = polygon_entity->BasePoint();
             polygon_data.rotation = polygon_entity->Rotation();
+            polygon_data.texture_repeate = polygon_entity->GetTextureRepate();
+
+            const char* texture = polygon_entity->GetTexture();
+            const std::size_t string_length = std::strlen(texture);
+
+            std::memcpy(polygon_data.texture, texture, string_length);
 
             const math::Matrix& transform = polygon_entity->Transformation();
 
@@ -130,6 +139,14 @@ namespace
         File::FilePtr file = File::CreateBinaryFile(file_name);
         world::WriteWorld(file, world_data);
     }
+
+    const char* avalible_textures[] = {
+        "stone_tileable.png",
+        "gray_stone.png",
+        "dark_stone.png",
+        "brown_stone.png",
+        "lava1.png",
+        "lava2.png" };
 }
 
 using namespace editor;
@@ -146,9 +163,13 @@ EditorZone::EditorZone(const math::Vector2f& window_size, mono::EventHandler& ev
     m_context.contextMenuCallback = std::bind(&EditorZone::OnContextMenu, this, _1);
     m_context.contextMenuItems = { "Polygon", "Decoration" };
 
-    m_context.selectedPolygonIndex = -1;
-    m_context.polygonSelected = std::bind(&EditorZone::OnSelectedPolygon, this, _1);
-    m_context.polygonDeleted = std::bind(&EditorZone::OnDeletePolygon, this, _1);
+    m_context.texture_items_count = 6;
+    m_context.texture_items = avalible_textures;
+
+    m_context.has_selection = false;
+    m_context.texture_repeate_callback = std::bind(&EditorZone::OnTextureRepeate, this, _1);
+    m_context.texture_changed_callback = std::bind(&EditorZone::OnTextureChanged, this, _1);
+    m_context.delete_callback = std::bind(&EditorZone::OnDeletePolygon, this);
 
     m_context.editorMenuCallback = std::bind(&EditorZone::EditorMenuCallback, this, _1);
     m_context.toolsMenuCallback = std::bind(&EditorZone::ToolsMenuCallback, this, _1);
@@ -219,7 +240,54 @@ void EditorZone::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygo
 {
     AddEntity(polygon, 1);
     m_polygons.push_back(polygon);
-    m_context.polygonItems.push_back("Polygon: " + std::to_string(m_polygons.size()));
+}
+
+mono::IEntityPtr EditorZone::FindEntityFromPosition(const math::Vector2f& position)
+{
+    for(auto& polygon : m_polygons)
+    {
+        const math::Quad& bb = polygon->BoundingBox();
+        const bool found_polygon = math::PointInsideQuad(position, bb);
+        if(found_polygon)
+            return polygon;
+    }
+
+    return nullptr;
+}
+
+void EditorZone::SelectEntity(const mono::IEntityPtr& entity)
+{
+    m_selected_polygon = nullptr;
+
+    for(auto& polygon : m_polygons)
+    {
+        const bool selected = (polygon == entity);
+        polygon->SetSelected(selected);
+        if(selected)
+            m_selected_polygon = polygon;
+    }
+
+    m_context.has_selection = (entity != nullptr);
+    if(entity)
+    {
+        const math::Vector2f& position = entity->Position();
+        m_context.polygon_x = position.x;
+        m_context.polygon_y = position.y;
+        m_context.polygon_rotation = entity->Rotation();
+        m_context.texture_repeate = m_selected_polygon->GetTextureRepate();
+
+        const char* texture = m_selected_polygon->GetTexture();
+
+        for(int index = 0; index < 6; ++index)
+        {
+            const bool found = std::strstr(texture, avalible_textures[index]) != nullptr;
+            if(found)
+            {
+                m_context.texture_index = index;
+                break;
+            }
+        }
+    }
 }
 
 void EditorZone::OnContextMenu(int index)
@@ -227,23 +295,25 @@ void EditorZone::OnContextMenu(int index)
     m_userInputController->HandleContextMenu(index);
 }
 
-void EditorZone::OnSelectedPolygon(int index)
+void EditorZone::OnTextureRepeate(float repeate)
 {
-    m_context.selectedPolygonIndex = index;
-
-    for(int polygon_index = 0; polygon_index < m_polygons.size(); ++polygon_index)
-        m_polygons[polygon_index]->SetSelected(polygon_index == index);
+    m_selected_polygon->SetTextureRepeate(repeate);
 }
 
-void EditorZone::OnDeletePolygon(int index)
+void EditorZone::OnTextureChanged(int texture_index)
 {
-    const auto remove_polygon_func = [this, index] {
-        std::shared_ptr<editor::PolygonEntity> polygon = m_polygons[index];
+    m_selected_polygon->SetTexture(avalible_textures[texture_index]);
+}
 
-        m_polygons.erase(m_polygons.begin() + index);
-        this->RemoveEntity(polygon);
+void EditorZone::OnDeletePolygon()
+{
+    m_context.has_selection = false;
 
-        m_context.polygonItems.erase(m_context.polygonItems.begin() + index);
+    const auto remove_polygon_func = [this] {
+        auto it = std::find(m_polygons.begin(), m_polygons.end(), m_selected_polygon);
+        m_polygons.erase(it);
+        this->RemoveEntity(m_selected_polygon);
+        m_selected_polygon = nullptr;
     };
 
     SchedulePreFrameTask(remove_polygon_func);

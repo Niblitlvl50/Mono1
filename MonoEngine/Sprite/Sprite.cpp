@@ -8,7 +8,7 @@
 
 #include "Sprite.h"
 #include "SpriteAttributes.h"
-#include "ITexture.h"
+#include "Texture/ITexture.h"
 
 #include <stdexcept>
 

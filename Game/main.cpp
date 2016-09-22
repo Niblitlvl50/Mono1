@@ -1,14 +1,14 @@
 
 
-#include "SysLibs.h"
-#include "SysVideo.h"
-#include "WindowFactory.h"
+#include "System/SysLibs.h"
+#include "System/SysVideo.h"
+#include "System/WindowFactory.h"
 #include "TestZone.h"
-#include "TraceCamera.h"
+#include "Camera/TraceCamera.h"
 #include "Engine.h"
-#include "TextFunctions.h"
+#include "Text/TextFunctions.h"
 #include "Color.h"
-#include "EventHandler.h"
+#include "EventHandler/EventHandler.h"
 #include "IWindow.h"
 
 #include "GameContext.h"

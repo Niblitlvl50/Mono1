@@ -13,17 +13,17 @@
 #include "IWindow.h"
 #include "ICamera.h"
 #include "IZone.h"
-#include "IShaderFactory.h"
-#include "IColorShader.h"
-#include "ITextureShader.h"
-#include "IMorphingShader.h"
-#include "ShaderFunctions.h"
+#include "Shader/IShaderFactory.h"
+#include "Shader/IColorShader.h"
+#include "Shader/ITextureShader.h"
+#include "Shader/IMorphingShader.h"
+#include "Shader/ShaderFunctions.h"
 
-#include "Vector2f.h"
-#include "Quad.h"
+#include "Math/Vector2f.h"
+#include "Math/Quad.h"
 
-#include "EventHandler.h"
-#include "QuitEvent.h"
+#include "EventHandler/EventHandler.h"
+#include "Events/QuitEvent.h"
 
 namespace
 {

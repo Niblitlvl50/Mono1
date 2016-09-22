@@ -9,7 +9,7 @@
 #pragma once
 
 #include "MonoFwd.h"
-#include "Vector2f.h"
+#include "Math/Vector2f.h"
 
 namespace game
 {

@@ -7,9 +7,9 @@
 //
 
 #include "WeaponFactory.h"
-#include "StandardWeapon.h"
-#include "RocketLauncher.h"
-#include "CacoPlasma.h"
+#include "Weapons/StandardWeapon.h"
+#include "Weapons/RocketLauncher.h"
+#include "Weapons/CacoPlasma.h"
 
 std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponType weapon, mono::EventHandler& eventHandler)
 {

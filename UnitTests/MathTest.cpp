@@ -7,9 +7,9 @@
 //
 
 #include "gtest/gtest.h"
-#include "Quad.h"
-#include "Vector2f.h"
-#include "MathFunctions.h"
+#include "Math/Quad.h"
+#include "Math/Vector2f.h"
+#include "Math/MathFunctions.h"
 
 TEST(MathTest, QuadZero)
 {

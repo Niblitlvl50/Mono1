@@ -9,7 +9,7 @@
 #pragma once
 
 #include "ISound.h"
-#include "SysTypes.h"
+#include "System/SysTypes.h"
 #include "MonoPtrFwd.h"
 
 #include <vector>

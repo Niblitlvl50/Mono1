@@ -7,12 +7,12 @@
 //
 
 #include "RocketLauncher.h"
-#include "EventHandler.h"
+#include "EventHandler/EventHandler.h"
 
 #include "Rocket.h"
-#include "SpawnPhysicsEntityEvent.h"
-#include "Vector2f.h"
-#include "MathFunctions.h"
+#include "Events/SpawnPhysicsEntityEvent.h"
+#include "Math/Vector2f.h"
+#include "Math/MathFunctions.h"
 #include "RenderLayers.h"
 
 #include <cmath>

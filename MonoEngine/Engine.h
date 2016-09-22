@@ -10,8 +10,8 @@
 #pragma once
 
 #include "MonoPtrFwd.h"
-#include "EventFwd.h"
-#include "EventToken.h"
+#include "Events/EventFwd.h"
+#include "EventHandler/EventToken.h"
 
 namespace mono
 {

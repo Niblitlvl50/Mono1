@@ -8,15 +8,15 @@
 
 #include "FireBullet.h"
 #include "IRenderer.h"
-#include "ISprite.h"
-#include "SpriteFactory.h"
-#include "RemoveEntityEvent.h"
-#include "DamageEvent.h"
-#include "EventHandler.h"
+#include "Sprite/ISprite.h"
+#include "Sprite/SpriteFactory.h"
+#include "Events/RemoveEntityEvent.h"
+#include "Events/DamageEvent.h"
+#include "EventHandler/EventHandler.h"
 
-#include "CMIBody.h"
-#include "CMIShape.h"
-#include "CMFactory.h"
+#include "Physics/CMIBody.h"
+#include "Physics/CMIShape.h"
+#include "Physics/CMFactory.h"
 
 using namespace game;
 

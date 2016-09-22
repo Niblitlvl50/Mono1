@@ -9,7 +9,7 @@
 #pragma once
 
 #include "MonoFwd.h"
-#include "MathFwd.h"
+#include "Math/MathFwd.h"
 #include <vector>
 
 namespace mono
@@ -68,5 +68,10 @@ namespace mono
                    const std::vector<math::Vector2f>& shape2,
                    const mono::Color::RGBA& color,
                    const std::shared_ptr<IMorphingShader>& shader);
+
+    void DrawTexturedGeometry(const std::vector<math::Vector2f>& vertices,
+                              const std::vector<math::Vector2f>& texture_coordinates,
+                              const std::vector<unsigned short>& indices,
+                              const std::shared_ptr<ITextureShader>& shader);
 }
 

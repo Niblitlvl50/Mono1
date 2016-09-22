@@ -7,19 +7,19 @@
 //
 
 #include "PhysicsEntityBase.h"
-#include "Quad.h"
-#include "Matrix.h"
-#include "CMIBody.h"
+#include "Math/Quad.h"
+#include "Math/Matrix.h"
+#include "Physics/CMIBody.h"
 #include "IRenderer.h"
-#include "SysUID.h"
+#include "System/SysUID.h"
 
 using namespace mono;
 
 PhysicsEntityBase::PhysicsEntityBase()
     : m_uid(system::CreateUID()),
       m_properties(0),
-      mRotation(0.0f),
-      mScale(1.0f, 1.0f)
+      mScale(1.0f, 1.0f),
+      mRotation(0.0f)
 { }
 
 const math::Vector2f& PhysicsEntityBase::Position() const

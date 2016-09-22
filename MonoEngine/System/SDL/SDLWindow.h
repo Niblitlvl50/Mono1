@@ -11,7 +11,7 @@
 #pragma once
 
 #include "IWindow.h"
-#include "Vector2f.h"
+#include "Math/Vector2f.h"
 
 struct SDL_Window;
 

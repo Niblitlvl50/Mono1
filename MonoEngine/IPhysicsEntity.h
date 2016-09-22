@@ -9,7 +9,7 @@
 #pragma once
 
 #include "IEntity.h"
-#include "CMFwd.h"
+#include "Physics/CMFwd.h"
 
 namespace mono
 {

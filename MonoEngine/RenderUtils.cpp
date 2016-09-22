@@ -7,15 +7,15 @@
 //
 
 #include "RenderUtils.h"
-#include "Quad.h"
-#include "ISprite.h"
-#include "SysOpenGL.h"
-#include "MathFunctions.h"
-#include "TextDefinition.h"
-#include "ITexture.h"
-#include "IColorShader.h"
-#include "ITextureShader.h"
-#include "IMorphingShader.h"
+#include "Math/Quad.h"
+#include "Sprite/ISprite.h"
+#include "System/SysOpenGL.h"
+#include "Math/MathFunctions.h"
+#include "Text/TextDefinition.h"
+#include "Texture/ITexture.h"
+#include "Shader/IColorShader.h"
+#include "Shader/ITextureShader.h"
+#include "Shader/IMorphingShader.h"
 
 #include <cmath>
 
@@ -235,5 +235,25 @@ void mono::DrawShape(const std::vector<math::Vector2f>& shape1,
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
+}
+
+void mono::DrawTexturedGeometry(const std::vector<math::Vector2f>& vertices,
+                                const std::vector<math::Vector2f>& texture_coordinates,
+                                const std::vector<unsigned short>& indices,
+                                const std::shared_ptr<ITextureShader>& shader)
+{
+    shader->SetShade(mono::Color::RGBA());
+    shader->SetAlphaTexture(false);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, vertices.data());
+    glVertexAttribPointer(shader->GetTextureAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, texture_coordinates.data());
+
+    glDrawElements(GL_TRIANGLE_FAN, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_SHORT, indices.data());
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
 }
 

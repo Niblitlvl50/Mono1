@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "CMIBody.h"
+#include "Physics/CMIBody.h"
 
 namespace game
 {

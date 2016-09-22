@@ -8,15 +8,17 @@
 
 #include "UserInputController.h"
 
-#include "EventHandler.h"
-#include "EventFuncFwd.h"
-#include "MouseDownEvent.h"
-#include "MouseUpEvent.h"
-#include "MouseMotionEvent.h"
-#include "MultiGestureEvent.h"
-#include "KeyDownEvent.h"
+#include "Editor.h"
+#include "EventHandler/EventHandler.h"
+#include "Events/EventFuncFwd.h"
+#include "Events/MouseDownEvent.h"
+#include "Events/MouseUpEvent.h"
+#include "Events/MouseMotionEvent.h"
+#include "Events/MultiGestureEvent.h"
+#include "Events/MouseWheelEvent.h"
+#include "Events/KeyDownEvent.h"
 
-#include "SysKeycodes.h"
+#include "System/SysKeycodes.h"
 
 #include "ImGuiInterfaceDrawer.h"
 
@@ -29,12 +31,11 @@ UserInputController::UserInputController(const mono::ICameraPtr& camera,
                                          const math::Vector2f& window_size,
                                          mono::EventHandler& event_handler)
     : m_eventHandler(event_handler),
+      m_editor(editor),
       m_context(context),
       m_cameraTool(camera, window_size),
       m_polygonTool(editor),
       m_polygonBrushTool(editor),
-      m_translateTool(editor),
-      m_rotateTool(editor),
       m_activeTool(&m_polygonTool)
 {
     using namespace std::placeholders;
@@ -42,12 +43,14 @@ UserInputController::UserInputController(const mono::ICameraPtr& camera,
     const event::MouseDownEventFunc& mouse_down = std::bind(&UserInputController::OnMouseDown, this, _1);
     const event::MouseUpEventFunc& mouse_up = std::bind(&UserInputController::OnMouseUp, this, _1);
     const event::MouseMotionEventFunc& mouse_move = std::bind(&UserInputController::OnMouseMove, this, _1);
+    const event::MouseWheelEventFunc& mouse_wheel = std::bind(&UserInputController::OnMouseWheel, this, _1);
     const event::MultiGestureEventFunc& multi_gesture = std::bind(&UserInputController::OnMultiGesture, this, _1);
     const event::KeyDownEventFunc& key_down = std::bind(&UserInputController::OnKeyDown, this, _1);
 
     m_mouseDownToken = m_eventHandler.AddListener(mouse_down);
     m_mouseUpToken = m_eventHandler.AddListener(mouse_up);
     m_mouseMoveToken = m_eventHandler.AddListener(mouse_move);
+    m_mouseWheelToken = m_eventHandler.AddListener(mouse_wheel);
     m_multiGestureToken = m_eventHandler.AddListener(multi_gesture);
     m_keyDownToken = m_eventHandler.AddListener(key_down);
 }
@@ -57,6 +60,7 @@ UserInputController::~UserInputController()
     m_eventHandler.RemoveListener(m_mouseDownToken);
     m_eventHandler.RemoveListener(m_mouseUpToken);
     m_eventHandler.RemoveListener(m_mouseMoveToken);
+    m_eventHandler.RemoveListener(m_mouseWheelToken);
     m_eventHandler.RemoveListener(m_multiGestureToken);
     m_eventHandler.RemoveListener(m_keyDownToken);
 }
@@ -110,7 +114,11 @@ bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)
 
     if(event.key == MouseButton::LEFT)
     {
-        m_activeTool->HandleMouseDown(math::Vector2f(event.worldX, event.worldY));
+        const math::Vector2f world_position(event.worldX, event.worldY);
+
+        auto entity = m_editor->FindEntityFromPosition(world_position);
+        m_editor->SelectEntity(entity);
+        m_activeTool->HandleMouseDown(world_position, entity);
         handled = m_activeTool->IsActive();
     }
 
@@ -140,6 +148,12 @@ bool UserInputController::OnMouseMove(const event::MouseMotionEvent& event)
     if(m_cameraTool.IsActive())
         m_cameraTool.HandleMousePosition(math::Vector2f(event.screenX, event.screenY));
 
+    return true;
+}
+
+bool UserInputController::OnMouseWheel(const event::MouseWheelEvent& event)
+{
+    m_cameraTool.HandleMouseWheel(event.x, event.y);
     return true;
 }
 

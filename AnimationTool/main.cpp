@@ -6,16 +6,16 @@
 //
 //
 
-#include "SysLibs.h"
-#include "SysVideo.h"
-#include "SysKeycodes.h"
-#include "WindowFactory.h"
-#include "TraceCamera.h"
+#include "System/SysLibs.h"
+#include "System/SysVideo.h"
+#include "System/SysKeycodes.h"
+#include "System/WindowFactory.h"
+#include "Camera/TraceCamera.h"
 #include "Engine.h"
-#include "EventHandler.h"
-#include "KeyUpEvent.h"
-#include "KeyDownEvent.h"
-#include "EventFuncFwd.h"
+#include "EventHandler/EventHandler.h"
+#include "Events/KeyUpEvent.h"
+#include "Events/KeyDownEvent.h"
+#include "Events/EventFuncFwd.h"
 
 #include "IWindow.h"
 #include "ICamera.h"
@@ -23,11 +23,11 @@
 #include "ZoneBase.h"
 #include "Engine.h"
 #include "Color.h"
-#include "ISprite.h"
-#include "SpriteFactory.h"
+#include "Sprite/ISprite.h"
+#include "Sprite/SpriteFactory.h"
 #include "EntityBase.h"
 #include "IRenderer.h"
-#include "TextFunctions.h"
+#include "Text/TextFunctions.h"
 
 #include <algorithm>
 #include <cstdio>
@@ -85,7 +85,7 @@ namespace
             m_sprite->doUpdate(delta);
         }
 
-        void SetAnimation(int id)
+        void SetAnimation(unsigned int id)
         {
             const unsigned int animations = m_sprite->GetDefinedAnimations();
             if(id < animations)

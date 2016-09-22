@@ -9,8 +9,8 @@
 #pragma once
 
 #include "MonoFwd.h"
-#include "EventToken.h"
-#include "EventFwd.h"
+#include "EventHandler/EventToken.h"
+#include "Events/EventFwd.h"
 
 namespace editor
 {

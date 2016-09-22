@@ -10,8 +10,8 @@
 #pragma once
 
 #include "IRenderer.h"
-#include "TextDefinition.h"
-#include "Matrix.h"
+#include "Text/TextDefinition.h"
+#include "Math/Matrix.h"
 
 namespace mono
 {
@@ -40,6 +40,11 @@ namespace mono
         virtual void DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const;
         virtual void DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const;
         virtual void DrawShape(const std::vector<math::Vector2f>& shape1, const std::vector<math::Vector2f>& shape2, float morphGrade, const Color::RGBA& color);
+
+        virtual void DrawGeometry(const std::vector<math::Vector2f>& vertices,
+                                  const std::vector<math::Vector2f>& texture_coordinates,
+                                  const std::vector<unsigned short>& indices,
+                                  const ITexturePtr& texture);
 
         virtual void UseShader(const IShaderPtr& shader) const;
         virtual void UseTexture(const ITexturePtr& texture) const;

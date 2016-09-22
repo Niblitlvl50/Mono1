@@ -10,8 +10,8 @@
 #include "IRenderer.h"
 #include "ICamera.h"
 #include "Color.h"
-#include "Quad.h"
-#include "Matrix.h"
+#include "Math/Quad.h"
+#include "Math/Matrix.h"
 
 #include <vector>
 #include <cstdio>

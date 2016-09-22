@@ -8,12 +8,12 @@
 
 #include "StandardWeapon.h"
 #include "FireBullet.h"
-#include "SpawnPhysicsEntityEvent.h"
+#include "Events/SpawnPhysicsEntityEvent.h"
 
-#include "EventHandler.h"
-#include "Vector2f.h"
-#include "MathFunctions.h"
-#include "AudioFactory.h"
+#include "EventHandler/EventHandler.h"
+#include "Math/Vector2f.h"
+#include "Math/MathFunctions.h"
+#include "Audio/AudioFactory.h"
 #include "RenderLayers.h"
 
 #include <cmath>

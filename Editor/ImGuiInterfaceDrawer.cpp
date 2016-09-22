@@ -7,7 +7,7 @@
 //
 
 #include "ImGuiInterfaceDrawer.h"
-#include "imgui.h"
+#include "imgui/imgui.h"
 
 using namespace editor;
 
@@ -56,37 +56,35 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
         ImGui::EndMenu();
     }
 
-    ImGui::EndMainMenuBar();
-
-
-    ImGui::Begin("Polygons", nullptr, ImVec2(500, 700));
-
-    int selectedPolygon = -1;
-
-    for(int index = 0; index < m_context.polygonItems.size(); ++index)
+    if(ImGui::BeginMenu("Options"))
     {
-        const ImGuiTreeNodeFlags selected_flag = (index == m_context.selectedPolygonIndex) ? ImGuiTreeNodeFlags_Selected : 0;
-        const ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | selected_flag;
+        static ImVec4 color(1.0f, 0.0f, 1.0f, 1.0f);
+        ImGui::ColorEdit3("BG Color", &color.x);
 
-        ImGui::TreeNodeEx((void*)(intptr_t)index, flags, m_context.polygonItems.at(index).c_str(), index);
-        if(ImGui::IsItemClicked())
-            selectedPolygon = index;
-
-        ImGui::SameLine();
-
-        ImGui::PushID(index);
-        if(ImGui::SmallButton("Delete"))
-            m_context.polygonDeleted(index);
-
-        ImGui::PopID();
+        ImGui::EndMenu();
     }
 
-    ImGui::End();
+    ImGui::EndMainMenuBar();
 
-    if(selectedPolygon != -1)
-        m_context.polygonSelected(selectedPolygon);
+    if(m_context.has_selection)
+    {
+        ImGui::Begin("Selection", nullptr, ImVec2(200, 120), true, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
 
+        ImGui::Value("X", m_context.polygon_x);
+        ImGui::SameLine();
+        ImGui::Value("Y", m_context.polygon_y);
+        ImGui::Value("Rotation", m_context.polygon_rotation);
+        if(ImGui::SliderFloat("Repeate", &m_context.texture_repeate, 1.0f, 10.0f))
+            m_context.texture_repeate_callback(m_context.texture_repeate);
 
+        if(ImGui::Combo("Texture", &m_context.texture_index, m_context.texture_items, m_context.texture_items_count))
+            m_context.texture_changed_callback(m_context.texture_index);
+
+        if(ImGui::Button("Delete"))
+            m_context.delete_callback();
+
+        ImGui::End();
+    }
 
     if(m_context.showContextMenu)
     {
@@ -101,7 +99,7 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
         int menu_index = -1;
 
-        for(int index = 0; index < m_context.contextMenuItems.size(); ++index)
+        for(size_t index = 0; index < m_context.contextMenuItems.size(); ++index)
         {
             if(ImGui::Selectable(m_context.contextMenuItems.at(index).c_str()))
                 menu_index = index;
@@ -122,7 +120,7 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
     const ImVec2 window_size = ImVec2(160.0f, 50.0f);
     const float window_position = ImGui::GetIO().DisplaySize.x - window_size.x;
 
-    for(int index = 0; index < m_context.notifications.size(); ++index)
+    for(size_t index = 0; index < m_context.notifications.size(); ++index)
     {
         Notification& note = m_context.notifications[index];
 
@@ -139,7 +137,7 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
         note.time_left -= delta;
 
         char window_id[16];
-        std::sprintf(window_id, "overlay: %u", index);
+        std::sprintf(window_id, "overlay: %zu", index);
 
         ImGui::SetNextWindowPos(ImVec2(window_position - 10, index * 60 + 30));
 

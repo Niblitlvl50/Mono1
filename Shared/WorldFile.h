@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include "Vector2f.h"
-#include "SysFile.h"
+#include "Math/Vector2f.h"
+#include "System/SysFile.h"
 #include <vector>
 
 namespace world
@@ -19,6 +19,8 @@ namespace world
         math::Vector2f position;
         math::Vector2f local_offset;
         float rotation = 0.0f;
+        float texture_repeate = 1.0f;
+        char texture[32] = { 0 };
         std::vector<math::Vector2f> vertices;
     };
 

@@ -12,7 +12,7 @@
 #include <string>
 #include <functional>
 
-class lua_State;
+struct lua_State;
 
 namespace mono
 {

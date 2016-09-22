@@ -10,7 +10,7 @@
 #pragma once
 
 #include "MonoPtrFwd.h"
-#include "MathFwd.h"
+#include "Math/MathFwd.h"
 
 #include <vector>
 
@@ -33,6 +33,11 @@ namespace mono
         virtual void DrawQuad(const math::Quad& quad, const Color::RGBA& color, float width) const = 0;
         virtual void DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const Color::RGBA& color) const = 0;
         virtual void DrawShape(const std::vector<math::Vector2f>& shape1, const std::vector<math::Vector2f>& shape2, float morphGrade, const Color::RGBA& color) = 0;
+
+        virtual void DrawGeometry(const std::vector<math::Vector2f>& vertices,
+                                  const std::vector<math::Vector2f>& texture_coordinates,
+                                  const std::vector<unsigned short>& indices,
+                                  const ITexturePtr& texture) = 0;
 
         virtual void UseShader(const IShaderPtr& shader) const = 0;
         virtual void UseTexture(const ITexturePtr& texture) const = 0;

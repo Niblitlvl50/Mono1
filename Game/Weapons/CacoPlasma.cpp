@@ -7,23 +7,23 @@
 //
 
 #include "CacoPlasma.h"
-#include "MathFunctions.h"
-#include "Vector2f.h"
+#include "Math/MathFunctions.h"
+#include "Math/Vector2f.h"
 
 #include "EntityBase.h"
 #include "PhysicsEntityBase.h"
-#include "ISprite.h"
-#include "SpriteFactory.h"
+#include "Sprite/ISprite.h"
+#include "Sprite/SpriteFactory.h"
 #include "IRenderer.h"
-#include "EventHandler.h"
-#include "CMIBody.h"
-#include "CMIShape.h"
-#include "CMFactory.h"
+#include "EventHandler/EventHandler.h"
+#include "Physics/CMIBody.h"
+#include "Physics/CMIShape.h"
+#include "Physics/CMFactory.h"
 
-#include "SpawnEntityEvent.h"
-#include "RemoveEntityEvent.h"
-#include "SpawnPhysicsEntityEvent.h"
-#include "DamageEvent.h"
+#include "Events/SpawnEntityEvent.h"
+#include "Events/RemoveEntityEvent.h"
+#include "Events/SpawnPhysicsEntityEvent.h"
+#include "Events/DamageEvent.h"
 
 #include "RenderLayers.h"
 

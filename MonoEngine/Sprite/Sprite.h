@@ -12,7 +12,7 @@
 
 #include "ISprite.h"
 #include "AnimationSequence.h"
-#include "Quad.h"
+#include "Math/Quad.h"
 #include "Color.h"
 
 #include <unordered_map>

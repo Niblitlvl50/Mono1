@@ -7,57 +7,35 @@
 //
 
 #include "RotateTool.h"
-#include "Editor.h"
-#include "MathFunctions.h"
-#include "Vector2f.h"
-#include "Quad.h"
-#include "Polygon.h"
+#include "Math/MathFunctions.h"
+#include "Math/Vector2f.h"
+#include "Math/Quad.h"
+#include "IEntity.h"
 
 using namespace editor;
-
-
-RotateTool::RotateTool(EditorZone* editor)
-    : m_editor(editor)
-{ }
 
 void RotateTool::Begin()
 { }
 
 void RotateTool::End()
 {
-    if(m_polygon)
-    {
-        m_polygon->SetSelected(false);
-        m_polygon = nullptr;
-    }
+    m_entity = nullptr;
 }
 
 bool RotateTool::IsActive() const
 {
-    return m_polygon != nullptr;
+    return m_entity != nullptr;
 }
 
-void RotateTool::HandleMouseDown(const math::Vector2f& world_pos)
+void RotateTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
 {
-    for(auto& polygon : m_editor->m_polygons)
-        polygon->SetSelected(false);
+    m_entity = entity;
+    if(!m_entity)
+        return;
 
-    for(auto& polygon : m_editor->m_polygons)
-    {
-        const math::Quad& bb = polygon->BoundingBox();
-        const bool found_polygon = math::PointInsideQuad(world_pos, bb);
-        if(found_polygon)
-        {
-            m_polygon = polygon;
-            m_polygon->SetSelected(true);
-
-            const math::Vector2f& position = m_polygon->Position() + m_polygon->BasePoint();
-            const float rotation = m_polygon->Rotation();
-            m_rotationDiff = rotation - math::AngleBetweenPoints(position, world_pos);
-
-            break;
-        }
-    }
+    const math::Vector2f& position = m_entity->Position() + m_entity->BasePoint();
+    const float rotation = m_entity->Rotation();
+    m_rotationDiff = rotation - math::AngleBetweenPoints(position, world_pos);
 }
 
 void RotateTool::HandleMouseUp(const math::Vector2f& world_pos)
@@ -67,13 +45,13 @@ void RotateTool::HandleMouseUp(const math::Vector2f& world_pos)
 
 void RotateTool::HandleMousePosition(const math::Vector2f& world_pos)
 {
-    if(!m_polygon)
+    if(!m_entity)
         return;
 
-    const math::Vector2f& position = m_polygon->Position() + m_polygon->BasePoint();
+    const math::Vector2f& position = m_entity->Position() + m_entity->BasePoint();
     const float angle = math::AngleBetweenPoints(position, world_pos);
 
-    m_polygon->SetRotation(angle + m_rotationDiff);
+    m_entity->SetRotation(angle + m_rotationDiff);
 }
 
 

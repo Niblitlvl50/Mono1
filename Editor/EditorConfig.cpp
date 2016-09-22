@@ -7,9 +7,9 @@
 //
 
 #include "EditorConfig.h"
-#include "luatables.h"
+#include "luatables++/luatables.h"
 
-#include "SysFile.h"
+#include "System/SysFile.h"
 #include <cstdio>
 
 namespace

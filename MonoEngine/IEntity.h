@@ -11,8 +11,8 @@
 
 #include "IDrawable.h"
 #include "IUpdatable.h"
-#include "SysTypes.h"
-#include "MathFwd.h"
+#include "System/SysTypes.h"
+#include "Math/MathFwd.h"
 
 namespace mono
 {

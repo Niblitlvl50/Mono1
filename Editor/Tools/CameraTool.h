@@ -10,11 +10,11 @@
 
 #include "ITool.h"
 #include "MonoPtrFwd.h"
-#include "Vector2f.h"
+#include "Math/Vector2f.h"
 
 namespace editor
 {
-    class CameraTool : public ITool
+    class CameraTool
     {
     public:
 
@@ -27,6 +27,7 @@ namespace editor
         virtual void HandleMouseUp(const math::Vector2f& world_pos);
         virtual void HandleMousePosition(const math::Vector2f& world_pos);
 
+        void HandleMouseWheel(float x, float y);
         void HandleMultiGesture(const math::Vector2f& screen_position, float distance);
 
         mono::ICameraPtr m_camera;

@@ -9,9 +9,9 @@
 
 #include "InvaderEntity.h"
 #include "IRenderer.h"
-#include "ISprite.h"
-#include "SpriteFactory.h"
-#include "MathFunctions.h"
+#include "Sprite/ISprite.h"
+#include "Sprite/SpriteFactory.h"
+#include "Math/MathFunctions.h"
 
 using namespace game;
 

@@ -14,22 +14,22 @@
 #include "ICamera.h"
 #include "IZone.h"
 
-#include "SysTime.h"
-#include "SysEvents.h"
+#include "System/SysTime.h"
+#include "System/SysEvents.h"
 
-#include "EventHandler.h"
-#include "EventFuncFwd.h"
-#include "PauseEvent.h"
-#include "QuitEvent.h"
-#include "ApplicationEvent.h"
-#include "SurfaceChangedEvent.h"
-#include "ActivatedEvent.h"
-#include "TimeScaleEvent.h"
+#include "EventHandler/EventHandler.h"
+#include "Events/EventFuncFwd.h"
+#include "Events/PauseEvent.h"
+#include "Events/QuitEvent.h"
+#include "Events/ApplicationEvent.h"
+#include "Events/SurfaceChangedEvent.h"
+#include "Events/ActivatedEvent.h"
+#include "Events/TimeScaleEvent.h"
 
 #include "Renderer.h"
 
-#include "Vector2f.h"
-#include "Quad.h"
+#include "Math/Vector2f.h"
+#include "Math/Quad.h"
 
 using namespace mono;
 

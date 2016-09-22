@@ -10,7 +10,7 @@
 
 #include "MonoPtrFwd.h"
 #include "PhysicsEntityBase.h"
-#include "CMIBody.h"
+#include "Physics/CMIBody.h"
 
 namespace game
 {

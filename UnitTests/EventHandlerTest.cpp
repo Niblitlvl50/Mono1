@@ -7,7 +7,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "EventHandler.h"
+#include "EventHandler/EventHandler.h"
 
 #include <functional>
 

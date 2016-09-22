@@ -7,10 +7,10 @@
 //
 
 #include "AnimatedDude.h"
-#include "SysTime.h"
+#include "System/SysTime.h"
 #include "IRenderer.h"
-#include "ISprite.h"
-#include "SpriteFactory.h"
+#include "Sprite/ISprite.h"
+#include "Sprite/SpriteFactory.h"
 #include "Color.h"
 #include <cmath>
 

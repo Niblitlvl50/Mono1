@@ -7,7 +7,7 @@
 //
 
 #include "WindowFactory.h"
-#include "SDLWindow.h"
+#include "SDL/SDLWindow.h"
 
 mono::IWindowPtr mono::CreateWindow(const char* title, int width, int height, bool fullscreen)
 {

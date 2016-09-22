@@ -8,8 +8,8 @@
 
 #include "MorphingShader.h"
 #include "ShaderFunctions.h"
-#include "SysOpenGL.h"
-#include "Matrix.h"
+#include "System/SysOpenGL.h"
+#include "Math/Matrix.h"
 
 namespace
 {

@@ -8,16 +8,16 @@
 
 #include "ShuttleController.h"
 #include "Shuttle.h"
-#include "EventHandler.h"
-#include "EventFuncFwd.h"
-#include "MouseUpEvent.h"
-#include "MouseDownEvent.h"
-#include "MouseMotionEvent.h"
-#include "MultiGestureEvent.h"
-#include "KeyDownEvent.h"
-#include "SysKeycodes.h"
-#include "WeaponTypes.h"
-#include "MathFunctions.h"
+#include "EventHandler/EventHandler.h"
+#include "Events/EventFuncFwd.h"
+#include "Events/MouseUpEvent.h"
+#include "Events/MouseDownEvent.h"
+#include "Events/MouseMotionEvent.h"
+#include "Events/MultiGestureEvent.h"
+#include "Events/KeyDownEvent.h"
+#include "System/SysKeycodes.h"
+#include "Weapons/WeaponTypes.h"
+#include "Math/MathFunctions.h"
 
 
 using namespace game;

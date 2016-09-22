@@ -38,13 +38,13 @@
 
 #include "SpriteFactory.h"
 
-#include "LuaState.h"
-#include "LuaFunctions.h"
+#include "Lua/LuaState.h"
+#include "Lua/LuaFunctions.h"
 
-#include "ITexture.h"
-#include "TextureFactory.h"
+#include "Texture/ITexture.h"
+#include "Texture/TextureFactory.h"
 
-#include "Quad.h"
+#include "Math/Quad.h"
 #include "Sprite.h"
 
 namespace

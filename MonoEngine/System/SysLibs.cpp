@@ -9,8 +9,8 @@
 #include "SysLibs.h"
 #include "SysSound.h"
 #include "SysNetwork.h"
-#include "TextFunctions.h"
-#include "ShaderFunctions.h"
+#include "Text/TextFunctions.h"
+#include "Shader/ShaderFunctions.h"
 #include "SDL.h"
 
 #include <stdexcept>

@@ -11,7 +11,7 @@
 #include "Polygon.h"
 #include "IRenderer.h"
 #include "Color.h"
-#include "Quad.h"
+#include "Math/Quad.h"
 
 using namespace editor;
 
@@ -66,7 +66,7 @@ bool PolygonTool::IsActive() const
     return m_polygon != nullptr;
 }
 
-void PolygonTool::HandleMouseDown(const math::Vector2f& world_pos)
+void PolygonTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
 { }
 
 void PolygonTool::HandleMouseUp(const math::Vector2f& world_pos)
@@ -93,4 +93,7 @@ void PolygonTool::HandleMouseUp(const math::Vector2f& world_pos)
 void PolygonTool::HandleMousePosition(const math::Vector2f& world_pos)
 {
     m_mousePosition = world_pos;
+
+    if(m_firstPoint)
+        m_lastAddedPoint = world_pos;
 }

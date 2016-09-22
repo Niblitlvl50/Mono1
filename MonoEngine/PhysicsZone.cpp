@@ -9,9 +9,9 @@
 #include "PhysicsZone.h"
 #include "IRenderer.h"
 #include "IUpdatable.h"
-#include "CMSpace.h"
-#include "CMObject.h"
-#include "CMIShape.h"
+#include "Physics/CMSpace.h"
+#include "Physics/CMObject.h"
+#include "Physics/CMIShape.h"
 #include "IPhysicsEntity.h"
 
 #include "Utils.h"

@@ -9,9 +9,9 @@
 #include "PathFactory.h"
 #include "IPath.h"
 
-#include "LuaState.h"
-#include "LuaFunctions.h"
-#include "Vector2f.h"
+#include "Lua/LuaState.h"
+#include "Lua/LuaFunctions.h"
+#include "Math/Vector2f.h"
 
 namespace
 {

@@ -11,7 +11,7 @@
 #include "MonoPtrFwd.h"
 #include "PhysicsEntityBase.h"
 #include "ShuttleController.h"
-#include "CMIBody.h"
+#include "Physics/CMIBody.h"
 
 namespace game
 {

@@ -7,12 +7,13 @@
 //
 
 #include "AudioFactory.h"
-#include "SysTypes.h"
-#include "SysFile.h"
+#include "System/SysTypes.h"
+#include "System/SysFile.h"
 
 #include "OpenAL/al.h"
 
 #include <unordered_map>
+#include <string>
 #include <cstdio>
 
 namespace
@@ -87,7 +88,7 @@ namespace
               m_source(0)
         {
             alGenSources(1, &m_source);
-            alSourcei(m_source, AL_BUFFER, m_data->BufferId());
+            alSourcei(m_source, AL_BUFFER, static_cast<ALint>(m_data->BufferId()));
             alSourcei(m_source, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
 
             Pitch(1.0f);
@@ -140,7 +141,7 @@ namespace
     }
 
     // The sound data repository, this is where all the sounds are stored!
-    std::unordered_map<const char*, std::weak_ptr<SoundData>> repository;
+    std::unordered_map<std::string, std::weak_ptr<SoundData>> repository;
 }
 
 mono::ISoundPtr mono::AudioFactory::CreateSound(const char* fileName, bool loop)

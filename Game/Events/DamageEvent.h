@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "CMFwd.h"
+#include "Physics/CMFwd.h"
 
 namespace game
 {

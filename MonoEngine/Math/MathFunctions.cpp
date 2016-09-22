@@ -70,7 +70,7 @@ math::Vector2f math::CentroidOfPolygon(const std::vector<math::Vector2f>& points
     };
 
 
-    for(int point_index = 0; point_index < points.size() -1; ++point_index)
+    for(size_t point_index = 0; point_index < points.size() -1; ++point_index)
         func(points.at(point_index), points.at(point_index +1));
 
     func(points.back(), points.front());
@@ -86,7 +86,7 @@ bool math::IsPolygonClockwise(const std::vector<math::Vector2f>& points)
 {
     float sum = 0.0f;
 
-    for(int point_index = 0; point_index < points.size(); ++point_index)
+    for(size_t point_index = 0; point_index < points.size(); ++point_index)
     {
         const math::Vector2f& v1 = points[point_index];
         const math::Vector2f& v2 = points[(point_index + 1) % points.size()];
@@ -95,6 +95,15 @@ bool math::IsPolygonClockwise(const std::vector<math::Vector2f>& points)
     }
 
     return sum > 0.0f;
+}
+
+math::Vector2f math::MapVectorInQuad(const math::Vector2f& point, const math::Quad& quad)
+{
+    const math::Vector2f& temp = point - quad.mA;
+    const math::Vector2f& size = quad.mB - quad.mA;
+
+    // We need to flip the y axis
+    return math::Vector2f(temp.x / size.x, (size.y - temp.y) / size.y);
 }
 
 

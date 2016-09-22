@@ -9,7 +9,7 @@
 #include "ShaderFunctions.h"
 #include "IShaderFactory.h"
 #include "ShaderFactory.h"
-#include "SysOpenGL.h"
+#include "System/SysOpenGL.h"
 
 #include <vector>
 #include <string>

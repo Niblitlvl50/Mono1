@@ -8,12 +8,12 @@
 
 #include "CacoDemon.h"
 #include "IRenderer.h"
-#include "ISprite.h"
-#include "SpriteFactory.h"
+#include "Sprite/ISprite.h"
+#include "Sprite/SpriteFactory.h"
 #include "WeaponFactory.h"
-#include "CMIBody.h"
-#include "CMIShape.h"
-#include "CMFactory.h"
+#include "Physics/CMIBody.h"
+#include "Physics/CMIShape.h"
+#include "Physics/CMFactory.h"
 
 #include "EntityProperties.h"
 

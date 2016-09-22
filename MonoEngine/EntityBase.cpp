@@ -9,11 +9,11 @@
 
 #include "EntityBase.h"
 #include "Utils.h"
-#include "Quad.h"
-#include "Matrix.h"
+#include "Math/Quad.h"
+#include "Math/Matrix.h"
 #include "IRenderer.h"
 
-#include "SysUID.h"
+#include "System/SysUID.h"
 
 
 using namespace mono;
@@ -21,8 +21,8 @@ using namespace mono;
 EntityBase::EntityBase()
     : m_uid(system::CreateUID()),
       m_properties(0),
-      mRotation(0.0f),
-      mScale(1.0f, 1.0f)
+      mScale(1.0f, 1.0f),
+      mRotation(0.0f)
 { }
 
 void EntityBase::doDraw(IRenderer& renderer) const

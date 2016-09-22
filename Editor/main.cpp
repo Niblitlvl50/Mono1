@@ -1,13 +1,13 @@
 
-#include "SysLibs.h"
+#include "System/SysLibs.h"
 
-#include "WindowFactory.h"
-#include "TraceCamera.h"
+#include "System/WindowFactory.h"
+#include "Camera/TraceCamera.h"
 #include "Engine.h"
 
-#include "EventHandler.h"
+#include "EventHandler/EventHandler.h"
 #include "IWindow.h"
-#include "TextFunctions.h"
+#include "Text/TextFunctions.h"
 #include "Color.h"
 
 #include "Editor.h"

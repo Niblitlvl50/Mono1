@@ -8,7 +8,7 @@
 
 #include <gtest/gtest.h>
 
-#include "AudioFactory.h"
+#include "Audio/AudioFactory.h"
 
 TEST(Sound, LoadWaveAndExpectSuccess)
 {

@@ -7,8 +7,8 @@
 //
 
 #include "TextureShader.h"
-#include "SysOpenGL.h"
-#include "Matrix.h"
+#include "System/SysOpenGL.h"
+#include "Math/Matrix.h"
 #include "Color.h"
 
 #include "ShaderFunctions.h"

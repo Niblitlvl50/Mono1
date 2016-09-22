@@ -11,8 +11,8 @@
 
 #include "IPhysicsZone.h"
 #include "ZoneBase.h"
-#include "MathFwd.h"
-#include "CMFwd.h"
+#include "Math/MathFwd.h"
+#include "Physics/CMFwd.h"
 
 #include <vector>
 

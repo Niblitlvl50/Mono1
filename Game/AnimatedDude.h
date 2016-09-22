@@ -9,7 +9,7 @@
 #pragma once
 
 #include "EntityBase.h"
-#include "Vector2f.h"
+#include "Math/Vector2f.h"
 #include "AnimatedDudeController.h"
 
 namespace game

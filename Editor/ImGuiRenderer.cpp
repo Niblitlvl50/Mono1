@@ -7,16 +7,16 @@
 //
 
 #include "ImGuiRenderer.h"
-#include "Quad.h"
-#include "Matrix.h"
-#include "SysOpenGL.h"
-#include "SysTypes.h"
+#include "Math/Quad.h"
+#include "Math/Matrix.h"
+#include "System/SysOpenGL.h"
+#include "System/SysTypes.h"
 #include "ImGuiShader.h"
-#include "ITexture.h"
-#include "TextureFactory.h"
+#include "Texture/ITexture.h"
+#include "Texture/TextureFactory.h"
 #include "IRenderer.h"
 
-#include "imgui.h"
+#include "imgui/imgui.h"
 
 using namespace editor;
 

@@ -7,8 +7,8 @@
 //
 
 #include "PhysicsGrid.h"
-#include "CMFactory.h"
-#include "CMIShape.h"
+#include "Physics/CMFactory.h"
+#include "Physics/CMIShape.h"
 #include "IRenderer.h"
 #include "Color.h"
 

@@ -9,8 +9,8 @@
 #pragma once
 
 #include "ZoneBase.h"
-#include "EventFwd.h"
-#include "EventToken.h"
+#include "Events/EventFwd.h"
+#include "EventHandler/EventToken.h"
 
 #include "ImGuiInterfaceDrawer.h"
 #include "ImGuiInputHandler.h"
@@ -37,9 +37,14 @@ namespace editor
 
         void AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon);
 
+        mono::IEntityPtr FindEntityFromPosition(const math::Vector2f& position);
+        void SelectEntity(const mono::IEntityPtr& entity);
+
         void OnContextMenu(int index);
-        void OnSelectedPolygon(int index);
-        void OnDeletePolygon(int index);
+
+        void OnTextureRepeate(float repeate);
+        void OnTextureChanged(int texture_index);
+        void OnDeletePolygon();
 
         void EditorMenuCallback(EditorMenuOptions index);
         void ToolsMenuCallback(ToolsMenuOptions index);
@@ -54,6 +59,8 @@ namespace editor
         std::shared_ptr<editor::ImGuiInterfaceDrawer> m_interfaceDrawer;
         std::shared_ptr<editor::ImGuiRenderer> m_guiRenderer;
         std::shared_ptr<editor::UserInputController> m_userInputController;
+
+        std::shared_ptr<editor::PolygonEntity> m_selected_polygon;
         std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
 
         mono::EventToken<event::SurfaceChangedEvent> m_surfaceChangedToken;

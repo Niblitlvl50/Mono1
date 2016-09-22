@@ -7,9 +7,9 @@
 //
 
 #include "gtest/gtest.h"
-#include "LuaInterpreter.h"
-#include "LuaState.h"
-#include "LuaFunctions.h"
+#include "Lua/LuaInterpreter.h"
+#include "Lua/LuaState.h"
+#include "Lua/LuaFunctions.h"
 
 #include <stdexcept>
 #include <functional>

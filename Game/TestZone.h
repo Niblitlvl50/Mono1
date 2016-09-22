@@ -10,7 +10,7 @@
 #pragma once
 
 #include "PhysicsZone.h"
-#include "EventToken.h"
+#include "EventHandler/EventToken.h"
 
 #include "Spawner.h"
 #include "DamageController.h"

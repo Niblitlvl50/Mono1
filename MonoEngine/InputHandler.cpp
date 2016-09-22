@@ -8,24 +8,24 @@
  */
 
 #include "InputHandler.h"
-#include "EventHandler.h"
+#include "EventHandler/EventHandler.h"
 
-#include "QuitEvent.h"
-#include "PauseEvent.h"
-#include "ApplicationEvent.h"
-#include "SurfaceChangedEvent.h"
-#include "ActivatedEvent.h"
-#include "KeyDownEvent.h"
-#include "KeyUpEvent.h"
-#include "TextInputEvent.h"
-#include "MouseDownEvent.h"
-#include "MouseUpEvent.h"
-#include "MouseMotionEvent.h"
-#include "MouseWheelEvent.h"
-#include "TouchEvent.h"
-#include "MultiGestureEvent.h"
+#include "Events/QuitEvent.h"
+#include "Events/PauseEvent.h"
+#include "Events/ApplicationEvent.h"
+#include "Events/SurfaceChangedEvent.h"
+#include "Events/ActivatedEvent.h"
+#include "Events/KeyDownEvent.h"
+#include "Events/KeyUpEvent.h"
+#include "Events/TextInputEvent.h"
+#include "Events/MouseDownEvent.h"
+#include "Events/MouseUpEvent.h"
+#include "Events/MouseMotionEvent.h"
+#include "Events/MouseWheelEvent.h"
+#include "Events/TouchEvent.h"
+#include "Events/MultiGestureEvent.h"
 
-#include "SysKeycodes.h"
+#include "System/SysKeycodes.h"
 
 using namespace mono;
 

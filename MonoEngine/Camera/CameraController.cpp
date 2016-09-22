@@ -7,12 +7,12 @@
 //
 
 #include "CameraController.h"
-#include "EventHandler.h"
-#include "EventFuncFwd.h"
-#include "MultiGestureEvent.h"
+#include "EventHandler/EventHandler.h"
+#include "Events/EventFuncFwd.h"
+#include "Events/MultiGestureEvent.h"
 #include "ICamera.h"
-#include "MathFunctions.h"
-#include "Quad.h"
+#include "Math/MathFunctions.h"
+#include "Math/Quad.h"
 
 #include <functional>
 #include <cmath>

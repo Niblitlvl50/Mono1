@@ -12,6 +12,7 @@
 #include <typeinfo>
 #include <map>
 #include <unordered_map>
+#include <string>
 #include <functional>
 #include <memory>
 #include "EventToken.h"
@@ -55,7 +56,7 @@ namespace mono
     class EventHandler
     {
         typedef std::shared_ptr<void> voidPtr;
-        std::unordered_map<const char*, voidPtr> events;
+        std::unordered_map<std::string, voidPtr> events;
 
     public:
         

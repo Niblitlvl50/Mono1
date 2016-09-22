@@ -9,9 +9,9 @@
 #pragma once
 
 #include "MonoFwd.h"
-#include "EventFwd.h"
-#include "EventToken.h"
-#include "Vector2f.h"
+#include "Events/EventFwd.h"
+#include "EventHandler/EventToken.h"
+#include "Math/Vector2f.h"
 
 namespace game
 {

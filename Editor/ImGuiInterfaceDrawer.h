@@ -39,10 +39,18 @@ namespace editor
         std::vector<std::string> contextMenuItems;
         std::function<void (int)> contextMenuCallback;
 
-        int selectedPolygonIndex;
-        std::vector<std::string> polygonItems;
-        std::function<void (int)> polygonSelected;
-        std::function<void (int)> polygonDeleted;
+        const char** texture_items;
+        int texture_items_count;
+
+        bool has_selection;
+        float polygon_x;
+        float polygon_y;
+        float polygon_rotation;
+        float texture_repeate;
+        int texture_index;
+        std::function<void (float)> texture_repeate_callback;
+        std::function<void (int)> texture_changed_callback;
+        std::function<void ()> delete_callback;
 
         std::vector<Notification> notifications;
 
