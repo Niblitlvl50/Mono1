@@ -1,0 +1,2 @@
+cd Resources
+../bin/game
