@@ -11,7 +11,7 @@
 #include "MonoPtrFwd.h"
 #include "PhysicsEntityBase.h"
 #include "CacoDemonController.h"
-#include "IWeaponSystem.h"
+#include "Weapons/IWeaponSystem.h"
 
 namespace game
 {

@@ -83,13 +83,14 @@ namespace
     {
     public:
 
-        SoundImpl(const std::shared_ptr<SoundData>& data, bool loop)
+        SoundImpl(const std::shared_ptr<SoundData>& data, bool loop, bool relative)
             : m_data(data),
               m_source(0)
         {
             alGenSources(1, &m_source);
             alSourcei(m_source, AL_BUFFER, static_cast<ALint>(m_data->BufferId()));
             alSourcei(m_source, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
+            alSourcei(m_source, AL_SOURCE_RELATIVE, relative ? AL_TRUE : AL_FALSE);
 
             Pitch(1.0f);
             Gain(1.0f);
@@ -144,14 +145,14 @@ namespace
     std::unordered_map<std::string, std::weak_ptr<SoundData>> repository;
 }
 
-mono::ISoundPtr mono::AudioFactory::CreateSound(const char* fileName, bool loop)
+mono::ISoundPtr mono::AudioFactory::CreateSound(const char* fileName, bool loop, bool relative)
 {
     auto it = repository.find(fileName);
     if(it != repository.end())
     {
         auto data = it->second.lock();
         if(data)
-            return std::make_shared<SoundImpl>(data, loop);
+            return std::make_shared<SoundImpl>(data, loop, relative);
 
         std::printf("Unable to create a shared from a weak pointer, will reload the data. Source: %s", fileName);
     }
@@ -171,7 +172,7 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const char* fileName, bool loop)
     // Store it in the repository for others to retreive
     repository[fileName] = data;
 
-    return std::make_shared<SoundImpl>(data, loop);
+    return std::make_shared<SoundImpl>(data, loop, relative);
 }
 
 mono::SoundFile mono::AudioFactory::LoadFile(const char* fileName)

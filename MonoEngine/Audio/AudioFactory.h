@@ -34,7 +34,7 @@ namespace mono
     namespace AudioFactory
     {
         // Create a sound to use, only supports WAV at the moment
-        mono::ISoundPtr CreateSound(const char* fileName, bool loop);
+        mono::ISoundPtr CreateSound(const char* fileName, bool loop, bool relative);
 
         // Load a sound file from disk, only supports WAV at the moment
         SoundFile LoadFile(const char* fileName);

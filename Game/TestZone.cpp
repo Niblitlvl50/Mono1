@@ -178,7 +178,7 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
     const std::function<bool (const game::DamageEvent&)>& damageFunc = std::bind(&TestZone::OnDamageEvent, this, _1);
     mDamageEventToken = mEventHandler.AddListener(damageFunc);
 
-    m_backgroundMusic = mono::AudioFactory::CreateSound("sound/InGame_Phoenix.wav", true);
+    m_backgroundMusic = mono::AudioFactory::CreateSound("sound/InGame_Phoenix.wav", true, true);
 }
 
 TestZone::~TestZone()
@@ -205,6 +205,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(moon1, FOREGROUND);
     AddPhysicsEntity(moon2, FOREGROUND);
     AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
+    AddUpdatable(std::make_shared<ListenerPositionUpdater>(camera));
 
     std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(0.0f, 0.0f, mEventHandler);
     AddPhysicsEntity(shuttle, FOREGROUND);
@@ -280,8 +281,13 @@ bool TestZone::OnDamageEvent(const game::DamageEvent& event)
         m_damageController.RemoveRecord(entity->Id());
         SchedulePreFrameTask(std::bind(&TestZone::RemovePhysicsEntity, this, entity));
 
-        const float rotation = mono::Random() * math::PI() * 2.0f;
-        AddEntity(std::make_shared<Explosion>(mEventHandler, entity->Position(), 20, rotation), FOREGROUND);
+        game::ExplosionConfiguration config;
+        config.position = entity->Position();
+        config.scale = 20.0f;
+        config.rotation = mono::Random() * math::PI() * 2.0f;
+        config.sprite_file = "sprites/explosion.sprite";
+
+        AddEntity(std::make_shared<Explosion>(config, mEventHandler), FOREGROUND);
     }
 
     return true;

@@ -14,8 +14,8 @@
 #include "IRenderer.h"
 #include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"
-#include "IWeaponSystem.h"
-#include "WeaponFactory.h"
+#include "Weapons/IWeaponSystem.h"
+#include "Weapons/WeaponFactory.h"
 
 #include "Math/MathFunctions.h"
 #include "Audio/AudioListener.h"
@@ -67,7 +67,7 @@ void Shuttle::Draw(mono::IRenderer& renderer) const
 void Shuttle::Update(unsigned int delta)
 {
     mSprite->doUpdate(delta);
-    mono::ListenerPosition(mPosition);
+    //mono::ListenerPosition(mPosition);
 
     if(m_fire)
         mWeapon->Fire(mPosition, mRotation);

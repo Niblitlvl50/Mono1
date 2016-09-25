@@ -20,6 +20,5 @@ namespace game
         { }
 
         virtual void Fire(const math::Vector2f& position, float direction) = 0;
-        virtual int RoundsPerSecond() const = 0;
     };
 }

@@ -15,11 +15,11 @@
 
 using namespace game;
 
-Explosion::Explosion(mono::EventHandler& event_handler, const math::Vector2f& position, float scale, float rotation)
+Explosion::Explosion(const ExplosionConfiguration& config, mono::EventHandler& event_handler)
 {
-    mPosition = position;
-    mScale = math::Vector2f(scale, scale);
-    mRotation = rotation;
+    mPosition = config.position;
+    mScale = math::Vector2f(config.scale, config.scale);
+    mRotation = config.rotation;
 
     const uint id = Id();
 
@@ -27,16 +27,16 @@ Explosion::Explosion(mono::EventHandler& event_handler, const math::Vector2f& po
         event_handler.DispatchEvent(game::RemoveEntityEvent(id));
     };
     
-    mSprite = mono::CreateSprite("sprites/explosion.sprite");
-    mSprite->SetAnimation(0, func);
+    m_sprite = mono::CreateSprite(config.sprite_file);
+    m_sprite->SetAnimation(0, func);
 }
 
 void Explosion::Update(unsigned int delta)
 {
-    mSprite->doUpdate(delta);
+    m_sprite->doUpdate(delta);
 }
 
 void Explosion::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(*mSprite);
+    renderer.DrawSprite(*m_sprite);
 }
