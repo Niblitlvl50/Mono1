@@ -92,7 +92,7 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponTyp
             bullet_config.sprite_file = "sprites/laser.sprite";
             bullet_config.sound_file = nullptr;
 
-            config.rounds_per_second = 1.0f;
+            config.rounds_per_second = 1.5f;
             config.bullet_force = 300.0f;
             config.bullet_config = bullet_config;
 
@@ -106,9 +106,7 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponTyp
             bullet_config.collision_radius = 5.0f;
             bullet_config.collision_callback = CacoPlasmaCollision;
             bullet_config.sprite_file = "sprites/cacobullet.sprite";
-            //bullet_config.sound_file = nullptr;
-            bullet_config.sound_file = "sound/laser.wav";
-
+            bullet_config.sound_file = nullptr;
 
             config.rounds_per_second = 2.0f;
             config.bullet_force = 400.0f;
