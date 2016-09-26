@@ -17,7 +17,7 @@ namespace game
     {
     public:
 
-        InvaderGroup();
+        InvaderGroup(const math::Vector2f& position);
 
     private:
 

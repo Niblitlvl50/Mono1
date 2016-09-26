@@ -209,7 +209,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(std::make_shared<game::CacoDemon>(mEventHandler), FOREGROUND);
 
     AddEntity(std::make_shared<AnimatedDude>(100.0f, 50.0f, mEventHandler), MIDDLEGROUND);
-    AddEntity(std::make_shared<InvaderGroup>(), BACKGROUND);
+    AddEntity(std::make_shared<InvaderGroup>(math::Vector2f(300.0f, 800.0f)), BACKGROUND);
     AddEntity(std::make_shared<DotEntity>(), FOREGROUND);
     AddEntity(std::make_shared<PathPoint>(), BACKGROUND);
     AddEntity(std::make_shared<Morpher>(), FOREGROUND);

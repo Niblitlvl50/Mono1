@@ -14,9 +14,9 @@
 
 using namespace game;
 
-InvaderGroup::InvaderGroup()
+InvaderGroup::InvaderGroup(const math::Vector2f& position)
 {
-    mPosition = math::Vector2f(0.0f, -30.0f);
+    mPosition = position;
     mScale = math::Vector2f(20.0f, 20.0f);
     
     AddChild(std::make_shared<InvaderEntity>(-1, -1));
