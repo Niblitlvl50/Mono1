@@ -85,7 +85,7 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponTyp
         case game::WeaponType::ROCKET:
         {
             BulletConfiguration bullet_config;
-            bullet_config.life_span = 1.0f;
+            bullet_config.life_span = 0.6f;
             bullet_config.fuzzy_life_span = 0.3f;
             bullet_config.collision_radius = 2.0f;
             bullet_config.collision_callback = RocketCollision;
