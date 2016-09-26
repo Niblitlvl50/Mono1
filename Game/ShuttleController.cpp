@@ -13,8 +13,9 @@
 #include "Events/MouseUpEvent.h"
 #include "Events/MouseDownEvent.h"
 #include "Events/MouseMotionEvent.h"
-#include "Events/MultiGestureEvent.h"
 #include "Events/KeyDownEvent.h"
+#include "Events/KeyUpEvent.h"
+#include "Events/TimeScaleEvent.h"
 #include "System/SysKeycodes.h"
 #include "Weapons/WeaponTypes.h"
 #include "Math/MathFunctions.h"
@@ -41,8 +42,8 @@ ShuttleController::ShuttleController(game::Shuttle* shuttle, mono::EventHandler&
     const event::KeyDownEventFunc keyDownFunc = std::bind(&ShuttleController::OnKeyDown, this, _1);
     mKeyDownToken = mEventHandler.AddListener(keyDownFunc);
 
-    //const Event::MultiGestureEventFunc multiGestureFunc = std::bind(&ShuttleController::OnMultiGesture, this, _1);
-    //mMultiGestureToken = mEventHandler.AddListener(multiGestureFunc);
+    const event::KeyUpEventFunc key_up_func = std::bind(&ShuttleController::OnKeyUp, this, _1);
+    m_keyUpToken = mEventHandler.AddListener(key_up_func);
 }
 
 ShuttleController::~ShuttleController()
@@ -50,7 +51,7 @@ ShuttleController::~ShuttleController()
     mEventHandler.RemoveListener(mMouseUpToken);
     mEventHandler.RemoveListener(mMouseDownToken);
     mEventHandler.RemoveListener(mMouseMotionToken);
-    //mEventHandler.RemoveListener(mMultiGestureToken);
+    mEventHandler.RemoveListener(m_keyUpToken);
 }
 
 bool ShuttleController::OnMouseDown(const event::MouseDownEvent& event)
@@ -104,25 +105,28 @@ bool ShuttleController::OnMouseMotion(const event::MouseMotionEvent& event)
     return false;
 }
 
-bool ShuttleController::OnMultiGesture(const event::MultiGestureEvent& event)
-{
-    const float force = event.theta * 1000;
-    mShuttle->ApplyRotationForce(force);
-
-    return true;
-}
-
 bool ShuttleController::OnKeyDown(const event::KeyDownEvent& event)
 {
-    if(event.key != Key::ONE && event.key != Key::TWO && event.key != Key::THREE)
+    if(event.key != Key::ONE && event.key != Key::TWO && event.key != Key::THREE && event.key != Key::SPACE)
         return false;
 
     if(event.key == Key::ONE)
        mShuttle->SelectWeapon(WeaponType::STANDARD);
     else if(event.key == Key::TWO)
         mShuttle->SelectWeapon(WeaponType::ROCKET);
-    else
+    else if(event.key == Key::THREE)
         mShuttle->SelectWeapon(WeaponType::CACOPLASMA);
+    else if(event.key == Key::SPACE)
+        mEventHandler.DispatchEvent(event::TimeScaleEvent(0.5f));
 
+    return true;
+}
+
+bool ShuttleController::OnKeyUp(const event::KeyUpEvent& event)
+{
+    if(event.key != Key::SPACE)
+        return false;
+
+    mEventHandler.DispatchEvent(event::TimeScaleEvent(1.0f));
     return true;
 }
