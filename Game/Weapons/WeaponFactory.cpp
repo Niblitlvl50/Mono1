@@ -75,7 +75,7 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponTyp
             bullet_config.sprite_file = "sprites/firebullet.sprite";
             bullet_config.sound_file = nullptr;
 
-            config.rounds_per_second = 10.0f;
+            config.rounds_per_second = 8.0f;
             config.bullet_force = 400.0f;
             config.fire_sound = "sound/laser.wav";
             config.bullet_config = bullet_config;

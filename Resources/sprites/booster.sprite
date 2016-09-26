@@ -4,10 +4,10 @@
 texture = "spritesheet.png"
 rows = 1
 columns = 3
-x = 180
-y = 47
-u = 217
-v = 60
+x = 176
+y = 48
+u = 223
+v = 63
 
 animations = { }
 animations[0] = { 0, -1 }
