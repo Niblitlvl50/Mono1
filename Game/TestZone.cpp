@@ -132,7 +132,7 @@ namespace
         math::Normalize(unit);
         
         const math::Vector2f& impulse = unit * magnitude;
-        body->ApplyImpulse(impulse, math::zeroVec);
+        body->ApplyImpulse(impulse, body->GetPosition());
     }
 
     void AddMeteorCluster(mono::IPhysicsZone* zone)
