@@ -185,6 +185,7 @@ TestZone::~TestZone()
     mEventHandler.RemoveListener(mSpawnEntityToken);
     mEventHandler.RemoveListener(mSpawnPhysicsEntityToken);
     mEventHandler.RemoveListener(mRemoveEntityByIdToken);
+    mEventHandler.RemoveListener(mShockwaveEventToken);
     mEventHandler.RemoveListener(mDamageEventToken);
 }
 
