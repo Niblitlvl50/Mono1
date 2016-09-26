@@ -40,6 +40,10 @@ bool editor::SaveConfig(const char* config_file, const editor::Config& config)
 
 bool editor::LoadConfig(const char* config_file, editor::Config& config)
 {
+    const bool file_exists = File::OpenAsciiFile(config_file) != nullptr;
+    if(!file_exists)
+        return false;
+
     LuaTable table = LuaTable::fromFile(config_file);
 
     config.cameraPosition.x = table[camera_position][1];

@@ -7,8 +7,6 @@
 //
 
 #include "SysFile.h"
-#include <stdexcept>
-#include <string>
 #include <cstdio>
 
 namespace
@@ -17,7 +15,10 @@ namespace
     {
         std::FILE* file = std::fopen(file_name, mode);
         if(!file)
-            throw std::runtime_error("Unable to open file: " + std::string(file_name) + " ,with mode: " + std::string(mode));
+        {
+            std::printf("Unable to open file: %s, with mode: %s", file_name, mode);
+            return nullptr;
+        }
 
         return File::FilePtr(file, std::fclose);
     }
