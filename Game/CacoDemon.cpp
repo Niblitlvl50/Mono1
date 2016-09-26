@@ -17,6 +17,8 @@
 
 #include "EntityProperties.h"
 
+#include <cmath>
+
 using namespace game;
 
 namespace
@@ -44,7 +46,7 @@ CacoDemon::CacoDemon(mono::EventHandler& eventHandler)
 
     mPhysicsObject.body->SetCollisionHandler(&m_controller);
 
-    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, 80, 80);
+    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, 35.0f, math::zeroVec);
     shape->SetElasticity(0.1f);
 
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
@@ -64,5 +66,9 @@ void CacoDemon::Draw(mono::IRenderer& renderer) const
 void CacoDemon::Update(unsigned int delta)
 {
     m_sprite->doUpdate(delta);
-    m_weapon->Fire(mPosition, mRotation);
+
+    const math::Vector2f unit(-std::sin(mRotation), std::cos(mRotation));
+    const math::Vector2f offset = unit * 40.0f;
+
+    m_weapon->Fire(mPosition + offset, mRotation);
 }

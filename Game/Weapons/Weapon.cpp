@@ -35,13 +35,12 @@ void Weapon::Fire(const math::Vector2f& position, float direction)
     if(delta > weaponDelta)
     {
         const math::Vector2f unit(-std::sin(direction), std::cos(direction));
-        const math::Vector2f& new_position = position + (unit * 20.0f);
         const math::Vector2f& impulse = unit * m_weaponConfig.bullet_force;
 
         auto bullet = std::make_shared<Bullet>(m_weaponConfig.bullet_config, m_eventHandler);
-        bullet->SetPosition(new_position);
+        bullet->SetPosition(position);
         bullet->SetRotation(direction);
-        bullet->GetPhysics().body->ApplyImpulse(impulse, new_position);
+        bullet->GetPhysics().body->ApplyImpulse(impulse, position);
 
         m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet, BACKGROUND));
 
