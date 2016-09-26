@@ -9,6 +9,7 @@
 #pragma once
 
 #include "IPhysicsEntity.h"
+#include "MonoPtrFwd.h"
 #include "Math/Vector2f.h"
 #include "Physics/CMObject.h"
 
@@ -31,6 +32,9 @@ namespace mono
         virtual void SetProperty(uint property);
         virtual bool HasProperty(uint property) const;
 
+        void AddChild(const IEntityPtr& child);
+        void RemoveChild(const IEntityPtr& child);
+
     protected:
         
         PhysicsEntityBase();
@@ -49,6 +53,7 @@ namespace mono
         float mRotation;
         
         mono::Object mPhysicsObject;
+        std::vector<IEntityPtr> m_children;
     };
 }
 

@@ -12,6 +12,7 @@
 #include "Physics/CMIBody.h"
 #include "IRenderer.h"
 #include "System/SysUID.h"
+#include "Utils.h"
 
 using namespace mono;
 
@@ -57,7 +58,17 @@ void PhysicsEntityBase::SetScale(const math::Vector2f& scale)
 math::Quad PhysicsEntityBase::BoundingBox() const
 {
     const math::Vector2f& halfScale = mScale / 2.0f;
-    return math::Quad(mPosition - halfScale, mPosition + halfScale);
+    math::Quad thisbb(mPosition - halfScale, mPosition + halfScale);
+
+    for(const auto& child : m_children)
+    {
+        math::Quad childbb = (child->BoundingBox() * mScale);
+        childbb.mA += mPosition;
+        childbb.mB += mPosition;
+        thisbb |= childbb;
+    }
+            
+    return thisbb;
 }
 
 mono::Object& PhysicsEntityBase::GetPhysics()
@@ -83,6 +94,13 @@ bool PhysicsEntityBase::HasProperty(uint property) const
 void PhysicsEntityBase::doDraw(IRenderer& renderer) const
 {
     const math::Matrix& transform = renderer.GetCurrentTransform() * Transformation();
+
+    for(const auto& child : m_children)
+    {
+        renderer.PushNewTransform(transform);
+        child->doDraw(renderer);
+    }
+
     renderer.PushNewTransform(transform);
 
     Draw(renderer);
@@ -92,7 +110,10 @@ void PhysicsEntityBase::doUpdate(unsigned int delta)
 {
     mPosition = mPhysicsObject.body->GetPosition();
     mRotation = mPhysicsObject.body->GetAngle();
-    
+
+    for(auto& child : m_children)
+        child->doUpdate(delta);
+
     Update(delta);
 }
 
@@ -115,4 +136,13 @@ math::Matrix PhysicsEntityBase::Transformation() const
     return transform;
 }
 
+void PhysicsEntityBase::AddChild(const IEntityPtr& child)
+{
+    m_children.push_back(child);
+}
+
+void PhysicsEntityBase::RemoveChild(const IEntityPtr& child)
+{
+    FindAndRemove(m_children, child);
+}
 
