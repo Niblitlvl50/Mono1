@@ -62,10 +62,13 @@ void Sprite::SetAnimation(int id)
 
 void Sprite::SetAnimation(int id, const std::function<void ()>& func)
 {
+    const bool same_id = (id == m_activeAnimationId);
+
     m_activeAnimationId = id;
     m_callbackFunction = func;
 
-    m_definedAnimations.find(id)->second.Restart();
+    if(!same_id)
+        m_definedAnimations.find(id)->second.Restart();
 }
 
 void Sprite::DefineAnimation(int id, const std::vector<int>& frames, bool loop)
