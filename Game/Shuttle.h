@@ -13,10 +13,20 @@
 #include "ShuttleController.h"
 #include "Physics/CMIBody.h"
 
+class SpriteEntity;
+
 namespace game
 {
     class IWeaponSystem;
     enum class WeaponType;
+
+    enum class BoosterPosition
+    {
+        LEFT,
+        RIGHT,
+        MAIN,
+        ALL
+    };
 
     class Shuttle : public mono::PhysicsEntityBase, public mono::ICollisionHandler
     {
@@ -37,8 +47,7 @@ namespace game
         void Fire();
         void StopFire();
 
-        void StartThrusting();
-        void StopThrusting();
+        void SetBoosterThrusting(BoosterPosition position, bool enabled);
         
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
@@ -54,6 +63,9 @@ namespace game
         mono::EventHandler& mEventHandler;
 
         bool m_fire;
+
+        std::shared_ptr<SpriteEntity> m_left_booster;
+        std::shared_ptr<SpriteEntity> m_right_booster;
     };
 }
 

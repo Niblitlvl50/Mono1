@@ -12,12 +12,14 @@
 #include "Physics/CMFactory.h"
 
 #include "IRenderer.h"
+#include "EntityBase.h"
 #include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"
 #include "Weapons/IWeaponSystem.h"
 #include "Weapons/WeaponFactory.h"
 
 #include "Math/MathFunctions.h"
+#include "Math/Matrix.h"
 #include "Audio/AudioListener.h"
 
 #include <cmath>
@@ -33,6 +35,33 @@ namespace constants
         THRUSTING
     };
 }
+
+class SpriteEntity : public mono::EntityBase
+{
+public:
+
+    SpriteEntity(const char* sprite_file)
+    {
+        m_sprite = mono::CreateSprite(sprite_file);
+    }
+
+    virtual void Draw(mono::IRenderer& renderer) const
+    {
+        renderer.DrawSprite(*m_sprite);
+    }
+
+    virtual void Update(unsigned int delta)
+    {
+        m_sprite->doUpdate(delta);
+    }
+
+    void SetAnimation(int animation_id)
+    {
+        m_sprite->SetAnimation(animation_id);
+    }
+
+    mono::ISpritePtr m_sprite;
+};
 
 
 Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
@@ -55,6 +84,19 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     mSprite = mono::CreateSprite("sprites/shuttle.sprite");
     mSprite->SetAnimation(constants::IDLE);
 
+    m_left_booster = std::make_shared<SpriteEntity>("sprites/booster.sprite");
+    m_left_booster->SetScale(math::Vector2f(0.5f, 0.5f));
+    m_left_booster->SetRotation(-math::PI_2());
+    m_left_booster->SetPosition(math::Vector2f(-0.6f, 0.0f));
+
+    m_right_booster = std::make_shared<SpriteEntity>("sprites/booster.sprite");
+    m_right_booster->SetScale(math::Vector2f(0.5f, 0.5f));
+    m_right_booster->SetRotation(math::PI_2());
+    m_right_booster->SetPosition(math::Vector2f(0.6f, 0.0f));
+    
+    AddChild(m_left_booster);
+    AddChild(m_right_booster);
+
     // Make sure we have a weapon
     SelectWeapon(WeaponType::STANDARD);
 }
@@ -69,15 +111,14 @@ void Shuttle::Update(unsigned int delta)
     mSprite->doUpdate(delta);
     //mono::ListenerPosition(mPosition);
 
+    constexpr math::Vector2f bullet_offset(0.0f, 15.0f);
+
     if(m_fire)
-        mWeapon->Fire(mPosition, mRotation);
+        mWeapon->Fire(mPosition + bullet_offset, mRotation);
 }
 
 void Shuttle::OnCollideWith(const mono::IBodyPtr& body)
-{
-    //body->IsStatic();
-    //mPhysicsObject.body->GetMoment();
-}
+{ }
 
 void Shuttle::OnPostStep()
 { }
@@ -85,9 +126,6 @@ void Shuttle::OnPostStep()
 void Shuttle::SelectWeapon(WeaponType weapon)
 {
     mWeapon = Factory::CreateWeapon(weapon, mEventHandler);
-
-    // Setup the weapon's sprite
-    //mWeaponSprite.
 }
 
 void Shuttle::ApplyRotationForce(float force)
@@ -110,7 +148,6 @@ void Shuttle::ApplyThrustForce(float force)
 
 void Shuttle::ApplyImpulse(const math::Vector2f& force)
 {
-    //mPhysicsObject.body->ApplyImpulse(force, math::zeroVec);
     mPhysicsObject.body->ApplyImpulse(force, mPosition);
 }
 
@@ -124,14 +161,27 @@ void Shuttle::StopFire()
     m_fire = false;
 }
 
-void Shuttle::StartThrusting()
+void Shuttle::SetBoosterThrusting(BoosterPosition position, bool enable)
 {
-    mSprite->SetAnimation(constants::THRUSTING);
-}
+    const int state = enable ? constants::THRUSTING : constants::IDLE;
 
-void Shuttle::StopThrusting()
-{
-    mSprite->SetAnimation(constants::IDLE);
+    switch(position)
+    {
+        case BoosterPosition::LEFT:
+            m_left_booster->SetAnimation(state);
+            break;
+        case BoosterPosition::RIGHT:
+            m_right_booster->SetAnimation(state);
+            break;
+        case BoosterPosition::MAIN:
+            mSprite->SetAnimation(state);
+            break;
+        case BoosterPosition::ALL:
+            m_left_booster->SetAnimation(state);
+            m_right_booster->SetAnimation(state);
+            mSprite->SetAnimation(state);
+            break;
+    }
 }
 
 

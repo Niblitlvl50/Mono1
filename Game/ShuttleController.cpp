@@ -58,7 +58,6 @@ bool ShuttleController::OnMouseDown(const event::MouseDownEvent& event)
     mShuttle->Fire();
 
     mMouseDownPosition = math::Vector2f(event.screenX, -event.screenY);
-    mShuttle->StartThrusting();
     mMouseDown = true;
 
     return true;
@@ -69,7 +68,8 @@ bool ShuttleController::OnMouseUp(const event::MouseUpEvent& event)
     mShuttle->StopFire();
     
     mShuttle->mPhysicsObject.body->ResetForces();
-    mShuttle->StopThrusting();
+    mShuttle->SetBoosterThrusting(BoosterPosition::ALL, false);
+
     mMouseDown = false;
 
     return true;
@@ -89,6 +89,15 @@ bool ShuttleController::OnMouseMotion(const event::MouseMotionEvent& event)
     math::Normalize(force);
 
     mShuttle->ApplyImpulse(force * 100);
+
+
+    const bool leftBoosterOn = (force.x > 0.0f);
+    const bool rightBoosterOn = (force.x < 0.0f);
+    const bool mainBoosterOn = (force.y > 0.0f);
+
+    mShuttle->SetBoosterThrusting(BoosterPosition::LEFT, leftBoosterOn);
+    mShuttle->SetBoosterThrusting(BoosterPosition::RIGHT, rightBoosterOn);
+    mShuttle->SetBoosterThrusting(BoosterPosition::MAIN, mainBoosterOn);
 
     mMouseDownPosition = current;
 

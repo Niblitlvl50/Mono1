@@ -1,0 +1,15 @@
+
+-- This sprite is exported from spritesheet.psd
+
+texture = "spritesheet.png"
+rows = 1
+columns = 3
+x = 180
+y = 47
+u = 217
+v = 60
+
+animations = { }
+animations[0] = { 0, -1 }
+animations[1] = { 1, 50, 2, 50 }
+
