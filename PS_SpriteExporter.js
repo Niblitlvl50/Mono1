@@ -8,6 +8,25 @@
 //! Tested on CS5.
 //!
 
+var storeSettings = function(settings_key, path)
+{
+	var string_key = app.stringIDToTypeID("output_path")
+
+	var descriptor = new ActionDescriptor()
+	descriptor.putString(string_key, path)
+
+	app.putCustomOptions(settings_key, descriptor, true)
+}
+
+var loadSettings = function(settings_key)
+{
+	var string_key = app.stringIDToTypeID("output_path")
+
+	var descriptor = app.getCustomOptions(settings_key)
+	if(descriptor)
+		return descriptor.getString(string_key)
+}
+
 var checkFileForAttributes = function(filename, attribute)
 {
 	var file = new File(filename)
@@ -29,7 +48,7 @@ var checkFileForAttributes = function(filename, attribute)
 	return attributes
 }
 
-var createSpriteFilesFromLayers = function(layers)
+var createSpriteFilesFromLayers = function(layers, output_path)
 {
 	var animationsText = "animations = { }"
 	var defaultAnimationText = "animations[0] = { 0, -1 }"
@@ -61,7 +80,7 @@ var createSpriteFilesFromLayers = function(layers)
 				columns = value
 		}
 
-		var filename = outputPath + spriteName + ".sprite"
+		var filename = output_path + spriteName + ".sprite"
 		var animations = checkFileForAttributes(filename, "animations")
 		var attributes = checkFileForAttributes(filename, "attributes")
 
@@ -106,13 +125,13 @@ var createSpriteFilesFromLayers = function(layers)
 	}
 }
 
-var createPathFiles = function(pathItems)
+var createPathFiles = function(pathItems, output_path)
 {
 	var localPathItems = pathItems
 	for(var index = 0; index < localPathItems.length; ++index)
 	{
 		var pathItem = localPathItems[index]
-		var filename = outputPath + pathItem.name + ".path"
+		var filename = output_path + pathItem.name + ".path"
 
 		// Create the file
 		var file = new File(filename)
@@ -148,28 +167,43 @@ var createPathFiles = function(pathItems)
 	}
 }
 
-var exportDocumentToPNG = function(document)
+var exportDocumentToPNG = function(document, output_file)
 {
-	var exportFile = new File(outputPath + textureName)
 	var exportOptions = new ExportOptionsSaveForWeb()
 	exportOptions.format = SaveDocumentType.PNG
 	exportOptions.PNG8 = false
-	document.exportDocument(exportFile, ExportType.SAVEFORWEB, exportOptions)
+	document.exportDocument(output_file, ExportType.SAVEFORWEB, exportOptions)
 }
 
-// Output directory
-var outputPath = "/Users/niklasdamberg/Desktop/work/"
 
-var localDocument = app.activeDocument
-var dotPsdIndex = localDocument.name.search(".psd")
-var textureName = localDocument.name.substr(0, dotPsdIndex) + ".png"
+var script_key = "PS_SpriteExporter"
+var open_path = "."
 
-// Start exporting
-createSpriteFilesFromLayers(localDocument.layers)
-createPathFiles(localDocument.pathItems)
-exportDocumentToPNG(localDocument)
- 
-// Show alert for user that something has been done
-alert("Successfully exported sprite sheet!\nOutput folder: "  + outputPath)
+var persistent_path = loadSettings(script_key)
+if(persistent_path)
+	open_path = persistent_path
 
+var selected_folder = new Folder(open_path)
+selected_folder = selected_folder.selectDlg("Select export folder")
 
+if(selected_folder)
+{
+	selected_folder += "/"
+
+	var localDocument = app.activeDocument
+	var dotPsdIndex = localDocument.name.search(".psd")
+	var textureName = localDocument.name.substr(0, dotPsdIndex) + ".png"
+
+	var exportFile = new File(selected_folder + textureName)
+
+	// Start exporting
+	createSpriteFilesFromLayers(localDocument.layers, selected_folder)
+	createPathFiles(localDocument.pathItems, selected_folder)
+	exportDocumentToPNG(localDocument, exportFile)
+
+	// Store the export path and use it next time
+	storeSettings(script_key, selected_folder)
+
+	// Show alert for user that something has been done
+	alert("Successfully exported sprite sheet!\nOutput folder: "  + selected_folder)
+}
