@@ -20,7 +20,7 @@ namespace mono
     {
         virtual ~IRenderer()
         { }
-		
+
         virtual void AddDrawable(const IDrawablePtr& drawable) = 0;
         virtual void AddUpdatable(const IUpdatablePtr& updatable) = 0;
         

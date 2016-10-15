@@ -10,13 +10,14 @@
 #include "DotEntity.h"
 #include "IRenderer.h"
 #include "Color.h"
+#include "Math/Matrix.h"
 
 #include <cmath>
 
 using namespace game;
 
 DotEntity::DotEntity()
-    : mBase(400.0f, 100.0f),
+    : mBase(400.0f, 400.0f),
       mDelta(0.0f)
 {
     mScale = math::Vector2f(3.0f, 3.0f);
@@ -28,8 +29,11 @@ void DotEntity::Draw(mono::IRenderer& renderer) const
     constexpr mono::Color::RGBA color(0.0, 0.0, 0.0);
     constexpr float size = 4.0f;
 
+    constexpr math::Vector2f text_offset(0.0f, 5.0f);
+    const math::Vector2f& global_pos = math::Transform(Transformation(), text_offset);
+
     renderer.DrawPoints(points, color, size);
-    renderer.DrawText("dot...", math::Vector2f(0.0f, 5.0f), true, color);
+    renderer.DrawText("dot...", global_pos, true, color);
 }
 
 void DotEntity::Update(unsigned int delta)

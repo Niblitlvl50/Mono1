@@ -18,7 +18,7 @@ namespace mono
     {
         virtual ~IWindow()
         { }
-		
+
         virtual void SurfaceChanged(int width, int height) = 0;
         virtual void Activated(bool activated) = 0;
         virtual void SwapBuffers() const = 0;

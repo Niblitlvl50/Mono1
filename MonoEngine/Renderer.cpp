@@ -90,6 +90,8 @@ void Renderer::DrawFrame()
     m_current_transform = mModelView;
     m_current_projection = mProjectionMatrix;
 
+    doDrawTexts();
+
     EndDraw();
 }
 
@@ -120,15 +122,8 @@ void Renderer::DrawText(const char* text, const math::Vector2f& pos, bool center
     TextDefinition def = mono::GenerateVertexDataFromString(text, pos, center);
     def.color = color;
 
-    const std::vector<TextDefinition> texts = { def };
-
-
-    UseTexture(texture);
-    UseShader(mTextureShader);
-    ::DrawTexts(texts, mTextureShader);
-
     // Save the text in the collection
-    //mTexts.push_back(def);
+    mTexts.push_back(def);
 }
 
 void Renderer::doDrawTexts() const
