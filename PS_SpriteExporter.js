@@ -20,11 +20,14 @@ var storeSettings = function(settings_key, path)
 
 var loadSettings = function(settings_key)
 {
-	var string_key = app.stringIDToTypeID("output_path")
-
-	var descriptor = app.getCustomOptions(settings_key)
-	if(descriptor)
+	try
+	{
+		var string_key = app.stringIDToTypeID("output_path")
+		var descriptor = app.getCustomOptions(settings_key)
 		return descriptor.getString(string_key)
+	}
+	catch (error)
+	{ }
 }
 
 var checkFileForAttributes = function(filename, attribute)
