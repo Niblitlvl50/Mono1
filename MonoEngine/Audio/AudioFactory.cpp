@@ -14,7 +14,9 @@
 
 #include <unordered_map>
 #include <string>
+#include <exception>
 #include <cstdio>
+
 
 namespace
 {
@@ -154,7 +156,7 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const char* fileName, bool loop,
         if(data)
             return std::make_shared<SoundImpl>(data, loop, relative);
 
-        std::printf("Unable to create a shared from a weak pointer, will reload the data. Source: %s", fileName);
+        std::printf("Unable to create a shared from a weak pointer, will reload the data. Source: %s\n", fileName);
     }
 
     const mono::SoundFile& soundFile = LoadFile(fileName);
@@ -178,6 +180,8 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const char* fileName, bool loop,
 mono::SoundFile mono::AudioFactory::LoadFile(const char* fileName)
 {
     File::FilePtr soundFile = File::OpenBinaryFile(fileName);
+    if(!soundFile)
+        throw std::runtime_error("Unable to open sound file");
 
     std::vector<byte> bytes;
     File::FileRead(soundFile, bytes);

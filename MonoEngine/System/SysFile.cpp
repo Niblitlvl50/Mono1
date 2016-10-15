@@ -16,7 +16,7 @@ namespace
         std::FILE* file = std::fopen(file_name, mode);
         if(!file)
         {
-            std::printf("Unable to open file: %s, with mode: %s", file_name, mode);
+            std::printf("Unable to open file: %s, with mode: %s\n", file_name, mode);
             return nullptr;
         }
 

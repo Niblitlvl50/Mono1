@@ -191,7 +191,7 @@ int main(int argc, const char * argv[])
 {
     if(argc < 2)
     {
-        std::printf("You need to supply an argument");
+        std::printf("You need to supply an argument\n");
         return 1;
     }
 
