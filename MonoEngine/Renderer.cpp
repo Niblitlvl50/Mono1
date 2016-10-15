@@ -213,10 +213,8 @@ void Renderer::UseShader(const IShaderPtr& shader) const
 void Renderer::UseTexture(const ITexturePtr& texture) const
 {
     const unsigned int id = texture->Id();
-    //if(id != m_currentTextureId)
+    if(id != m_currentTextureId)
     {
-        // This does not work! Why?
-
         texture->Use();
         m_currentTextureId = id;
     }
