@@ -1,1 +1,1 @@
--- This sprite is exported from spritesheet.psdtexture = "spritesheet.png"rows = 1columns = 1x = 208y = 112u = 223v = 127animations = { }animations[0] = { 0, -1 }
+-- This sprite is exported from spritesheet.psdtexture = "spritesheet.png"rows = 1columns = 1x = 175y = 166u = 190v = 181animations = { }animations[0] = { 0, -1 }
