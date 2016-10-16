@@ -13,9 +13,11 @@
 
 using namespace game;
 
-Enemy::Enemy(const EnemySetup& setup, mono::EventHandler& event_handler)
+Enemy::Enemy(EnemySetup& setup, mono::EventHandler& event_handler)
     : m_eventHandler(event_handler)
 {
+    m_controller = std::move(setup.controller);
+    
     SetProperty(EntityProperties::DAMAGABLE);
 
     mPosition = setup.position;
@@ -26,8 +28,8 @@ Enemy::Enemy(const EnemySetup& setup, mono::EventHandler& event_handler)
 
     mPhysicsObject.body->SetPosition(mPosition);
 
-    m_sprite = mono::CreateSprite(setup.sprite_file);
     m_weapon = game::Factory::CreateWeapon(WeaponType::STANDARD, m_eventHandler);
+    m_sprite = mono::CreateSprite(setup.sprite_file);
 }
 
 void Enemy::Draw(mono::IRenderer& renderer) const
@@ -38,4 +40,5 @@ void Enemy::Draw(mono::IRenderer& renderer) const
 void Enemy::Update(unsigned int delta)
 {
     m_sprite->doUpdate(delta);
+    m_controller->doUpdate(delta);
 }

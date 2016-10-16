@@ -10,7 +10,6 @@
 #pragma once
 
 #include "IRenderer.h"
-#include "Text/TextDefinition.h"
 #include "Math/Matrix.h"
 
 namespace mono
@@ -31,7 +30,7 @@ namespace mono
         virtual void AddDrawable(const IDrawablePtr& drawable);
         virtual void AddUpdatable(const IUpdatablePtr& updatable);
 
-        virtual void DrawText(const char* text, const math::Vector2f& pos, bool center, const mono::Color::RGBA& color);
+        virtual void DrawText(int font_id, const char* text, const math::Vector2f& pos, bool center, const mono::Color::RGBA& color);
         virtual void DrawSprite(const ISprite& sprite) const;
         virtual void DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color::RGBA& color, float size) const;
         virtual void DrawLines(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const;
@@ -81,7 +80,6 @@ namespace mono
 
         std::vector<IDrawablePtr> mDrawables;
         std::vector<IUpdatablePtr> mUpdatables;
-        std::vector<TextDefinition> mTexts;
     };
 }
 

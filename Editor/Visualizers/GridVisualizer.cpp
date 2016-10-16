@@ -80,7 +80,7 @@ void GridVisualizer::doDraw(mono::IRenderer& renderer) const
 
     renderer.DrawLines(m_gridVertices, gray_color, 1.0f);
     renderer.DrawLines(points, black_color, 2.0f);
-    renderer.DrawText(text, position, true, black_color);
+    renderer.DrawText(0, text, position, true, black_color);
 }
 
 math::Quad GridVisualizer::BoundingBox() const

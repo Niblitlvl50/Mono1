@@ -35,11 +35,16 @@ namespace
         float texCoordY1;
     };
 
-    static mono::ITexturePtr fontTexture;
-    static std::unordered_map<char, CharData> charMap;
+    struct FontData
+    {
+        mono::ITexturePtr texture;
+        std::unordered_map<char, CharData> chars;
+    };
+
+    std::unordered_map<int, FontData> fonts;
 }
 
-void mono::LoadFont(const char* font, float size, float scale)
+void mono::LoadFont(int font_id, const char* font, float size, float scale)
 {
     File::FilePtr fontfile = File::OpenBinaryFile(font);
     
@@ -58,7 +63,8 @@ void mono::LoadFont(const char* font, float size, float scale)
     // thats why a bit down the y texture coordinate is flipped.
     stbtt_BakeFontBitmap(fontbuffer.data(), 0, size, bitmap, width, height, base, chars, chardata);
 
-    fontTexture = mono::CreateTexture(bitmap, width, height, 1);
+    FontData font_data;
+    font_data.texture = mono::CreateTexture(bitmap, width, height, 1);
 
     constexpr float texCoordXMulti = 1.0f / width;
     constexpr float texCoordYMulti = 1.0f / height;
@@ -80,22 +86,23 @@ void mono::LoadFont(const char* font, float size, float scale)
         
         // For the correct char we need to add base to the index.
         const char thechar = static_cast<char>(index + base);
-        charMap[thechar] = data;
+        font_data.chars[thechar] = data;
     }
+
+    fonts.insert(std::make_pair(font_id, font_data));
 }
 
-mono::ITexturePtr mono::GetFontTexture()
+mono::ITexturePtr mono::GetFontTexture(int font_id)
 {
-    return fontTexture;
+    return fonts.find(font_id)->second.texture;
 }
 
-void mono::UnloadFont()
+void mono::UnloadFonts()
 {
-    fontTexture = nullptr;
-    charMap.clear();
+    fonts.clear();
 }
 
-mono::TextDefinition mono::GenerateVertexDataFromString(const char* text, const math::Vector2f& pos, bool center)
+mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char* text, const math::Vector2f& pos, bool center)
 {
     mono::TextDefinition textDef;
     textDef.chars = static_cast<unsigned int>(std::strlen(text));
@@ -107,13 +114,15 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const char* text, const 
     float yposition = pos.y;
     
     if(center)
-        xposition -= MeasureString(text).x / 2.0f;
+        xposition -= MeasureString(font_id, text).x / 2.0f;
+
+    const FontData& font_data = fonts.find(font_id)->second;
 
     while(*text != '\0')
     {
         // Look up char in map.
-        const auto foundChar = charMap.find(*text);
-        assert(foundChar != charMap.end());
+        const auto foundChar = font_data.chars.find(*text);
+        assert(foundChar != font_data.chars.end());
 
         const CharData& data = foundChar->second;
         
@@ -163,15 +172,17 @@ mono::TextDefinition mono::GenerateVertexDataFromString(const char* text, const 
     return textDef;
 }
 
-math::Vector2f mono::MeasureString(const char* text)
+math::Vector2f mono::MeasureString(int font_id, const char* text)
 {
+    const FontData& font_data = fonts.find(font_id)->second;
+
     math::Vector2f size;
     
     while(*text != '\0')
     {
         // Look up char in map.
-        const auto foundChar = charMap.find(*text);
-        assert(foundChar != charMap.end());
+        const auto foundChar = font_data.chars.find(*text);
+        assert(foundChar != font_data.chars.end());
 
         const CharData& data = foundChar->second;
         size.x += data.xadvance;

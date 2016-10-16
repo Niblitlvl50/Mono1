@@ -12,7 +12,7 @@
 #include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"
 #include "Color.h"
-#include "Math/Matrix.h"
+#include "FontIds.h"
 #include <cmath>
 
 using namespace game;
@@ -48,9 +48,9 @@ void AnimatedDude::Draw(mono::IRenderer& renderer) const
 {
     renderer.DrawSprite(*mSprite);
 
-    const math::Vector2f& global_position = math::Transform(Transformation(), math::zeroVec);
+    constexpr math::Vector2f text_offset(0.0f, 0.7f);
     constexpr mono::Color::RGBA color(0.5f, 1.0f, 0.0f);
-    renderer.DrawText("Ryu Hayabusa", global_position, true, color);
+    renderer.DrawText(FontId::SMALL, "Ryu Hayabusa", text_offset, true, color);
 }
 
 void AnimatedDude::Update(unsigned int delta)

@@ -34,6 +34,8 @@
 
 namespace
 {
+    constexpr int FONT_ID = 0;
+
     class Label : public mono::IDrawable
     {
     public:
@@ -41,13 +43,13 @@ namespace
         Label(const char* text, const math::Vector2f& position)
             : m_text(text),
               m_position(position),
-              m_size(mono::MeasureString(text))
+              m_size(mono::MeasureString(FONT_ID, text))
         { }
 
         virtual void doDraw(mono::IRenderer& renderer) const
         {
             constexpr mono::Color::RGBA color(1, 0, 0, 1);
-            renderer.DrawText(m_text, m_position, false, color);
+            renderer.DrawText(FONT_ID, m_text, m_position, false, color);
         }
 
         virtual math::Quad BoundingBox() const
@@ -207,7 +209,7 @@ int main(int argc, const char * argv[])
     window->SetBackgroundColor(mono::Color::RGBA(0.6, 0.6, 0.6));
 
     mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(300, 200);
-    mono::LoadFont("pixelette.ttf", 10.0f);
+    mono::LoadFont(FONT_ID, "pixelette.ttf", 10.0f);
 
     mono::Engine engine(window, camera, eventHandler);
     engine.Run(std::make_shared<Zone>(eventHandler, file));

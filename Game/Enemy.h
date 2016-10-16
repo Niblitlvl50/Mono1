@@ -9,11 +9,13 @@
 
 namespace game
 {
+    class Enemy;
+
     class IEnemyController : public mono::IUpdatable
     {
     public:
 
-        virtual void doUpdate(unsigned int delta) = 0;
+        virtual void Initialize(Enemy* enemy) = 0;
     };
 
     struct EnemySetup
@@ -29,15 +31,18 @@ namespace game
     {
     public:
 
-        Enemy(const EnemySetup& setup, mono::EventHandler& event_handler);
+        Enemy(EnemySetup& setup, mono::EventHandler& event_handler);
 
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
 
     private:
 
+        friend IEnemyController;
+
         mono::EventHandler& m_eventHandler;
-        mono::ISpritePtr m_sprite;
+        std::unique_ptr<IEnemyController> m_controller;
         std::unique_ptr<IWeaponSystem> m_weapon;
+        mono::ISpritePtr m_sprite;
     };
 }

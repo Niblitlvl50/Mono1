@@ -27,7 +27,7 @@ int main(int argc, const char* argv[])
     window->SetBackgroundColor(mono::Color::RGBA(0.7, 0.7, 0.7));
 
     mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(window_size.x, window_size.y);
-    mono::LoadFont("pixelette.ttf", 10.0f);
+    mono::LoadFont(0, "pixelette.ttf", 10.0f);
 
     mono::Engine engine(window, camera, eventHandler);
     engine.Run(std::make_shared<editor::EditorZone>(window_size, eventHandler, file_name));

@@ -38,7 +38,7 @@ void System::Init()
 void System::Exit()
 {
     mono::UnloadShaderFactory();
-    mono::UnloadFont();
+    mono::UnloadFonts();
     Sound::Exit();
     Network::Exit();
 

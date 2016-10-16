@@ -11,6 +11,7 @@
 #include "IRenderer.h"
 #include "Color.h"
 #include "Math/Matrix.h"
+#include "FontIds.h"
 
 #include <cmath>
 
@@ -29,11 +30,9 @@ void DotEntity::Draw(mono::IRenderer& renderer) const
     constexpr mono::Color::RGBA color(0.0, 0.0, 0.0);
     constexpr float size = 4.0f;
 
-    constexpr math::Vector2f text_offset(0.0f, 5.0f);
-    const math::Vector2f& global_pos = math::Transform(Transformation(), text_offset);
-
+    constexpr math::Vector2f text_offset(0.0f, 2.5f);
     renderer.DrawPoints(points, color, size);
-    renderer.DrawText("dot...", global_pos, true, color);
+    renderer.DrawText(FontId::MEDIUM, "dot...", text_offset, true, color);
 }
 
 void DotEntity::Update(unsigned int delta)

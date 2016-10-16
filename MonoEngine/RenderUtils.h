@@ -38,8 +38,8 @@ namespace mono
                     const std::shared_ptr<ITextureShader>& shader);
 
     //! Draws texts from the text definitions
-    void DrawTexts(const std::vector<TextDefinition>& texts,
-                   const std::shared_ptr<ITextureShader>& shader);
+    void DrawText(const TextDefinition& text,
+                  const std::shared_ptr<ITextureShader>& shader);
 
     //! Draws a single line
     void DrawLine(const std::vector<math::Vector2f>& vertices,

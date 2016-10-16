@@ -59,7 +59,6 @@ void Renderer::EndDraw()
     // Clear all the stuff once the frame has been drawn
     mDrawables.clear();
     mUpdatables.clear();
-    mTexts.clear();
 }
 
 void Renderer::DrawFrame()
@@ -90,8 +89,6 @@ void Renderer::DrawFrame()
     m_current_transform = mModelView;
     m_current_projection = mProjectionMatrix;
 
-    doDrawTexts();
-
     EndDraw();
 }
 
@@ -113,29 +110,19 @@ void Renderer::AddUpdatable(const IUpdatablePtr& updatable)
     mUpdatables.push_back(updatable);
 }
 
-void Renderer::DrawText(const char* text, const math::Vector2f& pos, bool center, const mono::Color::RGBA& color)
+void Renderer::DrawText(int font_id, const char* text, const math::Vector2f& pos, bool center, const mono::Color::RGBA& color)
 {
-    const mono::ITexturePtr& texture = mono::GetFontTexture();
+    const mono::ITexturePtr& texture = mono::GetFontTexture(font_id);
     if(!texture)
         return;
 
-    TextDefinition def = mono::GenerateVertexDataFromString(text, pos, center);
+    TextDefinition def = mono::GenerateVertexDataFromString(font_id, text, pos, center);
     def.color = color;
-
-    // Save the text in the collection
-    mTexts.push_back(def);
-}
-
-void Renderer::doDrawTexts() const
-{
-    const mono::ITexturePtr& texture = mono::GetFontTexture();
-    if(!texture)
-        return;
 
     UseTexture(texture);
     UseShader(mTextureShader);
 
-    ::DrawTexts(mTexts, mTextureShader);
+    ::DrawText(def, mTextureShader);
 }
 
 void Renderer::DrawSprite(const ISprite& sprite) const

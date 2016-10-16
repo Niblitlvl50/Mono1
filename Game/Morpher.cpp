@@ -9,7 +9,7 @@
 #include "Morpher.h"
 #include "IRenderer.h"
 #include "Color.h"
-#include "Math/Matrix.h"
+#include "FontIds.h"
 
 using namespace game;
 
@@ -39,9 +39,7 @@ void Morpher::Draw(mono::IRenderer& renderer) const
 {
     constexpr mono::Color::RGBA color(0, 1, 1);
     renderer.DrawShape(m_shape1, m_shape2, m_morphGrade, color);
-
-    const math::Vector2f& global_pos = math::Transform(Transformation(), math::zeroVec);
-    renderer.DrawText("Here", global_pos, true, color);
+    renderer.DrawText(FontId::LARGE, "Here", math::zeroVec, true, color);
 }
 
 void Morpher::Update(unsigned int delta)

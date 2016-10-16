@@ -95,29 +95,23 @@ void mono::DrawSprite(const mono::ISprite& sprite, const std::shared_ptr<ITextur
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawTexts(const std::vector<TextDefinition>& texts, const std::shared_ptr<ITextureShader>& shader)
+void mono::DrawText(const TextDefinition& text, const std::shared_ptr<ITextureShader>& shader)
 {
-    if(texts.empty())
-        return;
-
     shader->SetAlphaTexture(true);
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
 
-    for(const mono::TextDefinition& text : texts)
-    {
-        shader->SetShade(text.color);
+    shader->SetShade(text.color);
 
-        glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, text.vertices.data());
-        glVertexAttribPointer(shader->GetTextureAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, text.texcoords.data());
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, text.vertices.data());
+    glVertexAttribPointer(shader->GetTextureAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, text.texcoords.data());
 
-        // Number of chars in the text, times 3 since each triangle contains 3 vertices,
-        // times 2 since each char containts two triangles.
-        const int verticesToDraw = (int)text.chars * 3 * 2;
+    // Number of chars in the text, times 3 since each triangle contains 3 vertices,
+    // times 2 since each char containts two triangles.
+    const int verticesToDraw = (int)text.chars * 3 * 2;
 
-        glDrawArrays(GL_TRIANGLES, 0, verticesToDraw);
-    }
+    glDrawArrays(GL_TRIANGLES, 0, verticesToDraw);
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
