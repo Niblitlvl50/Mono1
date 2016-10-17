@@ -47,11 +47,6 @@ add_library(imgui STATIC ${imgui_source_files})
 file(GLOB_RECURSE lua_source_files "External Libs/Lua-5.1.4/*.c")
 add_library(lua STATIC ${lua_source_files})
 
-# Luatables++
-file(GLOB_RECURSE luatables_source_files "External Libs/luatables++/*.cc")
-add_library(luatables STATIC ${luatables_source_files})
-target_include_directories(luatables PRIVATE "External Libs/Lua-5.1.4")
-
 # gtest
 file(GLOB_RECURSE gtest_source_files "External Libs/gtest-1.7.0/src/*.cc")
 add_library(gtest STATIC ${gtest_source_files})
@@ -83,9 +78,9 @@ target_link_libraries(animationtool mono)
 # Editor
 file(GLOB_RECURSE editor_source_files "Editor/*.cpp")
 add_executable(editor ${editor_source_files})
-add_dependencies(editor mono shared imgui luatables)
+add_dependencies(editor mono shared imgui)
 target_include_directories(editor PRIVATE "Editor")
-target_link_libraries(editor mono shared imgui luatables)
+target_link_libraries(editor mono shared imgui)
 
 # Game
 file(GLOB_RECURSE game_source_files "Game/*.cpp")
