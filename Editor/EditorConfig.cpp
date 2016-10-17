@@ -7,9 +7,9 @@
 //
 
 #include "EditorConfig.h"
-#include "luatables++/luatables.h"
-
 #include "System/SysFile.h"
+#include "nlohmann_json/json.hpp"
+
 #include <cstdio>
 
 namespace
@@ -20,17 +20,21 @@ namespace
 
 bool editor::SaveConfig(const char* config_file, const editor::Config& config)
 {
-    LuaTable table = LuaTable::fromLuaExpression(" return {} ");
+    nlohmann::json json;
 
-    table[camera_position][1].set<float>(config.cameraPosition.x);
-    table[camera_position][2].set<float>(config.cameraPosition.y);
+    json[camera_position] = {
+        config.cameraPosition.x,
+        config.cameraPosition.y
+        };
+    
+    json[camera_viewport] = {
+        config.cameraViewport.mA.x,
+        config.cameraViewport.mA.y,
+        config.cameraViewport.mB.x,
+        config.cameraViewport.mB.y
+    };
 
-    table[camera_viewport][1].set<float>(config.cameraViewport.mA.x);
-    table[camera_viewport][2].set<float>(config.cameraViewport.mA.y);
-    table[camera_viewport][3].set<float>(config.cameraViewport.mB.x);
-    table[camera_viewport][4].set<float>(config.cameraViewport.mB.y);
-
-    const std::string& serialized_config = table.serialize();
+    const std::string& serialized_config = json.dump(4);
 
     File::FilePtr file = File::CreateAsciiFile(config_file);
     std::fwrite(serialized_config.data(), serialized_config.length(), sizeof(char), file.get());
@@ -40,19 +44,26 @@ bool editor::SaveConfig(const char* config_file, const editor::Config& config)
 
 bool editor::LoadConfig(const char* config_file, editor::Config& config)
 {
-    const bool file_exists = File::OpenAsciiFile(config_file) != nullptr;
-    if(!file_exists)
+    File::FilePtr file = File::OpenAsciiFile(config_file);
+    if(!file)
         return false;
 
-    LuaTable table = LuaTable::fromFile(config_file);
+    const long size = File::FileSize(file);
 
-    config.cameraPosition.x = table[camera_position][1];
-    config.cameraPosition.y = table[camera_position][2];
+    std::string input_text;
+    input_text.resize(size);
 
-    config.cameraViewport.mA.x = table[camera_viewport][1];
-    config.cameraViewport.mA.y = table[camera_viewport][2];
-    config.cameraViewport.mB.x = table[camera_viewport][3];
-    config.cameraViewport.mB.y = table[camera_viewport][4];
+    std::fread(&input_text.front(), 1, size, file.get());
+
+    const nlohmann::json& json = nlohmann::json::parse(input_text);
+
+    config.cameraPosition.x = json[camera_position][0];
+    config.cameraPosition.y = json[camera_position][1];
+
+    config.cameraViewport.mA.x = json[camera_viewport][0];
+    config.cameraViewport.mA.y = json[camera_viewport][1];
+    config.cameraViewport.mB.x = json[camera_viewport][2];
+    config.cameraViewport.mB.y = json[camera_viewport][3];
 
     return true;
 }

@@ -200,7 +200,7 @@ EditorZone::~EditorZone()
     config.cameraPosition = m_camera->GetPosition();
     config.cameraViewport = m_camera->GetViewport();
 
-    editor::SaveConfig("editor.config", config);
+    editor::SaveConfig("editor_config.json", config);
 }
 
 void EditorZone::OnLoad(mono::ICameraPtr camera)
@@ -208,7 +208,7 @@ void EditorZone::OnLoad(mono::ICameraPtr camera)
     m_camera = camera;
     
     editor::Config config;
-    const bool config_loaded = editor::LoadConfig("editor.config", config);
+    const bool config_loaded = editor::LoadConfig("editor_config.json", config);
     if(config_loaded)
     {
         camera->SetPosition(config.cameraPosition);
