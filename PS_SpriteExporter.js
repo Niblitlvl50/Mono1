@@ -32,30 +32,31 @@ var loadSettings = function(settings_key)
 
 var checkFileForAttributes = function(filename, attribute)
 {
+	var attributes = new Array()
+
 	var file = new File(filename)
 	var success = file.open('r')
-	if(!success)
-		return null
-
-	var attributes = new Array()
-	while(!file.eof)
+	if(success)
 	{
-		var line = file.readln()
-		var index = line.search(attribute)
-		if(index != -1)
-			attributes.push(line)
-	}
+		while(!file.eof)
+		{
+			var line = file.readln()
+			var index = line.search(attribute)
+			if(index != -1)
+			{
+				attributes.push(file.readln())
+				break
+			}
+		}
 
-	file.close()
+		file.close()
+	}
 
 	return attributes
 }
 
 var createSpriteFilesFromLayers = function(layers, output_path)
 {
-	var animationsText = "animations = { }"
-	var defaultAnimationText = "animations[0] = { 0, -1 }"
-	
 	var localLayers = layers
 	
 	for(var index = 0; index < localLayers.length; ++index)
@@ -92,38 +93,39 @@ var createSpriteFilesFromLayers = function(layers, output_path)
 		file.open('w')
 		
 		file.writeln("")
-		file.writeln("-- This sprite is exported from " + localDocument.name)
-		file.writeln("")
+		file.writeln("{")
 
-		file.writeln("texture = \"" + textureName + "\"")
-		file.writeln("rows = " + rows)
-		file.writeln("columns = " + columns)
-		file.writeln("x = " + (bounds[0].value +1))
-		file.writeln("y = " + (bounds[1].value +1))
-		file.writeln("u = " + (bounds[2].value -2))
-		file.writeln("v = " + (bounds[3].value -2))
-		file.writeln("")
+		file.writeln("\t\"texture\": \"" + textureName + "\",")
+		file.writeln("\t\"rows\": " + rows + ",")
+		file.writeln("\t\"columns\": " + columns + ",")
+		file.writeln("\t\"x\": " + (bounds[0].value +1) + ",")
+		file.writeln("\t\"y\": " + (bounds[1].value +1) + ",")
+		file.writeln("\t\"u\": " + (bounds[2].value -2) + ",")
+		file.writeln("\t\"v\": " + (bounds[3].value -2) + ",")
 
-		if(animations == null)
-		{
-			file.writeln(animationsText)
-			file.writeln(defaultAnimationText)
-		}
-		else
-		{
-			for(var animIndex = 0; animIndex < animations.length; ++animIndex)
-				file.writeln(animations[animIndex])
-		}
+		var has_attributes = (attributes.length > 0)
 
-		// Write previous attributes if there were any
-		if(attributes != null)
+		if(animations.length == 0)
+			animations.push("\t\t0, -1")
+
+		file.writeln("\t\"animations\": [")
+		for(var animIndex = 0; animIndex < animations.length; ++animIndex)
+			file.writeln(animations[animIndex])
+
+		var end_char = has_attributes ? "," : ""
+		file.writeln("\t]" + end_char)
+
+		if(has_attributes)
 		{
-			file.writeln("")
+			file.writeln("\t\"attributes\": [")
 
 			for(var attribIndex = 0; attribIndex < attributes.length; ++attribIndex)
 				file.writeln(attributes[attribIndex])
+
+			file.writeln("\t]")
 		}
 
+		file.writeln("}")
 		file.close()	
 	}
 }
@@ -142,10 +144,7 @@ var createPathFiles = function(pathItems, output_path)
 		file.open('w')
 
 		file.writeln("")
-		file.writeln("-- This path is exported from " + localDocument.name)
-		file.writeln("-- The path variable contains a collection of x and y pairs")
-		file.writeln("")
-		file.writeln("path = { }")
+		file.writeln("{")
 
 		for(var subIndex = 0; subIndex < pathItem.subPathItems.length; ++subIndex)
 		{
@@ -155,17 +154,26 @@ var createPathFiles = function(pathItems, output_path)
 			// Let this be the base for the local path coordinate system
 			var basePoint = points[0]
 
+			file.writeln("\t\"x\": " + basePoint.anchor[0] + ",")
+			file.writeln("\t\"y\": " + basePoint.anchor[1] + ",")
+			file.writeln("\t\"path\": [")
+
 			for(var pointIndex = 0; pointIndex < points.length; ++pointIndex)
 			{
+				var is_last = pointIndex == (points.length -1)
+				var add_char = is_last ? "" : ","
+
 				var point = points[pointIndex]
 				var x = point.anchor[0] - basePoint.anchor[0]
 
 				// Invert the y-axis since these points should be in opengl coordinate system
 				var y = (point.anchor[1] - basePoint.anchor[1]) * -1
-				file.writeln("path[" + pointIndex + "] = { " + x + ", " + y + " }")
+				file.writeln("\t\t" + x + ", " + y + add_char)
 			}
 		}
 
+		file.writeln("\t]")
+		file.writeln("}")
 		file.close()
 	}
 }
