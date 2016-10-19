@@ -83,7 +83,7 @@ uint mono::LinkProgram(uint vertexShader, uint fragmentShader)
         // Store the link log
         const std::string log(infoLog.begin(), infoLog.end());
 
-        // Throw here since we could not compile the shader
+        // Throw here since we could not link the shader
         throw std::runtime_error("Unable to link program. - " + log);
     }
 
