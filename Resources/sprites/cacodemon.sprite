@@ -1,16 +1,32 @@
 
--- This sprite is exported from cacodemon.psd
-
-texture = "cacodemon.png"
-rows = 2
-columns = 6
-x = 1
-y = 1
-u = 478
-v = 158
-
-animations = { }
-animations[0] = { 0, -1 }
-animations[1] = { 1, 120, 2, 120, 3, 120, 4, 120 }
-animations[2] = { 5, 200 }
-animations[3] = { 6, 100, 7, 100, 8, 100, 9, 100, 10, 100, 11, 1000 }
+{
+	"texture": "cacodemon.png",
+	"rows": 2,
+	"columns": 6,
+	"x": 1,
+	"y": 1,
+	"u": 478,
+	"v": 158,
+	"animations": [
+		{
+			"id": 0,
+			"loop": false,
+			"frames": [ 0, -1 ]
+		},
+		{
+			"id": 1,
+			"loop": true,
+			"frames": [ 1, 120, 2, 120, 3, 120, 4, 120 ]
+		},
+		{
+			"id": 2,
+			"loop": true,
+			"frames": [ 5, 200 ]
+		},
+		{
+			"id": 3,
+			"loop": false,
+			"frames": [ 6, 100, 7, 100, 8, 100, 9, 100, 10, 100, 11, 1000 ]
+		}
+	]
+}

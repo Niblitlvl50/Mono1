@@ -1,1 +1,1 @@
--- This sprite is exported from spritesheet.psdtexture = "spritesheet.png"rows = 1columns = 2x = 176y = 192u = 239v = 239animations = { }animations[0] = { 0, 50, 1, 50 }
+{	"texture": "spritesheet.png",	"rows": 1,	"columns": 2,	"x": 176,	"y": 192,	"u": 239,	"v": 239,	"animations": [		{			"id": 0,			"loop": true,			"frames": [ 0, 50, 1, 50 ]		}	]}
