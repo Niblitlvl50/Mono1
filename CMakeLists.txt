@@ -43,10 +43,6 @@ endif(SDL2_FOUND)
 file(GLOB_RECURSE imgui_source_files "External Libs/imgui/*.cpp")
 add_library(imgui STATIC ${imgui_source_files})
 
-# Lua
-file(GLOB_RECURSE lua_source_files "External Libs/Lua-5.1.4/*.c")
-add_library(lua STATIC ${lua_source_files})
-
 # gtest
 file(GLOB_RECURSE gtest_source_files "External Libs/gtest-1.7.0/src/*.cc")
 add_library(gtest STATIC ${gtest_source_files})
@@ -59,8 +55,8 @@ add_library(shared STATIC ${shared_source_files})
 # Mono
 file(GLOB_RECURSE engine_source_files "MonoEngine/*.cpp")
 add_library(mono STATIC ${engine_source_files})
-add_dependencies(mono lua chipmunk_static)
-target_link_libraries(mono lua chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENAL_LIBRARY})
+add_dependencies(mono chipmunk_static)
+target_link_libraries(mono chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENAL_LIBRARY})
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "UnitTests/*.cpp")
