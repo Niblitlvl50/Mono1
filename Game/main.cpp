@@ -16,8 +16,6 @@
 
 int main(int argc, char* argv[])
 {
-    constexpr math::Vector2f iPhone6SSize(750.0f, 1334.0f);
-    
     System::Init();
 
     // The "global" event handler used throughout the game
@@ -25,8 +23,9 @@ int main(int argc, char* argv[])
 
     game::context.event_handler = &eventHandler;
 
-    const math::Vector2f& nativeSize = Video::GetCurrentWindowSize();
-    const float ratio = nativeSize.y / iPhone6SSize.y;
+    //constexpr math::Vector2f iPhone6SSize(750.0f, 1334.0f);
+    //const math::Vector2f& nativeSize = Video::GetCurrentWindowSize();
+    //const float ratio = nativeSize.y / iPhone6SSize.y;
 
     //const math::Vector2f& size = iPhone6SSize * ratio;
     const math::Vector2f size(1280, 800);
@@ -35,6 +34,7 @@ int main(int argc, char* argv[])
     window->SetBackgroundColor(mono::Color::RGBA(0.6, 0.6, 0.6));
 
     mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(size.x / 2, size.y / 2);
+    
     mono::LoadFont(game::FontId::SMALL,  "pixelette.ttf", 10.0f, 1.0f / 10.0f);
     mono::LoadFont(game::FontId::MEDIUM, "pixelette.ttf", 10.0f, 1.0f / 5.0f);
     mono::LoadFont(game::FontId::LARGE,  "pixelette.ttf", 10.0f, 1.0f);
