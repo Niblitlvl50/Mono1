@@ -13,6 +13,8 @@
 #include "ShuttleController.h"
 #include "Physics/CMIBody.h"
 
+#include "Weapons/IWeaponSystem.h"
+
 class SpriteEntity;
 
 namespace game

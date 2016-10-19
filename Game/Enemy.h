@@ -5,7 +5,6 @@
 #include "MonoPtrFwd.h"
 #include "PhysicsEntityBase.h"
 #include "Math/Vector2f.h"
-#include "Weapons/IWeaponSystem.h"
 
 namespace game
 {
@@ -31,18 +30,12 @@ namespace game
     {
     public:
 
-        Enemy(EnemySetup& setup, mono::EventHandler& event_handler);
+        Enemy(EnemySetup& setup);
 
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
 
-    private:
-
-        friend IEnemyController;
-
-        mono::EventHandler& m_eventHandler;
         std::unique_ptr<IEnemyController> m_controller;
-        std::unique_ptr<IWeaponSystem> m_weapon;
         mono::ISpritePtr m_sprite;
     };
 }

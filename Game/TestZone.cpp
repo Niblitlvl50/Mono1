@@ -10,6 +10,9 @@
 #include "ICamera.h"
 #include "Audio/AudioFactory.h"
 
+#include "Enemy.h"
+#include "Enemies/EnemyFactory.h"
+
 #include "InvaderGroup.h"
 #include "DotEntity.h"
 #include "AnimatedDude.h"
@@ -19,7 +22,6 @@
 #include "Explosion.h"
 #include "PathPoint.h"
 #include "CubeSwarm.h"
-#include "CacoDemon.h"
 #include "Morpher.h"
 
 #include "Math/Quad.h"
@@ -207,7 +209,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(0.0f, 0.0f, mEventHandler);
     AddPhysicsEntity(shuttle, FOREGROUND);
 
-    AddPhysicsEntity(std::make_shared<game::CacoDemon>(mEventHandler), FOREGROUND);
+    AddPhysicsEntity(game::CreateCacoDemon(math::Vector2f(100, 100), mEventHandler), FOREGROUND);
 
     AddEntity(std::make_shared<AnimatedDude>(100.0f, 50.0f, mEventHandler), MIDDLEGROUND);
     AddEntity(std::make_shared<InvaderGroup>(math::Vector2f(300.0f, 800.0f)), BACKGROUND);
