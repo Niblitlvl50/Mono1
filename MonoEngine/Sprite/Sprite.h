@@ -51,12 +51,6 @@ namespace mono
         //! @param[in] loop If the animation should loop or not.
         void DefineAnimation(int id, const std::vector<int>& frames, bool loop);
 
-        //! Define an animation sequence by giving pairs of frame and duration, also with attributes.
-        //! @param[in] id Id of the animation.
-        //! @param[in] frames A collection of frame and duration pairs.
-        //! @param[in] attributes A collection of attributes for this animation.
-        void DefineAnimation(int id, const std::vector<int>& frames, const std::vector<std::string>& attributes);
-        
         //! Tell the sprite to run a specific animation.
         //! @param[in] id The animation to run.
         virtual void SetAnimation(int id);

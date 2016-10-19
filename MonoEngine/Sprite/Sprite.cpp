@@ -7,7 +7,6 @@
 //
 
 #include "Sprite.h"
-#include "SpriteAttributes.h"
 #include "Texture/ITexture.h"
 
 #include <stdexcept>
@@ -89,12 +88,6 @@ void Sprite::DefineAnimation(int id, const std::vector<int>& frames, bool loop)
     }
 
     m_definedAnimations.insert(std::make_pair(id, sequence));
-}
-
-void Sprite::DefineAnimation(int id, const std::vector<int>& frames, const std::vector<std::string>& attributes)
-{
-    const bool noloop = std::find_if(attributes.begin(), attributes.end(), FindNoLoopAttribute()) != attributes.end();
-    DefineAnimation(id, frames, !noloop);
 }
 
 int Sprite::GetDefinedAnimations() const
