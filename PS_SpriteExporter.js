@@ -44,7 +44,15 @@ var checkFileForAttributes = function(filename, attribute)
 			var index = line.search(attribute)
 			if(index != -1)
 			{
-				attributes.push(file.readln())
+				while(!file.eof)
+				{
+					var inner_line = file.readln()
+					if(inner_line.search("\t]") != -1)
+						break;
+
+					attributes.push(inner_line)
+				}
+
 				break
 			}
 		}
@@ -103,30 +111,16 @@ var createSpriteFilesFromLayers = function(layers, output_path)
 		file.writeln("\t\"u\": " + (bounds[2].value -2) + ",")
 		file.writeln("\t\"v\": " + (bounds[3].value -2) + ",")
 
-		var has_attributes = (attributes.length > 0)
-
 		if(animations.length == 0)
-			animations.push("\t\t0, -1")
+			animations.push("\t\t[ 0, -1 ]")
 
 		file.writeln("\t\"animations\": [")
 		for(var animIndex = 0; animIndex < animations.length; ++animIndex)
 			file.writeln(animations[animIndex])
-
-		var end_char = has_attributes ? "," : ""
-		file.writeln("\t]" + end_char)
-
-		if(has_attributes)
-		{
-			file.writeln("\t\"attributes\": [")
-
-			for(var attribIndex = 0; attribIndex < attributes.length; ++attribIndex)
-				file.writeln(attributes[attribIndex])
-
-			file.writeln("\t]")
-		}
-
+		
+		file.writeln("\t]")
 		file.writeln("}")
-		file.close()	
+		file.close()
 	}
 }
 
