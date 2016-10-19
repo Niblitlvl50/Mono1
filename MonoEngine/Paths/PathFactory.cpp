@@ -8,10 +8,10 @@
 
 #include "PathFactory.h"
 #include "IPath.h"
-
-#include "Lua/LuaState.h"
-#include "Lua/LuaFunctions.h"
 #include "Math/Vector2f.h"
+#include "System/SysFile.h"
+
+#include "nlohmann_json/json.hpp"
 
 namespace
 {
@@ -78,17 +78,21 @@ namespace
 
 std::shared_ptr<mono::IPath> mono::CreatePath(const char* path_file)
 {
-    lua::LuaState config(path_file);
-    const lua::MapIntFloatTable& table = lua::GetTableMap<int, float>(config, "path");
+    File::FilePtr file = File::OpenAsciiFile(path_file);
+    if(!file)
+        return nullptr;
+
+    std::vector<byte> file_data;
+    File::FileRead(file, file_data);
+
+    const nlohmann::json& json = nlohmann::json::parse(file_data);
+
+    const std::vector<float>& points = json["path"];
 
     std::vector<math::Vector2f> coords;
-    coords.reserve(table.size());
+    coords.resize(points.size() / 2);
 
-    for(const auto& pair : table)
-    {
-        const std::vector<float>& item = pair.second;
-        coords.emplace_back(item.at(0), item.at(1));
-    }
+    std::memcpy(coords.data(), points.data(), sizeof(float) * points.size());
     
     return std::make_shared<DefaultPath>(coords);
 }
