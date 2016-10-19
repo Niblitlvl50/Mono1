@@ -38,14 +38,15 @@
 
 #include "SpriteFactory.h"
 
-#include "Lua/LuaState.h"
-#include "Lua/LuaFunctions.h"
-
 #include "Texture/ITexture.h"
 #include "Texture/TextureFactory.h"
 
 #include "Math/Quad.h"
 #include "Sprite.h"
+
+#include "System/SysFile.h"
+#include "nlohmann_json/json.hpp"
+
 
 namespace
 {
@@ -92,18 +93,25 @@ namespace
 
 mono::ISpritePtr mono::CreateSprite(const char* sprite_file)
 {
-    lua::LuaState config(sprite_file);
+    File::FilePtr file = File::OpenAsciiFile(sprite_file);
+    if(!file)
+        return nullptr;
 
-    const std::string& texture_file = lua::GetValue<std::string>(config, "texture");
+    std::vector<byte> file_data;
+    File::FileRead(file, file_data);
+
+    const nlohmann::json& json = nlohmann::json::parse(file_data);
+    
+    const std::string& texture_file = json["texture"];
     mono::ITexturePtr texture = mono::CreateTexture(texture_file.c_str());
 
     TextureData data;
-    data.rows    = lua::GetValue<int>(config, "rows");
-    data.columns = lua::GetValue<int>(config, "columns");
-    data.x       = lua::GetValue<int>(config, "x");
-    data.y       = lua::GetValue<int>(config, "y");
-    data.u       = lua::GetValue<int>(config, "u");
-    data.v       = lua::GetValue<int>(config, "v");
+    data.rows    = json["rows"];
+    data.columns = json["columns"];
+    data.x       = json["x"];
+    data.y       = json["y"];
+    data.u       = json["u"];
+    data.v       = json["v"];
 
     data.textureSizeX = texture->Width();
     data.textureSizeY = texture->Height();
@@ -113,19 +121,12 @@ mono::ISpritePtr mono::CreateSprite(const char* sprite_file)
 
     std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>(texture, textureCoordinates);
 
-    const lua::MapIntIntTable& animations = lua::GetTableMap<int, int>(config, "animations");
-    const lua::MapIntStringTable& attributes = lua::GetTableMap<int, std::string>(config, "attributes");
-
-    for(const auto& animation : animations)
+    for(const auto& animation : json["animations"])
     {
-        const int key = animation.first;
-        const lua::IntTable& values = animation.second;
-
-        auto attribute = attributes.find(key);
-        if(attribute == attributes.end())
-            sprite->DefineAnimation(key, values, true);
-        else
-            sprite->DefineAnimation(key, values, attribute->second);
+        const int id = animation["id"];
+        const bool loop = animation["loop"];
+        const std::vector<int>& frames = animation["frames"];
+        sprite->DefineAnimation(id, frames, loop);
     }
 
     return sprite;
