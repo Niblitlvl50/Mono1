@@ -68,8 +68,8 @@ target_link_libraries(unittest mono gtest)
 # Animation tool
 file(GLOB_RECURSE animationtool_source_files "AnimationTool/*.cpp")
 add_executable(animationtool ${animationtool_source_files})
-add_dependencies(animationtool mono)
-target_link_libraries(animationtool mono)
+add_dependencies(animationtool mono shared imgui)
+target_link_libraries(animationtool mono shared imgui)
 
 # Editor
 file(GLOB_RECURSE editor_source_files "Editor/*.cpp")

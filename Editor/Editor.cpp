@@ -25,9 +25,8 @@
 
 #include "UserInputController.h"
 
-#include "ImGuiInputHandler.h"
 #include "ImGuiInterfaceDrawer.h"
-#include "ImGuiRenderer.h"
+#include "ImGuiImpl/ImGuiRenderer.h"
 
 #include "Events/EventFuncFwd.h"
 #include "Events/SurfaceChangedEvent.h"
