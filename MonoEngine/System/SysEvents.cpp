@@ -78,11 +78,11 @@ void Events::ProcessSystemEvents(const mono::IInputHandlerPtr& handler)
         switch(event.type)
         {
             case SDL_KEYDOWN:
-                handler->OnKeyDown(event.key.keysym.sym);
+                handler->OnKeyDown(event.key.keysym.sym, SDL_GetModState());
                 break;
 
             case SDL_KEYUP:
-                handler->OnKeyUp(event.key.keysym.sym);
+                handler->OnKeyUp(event.key.keysym.sym, SDL_GetModState());
                 break;
 
             case SDL_TEXTINPUT:

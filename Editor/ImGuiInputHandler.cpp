@@ -12,8 +12,7 @@
 
 #include "System/SysKeycodes.h"
 
-#include "Events/KeyUpEvent.h"
-#include "Events/KeyDownEvent.h"
+#include "Events/KeyEvent.h"
 #include "Events/TextInputEvent.h"
 #include "Events/MouseDownEvent.h"
 #include "Events/MouseUpEvent.h"

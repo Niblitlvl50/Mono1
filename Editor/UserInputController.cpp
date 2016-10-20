@@ -16,7 +16,7 @@
 #include "Events/MouseMotionEvent.h"
 #include "Events/MultiGestureEvent.h"
 #include "Events/MouseWheelEvent.h"
-#include "Events/KeyDownEvent.h"
+#include "Events/KeyEvent.h"
 
 #include "System/SysKeycodes.h"
 

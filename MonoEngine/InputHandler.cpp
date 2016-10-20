@@ -15,8 +15,7 @@
 #include "Events/ApplicationEvent.h"
 #include "Events/SurfaceChangedEvent.h"
 #include "Events/ActivatedEvent.h"
-#include "Events/KeyDownEvent.h"
-#include "Events/KeyUpEvent.h"
+#include "Events/KeyEvent.h"
 #include "Events/TextInputEvent.h"
 #include "Events/MouseDownEvent.h"
 #include "Events/MouseUpEvent.h"
@@ -34,13 +33,13 @@ InputHandler::InputHandler(const CoordinateFunc& func, EventHandler& eventHandle
       mEventHandler(eventHandler)
 { }
 
-void InputHandler::OnKeyDown(int key)
+void InputHandler::OnKeyDown(int key, int modifier)
 {
-    const event::KeyDownEvent event(key);
+    const event::KeyDownEvent event(key, modifier);
     mEventHandler.DispatchEvent(event);
 }
 
-void InputHandler::OnKeyUp(int key)
+void InputHandler::OnKeyUp(int key, int modifier)
 {
     if(key == Key::ESCAPE)
     {
@@ -48,7 +47,7 @@ void InputHandler::OnKeyUp(int key)
         return;
     }
 
-    const event::KeyUpEvent event(key);
+    const event::KeyUpEvent event(key, modifier);
     mEventHandler.DispatchEvent(event);
 }
 

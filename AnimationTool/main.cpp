@@ -13,8 +13,7 @@
 #include "Camera/TraceCamera.h"
 #include "Engine.h"
 #include "EventHandler/EventHandler.h"
-#include "Events/KeyUpEvent.h"
-#include "Events/KeyDownEvent.h"
+#include "Events/KeyEvent.h"
 #include "Events/EventFuncFwd.h"
 
 #include "IWindow.h"

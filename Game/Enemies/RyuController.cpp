@@ -3,7 +3,7 @@
 #include "Sprite/ISprite.h"
 #include "EventHandler/EventHandler.h"
 #include "Events/EventFuncFwd.h"
-#include "Events/KeyDownEvent.h"
+#include "Events/KeyEvent.h"
 #include "System/SysKeycodes.h"
 
 using namespace game;
