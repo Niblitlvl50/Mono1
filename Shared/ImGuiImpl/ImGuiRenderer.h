@@ -15,30 +15,32 @@
 #include <memory>
 #include <unordered_map>
 
-namespace editor
+class ImGuiShader;
+
+class ImGuiRenderer : public mono::IDrawable
 {
-    class ImGuiShader;
+public:
 
-    class ImGuiRenderer : public mono::IDrawable
-    {
-    public:
+    ImGuiRenderer(const char* config_file,
+                  const math::Vector2f& window_size);
 
-        ImGuiRenderer(const math::Vector2f& window_size);
-        ImGuiRenderer(const math::Vector2f& window_size, const std::unordered_map<unsigned int, mono::ITexturePtr>& textures);
-        virtual ~ImGuiRenderer();
+    ImGuiRenderer(const char* config_file,
+                  const math::Vector2f& window_size,
+                  const std::unordered_map<unsigned int, mono::ITexturePtr>& textures);
 
-        void SetWindowSize(const math::Vector2f& window_size);
+    virtual ~ImGuiRenderer();
 
-    private:
+    void SetWindowSize(const math::Vector2f& window_size);
 
-        void Initialize();
+private:
 
-        virtual void doDraw(mono::IRenderer& renderer) const;
-        virtual math::Quad BoundingBox() const;
+    void Initialize(const char* config_file);
 
-        math::Vector2f m_windowSize;
+    virtual void doDraw(mono::IRenderer& renderer) const;
+    virtual math::Quad BoundingBox() const;
 
-        std::shared_ptr<editor::ImGuiShader> m_shader;
-        std::unordered_map<unsigned int, mono::ITexturePtr> m_textures;
-    };
-}
+    math::Vector2f m_windowSize;
+
+    std::shared_ptr<ImGuiShader> m_shader;
+    std::unordered_map<unsigned int, mono::ITexturePtr> m_textures;
+};

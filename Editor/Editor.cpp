@@ -180,7 +180,7 @@ EditorZone::EditorZone(const mono::IWindowPtr& window, mono::EventHandler& event
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
     textures.insert(std::make_pair(texture->Id(), texture));
 
-    m_guiRenderer = std::make_shared<editor::ImGuiRenderer>(m_window->Size(), textures);
+    m_guiRenderer = std::make_shared<ImGuiRenderer>("editor_imgui.ini", m_window->Size(), textures);
 
     const event::SurfaceChangedEventFunc surface_func = std::bind(&EditorZone::OnSurfaceChanged, this, _1);
     m_surfaceChangedToken = m_eventHandler.AddListener(surface_func);

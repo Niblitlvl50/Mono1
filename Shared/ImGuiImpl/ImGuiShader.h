@@ -10,39 +10,36 @@
 
 #include "Shader/IShader.h"
 
-namespace editor
+class ImGuiShader : public mono::IShader
 {
-    class ImGuiShader : public mono::IShader
-    {
-    public:
+public:
 
-        ImGuiShader();
-        virtual ~ImGuiShader();
+    ImGuiShader();
+    virtual ~ImGuiShader();
 
-        virtual void Use();
-        virtual unsigned int GetShaderId() const;
-        virtual void LoadProjectionMatrix(const math::Matrix& projection);
-        virtual void LoadModelViewMatrix(const math::Matrix& modelView);
+    virtual void Use();
+    virtual unsigned int GetShaderId() const;
+    virtual void LoadProjectionMatrix(const math::Matrix& projection);
+    virtual void LoadModelViewMatrix(const math::Matrix& modelView);
 
-        void SetTextureValue(int value);
+    void SetTextureValue(int value);
 
-        unsigned int PositionAttribute() const;
-        unsigned int TextureAttribute() const;
-        unsigned int ColorAttribute() const;
+    unsigned int PositionAttribute() const;
+    unsigned int TextureAttribute() const;
+    unsigned int ColorAttribute() const;
 
-        int TextureLocation() const;
+    int TextureLocation() const;
 
-    private:
+private:
 
-        unsigned int m_program;
+    unsigned int m_program;
 
-        int m_MVMatrixLocation;
-        int m_PMatrixLocation;
+    int m_MVMatrixLocation;
+    int m_PMatrixLocation;
 
-        unsigned int m_positionAttributeLocation;
-        unsigned int m_textureAttributeLocation;
-        unsigned int m_colorAttributeLocation;
+    unsigned int m_positionAttributeLocation;
+    unsigned int m_textureAttributeLocation;
+    unsigned int m_colorAttributeLocation;
 
-        int m_textureLocation;
-    };
-}
+    int m_textureLocation;
+};

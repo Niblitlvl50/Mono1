@@ -11,8 +11,6 @@
 #include "System/SysOpenGL.h"
 #include "Math/Matrix.h"
 
-using namespace editor;
-
 namespace
 {
     constexpr const char* vertex_source =

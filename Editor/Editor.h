@@ -17,10 +17,10 @@
 
 #include "Polygon.h"
 
+class ImGuiRenderer;
 
 namespace editor
 {
-    class ImGuiRenderer;
     class UserInputController;
 
     class EditorZone : public mono::ZoneBase
@@ -50,13 +50,13 @@ namespace editor
 
         mono::IWindowPtr m_window;
         mono::EventHandler& m_eventHandler;
-        editor::ImGuiInputHandler m_inputHandler;
+        ImGuiInputHandler m_inputHandler;
         const char* m_fileName;
         mono::ICameraPtr m_camera;
 
         editor::UIContext m_context;
         std::shared_ptr<editor::ImGuiInterfaceDrawer> m_interfaceDrawer;
-        std::shared_ptr<editor::ImGuiRenderer> m_guiRenderer;
+        std::shared_ptr<ImGuiRenderer> m_guiRenderer;
         std::shared_ptr<editor::UserInputController> m_userInputController;
 
         std::shared_ptr<editor::PolygonEntity> m_selected_polygon;

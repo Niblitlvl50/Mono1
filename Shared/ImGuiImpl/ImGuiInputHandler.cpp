@@ -19,8 +19,6 @@
 
 #include "imgui/imgui.h"
 
-using namespace editor;
-
 ImGuiInputHandler::ImGuiInputHandler(mono::EventHandler& event_handler)
     : m_eventHandler(event_handler)
 {

@@ -18,21 +18,22 @@
 
 #include "imgui/imgui.h"
 
-using namespace editor;
-
 #define OFFSETOF(TYPE, ELEMENT) ((size_t)&(((TYPE *)0)->ELEMENT))
 
-ImGuiRenderer::ImGuiRenderer(const math::Vector2f& window_size)
+ImGuiRenderer::ImGuiRenderer(const char* config_file,
+                             const math::Vector2f& window_size)
     : m_windowSize(window_size)
 {
-    Initialize();
+    Initialize(config_file);
 }
 
-ImGuiRenderer::ImGuiRenderer(const math::Vector2f& window_size, const std::unordered_map<unsigned int, mono::ITexturePtr>& textures)
+ImGuiRenderer::ImGuiRenderer(const char* config_file,
+                             const math::Vector2f& window_size,
+                             const std::unordered_map<unsigned int, mono::ITexturePtr>& textures)
     : m_windowSize(window_size),
       m_textures(textures)
 {
-    Initialize();
+    Initialize(config_file);
 }
 
 ImGuiRenderer::~ImGuiRenderer()
@@ -40,12 +41,12 @@ ImGuiRenderer::~ImGuiRenderer()
     ImGui::Shutdown();
 }
 
-void ImGuiRenderer::Initialize()
+void ImGuiRenderer::Initialize(const char* config_file)
 {
     ImGui::GetIO().DisplaySize = ImVec2(m_windowSize.x, m_windowSize.y);
-    ImGui::GetIO().IniFilename = "editor_imgui.ini";
+    ImGui::GetIO().IniFilename = config_file;
 
-    m_shader = std::make_shared<editor::ImGuiShader>();
+    m_shader = std::make_shared<ImGuiShader>();
 
     int width;
     int height;
