@@ -9,12 +9,12 @@
 #include "UserInputController.h"
 
 #include "Editor.h"
+#include "IWindow.h"
 #include "EventHandler/EventHandler.h"
 #include "Events/EventFuncFwd.h"
 #include "Events/MouseEvent.h"
 #include "Events/MultiGestureEvent.h"
 #include "Events/KeyEvent.h"
-
 #include "System/SysKeycodes.h"
 
 #include "ImGuiInterfaceDrawer.h"
@@ -23,17 +23,19 @@
 using namespace editor;
 
 UserInputController::UserInputController(const mono::ICameraPtr& camera,
+                                         const mono::IWindowPtr& window,
                                          editor::EditorZone* editor,
                                          editor::UIContext* context,
-                                         const math::Vector2f& window_size,
                                          mono::EventHandler& event_handler)
-    : m_eventHandler(event_handler),
+    : m_window(window),
+      m_eventHandler(event_handler),
       m_editor(editor),
       m_context(context),
-      m_cameraTool(camera, window_size),
+      m_cameraTool(camera, window->Size()),
       m_polygonTool(editor),
       m_polygonBrushTool(editor),
-      m_activeTool(&m_polygonTool)
+      m_activeTool(&m_polygonTool),
+      m_isMaximized(false)
 {
     using namespace std::placeholders;
 
@@ -170,6 +172,15 @@ bool UserInputController::OnKeyDown(const event::KeyDownEvent& event)
         SelectTool(ToolsMenuOptions::TRANSLATE_TOOL);
     else if(event.key == Key::FOUR)
         SelectTool(ToolsMenuOptions::ROTATE_TOOL);
+    else if(event.key == Key::ENTER && event.mod == Key::L_CTRL)
+    {
+        if(m_isMaximized)
+            m_window->RestoreSize();
+        else
+            m_window->Maximize();
+
+        m_isMaximized = !m_isMaximized;
+    }
 
     return false;
 }

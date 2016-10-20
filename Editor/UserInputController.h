@@ -29,10 +29,10 @@ namespace editor
     public:
 
         UserInputController(const mono::ICameraPtr& camera,
-                         editor::EditorZone* editor,
-                         editor::UIContext* context,
-                         const math::Vector2f& window_size,
-                         mono::EventHandler& event_handler);
+                            const mono::IWindowPtr& window,
+                            editor::EditorZone* editor,
+                            editor::UIContext* context,
+                            mono::EventHandler& event_handler);
         ~UserInputController();
 
         void HandleContextMenu(int item_index);
@@ -47,6 +47,7 @@ namespace editor
         bool OnMultiGesture(const event::MultiGestureEvent& event);
         bool OnKeyDown(const event::KeyDownEvent& event);
 
+        mono::IWindowPtr m_window;
         mono::EventHandler& m_eventHandler;
         editor::EditorZone* m_editor;
 
@@ -65,6 +66,8 @@ namespace editor
         editor::TranslateTool m_translateTool;
         editor::RotateTool m_rotateTool;
         editor::ITool* m_activeTool;
+
+        bool m_isMaximized;
     };
 }
 

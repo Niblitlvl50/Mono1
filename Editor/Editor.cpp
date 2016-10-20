@@ -10,6 +10,7 @@
 
 #include "IRenderer.h"
 #include "ICamera.h"
+#include "IWindow.h"
 
 #include "Texture/TextureFactory.h"
 #include "Texture/ITexture.h"
@@ -151,8 +152,8 @@ namespace
 
 using namespace editor;
 
-EditorZone::EditorZone(const math::Vector2f& window_size, mono::EventHandler& event_handler, const char* file_name)
-    : m_windowSize(window_size),
+EditorZone::EditorZone(const mono::IWindowPtr& window, mono::EventHandler& event_handler, const char* file_name)
+    : m_window(window),
       m_eventHandler(event_handler),
       m_inputHandler(event_handler),
       m_fileName(file_name)
@@ -180,7 +181,7 @@ EditorZone::EditorZone(const math::Vector2f& window_size, mono::EventHandler& ev
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
     textures.insert(std::make_pair(texture->Id(), texture));
 
-    m_guiRenderer = std::make_shared<editor::ImGuiRenderer>(m_windowSize, textures);
+    m_guiRenderer = std::make_shared<editor::ImGuiRenderer>(m_window->Size(), textures);
 
     const event::SurfaceChangedEventFunc surface_func = std::bind(&EditorZone::OnSurfaceChanged, this, _1);
     m_surfaceChangedToken = m_eventHandler.AddListener(surface_func);
@@ -215,7 +216,7 @@ void EditorZone::OnLoad(mono::ICameraPtr camera)
         camera->SetViewport(config.cameraViewport);
     }
 
-    m_userInputController = std::make_shared<editor::UserInputController>(camera, this, &m_context, m_windowSize, m_eventHandler);
+    m_userInputController = std::make_shared<editor::UserInputController>(camera, m_window, this, &m_context, m_eventHandler);
 
     AddUpdatable(m_interfaceDrawer);
 

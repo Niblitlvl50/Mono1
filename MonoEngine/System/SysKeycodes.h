@@ -34,6 +34,11 @@ namespace Key
     extern const int SPACE;
     extern const int BACKSPACE;
     extern const int DELETE;
+
+    extern const int L_CTRL;
+    extern const int R_CTRL;
+    extern const int L_SHIFT;
+    extern const int R_SHIFT;
 }
 
 namespace MouseButton

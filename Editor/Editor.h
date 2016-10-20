@@ -27,7 +27,7 @@ namespace editor
     {
     public:
 
-        EditorZone(const math::Vector2f& window_size, mono::EventHandler& event_handler, const char* file_name);
+        EditorZone(const mono::IWindowPtr& window, mono::EventHandler& event_handler, const char* file_name);
         virtual ~EditorZone();
 
         virtual void OnLoad(mono::ICameraPtr camera);
@@ -41,7 +41,6 @@ namespace editor
         void SelectEntity(const mono::IEntityPtr& entity);
 
         void OnContextMenu(int index);
-
         void OnTextureRepeate(float repeate);
         void OnTextureChanged(int texture_index);
         void OnDeletePolygon();
@@ -49,11 +48,11 @@ namespace editor
         void EditorMenuCallback(EditorMenuOptions index);
         void ToolsMenuCallback(ToolsMenuOptions index);
 
-        const math::Vector2f m_windowSize;
+        mono::IWindowPtr m_window;
         mono::EventHandler& m_eventHandler;
         editor::ImGuiInputHandler m_inputHandler;
-
         const char* m_fileName;
+        mono::ICameraPtr m_camera;
 
         editor::UIContext m_context;
         std::shared_ptr<editor::ImGuiInterfaceDrawer> m_interfaceDrawer;
@@ -64,7 +63,5 @@ namespace editor
         std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
 
         mono::EventToken<event::SurfaceChangedEvent> m_surfaceChangedToken;
-
-        mono::ICameraPtr m_camera;
     };
 }

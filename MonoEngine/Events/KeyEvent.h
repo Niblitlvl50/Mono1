@@ -13,22 +13,22 @@ namespace event
     {
         constexpr KeyDownEvent(int key, int modifier)
             : key(key),
-              modifier(modifier)
+              mod(modifier)
         { }
         
         const int key;
-        const int modifier;
+        const int mod;
     };
 
     struct KeyUpEvent
     {
         constexpr KeyUpEvent(int key, int modifier)
             : key(key),
-              modifier(modifier)
+              mod(modifier)
         { }
         
         const int key;
-        const int modifier;
+        const int mod;
     };
 }
 
