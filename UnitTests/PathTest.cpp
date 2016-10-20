@@ -101,8 +101,8 @@ TEST(PathTest, CreatePathFromFileAndVerifyCoordinates)
     EXPECT_EQ(coords, path->GetPathPoints());
 }
 
-TEST(PathTest, NonExistingPathFileShouldThrowExpcetion)
+TEST(PathTest, NonExistingPathFileShouldReturnNullptr)
 {
-    EXPECT_THROW(mono::CreatePath("whatever"), std::runtime_error);
+    EXPECT_EQ(mono::CreatePath("whatever"), nullptr);
 }
 
