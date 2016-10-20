@@ -15,7 +15,6 @@
 
 #include "InvaderGroup.h"
 #include "DotEntity.h"
-#include "AnimatedDude.h"
 #include "Shuttle.h"
 #include "Moon.h"
 #include "Meteor.h"
@@ -210,8 +209,8 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(shuttle, FOREGROUND);
 
     AddPhysicsEntity(game::CreateCacoDemon(math::Vector2f(100, 100), mEventHandler), FOREGROUND);
+    AddPhysicsEntity(game::CreateRyu(math::Vector2f(100.0f, 50.0f), mEventHandler), MIDDLEGROUND);
 
-    AddEntity(std::make_shared<AnimatedDude>(100.0f, 50.0f, mEventHandler), MIDDLEGROUND);
     AddEntity(std::make_shared<InvaderGroup>(math::Vector2f(300.0f, 800.0f)), BACKGROUND);
     AddEntity(std::make_shared<DotEntity>(), FOREGROUND);
     AddEntity(std::make_shared<PathPoint>(), BACKGROUND);
