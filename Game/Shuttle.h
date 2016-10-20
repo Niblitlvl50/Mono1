@@ -60,7 +60,6 @@ namespace game
         std::unique_ptr<IWeaponSystem> mWeapon;
 
         mono::ISpritePtr mSprite;
-        //mono::Sprite mWeaponSprite;
         ShuttleController mController;
         mono::EventHandler& mEventHandler;
 

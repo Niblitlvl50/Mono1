@@ -28,14 +28,13 @@ Meteor::Meteor(float x, float y)
     SetProperty(EntityProperties::DAMAGABLE);
     
     mPhysicsObject.body = mono::PhysicsFactory::CreateBody(15.0f, 1.0f);
-    mPhysicsObject.body->SetPosition(mPosition);    
+    mPhysicsObject.body->SetPosition(mPosition);
 
     mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, 10.0f, 10.0f);
     shape->SetElasticity(0.9f);
     
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
-    
-    mPhysicsObject.shapes.push_back(shape);    
+    mPhysicsObject.shapes.push_back(shape);
 }
 
 void Meteor::Draw(mono::IRenderer& renderer) const
