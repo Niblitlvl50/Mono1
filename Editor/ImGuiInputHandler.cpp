@@ -14,10 +14,7 @@
 
 #include "Events/KeyEvent.h"
 #include "Events/TextInputEvent.h"
-#include "Events/MouseDownEvent.h"
-#include "Events/MouseUpEvent.h"
-#include "Events/MouseMotionEvent.h"
-#include "Events/MouseWheelEvent.h"
+#include "Events/MouseEvent.h"
 #include "Events/MultiGestureEvent.h"
 
 #include "imgui/imgui.h"
