@@ -37,6 +37,12 @@ namespace
         { }
         virtual void Activated(bool activated)
         { }
+        virtual void Maximize()
+        { }
+        virtual void Minimize()
+        { }
+        virtual void RestoreSize()
+        { }
         virtual void SwapBuffers() const
         {
             mSwapBuffersCalled = true;

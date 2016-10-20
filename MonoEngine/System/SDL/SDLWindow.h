@@ -26,6 +26,9 @@ namespace mono
 
         virtual void SurfaceChanged(int width, int height);
         virtual void Activated(bool activated);
+        virtual void Maximize();
+        virtual void Minimize();
+        virtual void RestoreSize();
         virtual void MakeCurrent();
         virtual void SwapBuffers() const;
         virtual void SetBackgroundColor(const mono::Color::RGBA& color);

@@ -109,6 +109,21 @@ void SDLWindow::SurfaceChanged(int width, int height)
 void SDLWindow::Activated(bool)
 { }
 
+void SDLWindow::Maximize()
+{
+    SDL_MaximizeWindow(mWindow);
+}
+
+void SDLWindow::Minimize()
+{
+    SDL_MinimizeWindow(mWindow);
+}
+
+void SDLWindow::RestoreSize()
+{
+    SDL_RestoreWindow(mWindow);
+}
+
 void SDLWindow::MakeCurrent()
 {
     SDL_GL_MakeCurrent(mWindow, mContext);
