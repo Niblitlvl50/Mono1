@@ -43,6 +43,7 @@ ImGuiRenderer::~ImGuiRenderer()
 void ImGuiRenderer::Initialize()
 {
     ImGui::GetIO().DisplaySize = ImVec2(m_windowSize.x, m_windowSize.y);
+    ImGui::GetIO().IniFilename = "editor_imgui.ini";
 
     m_shader = std::make_shared<editor::ImGuiShader>();
 
