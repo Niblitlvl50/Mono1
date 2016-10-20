@@ -33,19 +33,20 @@ namespace game
             Cube()
             { }
 
-            Cube(const math::Vector2f& position, float size)
-                : quad(position.x, position.y, position.x + size, position.y + size)
+            Cube(const math::Vector2f& position, float size, const mono::Color::HSL& color)
+                : quad(position.x, position.y, position.x + size, position.y + size),
+                  rotation(0.0f),
+                  color(color)
             { }
 
             math::Quad quad;
             float rotation;
-            mono::Color::RGBA color;
+            mono::Color::HSL color;
         };
 
         Cube GenerateCube();
 
         math::Quad m_bounds;
-        mono::Color::HSL mColor;
         std::vector<Cube> mCubes;
     };
 }

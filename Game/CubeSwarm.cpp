@@ -17,7 +17,6 @@ using namespace game;
 
 
 CubeSwarm::CubeSwarm()
-    : mColor(0.0f, 0.5f, 0.5f)
 {
     mCubes.resize(100);
 
@@ -27,10 +26,8 @@ CubeSwarm::CubeSwarm()
 
 void CubeSwarm::Draw(mono::IRenderer& renderer) const
 {
-    const mono::Color::RGBA color = mono::Color::ToRGBA(mColor);
-
     for(const Cube& cube : mCubes)
-        renderer.DrawQuad(cube.quad, color, 2.0f);
+        renderer.DrawQuad(cube.quad, mono::Color::ToRGBA(cube.color), 2.0f);
 }
 
 void CubeSwarm::Update(unsigned int delta)
@@ -51,11 +48,11 @@ void CubeSwarm::Update(unsigned int delta)
         cube.quad.mB += add;
 
         m_bounds |= cube.quad;
-    }
 
-    mColor.hue += delta * 0.0005f;
-    if(mColor.hue > 1.0f)
-        mColor.hue = 0.0f;
+        cube.color.hue += delta * 0.0005f;
+        if(cube.color.hue > 1.0f)
+            cube.color.hue = 0.0f;
+    }
 }
 
 math::Quad CubeSwarm::BoundingBox() const
@@ -69,5 +66,7 @@ CubeSwarm::Cube CubeSwarm::GenerateCube()
     const float random_y = mono::Random() * 100 - 50;
     const float random_size = mono::Random() * 10;
 
-    return CubeSwarm::Cube(math::Vector2f(random_x, random_y), random_size);
+    const mono::Color::HSL color(mono::Random(), 0.7f, 0.5f);
+
+    return CubeSwarm::Cube(math::Vector2f(random_x, random_y), random_size, color);
 }
