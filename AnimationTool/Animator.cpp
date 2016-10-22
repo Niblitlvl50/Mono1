@@ -12,28 +12,11 @@
 #include "Math/Vector2f.h"
 #include "System/SysKeycodes.h"
 
+#include "InterfaceDrawer.h"
 #include "ImGuiImpl/ImGuiRenderer.h"
 
-#include "imgui/imgui.h"
 
 using namespace animator;
-
-namespace
-{
-    class ImGuiInterfaceDrawer : public mono::IUpdatable
-    {
-    public:
-
-        virtual void doUpdate(unsigned int delta)
-        {
-            ImGui::GetIO().DeltaTime = float(delta) / 1000.0f;
-            ImGui::NewFrame();
-
-            ImGui::ShowTestWindow();
-            ImGui::Render();
-        }
-    };
-}
 
 Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHandler, const char* file)
     : m_eventHandler(eventHandler),
@@ -45,7 +28,7 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
 
     m_sprite = std::make_shared<MutableSprite>(file);
 
-    AddUpdatable(std::make_shared<ImGuiInterfaceDrawer>());
+    AddUpdatable(std::make_shared<InterfaceDrawer>());
 
     AddEntity(m_sprite, 0);
     AddDrawable(std::make_shared<ImGuiRenderer>("animator_imgui.ini", window->Size()), 2);
