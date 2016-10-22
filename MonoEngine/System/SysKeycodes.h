@@ -39,6 +39,8 @@ namespace Key
     extern const int R_CTRL;
     extern const int L_SHIFT;
     extern const int R_SHIFT;
+    extern const int L_ALT;
+    extern const int R_ALT;
 }
 
 namespace MouseButton

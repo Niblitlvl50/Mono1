@@ -76,6 +76,9 @@ bool ImGuiInputHandler::OnKeyDown(const event::KeyDownEvent& event)
         return false;
 
     ImGui::GetIO().KeysDown[event.key] = true;
+    ImGui::GetIO().KeyCtrl = event.ctrl;
+    ImGui::GetIO().KeyShift = event.shift;
+    ImGui::GetIO().KeyAlt = event.alt;
     return ImGui::GetIO().WantCaptureKeyboard;
 }
 
@@ -85,6 +88,9 @@ bool ImGuiInputHandler::OnKeyUp(const event::KeyUpEvent& event)
         return false;
 
     ImGui::GetIO().KeysDown[event.key] = false;
+    ImGui::GetIO().KeyCtrl = event.ctrl;
+    ImGui::GetIO().KeyShift = event.shift;
+    ImGui::GetIO().KeyAlt = event.alt;
     return ImGui::GetIO().WantCaptureKeyboard;
 }
 

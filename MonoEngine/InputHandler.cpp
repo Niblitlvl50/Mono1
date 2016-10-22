@@ -32,7 +32,11 @@ InputHandler::InputHandler(const CoordinateFunc& func, EventHandler& eventHandle
 
 void InputHandler::OnKeyDown(int key, int modifier)
 {
-    const event::KeyDownEvent event(key, modifier);
+    const bool ctrl  = (modifier & Key::L_CTRL)  || (modifier & Key::R_CTRL);
+    const bool shift = (modifier & Key::L_SHIFT) || (modifier & Key::R_SHIFT);
+    const bool alt   = (modifier & Key::L_ALT)   || (modifier & Key::R_ALT);
+
+    const event::KeyDownEvent event(key, ctrl, shift, alt);
     mEventHandler.DispatchEvent(event);
 }
 
@@ -44,7 +48,11 @@ void InputHandler::OnKeyUp(int key, int modifier)
         return;
     }
 
-    const event::KeyUpEvent event(key, modifier);
+    const bool ctrl  = (modifier & Key::L_CTRL)  || (modifier & Key::R_CTRL);
+    const bool shift = (modifier & Key::L_SHIFT) || (modifier & Key::R_SHIFT);
+    const bool alt   = (modifier & Key::L_ALT)   || (modifier & Key::R_ALT);
+
+    const event::KeyUpEvent event(key, ctrl, shift, alt);
     mEventHandler.DispatchEvent(event);
 }
 

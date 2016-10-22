@@ -172,7 +172,7 @@ bool UserInputController::OnKeyDown(const event::KeyDownEvent& event)
         SelectTool(ToolsMenuOptions::TRANSLATE_TOOL);
     else if(event.key == Key::FOUR)
         SelectTool(ToolsMenuOptions::ROTATE_TOOL);
-    else if(event.key == Key::ENTER && event.mod == Key::L_CTRL)
+    else if(event.key == Key::ENTER && event.ctrl)
     {
         if(m_isMaximized)
             m_window->RestoreSize();

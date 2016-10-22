@@ -37,6 +37,8 @@ const int Key::L_CTRL = KMOD_LCTRL;
 const int Key::R_CTRL = KMOD_RCTRL;
 const int Key::L_SHIFT = KMOD_LSHIFT;
 const int Key::R_SHIFT = KMOD_RSHIFT;
+const int Key::L_ALT = KMOD_LALT;
+const int Key::R_ALT = KMOD_RALT;
 
 const int MouseButton::LEFT = SDL_BUTTON_LEFT;
 const int MouseButton::MIDDLE = SDL_BUTTON_MIDDLE;
