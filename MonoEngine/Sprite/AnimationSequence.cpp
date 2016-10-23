@@ -10,56 +10,83 @@
 
 using namespace mono;
 
-AnimationSequence::AnimationSequence(bool loopSequence)
-    : mCurrentFrame(0),
-      mElapsedTime(0),
-      mLoopSequence(loopSequence),
-      mDone(false)
+AnimationSequence::AnimationSequence(bool loop_sequence)
+    : m_currentFrame(0),
+      m_elapsedTime(0),
+      m_loopSequence(loop_sequence),
+      m_done(false)
 { }
 
-void AnimationSequence::AddFrame(unsigned int frameNumber, unsigned int duration)
+void AnimationSequence::AddFrame(int frame_number, int duration)
 {
-    mFrames.push_back(mono::Frame(frameNumber, duration));
+    mono::Frame frame;
+    frame.frame = frame_number;
+    frame.duration = duration;
+    
+    m_frames.push_back(frame);
 }
 
-void AnimationSequence::Tick(unsigned int delta)
+void AnimationSequence::RemoveFrame(int frame_number)
 {
-    if(mDone)
+    m_frames.erase(m_frames.begin() + frame_number);
+}
+
+void AnimationSequence::Update(unsigned int delta)
+{
+    if(m_done)
         return;
     
-    mElapsedTime += delta;
+    m_elapsedTime += delta;
 
-    const mono::Frame& frame = mFrames.at(mCurrentFrame);
-    if(mElapsedTime > frame.duration)
+    const mono::Frame& frame = m_frames.at(m_currentFrame);
+    if(m_elapsedTime > frame.duration)
     {
-        mElapsedTime = 0;
-        mCurrentFrame++;
+        m_elapsedTime = 0;
+        m_currentFrame++;
 
-        if(mCurrentFrame >= mFrames.size())
+        if(m_currentFrame >= m_frames.size())
         {
-            mCurrentFrame = 0;
-            if(!mLoopSequence)
-                mDone = true;
+            m_currentFrame = 0;
+            if(!m_loopSequence)
+                m_done = true;
         }
     }
 }
 
-unsigned int AnimationSequence::Frame() const
+int AnimationSequence::Frame() const
 {
-    return mFrames.at(mCurrentFrame).frame;
+    return m_frames.at(m_currentFrame).frame;
 }
 
 bool AnimationSequence::Finished() const
 {
-    return mDone;
+    return m_done;
 }
 
 void AnimationSequence::Restart()
 {
-    mCurrentFrame = 0;
-    mElapsedTime = 0;
-    mDone = false;
+    m_currentFrame = 0;
+    m_elapsedTime = 0;
+    m_done = false;
 }
 
+bool AnimationSequence::IsLooping() const
+{
+    return m_loopSequence;
+}
 
+void AnimationSequence::SetLooping(bool state)
+{
+    m_loopSequence = state;
+}
+
+const std::vector<mono::Frame>& AnimationSequence::GetFrames() const
+{
+    return m_frames;
+}
+
+std::vector<mono::Frame>& AnimationSequence::GetFrames()
+{
+    return m_frames;
+}
 

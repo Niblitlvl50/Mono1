@@ -25,28 +25,50 @@ void MutableSprite::Update(unsigned int delta)
     m_sprite->doUpdate(delta);
 }
 
-void MutableSprite::SetAnimation(unsigned int id)
+void MutableSprite::SetAnimation(int id)
 {
-    const unsigned int animations = m_sprite->GetDefinedAnimations();
+    const int animations = m_sprite->GetDefinedAnimations();
     if(id < animations)
         m_sprite->SetAnimation(id);
 }
 
-void MutableSprite::NextAnimation()
+void MutableSprite::RestartAnimation()
 {
-    int id = m_sprite->GetActiveAnimation();
-
-    id++;
-
-    id = std::min(id, m_sprite->GetDefinedAnimations() -1);
-    m_sprite->SetAnimation(id);
+    m_sprite->RestartAnimation();
 }
 
-void MutableSprite::PreviousAnimation()
+int MutableSprite::NextAnimation() const
 {
     int id = m_sprite->GetActiveAnimation();
-    id--;
+    ++id;
 
-    id = std::max(id, 0);
-    m_sprite->SetAnimation(id);
+    return std::min(id, m_sprite->GetDefinedAnimations() -1);
+}
+
+int MutableSprite::PreviousAnimation() const
+{
+    int id = m_sprite->GetActiveAnimation();
+    --id;
+
+    return std::max(id, 0);
+}
+
+int MutableSprite::CurrentAnimation() const
+{
+    return m_sprite->GetActiveAnimation();
+}
+
+const mono::AnimationSequence& MutableSprite::GetSequence(int id) const
+{
+    return m_sprite->GetSequence(id);
+}
+
+mono::AnimationSequence& MutableSprite::GetSequence(int id)
+{
+    return m_sprite->GetSequence(id);
+}
+
+const std::vector<mono::AnimationSequence>& MutableSprite::GetAnimations() const
+{
+    return m_sprite->GetAnimations();
 }

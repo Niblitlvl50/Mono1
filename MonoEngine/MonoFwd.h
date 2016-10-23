@@ -28,6 +28,7 @@ namespace mono
     class ISound;
     class IShader;
 
+    class AnimationSequence;
     class EventHandler;
 
     namespace Color

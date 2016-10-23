@@ -3,6 +3,7 @@
 
 #include "EntityBase.h"
 #include "MonoPtrFwd.h"
+#include "Sprite/ISprite.h"
 
 namespace animator
 {
@@ -15,9 +16,17 @@ namespace animator
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
 
-        void SetAnimation(unsigned int id);
-        void NextAnimation();
-        void PreviousAnimation();
+        void SetAnimation(int id);
+        void RestartAnimation();
+
+        int NextAnimation() const;
+        int PreviousAnimation() const;
+        int CurrentAnimation() const;
+
+        const mono::AnimationSequence& GetSequence(int id) const;
+        mono::AnimationSequence& GetSequence(int id);
+
+        const std::vector<mono::AnimationSequence>& GetAnimations() const;
 
     private:
     

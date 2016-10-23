@@ -15,41 +15,39 @@ namespace mono
 {
     struct Frame
     {
-        Frame()
-            : frame(0),
-              duration(-1)
-        { }
-
-        Frame(unsigned int frame, unsigned int duration)
-            : frame(frame),
-              duration(duration)
-        { }
-
-        unsigned int frame;
-        unsigned int duration;
+        int frame = 0;
+        int duration = 0;
     };
 
     class AnimationSequence
     {
     public:
 
-        AnimationSequence(bool loopSequence);
+        AnimationSequence(bool loop_sequence);
 
-        void AddFrame(unsigned int frameNumber, unsigned int duration);
-        void Tick(unsigned int delta);
+        void AddFrame(int frame_number, int duration);
+        void RemoveFrame(int frame_number);
 
-        unsigned int Frame() const;
+        void Update(unsigned int delta);
+
+        int Frame() const;
         bool Finished() const;
         void Restart();
 
+        bool IsLooping() const;
+        void SetLooping(bool state);
+
+        const std::vector<mono::Frame>& GetFrames() const;
+              std::vector<mono::Frame>& GetFrames();
+
     private:
 
-        unsigned int mCurrentFrame;
-        unsigned int mElapsedTime;
+        unsigned int m_currentFrame;
+        int m_elapsedTime;
 
-        bool mLoopSequence;
-        bool mDone;
+        bool m_loopSequence;
+        bool m_done;
 
-        std::vector<mono::Frame> mFrames;
+        std::vector<mono::Frame> m_frames;
     };
 }

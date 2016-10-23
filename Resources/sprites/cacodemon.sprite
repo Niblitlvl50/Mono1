@@ -1,32 +1,55 @@
-
 {
-	"texture": "cacodemon.png",
-	"rows": 2,
-	"columns": 6,
-	"x": 1,
-	"y": 1,
-	"u": 478,
-	"v": 158,
-	"animations": [
-		{
-			"id": 0,
-			"loop": false,
-			"frames": [ 0, -1 ]
-		},
-		{
-			"id": 1,
-			"loop": true,
-			"frames": [ 1, 120, 2, 120, 3, 120, 4, 120 ]
-		},
-		{
-			"id": 2,
-			"loop": true,
-			"frames": [ 5, 200 ]
-		},
-		{
-			"id": 3,
-			"loop": false,
-			"frames": [ 6, 100, 7, 100, 8, 100, 9, 100, 10, 100, 11, 1000 ]
-		}
-	]
+    "animations": [
+        {
+            "frames": [
+                0,
+                0
+            ],
+            "loop": true
+        },
+        {
+            "frames": [
+                1,
+                369,
+                2,
+                458,
+                3,
+                217,
+                10,
+                120
+            ],
+            "loop": true
+        },
+        {
+            "frames": [
+                5,
+                200
+            ],
+            "loop": true
+        },
+        {
+            "frames": [
+                6,
+                100,
+                7,
+                100,
+                8,
+                100,
+                9,
+                100,
+                10,
+                100,
+                11,
+                1000
+            ],
+            "loop": false
+        }
+    ],
+    "columns": 6,
+    "rows": 2,
+    "texture": "cacodemon.png",
+    "u": 478,
+    "v": 158,
+    "x": 1,
+    "y": 1
 }

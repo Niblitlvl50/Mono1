@@ -15,7 +15,6 @@
 #include "Math/Quad.h"
 #include "Color.h"
 
-#include <unordered_map>
 #include <functional>
 
 namespace mono
@@ -60,24 +59,29 @@ namespace mono
         //! @param[in] func A callback function.
         virtual void SetAnimation(int id, const std::function<void ()>& func);
 
+        //! Restarts the current set animation
+        virtual void RestartAnimation();
+
         //! Returns the number of defined animations for this sprite
-        //! @return int
         virtual int GetDefinedAnimations() const;
 
         //! Returns the current active animation
-        //! @return int
         virtual int GetActiveAnimation() const;
+
+        virtual const AnimationSequence& GetSequence(int id) const;
+        virtual       AnimationSequence& GetSequence(int id);
+        virtual const std::vector<AnimationSequence>& GetAnimations() const;
 
         virtual void doUpdate(unsigned int delta);
 
     private:
-                
-        int m_activeAnimationId;
-        std::function<void ()> m_callbackFunction;
+
+        int m_activeAnimation;
+        std::function<void ()> m_callback;
         ITexturePtr m_texture;
-        
+
         std::vector<math::Quad> m_textureCoordinates;
-        std::unordered_map<int, AnimationSequence> m_definedAnimations;
+        std::vector<AnimationSequence> m_animations;
 
         Color::RGBA m_color;
     };

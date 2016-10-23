@@ -13,13 +13,8 @@
 
 using namespace mono;
 
-namespace
-{
-    constexpr int DEFAULT_ANIMATION_ID = 0;
-}
-
 Sprite::Sprite(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates)
-    : m_activeAnimationId(DEFAULT_ANIMATION_ID),
+    : m_activeAnimation(0),
       m_texture(texture),
       m_textureCoordinates(coordinates)
 { }
@@ -31,7 +26,7 @@ ITexturePtr Sprite::GetTexture() const
 
 const math::Quad& Sprite::GetTextureCoords() const
 {
-    const AnimationSequence& anim = m_definedAnimations.find(m_activeAnimationId)->second;
+    const AnimationSequence& anim = m_animations[m_activeAnimation];
     return anim.Finished() ? math::zeroQuad : m_textureCoordinates.at(anim.Frame());
 }
 
@@ -47,11 +42,11 @@ void Sprite::SetShade(const mono::Color::RGBA& color)
 
 void Sprite::doUpdate(unsigned int delta)
 {
-    AnimationSequence& anim = m_definedAnimations.find(m_activeAnimationId)->second;
-    anim.Tick(delta);
+    AnimationSequence& anim = m_animations[m_activeAnimation];
+    anim.Update(delta);
 
-    if(anim.Finished() && m_callbackFunction)
-        m_callbackFunction();
+    if(anim.Finished() && m_callback)
+        m_callback();
 }
 
 void Sprite::SetAnimation(int id)
@@ -61,13 +56,18 @@ void Sprite::SetAnimation(int id)
 
 void Sprite::SetAnimation(int id, const std::function<void ()>& func)
 {
-    const bool same_id = (id == m_activeAnimationId);
+    const bool same_id = (id == m_activeAnimation);
 
-    m_activeAnimationId = id;
-    m_callbackFunction = func;
+    m_activeAnimation = id;
+    m_callback = func;
 
     if(!same_id)
-        m_definedAnimations.find(id)->second.Restart();
+        m_animations[id].Restart();
+}
+
+void Sprite::RestartAnimation()
+{
+    m_animations[m_activeAnimation].Restart();
 }
 
 void Sprite::DefineAnimation(int id, const std::vector<int>& frames, bool loop)
@@ -87,18 +87,30 @@ void Sprite::DefineAnimation(int id, const std::vector<int>& frames, bool loop)
         sequence.AddFrame(frame, duration);
     }
 
-    m_definedAnimations.insert(std::make_pair(id, sequence));
+    m_animations.push_back(sequence);
 }
 
 int Sprite::GetDefinedAnimations() const
 {
-    return static_cast<int>(m_definedAnimations.size());
+    return static_cast<int>(m_animations.size());
 }
 
 int Sprite::GetActiveAnimation() const
 {
-    return m_activeAnimationId;
+    return m_activeAnimation;
 }
 
+const AnimationSequence& Sprite::GetSequence(int id) const
+{
+    return m_animations[id];
+}
 
+AnimationSequence& Sprite::GetSequence(int id)
+{
+    return m_animations[id];
+}
 
+const std::vector<AnimationSequence>& Sprite::GetAnimations() const
+{
+    return m_animations;
+}

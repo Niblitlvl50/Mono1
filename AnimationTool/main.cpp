@@ -35,7 +35,7 @@ int main(int argc, const char * argv[])
     // The "global" event handler used throughout the game
     mono::EventHandler eventHandler;
 
-    auto window = mono::CreateWindow("AnimationTool", 1200, 800, false);
+    auto window = mono::CreateWindow("Animator", 1200, 800, false);
     window->SetBackgroundColor(mono::Color::RGBA(0.6, 0.6, 0.6));
 
     mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(300, 200);

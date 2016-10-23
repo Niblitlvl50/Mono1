@@ -13,9 +13,12 @@
 #include "Math/MathFwd.h"
 
 #include <functional>
+#include <vector>
 
 namespace mono
 {
+    class AnimationSequence;
+
     class ISprite : public IUpdatable
     {
     public:
@@ -47,6 +50,9 @@ namespace mono
         //! @param[in] func A callback function.
         virtual void SetAnimation(int id, const std::function<void ()>& func) = 0;
 
+        //! Restarts the current set animation
+        virtual void RestartAnimation() = 0;
+
         //! Returns the number of defined animations for this sprite
         //! @return int
         virtual int GetDefinedAnimations() const = 0;
@@ -54,5 +60,11 @@ namespace mono
         //! Returns the current active animation
         //! @return int
         virtual int GetActiveAnimation() const = 0;
+
+        //! Get an animation sequence from an animation id
+        virtual const AnimationSequence& GetSequence(int id) const = 0;
+        virtual       AnimationSequence& GetSequence(int id)       = 0;
+
+        virtual const std::vector<AnimationSequence>& GetAnimations() const = 0;
     };
 }
