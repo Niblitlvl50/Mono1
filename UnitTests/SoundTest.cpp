@@ -16,7 +16,7 @@ TEST(Sound, LoadWaveAndExpectSuccess)
 
     EXPECT_EQ(file.format, mono::SoundFormat::MONO_8BIT);
     EXPECT_EQ(file.frequency, 11025);
-    EXPECT_EQ(file.data.size(), 1793);
+    EXPECT_EQ(file.data.size(), 1793ul);
 }
 
 TEST(Sound, LoadMissingFileExpectException)
