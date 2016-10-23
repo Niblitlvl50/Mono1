@@ -38,6 +38,11 @@ float PhysicsEntityBase::Rotation() const
     return mRotation;
 }
 
+const math::Vector2f& PhysicsEntityBase::Scale() const
+{
+    return mScale;
+}
+
 void PhysicsEntityBase::SetPosition(const math::Vector2f& position)
 {
     mPosition = position;

@@ -24,6 +24,7 @@ namespace mono
         virtual const math::Vector2f& Position() const;
         virtual const math::Vector2f& BasePoint() const;
         virtual float Rotation() const;
+        virtual const math::Vector2f& Scale() const;
 
         virtual void SetPosition(const math::Vector2f& position);
         virtual void SetBasePoint(const math::Vector2f& base_point);
