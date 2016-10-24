@@ -20,7 +20,7 @@ namespace world
         math::Vector2f local_offset;
         float rotation = 0.0f;
         float texture_repeate = 1.0f;
-        char texture[32] = { 0 };
+        char texture[64] = { 0 };
         std::vector<math::Vector2f> vertices;
     };
 

@@ -1,1 +1,1 @@
-{	"texture": "spritesheet.png",	"rows": 1,	"columns": 1,	"x": 192,	"y": 112,	"u": 208,	"v": 127,	"animations": [		{			"id": 0,			"loop": false,			"frames": [ 0, -1 ]		}	]}
+{	"texture": "textures/spritesheet.png",	"rows": 1,	"columns": 1,	"x": 192,	"y": 112,	"u": 208,	"v": 127,	"animations": [		{			"loop": false,			"frames": [ 0, -1 ]		}	]}

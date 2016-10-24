@@ -47,7 +47,7 @@
     ],
     "columns": 6,
     "rows": 2,
-    "texture": "cacodemon.png",
+    "texture": "textures/cacodemon.png",
     "u": 478,
     "v": 158,
     "x": 1,

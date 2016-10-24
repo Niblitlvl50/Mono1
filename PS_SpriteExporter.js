@@ -103,16 +103,13 @@ var createSpriteFilesFromLayers = function(layers, output_path)
 		file.writeln("")
 		file.writeln("{")
 
-		file.writeln("\t\"texture\": \"" + textureName + "\",")
+		file.writeln("\t\"texture\": \"textures/" + textureName + "\",")
 		file.writeln("\t\"rows\": " + rows + ",")
 		file.writeln("\t\"columns\": " + columns + ",")
 		file.writeln("\t\"x\": " + (bounds[0].value +1) + ",")
 		file.writeln("\t\"y\": " + (bounds[1].value +1) + ",")
 		file.writeln("\t\"u\": " + (bounds[2].value -2) + ",")
 		file.writeln("\t\"v\": " + (bounds[3].value -2) + ",")
-
-		if(animations.length == 0)
-			animations.push("\t\t[ 0, -1 ]")
 
 		file.writeln("\t\"animations\": [")
 		for(var animIndex = 0; animIndex < animations.length; ++animIndex)

@@ -18,7 +18,7 @@ using namespace editor;
 PolygonVisualizer::PolygonVisualizer(const std::vector<Polygon>& polygons)
     : m_polygons(polygons)
 {
-    m_texture = mono::CreateTexture("placeholder.png");
+    m_texture = mono::CreateTexture("textures/placeholder.png");
 }
 
 void PolygonVisualizer::doDraw(mono::IRenderer& renderer) const

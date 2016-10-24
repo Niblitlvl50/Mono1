@@ -1,17 +1,1 @@
-
-{
-	"texture": "cacodemon.png",
-	"rows": 1,
-	"columns": 2,
-	"x": 21,
-	"y": 181,
-	"u": 58,
-	"v": 198,
-	"animations": [
-		{
-			"id": 0,
-			"loop": true,
-			"frames": [ 0, 50, 1, 50 ]
-		}
-	]
-}
+{	"texture": "textures/cacodemon.png",	"rows": 1,	"columns": 2,	"x": 21,	"y": 181,	"u": 58,	"v": 198,	"animations": [		{			"loop": true,			"frames": [ 0, 50, 1, 50 ]		}	]}

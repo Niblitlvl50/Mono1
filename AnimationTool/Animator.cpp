@@ -34,7 +34,7 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
     const event::SurfaceChangedEventFunc surface_func = std::bind(&Animator::OnSurfaceChanged, this, _1);
     m_surfaceChangedToken = eventHandler.AddListener(surface_func);
 
-    mono::ITexturePtr texture = mono::CreateTexture("placeholder.png");
+    mono::ITexturePtr texture = mono::CreateTexture("textures/placeholder.png");
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
     textures.insert(std::make_pair(texture->Id(), texture));
 

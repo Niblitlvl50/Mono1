@@ -24,7 +24,7 @@ using namespace editor;
 PolygonEntity::PolygonEntity()
     : m_selected(false),
       m_texture_repeate(1.0f),
-      m_texture_name("placeholder.png")
+      m_texture_name("textures/placeholder.png")
 { }
 
 void PolygonEntity::Draw(mono::IRenderer& renderer) const

@@ -141,12 +141,12 @@ namespace
     }
 
     const char* avalible_textures[] = {
-        "stone_tileable.png",
-        "gray_stone.png",
-        "dark_stone.png",
-        "brown_stone.png",
-        "lava1.png",
-        "lava2.png" };
+        "textures/stone_tileable.png",
+        "textures/gray_stone.png",
+        "textures/dark_stone.png",
+        "textures/brown_stone.png",
+        "textures/lava1.png",
+        "textures/lava2.png" };
 }
 
 using namespace editor;
@@ -176,7 +176,7 @@ EditorZone::EditorZone(const mono::IWindowPtr& window, mono::EventHandler& event
 
     m_interfaceDrawer = std::make_shared<editor::ImGuiInterfaceDrawer>(m_context);
 
-    mono::ITexturePtr texture = mono::CreateTexture("placeholder.png");
+    mono::ITexturePtr texture = mono::CreateTexture("textures/placeholder.png");
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
     textures.insert(std::make_pair(texture->Id(), texture));
 

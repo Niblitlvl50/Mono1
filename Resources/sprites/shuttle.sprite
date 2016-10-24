@@ -1,22 +1,27 @@
-
 {
-	"texture": "spritesheet.png",
-	"rows": 1,
-	"columns": 3,
-	"x": 172,
-	"y": 2,
-	"u": 252,
-	"v": 34,
-	"animations": [
-		{
-			"id": 0,
-			"loop": true,
-			"frames": [ 0, 0 ]
-		},
-		{
-			"id": 1,
-			"loop": true,
-			"frames": [ 1, 50, 2, 50 ]
-		}
-	]
+    "animations": [
+        {
+            "frames": [
+                0,
+                0
+            ],
+            "loop": true
+        },
+        {
+            "frames": [
+                1,
+                50,
+                2,
+                50
+            ],
+            "loop": true
+        }
+    ],
+    "columns": 3,
+    "rows": 1,
+    "texture": "textures/spritesheet.png",
+    "u": 252,
+    "v": 34,
+    "x": 172,
+    "y": 2
 }
