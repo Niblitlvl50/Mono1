@@ -44,13 +44,24 @@ var checkFileForAttributes = function(filename, attribute)
 			var index = line.search(attribute)
 			if(index != -1)
 			{
+				var counter = 1
+
 				while(!file.eof)
 				{
 					var inner_line = file.readln()
-					if(inner_line.search("\t]") != -1)
-						break;
 
-					attributes.push(inner_line)
+					var left_index = inner_line.indexOf("[")
+					if(left_index != -1)
+						counter += 1
+					
+					var right_index = inner_line.indexOf("]")
+					if(right_index != -1)
+						counter -= 1
+
+					if(counter > 0)
+						attributes.push(inner_line)
+					else
+						break
 				}
 
 				break
@@ -186,7 +197,7 @@ if(persistent_path)
 	open_path = persistent_path
 
 var selected_folder = new Folder(open_path)
-selected_folder = selected_folder.selectDlg("Select export folder")
+selected_folder = selected_folder.selectDlg("Select Resource folder")
 
 if(selected_folder)
 {
@@ -196,10 +207,10 @@ if(selected_folder)
 	var dotPsdIndex = localDocument.name.search(".psd")
 	var textureName = localDocument.name.substr(0, dotPsdIndex) + ".png"
 
-	var exportFile = new File(selected_folder + textureName)
+	var exportFile = new File(selected_folder + "/textures/" + textureName)
 
 	// Start exporting
-	createSpriteFilesFromLayers(localDocument.layers, selected_folder)
+	createSpriteFilesFromLayers(localDocument.layers, selected_folder + "/sprites/")
 	createPathFiles(localDocument.pathItems, selected_folder)
 	exportDocumentToPNG(localDocument, exportFile)
 
