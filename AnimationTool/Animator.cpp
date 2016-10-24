@@ -15,12 +15,32 @@
 
 #include "InterfaceDrawer.h"
 
+#include "Sprite/SpriteFactory.h"
 #include "Sprite/AnimationSequence.h"
+
 #include "Texture/ITexture.h"
 #include "Texture/TextureFactory.h"
 #include "WriteSpriteFile.h"
 
 using namespace animator;
+
+namespace
+{
+    void SetupIcons(UIContext& context, std::unordered_map<unsigned int, mono::ITexturePtr>& textures)
+    {
+        mono::ITexturePtr texture = mono::CreateTexture("textures/animator_tools.png"); 
+        textures.insert(std::make_pair(texture->Id(), texture));
+
+        const mono::ISpritePtr zoom_in  = mono::CreateSprite("sprites/zoom_in.sprite");
+        const mono::ISpritePtr zoom_out = mono::CreateSprite("sprites/zoom_out.sprite");
+        const mono::ISpritePtr save     = mono::CreateSprite("sprites/save.sprite");
+
+        context.tools_texture_id = texture->Id();
+        context.zoom_in_icon  = zoom_in->GetTextureCoords();
+        context.zoom_out_icon = zoom_out->GetTextureCoords();
+        context.save_icon     = save->GetTextureCoords();
+    }
+}
 
 Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHandler, const char* sprite_file)
     : m_eventHandler(eventHandler),
@@ -34,18 +54,12 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
     const event::SurfaceChangedEventFunc surface_func = std::bind(&Animator::OnSurfaceChanged, this, _1);
     m_surfaceChangedToken = eventHandler.AddListener(surface_func);
 
-    mono::ITexturePtr texture = mono::CreateTexture("textures/placeholder.png");
-    std::unordered_map<unsigned int, mono::ITexturePtr> textures;
-    textures.insert(std::make_pair(texture->Id(), texture));
-
     // Setup UI callbacks
     m_context.on_loop_toggle = std::bind(&Animator::OnLoopToggle, this, _1);
     m_context.on_tool_callback = std::bind(&Animator::OnToolAction, this, _1);
 
-    // Setup texture id's
-    m_context.save_icon = texture->Id();
-    m_context.zoom_in_icon = texture->Id();
-    m_context.zoom_out_icon = texture->Id();
+    std::unordered_map<unsigned int, mono::ITexturePtr> textures;
+    SetupIcons(m_context, textures);
 
     m_sprite = std::make_shared<MutableSprite>(sprite_file);
     m_guiRenderer = std::make_shared<ImGuiRenderer>("animator_imgui.ini", window->Size(), textures);

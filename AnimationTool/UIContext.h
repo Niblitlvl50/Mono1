@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Sprite/AnimationSequence.h"
+#include "Math/Quad.h"
 #include <vector>
 #include <functional>
 
@@ -16,9 +17,10 @@ namespace animator
 
     struct UIContext
     {
-        int zoom_in_icon;
-        int zoom_out_icon;
-        int save_icon;
+        int tools_texture_id;
+        math::Quad zoom_in_icon;
+        math::Quad zoom_out_icon;
+        math::Quad save_icon;
 
         int animation_id;
         const char* display_name;

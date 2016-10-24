@@ -105,7 +105,8 @@ var createSpriteFilesFromLayers = function(layers, output_path)
 
 		var filename = output_path + spriteName + ".sprite"
 		var animations = checkFileForAttributes(filename, "animations")
-		var attributes = checkFileForAttributes(filename, "attributes")
+		if(animations.length == 0)
+			animations.push("\t\t{ \"loop\": false, \"frames\": [ 0, 0 ] }")
 
 		var file = new File(filename)
 		file.lineFeed = "Macintosh"
