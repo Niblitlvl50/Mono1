@@ -1,1 +1,1 @@
-{	"texture": "textures/animator_tools.png",	"rows": 1,	"columns": 1,	"x": 22,	"y": 22,	"u": 81,	"v": 83,	"animations": [	]}
+{	"texture": "textures/animator_tools.png",	"rows": 1,	"columns": 1,	"x": 22,	"y": 22,	"u": 81,	"v": 83,	"animations": [		{ "loop": false, "frames": [ 0, 0 ] }	]}
