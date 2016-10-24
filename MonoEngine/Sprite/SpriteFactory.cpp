@@ -121,15 +121,11 @@ mono::ISpritePtr mono::CreateSprite(const char* sprite_file)
 
     std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>(texture, textureCoordinates);
 
-    int id = 0;
-
     for(const auto& animation : json["animations"])
     {
         const bool loop = animation["loop"];
         const std::vector<int>& frames = animation["frames"];
-        sprite->DefineAnimation(id, frames, loop);
-
-        id++;
+        sprite->DefineAnimation(frames, loop);
     }
 
     return sprite;

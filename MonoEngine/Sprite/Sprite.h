@@ -45,10 +45,9 @@ namespace mono
         void SetShade(const mono::Color::RGBA& color);
         
         //! Define an animation sequence by giving pairs of frame and duration.
-        //! @param[in] id Id of the animation.
         //! @param[in] frames A collection of frame and duration pairs. 
         //! @param[in] loop If the animation should loop or not.
-        void DefineAnimation(int id, const std::vector<int>& frames, bool loop);
+        void DefineAnimation(const std::vector<int>& frames, bool loop);
 
         //! Tell the sprite to run a specific animation.
         //! @param[in] id The animation to run.

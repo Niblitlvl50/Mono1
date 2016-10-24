@@ -70,7 +70,7 @@ void Sprite::RestartAnimation()
     m_animations[m_activeAnimation].Restart();
 }
 
-void Sprite::DefineAnimation(int id, const std::vector<int>& frames, bool loop)
+void Sprite::DefineAnimation(const std::vector<int>& frames, bool loop)
 {
     const bool even = (frames.size() % 2) == 0;
     if(!even)
@@ -80,9 +80,9 @@ void Sprite::DefineAnimation(int id, const std::vector<int>& frames, bool loop)
 
     for(auto it = frames.begin(), end = frames.end(); it != end; ++it)
     {
-        const unsigned int frame = *it;
+        const int frame = *it;
         ++it;
-        const unsigned int duration = *it;
+        const int duration = *it;
 
         sequence.AddFrame(frame, duration);
     }
