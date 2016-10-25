@@ -28,6 +28,12 @@ namespace animator
         std::vector<mono::Frame>* frames;
 
         std::function<void (bool)> on_loop_toggle;
+        
+        std::function<void ()>    on_add_animation;
+        std::function<void (int)> on_delete_animation;
+        std::function<void ()>    on_add_frame;
+        std::function<void (int)> on_delete_frame;
+
         std::function<void (Action)> on_tool_callback;
     };
 }

@@ -31,7 +31,14 @@ namespace animator
 
         bool OnDownUp(const event::KeyDownEvent& event);
         bool OnSurfaceChanged(const event::SurfaceChangedEvent& event);
+        
         void OnLoopToggle(bool state);
+        
+        void OnAddAnimation();
+        void OnDeleteAnimation(int id);
+        void OnAddFrame();
+        void OnDeleteFrame(int id);
+
         void OnToolAction(Action tool_action);
 
     private:

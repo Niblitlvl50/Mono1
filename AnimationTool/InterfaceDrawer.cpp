@@ -41,6 +41,11 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
 
     ImGui::Spacing();
     ImGui::Text("Frames");
+
+    ImGui::SameLine(0.0f, 150);
+    if(ImGui::SmallButton("Add frame"))
+        m_context.on_add_frame();
+
     ImGui::Separator();
 
     ImGui::BeginChild(666);
@@ -53,6 +58,11 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
 
         ImGui::PushID(index);
         ImGui::InputInt("frame", &frame.frame);
+
+        ImGui::SameLine(0.0f, 20.0f);
+        if(ImGui::SmallButton("x"))
+            m_context.on_delete_frame(index);
+
         ImGui::SliderInt("duration", &frame.duration, 10, 1000, "%.0f ms");
         ImGui::PopID();
 

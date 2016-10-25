@@ -28,7 +28,11 @@ void AnimationSequence::AddFrame(int frame_number, int duration)
 
 void AnimationSequence::RemoveFrame(int frame_number)
 {
+    if(m_frames.size() == 1)
+        return;
+
     m_frames.erase(m_frames.begin() + frame_number);
+    Restart();
 }
 
 void AnimationSequence::Update(unsigned int delta)

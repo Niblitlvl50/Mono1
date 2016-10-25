@@ -48,6 +48,7 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
       m_inputHandler(eventHandler)
 {
     using namespace std::placeholders;
+    
     const event::KeyDownEventFunc func = std::bind(&Animator::OnDownUp, this, _1);
     m_keyDownToken = eventHandler.AddListener(func);
 
@@ -55,8 +56,12 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
     m_surfaceChangedToken = eventHandler.AddListener(surface_func);
 
     // Setup UI callbacks
-    m_context.on_loop_toggle = std::bind(&Animator::OnLoopToggle, this, _1);
-    m_context.on_tool_callback = std::bind(&Animator::OnToolAction, this, _1);
+    m_context.on_loop_toggle      = std::bind(&Animator::OnLoopToggle, this, _1);
+    m_context.on_add_animation    = std::bind(&Animator::OnAddAnimation, this);
+    m_context.on_delete_animation = std::bind(&Animator::OnDeleteAnimation, this, _1);
+    m_context.on_add_frame        = std::bind(&Animator::OnAddFrame, this);
+    m_context.on_delete_frame     = std::bind(&Animator::OnDeleteFrame, this, _1);
+    m_context.on_tool_callback    = std::bind(&Animator::OnToolAction, this, _1);
 
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
     SetupIcons(m_context, textures);
@@ -168,6 +173,24 @@ void Animator::OnLoopToggle(bool state)
     sequence.SetLooping(state);
 
     m_sprite->RestartAnimation();
+}
+
+void Animator::OnAddAnimation()
+{ }
+
+void Animator::OnDeleteAnimation(int id)
+{ }
+
+void Animator::OnAddFrame()
+{
+    const int current_id = m_sprite->CurrentAnimation();
+    m_sprite->GetSequence(current_id).AddFrame(0, 100);
+}
+
+void Animator::OnDeleteFrame(int id)
+{
+    const int current_id = m_sprite->CurrentAnimation();
+    m_sprite->GetSequence(current_id).RemoveFrame(id);
 }
 
 void Animator::OnToolAction(Action tool_action)
