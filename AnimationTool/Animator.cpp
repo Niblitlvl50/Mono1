@@ -36,14 +36,10 @@ namespace
         mono::ITexturePtr texture = mono::CreateTexture("textures/animator_tools.png"); 
         textures.insert(std::make_pair(texture->Id(), texture));
 
-        const mono::ISpritePtr zoom_in  = mono::CreateSprite("sprites/zoom_in.sprite");
-        const mono::ISpritePtr zoom_out = mono::CreateSprite("sprites/zoom_out.sprite");
-        const mono::ISpritePtr save     = mono::CreateSprite("sprites/save.sprite");
+        const mono::ISpritePtr save = mono::CreateSprite("sprites/save.sprite");
 
         context.tools_texture_id = texture->Id();
-        context.zoom_in_icon  = zoom_in->GetTextureCoords();
-        context.zoom_out_icon = zoom_out->GetTextureCoords();
-        context.save_icon     = save->GetTextureCoords();
+        context.save_icon = save->GetTextureCoords();
     }
 }
 

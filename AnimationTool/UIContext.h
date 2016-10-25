@@ -11,8 +11,6 @@ namespace animator
     struct UIContext
     {
         int tools_texture_id;
-        math::Quad zoom_in_icon;
-        math::Quad zoom_out_icon;
         math::Quad save_icon;
 
         int animation_id;
