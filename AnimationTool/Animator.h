@@ -30,16 +30,18 @@ namespace animator
         void UpdateUIContext(int animation_id);
 
         bool OnDownUp(const event::KeyDownEvent& event);
+        bool OnMouseWheel(const event::MouseWheelEvent& event);
+        bool OnMultiGesture(const event::MultiGestureEvent& event);
         bool OnSurfaceChanged(const event::SurfaceChangedEvent& event);
         
         void OnLoopToggle(bool state);
-        
         void OnAddAnimation();
         void OnDeleteAnimation(int id);
         void OnAddFrame();
         void OnDeleteFrame(int id);
 
-        void OnToolAction(Action tool_action);
+        void Zoom(float multiplier);
+        void SaveSprite();
 
     private:
 
@@ -48,10 +50,15 @@ namespace animator
 
         mono::EventToken<event::KeyDownEvent> m_keyDownToken;
         mono::EventToken<event::SurfaceChangedEvent> m_surfaceChangedToken;
-        std::shared_ptr<MutableSprite> m_sprite;
+        mono::EventToken<event::MouseWheelEvent> m_mouseWheelToken;
+        mono::EventToken<event::MultiGestureEvent> m_multiGestureToken;
+        
         std::shared_ptr<ImGuiRenderer> m_guiRenderer;
 
         ImGuiInputHandler m_inputHandler;
         UIContext m_context;
+
+        mono::ICameraPtr m_camera;
+        mono::ISpritePtr m_sprite;
     };
 }

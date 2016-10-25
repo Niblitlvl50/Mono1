@@ -5,16 +5,21 @@
 #include "EventHandler/EventHandler.h"
 #include "Events/EventFuncFwd.h"
 #include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
+#include "Events/MultiGestureEvent.h"
 #include "Events/SurfaceChangedEvent.h"
 
 #include "ICamera.h"
 #include "IWindow.h"
 
 #include "Math/Vector2f.h"
+#include "Math/Quad.h"
+#include "Math/MathFunctions.h"
 #include "System/SysKeycodes.h"
 
 #include "InterfaceDrawer.h"
 
+#include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"
 #include "Sprite/AnimationSequence.h"
 
@@ -49,11 +54,15 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
 {
     using namespace std::placeholders;
     
-    const event::KeyDownEventFunc func = std::bind(&Animator::OnDownUp, this, _1);
-    m_keyDownToken = eventHandler.AddListener(func);
+    const event::KeyDownEventFunc& func = std::bind(&Animator::OnDownUp, this, _1);
+    const event::SurfaceChangedEventFunc& surface_func = std::bind(&Animator::OnSurfaceChanged, this, _1);
+    const event::MouseWheelEventFunc& mouse_wheel = std::bind(&Animator::OnMouseWheel, this, _1);
+    const event::MultiGestureEventFunc& multi_gesture = std::bind(&Animator::OnMultiGesture, this, _1);
 
-    const event::SurfaceChangedEventFunc surface_func = std::bind(&Animator::OnSurfaceChanged, this, _1);
+    m_keyDownToken = eventHandler.AddListener(func);
     m_surfaceChangedToken = eventHandler.AddListener(surface_func);
+    m_mouseWheelToken = m_eventHandler.AddListener(mouse_wheel);
+    m_multiGestureToken = m_eventHandler.AddListener(multi_gesture);
 
     // Setup UI callbacks
     m_context.on_loop_toggle      = std::bind(&Animator::OnLoopToggle, this, _1);
@@ -61,15 +70,15 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
     m_context.on_delete_animation = std::bind(&Animator::OnDeleteAnimation, this, _1);
     m_context.on_add_frame        = std::bind(&Animator::OnAddFrame, this);
     m_context.on_delete_frame     = std::bind(&Animator::OnDeleteFrame, this, _1);
-    m_context.on_tool_callback    = std::bind(&Animator::OnToolAction, this, _1);
+    m_context.on_save             = std::bind(&Animator::SaveSprite, this);
 
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
     SetupIcons(m_context, textures);
 
-    m_sprite = std::make_shared<MutableSprite>(sprite_file);
     m_guiRenderer = std::make_shared<ImGuiRenderer>("animator_imgui.ini", window->Size(), textures);
+    m_sprite = mono::CreateSprite(sprite_file);
     
-    AddEntity(m_sprite, 0);
+    AddEntity(std::make_shared<MutableSprite>(m_sprite), 0);
     AddDrawable(m_guiRenderer, 2);
     AddUpdatable(std::make_shared<InterfaceDrawer>(m_context));
 
@@ -79,23 +88,31 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
 Animator::~Animator()
 {
     m_eventHandler.RemoveListener(m_keyDownToken);
+    m_eventHandler.RemoveListener(m_surfaceChangedToken);
+    m_eventHandler.RemoveListener(m_mouseWheelToken);
+    m_eventHandler.RemoveListener(m_multiGestureToken);
 }
 
 void Animator::OnLoad(mono::ICameraPtr camera)
 {
-    camera->Follow(m_sprite, math::zeroVec);
-    camera->SetPosition(m_sprite->Position());
+    m_camera = camera;
+    camera->SetPosition(math::zeroVec);
 }
 
 void Animator::OnUnload()
 {
-    WriteSpriteFile(m_spriteFile, m_sprite->GetAnimations());
+    m_camera = nullptr;
+    SaveSprite();
 }
 
 void Animator::SetAnimation(int animation_id)
 {
-    m_sprite->SetAnimation(animation_id);
-    UpdateUIContext(animation_id);
+    const int animations = m_sprite->GetDefinedAnimations();
+    if(animation_id < animations)
+    {
+        m_sprite->SetAnimation(animation_id);
+        UpdateUIContext(animation_id);
+    }
 }
 
 void Animator::UpdateUIContext(int animation_id)
@@ -119,11 +136,17 @@ bool Animator::OnDownUp(const event::KeyDownEvent& event)
     }
     else if(event.key == Key::LEFT || event.key == Key::DOWN)
     {
-        animation = m_sprite->PreviousAnimation();
+        int id = m_sprite->GetActiveAnimation();
+        --id;
+
+        animation = std::max(id, 0);
     }
     else if(event.key == Key::RIGHT || event.key == Key::UP)
     {
-        animation = m_sprite->NextAnimation();
+        int id = m_sprite->GetActiveAnimation();
+        ++id;
+
+        animation = std::min(id, m_sprite->GetDefinedAnimations() -1);
     }
     else
     {
@@ -158,6 +181,23 @@ bool Animator::OnDownUp(const event::KeyDownEvent& event)
     return false;
 }
 
+bool Animator::OnMouseWheel(const event::MouseWheelEvent& event)
+{
+    const float multiplier = (event.y < 0.0f) ? 1.0f : -1.0f;
+    Zoom(multiplier);
+    return true;
+}
+
+bool Animator::OnMultiGesture(const event::MultiGestureEvent& event)
+{
+    if(std::fabs(event.distance) < 1e-3)
+        return false;
+
+    const float multiplier = (event.distance < 0.0f) ? 1.0f : -1.0f;
+    Zoom(multiplier);
+    return true;
+}
+
 bool Animator::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 {
     if(event.width > 0 && event.height > 0)
@@ -168,7 +208,7 @@ bool Animator::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 
 void Animator::OnLoopToggle(bool state)
 {
-    const int current_id = m_sprite->CurrentAnimation();
+    const int current_id = m_sprite->GetActiveAnimation();
     mono::AnimationSequence& sequence = m_sprite->GetSequence(current_id);
     sequence.SetLooping(state);
 
@@ -183,30 +223,29 @@ void Animator::OnDeleteAnimation(int id)
 
 void Animator::OnAddFrame()
 {
-    const int current_id = m_sprite->CurrentAnimation();
+    const int current_id = m_sprite->GetActiveAnimation();
     m_sprite->GetSequence(current_id).AddFrame(0, 100);
 }
 
 void Animator::OnDeleteFrame(int id)
 {
-    const int current_id = m_sprite->CurrentAnimation();
+    const int current_id = m_sprite->GetActiveAnimation();
     m_sprite->GetSequence(current_id).RemoveFrame(id);
 }
 
-void Animator::OnToolAction(Action tool_action)
+void Animator::Zoom(float multiplier)
 {
-    switch(tool_action)
-    {
-    case Action::ZOOM_IN:
-        m_sprite->SetScale(m_sprite->Scale() * 1.1f);
-        break;
+    math::Quad quad = m_camera->GetViewport();
 
-    case Action::ZOOM_OUT:
-        m_sprite->SetScale(m_sprite->Scale() * 0.9f);
-        break;
+    const float resizeValue = quad.mB.x * 0.15f * multiplier;
+    const float aspect = quad.mB.x / quad.mB.y;
+    math::ResizeQuad(quad, resizeValue, aspect);
 
-    case Action::SAVE:
-        WriteSpriteFile(m_spriteFile, m_sprite->GetAnimations());
-        break;
-    }
+    m_camera->SetTargetViewport(quad);
 }
+
+void Animator::SaveSprite()
+{
+    WriteSpriteFile(m_spriteFile, m_sprite->GetAnimations());
+}
+

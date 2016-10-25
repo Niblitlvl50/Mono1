@@ -46,6 +46,7 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
     if(ImGui::SmallButton("Add frame"))
         m_context.on_add_frame();
 
+    ImGui::Spacing();
     ImGui::Separator();
 
     ImGui::BeginChild(666);
@@ -81,37 +82,19 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
                                 ImGuiWindowFlags_NoMove | 
                                 ImGuiWindowFlags_NoCollapse;
 
-    ImGui::Begin("tools", nullptr, ImVec2(0.0f, 0.0f), 1.0f, tools_flags);
+    ImGui::Begin("tools", nullptr, ImVec2(0.0f, 0.0f), 0.0f, tools_flags);
 
     void* texture_id = reinterpret_cast<void*>(m_context.tools_texture_id);
     const ImVec2 button_size(44, 44);
     const ImVec4 bg_color(1.0f, 1.0f, 1.0f, 1.0f);
 
-    const ImVec2 zoom_in1(m_context.zoom_in_icon.mA.x, m_context.zoom_in_icon.mB.y);
-    const ImVec2 zoom_in2(m_context.zoom_in_icon.mB.x, m_context.zoom_in_icon.mA.y);
-
-    const ImVec2 zoom_out1(m_context.zoom_out_icon.mA.x, m_context.zoom_out_icon.mB.y);
-    const ImVec2 zoom_out2(m_context.zoom_out_icon.mB.x, m_context.zoom_out_icon.mA.y);
-
     const ImVec2 save1(m_context.save_icon.mA.x, m_context.save_icon.mB.y);
     const ImVec2 save2(m_context.save_icon.mB.x, m_context.save_icon.mA.y);
 
-    ImGui::PushID(1);
-    if(ImGui::ImageButton(texture_id, button_size, zoom_in1, zoom_in2, 2, bg_color))
-        m_context.on_tool_callback(Action::ZOOM_IN);
-    ImGui::PopID();
+    ImGui::Indent(215);
 
-    ImGui::SameLine();
-    ImGui::PushID(2);
-    if(ImGui::ImageButton(texture_id, button_size, zoom_out1, zoom_out2, 2, bg_color))
-        m_context.on_tool_callback(Action::ZOOM_OUT);
-    ImGui::PopID();
-
-    ImGui::SameLine();
-    ImGui::PushID(3);
     if(ImGui::ImageButton(texture_id, button_size, save1, save2, 2, bg_color))
-        m_context.on_tool_callback(Action::SAVE);
-    ImGui::PopID();
+        m_context.on_save();
 
     ImGui::End();
 

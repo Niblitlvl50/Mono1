@@ -8,13 +8,6 @@
 
 namespace animator
 {
-    enum class Action
-    {
-        ZOOM_IN,
-        ZOOM_OUT,
-        SAVE
-    };
-
     struct UIContext
     {
         int tools_texture_id;
@@ -34,6 +27,6 @@ namespace animator
         std::function<void ()>    on_add_frame;
         std::function<void (int)> on_delete_frame;
 
-        std::function<void (Action)> on_tool_callback;
+        std::function<void ()> on_save;
     };
 }
