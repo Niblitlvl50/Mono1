@@ -5,7 +5,7 @@
 
 using namespace animator;
 
-MutableSprite::MutableSprite(const mono::ISpritePtr& sprite)
+MutableSprite::MutableSprite(mono::ISprite& sprite)
     : m_sprite(sprite)
 {
     mScale = math::Vector2f(50, 50);
@@ -13,10 +13,10 @@ MutableSprite::MutableSprite(const mono::ISpritePtr& sprite)
 
 void MutableSprite::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(*m_sprite);
+    renderer.DrawSprite(m_sprite);
 }
 
 void MutableSprite::Update(unsigned int delta)
 {
-    m_sprite->doUpdate(delta);
+    m_sprite.doUpdate(delta);
 }

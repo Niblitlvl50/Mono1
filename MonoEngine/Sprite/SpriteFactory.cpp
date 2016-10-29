@@ -1,52 +1,26 @@
+
 //
-//  SpriteFactory.cpp
-//  MonoiOS
+// This is an example of a sprite file that you pass to this sprite factory
+
 //
-//  Created by Niklas Damberg on 21/07/16.
+// An image with 2 rows and 5 columns and their indices.
+//  _ _ _ _ _
+// |0|1|2|3|4|
+//  - - - - -
+// |5|6|7|8|9|
+//  - - - - -
 //
-//
-
-
-//! This is an example of a sprite file that you pass to this sprite factory
-
-//!
-//! texture = "sheet.png"
-//! rows = 3
-//! columns = 4
-//!
-//! x = 1
-//! y = 1
-//! u = 128
-//! v = 98
-//!
-//! animations = { }
-//! animations[0] = { 0, -1 }
-//! animations[1] = { 1, 100, 2, 100, 3, 100 }
-//! animations[2] = { 4, 100, 5, 100, 6, 100, 7, 100 }
-//! animations[3] = { 8, 100, 9, 100, 10, 100, 11, 100 }
-//!
-
-//!
-//! An image with 2 rows and 5 columns and their indices.
-//!  _ _ _ _ _
-//! |0|1|2|3|4|
-//!  - - - - -
-//! |5|6|7|8|9|
-//!  - - - - -
-//!
-
 
 #include "SpriteFactory.h"
+#include "Sprite.h"
 
 #include "Texture/ITexture.h"
 #include "Texture/TextureFactory.h"
 
 #include "Math/Quad.h"
-#include "Sprite.h"
-
 #include "System/SysFile.h"
-#include "nlohmann_json/json.hpp"
 
+#include "nlohmann_json/json.hpp"
 
 namespace
 {
@@ -88,45 +62,60 @@ namespace
             }
         }
     }
+
+    bool LoadSpriteData(mono::Sprite& sprite, const char* sprite_file)
+    {
+        File::FilePtr file = File::OpenAsciiFile(sprite_file);
+        if(!file)
+            return false;
+
+        std::vector<byte> file_data;
+        File::FileRead(file, file_data);
+
+        const nlohmann::json& json = nlohmann::json::parse(file_data);
+        
+        const std::string& texture_file = json["texture"];
+        mono::ITexturePtr texture = mono::CreateTexture(texture_file.c_str());
+
+        TextureData data;
+        data.rows    = json["rows"];
+        data.columns = json["columns"];
+        data.x       = json["x"];
+        data.y       = json["y"];
+        data.u       = json["u"];
+        data.v       = json["v"];
+
+        data.textureSizeX = texture->Width();
+        data.textureSizeY = texture->Height();
+
+        std::vector<math::Quad> textureCoordinates;
+        GenerateTextureCoordinates(data, textureCoordinates);
+
+        sprite.Init(texture, textureCoordinates);
+
+        for(const auto& animation : json["animations"])
+        {
+            const bool loop = animation["loop"];
+            const std::vector<int>& frames = animation["frames"];
+            sprite.DefineAnimation(frames, loop);
+        }
+
+        return true;
+    }
 }
 
 
 mono::ISpritePtr mono::CreateSprite(const char* sprite_file)
 {
-    File::FilePtr file = File::OpenAsciiFile(sprite_file);
-    if(!file)
-        return nullptr;
+    std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>();
+    const bool result = LoadSpriteData(*sprite.get(), sprite_file);
+    if(result)
+        return sprite;
 
-    std::vector<byte> file_data;
-    File::FileRead(file, file_data);
+    return nullptr;
+}
 
-    const nlohmann::json& json = nlohmann::json::parse(file_data);
-    
-    const std::string& texture_file = json["texture"];
-    mono::ITexturePtr texture = mono::CreateTexture(texture_file.c_str());
-
-    TextureData data;
-    data.rows    = json["rows"];
-    data.columns = json["columns"];
-    data.x       = json["x"];
-    data.y       = json["y"];
-    data.u       = json["u"];
-    data.v       = json["v"];
-
-    data.textureSizeX = texture->Width();
-    data.textureSizeY = texture->Height();
-
-    std::vector<math::Quad> textureCoordinates;
-    GenerateTextureCoordinates(data, textureCoordinates);
-
-    std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>(texture, textureCoordinates);
-
-    for(const auto& animation : json["animations"])
-    {
-        const bool loop = animation["loop"];
-        const std::vector<int>& frames = animation["frames"];
-        sprite->DefineAnimation(frames, loop);
-    }
-
-    return sprite;
+bool mono::CreateSprite(mono::Sprite& sprite, const char* sprite_file)
+{
+    return LoadSpriteData(sprite, sprite_file);
 }

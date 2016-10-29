@@ -6,6 +6,7 @@
 #include "EventHandler/EventToken.h"
 #include "Events/EventFwd.h"
 #include "UIContext.h"
+#include "Sprite/Sprite.h"
 
 #include "ImGuiImpl/ImGuiInputHandler.h"
 #include "ImGuiImpl/ImGuiRenderer.h"
@@ -59,6 +60,6 @@ namespace animator
         UIContext m_context;
 
         mono::ICameraPtr m_camera;
-        mono::ISpritePtr m_sprite;
+        mono::Sprite m_sprite;
     };
 }

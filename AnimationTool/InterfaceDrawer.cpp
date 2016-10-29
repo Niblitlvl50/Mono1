@@ -43,7 +43,7 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
     ImGui::Text("Frames");
 
     ImGui::SameLine(0.0f, 150);
-    if(ImGui::SmallButton("Add frame"))
+    if(ImGui::Button("Add frame"))
         m_context.on_add_frame();
 
     ImGui::Spacing();
@@ -58,7 +58,7 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
         ImGui::Spacing();
 
         ImGui::PushID(index);
-        ImGui::InputInt("frame", &frame.frame);
+        ImGui::SliderInt("frame", &frame.frame, 0, m_context.max_frame_id);
 
         ImGui::SameLine(0.0f, 20.0f);
         if(ImGui::SmallButton("x"))
@@ -98,5 +98,6 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
 
     ImGui::End();
 
+    //ImGui::ShowTestWindow();
     ImGui::Render();
 }

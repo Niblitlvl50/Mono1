@@ -23,11 +23,15 @@ namespace mono
     {
     public:
 
+        Sprite();
+
         //! Constructs a sprite object
         //! @param[in] texture The texture to use for this sprite.
         //! @param[in] coordinates The texture coordinates
         Sprite(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates);
-        
+
+        void Init(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates);
+
         //! Gets the sprites texture
         //! @return ITexturePtr A shared pointer to the texture.
         virtual ITexturePtr GetTexture() const;
@@ -42,13 +46,8 @@ namespace mono
         
         //! Sets the color shade of the sprite
         //! @param[in] color The color shading
-        void SetShade(const mono::Color::RGBA& color);
+        virtual void SetShade(const mono::Color::RGBA& color);
         
-        //! Define an animation sequence by giving pairs of frame and duration.
-        //! @param[in] frames A collection of frame and duration pairs. 
-        //! @param[in] loop If the animation should loop or not.
-        void DefineAnimation(const std::vector<int>& frames, bool loop);
-
         //! Tell the sprite to run a specific animation.
         //! @param[in] id The animation to run.
         virtual void SetAnimation(int id);
@@ -61,15 +60,24 @@ namespace mono
         //! Restarts the current set animation
         virtual void RestartAnimation();
 
-        //! Returns the number of defined animations for this sprite
-        virtual int GetDefinedAnimations() const;
-
         //! Returns the current active animation
         virtual int GetActiveAnimation() const;
 
-        virtual const AnimationSequence& GetSequence(int id) const;
-        virtual       AnimationSequence& GetSequence(int id);
-        virtual const std::vector<AnimationSequence>& GetAnimations() const;
+        //! Define an animation sequence by giving pairs of frame and duration.
+        //! @param[in] frames A collection of frame and duration pairs. 
+        //! @param[in] loop If the animation should loop or not.
+        void DefineAnimation(const std::vector<int>& frames, bool loop);
+
+        //! Returns the number of defined animations for this sprite
+        int GetDefinedAnimations() const;
+
+        int GetUniqueFrames() const;
+
+        const AnimationSequence& GetSequence(int id) const;
+              AnimationSequence& GetSequence(int id);
+
+        const std::vector<AnimationSequence>& GetAnimations() const;
+              std::vector<AnimationSequence>& GetAnimations();
 
         virtual void doUpdate(unsigned int delta);
 

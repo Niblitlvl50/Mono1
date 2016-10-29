@@ -60,6 +60,16 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
     m_mouseWheelToken = m_eventHandler.AddListener(mouse_wheel);
     m_multiGestureToken = m_eventHandler.AddListener(multi_gesture);
 
+    std::unordered_map<unsigned int, mono::ITexturePtr> textures;
+    SetupIcons(m_context, textures);
+
+    m_guiRenderer = std::make_shared<ImGuiRenderer>("animator_imgui.ini", window->Size(), textures);
+    mono::CreateSprite(m_sprite, sprite_file);
+    
+    AddEntity(std::make_shared<MutableSprite>(m_sprite), 0);
+    AddDrawable(m_guiRenderer, 2);
+    AddUpdatable(std::make_shared<InterfaceDrawer>(m_context));
+
     // Setup UI callbacks
     m_context.on_loop_toggle      = std::bind(&Animator::OnLoopToggle, this, _1);
     m_context.on_add_animation    = std::bind(&Animator::OnAddAnimation, this);
@@ -68,17 +78,10 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
     m_context.on_delete_frame     = std::bind(&Animator::OnDeleteFrame, this, _1);
     m_context.on_save             = std::bind(&Animator::SaveSprite, this);
 
-    std::unordered_map<unsigned int, mono::ITexturePtr> textures;
-    SetupIcons(m_context, textures);
+    m_context.max_frame_id = m_sprite.GetUniqueFrames() -1;
+    m_context.active_frame = m_sprite.GetActiveAnimation();
 
-    m_guiRenderer = std::make_shared<ImGuiRenderer>("animator_imgui.ini", window->Size(), textures);
-    m_sprite = mono::CreateSprite(sprite_file);
-    
-    AddEntity(std::make_shared<MutableSprite>(m_sprite), 0);
-    AddDrawable(m_guiRenderer, 2);
-    AddUpdatable(std::make_shared<InterfaceDrawer>(m_context));
-
-    SetAnimation(0);
+    SetAnimation(m_sprite.GetActiveAnimation());
 }
 
 Animator::~Animator()
@@ -103,17 +106,17 @@ void Animator::OnUnload()
 
 void Animator::SetAnimation(int animation_id)
 {
-    const int animations = m_sprite->GetDefinedAnimations();
+    const int animations = m_sprite.GetDefinedAnimations();
     if(animation_id < animations)
     {
-        m_sprite->SetAnimation(animation_id);
+        m_sprite.SetAnimation(animation_id);
         UpdateUIContext(animation_id);
     }
 }
 
 void Animator::UpdateUIContext(int animation_id)
 {
-    mono::AnimationSequence& sequence = m_sprite->GetSequence(animation_id);
+    mono::AnimationSequence& sequence = m_sprite.GetSequence(animation_id);
 
     m_context.animation_id = animation_id;
     m_context.display_name = "hello";
@@ -127,22 +130,22 @@ bool Animator::OnDownUp(const event::KeyDownEvent& event)
     
     if(event.key == Key::ENTER || event.key == Key::SPACE)
     {
-        m_sprite->RestartAnimation();
+        m_sprite.RestartAnimation();
         return true;
     }
     else if(event.key == Key::LEFT || event.key == Key::DOWN)
     {
-        int id = m_sprite->GetActiveAnimation();
+        int id = m_sprite.GetActiveAnimation();
         --id;
 
         animation = std::max(id, 0);
     }
     else if(event.key == Key::RIGHT || event.key == Key::UP)
     {
-        int id = m_sprite->GetActiveAnimation();
+        int id = m_sprite.GetActiveAnimation();
         ++id;
 
-        animation = std::min(id, m_sprite->GetDefinedAnimations() -1);
+        animation = std::min(id, m_sprite.GetDefinedAnimations() -1);
     }
     else
     {
@@ -204,11 +207,11 @@ bool Animator::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 
 void Animator::OnLoopToggle(bool state)
 {
-    const int current_id = m_sprite->GetActiveAnimation();
-    mono::AnimationSequence& sequence = m_sprite->GetSequence(current_id);
+    const int current_id = m_sprite.GetActiveAnimation();
+    mono::AnimationSequence& sequence = m_sprite.GetSequence(current_id);
     sequence.SetLooping(state);
 
-    m_sprite->RestartAnimation();
+    m_sprite.RestartAnimation();
 }
 
 void Animator::OnAddAnimation()
@@ -219,14 +222,14 @@ void Animator::OnDeleteAnimation(int id)
 
 void Animator::OnAddFrame()
 {
-    const int current_id = m_sprite->GetActiveAnimation();
-    m_sprite->GetSequence(current_id).AddFrame(0, 100);
+    const int current_id = m_sprite.GetActiveAnimation();
+    m_sprite.GetSequence(current_id).AddFrame(0, 100);
 }
 
 void Animator::OnDeleteFrame(int id)
 {
-    const int current_id = m_sprite->GetActiveAnimation();
-    m_sprite->GetSequence(current_id).RemoveFrame(id);
+    const int current_id = m_sprite.GetActiveAnimation();
+    m_sprite.GetSequence(current_id).RemoveFrame(id);
 }
 
 void Animator::Zoom(float multiplier)
@@ -242,6 +245,6 @@ void Animator::Zoom(float multiplier)
 
 void Animator::SaveSprite()
 {
-    WriteSpriteFile(m_spriteFile, m_sprite->GetAnimations());
+    WriteSpriteFile(m_spriteFile, m_sprite.GetAnimations());
 }
 

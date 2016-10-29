@@ -13,11 +13,21 @@
 
 using namespace mono;
 
+Sprite::Sprite()
+    : m_activeAnimation(0)
+{ }
+
 Sprite::Sprite(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates)
     : m_activeAnimation(0),
       m_texture(texture),
       m_textureCoordinates(coordinates)
 { }
+
+void Sprite::Init(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates)
+{
+      m_texture = texture;
+      m_textureCoordinates = coordinates;
+}
 
 ITexturePtr Sprite::GetTexture() const
 {
@@ -95,6 +105,11 @@ int Sprite::GetDefinedAnimations() const
     return static_cast<int>(m_animations.size());
 }
 
+int Sprite::GetUniqueFrames() const
+{
+    return static_cast<int>(m_textureCoordinates.size());
+}
+
 int Sprite::GetActiveAnimation() const
 {
     return m_activeAnimation;
@@ -111,6 +126,11 @@ AnimationSequence& Sprite::GetSequence(int id)
 }
 
 const std::vector<AnimationSequence>& Sprite::GetAnimations() const
+{
+    return m_animations;
+}
+
+std::vector<AnimationSequence>& Sprite::GetAnimations()
 {
     return m_animations;
 }

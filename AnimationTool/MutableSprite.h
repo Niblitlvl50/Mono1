@@ -10,13 +10,13 @@ namespace animator
     {
     public:
 
-        MutableSprite(const mono::ISpritePtr& sprite);
+        MutableSprite(mono::ISprite& sprite);
 
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
 
     private:
 
-        mono::ISpritePtr m_sprite;
+        mono::ISprite& m_sprite;
     };
 }
