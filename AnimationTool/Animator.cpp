@@ -37,9 +37,13 @@ namespace
         textures.insert(std::make_pair(texture->Id(), texture));
 
         const mono::ISpritePtr save = mono::CreateSprite("sprites/save.sprite");
+        const mono::ISpritePtr add = mono::CreateSprite("sprites/add.sprite");
+        const mono::ISpritePtr remove = mono::CreateSprite("sprites/delete.sprite");
 
         context.tools_texture_id = texture->Id();
         context.save_icon = save->GetTextureCoords();
+        context.add_icon = add->GetTextureCoords();
+        context.delete_icon = remove->GetTextureCoords();
     }
 }
 
@@ -73,7 +77,7 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
     // Setup UI callbacks
     m_context.on_loop_toggle      = std::bind(&Animator::OnLoopToggle, this, _1);
     m_context.on_add_animation    = std::bind(&Animator::OnAddAnimation, this);
-    m_context.on_delete_animation = std::bind(&Animator::OnDeleteAnimation, this, _1);
+    m_context.on_delete_animation = std::bind(&Animator::OnDeleteAnimation, this);
     m_context.on_add_frame        = std::bind(&Animator::OnAddFrame, this);
     m_context.on_delete_frame     = std::bind(&Animator::OnDeleteFrame, this, _1);
     m_context.on_save             = std::bind(&Animator::SaveSprite, this);
@@ -119,7 +123,7 @@ void Animator::UpdateUIContext(int animation_id)
     mono::AnimationSequence& sequence = m_sprite.GetSequence(animation_id);
 
     m_context.animation_id = animation_id;
-    m_context.display_name = "hello";
+    m_context.display_name = sequence.GetName();
     m_context.loop_animation = sequence.IsLooping();
     m_context.frames = &sequence.GetFrames();
 }
@@ -215,10 +219,21 @@ void Animator::OnLoopToggle(bool state)
 }
 
 void Animator::OnAddAnimation()
-{ }
+{
+    m_sprite.DefineAnimation("new", { 0, 100 }, false);
+    SetAnimation(m_sprite.GetActiveAnimation());
+}
 
-void Animator::OnDeleteAnimation(int id)
-{ }
+void Animator::OnDeleteAnimation()
+{
+    const int active_animation = m_sprite.GetActiveAnimation();
+    
+    std::vector<mono::AnimationSequence>& animations = m_sprite.GetAnimations();
+    animations.erase(animations.begin() + active_animation);
+
+    if(active_animation >= animations.size())
+        SetAnimation(active_animation -1);
+}
 
 void Animator::OnAddFrame()
 {

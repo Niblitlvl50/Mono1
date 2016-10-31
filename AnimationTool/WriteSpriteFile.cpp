@@ -32,6 +32,7 @@ void animator::WriteSpriteFile(const char* sprite_file, const std::vector<mono::
         }
 
         nlohmann::json object;
+        object["name"] = animation.GetName();
         object["loop"] = animation.IsLooping();
         object["frames"] = values;
 

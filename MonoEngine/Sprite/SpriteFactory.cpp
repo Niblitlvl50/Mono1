@@ -95,9 +95,10 @@ namespace
 
         for(const auto& animation : json["animations"])
         {
+            const std::string& name = animation["name"];
             const bool loop = animation["loop"];
             const std::vector<int>& frames = animation["frames"];
-            sprite.DefineAnimation(frames, loop);
+            sprite.DefineAnimation(name.c_str(), frames, loop);
         }
 
         return true;

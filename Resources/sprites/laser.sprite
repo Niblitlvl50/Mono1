@@ -1,1 +1,17 @@
-{	"texture": "textures/spritesheet.png",	"rows": 1,	"columns": 1,	"x": 208,	"y": 144,	"u": 239,	"v": 175,	"animations": [		{			"loop": false,			"frames": [ 0, -1 ]		}	]}
+
+{
+	"texture": "textures/spritesheet.png",
+	"rows": 1,
+	"columns": 1,
+	"x": 208,
+	"y": 144,
+	"u": 239,
+	"v": 175,
+	"animations": [
+		{
+			"name": "default",
+			"loop": false,
+			"frames": [ 0, -1 ]
+		}
+	]
+}

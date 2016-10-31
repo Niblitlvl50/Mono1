@@ -5,6 +5,24 @@
 
 using namespace animator;
 
+namespace
+{
+    struct ImageCoords
+    {
+        ImVec2 uv1;
+        ImVec2 uv2;
+    };
+
+    ImageCoords QuadToImageCoords(const math::Quad& input)
+    {
+        ImageCoords coords;
+        coords.uv1 = ImVec2(input.mA.x, input.mB.y);
+        coords.uv2 = ImVec2(input.mB.x, input.mA.y);
+
+        return coords;
+    }
+}
+
 InterfaceDrawer::InterfaceDrawer(UIContext& context)
     : m_context(context)
 { }
@@ -24,6 +42,8 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
     const int window_x = window_size.x - window_width - padding;
     const int tools_window_y = animation_window_height + padding + 10;
 
+    void* texture_id = reinterpret_cast<void*>(m_context.tools_texture_id);
+
     ImGui::SetNextWindowPos(ImVec2(window_x, padding));
     ImGui::SetNextWindowSize(ImVec2(window_width, animation_window_height));
 
@@ -35,6 +55,11 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
     ImGui::Value("Id", m_context.animation_id);
     ImGui::SameLine();
     ImGui::Text("(%s)", m_context.display_name);
+
+    //char buffer[100] = { 0 };
+    //buffer = m_context.display_name;
+
+    //ImGui::InputText("Name", buffer, 100);
 
     if(ImGui::Checkbox("Loop", &m_context.loop_animation))
         m_context.on_loop_toggle(m_context.loop_animation);
@@ -51,6 +76,10 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
 
     ImGui::BeginChild(666);
 
+    const ImageCoords& delete_icon = QuadToImageCoords(m_context.delete_icon);
+    const ImVec4 delete_bg_color(0.0f, 0.0f, 0.0f, 1.0f);
+    const ImVec2 delete_button_size(20, 20);
+
     for(size_t index = 0; index < m_context.frames->size(); ++index)
     {
         mono::Frame& frame = m_context.frames->at(index);
@@ -58,10 +87,10 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
         ImGui::Spacing();
 
         ImGui::PushID(index);
-        ImGui::SliderInt("frame", &frame.frame, 0, m_context.max_frame_id);
+        ImGui::SliderInt("frame", &frame.frame, 1, m_context.max_frame_id);
 
         ImGui::SameLine(0.0f, 20.0f);
-        if(ImGui::SmallButton("x"))
+        if(ImGui::ImageButton(texture_id, delete_button_size, delete_icon.uv1, delete_icon.uv2, 0, delete_bg_color))
             m_context.on_delete_frame(index);
 
         ImGui::SliderInt("duration", &frame.duration, 10, 1000, "%.0f ms");
@@ -84,14 +113,23 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
 
     ImGui::Begin("tools", nullptr, ImVec2(0.0f, 0.0f), 0.0f, tools_flags);
 
-    void* texture_id = reinterpret_cast<void*>(m_context.tools_texture_id);
     const ImVec2 button_size(44, 44);
     const ImVec4 bg_color(1.0f, 1.0f, 1.0f, 1.0f);
 
     const ImVec2 save1(m_context.save_icon.mA.x, m_context.save_icon.mB.y);
     const ImVec2 save2(m_context.save_icon.mB.x, m_context.save_icon.mA.y);
 
-    ImGui::Indent(215);
+    //ImGui::Indent(215);
+
+    if(ImGui::Button("Add", button_size))
+        m_context.on_add_animation();
+
+    ImGui::SameLine();
+
+    if(ImGui::Button("Delete", button_size))
+        m_context.on_delete_animation();
+
+    ImGui::SameLine();
 
     if(ImGui::ImageButton(texture_id, button_size, save1, save2, 2, bg_color))
         m_context.on_save();

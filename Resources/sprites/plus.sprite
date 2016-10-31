@@ -3,10 +3,10 @@
 	"texture": "textures/animator_tools.png",
 	"rows": 1,
 	"columns": 1,
-	"x": 17,
+	"x": 113,
 	"y": 17,
-	"u": 94,
-	"v": 94,
+	"u": 174,
+	"v": 78,
 	"animations": [
 		{ "name": "default", "loop": false, "frames": [ 0, 0 ] }
 	]

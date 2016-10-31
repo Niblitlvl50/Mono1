@@ -3,9 +3,10 @@
         {
             "frames": [
                 0,
-                0
+                10
             ],
-            "loop": true
+            "loop": true,
+            "name": "default"
         },
         {
             "frames": [
@@ -14,7 +15,8 @@
                 2,
                 50
             ],
-            "loop": true
+            "loop": true,
+            "name": "default"
         }
     ],
     "columns": 3,

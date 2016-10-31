@@ -37,7 +37,7 @@ namespace animator
         
         void OnLoopToggle(bool state);
         void OnAddAnimation();
-        void OnDeleteAnimation(int id);
+        void OnDeleteAnimation();
         void OnAddFrame();
         void OnDeleteFrame(int id);
 

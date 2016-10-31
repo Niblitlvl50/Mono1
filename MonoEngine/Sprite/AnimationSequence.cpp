@@ -10,10 +10,11 @@
 
 using namespace mono;
 
-AnimationSequence::AnimationSequence(bool loop_sequence)
-    : m_currentFrame(0),
+AnimationSequence::AnimationSequence(const char* name, bool loop_sequence)
+    : m_loop(loop_sequence),
+      m_name(name),
+      m_currentFrame(0),
       m_elapsedTime(0),
-      m_loopSequence(loop_sequence),
       m_done(false)
 { }
 
@@ -51,7 +52,7 @@ void AnimationSequence::Update(unsigned int delta)
         if(m_currentFrame >= m_frames.size())
         {
             m_currentFrame = 0;
-            if(!m_loopSequence)
+            if(!m_loop)
                 m_done = true;
         }
     }
@@ -76,12 +77,17 @@ void AnimationSequence::Restart()
 
 bool AnimationSequence::IsLooping() const
 {
-    return m_loopSequence;
+    return m_loop;
 }
 
 void AnimationSequence::SetLooping(bool state)
 {
-    m_loopSequence = state;
+    m_loop = state;
+}
+
+const char* AnimationSequence::GetName() const
+{
+    return m_name.c_str();
 }
 
 const std::vector<mono::Frame>& AnimationSequence::GetFrames() const

@@ -2,41 +2,6 @@
     "animations": [
         {
             "frames": [
-                0,
-                100,
-                0,
-                100,
-                0,
-                100
-            ],
-            "loop": true
-        },
-        {
-            "frames": [
-                1,
-                369,
-                2,
-                458,
-                3,
-                217,
-                10,
-                120
-            ],
-            "loop": true
-        },
-        {
-            "frames": [
-                5,
-                275,
-                6,
-                357,
-                4,
-                489
-            ],
-            "loop": true
-        },
-        {
-            "frames": [
                 6,
                 100,
                 7,
@@ -45,12 +10,61 @@
                 100,
                 9,
                 100,
-                10,
-                100,
                 11,
                 1000
             ],
-            "loop": false
+            "loop": true,
+            "name": "first"
+        },
+        {
+            "frames": [
+                0,
+                100
+            ],
+            "loop": false,
+            "name": "second"
+        },
+        {
+            "frames": [
+                0,
+                100,
+                2,
+                100
+            ],
+            "loop": true,
+            "name": "another"
+        },
+        {
+            "frames": [
+                0,
+                100,
+                2,
+                281,
+                7,
+                344
+            ],
+            "loop": true,
+            "name": "attack"
+        },
+        {
+            "frames": [
+                0,
+                100,
+                4,
+                100,
+                8,
+                100
+            ],
+            "loop": true,
+            "name": "death"
+        },
+        {
+            "frames": [
+                6,
+                817
+            ],
+            "loop": true,
+            "name": "idle"
         }
     ],
     "columns": 6,

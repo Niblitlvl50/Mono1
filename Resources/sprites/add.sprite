@@ -4,9 +4,9 @@
 	"rows": 1,
 	"columns": 1,
 	"x": 17,
-	"y": 17,
-	"u": 94,
-	"v": 94,
+	"y": 129,
+	"u": 78,
+	"v": 190,
 	"animations": [
 		{ "name": "default", "loop": false, "frames": [ 0, 0 ] }
 	]

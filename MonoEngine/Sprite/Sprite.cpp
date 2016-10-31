@@ -80,13 +80,13 @@ void Sprite::RestartAnimation()
     m_animations[m_activeAnimation].Restart();
 }
 
-void Sprite::DefineAnimation(const std::vector<int>& frames, bool loop)
+void Sprite::DefineAnimation(const std::string& name, const std::vector<int>& frames, bool loop)
 {
     const bool even = (frames.size() % 2) == 0;
     if(!even)
         throw std::runtime_error("Animation vector does not match up, not an even number of values");
 
-    AnimationSequence sequence(loop);
+    AnimationSequence sequence(name.c_str(), loop);
 
     for(auto it = frames.begin(), end = frames.end(); it != end; ++it)
     {
