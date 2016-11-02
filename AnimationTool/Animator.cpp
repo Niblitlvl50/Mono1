@@ -125,6 +125,7 @@ void Animator::UpdateUIContext(int animation_id)
 {
     mono::AnimationSequence& sequence = m_sprite.GetSequence(animation_id);
 
+    m_context.animations = m_sprite.GetDefinedAnimations();
     m_context.animation_id = animation_id;
     m_context.display_name = sequence.GetName();
     m_context.loop_animation = sequence.IsLooping();
@@ -225,6 +226,7 @@ void Animator::OnAddAnimation()
 {
     const int animation_id = m_sprite.DefineAnimation("new", { 0, 100 }, false);
     SetAnimation(animation_id);
+    m_sprite.RestartAnimation();
 }
 
 void Animator::OnDeleteAnimation()

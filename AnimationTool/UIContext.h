@@ -17,6 +17,7 @@ namespace animator
         math::Quad delete_icon;
 
         int animation_id;
+        int animations;
         const char* display_name;
         bool loop_animation;
         int max_frame_id;
