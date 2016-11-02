@@ -90,6 +90,11 @@ const char* AnimationSequence::GetName() const
     return m_name.c_str();
 }
 
+void AnimationSequence::SetName(const char* name)
+{
+    m_name = name;
+}
+
 const std::vector<mono::Frame>& AnimationSequence::GetFrames() const
 {
     return m_frames;

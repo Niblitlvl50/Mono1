@@ -40,6 +40,7 @@ namespace animator
         void OnDeleteAnimation();
         void OnAddFrame();
         void OnDeleteFrame(int id);
+        void OnNameAnimation(const char* new_name);
 
         void Zoom(float multiplier);
         void SaveSprite();

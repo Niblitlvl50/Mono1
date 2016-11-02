@@ -29,9 +29,6 @@ InterfaceDrawer::InterfaceDrawer(UIContext& context)
 
 void InterfaceDrawer::doUpdate(unsigned int delta)
 {
-    ImGui::GetIO().DeltaTime = float(delta) / 1000.0f;
-    ImGui::NewFrame();
-
     const ImVec2& window_size = ImGui::GetIO().DisplaySize;
 
     constexpr int padding = 20;
@@ -42,7 +39,17 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
     const int window_x = window_size.x - window_width - padding;
     const int tools_window_y = animation_window_height + padding + 10;
 
+    const ImageCoords& add_icon = QuadToImageCoords(m_context.add_icon);
+    const ImageCoords& delete_icon = QuadToImageCoords(m_context.delete_icon);
+    const ImageCoords& plus_icon = QuadToImageCoords(m_context.plus_icon);
+
+    const ImVec4 delete_bg_color(0.0f, 0.0f, 0.0f, 1.0f);
+    const ImVec2 small_button_size(20, 20);
+
     void* texture_id = reinterpret_cast<void*>(m_context.tools_texture_id);
+
+    ImGui::GetIO().DeltaTime = float(delta) / 1000.0f;
+    ImGui::NewFrame();
 
     ImGui::SetNextWindowPos(ImVec2(window_x, padding));
     ImGui::SetNextWindowSize(ImVec2(window_width, animation_window_height));
@@ -52,33 +59,31 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
                                     ImGuiWindowFlags_NoCollapse;
     ImGui::Begin("Animation", nullptr, ImVec2(0.0f, 0.0f), 1.0f, animation_flags);
     
+    ImGui::AlignFirstTextHeightToWidgets();
     ImGui::Value("Id", m_context.animation_id);
     ImGui::SameLine();
-    ImGui::Text("(%s)", m_context.display_name);
 
-    //char buffer[100] = { 0 };
-    //buffer = m_context.display_name;
-
-    //ImGui::InputText("Name", buffer, 100);
+    char buffer[100] = { 0 };
+    sprintf(buffer, "%s", m_context.display_name);
+    if(ImGui::InputText("", buffer, 100))
+        m_context.on_name_animation(buffer);
 
     if(ImGui::Checkbox("Loop", &m_context.loop_animation))
         m_context.on_loop_toggle(m_context.loop_animation);
 
     ImGui::Spacing();
-    ImGui::Text("Frames");
+    ImGui::Spacing();
+    ImGui::Spacing();
 
-    ImGui::SameLine(0.0f, 150);
-    if(ImGui::Button("Add frame"))
+    ImGui::AlignFirstTextHeightToWidgets();
+    ImGui::Text("Frames");
+    ImGui::SameLine();
+
+    if(ImGui::ImageButton(texture_id, small_button_size, plus_icon.uv1, plus_icon.uv2, 0, delete_bg_color))
         m_context.on_add_frame();
 
-    ImGui::Spacing();
     ImGui::Separator();
-
     ImGui::BeginChild(666);
-
-    const ImageCoords& delete_icon = QuadToImageCoords(m_context.delete_icon);
-    const ImVec4 delete_bg_color(0.0f, 0.0f, 0.0f, 1.0f);
-    const ImVec2 delete_button_size(20, 20);
 
     for(size_t index = 0; index < m_context.frames->size(); ++index)
     {
@@ -90,7 +95,7 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
         ImGui::SliderInt("frame", &frame.frame, 1, m_context.max_frame_id);
 
         ImGui::SameLine(0.0f, 20.0f);
-        if(ImGui::ImageButton(texture_id, delete_button_size, delete_icon.uv1, delete_icon.uv2, 0, delete_bg_color))
+        if(ImGui::ImageButton(texture_id, small_button_size, delete_icon.uv1, delete_icon.uv2, 0, delete_bg_color))
             m_context.on_delete_frame(index);
 
         ImGui::SliderInt("duration", &frame.duration, 10, 1000, "%.0f ms");
@@ -116,26 +121,20 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
     const ImVec2 button_size(44, 44);
     const ImVec4 bg_color(1.0f, 1.0f, 1.0f, 1.0f);
 
-    const ImVec2 save1(m_context.save_icon.mA.x, m_context.save_icon.mB.y);
-    const ImVec2 save2(m_context.save_icon.mB.x, m_context.save_icon.mA.y);
-
-    //ImGui::Indent(215);
+    const ImageCoords& save_icon = QuadToImageCoords(m_context.save_icon);
 
     if(ImGui::Button("Add", button_size))
         m_context.on_add_animation();
 
     ImGui::SameLine();
-
     if(ImGui::Button("Delete", button_size))
         m_context.on_delete_animation();
 
     ImGui::SameLine();
-
-    if(ImGui::ImageButton(texture_id, button_size, save1, save2, 2, bg_color))
+    if(ImGui::ImageButton(texture_id, button_size, save_icon.uv1, save_icon.uv2, 2, bg_color))
         m_context.on_save();
 
     ImGui::End();
-
     //ImGui::ShowTestWindow();
     ImGui::Render();
 }

@@ -38,11 +38,13 @@ namespace
 
         const mono::ISpritePtr save = mono::CreateSprite("sprites/save.sprite");
         const mono::ISpritePtr add = mono::CreateSprite("sprites/add.sprite");
+        const mono::ISpritePtr plus = mono::CreateSprite("sprites/plus.sprite");
         const mono::ISpritePtr remove = mono::CreateSprite("sprites/delete.sprite");
 
         context.tools_texture_id = texture->Id();
         context.save_icon = save->GetTextureCoords();
         context.add_icon = add->GetTextureCoords();
+        context.plus_icon = plus->GetTextureCoords();
         context.delete_icon = remove->GetTextureCoords();
     }
 }
@@ -80,6 +82,7 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
     m_context.on_delete_animation = std::bind(&Animator::OnDeleteAnimation, this);
     m_context.on_add_frame        = std::bind(&Animator::OnAddFrame, this);
     m_context.on_delete_frame     = std::bind(&Animator::OnDeleteFrame, this, _1);
+    m_context.on_name_animation   = std::bind(&Animator::OnNameAnimation, this, _1);
     m_context.on_save             = std::bind(&Animator::SaveSprite, this);
 
     m_context.max_frame_id = m_sprite.GetUniqueFrames() -1;
@@ -245,6 +248,12 @@ void Animator::OnDeleteFrame(int id)
 {
     const int current_id = m_sprite.GetActiveAnimation();
     m_sprite.GetSequence(current_id).RemoveFrame(id);
+}
+
+void Animator::OnNameAnimation(const char* new_name)
+{
+    const int current_id = m_sprite.GetActiveAnimation();
+    m_sprite.GetSequence(current_id).SetName(new_name);
 }
 
 void Animator::Zoom(float multiplier)

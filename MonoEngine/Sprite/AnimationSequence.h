@@ -39,6 +39,7 @@ namespace mono
         void SetLooping(bool state);
 
         const char* GetName() const;
+        void SetName(const char* name);
 
         const std::vector<mono::Frame>& GetFrames() const;
               std::vector<mono::Frame>& GetFrames();
