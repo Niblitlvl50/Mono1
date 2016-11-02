@@ -66,7 +66,8 @@ namespace mono
         //! Define an animation sequence by giving pairs of frame and duration.
         //! @param[in] frames A collection of frame and duration pairs. 
         //! @param[in] loop If the animation should loop or not.
-        void DefineAnimation(const std::string& name, const std::vector<int>& frames, bool loop);
+        //! return The create animation id
+        int DefineAnimation(const std::string& name, const std::vector<int>& frames, bool loop);
 
         //! Returns the number of defined animations for this sprite
         int GetDefinedAnimations() const;

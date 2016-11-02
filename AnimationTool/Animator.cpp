@@ -223,8 +223,8 @@ void Animator::OnLoopToggle(bool state)
 
 void Animator::OnAddAnimation()
 {
-    m_sprite.DefineAnimation("new", { 0, 100 }, false);
-    SetAnimation(m_sprite.GetActiveAnimation());
+    const int animation_id = m_sprite.DefineAnimation("new", { 0, 100 }, false);
+    SetAnimation(animation_id);
 }
 
 void Animator::OnDeleteAnimation()
@@ -234,7 +234,7 @@ void Animator::OnDeleteAnimation()
     std::vector<mono::AnimationSequence>& animations = m_sprite.GetAnimations();
     animations.erase(animations.begin() + active_animation);
 
-    if(active_animation >= animations.size())
+    if(active_animation >= static_cast<int>(animations.size()))
         SetAnimation(active_animation -1);
 }
 
