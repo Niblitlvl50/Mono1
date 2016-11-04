@@ -39,7 +39,7 @@ namespace
 
         const game::SpawnEntityEvent event(std::make_shared<game::Explosion>(config, event_handler));
         event_handler.DispatchEvent(event);
-
+        event_handler.DispatchEvent(game::DamageEvent(other, 20));
         event_handler.DispatchEvent(game::ShockwaveEvent(config.position, 300));
         event_handler.DispatchEvent(game::RemoveEntityEvent(bullet->Id()));
     }

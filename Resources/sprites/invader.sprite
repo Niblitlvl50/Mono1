@@ -10,7 +10,7 @@
 	"animations": [
 		{
 			"name": "default",
-			"loop": false,
+			"loop": true,
 			"frames": [ 0, -1 ]
 		}
 	]
