@@ -11,14 +11,14 @@ namespace event
 {
     struct KeyDownEvent
     {
-        constexpr KeyDownEvent(int key, bool ctrl, bool shift, bool alt)
+        constexpr KeyDownEvent(unsigned int key, bool ctrl, bool shift, bool alt)
             : key(key),
               ctrl(ctrl),
               shift(shift),
               alt(alt)
         { }
         
-        const int key;
+        const unsigned int key;
         const bool ctrl;
         const bool shift;
         const bool alt;
@@ -26,14 +26,14 @@ namespace event
 
     struct KeyUpEvent
     {
-        constexpr KeyUpEvent(int key, bool ctrl, bool shift, bool alt)
+        constexpr KeyUpEvent(unsigned int key, bool ctrl, bool shift, bool alt)
             : key(key),
               ctrl(ctrl),
               shift(shift),
               alt(alt)
         { }
         
-        const int key;
+        const unsigned int key;
         const bool ctrl;
         const bool shift;
         const bool alt;

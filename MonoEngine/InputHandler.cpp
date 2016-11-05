@@ -30,7 +30,7 @@ InputHandler::InputHandler(const CoordinateFunc& func, EventHandler& eventHandle
       mEventHandler(eventHandler)
 { }
 
-void InputHandler::OnKeyDown(int key, int modifier)
+void InputHandler::OnKeyDown(unsigned int key, int modifier)
 {
     const bool ctrl  = (modifier & Key::L_CTRL)  || (modifier & Key::R_CTRL);
     const bool shift = (modifier & Key::L_SHIFT) || (modifier & Key::R_SHIFT);
@@ -40,7 +40,7 @@ void InputHandler::OnKeyDown(int key, int modifier)
     mEventHandler.DispatchEvent(event);
 }
 
-void InputHandler::OnKeyUp(int key, int modifier)
+void InputHandler::OnKeyUp(unsigned int key, int modifier)
 {
     if(key == Key::ESCAPE)
     {

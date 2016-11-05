@@ -25,8 +25,8 @@ namespace mono
         
     private:
         
-        virtual void OnKeyDown(int key, int modifier);
-        virtual void OnKeyUp(int key, int modifier);
+        virtual void OnKeyDown(unsigned int key, int modifier);
+        virtual void OnKeyUp(unsigned int key, int modifier);
         virtual void OnTextInput(const char* text);
         virtual void OnMouseDown(unsigned int button, int x, int y);
         virtual void OnMouseUp(unsigned int button, int x, int y);

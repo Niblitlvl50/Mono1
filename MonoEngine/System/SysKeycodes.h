@@ -11,41 +11,41 @@
 
 namespace Key
 {
-    extern const int ESCAPE;
+    extern const unsigned int ESCAPE;
 
-    extern const int ZERO;
-    extern const int ONE;
-    extern const int TWO;
-    extern const int THREE;
-    extern const int FOUR;
-    extern const int FIVE;
-    extern const int SIX;
-    extern const int SEVEN;
-    extern const int EIGHT;
-    extern const int NINE;
+    extern const unsigned int ZERO;
+    extern const unsigned int ONE;
+    extern const unsigned int TWO;
+    extern const unsigned int THREE;
+    extern const unsigned int FOUR;
+    extern const unsigned int FIVE;
+    extern const unsigned int SIX;
+    extern const unsigned int SEVEN;
+    extern const unsigned int EIGHT;
+    extern const unsigned int NINE;
 
-    extern const int LEFT;
-    extern const int RIGHT;
-    extern const int UP;
-    extern const int DOWN;
+    extern const unsigned int LEFT;
+    extern const unsigned int RIGHT;
+    extern const unsigned int UP;
+    extern const unsigned int DOWN;
 
-    extern const int TAB;
-    extern const int ENTER;
-    extern const int SPACE;
-    extern const int BACKSPACE;
-    extern const int DELETE;
+    extern const unsigned int TAB;
+    extern const unsigned int ENTER;
+    extern const unsigned int SPACE;
+    extern const unsigned int BACKSPACE;
+    extern const unsigned int DELETE;
 
-    extern const int L_CTRL;
-    extern const int R_CTRL;
-    extern const int L_SHIFT;
-    extern const int R_SHIFT;
-    extern const int L_ALT;
-    extern const int R_ALT;
+    extern const unsigned int L_CTRL;
+    extern const unsigned int R_CTRL;
+    extern const unsigned int L_SHIFT;
+    extern const unsigned int R_SHIFT;
+    extern const unsigned int L_ALT;
+    extern const unsigned int R_ALT;
 }
 
 namespace MouseButton
 {
-    extern const int LEFT;
-    extern const int MIDDLE;
-    extern const int RIGHT;
+    extern const unsigned int LEFT;
+    extern const unsigned int MIDDLE;
+    extern const unsigned int RIGHT;
 }
