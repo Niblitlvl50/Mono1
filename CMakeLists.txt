@@ -14,9 +14,9 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wextra -Wno-long-long -pedantic -Wno-unused-parameter -Wno-unused-variable -Wno-format-pedantic")
 
 # Chipmunk2D
-set(BUILD_DEMOS OFF)
 set(BUILD_SHARED OFF)
 set(BUILD_STATIC ON)
+set(BUILD_DEMOS OFF CACHE BOOL "Build chipmunk demo application" FORCE)
 set(LIB_INSTALL_DIR ${LIBRARY_OUTPUT_PATH})
 add_subdirectory("External Libs/Chipmunk2D")
 
