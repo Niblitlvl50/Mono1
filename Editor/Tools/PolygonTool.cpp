@@ -66,6 +66,12 @@ bool PolygonTool::IsActive() const
     return m_polygon != nullptr;
 }
 
+void PolygonTool::HandleContextMenu(int menu_index)
+{
+    if(menu_index == 0)
+        End();
+}
+
 void PolygonTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
 { }
 

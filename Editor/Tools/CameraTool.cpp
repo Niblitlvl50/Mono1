@@ -22,12 +22,6 @@ CameraTool::CameraTool(const mono::ICameraPtr& camera, const math::Vector2f& win
       m_translate(false)
 { }
 
-void CameraTool::Begin()
-{ }
-
-void CameraTool::End()
-{ }
-
 bool CameraTool::IsActive() const
 {
     return m_translate;

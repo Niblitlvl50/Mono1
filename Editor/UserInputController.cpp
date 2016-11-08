@@ -69,8 +69,7 @@ UserInputController::~UserInputController()
 
 void UserInputController::HandleContextMenu(int item_index)
 {
-    if(item_index == 0)
-        m_activeTool->IsActive() ? m_activeTool->End() : m_activeTool->Begin();
+    m_activeTool->HandleContextMenu(item_index);
 }
 
 void UserInputController::SelectTool(ToolsMenuOptions option)
@@ -80,7 +79,7 @@ void UserInputController::SelectTool(ToolsMenuOptions option)
         case ToolsMenuOptions::POLYGON_TOOL:
         {
             m_activeTool = &m_polygonTool;
-            m_context->contextMenuItems = { "Create polygon", "Hello1" };
+            m_context->contextMenuItems = { "Create polygon", "Undo last" };
             m_context->notifications.push_back(Notification(m_context->default_icon, "Polygon tool", 2000));
             break;
         }
@@ -88,7 +87,7 @@ void UserInputController::SelectTool(ToolsMenuOptions option)
         case ToolsMenuOptions::POLYGON_BRUSH_TOOL:
         {
             m_activeTool = &m_polygonBrushTool;
-            m_context->contextMenuItems = { "Create polygon", "Hello2" };
+            m_context->contextMenuItems.clear();
             m_context->notifications.push_back(Notification(m_context->default_icon, "Polygon Brush", 2000));
             break;
         }
@@ -111,12 +110,13 @@ void UserInputController::SelectTool(ToolsMenuOptions option)
 
         case ToolsMenuOptions::PATH_TOOL:
             m_activeTool = &m_pathTool;
-            m_context->contextMenuItems = { "Create path", "hello3" };
+            m_context->contextMenuItems = { "Create path", "Undo last" };
             m_context->notifications.push_back(Notification(m_context->default_icon, "Path tool", 2000));
             break;
     }
 
     m_context->active_tool_index = static_cast<int>(option);
+    m_activeTool->Begin();
 }
 
 bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)

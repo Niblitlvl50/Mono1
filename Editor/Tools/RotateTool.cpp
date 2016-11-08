@@ -27,6 +27,9 @@ bool RotateTool::IsActive() const
     return m_entity != nullptr;
 }
 
+void RotateTool::HandleContextMenu(int menu_index)
+{ }
+
 void RotateTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
 {
     m_entity = entity;

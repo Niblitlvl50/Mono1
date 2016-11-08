@@ -80,6 +80,9 @@ bool PolygonBrushTool::IsActive() const
     return m_painting;
 }
 
+void PolygonBrushTool::HandleContextMenu(int menu_index)
+{ }
+
 void PolygonBrushTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
 {
     if(!m_polygon)

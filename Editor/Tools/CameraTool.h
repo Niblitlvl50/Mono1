@@ -8,7 +8,6 @@
 
 #pragma once
 
-#include "ITool.h"
 #include "MonoPtrFwd.h"
 #include "Math/Vector2f.h"
 
@@ -20,12 +19,10 @@ namespace editor
 
         CameraTool(const mono::ICameraPtr& camera, const math::Vector2f& window_size);
 
-        virtual void Begin();
-        virtual void End();
-        virtual bool IsActive() const;
-        virtual void HandleMouseDown(const math::Vector2f& world_pos);
-        virtual void HandleMouseUp(const math::Vector2f& world_pos);
-        virtual void HandleMousePosition(const math::Vector2f& world_pos);
+        bool IsActive() const;
+        void HandleMouseDown(const math::Vector2f& world_pos);
+        void HandleMouseUp(const math::Vector2f& world_pos);
+        void HandleMousePosition(const math::Vector2f& world_pos);
 
         void HandleMouseWheel(float x, float y);
         void HandleMultiGesture(const math::Vector2f& screen_position, float distance);

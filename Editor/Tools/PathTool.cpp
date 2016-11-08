@@ -65,6 +65,14 @@ bool PathTool::IsActive() const
     return m_active;
 }
 
+void PathTool::HandleContextMenu(int menu_index)
+{
+    if(menu_index == 0)
+        End();
+    else if(menu_index == 1 && !m_points.empty())
+        m_points.pop_back();
+}
+
 void PathTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
 { }
 

@@ -13,7 +13,6 @@
 
 using namespace editor;
 
-
 void TranslateTool::Begin()
 { }
 
@@ -26,6 +25,9 @@ bool TranslateTool::IsActive() const
 {
     return m_entity != nullptr;
 }
+
+void TranslateTool::HandleContextMenu(int menu_index)
+{ }
 
 void TranslateTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
 {
