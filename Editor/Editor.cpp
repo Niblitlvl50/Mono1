@@ -172,7 +172,6 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     using namespace std::placeholders;
 
     m_context.showContextMenu = false;
-    m_context.contextMenuItems = { "Polygon", "Decoration" };
     m_context.texture_items_count = n_textures;
     m_context.texture_items = avalible_textures;
     m_context.has_selection = false;

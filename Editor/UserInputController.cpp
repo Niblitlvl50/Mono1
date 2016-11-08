@@ -80,6 +80,7 @@ void UserInputController::SelectTool(ToolsMenuOptions option)
         case ToolsMenuOptions::POLYGON_TOOL:
         {
             m_activeTool = &m_polygonTool;
+            m_context->contextMenuItems = { "Create polygon", "Hello1" };
             m_context->notifications.push_back(Notification(m_context->default_icon, "Polygon tool", 2000));
             break;
         }
@@ -87,6 +88,7 @@ void UserInputController::SelectTool(ToolsMenuOptions option)
         case ToolsMenuOptions::POLYGON_BRUSH_TOOL:
         {
             m_activeTool = &m_polygonBrushTool;
+            m_context->contextMenuItems = { "Create polygon", "Hello2" };
             m_context->notifications.push_back(Notification(m_context->default_icon, "Polygon Brush", 2000));
             break;
         }
@@ -94,6 +96,7 @@ void UserInputController::SelectTool(ToolsMenuOptions option)
         case ToolsMenuOptions::TRANSLATE_TOOL:
         {
             m_activeTool = &m_translateTool;
+            m_context->contextMenuItems.clear();
             m_context->notifications.push_back(Notification(m_context->default_icon, "Translate tool", 2000));
             break;
         }
@@ -101,12 +104,14 @@ void UserInputController::SelectTool(ToolsMenuOptions option)
         case ToolsMenuOptions::ROTATE_TOOL:
         {
             m_activeTool = &m_rotateTool;
+            m_context->contextMenuItems.clear();
             m_context->notifications.push_back(Notification(m_context->default_icon, "Rotate tool", 2000));
             break;
         }
 
         case ToolsMenuOptions::PATH_TOOL:
             m_activeTool = &m_pathTool;
+            m_context->contextMenuItems = { "Create path", "hello3" };
             m_context->notifications.push_back(Notification(m_context->default_icon, "Path tool", 2000));
             break;
     }
@@ -139,7 +144,7 @@ bool UserInputController::OnMouseUp(const event::MouseUpEvent& event)
     if(event.key == MouseButton::LEFT)
         m_activeTool->HandleMouseUp(math::Vector2f(event.worldX, event.worldY));
     else if(event.key == MouseButton::RIGHT)
-        m_context->showContextMenu = true;
+        m_context->showContextMenu = !m_context->contextMenuItems.empty();
 
     m_cameraTool.HandleMouseUp(math::Vector2f(event.screenX, event.screenY));
 
