@@ -86,7 +86,6 @@ std::shared_ptr<mono::IPath> mono::CreatePath(const char* path_file)
     File::FileRead(file, file_data);
 
     const nlohmann::json& json = nlohmann::json::parse(file_data);
-
     const std::vector<float>& points = json["path"];
 
     std::vector<math::Vector2f> coords;
@@ -102,6 +101,25 @@ std::shared_ptr<mono::IPath> mono::CreatePath(const std::vector<math::Vector2f>&
     return std::make_shared<DefaultPath>(coords);
 }
 
+bool mono::SavePath(const char* path_file, const math::Vector2f& position, const std::vector<math::Vector2f>& points)
+{
+    std::vector<float> float_points;
+    float_points.resize(points.size() * 2);
+    std::memcpy(float_points.data(), points.data(), sizeof(math::Vector2f) * points.size());
+
+    nlohmann::json json;
+    json["x"] = position.x;
+    json["y"] = position.y;
+    json["path"] = float_points;
+
+    const std::string& serialized_path = json.dump(4);
+    File::FilePtr output_file = File::CreateAsciiFile(path_file);
+    if(!output_file)
+        return false;
+
+    std::fwrite(serialized_path.data(), serialized_path.length(), sizeof(char), output_file.get());
+    return true;
+}
 
 
 
