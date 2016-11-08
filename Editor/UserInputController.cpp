@@ -24,7 +24,7 @@ using namespace editor;
 
 UserInputController::UserInputController(const mono::ICameraPtr& camera,
                                          const mono::IWindowPtr& window,
-                                         editor::EditorZone* editor,
+                                         editor::Editor* editor,
                                          editor::UIContext* context,
                                          mono::EventHandler& event_handler)
     : m_window(window),
@@ -34,7 +34,8 @@ UserInputController::UserInputController(const mono::ICameraPtr& camera,
       m_cameraTool(camera, window->Size()),
       m_polygonTool(editor),
       m_polygonBrushTool(editor),
-      m_activeTool(&m_polygonTool),
+      m_pathTool(editor),
+      m_activeTool(nullptr),
       m_isMaximized(false)
 {
     using namespace std::placeholders;
@@ -52,6 +53,8 @@ UserInputController::UserInputController(const mono::ICameraPtr& camera,
     m_mouseWheelToken = m_eventHandler.AddListener(mouse_wheel);
     m_multiGestureToken = m_eventHandler.AddListener(multi_gesture);
     m_keyDownToken = m_eventHandler.AddListener(key_down);
+
+    SelectTool(ToolsMenuOptions::POLYGON_TOOL);
 }
 
 UserInputController::~UserInputController()
@@ -77,34 +80,38 @@ void UserInputController::SelectTool(ToolsMenuOptions option)
         case ToolsMenuOptions::POLYGON_TOOL:
         {
             m_activeTool = &m_polygonTool;
-            m_context->notifications.push_back(Notification(2, "Polygon tool", 2000));
+            m_context->notifications.push_back(Notification(m_context->default_icon, "Polygon tool", 2000));
             break;
         }
 
         case ToolsMenuOptions::POLYGON_BRUSH_TOOL:
         {
             m_activeTool = &m_polygonBrushTool;
-            m_context->notifications.push_back(Notification(2, "Polygon Brush", 2000));
+            m_context->notifications.push_back(Notification(m_context->default_icon, "Polygon Brush", 2000));
             break;
         }
 
         case ToolsMenuOptions::TRANSLATE_TOOL:
         {
             m_activeTool = &m_translateTool;
-            m_context->notifications.push_back(Notification(2, "Translate tool", 2000));
+            m_context->notifications.push_back(Notification(m_context->default_icon, "Translate tool", 2000));
             break;
         }
 
         case ToolsMenuOptions::ROTATE_TOOL:
         {
             m_activeTool = &m_rotateTool;
-            m_context->notifications.push_back(Notification(2, "Rotate tool", 2000));
+            m_context->notifications.push_back(Notification(m_context->default_icon, "Rotate tool", 2000));
             break;
         }
 
-        case ToolsMenuOptions::CAMERA_TOOL:
+        case ToolsMenuOptions::PATH_TOOL:
+            m_activeTool = &m_pathTool;
+            m_context->notifications.push_back(Notification(m_context->default_icon, "Path tool", 2000));
             break;
     }
+
+    m_context->active_tool_index = static_cast<int>(option);
 }
 
 bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)
@@ -169,8 +176,10 @@ bool UserInputController::OnKeyDown(const event::KeyDownEvent& event)
     else if(event.key == Key::TWO)
         SelectTool(ToolsMenuOptions::POLYGON_BRUSH_TOOL);
     else if(event.key == Key::THREE)
-        SelectTool(ToolsMenuOptions::TRANSLATE_TOOL);
+        SelectTool(ToolsMenuOptions::PATH_TOOL);
     else if(event.key == Key::FOUR)
+        SelectTool(ToolsMenuOptions::TRANSLATE_TOOL);
+    else if(event.key == Key::FIVE)
         SelectTool(ToolsMenuOptions::ROTATE_TOOL);
     else if(event.key == Key::ENTER && event.ctrl)
     {

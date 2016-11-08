@@ -14,14 +14,14 @@
 
 namespace editor
 {
-    class EditorZone;
+    class Editor;
     class PolygonEntity;
 
     class PolygonTool : public ITool
     {
     public:
 
-        PolygonTool(EditorZone* editor);
+        PolygonTool(Editor* editor);
 
         virtual void Begin();
         virtual void End();
@@ -30,7 +30,7 @@ namespace editor
         virtual void HandleMouseUp(const math::Vector2f& world_pos);
         virtual void HandleMousePosition(const math::Vector2f& world_pos);
 
-        EditorZone* m_editor;
+        Editor* m_editor;
         std::shared_ptr<editor::PolygonEntity> m_polygon;
         bool m_firstPoint;
 

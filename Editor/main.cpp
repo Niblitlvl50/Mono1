@@ -30,7 +30,7 @@ int main(int argc, const char* argv[])
     mono::LoadFont(0, "pixelette.ttf", 10.0f);
 
     mono::Engine engine(window, camera, eventHandler);
-    engine.Run(std::make_shared<editor::EditorZone>(window, eventHandler, file_name));
+    engine.Run(std::make_shared<editor::Editor>(window, eventHandler, file_name));
 
     System::Exit();
 

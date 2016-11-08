@@ -12,6 +12,8 @@
 #include "Events/EventFwd.h"
 #include "EventHandler/EventToken.h"
 
+#include "MainMenuOptions.h"
+#include "UIContext.h"
 #include "ImGuiInterfaceDrawer.h"
 #include "ImGuiImpl/ImGuiInputHandler.h"
 
@@ -23,12 +25,12 @@ namespace editor
 {
     class UserInputController;
 
-    class EditorZone : public mono::ZoneBase
+    class Editor : public mono::ZoneBase
     {
     public:
 
-        EditorZone(const mono::IWindowPtr& window, mono::EventHandler& event_handler, const char* file_name);
-        virtual ~EditorZone();
+        Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler, const char* file_name);
+        virtual ~Editor();
 
         virtual void OnLoad(mono::ICameraPtr camera);
         virtual void OnUnload();
@@ -36,6 +38,7 @@ namespace editor
         bool OnSurfaceChanged(const event::SurfaceChangedEvent& event);
 
         void AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon);
+        void AddPath(const std::vector<math::Vector2f>& points);
 
         mono::IEntityPtr FindEntityFromPosition(const math::Vector2f& position);
         void SelectEntity(const mono::IEntityPtr& entity);
@@ -47,6 +50,8 @@ namespace editor
 
         void EditorMenuCallback(EditorMenuOptions index);
         void ToolsMenuCallback(ToolsMenuOptions index);
+
+    private:
 
         mono::IWindowPtr m_window;
         mono::EventHandler& m_eventHandler;

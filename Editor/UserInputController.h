@@ -19,6 +19,7 @@
 #include "Tools/TranslateTool.h"
 #include "Tools/RotateTool.h"
 #include "Tools/CameraTool.h"
+#include "Tools/PathTool.h"
 
 namespace editor
 {
@@ -30,7 +31,7 @@ namespace editor
 
         UserInputController(const mono::ICameraPtr& camera,
                             const mono::IWindowPtr& window,
-                            editor::EditorZone* editor,
+                            editor::Editor* editor,
                             editor::UIContext* context,
                             mono::EventHandler& event_handler);
         ~UserInputController();
@@ -49,7 +50,7 @@ namespace editor
 
         mono::IWindowPtr m_window;
         mono::EventHandler& m_eventHandler;
-        editor::EditorZone* m_editor;
+        editor::Editor* m_editor;
 
         mono::EventToken<event::MouseUpEvent> m_mouseUpToken;
         mono::EventToken<event::MouseDownEvent> m_mouseDownToken;
@@ -65,6 +66,7 @@ namespace editor
         editor::PolygonBrushTool m_polygonBrushTool;
         editor::TranslateTool m_translateTool;
         editor::RotateTool m_rotateTool;
+        editor::PathTool m_pathTool;
         editor::ITool* m_activeTool;
 
         bool m_isMaximized;

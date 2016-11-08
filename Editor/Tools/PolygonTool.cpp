@@ -40,7 +40,7 @@ public:
     const math::Vector2f& m_mousePosition;
 };
 
-PolygonTool::PolygonTool(EditorZone* editor)
+PolygonTool::PolygonTool(Editor* editor)
     : m_editor(editor)
 {
     m_visualizer = std::make_shared<Visualizer>(m_lastAddedPoint, m_mousePosition);

@@ -7,6 +7,10 @@
 //
 
 #include "ImGuiInterfaceDrawer.h"
+#include "MainMenuOptions.h"
+#include "UIContext.h"
+
+#include "ImGuiImpl/ImGuiUtils.h"
 #include "imgui/imgui.h"
 
 using namespace editor;
@@ -18,7 +22,6 @@ ImGuiInterfaceDrawer::ImGuiInterfaceDrawer(UIContext& context)
 void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 {
     ImGui::GetIO().DeltaTime = float(delta) / 1000.0f;
-
     ImGui::NewFrame();
 
     ImGui::BeginMainMenuBar();
@@ -38,21 +41,21 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
     if(ImGui::BeginMenu("Tools"))
     {
-        if(ImGui::MenuItem("Polygon", "1"))
+        if(ImGui::MenuItem("Polygon", "1", m_context.active_tool_index == 0))
             m_context.toolsMenuCallback(ToolsMenuOptions::POLYGON_TOOL);
 
-        if(ImGui::MenuItem("Polygon Brush", "2"))
+        if(ImGui::MenuItem("Polygon Brush", "2", m_context.active_tool_index == 1))
             m_context.toolsMenuCallback(ToolsMenuOptions::POLYGON_BRUSH_TOOL);
 
-        if(ImGui::MenuItem("Translate", "3"))
+        if(ImGui::MenuItem("Path drawer", "3", m_context.active_tool_index == 2))
+            m_context.toolsMenuCallback(ToolsMenuOptions::PATH_TOOL);
+
+        if(ImGui::MenuItem("Translate", "4", m_context.active_tool_index == 3))
             m_context.toolsMenuCallback(ToolsMenuOptions::TRANSLATE_TOOL);
 
-        if(ImGui::MenuItem("Rotate", "4", true))
+        if(ImGui::MenuItem("Rotate", "5", m_context.active_tool_index == 4))
             m_context.toolsMenuCallback(ToolsMenuOptions::ROTATE_TOOL);
 
-        if(ImGui::MenuItem("Camera", "5", false, false))
-            m_context.toolsMenuCallback(ToolsMenuOptions::CAMERA_TOOL);
-        
         ImGui::EndMenu();
     }
 
@@ -60,7 +63,6 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
     {
         static ImVec4 color(1.0f, 0.0f, 1.0f, 1.0f);
         ImGui::ColorEdit3("BG Color", &color.x);
-
         ImGui::EndMenu();
     }
 
@@ -68,7 +70,7 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
     if(m_context.has_selection)
     {
-        ImGui::Begin("Selection", nullptr, ImVec2(200, 120), true, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        ImGui::Begin("Selection", nullptr, ImVec2(250, 120), true, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
 
         ImGui::Value("X", m_context.polygon_x);
         ImGui::SameLine();
@@ -94,11 +96,7 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
     if(ImGui::BeginPopup("context"))
     {
-        ImGui::Text("Create...");
-        ImGui::Separator();
-
         int menu_index = -1;
-
         for(size_t index = 0; index < m_context.contextMenuItems.size(); ++index)
         {
             if(ImGui::Selectable(m_context.contextMenuItems.at(index).c_str()))
@@ -119,6 +117,7 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
     const ImVec2 window_size = ImVec2(160.0f, 50.0f);
     const float window_position = ImGui::GetIO().DisplaySize.x - window_size.x;
+    void* texture_id = reinterpret_cast<void*>(m_context.tools_texture_id);
 
     for(size_t index = 0; index < m_context.notifications.size(); ++index)
     {
@@ -136,13 +135,15 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
         note.time_left -= delta;
 
+        const ImageCoords& icon = QuadToImageCoords(note.icon);
+
         char window_id[16];
         std::sprintf(window_id, "overlay: %zu", index);
 
         ImGui::SetNextWindowPos(ImVec2(window_position - 10, index * 60 + 30));
 
         ImGui::Begin(window_id, nullptr, window_size, window_alpha, notification_window_flags);
-        ImGui::Image(reinterpret_cast<void*>(note.image), ImVec2(32.0f, 32.0f), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), tint);
+        ImGui::Image(texture_id, ImVec2(32.0f, 32.0f), icon.uv1, icon.uv2, tint);
         ImGui::SameLine();
         ImGui::TextColored(tint, "%s", note.text.c_str());
         ImGui::End();
@@ -156,6 +157,5 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
     m_context.notifications.erase(it, m_context.notifications.end());
 
     //ImGui::ShowTestWindow();
-
     ImGui::Render();
 }

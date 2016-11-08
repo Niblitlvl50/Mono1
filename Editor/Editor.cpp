@@ -146,12 +146,24 @@ namespace
         "textures/dark_stone.png",
         "textures/brown_stone.png",
         "textures/lava1.png",
-        "textures/lava2.png" };
+        "textures/lava2.png"
+        };
+
+    constexpr int n_textures = 6;
+
+    void SetupIcons(editor::UIContext& context, std::unordered_map<unsigned int, mono::ITexturePtr>& textures)
+    {
+        mono::ITexturePtr texture = mono::CreateTexture("textures/placeholder.png");
+        textures.insert(std::make_pair(texture->Id(), texture));
+
+        context.tools_texture_id = texture->Id();
+        context.default_icon = math::Quad(0.0f, 0.0f, 1.0f, 1.0f);
+    }
 }
 
 using namespace editor;
 
-EditorZone::EditorZone(const mono::IWindowPtr& window, mono::EventHandler& event_handler, const char* file_name)
+Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler, const char* file_name)
     : m_window(window),
       m_eventHandler(event_handler),
       m_inputHandler(event_handler),
@@ -160,29 +172,25 @@ EditorZone::EditorZone(const mono::IWindowPtr& window, mono::EventHandler& event
     using namespace std::placeholders;
 
     m_context.showContextMenu = false;
-    m_context.contextMenuCallback = std::bind(&EditorZone::OnContextMenu, this, _1);
     m_context.contextMenuItems = { "Polygon", "Decoration" };
-
-    m_context.texture_items_count = 6;
+    m_context.texture_items_count = n_textures;
     m_context.texture_items = avalible_textures;
-
     m_context.has_selection = false;
-    m_context.texture_repeate_callback = std::bind(&EditorZone::OnTextureRepeate, this, _1);
-    m_context.texture_changed_callback = std::bind(&EditorZone::OnTextureChanged, this, _1);
-    m_context.delete_callback = std::bind(&EditorZone::OnDeletePolygon, this);
 
-    m_context.editorMenuCallback = std::bind(&EditorZone::EditorMenuCallback, this, _1);
-    m_context.toolsMenuCallback = std::bind(&EditorZone::ToolsMenuCallback, this, _1);
+    m_context.contextMenuCallback = std::bind(&Editor::OnContextMenu, this, _1);
+    m_context.texture_repeate_callback = std::bind(&Editor::OnTextureRepeate, this, _1);
+    m_context.texture_changed_callback = std::bind(&Editor::OnTextureChanged, this, _1);
+    m_context.delete_callback = std::bind(&Editor::OnDeletePolygon, this);
+    m_context.editorMenuCallback = std::bind(&Editor::EditorMenuCallback, this, _1);
+    m_context.toolsMenuCallback = std::bind(&Editor::ToolsMenuCallback, this, _1);
+
+    std::unordered_map<unsigned int, mono::ITexturePtr> textures;
+    SetupIcons(m_context, textures);
 
     m_interfaceDrawer = std::make_shared<editor::ImGuiInterfaceDrawer>(m_context);
-
-    mono::ITexturePtr texture = mono::CreateTexture("textures/placeholder.png");
-    std::unordered_map<unsigned int, mono::ITexturePtr> textures;
-    textures.insert(std::make_pair(texture->Id(), texture));
-
     m_guiRenderer = std::make_shared<ImGuiRenderer>("editor_imgui.ini", m_window->Size(), textures);
 
-    const event::SurfaceChangedEventFunc surface_func = std::bind(&EditorZone::OnSurfaceChanged, this, _1);
+    const event::SurfaceChangedEventFunc surface_func = std::bind(&Editor::OnSurfaceChanged, this, _1);
     m_surfaceChangedToken = m_eventHandler.AddListener(surface_func);
 
     const auto& polygons = LoadPolygons(m_fileName);
@@ -190,7 +198,7 @@ EditorZone::EditorZone(const mono::IWindowPtr& window, mono::EventHandler& event
         AddPolygon(polygon);
 }
 
-EditorZone::~EditorZone()
+Editor::~Editor()
 {
     m_eventHandler.RemoveListener(m_surfaceChangedToken);
 
@@ -203,7 +211,7 @@ EditorZone::~EditorZone()
     editor::SaveConfig("editor_config.json", config);
 }
 
-void EditorZone::OnLoad(mono::ICameraPtr camera)
+void Editor::OnLoad(mono::ICameraPtr camera)
 {
     m_camera = camera;
     
@@ -218,17 +226,15 @@ void EditorZone::OnLoad(mono::ICameraPtr camera)
     m_userInputController = std::make_shared<editor::UserInputController>(camera, m_window, this, &m_context, m_eventHandler);
 
     AddUpdatable(m_interfaceDrawer);
-
     AddDrawable(m_guiRenderer, 2);
     AddDrawable(std::make_shared<GridVisualizer>(camera), 0);
-
     AddEntity(std::make_shared<SpriteDrawable>("sprites/shuttle.sprite"), 0);
 }
 
-void EditorZone::OnUnload()
+void Editor::OnUnload()
 { }
 
-bool EditorZone::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
+bool Editor::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 {
     if(event.width > 0 && event.height > 0)
         m_guiRenderer->SetWindowSize(math::Vector2f(event.width, event.height));
@@ -236,13 +242,18 @@ bool EditorZone::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
     return false;
 }
 
-void EditorZone::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
+void Editor::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
 {
     AddEntity(polygon, 1);
     m_polygons.push_back(polygon);
 }
 
-mono::IEntityPtr EditorZone::FindEntityFromPosition(const math::Vector2f& position)
+void Editor::AddPath(const std::vector<math::Vector2f>& points)
+{
+
+}
+
+mono::IEntityPtr Editor::FindEntityFromPosition(const math::Vector2f& position)
 {
     for(auto& polygon : m_polygons)
     {
@@ -255,7 +266,7 @@ mono::IEntityPtr EditorZone::FindEntityFromPosition(const math::Vector2f& positi
     return nullptr;
 }
 
-void EditorZone::SelectEntity(const mono::IEntityPtr& entity)
+void Editor::SelectEntity(const mono::IEntityPtr& entity)
 {
     m_selected_polygon = nullptr;
 
@@ -267,18 +278,18 @@ void EditorZone::SelectEntity(const mono::IEntityPtr& entity)
             m_selected_polygon = polygon;
     }
 
-    m_context.has_selection = (entity != nullptr);
-    if(entity)
+    m_context.has_selection = (m_selected_polygon != nullptr);
+    if(m_selected_polygon)
     {
-        const math::Vector2f& position = entity->Position();
+        const math::Vector2f& position = m_selected_polygon->Position();
         m_context.polygon_x = position.x;
         m_context.polygon_y = position.y;
-        m_context.polygon_rotation = entity->Rotation();
+        m_context.polygon_rotation = m_selected_polygon->Rotation();
         m_context.texture_repeate = m_selected_polygon->GetTextureRepate();
 
         const char* texture = m_selected_polygon->GetTexture();
 
-        for(int index = 0; index < 6; ++index)
+        for(int index = 0; index < n_textures; ++index)
         {
             const bool found = std::strstr(texture, avalible_textures[index]) != nullptr;
             if(found)
@@ -290,22 +301,22 @@ void EditorZone::SelectEntity(const mono::IEntityPtr& entity)
     }
 }
 
-void EditorZone::OnContextMenu(int index)
+void Editor::OnContextMenu(int index)
 {
     m_userInputController->HandleContextMenu(index);
 }
 
-void EditorZone::OnTextureRepeate(float repeate)
+void Editor::OnTextureRepeate(float repeate)
 {
     m_selected_polygon->SetTextureRepeate(repeate);
 }
 
-void EditorZone::OnTextureChanged(int texture_index)
+void Editor::OnTextureChanged(int texture_index)
 {
     m_selected_polygon->SetTexture(avalible_textures[texture_index]);
 }
 
-void EditorZone::OnDeletePolygon()
+void Editor::OnDeletePolygon()
 {
     m_context.has_selection = false;
 
@@ -319,13 +330,13 @@ void EditorZone::OnDeletePolygon()
     SchedulePreFrameTask(remove_polygon_func);
 }
 
-void EditorZone::EditorMenuCallback(EditorMenuOptions option)
+void Editor::EditorMenuCallback(EditorMenuOptions option)
 {
     if(option == EditorMenuOptions::SAVE)
         SavePolygons(m_fileName, m_polygons);
 }
 
-void EditorZone::ToolsMenuCallback(ToolsMenuOptions option)
+void Editor::ToolsMenuCallback(ToolsMenuOptions option)
 {
     m_userInputController->SelectTool(option);
 }

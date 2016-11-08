@@ -48,7 +48,7 @@ public:
     const std::vector<math::Vector2f>& m_points;
 };
 
-PolygonBrushTool::PolygonBrushTool(EditorZone* editor)
+PolygonBrushTool::PolygonBrushTool(Editor* editor)
     : m_editor(editor),
       m_painting(false)
 {

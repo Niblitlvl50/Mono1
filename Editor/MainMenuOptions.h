@@ -17,12 +17,12 @@ namespace editor
         EXPORT
     };
 
-    enum class ToolsMenuOptions
+    enum class ToolsMenuOptions : int
     {
         POLYGON_TOOL,
         POLYGON_BRUSH_TOOL,
+        PATH_TOOL,
         TRANSLATE_TOOL,
-        ROTATE_TOOL,
-        CAMERA_TOOL
+        ROTATE_TOOL
     };
 }
