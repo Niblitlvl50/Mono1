@@ -25,7 +25,7 @@ bool editor::SaveConfig(const char* config_file, const editor::Config& config)
     json[camera_position] = {
         config.cameraPosition.x,
         config.cameraPosition.y
-        };
+    };
     
     json[camera_viewport] = {
         config.cameraViewport.mA.x,
