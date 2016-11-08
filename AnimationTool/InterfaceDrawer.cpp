@@ -1,27 +1,10 @@
 
 #include "InterfaceDrawer.h"
 #include "UIContext.h"
+#include "ImGuiImpl/ImGuiUtils.h"
 #include "imgui/imgui.h"
 
 using namespace animator;
-
-namespace
-{
-    struct ImageCoords
-    {
-        ImVec2 uv1;
-        ImVec2 uv2;
-    };
-
-    ImageCoords QuadToImageCoords(const math::Quad& input)
-    {
-        ImageCoords coords;
-        coords.uv1 = ImVec2(input.mA.x, input.mB.y);
-        coords.uv2 = ImVec2(input.mB.x, input.mA.y);
-
-        return coords;
-    }
-}
 
 InterfaceDrawer::InterfaceDrawer(UIContext& context)
     : m_context(context)
