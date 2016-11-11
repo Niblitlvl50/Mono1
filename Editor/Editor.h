@@ -18,6 +18,7 @@
 #include "ImGuiImpl/ImGuiInputHandler.h"
 
 #include "Polygon.h"
+#include "Path.h"
 
 class ImGuiRenderer;
 
@@ -36,6 +37,7 @@ namespace editor
         virtual void OnUnload();
 
         bool OnSurfaceChanged(const event::SurfaceChangedEvent& event);
+        void UpdateUI();
 
         void AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon);
         void AddPath(const std::vector<math::Vector2f>& points);
@@ -66,6 +68,8 @@ namespace editor
 
         std::shared_ptr<editor::PolygonEntity> m_selected_polygon;
         std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
+
+        std::vector<std::shared_ptr<editor::PathEntity>> m_paths;
 
         mono::EventToken<event::SurfaceChangedEvent> m_surfaceChangedToken;
     };

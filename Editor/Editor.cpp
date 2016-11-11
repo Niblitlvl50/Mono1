@@ -32,8 +32,8 @@
 #include "Events/SurfaceChangedEvent.h"
 #include "EventHandler/EventHandler.h"
 
-#include "WorldFile.h"
 #include "EditorConfig.h"
+#include "WorldSerializer.h"
 
 #include "Visualizers/GridVisualizer.h"
 
@@ -42,103 +42,21 @@ namespace
     class SpriteDrawable : public mono::EntityBase
     {
     public:
-
         SpriteDrawable(const char* file)
         {
             m_sprite = mono::CreateSprite(file);
             SetScale(math::Vector2f(50, 50));
         }
-
         virtual void Draw(mono::IRenderer& renderer) const
         {
             renderer.DrawSprite(*m_sprite);
         }
-
         virtual void Update(unsigned int delta)
         {
             m_sprite->doUpdate(delta);
         }
-
         mono::ISpritePtr m_sprite;
     };
-
-    std::vector<std::shared_ptr<editor::PolygonEntity>> LoadPolygons(const char* file_name)
-    {
-        std::vector<std::shared_ptr<editor::PolygonEntity>> polygon_data;
-
-        if(!file_name)
-            return polygon_data;
-
-        File::FilePtr file;
-
-        try
-        {
-            file = File::OpenBinaryFile(file_name);
-        }
-        catch(...)
-        {
-            return polygon_data;
-        }
-
-        world::LevelFileHeader level_data;
-        world::ReadWorld(file, level_data);
-
-        polygon_data.reserve(level_data.polygons.size());
-
-        for(const world::PolygonData& polygon : level_data.polygons)
-        {
-            std::shared_ptr<editor::PolygonEntity> polygon_entity = std::make_shared<editor::PolygonEntity>();
-            polygon_entity->SetPosition(polygon.position);
-            polygon_entity->SetBasePoint(polygon.local_offset);
-            polygon_entity->SetRotation(polygon.rotation);
-            polygon_entity->SetTextureRepeate(polygon.texture_repeate);
-            polygon_entity->SetTexture(polygon.texture);
-
-            math::Matrix invert_transform = polygon_entity->Transformation();
-            math::Inverse(invert_transform);
-
-            for(const math::Vector2f& vertex : polygon.vertices)
-                polygon_entity->AddVertex(math::Transform(invert_transform, vertex));
-
-            polygon_data.push_back(polygon_entity);
-        }
-
-        return polygon_data;
-    }
-
-    void SavePolygons(const char* file_name, const std::vector<std::shared_ptr<editor::PolygonEntity>>& polygons)
-    {
-        if(!file_name)
-            return;
-
-        world::LevelFileHeader world_data;
-        world_data.version = 1;
-        world_data.polygons.resize(polygons.size());
-
-        for(size_t index = 0; index < polygons.size(); ++index)
-        {
-            const auto& polygon_entity = polygons[index];
-            world::PolygonData& polygon_data = world_data.polygons[index];
-
-            polygon_data.position = polygon_entity->Position();
-            polygon_data.local_offset = polygon_entity->BasePoint();
-            polygon_data.rotation = polygon_entity->Rotation();
-            polygon_data.texture_repeate = polygon_entity->GetTextureRepate();
-
-            const char* texture = polygon_entity->GetTexture();
-            const std::size_t string_length = std::strlen(texture);
-
-            std::memcpy(polygon_data.texture, texture, string_length);
-
-            const math::Matrix& transform = polygon_entity->Transformation();
-
-            for(const math::Vector2f& vertex : polygon_entity->GetVertices())
-                polygon_data.vertices.push_back(math::Transform(transform, vertex));
-        }
-
-        File::FilePtr file = File::CreateBinaryFile(file_name);
-        world::WriteWorld(file, world_data);
-    }
 
     const char* avalible_textures[] = {
         "textures/stone_tileable.png",
@@ -171,10 +89,8 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
 {
     using namespace std::placeholders;
 
-    m_context.showContextMenu = false;
     m_context.texture_items_count = n_textures;
     m_context.texture_items = avalible_textures;
-    m_context.has_selection = false;
 
     m_context.contextMenuCallback = std::bind(&Editor::OnContextMenu, this, _1);
     m_context.texture_repeate_callback = std::bind(&Editor::OnTextureRepeate, this, _1);
@@ -195,6 +111,8 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     const auto& polygons = LoadPolygons(m_fileName);
     for(auto& polygon : polygons)
         AddPolygon(polygon);
+
+    const auto& paths = LoadPaths("hello.paths");
 }
 
 Editor::~Editor()
@@ -202,6 +120,7 @@ Editor::~Editor()
     m_eventHandler.RemoveListener(m_surfaceChangedToken);
 
     SavePolygons(m_fileName, m_polygons);
+    SavePaths("hello.paths", m_paths);
 
     editor::Config config;
     config.cameraPosition = m_camera->GetPosition();
@@ -241,6 +160,30 @@ bool Editor::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
     return false;
 }
 
+void Editor::UpdateUI()
+{
+    if(m_selected_polygon)
+    {
+        const math::Vector2f& position = m_selected_polygon->Position();
+        m_context.polygon_x = position.x;
+        m_context.polygon_y = position.y;
+        m_context.polygon_rotation = m_selected_polygon->Rotation();
+        m_context.texture_repeate = m_selected_polygon->GetTextureRepate();
+
+        const char* texture = m_selected_polygon->GetTexture();
+
+        for(int index = 0; index < n_textures; ++index)
+        {
+            const bool found = std::strstr(texture, avalible_textures[index]) != nullptr;
+            if(found)
+            {
+                m_context.texture_index = index;
+                break;
+            }
+        }
+    }
+}
+
 void Editor::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
 {
     AddEntity(polygon, 1);
@@ -249,7 +192,9 @@ void Editor::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
 
 void Editor::AddPath(const std::vector<math::Vector2f>& points)
 {
-
+    auto path = std::make_shared<PathEntity>(points);
+    AddEntity(path, 1);
+    m_paths.push_back(path);
 }
 
 mono::IEntityPtr Editor::FindEntityFromPosition(const math::Vector2f& position)
@@ -278,26 +223,7 @@ void Editor::SelectEntity(const mono::IEntityPtr& entity)
     }
 
     m_context.has_selection = (m_selected_polygon != nullptr);
-    if(m_selected_polygon)
-    {
-        const math::Vector2f& position = m_selected_polygon->Position();
-        m_context.polygon_x = position.x;
-        m_context.polygon_y = position.y;
-        m_context.polygon_rotation = m_selected_polygon->Rotation();
-        m_context.texture_repeate = m_selected_polygon->GetTextureRepate();
-
-        const char* texture = m_selected_polygon->GetTexture();
-
-        for(int index = 0; index < n_textures; ++index)
-        {
-            const bool found = std::strstr(texture, avalible_textures[index]) != nullptr;
-            if(found)
-            {
-                m_context.texture_index = index;
-                break;
-            }
-        }
-    }
+    UpdateUI();
 }
 
 void Editor::OnContextMenu(int index)
@@ -322,7 +248,7 @@ void Editor::OnDeletePolygon()
     const auto remove_polygon_func = [this] {
         auto it = std::find(m_polygons.begin(), m_polygons.end(), m_selected_polygon);
         m_polygons.erase(it);
-        this->RemoveEntity(m_selected_polygon);
+        RemoveEntity(m_selected_polygon);
         m_selected_polygon = nullptr;
     };
 
@@ -332,7 +258,10 @@ void Editor::OnDeletePolygon()
 void Editor::EditorMenuCallback(EditorMenuOptions option)
 {
     if(option == EditorMenuOptions::SAVE)
+    {
         SavePolygons(m_fileName, m_polygons);
+        SavePaths("hello.paths", m_paths);
+    }
 }
 
 void Editor::ToolsMenuCallback(ToolsMenuOptions option)
