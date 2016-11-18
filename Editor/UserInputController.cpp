@@ -22,6 +22,18 @@
 
 using namespace editor;
 
+namespace
+{
+    struct ToolData
+    {
+        editor::ITool* tool;
+        editor::Notification notification;
+        std::vector<std::string> context_menu;
+    };
+
+    ToolData tools[ToolsMenuOptions::N_TOOLS];
+}
+
 UserInputController::UserInputController(const mono::ICameraPtr& camera,
                                          const mono::IWindowPtr& window,
                                          editor::Editor* editor,
@@ -54,6 +66,36 @@ UserInputController::UserInputController(const mono::ICameraPtr& camera,
     m_multiGestureToken = m_eventHandler.AddListener(multi_gesture);
     m_keyDownToken = m_eventHandler.AddListener(key_down);
 
+    tools[ToolsMenuOptions::POLYGON_TOOL] = {
+        &m_polygonTool,
+        Notification(m_context->default_icon, "Polygon tool", 2000),
+        { "Create polygon", "Undo last" }
+    };
+
+    tools[ToolsMenuOptions::POLYGON_BRUSH_TOOL] = {
+        &m_polygonBrushTool,
+        Notification(m_context->default_icon, "Polygon Brush", 2000),
+        { }
+    };
+
+    tools[ToolsMenuOptions::TRANSLATE_TOOL] = {
+        &m_translateTool,
+        Notification(m_context->default_icon, "Translate tool", 2000),
+        { }
+    };
+
+    tools[ToolsMenuOptions::ROTATE_TOOL] = {
+        &m_rotateTool,
+        Notification(m_context->default_icon, "Rotate tool", 2000),
+        { }
+    };
+
+    tools[ToolsMenuOptions::PATH_TOOL] = {
+        &m_pathTool,
+        Notification(m_context->default_icon, "Path tool", 2000),
+        { "Create path", "Undo last" }
+    };
+
     SelectTool(ToolsMenuOptions::POLYGON_TOOL);
 }
 
@@ -74,48 +116,13 @@ void UserInputController::HandleContextMenu(int item_index)
 
 void UserInputController::SelectTool(ToolsMenuOptions option)
 {
-    switch(option)
-    {
-        case ToolsMenuOptions::POLYGON_TOOL:
-        {
-            m_activeTool = &m_polygonTool;
-            m_context->contextMenuItems = { "Create polygon", "Undo last" };
-            m_context->notifications.push_back(Notification(m_context->default_icon, "Polygon tool", 2000));
-            break;
-        }
+    const ToolData& tool_data = tools[option];
 
-        case ToolsMenuOptions::POLYGON_BRUSH_TOOL:
-        {
-            m_activeTool = &m_polygonBrushTool;
-            m_context->contextMenuItems.clear();
-            m_context->notifications.push_back(Notification(m_context->default_icon, "Polygon Brush", 2000));
-            break;
-        }
-
-        case ToolsMenuOptions::TRANSLATE_TOOL:
-        {
-            m_activeTool = &m_translateTool;
-            m_context->contextMenuItems.clear();
-            m_context->notifications.push_back(Notification(m_context->default_icon, "Translate tool", 2000));
-            break;
-        }
-
-        case ToolsMenuOptions::ROTATE_TOOL:
-        {
-            m_activeTool = &m_rotateTool;
-            m_context->contextMenuItems.clear();
-            m_context->notifications.push_back(Notification(m_context->default_icon, "Rotate tool", 2000));
-            break;
-        }
-
-        case ToolsMenuOptions::PATH_TOOL:
-            m_activeTool = &m_pathTool;
-            m_context->contextMenuItems = { "Create path", "Undo last" };
-            m_context->notifications.push_back(Notification(m_context->default_icon, "Path tool", 2000));
-            break;
-    }
-
+    m_activeTool = tool_data.tool;
+    m_context->notifications.push_back(tool_data.notification);
+    m_context->contextMenuItems = tool_data.context_menu;
     m_context->active_tool_index = static_cast<int>(option);
+
     m_activeTool->Begin();
 }
 
