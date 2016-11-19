@@ -68,19 +68,30 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
     ImGui::EndMainMenuBar();
 
-    if(m_context.has_selection)
+    if(m_context.has_polygon_selection || m_context.has_path_selection)
     {
-        ImGui::Begin("Selection", nullptr, ImVec2(250, 120), true, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        constexpr int flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
+        ImGui::Begin("Selection", nullptr, ImVec2(250, 120), true, flags);
 
-        ImGui::Value("X", m_context.polygon_x);
-        ImGui::SameLine();
-        ImGui::Value("Y", m_context.polygon_y);
-        ImGui::Value("Rotation", m_context.polygon_rotation);
-        if(ImGui::SliderFloat("Repeate", &m_context.texture_repeate, 1.0f, 10.0f))
-            m_context.texture_repeate_callback(m_context.texture_repeate);
+        if(m_context.has_polygon_selection)
+        {
+            ImGui::Value("X", m_context.polygon_x);
+            ImGui::SameLine();
+            ImGui::Value("Y", m_context.polygon_y);
+            ImGui::Value("Rotation", m_context.polygon_rotation);
+            if(ImGui::SliderFloat("Repeate", &m_context.texture_repeate, 1.0f, 10.0f))
+                m_context.texture_repeate_callback(m_context.texture_repeate);
 
-        if(ImGui::Combo("Texture", &m_context.texture_index, m_context.texture_items, m_context.texture_items_count))
-            m_context.texture_changed_callback(m_context.texture_index);
+            if(ImGui::Combo("Texture", &m_context.texture_index, m_context.texture_items, m_context.texture_items_count))
+                m_context.texture_changed_callback(m_context.texture_index);
+        }
+        else if(m_context.has_path_selection)
+        {
+            ImGui::Value("X", m_context.path_x);
+            ImGui::SameLine();
+            ImGui::Value("Y", m_context.path_y);
+            ImGui::Text("%s", m_context.path_name);
+        }
 
         if(ImGui::Button("Delete"))
             m_context.delete_callback();

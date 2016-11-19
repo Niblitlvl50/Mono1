@@ -69,6 +69,7 @@ namespace editor
         std::shared_ptr<editor::PolygonEntity> m_selected_polygon;
         std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
 
+        std::shared_ptr<editor::PathEntity> m_selected_path;
         std::vector<std::shared_ptr<editor::PathEntity>> m_paths;
 
         mono::EventToken<event::SurfaceChangedEvent> m_surfaceChangedToken;

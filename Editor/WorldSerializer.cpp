@@ -1,9 +1,14 @@
 
 #include "WorldSerializer.h"
 #include "Polygon.h"
+#include "Path.h"
 #include "Math/Matrix.h"
 #include "System/SysFile.h"
 #include "WorldFile.h"
+
+#include "Paths/PathFactory.h"
+
+#include "nlohmann_json/json.hpp"
 
 std::vector<std::shared_ptr<editor::PolygonEntity>> editor::LoadPolygons(const char* file_name)
 {
@@ -88,7 +93,11 @@ std::vector<std::shared_ptr<editor::PathEntity>> editor::LoadPaths(const char* f
     return std::vector<std::shared_ptr<editor::PathEntity>>();
 }
 
-void editor::SavePaths(const char* file_name, const std::vector<std::shared_ptr<editor::PathEntity>>& paths)
+void editor::SavePaths(const std::vector<std::shared_ptr<editor::PathEntity>>& paths)
 {
-
+    for(auto& path : paths)
+    {
+        const std::string& filename = path->m_name + ".path";
+        mono::SavePath(filename.c_str(), math::zeroVec, path->m_points);
+    }
 }

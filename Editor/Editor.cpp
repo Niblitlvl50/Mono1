@@ -120,7 +120,7 @@ Editor::~Editor()
     m_eventHandler.RemoveListener(m_surfaceChangedToken);
 
     SavePolygons(m_fileName, m_polygons);
-    SavePaths("hello.paths", m_paths);
+    SavePaths(m_paths);
 
     editor::Config config;
     config.cameraPosition = m_camera->GetPosition();
@@ -162,6 +162,9 @@ bool Editor::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 
 void Editor::UpdateUI()
 {
+    m_context.has_polygon_selection = (m_selected_polygon != nullptr);
+    m_context.has_path_selection    = (m_selected_path != nullptr);
+
     if(m_selected_polygon)
     {
         const math::Vector2f& position = m_selected_polygon->Position();
@@ -182,6 +185,13 @@ void Editor::UpdateUI()
             }
         }
     }
+    else if(m_selected_path)
+    {
+        const math::Vector2f& position = m_selected_path->Position();
+        m_context.path_x = position.x;
+        m_context.path_y = position.y;
+        m_context.path_name = m_selected_path->m_name.c_str();
+    }
 }
 
 void Editor::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
@@ -192,19 +202,30 @@ void Editor::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
 
 void Editor::AddPath(const std::vector<math::Vector2f>& points)
 {
-    auto path = std::make_shared<PathEntity>(points);
+    auto path = std::make_shared<PathEntity>("hello", points);
     AddEntity(path, 1);
     m_paths.push_back(path);
 }
 
 mono::IEntityPtr Editor::FindEntityFromPosition(const math::Vector2f& position)
 {
+    auto find_func = [&position](const mono::IEntityPtr& entity) {
+        const math::Quad& bb = entity->BoundingBox();
+        return math::PointInsideQuad(position, bb);
+    };
+
     for(auto& polygon : m_polygons)
     {
-        const math::Quad& bb = polygon->BoundingBox();
-        const bool found_polygon = math::PointInsideQuad(position, bb);
-        if(found_polygon)
+        const bool found = find_func(polygon);
+        if(found)
             return polygon;
+    }
+
+    for(auto& path : m_paths)
+    {
+        const bool found = find_func(path);
+        if(found)
+            return path;
     }
 
     return nullptr;
@@ -213,6 +234,7 @@ mono::IEntityPtr Editor::FindEntityFromPosition(const math::Vector2f& position)
 void Editor::SelectEntity(const mono::IEntityPtr& entity)
 {
     m_selected_polygon = nullptr;
+    m_selected_path = nullptr;
 
     for(auto& polygon : m_polygons)
     {
@@ -222,7 +244,13 @@ void Editor::SelectEntity(const mono::IEntityPtr& entity)
             m_selected_polygon = polygon;
     }
 
-    m_context.has_selection = (m_selected_polygon != nullptr);
+    for(auto& path : m_paths)
+    {
+        const bool selected = (path == entity);
+        if(selected)
+            m_selected_path = path;
+    }
+
     UpdateUI();
 }
 
@@ -243,16 +271,16 @@ void Editor::OnTextureChanged(int texture_index)
 
 void Editor::OnDeletePolygon()
 {
-    m_context.has_selection = false;
+    m_context.has_polygon_selection = false;
 
-    const auto remove_polygon_func = [this] {
+    const auto remove_entity_func = [this] {
         auto it = std::find(m_polygons.begin(), m_polygons.end(), m_selected_polygon);
         m_polygons.erase(it);
         RemoveEntity(m_selected_polygon);
         m_selected_polygon = nullptr;
     };
 
-    SchedulePreFrameTask(remove_polygon_func);
+    SchedulePreFrameTask(remove_entity_func);
 }
 
 void Editor::EditorMenuCallback(EditorMenuOptions option)
@@ -260,7 +288,7 @@ void Editor::EditorMenuCallback(EditorMenuOptions option)
     if(option == EditorMenuOptions::SAVE)
     {
         SavePolygons(m_fileName, m_polygons);
-        SavePaths("hello.paths", m_paths);
+        SavePaths(m_paths);
     }
 }
 
