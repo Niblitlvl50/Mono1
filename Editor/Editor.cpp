@@ -95,6 +95,7 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     m_context.contextMenuCallback = std::bind(&Editor::OnContextMenu, this, _1);
     m_context.texture_repeate_callback = std::bind(&Editor::OnTextureRepeate, this, _1);
     m_context.texture_changed_callback = std::bind(&Editor::OnTextureChanged, this, _1);
+    m_context.path_name_callback = std::bind(&Editor::OnPathName, this, _1);
     m_context.delete_callback = std::bind(&Editor::OnDeletePolygon, this);
     m_context.editorMenuCallback = std::bind(&Editor::EditorMenuCallback, this, _1);
     m_context.toolsMenuCallback = std::bind(&Editor::ToolsMenuCallback, this, _1);
@@ -269,9 +270,16 @@ void Editor::OnTextureChanged(int texture_index)
     m_selected_polygon->SetTexture(avalible_textures[texture_index]);
 }
 
+void Editor::OnPathName(const char* new_name)
+{
+    m_selected_path->m_name = new_name;
+}
+
 void Editor::OnDeletePolygon()
 {
     m_context.has_polygon_selection = false;
+    m_context.has_path_selection = false;
+
 
     const auto remove_entity_func = [this] {
         auto it = std::find(m_polygons.begin(), m_polygons.end(), m_selected_polygon);

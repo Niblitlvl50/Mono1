@@ -48,6 +48,7 @@ namespace editor
         void OnContextMenu(int index);
         void OnTextureRepeate(float repeate);
         void OnTextureChanged(int texture_index);
+        void OnPathName(const char* new_name);
         void OnDeletePolygon();
 
         void EditorMenuCallback(EditorMenuOptions index);

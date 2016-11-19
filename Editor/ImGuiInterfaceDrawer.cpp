@@ -90,7 +90,11 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
             ImGui::Value("X", m_context.path_x);
             ImGui::SameLine();
             ImGui::Value("Y", m_context.path_y);
-            ImGui::Text("%s", m_context.path_name);
+
+            char buffer[100] = { 0 };
+            snprintf(buffer, 100, "%s", m_context.path_name);
+            if(ImGui::InputText("", buffer, 100))
+                m_context.path_name_callback(buffer);
         }
 
         if(ImGui::Button("Delete"))

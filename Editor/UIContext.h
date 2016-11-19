@@ -39,6 +39,7 @@ namespace editor
 
         std::function<void (float)> texture_repeate_callback;
         std::function<void (int)> texture_changed_callback;
+        std::function<void (const char*)> path_name_callback;
         std::function<void ()> delete_callback;
         std::function<void (int)> contextMenuCallback;
         std::function<void (EditorMenuOptions option)> editorMenuCallback;
