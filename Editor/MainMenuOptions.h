@@ -19,11 +19,11 @@ namespace editor
 
     enum ToolsMenuOptions
     {
+        TRANSLATE_TOOL,
+        ROTATE_TOOL,
         POLYGON_TOOL,
         POLYGON_BRUSH_TOOL,
         PATH_TOOL,
-        TRANSLATE_TOOL,
-        ROTATE_TOOL,
         N_TOOLS
     };
 }

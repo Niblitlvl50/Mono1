@@ -41,20 +41,20 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
     if(ImGui::BeginMenu("Tools"))
     {
-        if(ImGui::MenuItem("Polygon", "1", m_context.active_tool_index == 0))
-            m_context.toolsMenuCallback(ToolsMenuOptions::POLYGON_TOOL);
-
-        if(ImGui::MenuItem("Polygon Brush", "2", m_context.active_tool_index == 1))
-            m_context.toolsMenuCallback(ToolsMenuOptions::POLYGON_BRUSH_TOOL);
-
-        if(ImGui::MenuItem("Path drawer", "3", m_context.active_tool_index == 2))
-            m_context.toolsMenuCallback(ToolsMenuOptions::PATH_TOOL);
-
-        if(ImGui::MenuItem("Translate", "4", m_context.active_tool_index == 3))
+        if(ImGui::MenuItem("Translate", "1", m_context.active_tool_index == 0))
             m_context.toolsMenuCallback(ToolsMenuOptions::TRANSLATE_TOOL);
 
-        if(ImGui::MenuItem("Rotate", "5", m_context.active_tool_index == 4))
+        if(ImGui::MenuItem("Rotate", "2", m_context.active_tool_index == 1))
             m_context.toolsMenuCallback(ToolsMenuOptions::ROTATE_TOOL);
+
+        if(ImGui::MenuItem("Polygon", "3", m_context.active_tool_index == 2))
+            m_context.toolsMenuCallback(ToolsMenuOptions::POLYGON_TOOL);
+
+        if(ImGui::MenuItem("Polygon Brush", "4", m_context.active_tool_index == 3))
+            m_context.toolsMenuCallback(ToolsMenuOptions::POLYGON_BRUSH_TOOL);
+
+        if(ImGui::MenuItem("Path drawer", "5", m_context.active_tool_index == 4))
+            m_context.toolsMenuCallback(ToolsMenuOptions::PATH_TOOL);
 
         ImGui::EndMenu();
     }

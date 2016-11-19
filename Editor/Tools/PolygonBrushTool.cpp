@@ -56,24 +56,10 @@ PolygonBrushTool::PolygonBrushTool(Editor* editor)
 }
 
 void PolygonBrushTool::Begin()
-{
-    m_painting = false;
-    m_direction = math::INF;
-
-    m_polygon = std::make_shared<editor::PolygonEntity>();
-    m_editor->AddPolygon(m_polygon);
-
-    m_editor->AddDrawable(m_visualizer, 1);
-}
+{ }
 
 void PolygonBrushTool::End()
-{
-    m_editor->RemoveDrawable(m_visualizer);
-
-    m_painting = false;
-    m_polygon = nullptr;
-    m_drawnPoints.clear();
-}
+{ }
 
 bool PolygonBrushTool::IsActive() const
 {
@@ -85,21 +71,26 @@ void PolygonBrushTool::HandleContextMenu(int menu_index)
 
 void PolygonBrushTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
 {
-    if(!m_polygon)
-        return;
-
     m_painting = true;
+    m_direction = math::INF;
     m_previousPoint = world_pos;
     m_previouslyAddedPoint = world_pos;
 
+    m_polygon = std::make_shared<editor::PolygonEntity>();
     m_polygon->SetPosition(world_pos);
     m_polygon->AddVertex(math::zeroVec);
+
+    m_editor->AddPolygon(m_polygon);
+    m_editor->AddDrawable(m_visualizer, 1);
 }
 
 void PolygonBrushTool::HandleMouseUp(const math::Vector2f& world_pos)
 {
-    if(IsActive())
-        End();
+    m_editor->RemoveDrawable(m_visualizer);
+
+    m_painting = false;
+    m_polygon = nullptr;
+    m_drawnPoints.clear();
 }
 
 void PolygonBrushTool::HandleMousePosition(const math::Vector2f& world_pos)
@@ -129,6 +120,5 @@ void PolygonBrushTool::HandleMousePosition(const math::Vector2f& world_pos)
     }
 
     m_previousPoint = world_pos;
-
     m_drawnPoints.push_back(m_previousPoint);
 }

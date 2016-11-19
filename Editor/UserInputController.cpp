@@ -20,8 +20,6 @@
 #include "ImGuiInterfaceDrawer.h"
 
 
-using namespace editor;
-
 namespace
 {
     struct ToolData
@@ -31,8 +29,10 @@ namespace
         std::vector<std::string> context_menu;
     };
 
-    ToolData tools[ToolsMenuOptions::N_TOOLS];
+    ToolData tools[editor::ToolsMenuOptions::N_TOOLS];
 }
+
+using namespace editor;
 
 UserInputController::UserInputController(const mono::ICameraPtr& camera,
                                          const mono::IWindowPtr& window,
@@ -96,7 +96,7 @@ UserInputController::UserInputController(const mono::ICameraPtr& camera,
         { "Create path", "Undo last" }
     };
 
-    SelectTool(ToolsMenuOptions::POLYGON_TOOL);
+    SelectTool(ToolsMenuOptions::TRANSLATE_TOOL);
 }
 
 UserInputController::~UserInputController()
@@ -184,15 +184,15 @@ bool UserInputController::OnMultiGesture(const event::MultiGestureEvent& event)
 bool UserInputController::OnKeyDown(const event::KeyDownEvent& event)
 {
     if(event.key == Key::ONE)
-        SelectTool(ToolsMenuOptions::POLYGON_TOOL);
-    else if(event.key == Key::TWO)
-        SelectTool(ToolsMenuOptions::POLYGON_BRUSH_TOOL);
-    else if(event.key == Key::THREE)
-        SelectTool(ToolsMenuOptions::PATH_TOOL);
-    else if(event.key == Key::FOUR)
         SelectTool(ToolsMenuOptions::TRANSLATE_TOOL);
-    else if(event.key == Key::FIVE)
+    else if(event.key == Key::TWO)
         SelectTool(ToolsMenuOptions::ROTATE_TOOL);
+    else if(event.key == Key::THREE)
+        SelectTool(ToolsMenuOptions::POLYGON_TOOL);
+    else if(event.key == Key::FOUR)
+        SelectTool(ToolsMenuOptions::POLYGON_BRUSH_TOOL);
+    else if(event.key == Key::FIVE)
+        SelectTool(ToolsMenuOptions::PATH_TOOL);
     else if(event.key == Key::ENTER && event.ctrl)
     {
         if(m_isMaximized)
