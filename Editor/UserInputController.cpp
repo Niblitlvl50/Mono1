@@ -134,7 +134,7 @@ bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)
     {
         const math::Vector2f world_position(event.worldX, event.worldY);
 
-        auto entity = m_editor->FindEntityFromPosition(world_position);
+        auto entity = m_editor->FindEntityFromPoint(world_position);
         m_editor->SelectEntity(entity);
         m_activeTool->HandleMouseDown(world_position, entity);
         handled = m_activeTool->IsActive();
