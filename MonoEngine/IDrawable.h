@@ -18,7 +18,7 @@ namespace mono
     {
         virtual ~IDrawable()
         { }
-		
+
         virtual void doDraw(mono::IRenderer& renderer) const = 0;
 
         // Bounding box in global coordiantes

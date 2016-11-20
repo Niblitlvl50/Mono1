@@ -9,11 +9,11 @@
 #pragma once
 
 #include "IZone.h"
+#include "Math/MathFwd.h"
 #include <vector>
 
 namespace mono
 {
-
     class ZoneBase : public virtual IZone
     {
 
@@ -29,6 +29,8 @@ namespace mono
         virtual void RemoveDrawable(const IDrawablePtr& drawable);
 
         virtual mono::IEntityPtr FindEntityFromId(uint id) const;
+        virtual mono::IEntityPtr FindEntityFromPoint(const math::Vector2f& point) const;
+
         virtual void SchedulePreFrameTask(const std::function<void ()>& task);
 
     protected:
@@ -44,5 +46,4 @@ namespace mono
 
         std::vector<std::function<void ()>> m_preFrameTasks;
     };
-    
 }

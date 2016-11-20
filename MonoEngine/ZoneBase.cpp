@@ -10,6 +10,8 @@
 #include "IRenderer.h"
 #include "IEntity.h"
 #include "Utils.h"
+#include "Math/Quad.h"
+#include "Math/MathFunctions.h"
 
 #include <stdexcept>
 
@@ -96,6 +98,20 @@ mono::IEntityPtr ZoneBase::FindEntityFromId(uint id) const
 {
     const auto find_func = [id](const mono::IEntityPtr& entity) {
         return id == entity->Id();
+    };
+
+    const auto& it = std::find_if(mEntities.begin(), mEntities.end(), find_func);
+    if(it != mEntities.end())
+        return *it;
+
+    return nullptr;
+}
+
+mono::IEntityPtr ZoneBase::FindEntityFromPoint(const math::Vector2f& point) const
+{
+    const auto find_func = [&point](const mono::IEntityPtr& entity) {
+        const math::Quad& bb = entity->BoundingBox();
+        return math::PointInsideQuad(point, bb);
     };
 
     const auto& it = std::find_if(mEntities.begin(), mEntities.end(), find_func);
