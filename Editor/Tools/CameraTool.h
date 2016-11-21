@@ -20,9 +20,9 @@ namespace editor
         CameraTool(const mono::ICameraPtr& camera, const math::Vector2f& window_size);
 
         bool IsActive() const;
-        void HandleMouseDown(const math::Vector2f& world_pos);
-        void HandleMouseUp(const math::Vector2f& world_pos);
-        void HandleMousePosition(const math::Vector2f& world_pos);
+        void HandleMouseDown(const math::Vector2f& screen_position);
+        void HandleMouseUp(const math::Vector2f& screen_position);
+        void HandleMousePosition(const math::Vector2f& screen_position);
 
         void HandleMouseWheel(float x, float y);
         void HandleMultiGesture(const math::Vector2f& screen_position, float distance);
