@@ -85,6 +85,14 @@ void PolygonEntity::AddVertex(const math::Vector2f& vertex)
     }
 }
 
+void PolygonEntity::SetVertex(const math::Vector2f& vertex, size_t index)
+{
+    math::Matrix transform = Transformation();
+    math::Inverse(transform);
+
+    m_points[index] = math::Transform(transform, vertex);
+}
+
 const std::vector<math::Vector2f>& PolygonEntity::GetVertices() const
 {
     return m_points;

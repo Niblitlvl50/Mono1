@@ -36,6 +36,7 @@
 #include "WorldSerializer.h"
 
 #include "Visualizers/GridVisualizer.h"
+#include "Visualizers/GrabberVisualizer.h"
 
 namespace
 {
@@ -147,6 +148,7 @@ void Editor::OnLoad(mono::ICameraPtr camera)
     AddUpdatable(m_interfaceDrawer);
     AddDrawable(m_guiRenderer, 2);
     AddDrawable(std::make_shared<GridVisualizer>(camera), 0);
+    AddDrawable(std::make_shared<GrabberVisualizer>(m_grabbers), 2);
     AddEntity(std::make_shared<SpriteDrawable>("sprites/shuttle.sprite"), 0);
 }
 
@@ -208,51 +210,79 @@ void Editor::AddPath(const std::vector<math::Vector2f>& points)
     m_paths.push_back(path);
 }
 
-mono::IEntityPtr Editor::FindEntityFromPosition(const math::Vector2f& position)
-{
-    auto find_func = [&position](const mono::IEntityPtr& entity) {
-        const math::Quad& bb = entity->BoundingBox();
-        return math::PointInsideQuad(position, bb);
-    };
-
-    for(auto& polygon : m_polygons)
-    {
-        const bool found = find_func(polygon);
-        if(found)
-            return polygon;
-    }
-
-    for(auto& path : m_paths)
-    {
-        const bool found = find_func(path);
-        if(found)
-            return path;
-    }
-
-    return nullptr;
-}
-
 void Editor::SelectEntity(const mono::IEntityPtr& entity)
 {
+    using namespace std::placeholders;
+
     m_selected_polygon = nullptr;
     m_selected_path = nullptr;
+    m_grabbers.clear();
 
     for(auto& polygon : m_polygons)
     {
         const bool selected = (polygon == entity);
         polygon->SetSelected(selected);
         if(selected)
+        {
             m_selected_polygon = polygon;
+            const math::Matrix& transform = polygon->Transformation();
+
+            const auto& vertices = m_selected_polygon->GetVertices();
+            for(size_t index = 0; index < vertices.size(); ++index)
+            {
+                Grabber grab;
+                grab.position = math::Transform(transform, vertices[index]);
+                grab.callback = std::bind(&PolygonEntity::SetVertex, m_selected_polygon, _1, index);
+                m_grabbers.push_back(grab);
+            }
+        }
     }
 
     for(auto& path : m_paths)
     {
         const bool selected = (path == entity);
+        path->SetSelected(selected);
         if(selected)
+        {
             m_selected_path = path;
+            const math::Matrix& transform = path->Transformation();
+
+            const auto& vertices = m_selected_path->m_points;
+            for(size_t index = 0; index < vertices.size(); ++index)
+            {
+                Grabber grab;
+                grab.position = math::Transform(transform, vertices[index]);
+                grab.callback = std::bind(&PathEntity::SetVertex, m_selected_path, _1, index);
+                m_grabbers.push_back(grab);
+            }
+        }
     }
 
     UpdateUI();
+}
+
+void Editor::SelectGrabber(const math::Vector2f& position)
+{
+    for(auto& grabber : m_grabbers)
+        grabber.hoover = false;
+
+    editor::Grabber* grabber = FindGrabber(position);
+    if(grabber)
+        grabber->hoover = true;
+}
+
+editor::Grabber* Editor::FindGrabber(const math::Vector2f& position)
+{
+    const float threshold = m_camera->GetViewport().mB.x / m_window->Size().x * 5.0f;
+
+    for(auto& grabber : m_grabbers)
+    {
+        const float distance = math::Length(grabber.position - position);
+        if(distance <= threshold)
+            return &grabber;
+    }
+
+    return nullptr;
 }
 
 void Editor::OnContextMenu(int index)
@@ -279,16 +309,30 @@ void Editor::OnDeletePolygon()
 {
     m_context.has_polygon_selection = false;
     m_context.has_path_selection = false;
+    m_grabbers.clear();
 
+    if(m_selected_polygon)
+    {
+        const auto remove_polygon_func = [this] {
+            auto it = std::find(m_polygons.begin(), m_polygons.end(), m_selected_polygon);
+            m_polygons.erase(it);
+            RemoveEntity(m_selected_polygon);
+            m_selected_polygon = nullptr;
+        };
 
-    const auto remove_entity_func = [this] {
-        auto it = std::find(m_polygons.begin(), m_polygons.end(), m_selected_polygon);
-        m_polygons.erase(it);
-        RemoveEntity(m_selected_polygon);
-        m_selected_polygon = nullptr;
-    };
+        SchedulePreFrameTask(remove_polygon_func);
+    }
+    else if(m_selected_path)
+    {
+        const auto remove_path_func = [this] {
+            auto it = std::find(m_paths.begin(), m_paths.end(), m_selected_path);
+            m_paths.erase(it);
+            RemoveEntity(m_selected_path);
+            m_selected_path = nullptr;
+        };
 
-    SchedulePreFrameTask(remove_entity_func);
+        SchedulePreFrameTask(remove_path_func);
+    }
 }
 
 void Editor::EditorMenuCallback(EditorMenuOptions option)

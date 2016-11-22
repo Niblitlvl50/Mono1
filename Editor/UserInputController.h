@@ -24,6 +24,7 @@
 namespace editor
 {
     struct UIContext;
+    struct Grabber;
     
     class UserInputController
     {
@@ -68,6 +69,8 @@ namespace editor
         editor::RotateTool m_rotateTool;
         editor::PathTool m_pathTool;
         editor::ITool* m_activeTool;
+
+        editor::Grabber* m_grabber;
 
         bool m_isMaximized;
     };

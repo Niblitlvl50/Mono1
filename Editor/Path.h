@@ -18,7 +18,12 @@ namespace editor
         virtual void Update(unsigned int delta);
         virtual math::Quad BoundingBox() const;
 
+        math::Quad LocalBoundingBox() const;
+        void SetSelected(bool selected);
+        void SetVertex(const math::Vector2f& vertex, size_t index);
+
         std::string m_name;
         std::vector<math::Vector2f> m_points;
+        bool m_selected;
     };
 }

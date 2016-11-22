@@ -7,8 +7,9 @@
 //
 
 #include "UserInputController.h"
-
 #include "Editor.h"
+#include "Grabber.h"
+
 #include "IWindow.h"
 #include "EventHandler/EventHandler.h"
 #include "Events/EventFuncFwd.h"
@@ -48,6 +49,7 @@ UserInputController::UserInputController(const mono::ICameraPtr& camera,
       m_polygonBrushTool(editor),
       m_pathTool(editor),
       m_activeTool(nullptr),
+      m_grabber(nullptr),
       m_isMaximized(false)
 {
     using namespace std::placeholders;
@@ -134,6 +136,11 @@ bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)
     {
         const math::Vector2f world_position(event.worldX, event.worldY);
 
+        // Check for grabbers first
+        m_grabber = m_editor->FindGrabber(world_position);
+        if(m_grabber)
+            return true;
+
         auto entity = m_editor->FindEntityFromPoint(world_position);
         m_editor->SelectEntity(entity);
         m_activeTool->HandleMouseDown(world_position, entity);
@@ -148,6 +155,8 @@ bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)
 
 bool UserInputController::OnMouseUp(const event::MouseUpEvent& event)
 {
+    m_grabber = nullptr;
+
     if(event.key == MouseButton::LEFT)
         m_activeTool->HandleMouseUp(math::Vector2f(event.worldX, event.worldY));
     else if(event.key == MouseButton::RIGHT)
@@ -160,11 +169,25 @@ bool UserInputController::OnMouseUp(const event::MouseUpEvent& event)
 
 bool UserInputController::OnMouseMove(const event::MouseMotionEvent& event)
 {
-    if(m_activeTool->IsActive())
-        m_activeTool->HandleMousePosition(math::Vector2f(event.worldX, event.worldY));
+    const math::Vector2f world_position(event.worldX, event.worldY);
+    const math::Vector2f screen_position(event.screenX, event.screenY);
 
-    if(m_cameraTool.IsActive())
-        m_cameraTool.HandleMousePosition(math::Vector2f(event.screenX, event.screenY));
+    m_editor->SelectGrabber(world_position);
+
+    // Deal with the grabbers first, move if we have one.
+    if(m_grabber)
+    {
+        m_grabber->position = world_position;
+        m_grabber->callback(world_position);
+    }
+    else
+    {
+        if(m_activeTool->IsActive())
+            m_activeTool->HandleMousePosition(world_position);
+
+        if(m_cameraTool.IsActive())
+            m_cameraTool.HandleMousePosition(screen_position);
+    }
 
     return true;
 }

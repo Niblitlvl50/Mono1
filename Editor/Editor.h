@@ -19,6 +19,7 @@
 
 #include "Polygon.h"
 #include "Path.h"
+#include "Grabber.h"
 
 class ImGuiRenderer;
 
@@ -42,8 +43,10 @@ namespace editor
         void AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon);
         void AddPath(const std::vector<math::Vector2f>& points);
 
-        mono::IEntityPtr FindEntityFromPosition(const math::Vector2f& position);
         void SelectEntity(const mono::IEntityPtr& entity);
+
+        void SelectGrabber(const math::Vector2f& position);
+        Grabber* FindGrabber(const math::Vector2f& position);
 
         void OnContextMenu(int index);
         void OnTextureRepeate(float repeate);
@@ -72,6 +75,8 @@ namespace editor
 
         std::shared_ptr<editor::PathEntity> m_selected_path;
         std::vector<std::shared_ptr<editor::PathEntity>> m_paths;
+
+        std::vector<editor::Grabber> m_grabbers;
 
         mono::EventToken<event::SurfaceChangedEvent> m_surfaceChangedToken;
     };
