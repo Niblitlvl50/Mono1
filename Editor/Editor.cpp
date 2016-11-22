@@ -114,7 +114,9 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     for(auto& polygon : polygons)
         AddPolygon(polygon);
 
-    const auto& paths = LoadPaths("hello.paths");
+    m_paths = LoadPaths("world.paths");
+    for(auto& path : m_paths)
+        AddEntity(path, 1);
 }
 
 Editor::~Editor()
@@ -122,7 +124,7 @@ Editor::~Editor()
     m_eventHandler.RemoveListener(m_surfaceChangedToken);
 
     SavePolygons(m_fileName, m_polygons);
-    SavePaths(m_paths);
+    SavePaths("world.paths", m_paths);
 
     editor::Config config;
     config.cameraPosition = m_camera->GetPosition();
@@ -340,7 +342,7 @@ void Editor::EditorMenuCallback(EditorMenuOptions option)
     if(option == EditorMenuOptions::SAVE)
     {
         SavePolygons(m_fileName, m_polygons);
-        SavePaths(m_paths);
+        SavePaths("world.paths", m_paths);
     }
 }
 

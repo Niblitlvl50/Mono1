@@ -6,6 +6,7 @@
 #include "System/SysFile.h"
 #include "WorldFile.h"
 
+#include "Paths/IPath.h"
 #include "Paths/PathFactory.h"
 
 #include "nlohmann_json/json.hpp"
@@ -90,14 +91,53 @@ void editor::SavePolygons(const char* file_name, const std::vector<std::shared_p
 
 std::vector<std::shared_ptr<editor::PathEntity>> editor::LoadPaths(const char* file_name)
 {
-    return std::vector<std::shared_ptr<editor::PathEntity>>();
+    std::vector<std::shared_ptr<editor::PathEntity>> paths;
+
+    File::FilePtr file = File::OpenAsciiFile(file_name);
+    if(!file)
+        return paths;
+
+    std::vector<byte> file_data;
+    File::FileRead(file, file_data);
+
+    const nlohmann::json& json = nlohmann::json::parse(file_data);
+    const std::vector<std::string>& path_names = json["path_files"];
+
+    paths.reserve(path_names.size());
+
+    const auto get_name = [](const std::string& file_name) {
+        const size_t slash_pos = file_name.find_last_of('/');
+        const size_t dot_pos = file_name.find_last_of('.');
+        return file_name.substr(slash_pos +1, dot_pos - slash_pos -1);
+    };
+
+    for(const std::string& file : path_names)
+    {
+        std::shared_ptr<mono::IPath> path = mono::CreatePath(file.c_str());
+        auto path_entity = std::make_shared<editor::PathEntity>(get_name(file), path->GetPathPoints());
+        paths.push_back(path_entity);
+    }
+
+    return paths;
 }
 
-void editor::SavePaths(const std::vector<std::shared_ptr<editor::PathEntity>>& paths)
+void editor::SavePaths(const char* file_name, const std::vector<std::shared_ptr<editor::PathEntity>>& paths)
 {
+    std::vector<std::string> path_names;
+    path_names.reserve(paths.size());
+
     for(auto& path : paths)
     {
-        const std::string& filename = path->m_name + ".path";
-        mono::SavePath(filename.c_str(), math::zeroVec, path->m_points);
+        const std::string& filename = "paths/" + path->m_name + ".path";
+        mono::SavePath(filename.c_str(), path->Position(), path->m_points);
+        path_names.push_back(filename);
     }
+
+    nlohmann::json json;
+    json["path_files"] = path_names;
+
+    const std::string& serialized_json = json.dump(4);
+
+    File::FilePtr file = File::CreateAsciiFile(file_name);
+    std::fwrite(serialized_json.data(), serialized_json.length(), sizeof(char), file.get());
 }
