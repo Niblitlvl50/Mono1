@@ -115,6 +115,7 @@ std::vector<std::shared_ptr<editor::PathEntity>> editor::LoadPaths(const char* f
     {
         std::shared_ptr<mono::IPath> path = mono::CreatePath(file.c_str());
         auto path_entity = std::make_shared<editor::PathEntity>(get_name(file), path->GetPathPoints());
+        path_entity->SetPosition(path->Position());
         paths.push_back(path_entity);
     }
 
