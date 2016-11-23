@@ -21,6 +21,8 @@ namespace mono
         // Get total length of the path
         virtual float Length() const = 0;
 
+        virtual const math::Vector2f& Position() const = 0;
+
         // Get a position from a length value
         virtual math::Vector2f GetPositionByLength(float length) const = 0;
 

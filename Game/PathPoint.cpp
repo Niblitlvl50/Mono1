@@ -29,7 +29,7 @@ PathPoint::PathPoint()
         math::Vector2f(0, 0)
     };
 
-    mPath = mono::CreatePath(points);
+    mPath = mono::CreatePath(math::zeroVec, points);
 }
 
 void PathPoint::Draw(mono::IRenderer& renderer) const
