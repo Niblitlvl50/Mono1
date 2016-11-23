@@ -164,18 +164,15 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
       m_spawner(eventHandler)
 {
     const game::SpawnEntityFunc spawnEntityFunc = std::bind(&TestZone::SpawnEntity, this, _1);
-    mSpawnEntityToken = mEventHandler.AddListener(spawnEntityFunc);
-    
     const game::SpawnPhysicsEntityFunc spawnPhysicsFunc = std::bind(&TestZone::SpawnPhysicsEntity, this, _1);
-    mSpawnPhysicsEntityToken = mEventHandler.AddListener(spawnPhysicsFunc);
-
     const game::RemoveEntityFunc& removeFunc = std::bind(&TestZone::OnRemoveEntity, this, _1);
-    mRemoveEntityByIdToken = mEventHandler.AddListener(removeFunc);
-
     const game::ShockwaveEventFunc shockwaveFunc = std::bind(&TestZone::OnShockwaveEvent, this, _1);
-    mShockwaveEventToken = mEventHandler.AddListener(shockwaveFunc);
-
     const std::function<bool (const game::DamageEvent&)>& damageFunc = std::bind(&TestZone::OnDamageEvent, this, _1);
+
+    mSpawnEntityToken = mEventHandler.AddListener(spawnEntityFunc);
+    mSpawnPhysicsEntityToken = mEventHandler.AddListener(spawnPhysicsFunc);
+    mRemoveEntityByIdToken = mEventHandler.AddListener(removeFunc);
+    mShockwaveEventToken = mEventHandler.AddListener(shockwaveFunc);
     mDamageEventToken = mEventHandler.AddListener(damageFunc);
 
     m_backgroundMusic = mono::AudioFactory::CreateSound("sound/InGame_Phoenix.wav", true, true);
@@ -198,18 +195,18 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     world::ReadWorld(world_file, world_header);
     game::LoadWorld(this, world_header.polygons);
 
-    std::shared_ptr<Moon> moon1 = std::make_shared<Moon>(550.0f, 300.0f, 100.0f);
-    std::shared_ptr<Moon> moon2 = std::make_shared<Moon>(-400.0f, 400.0f, 50.0f);
-    AddPhysicsEntity(moon1, FOREGROUND);
-    AddPhysicsEntity(moon2, FOREGROUND);
-    AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
+    //std::shared_ptr<Moon> moon1 = std::make_shared<Moon>(550.0f, 300.0f, 100.0f);
+    //std::shared_ptr<Moon> moon2 = std::make_shared<Moon>(-400.0f, 400.0f, 50.0f);
+    //AddPhysicsEntity(moon1, FOREGROUND);
+    //AddPhysicsEntity(moon2, FOREGROUND);
+    //AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
     AddUpdatable(std::make_shared<ListenerPositionUpdater>(camera));
 
     std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(0.0f, 0.0f, mEventHandler);
     AddPhysicsEntity(shuttle, FOREGROUND);
 
     AddPhysicsEntity(game::CreateCacoDemon(math::Vector2f(100, 100), mEventHandler), FOREGROUND);
-    AddPhysicsEntity(game::CreateRyu(math::Vector2f(100.0f, 50.0f), mEventHandler), MIDDLEGROUND);
+    //AddPhysicsEntity(game::CreateRyu(math::Vector2f(100.0f, 50.0f), mEventHandler), MIDDLEGROUND);
 
     AddPhysicsEntity(game::CreateInvader(math::Vector2f(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
     AddPhysicsEntity(game::CreateInvader(math::Vector2f(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
@@ -220,7 +217,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddEntity(std::make_shared<InvaderGroup>(math::Vector2f(300.0f, 800.0f)), BACKGROUND);
     AddEntity(std::make_shared<DotEntity>(), FOREGROUND);
     AddEntity(std::make_shared<PathPoint>(), BACKGROUND);
-    AddEntity(std::make_shared<Morpher>(), FOREGROUND);
+    //AddEntity(std::make_shared<Morpher>(), FOREGROUND);
     AddEntity(std::make_shared<game::CubeSwarm>(), FOREGROUND);
 
     AddMeteorCluster(this);
