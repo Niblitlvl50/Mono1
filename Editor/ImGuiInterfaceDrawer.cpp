@@ -75,10 +75,10 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
 
         if(m_context.has_polygon_selection)
         {
-            ImGui::Value("X", m_context.polygon_x);
+            ImGui::Value("X", m_context.position_x);
             ImGui::SameLine();
-            ImGui::Value("Y", m_context.polygon_y);
-            ImGui::Value("Rotation", m_context.polygon_rotation);
+            ImGui::Value("Y", m_context.position_y);
+            ImGui::Value("Rotation", m_context.rotation);
             if(ImGui::SliderFloat("Repeate", &m_context.texture_repeate, 1.0f, 10.0f))
                 m_context.texture_repeate_callback(m_context.texture_repeate);
 
@@ -87,14 +87,15 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
         }
         else if(m_context.has_path_selection)
         {
-            ImGui::Value("X", m_context.path_x);
-            ImGui::SameLine();
-            ImGui::Value("Y", m_context.path_y);
-
             char buffer[100] = { 0 };
             snprintf(buffer, 100, "%s", m_context.path_name);
             if(ImGui::InputText("", buffer, 100))
                 m_context.path_name_callback(buffer);
+
+            ImGui::Value("X", m_context.position_x);
+            ImGui::SameLine();
+            ImGui::Value("Y", m_context.position_y);
+            ImGui::Value("Rotation", m_context.rotation);
         }
 
         if(ImGui::Button("Delete"))

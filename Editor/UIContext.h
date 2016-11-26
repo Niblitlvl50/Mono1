@@ -24,15 +24,14 @@ namespace editor
         int texture_items_count = 0;
 
         bool has_polygon_selection = false;
-        float polygon_x = 0.0f;
-        float polygon_y = 0.0f;
-        float polygon_rotation = 0.0f;
+        bool has_path_selection = false;
+
+        float position_x = 0.0f;
+        float position_y = 0.0f;
+        float rotation = 0.0f;
+
         float texture_repeate = 0.0f;
         int texture_index = 0;
-
-        bool has_path_selection = false;
-        float path_x = 0.0f;
-        float path_y = 0.0f;
         const char* path_name = nullptr;
 
         int active_tool_index = 0;

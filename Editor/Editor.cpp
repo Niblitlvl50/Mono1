@@ -70,6 +70,18 @@ namespace
 
     constexpr int n_textures = 6;
 
+    int FindTextureIndex(const char* texture)
+    {
+        for(int index = 0; index < n_textures; ++index)
+        {
+            const bool found = std::strstr(texture, avalible_textures[index]) != nullptr;
+            if(found)
+                return index;
+        }
+
+        return -1;
+    }
+
     void SetupIcons(editor::UIContext& context, std::unordered_map<unsigned int, mono::ITexturePtr>& textures)
     {
         mono::ITexturePtr texture = mono::CreateTexture("textures/placeholder.png");
@@ -172,28 +184,18 @@ void Editor::UpdateUI()
     if(m_selected_polygon)
     {
         const math::Vector2f& position = m_selected_polygon->Position();
-        m_context.polygon_x = position.x;
-        m_context.polygon_y = position.y;
-        m_context.polygon_rotation = m_selected_polygon->Rotation();
+        m_context.position_x = position.x;
+        m_context.position_y = position.y;
+        m_context.rotation = m_selected_polygon->Rotation();
         m_context.texture_repeate = m_selected_polygon->GetTextureRepate();
-
-        const char* texture = m_selected_polygon->GetTexture();
-
-        for(int index = 0; index < n_textures; ++index)
-        {
-            const bool found = std::strstr(texture, avalible_textures[index]) != nullptr;
-            if(found)
-            {
-                m_context.texture_index = index;
-                break;
-            }
-        }
+        m_context.texture_index = FindTextureIndex(m_selected_polygon->GetTexture());
     }
     else if(m_selected_path)
     {
         const math::Vector2f& position = m_selected_path->Position();
-        m_context.path_x = position.x;
-        m_context.path_y = position.y;
+        m_context.position_x = position.x;
+        m_context.position_y = position.y;
+        m_context.rotation = 0.0f;
         m_context.path_name = m_selected_path->m_name.c_str();
     }
 }
