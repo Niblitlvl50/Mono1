@@ -14,7 +14,6 @@
 
 #include "MainMenuOptions.h"
 #include "UIContext.h"
-#include "ImGuiInterfaceDrawer.h"
 #include "ImGuiImpl/ImGuiInputHandler.h"
 
 #include "Polygon.h"
@@ -67,7 +66,6 @@ namespace editor
         mono::ICameraPtr m_camera;
 
         editor::UIContext m_context;
-        std::shared_ptr<editor::ImGuiInterfaceDrawer> m_interfaceDrawer;
         std::shared_ptr<ImGuiRenderer> m_guiRenderer;
         std::shared_ptr<editor::UserInputController> m_userInputController;
 

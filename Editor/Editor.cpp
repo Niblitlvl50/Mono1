@@ -104,7 +104,6 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
     SetupIcons(m_context, textures);
 
-    m_interfaceDrawer = std::make_shared<editor::ImGuiInterfaceDrawer>(m_context);
     m_guiRenderer = std::make_shared<ImGuiRenderer>("editor_imgui.ini", m_window->Size(), textures);
 
     const event::SurfaceChangedEventFunc surface_func = std::bind(&Editor::OnSurfaceChanged, this, _1);
@@ -147,7 +146,7 @@ void Editor::OnLoad(mono::ICameraPtr camera)
 
     m_userInputController = std::make_shared<editor::UserInputController>(camera, m_window, this, &m_context, m_eventHandler);
 
-    AddUpdatable(m_interfaceDrawer);
+    AddUpdatable(std::make_shared<editor::ImGuiInterfaceDrawer>(m_context));
     AddDrawable(m_guiRenderer, 2);
     AddDrawable(std::make_shared<GridVisualizer>(camera), 0);
     AddDrawable(std::make_shared<GrabberVisualizer>(m_grabbers), 2);
