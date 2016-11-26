@@ -13,9 +13,13 @@
 
 namespace editor
 {
+    class Editor;
+    
     class RotateTool : public ITool
     {
     public:
+
+        RotateTool(Editor* editor);
 
         virtual void Begin();
         virtual void End();
@@ -25,6 +29,8 @@ namespace editor
         virtual void HandleMouseUp(const math::Vector2f& world_pos);
         virtual void HandleMousePosition(const math::Vector2f& world_pos);
 
+    private:
+        Editor* m_editor;
         mono::IEntityPtr m_entity;
         float m_rotationDiff;
     };

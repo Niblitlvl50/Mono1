@@ -63,10 +63,10 @@ namespace editor
         editor::UIContext* m_context;
 
         editor::CameraTool m_cameraTool;
-        editor::PolygonTool m_polygonTool;
-        editor::PolygonBrushTool m_polygonBrushTool;
         editor::TranslateTool m_translateTool;
         editor::RotateTool m_rotateTool;
+        editor::PolygonTool m_polygonTool;
+        editor::PolygonBrushTool m_polygonBrushTool;
         editor::PathTool m_pathTool;
         editor::ITool* m_activeTool;
 

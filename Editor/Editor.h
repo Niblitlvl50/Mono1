@@ -47,6 +47,7 @@ namespace editor
 
         void SelectGrabber(const math::Vector2f& position);
         Grabber* FindGrabber(const math::Vector2f& position);
+        void UpdateGrabbers();
 
         void OnContextMenu(int index);
         void OnTextureRepeate(float repeate);

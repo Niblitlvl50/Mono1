@@ -14,9 +14,13 @@
 
 namespace editor
 {
+    class Editor;
+
     class TranslateTool : public ITool
     {
     public:
+
+        TranslateTool(Editor* editor);
 
         virtual void Begin();
         virtual void End();
@@ -26,6 +30,9 @@ namespace editor
         virtual void HandleMouseUp(const math::Vector2f& world_pos);
         virtual void HandleMousePosition(const math::Vector2f& world_pos);
 
+    private:
+
+        Editor* m_editor;
         mono::IEntityPtr m_entity;
         math::Vector2f m_beginTranslate;
         math::Vector2f m_positionDiff;

@@ -11,8 +11,13 @@
 #include "Math/Vector2f.h"
 #include "Math/Quad.h"
 #include "IEntity.h"
+#include "Editor.h"
 
 using namespace editor;
+
+RotateTool::RotateTool(Editor* editor)
+    : m_editor(editor)
+{ }
 
 void RotateTool::Begin()
 { }
@@ -55,6 +60,7 @@ void RotateTool::HandleMousePosition(const math::Vector2f& world_pos)
     const float angle = math::AngleBetweenPoints(position, world_pos);
 
     m_entity->SetRotation(angle + m_rotationDiff);
+    m_editor->UpdateGrabbers();
 }
 
 

@@ -214,30 +214,15 @@ void Editor::AddPath(const std::vector<math::Vector2f>& points)
 
 void Editor::SelectEntity(const mono::IEntityPtr& entity)
 {
-    using namespace std::placeholders;
-
     m_selected_polygon = nullptr;
     m_selected_path = nullptr;
-    m_grabbers.clear();
 
     for(auto& polygon : m_polygons)
     {
         const bool selected = (polygon == entity);
         polygon->SetSelected(selected);
         if(selected)
-        {
             m_selected_polygon = polygon;
-            const math::Matrix& transform = polygon->Transformation();
-
-            const auto& vertices = m_selected_polygon->GetVertices();
-            for(size_t index = 0; index < vertices.size(); ++index)
-            {
-                Grabber grab;
-                grab.position = math::Transform(transform, vertices[index]);
-                grab.callback = std::bind(&PolygonEntity::SetVertex, m_selected_polygon, _1, index);
-                m_grabbers.push_back(grab);
-            }
-        }
     }
 
     for(auto& path : m_paths)
@@ -245,21 +230,10 @@ void Editor::SelectEntity(const mono::IEntityPtr& entity)
         const bool selected = (path == entity);
         path->SetSelected(selected);
         if(selected)
-        {
             m_selected_path = path;
-            const math::Matrix& transform = path->Transformation();
-
-            const auto& vertices = m_selected_path->m_points;
-            for(size_t index = 0; index < vertices.size(); ++index)
-            {
-                Grabber grab;
-                grab.position = math::Transform(transform, vertices[index]);
-                grab.callback = std::bind(&PathEntity::SetVertex, m_selected_path, _1, index);
-                m_grabbers.push_back(grab);
-            }
-        }
     }
 
+    UpdateGrabbers();
     UpdateUI();
 }
 
@@ -285,6 +259,40 @@ editor::Grabber* Editor::FindGrabber(const math::Vector2f& position)
     }
 
     return nullptr;
+}
+
+void Editor::UpdateGrabbers()
+{
+    using namespace std::placeholders;
+
+    m_grabbers.clear();
+
+    if(m_selected_polygon)
+    {
+        const math::Matrix& transform = m_selected_polygon->Transformation();
+
+        const auto& vertices = m_selected_polygon->GetVertices();
+        for(size_t index = 0; index < vertices.size(); ++index)
+        {
+            Grabber grab;
+            grab.position = math::Transform(transform, vertices[index]);
+            grab.callback = std::bind(&PolygonEntity::SetVertex, m_selected_polygon, _1, index);
+            m_grabbers.push_back(grab);
+        }
+    }
+    else if(m_selected_path)
+    {
+        const math::Matrix& transform = m_selected_path->Transformation();
+
+        const auto& vertices = m_selected_path->m_points;
+        for(size_t index = 0; index < vertices.size(); ++index)
+        {
+            Grabber grab;
+            grab.position = math::Transform(transform, vertices[index]);
+            grab.callback = std::bind(&PathEntity::SetVertex, m_selected_path, _1, index);
+            m_grabbers.push_back(grab);
+        }
+    }
 }
 
 void Editor::OnContextMenu(int index)

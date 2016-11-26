@@ -10,8 +10,13 @@
 #include "IEntity.h"
 #include "Math/Vector2f.h"
 #include "Math/Quad.h"
+#include "Editor.h"
 
 using namespace editor;
+
+TranslateTool::TranslateTool(Editor* editor)
+    : m_editor(editor)
+{ }
 
 void TranslateTool::Begin()
 { }
@@ -53,6 +58,7 @@ void TranslateTool::HandleMousePosition(const math::Vector2f& world_pos)
     const math::Vector2f& new_pos = m_beginTranslate - delta;
 
     m_entity->SetPosition(new_pos + m_positionDiff);
+    m_editor->UpdateGrabbers();
 }
 
 
