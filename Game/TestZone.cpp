@@ -233,13 +233,13 @@ void TestZone::OnUnload()
 
 bool TestZone::SpawnEntity(const game::SpawnEntityEvent& event)
 {
-    AddEntity(event.mEntity, FOREGROUND);
+    AddEntity(event.entity, FOREGROUND);
     return true;
 }
 
 bool TestZone::SpawnPhysicsEntity(const game::SpawnPhysicsEntityEvent& event)
 {
-    AddPhysicsEntity(event.mEntity, FOREGROUND);
+    AddPhysicsEntity(event.entity, FOREGROUND);
     return true;
 }
 
@@ -261,7 +261,7 @@ bool TestZone::OnRemoveEntity(const game::RemoveEntityEvent& event)
 
 bool TestZone::OnShockwaveEvent(const game::ShockwaveEvent& event)
 {
-    const auto func = std::bind(ApplyShockwave, _1, event.mPosition, event.mMagnitude);
+    const auto func = std::bind(ApplyShockwave, _1, event.position, event.magnitude);
     this->ForEachBody(func);
 
     return true;

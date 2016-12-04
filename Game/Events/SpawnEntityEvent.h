@@ -15,9 +15,9 @@ namespace game
     struct SpawnEntityEvent
     {
         SpawnEntityEvent(const mono::IEntityPtr& entity)
-            : mEntity(entity)
+            : entity(entity)
         { }
-        const mono::IEntityPtr mEntity;
+        const mono::IEntityPtr entity;
     };
     
     typedef std::function<bool (const game::SpawnEntityEvent& event)> SpawnEntityFunc;
