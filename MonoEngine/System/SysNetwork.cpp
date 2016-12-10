@@ -66,12 +66,12 @@ namespace
             return zed_net_udp_socket_send(m_handle, socket_address, data.data(), size);
         }
 
-        void Receive(std::vector<byte>& data)
+        bool Receive(std::vector<byte>& data)
         {
             zed_net_address_t sender;
             const int size = static_cast<int>(data.capacity());
-            zed_net_udp_socket_receive(m_handle, &sender, data.data(), size);
-            data.shrink_to_fit();
+            return zed_net_udp_socket_receive(m_handle, &sender, data.data(), size) != 0;
+            //data.shrink_to_fit();
         }
 
         zed_net_address_t m_address;

@@ -21,8 +21,8 @@ namespace Network
     //! Exit the network module
     void Exit();
 
+    // Get the host name of the computer
     std::string GetLocalHostName();
-
 
     class ISocket
     {
@@ -40,10 +40,12 @@ namespace Network
         //! Receives data from the socket into the buffer,
         //! make sure to reserve the amount of data you want to
         //! be able to receive.
-        virtual void Receive(std::vector<byte>& buffer) = 0;
+        virtual bool Receive(std::vector<byte>& buffer) = 0;
     };
 
-    std::shared_ptr<ISocket> CreateUDPSocket(int port, bool blocking);
-    std::shared_ptr<ISocket> OpenUDPSocket(const char* address, int port, bool blocking);
-    std::shared_ptr<ISocket> OpenBroadcastSocket(int port, bool blocking);
+    using ISocketPtr = std::shared_ptr<ISocket>;
+
+    ISocketPtr CreateUDPSocket(int port, bool blocking);
+    ISocketPtr OpenUDPSocket(const char* address, int port, bool blocking);
+    ISocketPtr OpenBroadcastSocket(int port, bool blocking);
 }
