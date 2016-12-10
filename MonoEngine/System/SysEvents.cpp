@@ -54,8 +54,7 @@ namespace
         if(event.code == Events::TIMER_CALLBACK)
         {
             // Function signature
-            typedef void (*callback)(void*);
-
+            using callback = void (*)(void*);
             const callback func = reinterpret_cast<callback>(event.data1);
             func(event.data2);
 

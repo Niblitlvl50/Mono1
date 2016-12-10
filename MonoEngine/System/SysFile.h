@@ -16,7 +16,7 @@
 namespace File
 {
     //! A smart file handle
-    typedef std::shared_ptr<FILE> FilePtr;
+    using FilePtr = std::shared_ptr<FILE>;
 
     //! Opens a binary file for reading
     FilePtr OpenBinaryFile(const char* file_name);

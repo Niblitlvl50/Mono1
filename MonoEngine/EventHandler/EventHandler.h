@@ -23,7 +23,7 @@ namespace mono
     template<typename Event>
     struct EventListeners
     {
-        typedef std::function<bool (const Event& event)> ListenerCallback;
+        using ListenerCallback = std::function<bool (const Event& event)>;
         //std::unordered_map<EventToken<Event>, ListenerCallback> mListeners;
         std::map<EventToken<Event>, ListenerCallback> mListeners;
 
@@ -55,8 +55,8 @@ namespace mono
     
     class EventHandler
     {
-        typedef std::shared_ptr<void> voidPtr;
-        std::unordered_map<std::string, voidPtr> events;
+        using VoidPtr = std::shared_ptr<void>;
+        std::unordered_map<std::string, VoidPtr> events;
 
     public:
         

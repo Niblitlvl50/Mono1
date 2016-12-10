@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <functional>
+
 namespace game
 {
     struct RemoveEntityEvent
@@ -19,5 +21,5 @@ namespace game
         const uint id;
     };
     
-    typedef std::function<bool (const game::RemoveEntityEvent& event)> RemoveEntityFunc;
+    using RemoveEntityFunc = std::function<bool (const game::RemoveEntityEvent& event)>;
 }

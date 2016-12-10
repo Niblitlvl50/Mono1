@@ -13,18 +13,18 @@
 
 namespace mono
 {
-    typedef std::shared_ptr<IWindow> IWindowPtr;
-    typedef std::shared_ptr<ICamera> ICameraPtr;
-    typedef std::shared_ptr<IRenderer> IRendererPtr;
-    typedef std::shared_ptr<IDrawable> IDrawablePtr;
-    typedef std::shared_ptr<IEntity> IEntityPtr;
-    typedef std::shared_ptr<IPhysicsEntity> IPhysicsEntityPtr;
-    typedef std::shared_ptr<IUpdatable> IUpdatablePtr;
-    typedef std::shared_ptr<IInputHandler> IInputHandlerPtr;
-    typedef std::shared_ptr<IZone> IZonePtr;
-    typedef std::shared_ptr<ITexture> ITexturePtr;
-    typedef std::shared_ptr<IAction> IActionPtr;
-    typedef std::shared_ptr<ISound> ISoundPtr;
-    typedef std::shared_ptr<IShader> IShaderPtr;
-    typedef std::shared_ptr<ISprite> ISpritePtr;
+    using IWindowPtr = std::shared_ptr<IWindow>;
+    using ICameraPtr = std::shared_ptr<ICamera>;
+    using IRendererPtr = std::shared_ptr<IRenderer>;
+    using IDrawablePtr = std::shared_ptr<IDrawable>;
+    using IEntityPtr = std::shared_ptr<IEntity>;
+    using IPhysicsEntityPtr = std::shared_ptr<IPhysicsEntity>;
+    using IUpdatablePtr = std::shared_ptr<IUpdatable>;
+    using IInputHandlerPtr = std::shared_ptr<IInputHandler>;
+    using IZonePtr = std::shared_ptr<IZone>;
+    using ITexturePtr = std::shared_ptr<ITexture>;
+    using IActionPtr = std::shared_ptr<IAction>;
+    using ISoundPtr = std::shared_ptr<ISound>;
+    using IShaderPtr = std::shared_ptr<IShader>;
+    using ISpritePtr = std::shared_ptr<ISprite>;
 }

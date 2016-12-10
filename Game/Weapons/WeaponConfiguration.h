@@ -7,7 +7,8 @@
 
 namespace game
 {
-    typedef void (*bullet_impact_callback)(const mono::IPhysicsEntity*, const mono::IBodyPtr&, mono::EventHandler&);
+    using bullet_impact_callback = void (*)(const mono::IPhysicsEntity*, const mono::IBodyPtr&, mono::EventHandler&);
+    
 
     struct BulletConfiguration
     {

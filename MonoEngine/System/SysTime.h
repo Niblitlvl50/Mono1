@@ -25,8 +25,7 @@ namespace Time
         virtual void Stop() = 0;
     };
 
-    typedef std::unique_ptr<ITimer> ITimerPtr;
-
+    using ITimerPtr = std::unique_ptr<ITimer>;
 
     //! Create a timer with a single callback after a certain time
     ITimerPtr CreateOneShotTimer(unsigned int ms, const std::function<void ()>& callback);

@@ -32,6 +32,6 @@ namespace mono
         virtual int ColorComponents() const = 0;
     };
     
-    typedef std::shared_ptr<IImage> IImagePtr;
+    using IImagePtr = std::shared_ptr<IImage>;
 }
 

@@ -18,12 +18,10 @@ struct cpShape;
 namespace mono
 {
     struct Object;
-    
     struct IBody;
-    typedef std::shared_ptr<IBody> IBodyPtr;
-
     struct IShape;
-    typedef std::shared_ptr<IShape> IShapePtr;
 
-    typedef std::function<void (const IBodyPtr&)> BodyFunc;
+    using IBodyPtr = std::shared_ptr<IBody>;
+    using IShapePtr = std::shared_ptr<IShape>;
+    using BodyFunc = std::function<void (const IBodyPtr&)>;
 }

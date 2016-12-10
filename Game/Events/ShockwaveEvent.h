@@ -11,6 +11,8 @@
 #include "MonoFwd.h"
 #include "Math/Vector2f.h"
 
+#include <functional>
+
 namespace game
 {
     struct ShockwaveEvent
@@ -24,5 +26,5 @@ namespace game
         const float magnitude;
     };
 
-    typedef std::function<bool (const game::ShockwaveEvent&)> ShockwaveEventFunc;
+    using ShockwaveEventFunc = std::function<bool (const game::ShockwaveEvent&)>;
 }

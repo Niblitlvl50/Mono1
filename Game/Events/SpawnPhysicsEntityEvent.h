@@ -10,6 +10,7 @@
 
 #include "MonoFwd.h"
 #include "MonoPtrFwd.h"
+#include <functional>
 
 namespace game
 {
@@ -23,5 +24,5 @@ namespace game
         const int layer;
     };
     
-    typedef std::function<bool (const game::SpawnPhysicsEntityEvent& event)> SpawnPhysicsEntityFunc;
+    using SpawnPhysicsEntityFunc = std::function<bool (const game::SpawnPhysicsEntityEvent& event)>;
 }

@@ -9,6 +9,7 @@
 #pragma once
 
 #include "MonoFwd.h"
+#include <functional>
 
 namespace game
 {
@@ -20,6 +21,6 @@ namespace game
         const mono::IEntityPtr entity;
     };
     
-    typedef std::function<bool (const game::SpawnEntityEvent& event)> SpawnEntityFunc;
+    using SpawnEntityFunc = std::function<bool (const game::SpawnEntityEvent& event)>;
 }
 
