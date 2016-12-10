@@ -29,7 +29,7 @@ namespace
             if(address_result != 0)
                 throw std::runtime_error("Unable to resolve host address");
 
-            m_handle = zed_net_udp_socket_open(port, blocking);
+            m_handle = zed_net_udp_socket_open(port, !blocking);
             if(!m_handle)
                 throw std::runtime_error("Failed to create socket");
 
