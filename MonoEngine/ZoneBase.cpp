@@ -91,11 +91,11 @@ void ZoneBase::RemoveDrawable(const IDrawablePtr& drawable)
     };
 
     auto it = std::find_if(mDrawables.begin(), mDrawables.end(), func);
-    if(it == mDrawables.end())
+    if(it != mDrawables.end())
+        mDrawables.erase(it);
+    else
         std::printf("ZoneBase - Unable to remove drawable");
         //throw std::runtime_error("ZoneBase - Unable to remove drawable");
-
-    mDrawables.erase(it);
 }
 
 mono::IEntityPtr ZoneBase::FindEntityFromId(uint id) const
