@@ -18,7 +18,8 @@ using namespace game;
 Weapon::Weapon(const WeaponConfiguration& config, mono::EventHandler& eventHandler)
     : m_weaponConfig(config),
       m_eventHandler(eventHandler),
-      m_lastFireTimestamp(0)
+      m_lastFireTimestamp(0),
+      m_currentFireRate(1.0f)
 {
     if(config.fire_sound)
         m_fireSound = mono::AudioFactory::CreateSound(config.fire_sound, false, false);
@@ -27,12 +28,16 @@ Weapon::Weapon(const WeaponConfiguration& config, mono::EventHandler& eventHandl
 void Weapon::Fire(const math::Vector2f& position, float direction)
 {
     const float rpsHz = 1.0f / m_weaponConfig.rounds_per_second;
-    const unsigned int weaponDelta = rpsHz * 1000.0f;
+    const unsigned int weapon_delta = rpsHz * 1000.0f;
 
     const unsigned int now = Time::GetMilliseconds();
     const unsigned int delta = now - m_lastFireTimestamp;
+    const unsigned int modified_delta = delta * m_currentFireRate;
 
-    if(delta > weaponDelta)
+    if(delta > weapon_delta)
+        m_currentFireRate = 1.0f;
+
+    if(modified_delta > weapon_delta)
     {
         const math::Vector2f unit(-std::sin(direction), std::cos(direction));
         const math::Vector2f& impulse = unit * m_weaponConfig.bullet_force;
@@ -48,5 +53,7 @@ void Weapon::Fire(const math::Vector2f& position, float direction)
             m_fireSound->Play();
 
         m_lastFireTimestamp = now;
+        m_currentFireRate *= m_weaponConfig.fire_rate_multiplier;
+        m_currentFireRate = std::min(m_currentFireRate, m_weaponConfig.max_fire_rate);
     }
 }

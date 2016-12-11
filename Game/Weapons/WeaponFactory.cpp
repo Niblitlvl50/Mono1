@@ -75,10 +75,12 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponTyp
             bullet_config.sprite_file = "sprites/firebullet.sprite";
             bullet_config.sound_file = nullptr;
 
-            config.rounds_per_second = 8.0f;
+            config.rounds_per_second = 6.0f;
+            config.fire_rate_multiplier = 1.1f;
+            config.max_fire_rate = 3.0f;
             config.bullet_force = 400.0f;
             config.fire_sound = "sound/laser.wav";
-            config.bullet_config = bullet_config;
+            config.bullet_config = std::move(bullet_config);
 
             break;
         }
@@ -94,7 +96,7 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponTyp
 
             config.rounds_per_second = 1.5f;
             config.bullet_force = 300.0f;
-            config.bullet_config = bullet_config;
+            config.bullet_config = std::move(bullet_config);
 
             break;
         }
@@ -110,7 +112,7 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponTyp
 
             config.rounds_per_second = 2.0f;
             config.bullet_force = 400.0f;
-            config.bullet_config = bullet_config;
+            config.bullet_config = std::move(bullet_config);
 
             break;
         }

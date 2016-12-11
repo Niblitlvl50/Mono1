@@ -21,6 +21,7 @@ namespace game
         const WeaponConfiguration m_weaponConfig;
         mono::EventHandler& m_eventHandler;
         unsigned int m_lastFireTimestamp;
+        float m_currentFireRate;
 
         mono::ISoundPtr m_fireSound;
     };

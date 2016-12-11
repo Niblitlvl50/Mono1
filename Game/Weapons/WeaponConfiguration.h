@@ -8,7 +8,6 @@
 namespace game
 {
     using bullet_impact_callback = void (*)(const mono::IPhysicsEntity*, const mono::IBodyPtr&, mono::EventHandler&);
-    
 
     struct BulletConfiguration
     {
@@ -24,6 +23,8 @@ namespace game
     struct WeaponConfiguration
     {
         float rounds_per_second = 1.0f;
+        float fire_rate_multiplier = 1.0f;
+        float max_fire_rate = 1.0f;
         float bullet_force = 100.0f;
         const char* fire_sound = nullptr;
 
