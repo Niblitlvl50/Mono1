@@ -156,7 +156,7 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const char* fileName, bool loop,
         if(data)
             return std::make_shared<SoundImpl>(data, loop, relative);
 
-        std::printf("Unable to create a shared from a weak pointer, will reload the data. Source: %s\n", fileName);
+        std::printf("AudioFactory - Unable to create a shared from a weak pointer, will reload the data. Source: %s\n", fileName);
     }
 
     const mono::SoundFile& soundFile = LoadFile(fileName);

@@ -30,7 +30,7 @@ mono::ITexturePtr mono::CreateTexture(const char* source)
         if(texture)
             return texture;
 
-        std::printf("Error when trying to create a shared_ptr from weak_ptr using source: %s\n", source);
+        std::printf("TextureFactory - Unable to create a shared_ptr from weak_ptr using source: %s\n", source);
     }
     
     const mono::IImagePtr image = LoadImage(source);
