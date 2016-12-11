@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd UnitTests/TestFiles
-../../bin/unittest
+../../bin/unittest $1
