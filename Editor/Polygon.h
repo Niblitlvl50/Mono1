@@ -49,7 +49,6 @@ namespace editor
 
         std::vector<math::Vector2f> m_points;
         std::vector<math::Vector2f> m_textureCoordinates;
-        math::Vector2f m_centroid;
         float m_texture_repeate;
         char m_texture_name[32];
     };

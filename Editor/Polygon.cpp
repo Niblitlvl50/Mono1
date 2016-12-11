@@ -46,7 +46,7 @@ void PolygonEntity::Draw(mono::IRenderer& renderer) const
     renderer.DrawClosedPolyline(m_points, line_color, 2.0f);
     renderer.DrawPoints(m_points, point_color, 4.0f);
 
-    renderer.DrawPoints({ m_centroid }, point_color, 4.0f);
+    renderer.DrawPoints({ mBasePoint }, point_color, 4.0f);
 
     if(m_selected)
     {
@@ -79,10 +79,7 @@ void PolygonEntity::AddVertex(const math::Vector2f& vertex)
     RecalculateTextureCoordinates();
 
     if(m_points.size() > 2)
-    {
-        m_centroid = math::CentroidOfPolygon(m_points);
-        mBasePoint = m_centroid;
-    }
+        mBasePoint = math::CentroidOfPolygon(m_points);
 }
 
 void PolygonEntity::SetVertex(const math::Vector2f& vertex, size_t index)
