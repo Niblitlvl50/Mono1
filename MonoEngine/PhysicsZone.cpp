@@ -15,6 +15,7 @@
 #include "IPhysicsEntity.h"
 
 #include "Utils.h"
+#include <cstdio>
 
 using namespace mono;
 
@@ -73,7 +74,8 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
     }
     else
     {
-        throw std::runtime_error("PhysicsZone - Unable to remove physics entity");
+        std::printf("PhysicsZone - Unable to remove physics entity\n");
+        //throw std::runtime_error("PhysicsZone - Unable to remove physics entity");
     }
 }
 
