@@ -8,6 +8,7 @@
 namespace editor
 {
     class Editor;
+    class PathEntity;
 
     class PathTool : public ITool
     {
@@ -26,11 +27,11 @@ namespace editor
     private:
 
         Editor* m_editor;
-        std::vector<math::Vector2f> m_points;
+        std::shared_ptr<editor::PathEntity> m_pathEntity;
         math::Vector2f m_mousePosition;
         bool m_active;
 
-        class Visualizer;
-        std::shared_ptr<Visualizer> m_visualizer;
+        //class Visualizer;
+        //std::shared_ptr<Visualizer> m_visualizer;
     };
 }

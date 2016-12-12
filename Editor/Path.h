@@ -12,6 +12,7 @@ namespace editor
     {
     public:
 
+        PathEntity(const std::string& name);
         PathEntity(const std::string& name, const std::vector<math::Vector2f>& points);
 
         virtual void Draw(mono::IRenderer& renderer) const;
@@ -20,6 +21,8 @@ namespace editor
 
         math::Quad LocalBoundingBox() const;
         void SetSelected(bool selected);
+
+        void AddVertex(const math::Vector2f& vertex);
         void SetVertex(const math::Vector2f& vertex, size_t index);
 
         std::string m_name;

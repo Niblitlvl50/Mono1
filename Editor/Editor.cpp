@@ -206,9 +206,8 @@ void Editor::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
     m_polygons.push_back(polygon);
 }
 
-void Editor::AddPath(const std::vector<math::Vector2f>& points)
+void Editor::AddPath(const std::shared_ptr<editor::PathEntity>& path)
 {
-    auto path = std::make_shared<PathEntity>("hello", points);
     AddEntity(path, 1);
     m_paths.push_back(path);
 }

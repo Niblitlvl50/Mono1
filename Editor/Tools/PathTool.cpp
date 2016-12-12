@@ -3,9 +3,11 @@
 #include "Editor.h"
 #include "IRenderer.h"
 #include "Color.h"
+#include "Path.h"
 
 using namespace editor;
 
+/*
 class PathTool::Visualizer : public mono::IDrawable
 {
 public:
@@ -38,25 +40,24 @@ public:
     const std::vector<math::Vector2f>& m_points;
     const math::Vector2f& m_mousePosition;
 };
+*/
 
 PathTool::PathTool(Editor* editor)
     : m_editor(editor),
-      m_active(false),
-      m_visualizer(std::make_shared<Visualizer>(m_points, m_mousePosition))
+      m_active(false)
+      //m_visualizer(std::make_shared<Visualizer>(m_points, m_mousePosition))
 { }
 
 void PathTool::Begin()
 {
     m_active = true;
-    m_editor->AddDrawable(m_visualizer, 3);
+    m_pathEntity = std::make_shared<editor::PathEntity>("New path");
+    m_editor->AddPath(m_pathEntity);
 }
 
 void PathTool::End()
 {
-    m_editor->AddPath(m_points);
-    m_editor->RemoveDrawable(m_visualizer);
-    m_points.clear();
-
+    m_pathEntity = nullptr;
     m_active = false;
 }
 
@@ -69,8 +70,8 @@ void PathTool::HandleContextMenu(int menu_index)
 {
     if(menu_index == 0)
         End();
-    else if(menu_index == 1 && !m_points.empty())
-        m_points.pop_back();
+    //else if(menu_index == 1 && !m_points.empty())
+    //    m_points.pop_back();
 }
 
 void PathTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
@@ -78,7 +79,10 @@ void PathTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr
 
 void PathTool::HandleMouseUp(const math::Vector2f& world_pos)
 {
-    m_points.push_back(world_pos);
+    if(!m_pathEntity)
+        return;
+
+    m_pathEntity->AddVertex(world_pos);
 }
 
 void PathTool::HandleMousePosition(const math::Vector2f& world_pos)

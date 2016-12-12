@@ -8,17 +8,15 @@
 
 using namespace editor;
 
-PathEntity::PathEntity(const std::string& name, const std::vector<math::Vector2f>& points)
+PathEntity::PathEntity(const std::string& name)
     : m_name(name),
-      m_points(points),
       m_selected(false)
+{ }
+
+PathEntity::PathEntity(const std::string& name, const std::vector<math::Vector2f>& points)
+    : PathEntity(name)
 {
-    SetPosition(points.front());
-
-    for(math::Vector2f& point : m_points)
-        point -= Position();
-
-    mBasePoint = math::CentroidOfPolygon(m_points);
+      m_points = points;
 }
 
 void PathEntity::Draw(mono::IRenderer& renderer) const
@@ -41,9 +39,7 @@ void PathEntity::Update(unsigned int delta)
 math::Quad PathEntity::BoundingBox() const
 {
     const math::Matrix& transform = Transformation();
-
     math::Quad bb(math::INF, math::INF, -math::INF, -math::INF);
-
     for(auto& point : m_points)
         bb |= math::Transform(transform, point);
 
@@ -53,7 +49,6 @@ math::Quad PathEntity::BoundingBox() const
 math::Quad PathEntity::LocalBoundingBox() const
 {
     math::Quad bb(math::INF, math::INF, -math::INF, -math::INF);
-
     for(auto& point : m_points)
         bb |= point;
 
@@ -63,6 +58,20 @@ math::Quad PathEntity::LocalBoundingBox() const
 void PathEntity::SetSelected(bool selected)
 {
     m_selected = selected;
+}
+
+void PathEntity::AddVertex(const math::Vector2f& vertex)
+{
+    if(m_points.empty())
+    {
+        SetPosition(vertex);
+        m_points.push_back(math::zeroVec);
+        return;
+    }
+
+    m_points.push_back(vertex - Position());
+    if(m_points.size() > 2)
+        mBasePoint = math::CentroidOfPolygon(m_points);
 }
 
 void PathEntity::SetVertex(const math::Vector2f& vertex, size_t index)

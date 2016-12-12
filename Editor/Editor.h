@@ -40,7 +40,7 @@ namespace editor
         void UpdateUI();
 
         void AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon);
-        void AddPath(const std::vector<math::Vector2f>& points);
+        void AddPath(const std::shared_ptr<editor::PathEntity>& path);
 
         void SelectEntity(const mono::IEntityPtr& entity);
 
