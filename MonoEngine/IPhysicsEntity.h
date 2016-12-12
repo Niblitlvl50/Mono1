@@ -1,10 +1,3 @@
-//
-//  IPhysicsEntity.h
-//  Worksample_2
-//
-//  Created by Niklas Damberg on 11/11/13.
-//
-//
 
 #pragma once
 
@@ -17,7 +10,7 @@ namespace mono
     {
         virtual ~IPhysicsEntity()
         { }
-        
+
         virtual mono::Object& GetPhysics() = 0;
     };
 }

@@ -1,11 +1,3 @@
-/*
- *  DrawableBase.cpp
- *  Monolith1
- *
- *  Created by Niblit on 2011-02-21.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
- *
- */
 
 #include "EntityBase.h"
 #include "Utils.h"
@@ -14,7 +6,6 @@
 #include "IRenderer.h"
 
 #include "System/SysUID.h"
-
 
 using namespace mono;
 

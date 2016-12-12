@@ -1,11 +1,3 @@
-//
-//  IEntity.h
-//  Mono1
-//
-//  Created by Niblit on 2012-04-06.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
-
 
 #pragma once
 
@@ -20,13 +12,12 @@ namespace mono
     {
         virtual ~IEntity()
         { }
-        
+
         virtual const math::Vector2f& Position() const = 0;
         virtual const math::Vector2f& BasePoint() const = 0;
         virtual const math::Vector2f& Scale() const = 0;
 
         virtual void SetPosition(const math::Vector2f& position) = 0;
-
         virtual void SetScale(const math::Vector2f& scale) = 0;
 
         // Rotation in radians
@@ -42,4 +33,3 @@ namespace mono
         virtual bool HasProperty(uint property) const = 0;
     };
 }
-

@@ -1,11 +1,3 @@
-/*
- *  DrawableBase.h
- *  Monolith1
- *
- *  Created by Niblit on 2011-02-21.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
- *
- */
 
 #pragma once
 
@@ -16,7 +8,6 @@
 
 namespace mono
 {
-
     class EntityBase : public IEntity
     {
     public:
@@ -39,9 +30,9 @@ namespace mono
 
         void AddChild(const IEntityPtr& child);
         void RemoveChild(const IEntityPtr& child);
-    
+
     protected:
-        
+
         EntityBase();
 
         virtual void Draw(mono::IRenderer& renderer) const = 0;
@@ -57,9 +48,7 @@ namespace mono
         math::Vector2f mBasePoint;
         math::Vector2f mScale;
         float mRotation;
-        
+
         std::vector<IEntityPtr> mChildren;
     };
-    
 }
-

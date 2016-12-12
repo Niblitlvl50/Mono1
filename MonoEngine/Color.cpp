@@ -1,10 +1,3 @@
-//
-//  Color.cpp
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 21/09/15.
-//
-//
 
 #include "Color.h"
 #include <algorithm>

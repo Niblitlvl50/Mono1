@@ -1,11 +1,3 @@
-/*
- *  IInputHandler.h
- *  Monolith1
- *
- *  Created by Niblit on 2011-02-08.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
- *
- */
 
 #pragma once
 
@@ -13,7 +5,6 @@
 
 namespace mono
 {
-
     struct IInputHandler
     {
         virtual ~IInputHandler()
@@ -40,7 +31,4 @@ namespace mono
         virtual void OnSurfaceChanged(int width, int height) = 0;
         virtual void OnActivated(bool gain) = 0;
     };
-
 }
-
-

@@ -20,11 +20,11 @@ namespace mono
     public:
         Engine(const IWindowPtr& view, const ICameraPtr& camera, EventHandler& eventHandler);
         ~Engine();
-		
+
         void Run(IZonePtr zone);
-		
+
     private:
-		
+
         bool OnPause(const event::PauseEvent& event);
         bool OnQuit(const event::QuitEvent& event);
         bool OnApplication(const event::ApplicationEvent& event);

@@ -1,11 +1,3 @@
-/*
- *  InputHandler.h
- *  Monolith1
- *
- *  Created by Niblit on 2011-02-08.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
- *
- */
 
 #pragma once
 
@@ -20,11 +12,11 @@ namespace mono
     class InputHandler : public IInputHandler
     {
     public:
-        
+
         InputHandler(const CoordinateFunc& func, EventHandler& eventHandler);
-        
+
     private:
-        
+
         virtual void OnKeyDown(unsigned int key, int modifier);
         virtual void OnKeyUp(unsigned int key, int modifier);
         virtual void OnTextInput(const char* text);
@@ -45,9 +37,8 @@ namespace mono
 
         virtual void OnSurfaceChanged(int width, int height);
         virtual void OnActivated(bool gain);
-        
+
         const CoordinateFunc mScreenToWorldFunc;
         EventHandler& mEventHandler;
     };
 }
-

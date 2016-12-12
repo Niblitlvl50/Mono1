@@ -1,13 +1,5 @@
-//
-//  Color.h
-//  Worksample_2
-//
-//  Created by Niklas Damberg on 06/11/13.
-//
-//
 
 #pragma once
-
 
 namespace mono
 {
