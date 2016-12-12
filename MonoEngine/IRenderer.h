@@ -1,11 +1,3 @@
-/*
- *  IRenderer.h
- *  Monolith1
- *
- *  Created by Niblit on 2011-02-08.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
- *
- */
 
 #pragma once
 
@@ -49,6 +41,4 @@ namespace mono
         virtual void PushNewProjection(const math::Matrix& projection) = 0;
         virtual const math::Matrix& GetCurrentProjection() const = 0;
     };
-
 }
-

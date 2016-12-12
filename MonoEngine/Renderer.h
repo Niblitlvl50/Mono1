@@ -1,11 +1,3 @@
-/*
- *  MOGLRenderer.h
- *  Monolith1
- *
- *  Created by Niblit on 2011-02-08.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
- *
- */
 
 #pragma once
 
@@ -21,9 +13,9 @@ namespace mono
     class Renderer : public IRenderer
     {
     public:
-        
+
         Renderer(ICameraPtr camera, IWindowPtr window);
-        
+
         virtual void DrawFrame();
         virtual void Update(unsigned int milliseconds);
 
@@ -56,7 +48,7 @@ namespace mono
         virtual const math::Matrix& GetCurrentProjection() const;
 
     private:
-        
+
         void PrepareDraw();
         void EndDraw();
 
@@ -82,4 +74,3 @@ namespace mono
         std::vector<IUpdatablePtr> mUpdatables;
     };
 }
-

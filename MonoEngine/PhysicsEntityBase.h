@@ -1,10 +1,3 @@
-//
-//  PhysicsEntityBase.h
-//  Mono1
-//
-//  Created by Niblit on 2013-03-31.
-//  Copyright (c) 2013 __MyCompanyName__. All rights reserved.
-//
 
 #pragma once
 
@@ -18,7 +11,7 @@ namespace mono
     class PhysicsEntityBase : public IPhysicsEntity
     {
     public:
-        
+
         virtual const math::Vector2f& Position() const;
         virtual const math::Vector2f& BasePoint() const;
         virtual float Rotation() const;
@@ -37,24 +30,23 @@ namespace mono
         void RemoveChild(const IEntityPtr& child);
 
     protected:
-        
+
         PhysicsEntityBase();
-        
+
         virtual void doDraw(mono::IRenderer& renderer) const;
         virtual void doUpdate(unsigned int delta);
-        
+
         virtual void Draw(mono::IRenderer& renderer) const = 0;
         virtual void Update(unsigned int delta) = 0;
 
         const uint m_uid;
         uint m_properties;
-        
+
         math::Vector2f mPosition;
         math::Vector2f mScale;
         float mRotation;
-        
+
         mono::Object mPhysicsObject;
         std::vector<IEntityPtr> m_children;
     };
 }
-

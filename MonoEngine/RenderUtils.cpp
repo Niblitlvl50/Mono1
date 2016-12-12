@@ -1,10 +1,3 @@
-//
-//  RenderUtils.cpp
-//  Mono1
-//
-//  Created by Niblit on 2013-03-17.
-//  Copyright (c) 2013 __MyCompanyName__. All rights reserved.
-//
 
 #include "RenderUtils.h"
 #include "Math/Quad.h"

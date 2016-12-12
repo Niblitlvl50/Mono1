@@ -1,10 +1,3 @@
-//
-//  RenderUtils.h
-//  Mono1
-//
-//  Created by Niblit on 2013-03-17.
-//  Copyright (c) 2013 __MyCompanyName__. All rights reserved.
-//
 
 #pragma once
 
@@ -18,13 +11,13 @@ namespace mono
     class ITextureShader;
     class IMorphingShader;
     struct TextDefinition;
-    
+
     //! Draws a quad
     void DrawQuad(const math::Quad& quad,
                   const mono::Color::RGBA& color,
                   float width,
                   const std::shared_ptr<IColorShader>& shader);
-    
+
     //! Draws a circle
     void DrawCircle(const math::Vector2f& position,
                     float radie,
@@ -32,7 +25,7 @@ namespace mono
                     float lineWidth,
                     const mono::Color::RGBA& color,
                     const std::shared_ptr<IColorShader>& shader);
-    
+
     //! Draws a sprite
     void DrawSprite(const ISprite& sprite,
                     const std::shared_ptr<ITextureShader>& shader);
@@ -74,4 +67,3 @@ namespace mono
                               const std::vector<unsigned short>& indices,
                               const std::shared_ptr<ITextureShader>& shader);
 }
-

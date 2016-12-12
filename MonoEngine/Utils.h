@@ -1,10 +1,3 @@
-//
-//  Utils.h
-//  Mono1
-//
-//  Created by Niblit on 2012-05-21.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #pragma once
 
@@ -12,7 +5,7 @@
 #include <vector>
 
 namespace mono
-{    
+{
     template <typename T>
     inline bool FindAndRemove(std::vector<std::shared_ptr<T>>& collection, const std::shared_ptr<T>& object)
     {
@@ -22,23 +15,23 @@ namespace mono
             collection.erase(it);
             return true;
         }
-        
+
         return false;
     }
 
     class FPSCounter
     {
     public:
-        
+
         FPSCounter();
 
         void operator ++ (int i);
-        
+
         unsigned int Fps() const;
         unsigned int Frames() const;
-        
+
     private:
-        
+
         unsigned int mTime;
         unsigned int mFrames;
         unsigned int mTotalFrames;

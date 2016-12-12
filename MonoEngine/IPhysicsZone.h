@@ -1,10 +1,3 @@
-//
-//  IPhysicsZone.h
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 19/11/13.
-//
-//
 
 #pragma once
 

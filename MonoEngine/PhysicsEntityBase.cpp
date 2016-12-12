@@ -1,10 +1,3 @@
-//
-//  PhysicsEntityBase.cpp
-//  Mono1
-//
-//  Created by Niblit on 2013-03-31.
-//  Copyright (c) 2013 __MyCompanyName__. All rights reserved.
-//
 
 #include "PhysicsEntityBase.h"
 #include "Math/Quad.h"

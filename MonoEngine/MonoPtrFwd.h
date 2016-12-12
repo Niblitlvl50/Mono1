@@ -1,10 +1,3 @@
-//
-//  MonoPtrFwd.h
-//  Worksample_2
-//
-//  Created by Niklas Damberg on 07/11/13.
-//
-//
 
 #pragma once
 
