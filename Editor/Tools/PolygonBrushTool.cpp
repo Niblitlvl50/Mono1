@@ -25,7 +25,7 @@ class PolygonBrushTool::Visualizer : public mono::IDrawable
 {
 public:
 
-    Visualizer(const bool& painting, const std::vector<math::Vector2f>& drawn_points)
+    Visualizer(const bool& painting, const std::vector<math::Vector>& drawn_points)
         : m_painting(painting),
           m_points(drawn_points)
     { }
@@ -45,7 +45,7 @@ public:
     }
 
     const bool& m_painting;
-    const std::vector<math::Vector2f>& m_points;
+    const std::vector<math::Vector>& m_points;
 };
 
 PolygonBrushTool::PolygonBrushTool(Editor* editor)
@@ -69,7 +69,7 @@ bool PolygonBrushTool::IsActive() const
 void PolygonBrushTool::HandleContextMenu(int menu_index)
 { }
 
-void PolygonBrushTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
+void PolygonBrushTool::HandleMouseDown(const math::Vector& world_pos, mono::IEntityPtr entity)
 {
     m_painting = true;
     m_direction = math::INF;
@@ -84,7 +84,7 @@ void PolygonBrushTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IE
     m_editor->AddDrawable(m_visualizer, 1);
 }
 
-void PolygonBrushTool::HandleMouseUp(const math::Vector2f& world_pos)
+void PolygonBrushTool::HandleMouseUp(const math::Vector& world_pos)
 {
     m_editor->RemoveDrawable(m_visualizer);
 
@@ -93,7 +93,7 @@ void PolygonBrushTool::HandleMouseUp(const math::Vector2f& world_pos)
     m_drawnPoints.clear();
 }
 
-void PolygonBrushTool::HandleMousePosition(const math::Vector2f& world_pos)
+void PolygonBrushTool::HandleMousePosition(const math::Vector& world_pos)
 {
     if(!m_painting)
         return;
@@ -107,12 +107,12 @@ void PolygonBrushTool::HandleMousePosition(const math::Vector2f& world_pos)
     constexpr float threashold = math::ToRadians(5.0f);
     const float angle = std::fabs(m_direction - math::AngleBetweenPoints(m_previouslyAddedPoint, world_pos));
 
-    const math::Vector2f& position_diff = world_pos - m_previouslyAddedPoint;
+    const math::Vector& position_diff = world_pos - m_previouslyAddedPoint;
     const float distance = math::Length(position_diff);
 
     if(angle > threashold && distance > 5.0f)
     {
-        const math::Vector2f& position = m_polygon->Position();
+        const math::Vector& position = m_polygon->Position();
         m_polygon->AddVertex(m_previousPoint - position);
 
         m_previouslyAddedPoint = m_previousPoint;

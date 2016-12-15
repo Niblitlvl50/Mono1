@@ -8,8 +8,8 @@ namespace editor
 {
     struct Grabber
     {
-        math::Vector2f position;
+        math::Vector position;
         bool hoover = false;
-        std::function<void (const math::Vector2f&)> callback;
+        std::function<void (const math::Vector&)> callback;
     };
 }

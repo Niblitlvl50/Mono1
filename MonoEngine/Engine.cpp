@@ -37,10 +37,10 @@ namespace Func
 {
     void ScreenToWorld(float& x, float& y, IWindowPtr window, ICameraPtr camera)
     {
-        const math::Vector2f& windowSize = window->Size();
+        const math::Vector& windowSize = window->Size();
         const math::Quad& viewport = camera->GetViewport();
         
-        const math::Vector2f& scale = viewport.mB / windowSize;
+        const math::Vector& scale = viewport.mB / windowSize;
         
         const float screenX = x;
         const float screenY = windowSize.y - y;

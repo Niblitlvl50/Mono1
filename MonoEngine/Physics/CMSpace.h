@@ -23,7 +23,7 @@ namespace mono
     {
     public:
         
-        Space(const math::Vector2f& gravity, float damping);
+        Space(const math::Vector& gravity, float damping);
         ~Space();
         
         void Tick(float delta);
@@ -35,7 +35,7 @@ namespace mono
         void RemoveShape(const IShapePtr& shape);
         
         void ForEachBody(const BodyFunc& func);
-        IBodyPtr QueryFirst(const math::Vector2f& start, const math::Vector2f& end);
+        IBodyPtr QueryFirst(const math::Vector& start, const math::Vector& end);
         
     private:
         

@@ -19,7 +19,7 @@ class PolygonTool::Visualizer : public mono::IDrawable
 {
 public:
 
-    Visualizer(const math::Vector2f& last_point, const math::Vector2f& mouse_position)
+    Visualizer(const math::Vector& last_point, const math::Vector& mouse_position)
         : m_lastAddedPoint(last_point),
           m_mousePosition(mouse_position)
     { }
@@ -27,7 +27,7 @@ public:
     virtual void doDraw(mono::IRenderer& renderer) const
     {
         constexpr mono::Color::RGBA color(1.0f, 0.0f, 0.0f, 0.2f);
-        const std::vector<math::Vector2f>& line = { m_lastAddedPoint, m_mousePosition };
+        const std::vector<math::Vector>& line = { m_lastAddedPoint, m_mousePosition };
         renderer.DrawLines(line, color, 2.0f);
     }
 
@@ -36,8 +36,8 @@ public:
         return math::Quad(-math::INF, -math::INF, math::INF, math::INF);
     }
 
-    const math::Vector2f& m_lastAddedPoint;
-    const math::Vector2f& m_mousePosition;
+    const math::Vector& m_lastAddedPoint;
+    const math::Vector& m_mousePosition;
 };
 
 PolygonTool::PolygonTool(Editor* editor)
@@ -72,10 +72,10 @@ void PolygonTool::HandleContextMenu(int menu_index)
         End();
 }
 
-void PolygonTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
+void PolygonTool::HandleMouseDown(const math::Vector& world_pos, mono::IEntityPtr entity)
 { }
 
-void PolygonTool::HandleMouseUp(const math::Vector2f& world_pos)
+void PolygonTool::HandleMouseUp(const math::Vector& world_pos)
 {
     if(!m_polygon)
         return;
@@ -89,14 +89,14 @@ void PolygonTool::HandleMouseUp(const math::Vector2f& world_pos)
     }
     else
     {
-        const math::Vector2f& position = m_polygon->Position();
+        const math::Vector& position = m_polygon->Position();
         m_polygon->AddVertex(world_pos - position);
     }
 
     m_lastAddedPoint = world_pos;
 }
 
-void PolygonTool::HandleMousePosition(const math::Vector2f& world_pos)
+void PolygonTool::HandleMousePosition(const math::Vector& world_pos)
 {
     m_mousePosition = world_pos;
 

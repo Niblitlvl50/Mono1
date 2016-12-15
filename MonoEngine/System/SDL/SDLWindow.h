@@ -32,11 +32,11 @@ namespace mono
         virtual void MakeCurrent();
         virtual void SwapBuffers() const;
         virtual void SetBackgroundColor(const mono::Color::RGBA& color);
-        virtual const math::Vector2f& Size() const;
+        virtual const math::Vector& Size() const;
 	
     private:
                 
-        math::Vector2f mSize;
+        math::Vector mSize;
         SDL_Window* mWindow;
         void* mContext;
     };

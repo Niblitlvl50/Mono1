@@ -15,19 +15,19 @@ using namespace game;
 
 Morpher::Morpher()
 {
-    mPosition = math::Vector2f(-100, 50);
+    mPosition = math::Vector(-100, 50);
 
-    m_shape1 = { math::Vector2f(-10, -10),
-                 math::Vector2f(-10, 10),
-                 math::Vector2f(10, 10),
-                 math::Vector2f(10, -10),
-                 math::Vector2f(-10, -10) };
+    m_shape1 = { math::Vector(-10, -10),
+                 math::Vector(-10, 10),
+                 math::Vector(10, 10),
+                 math::Vector(10, -10),
+                 math::Vector(-10, -10) };
 
-    m_shape2 = { math::Vector2f(-15, -5),
-                 math::Vector2f(-13, 26),
-                 math::Vector2f(10, 29),
-                 math::Vector2f(7, -14),
-                 math::Vector2f(-15, -5) };
+    m_shape2 = { math::Vector(-15, -5),
+                 math::Vector(-13, 26),
+                 math::Vector(10, 29),
+                 math::Vector(7, -14),
+                 math::Vector(-15, -5) };
 
     m_morphGrade = 0.0;
 

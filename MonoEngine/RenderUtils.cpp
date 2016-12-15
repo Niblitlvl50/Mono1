@@ -17,23 +17,23 @@ void mono::DrawQuad(const math::Quad& quad,
                     float width,
                     const std::shared_ptr<IColorShader>& shader)
 {
-    const std::vector<math::Vector2f> vertices = { math::Vector2f(quad.mA.x, quad.mA.y),
-                                                   math::Vector2f(quad.mB.x, quad.mA.y),
-                                                   math::Vector2f(quad.mB.x, quad.mB.y),
-                                                   math::Vector2f(quad.mA.x, quad.mB.y),
-                                                   math::Vector2f(quad.mA.x, quad.mA.y) };
+    const std::vector<math::Vector> vertices = { math::Vector(quad.mA.x, quad.mA.y),
+                                                   math::Vector(quad.mB.x, quad.mA.y),
+                                                   math::Vector(quad.mB.x, quad.mB.y),
+                                                   math::Vector(quad.mA.x, quad.mB.y),
+                                                   math::Vector(quad.mA.x, quad.mA.y) };
 
     DrawLine(vertices, color, width, shader);
 }
 
-void mono::DrawCircle(const math::Vector2f& position,
+void mono::DrawCircle(const math::Vector& position,
                       float radie,
                       unsigned int segments,
                       float lineWidth,
                       const mono::Color::RGBA& color,
                       const std::shared_ptr<IColorShader>& shader)
 {
-    std::vector<math::Vector2f> vertices;
+    std::vector<math::Vector> vertices;
     vertices.reserve(segments +1);
 
     const float coef = 2.0f * math::PI() / float(segments);
@@ -110,7 +110,7 @@ void mono::DrawText(const TextDefinition& text, const std::shared_ptr<ITextureSh
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawLine(const std::vector<math::Vector2f>& vertices,
+void mono::DrawLine(const std::vector<math::Vector>& vertices,
                     const mono::Color::RGBA& color,
                     float width,
                     const std::shared_ptr<IColorShader>& shader)
@@ -132,7 +132,7 @@ void mono::DrawLine(const std::vector<math::Vector2f>& vertices,
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawClosedLine(const std::vector<math::Vector2f>& vertices,
+void mono::DrawClosedLine(const std::vector<math::Vector>& vertices,
                           const mono::Color::RGBA& color,
                           float width,
                           const std::shared_ptr<IColorShader>& shader)
@@ -154,7 +154,7 @@ void mono::DrawClosedLine(const std::vector<math::Vector2f>& vertices,
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawLines(const std::vector<math::Vector2f>& vertices,
+void mono::DrawLines(const std::vector<math::Vector>& vertices,
                      const mono::Color::RGBA& color,
                      float width,
                      const std::shared_ptr<IColorShader>& shader)
@@ -176,7 +176,7 @@ void mono::DrawLines(const std::vector<math::Vector2f>& vertices,
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawPoints(const std::vector<math::Vector2f>& vertices,
+void mono::DrawPoints(const std::vector<math::Vector>& vertices,
                       const mono::Color::RGBA& color,
                       float size,
                       const std::shared_ptr<IColorShader>& shader)
@@ -198,8 +198,8 @@ void mono::DrawPoints(const std::vector<math::Vector2f>& vertices,
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawShape(const std::vector<math::Vector2f>& shape1,
-                     const std::vector<math::Vector2f>& shape2,
+void mono::DrawShape(const std::vector<math::Vector>& shape1,
+                     const std::vector<math::Vector>& shape2,
                      const mono::Color::RGBA& color,
                      const std::shared_ptr<IMorphingShader>& shader)
 {
@@ -224,8 +224,8 @@ void mono::DrawShape(const std::vector<math::Vector2f>& shape1,
     glDisableVertexAttribArray(2);
 }
 
-void mono::DrawTexturedGeometry(const std::vector<math::Vector2f>& vertices,
-                                const std::vector<math::Vector2f>& texture_coordinates,
+void mono::DrawTexturedGeometry(const std::vector<math::Vector>& vertices,
+                                const std::vector<math::Vector>& texture_coordinates,
                                 const std::vector<unsigned short>& indices,
                                 const std::shared_ptr<ITextureShader>& shader)
 {

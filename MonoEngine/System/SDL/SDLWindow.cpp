@@ -103,7 +103,7 @@ SDLWindow::~SDLWindow()
 
 void SDLWindow::SurfaceChanged(int width, int height)
 {
-    mSize = math::Vector2f(width, height);
+    mSize = math::Vector(width, height);
 }
 
 void SDLWindow::Activated(bool)
@@ -141,7 +141,7 @@ void SDLWindow::SetBackgroundColor(const mono::Color::RGBA& color)
     glClearColor(color.red, color.green, color.blue, color.alpha);
 }
 
-const math::Vector2f& SDLWindow::Size() const
+const math::Vector& SDLWindow::Size() const
 {
     return mSize;
 }

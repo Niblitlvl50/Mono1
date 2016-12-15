@@ -42,7 +42,7 @@ void CubeSwarm::Update(unsigned int delta)
     {
         const float add_x = mono::Random() * 2.0 - 1.0;
         const float add_y = mono::Random() * 2.0 - 1.0;
-        const math::Vector2f add(add_x, add_y);
+        const math::Vector add(add_x, add_y);
 
         cube.quad.mA += add;
         cube.quad.mB += add;
@@ -68,5 +68,5 @@ CubeSwarm::Cube CubeSwarm::GenerateCube()
 
     const mono::Color::HSL color(mono::Random(), 0.7f, 0.5f);
 
-    return CubeSwarm::Cube(math::Vector2f(random_x, random_y), random_size, color);
+    return CubeSwarm::Cube(math::Vector(random_x, random_y), random_size, color);
 }

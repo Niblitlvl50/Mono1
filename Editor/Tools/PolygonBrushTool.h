@@ -28,21 +28,21 @@ namespace editor
         virtual void End();
         virtual bool IsActive() const;
         virtual void HandleContextMenu(int menu_index);
-        virtual void HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity);
-        virtual void HandleMouseUp(const math::Vector2f& world_pos);
-        virtual void HandleMousePosition(const math::Vector2f& world_pos);
+        virtual void HandleMouseDown(const math::Vector& world_pos, mono::IEntityPtr entity);
+        virtual void HandleMouseUp(const math::Vector& world_pos);
+        virtual void HandleMousePosition(const math::Vector& world_pos);
 
         Editor* m_editor;
         bool m_painting;
 
         std::shared_ptr<editor::PolygonEntity> m_polygon;
-        math::Vector2f m_previouslyAddedPoint;
-        math::Vector2f m_previousPoint;
+        math::Vector m_previouslyAddedPoint;
+        math::Vector m_previousPoint;
         float m_direction;
 
         class Visualizer;
         std::shared_ptr<Visualizer> m_visualizer;
 
-        std::vector<math::Vector2f> m_drawnPoints;
+        std::vector<math::Vector> m_drawnPoints;
     };
 }

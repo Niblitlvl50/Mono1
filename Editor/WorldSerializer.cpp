@@ -46,7 +46,7 @@ std::vector<std::shared_ptr<editor::PolygonEntity>> editor::LoadPolygons(const c
         math::Matrix invert_transform = polygon_entity->Transformation();
         math::Inverse(invert_transform);
 
-        for(const math::Vector2f& vertex : polygon.vertices)
+        for(const math::Vector& vertex : polygon.vertices)
             polygon_entity->AddVertex(math::Transform(invert_transform, vertex));
 
         polygon_data.push_back(polygon_entity);
@@ -81,7 +81,7 @@ void editor::SavePolygons(const char* file_name, const std::vector<std::shared_p
 
         const math::Matrix& transform = polygon_entity->Transformation();
 
-        for(const math::Vector2f& vertex : polygon_entity->GetVertices())
+        for(const math::Vector& vertex : polygon_entity->GetVertices())
             polygon_data.vertices.push_back(math::Transform(transform, vertex));
     }
 

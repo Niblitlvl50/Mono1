@@ -12,15 +12,15 @@ namespace mono
     {
     public:
     
-        virtual const math::Vector2f& Position() const;
-        virtual const math::Vector2f& BasePoint() const;
+        virtual const math::Vector& Position() const;
+        virtual const math::Vector& BasePoint() const;
         virtual float Rotation() const;
-        virtual const math::Vector2f& Scale() const;
+        virtual const math::Vector& Scale() const;
 
-        virtual void SetPosition(const math::Vector2f& position);
-        virtual void SetBasePoint(const math::Vector2f& base_point);
+        virtual void SetPosition(const math::Vector& position);
+        virtual void SetBasePoint(const math::Vector& base_point);
         virtual void SetRotation(float rotation);
-        virtual void SetScale(const math::Vector2f& scale);
+        virtual void SetScale(const math::Vector& scale);
 
         virtual math::Quad BoundingBox() const;
         virtual math::Matrix Transformation() const;
@@ -44,9 +44,9 @@ namespace mono
         const uint m_uid;
         uint m_properties;
 
-        math::Vector2f mPosition;
-        math::Vector2f mBasePoint;
-        math::Vector2f mScale;
+        math::Vector mPosition;
+        math::Vector mBasePoint;
+        math::Vector mScale;
         float mRotation;
 
         std::vector<IEntityPtr> mChildren;

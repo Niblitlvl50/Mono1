@@ -118,47 +118,47 @@ TEST(MathTest, QuadOperator_second)
     EXPECT_FLOAT_EQ(first.mB.y, second.mB.y);
 }
 
-TEST(MathTest, Vector2fOperator)
+TEST(MathTest, VectorOperator)
 {
-    const math::Vector2f first(2.0f, 1.1f);
-    const math::Vector2f second(-1.0f, 4.0f);
+    const math::Vector first(2.0f, 1.1f);
+    const math::Vector second(-1.0f, 4.0f);
     
-    const math::Vector2f result = first + second;
+    const math::Vector result = first + second;
     EXPECT_FLOAT_EQ(1.0f, result.x);
     EXPECT_FLOAT_EQ(5.1f, result.y);
     
-    const math::Vector2f subtractResult = first - second;
+    const math::Vector subtractResult = first - second;
     EXPECT_FLOAT_EQ(3.0f, subtractResult.x);
     EXPECT_FLOAT_EQ(-2.9f, subtractResult.y);
     
-    const math::Vector2f multiResult = first * 3.0f;
+    const math::Vector multiResult = first * 3.0f;
     EXPECT_FLOAT_EQ(6.0f, multiResult.x);
     EXPECT_FLOAT_EQ(3.3f, multiResult.y);
     
-    const math::Vector2f divideRestul1 = first / 2.0f;
+    const math::Vector divideRestul1 = first / 2.0f;
     EXPECT_FLOAT_EQ(1.0f, divideRestul1.x);
     EXPECT_FLOAT_EQ(0.55f, divideRestul1.y);
     
-    const math::Vector2f divideResult2 = first / math::Vector2f(5.0f, 4.0f);
+    const math::Vector divideResult2 = first / math::Vector(5.0f, 4.0f);
     EXPECT_FLOAT_EQ(0.4f, divideResult2.x);
     EXPECT_FLOAT_EQ(0.275f, divideResult2.y);
     
-    math::Vector2f addResult(1.0f, 0.0f);
-    addResult += math::Vector2f(7.7f, -3.0f);
+    math::Vector addResult(1.0f, 0.0f);
+    addResult += math::Vector(7.7f, -3.0f);
     EXPECT_FLOAT_EQ(8.7f, addResult.x);
     EXPECT_FLOAT_EQ(-3.0f, addResult.y);
 }
 
 TEST(MathTest, Bezier)
 {
-    math::Vector2f points[4];
-    points[0] = math::Vector2f(1.0f, 1.0f);
-    points[1] = math::Vector2f(3.0f, 1.0f);
-    points[2] = math::Vector2f(2.0f, -5.0f);
-    points[3] = math::Vector2f(3.14f, 3.14f);
+    math::Vector points[4];
+    points[0] = math::Vector(1.0f, 1.0f);
+    points[1] = math::Vector(3.0f, 1.0f);
+    points[2] = math::Vector(2.0f, -5.0f);
+    points[3] = math::Vector(3.14f, 3.14f);
 
-    const math::Vector2f& start_point = math::Cubic(0.0f, points);
-    const math::Vector2f& end_point = math::Cubic(1.0f, points);
+    const math::Vector& start_point = math::Cubic(0.0f, points);
+    const math::Vector& end_point = math::Cubic(1.0f, points);
 
     EXPECT_FLOAT_EQ(1.0f, start_point.x);
     EXPECT_FLOAT_EQ(1.0f, start_point.y);

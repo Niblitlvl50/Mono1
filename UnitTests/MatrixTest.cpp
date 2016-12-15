@@ -39,7 +39,7 @@ TEST(MatrixTest, VerifyIdentityOnCreation)
 TEST(MatrixTest, VerifyTranslateFunction)
 {
     math::Matrix matrix;
-    math::Translate(matrix, math::Vector2f(10, 22));
+    math::Translate(matrix, math::Vector(10, 22));
 
     EXPECT_EQ(1, matrix.data[0]);
     EXPECT_EQ(0, matrix.data[1]);
@@ -65,9 +65,9 @@ TEST(MatrixTest, VerifyTranslateFunction)
 TEST(MatrixTest, VerifyPositionFunction)
 {
     math::Matrix matrix;
-    math::Translate(matrix, math::Vector2f(123, 312));
+    math::Translate(matrix, math::Vector(123, 312));
 
-    math::Position(matrix, math::Vector2f(77.7, -32.1));
+    math::Position(matrix, math::Vector(77.7, -32.1));
 
     EXPECT_EQ(1, matrix.data[0]);
     EXPECT_EQ(0, matrix.data[1]);

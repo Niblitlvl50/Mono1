@@ -22,18 +22,18 @@ namespace mono
         virtual void AddDrawable(const IDrawablePtr& drawable);
         virtual void AddUpdatable(const IUpdatablePtr& updatable);
 
-        virtual void DrawText(int font_id, const char* text, const math::Vector2f& pos, bool center, const mono::Color::RGBA& color);
+        virtual void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color);
         virtual void DrawSprite(const ISprite& sprite) const;
-        virtual void DrawPoints(const std::vector<math::Vector2f>& points, const mono::Color::RGBA& color, float size) const;
-        virtual void DrawLines(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const;
-        virtual void DrawPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const;
-        virtual void DrawClosedPolyline(const std::vector<math::Vector2f>& linePoints, const mono::Color::RGBA& color, float width) const;
+        virtual void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const;
+        virtual void DrawLines(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const;
+        virtual void DrawPolyline(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const;
+        virtual void DrawClosedPolyline(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const;
         virtual void DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const;
-        virtual void DrawCircle(const math::Vector2f& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const;
-        virtual void DrawShape(const std::vector<math::Vector2f>& shape1, const std::vector<math::Vector2f>& shape2, float morphGrade, const Color::RGBA& color);
+        virtual void DrawCircle(const math::Vector& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const;
+        virtual void DrawShape(const std::vector<math::Vector>& shape1, const std::vector<math::Vector>& shape2, float morphGrade, const Color::RGBA& color);
 
-        virtual void DrawGeometry(const std::vector<math::Vector2f>& vertices,
-                                  const std::vector<math::Vector2f>& texture_coordinates,
+        virtual void DrawGeometry(const std::vector<math::Vector>& vertices,
+                                  const std::vector<math::Vector>& texture_coordinates,
                                   const std::vector<unsigned short>& indices,
                                   const ITexturePtr& texture);
 

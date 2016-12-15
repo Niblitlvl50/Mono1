@@ -17,16 +17,16 @@ namespace
 {
     struct DefaultPath : mono::IPath
     {
-        DefaultPath(const math::Vector2f& position, const std::vector<math::Vector2f>& coords)
+        DefaultPath(const math::Vector& position, const std::vector<math::Vector>& coords)
             : m_position(position),
               m_path(coords),
               m_length(0)
         {
-            math::Vector2f last = coords.front();
+            math::Vector last = coords.front();
             
             for(const auto& point : coords)
             {
-                const math::Vector2f& diff = last - point;
+                const math::Vector& diff = last - point;
                 m_length += math::Length(diff);
                 last = point;
             }
@@ -37,14 +37,14 @@ namespace
             return m_length;
         }
 
-        virtual const math::Vector2f& Position() const
+        virtual const math::Vector& Position() const
         {
             return m_position;
         }
 
-        virtual math::Vector2f GetPositionByLength(float length) const
+        virtual math::Vector GetPositionByLength(float length) const
         {
-            math::Vector2f last = m_path.front();
+            math::Vector last = m_path.front();
             if(length == 0)
                 return last;
             
@@ -52,7 +52,7 @@ namespace
 
             for(const auto& point : m_path)
             {
-                const math::Vector2f& diff = point - last;
+                const math::Vector& diff = point - last;
                 const float diffLength = math::Length(diff);
                 lengthCounter += diffLength;
                 
@@ -62,23 +62,23 @@ namespace
                     const float posLength = length - prevLength;
                     const float percent = posLength / diffLength;
                     
-                    const math::Vector2f& pos = last + (diff * percent);
+                    const math::Vector& pos = last + (diff * percent);
                     return pos;
                 }
                 
                 last = point;
             }
             
-            return math::Vector2f();
+            return math::Vector();
         }
 
-        virtual const std::vector<math::Vector2f>& GetPathPoints() const
+        virtual const std::vector<math::Vector>& GetPathPoints() const
         {
             return m_path;
         }
 
-        const math::Vector2f m_position;
-        const std::vector<math::Vector2f> m_path;
+        const math::Vector m_position;
+        const std::vector<math::Vector> m_path;
         float m_length;
     };
 }
@@ -97,24 +97,24 @@ std::shared_ptr<mono::IPath> mono::CreatePath(const char* path_file)
     const float x = json["x"];
     const float y = json["y"];
 
-    std::vector<math::Vector2f> coords;
+    std::vector<math::Vector> coords;
     coords.resize(points.size() / 2);
 
     std::memcpy(coords.data(), points.data(), sizeof(float) * points.size());
     
-    return std::make_shared<DefaultPath>(math::Vector2f(x, y), coords);
+    return std::make_shared<DefaultPath>(math::Vector(x, y), coords);
 }
 
-std::shared_ptr<mono::IPath> mono::CreatePath(const math::Vector2f& position, const std::vector<math::Vector2f>& coords)
+std::shared_ptr<mono::IPath> mono::CreatePath(const math::Vector& position, const std::vector<math::Vector>& coords)
 {
     return std::make_shared<DefaultPath>(position, coords);
 }
 
-bool mono::SavePath(const char* path_file, const math::Vector2f& position, const std::vector<math::Vector2f>& points)
+bool mono::SavePath(const char* path_file, const math::Vector& position, const std::vector<math::Vector>& points)
 {
     std::vector<float> float_points;
     float_points.resize(points.size() * 2);
-    std::memcpy(float_points.data(), points.data(), sizeof(math::Vector2f) * points.size());
+    std::memcpy(float_points.data(), points.data(), sizeof(math::Vector) * points.size());
 
     nlohmann::json json;
     json["x"] = position.x;

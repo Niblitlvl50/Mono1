@@ -54,13 +54,13 @@ namespace
         }
         virtual void SetBackgroundColor(const mono::Color::RGBA& color)
         { }
-        virtual const math::Vector2f& Size() const
+        virtual const math::Vector& Size() const
         {
             return mSize;
         }
 
         mono::EventHandler& mHandler;
-        math::Vector2f mSize;
+        math::Vector mSize;
 
         bool mMakeCurrentCalled = false;
         mutable bool mSwapBuffersCalled = false;
@@ -75,7 +75,7 @@ namespace
         {
             mUpdateCalled = true;
         }
-        virtual void Follow(const mono::IEntityPtr& entity, const math::Vector2f& offset)
+        virtual void Follow(const mono::IEntityPtr& entity, const math::Vector& offset)
         { }
         virtual void Unfollow()
         {
@@ -85,7 +85,7 @@ namespace
         {
             return mViewport;
         }
-        virtual math::Vector2f GetPosition() const
+        virtual math::Vector GetPosition() const
         {
             return mViewport.mA + (mViewport.mB * 0.5f);
         }
@@ -93,7 +93,7 @@ namespace
         { }
         virtual void SetTargetViewport(const math::Quad& target)
         { }
-        virtual void SetPosition(const math::Vector2f& position)
+        virtual void SetPosition(const math::Vector& position)
         { }
         
         math::Quad mViewport;

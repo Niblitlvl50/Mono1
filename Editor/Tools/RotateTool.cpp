@@ -35,28 +35,28 @@ bool RotateTool::IsActive() const
 void RotateTool::HandleContextMenu(int menu_index)
 { }
 
-void RotateTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
+void RotateTool::HandleMouseDown(const math::Vector& world_pos, mono::IEntityPtr entity)
 {
     m_entity = entity;
     if(!m_entity)
         return;
 
-    const math::Vector2f& position = m_entity->Position() + m_entity->BasePoint();
+    const math::Vector& position = m_entity->Position() + m_entity->BasePoint();
     const float rotation = m_entity->Rotation();
     m_rotationDiff = rotation - math::AngleBetweenPoints(position, world_pos);
 }
 
-void RotateTool::HandleMouseUp(const math::Vector2f& world_pos)
+void RotateTool::HandleMouseUp(const math::Vector& world_pos)
 {
     End();
 }
 
-void RotateTool::HandleMousePosition(const math::Vector2f& world_pos)
+void RotateTool::HandleMousePosition(const math::Vector& world_pos)
 {
     if(!m_entity)
         return;
 
-    const math::Vector2f& position = m_entity->Position() + m_entity->BasePoint();
+    const math::Vector& position = m_entity->Position() + m_entity->BasePoint();
     const float angle = math::AngleBetweenPoints(position, world_pos);
 
     m_entity->SetRotation(angle + m_rotationDiff);

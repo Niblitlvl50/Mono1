@@ -14,7 +14,7 @@ namespace mono
     {
     protected:
         
-        PhysicsZone(const math::Vector2f& gravity, float damping);
+        PhysicsZone(const math::Vector& gravity, float damping);
 
         virtual void ForEachBody(const mono::BodyFunc& func);
         virtual IPhysicsEntityPtr FindPhysicsEntityFromBody(const mono::IBodyPtr& body) const;

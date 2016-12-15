@@ -21,16 +21,16 @@ DotEntity::DotEntity()
     : mBase(400.0f, 400.0f),
       mDelta(0.0f)
 {
-    mScale = math::Vector2f(3.0f, 3.0f);
+    mScale = math::Vector(3.0f, 3.0f);
 }
 
 void DotEntity::Draw(mono::IRenderer& renderer) const
 {
-    const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
+    const std::vector<math::Vector> points = { math::Vector(0, 0) };
     constexpr mono::Color::RGBA color(0.0, 0.0, 0.0);
     constexpr float size = 4.0f;
 
-    constexpr math::Vector2f text_offset(0.0f, 2.5f);
+    constexpr math::Vector text_offset(0.0f, 2.5f);
     renderer.DrawPoints(points, color, size);
     renderer.DrawText(FontId::MEDIUM, "dot...", text_offset, true, color);
 }
@@ -42,6 +42,6 @@ void DotEntity::Update(unsigned int delta)
     const float deltasin = std::sin(mDelta) * 50.0f;
     const float deltacos = std::cos(mDelta) * 50.0f;
     
-    mPosition = mBase + math::Vector2f(deltasin, deltacos);
+    mPosition = mBase + math::Vector(deltasin, deltacos);
 }
 

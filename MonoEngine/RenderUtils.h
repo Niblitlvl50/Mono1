@@ -19,7 +19,7 @@ namespace mono
                   const std::shared_ptr<IColorShader>& shader);
 
     //! Draws a circle
-    void DrawCircle(const math::Vector2f& position,
+    void DrawCircle(const math::Vector& position,
                     float radie,
                     unsigned int segments,
                     float lineWidth,
@@ -35,35 +35,35 @@ namespace mono
                   const std::shared_ptr<ITextureShader>& shader);
 
     //! Draws a single line
-    void DrawLine(const std::vector<math::Vector2f>& vertices,
+    void DrawLine(const std::vector<math::Vector>& vertices,
                   const mono::Color::RGBA& color,
                   float width,
                   const std::shared_ptr<IColorShader>& shader);
 
-    void DrawClosedLine(const std::vector<math::Vector2f>& vertices,
+    void DrawClosedLine(const std::vector<math::Vector>& vertices,
                         const mono::Color::RGBA& color,
                         float width,
                         const std::shared_ptr<IColorShader>& shader);
 
     //! Draws lines, not connected to each other
-    void DrawLines(const std::vector<math::Vector2f>& vertices,
+    void DrawLines(const std::vector<math::Vector>& vertices,
                    const mono::Color::RGBA& color,
                    float width,
                    const std::shared_ptr<IColorShader>& shader);
 
     // Draw a collection of points
-    void DrawPoints(const std::vector<math::Vector2f>& vertices,
+    void DrawPoints(const std::vector<math::Vector>& vertices,
                     const mono::Color::RGBA& color,
                     float size,
                     const std::shared_ptr<IColorShader>& shader);
 
-    void DrawShape(const std::vector<math::Vector2f>& shape1,
-                   const std::vector<math::Vector2f>& shape2,
+    void DrawShape(const std::vector<math::Vector>& shape1,
+                   const std::vector<math::Vector>& shape2,
                    const mono::Color::RGBA& color,
                    const std::shared_ptr<IMorphingShader>& shader);
 
-    void DrawTexturedGeometry(const std::vector<math::Vector2f>& vertices,
-                              const std::vector<math::Vector2f>& texture_coordinates,
+    void DrawTexturedGeometry(const std::vector<math::Vector>& vertices,
+                              const std::vector<math::Vector>& texture_coordinates,
                               const std::vector<unsigned short>& indices,
                               const std::shared_ptr<ITextureShader>& shader);
 }

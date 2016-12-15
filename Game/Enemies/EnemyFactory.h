@@ -9,7 +9,7 @@ namespace game
 {
     class Enemy;
 
-    std::shared_ptr<Enemy> CreateCacoDemon(const math::Vector2f& position, mono::EventHandler& event_handler);
-    std::shared_ptr<Enemy> CreateRyu(const math::Vector2f& position, mono::EventHandler& event_handler);
-    std::shared_ptr<Enemy> CreateInvader(const math::Vector2f& position, mono::EventHandler& event_handler);
+    std::shared_ptr<Enemy> CreateCacoDemon(const math::Vector& position, mono::EventHandler& event_handler);
+    std::shared_ptr<Enemy> CreateRyu(const math::Vector& position, mono::EventHandler& event_handler);
+    std::shared_ptr<Enemy> CreateInvader(const math::Vector& position, mono::EventHandler& event_handler);
 }

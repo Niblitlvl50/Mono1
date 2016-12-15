@@ -13,5 +13,5 @@
 namespace mono
 {
     // Set the listener position
-    void ListenerPosition(const math::Vector2f& position);
+    void ListenerPosition(const math::Vector& position);
 }

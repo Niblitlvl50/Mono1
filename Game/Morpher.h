@@ -21,8 +21,8 @@ namespace game
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
 
-        std::vector<math::Vector2f> m_shape1;
-        std::vector<math::Vector2f> m_shape2;
+        std::vector<math::Vector> m_shape1;
+        std::vector<math::Vector> m_shape2;
 
         float m_morphGrade;
 

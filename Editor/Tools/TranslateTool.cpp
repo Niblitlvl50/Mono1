@@ -34,7 +34,7 @@ bool TranslateTool::IsActive() const
 void TranslateTool::HandleContextMenu(int menu_index)
 { }
 
-void TranslateTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEntityPtr entity)
+void TranslateTool::HandleMouseDown(const math::Vector& world_pos, mono::IEntityPtr entity)
 {
     m_entity = entity;
     if(!m_entity)
@@ -44,18 +44,18 @@ void TranslateTool::HandleMouseDown(const math::Vector2f& world_pos, mono::IEnti
     m_positionDiff = m_entity->Position() - world_pos;
 }
 
-void TranslateTool::HandleMouseUp(const math::Vector2f& world_pos)
+void TranslateTool::HandleMouseUp(const math::Vector& world_pos)
 {
     End();
 }
 
-void TranslateTool::HandleMousePosition(const math::Vector2f& world_pos)
+void TranslateTool::HandleMousePosition(const math::Vector& world_pos)
 {
     if(!m_entity)
         return;
 
-    const math::Vector2f& delta = m_beginTranslate - world_pos;
-    const math::Vector2f& new_pos = m_beginTranslate - delta;
+    const math::Vector& delta = m_beginTranslate - world_pos;
+    const math::Vector& new_pos = m_beginTranslate - delta;
 
     m_entity->SetPosition(new_pos + m_positionDiff);
     m_editor->UpdateGrabbers();

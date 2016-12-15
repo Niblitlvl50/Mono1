@@ -21,14 +21,14 @@
 #define OFFSETOF(TYPE, ELEMENT) ((size_t)&(((TYPE *)0)->ELEMENT))
 
 ImGuiRenderer::ImGuiRenderer(const char* config_file,
-                             const math::Vector2f& window_size)
+                             const math::Vector& window_size)
     : m_windowSize(window_size)
 {
     Initialize(config_file);
 }
 
 ImGuiRenderer::ImGuiRenderer(const char* config_file,
-                             const math::Vector2f& window_size,
+                             const math::Vector& window_size,
                              const std::unordered_map<unsigned int, mono::ITexturePtr>& textures)
     : m_windowSize(window_size),
       m_textures(textures)
@@ -133,7 +133,7 @@ math::Quad ImGuiRenderer::BoundingBox() const
     return math::Quad(-FLT_MAX, -FLT_MAX, FLT_MAX, FLT_MAX);
 }
 
-void ImGuiRenderer::SetWindowSize(const math::Vector2f& window_size)
+void ImGuiRenderer::SetWindowSize(const math::Vector& window_size)
 {
     m_windowSize = window_size;
 }

@@ -20,7 +20,7 @@
 using namespace mono;
 
 
-Space::Space(const math::Vector2f& gravity, float damping)
+Space::Space(const math::Vector& gravity, float damping)
 {
     mSpace = cpSpaceNew();
     cpSpaceSetGravity(mSpace, cpv(gravity.x, gravity.y));
@@ -102,7 +102,7 @@ void Space::DoForEachFuncOnBody(cpBody* body)
     }
 }
 
-IBodyPtr Space::QueryFirst(const math::Vector2f& start, const math::Vector2f& end)
+IBodyPtr Space::QueryFirst(const math::Vector& start, const math::Vector& end)
 {
     const cpShape* shape = cpSpaceSegmentQueryFirst(mSpace, cpv(start.x, start.y), cpv(end.x, end.y), 1, CP_SHAPE_FILTER_ALL, nullptr);
     if(!shape)

@@ -14,10 +14,10 @@
 
 using namespace game;
 
-InvaderGroup::InvaderGroup(const math::Vector2f& position)
+InvaderGroup::InvaderGroup(const math::Vector& position)
 {
     mPosition = position;
-    mScale = math::Vector2f(20.0f, 20.0f);
+    mScale = math::Vector(20.0f, 20.0f);
     
     AddChild(std::make_shared<InvaderEntity>(-1, -1));
     AddChild(std::make_shared<InvaderEntity>(1, 1));
@@ -25,7 +25,7 @@ InvaderGroup::InvaderGroup(const math::Vector2f& position)
 
 void InvaderGroup::Draw(mono::IRenderer& renderer) const
 {
-    const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
+    const std::vector<math::Vector> points = { math::Vector(0, 0) };
     constexpr mono::Color::RGBA color(0.0, 0.0, 0.0);
     constexpr float size = 5.0f;
 

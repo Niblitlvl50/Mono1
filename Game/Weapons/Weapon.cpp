@@ -25,7 +25,7 @@ Weapon::Weapon(const WeaponConfiguration& config, mono::EventHandler& eventHandl
         m_fireSound = mono::AudioFactory::CreateSound(config.fire_sound, false, false);
 }
 
-void Weapon::Fire(const math::Vector2f& position, float direction)
+void Weapon::Fire(const math::Vector& position, float direction)
 {
     const float rpsHz = 1.0f / m_weaponConfig.rounds_per_second;
     const unsigned int weapon_delta = rpsHz * 1000.0f;
@@ -39,8 +39,8 @@ void Weapon::Fire(const math::Vector2f& position, float direction)
 
     if(modified_delta > weapon_delta)
     {
-        const math::Vector2f unit(-std::sin(direction), std::cos(direction));
-        const math::Vector2f& impulse = unit * m_weaponConfig.bullet_force;
+        const math::Vector unit(-std::sin(direction), std::cos(direction));
+        const math::Vector& impulse = unit * m_weaponConfig.bullet_force;
 
         auto bullet = std::make_shared<Bullet>(m_weaponConfig.bullet_config, m_eventHandler);
         bullet->SetPosition(position);

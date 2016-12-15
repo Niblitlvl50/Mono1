@@ -25,9 +25,9 @@ namespace editor
         virtual void Update(unsigned int delta);
         virtual math::Quad BoundingBox() const;
 
-        void AddVertex(const math::Vector2f& vertex);
-        void SetVertex(const math::Vector2f& vertex, size_t index);
-        const std::vector<math::Vector2f>& GetVertices() const;
+        void AddVertex(const math::Vector& vertex);
+        void SetVertex(const math::Vector& vertex, size_t index);
+        const std::vector<math::Vector>& GetVertices() const;
 
         void SetSelected(bool selected);
         bool IsSelected() const;
@@ -47,17 +47,17 @@ namespace editor
         bool m_selected;
         mono::ITexturePtr m_texture;
 
-        std::vector<math::Vector2f> m_points;
-        std::vector<math::Vector2f> m_textureCoordinates;
+        std::vector<math::Vector> m_points;
+        std::vector<math::Vector> m_textureCoordinates;
         float m_texture_repeate;
         char m_texture_name[32];
     };
 
     struct Polygon
     {
-        std::vector<math::Vector2f> vertices;
-        std::vector<math::Vector2f> texture_coordinates;
-        math::Vector2f centroid;
+        std::vector<math::Vector> vertices;
+        std::vector<math::Vector> texture_coordinates;
+        math::Vector centroid;
         float texture_repeate;
     };
 }

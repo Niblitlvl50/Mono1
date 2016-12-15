@@ -57,35 +57,35 @@ namespace mono
         
         //! Set the position of the body
         //! @param position A new position
-        virtual void SetPosition(const math::Vector2f& position) = 0;
+        virtual void SetPosition(const math::Vector& position) = 0;
         
         //! Gets the bodys position
-        //! @return math::Vector2f The position
-        virtual math::Vector2f GetPosition() const = 0;
+        //! @return math::Vector The position
+        virtual math::Vector GetPosition() const = 0;
         
         //! Apply a force to the body
         //! @param force The force
         //! @param offset From where to apply it
-        virtual void ApplyForce(const math::Vector2f& force, const math::Vector2f& offset) = 0;
+        virtual void ApplyForce(const math::Vector& force, const math::Vector& offset) = 0;
 
         //! Apply a local force to the body
         //! @param force The force
         //! @param offset From where to apply it
-        virtual void ApplyLocalForce(const math::Vector2f& force, const math::Vector2f& offset) = 0;
+        virtual void ApplyLocalForce(const math::Vector& force, const math::Vector& offset) = 0;
         
         //! Apply an impulse to the body
         //! @param impulse The impulse
         //! @param offset From where to apply it
-        virtual void ApplyImpulse(const math::Vector2f& impulse, const math::Vector2f& offset) = 0;
+        virtual void ApplyImpulse(const math::Vector& impulse, const math::Vector& offset) = 0;
 
         //! Apply a local impulse to the body
         //! @param impulse The impulse
         //! @param offset From where to apply it
-        virtual void ApplyLocalImpulse(const math::Vector2f& impulse, const math::Vector2f& offset) = 0;
+        virtual void ApplyLocalImpulse(const math::Vector& impulse, const math::Vector& offset) = 0;
 
         //! Sets a velocity to the body
         //! @param velocity A velocity vector
-        virtual void SetVelocity(const math::Vector2f& velocity) = 0;
+        virtual void SetVelocity(const math::Vector& velocity) = 0;
 
         //! Resets all the forces that are working on the body
         virtual void ResetForces() = 0;

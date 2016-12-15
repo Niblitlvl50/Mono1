@@ -34,13 +34,13 @@ void math::Identity(Matrix& matrix)
     matrix.data[15] = 1;
 }
 
-void math::Translate(Matrix& matrix, const Vector2f& vector)
+void math::Translate(Matrix& matrix, const Vector& vector)
 {
     matrix.data[12] += vector.x;
     matrix.data[13] += vector.y;
 }
 
-void math::Position(Matrix& matrix, const Vector2f& position)
+void math::Position(Matrix& matrix, const Vector& position)
 {
     matrix.data[12] = position.x;
     matrix.data[13] = position.y;
@@ -75,7 +75,7 @@ void math::RotateZ(Matrix& matrix, float radians)
     matrix.data[13] = m12 * sine   + m13 * cosine;
 }
 
-void math::RotateZ(math::Matrix& matrix, float radians, const math::Vector2f& offset)
+void math::RotateZ(math::Matrix& matrix, float radians, const math::Vector& offset)
 {
     const float sine = std::sin(radians);
     const float cosine = std::cos(radians);
@@ -103,7 +103,7 @@ void math::RotateZ(math::Matrix& matrix, float radians, const math::Vector2f& of
     matrix.data[13] = m12 * sine   + m13 * cosine;
 }
 
-void math::ScaleXY(Matrix& matrix, const Vector2f& scale)
+void math::ScaleXY(Matrix& matrix, const Vector& scale)
 {
     // The elements of the matrix are stored as column major order.
     // |  0  4  8 12 |
@@ -265,11 +265,11 @@ void math::Inverse(math::Matrix& matrix)
         matrix.data[i] = inv.data[i] * det;
 }
 
-math::Vector2f math::Transform(const Matrix& matrix, const math::Vector2f& vector)
+math::Vector math::Transform(const Matrix& matrix, const math::Vector& vector)
 {
     const float x = matrix.data[0] * vector.x + matrix.data[1] * -vector.y + matrix.data[12];
     const float y = matrix.data[4] * -vector.x + matrix.data[5] * vector.y + matrix.data[13];
-    return math::Vector2f(x, y);
+    return math::Vector(x, y);
 }
 
 void math::operator *= (Matrix& left, const Matrix& right)

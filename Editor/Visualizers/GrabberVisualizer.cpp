@@ -14,10 +14,10 @@ GrabberVisualizer::GrabberVisualizer(const std::vector<editor::Grabber>& grabber
 
 void GrabberVisualizer::doDraw(mono::IRenderer& renderer) const
 {
-    std::vector<math::Vector2f> points;
+    std::vector<math::Vector> points;
     points.reserve(m_grabbers.size());
 
-    std::vector<math::Vector2f> hoovered_points;
+    std::vector<math::Vector> hoovered_points;
     hoovered_points.reserve(m_grabbers.size());
 
     for(const Grabber& grabber : m_grabbers)

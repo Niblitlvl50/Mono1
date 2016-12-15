@@ -23,12 +23,12 @@ int main(int argc, char* argv[])
 
     game::context.event_handler = &eventHandler;
 
-    //constexpr math::Vector2f iPhone6SSize(750.0f, 1334.0f);
-    //const math::Vector2f& nativeSize = Video::GetCurrentWindowSize();
+    //constexpr math::Vector iPhone6SSize(750.0f, 1334.0f);
+    //const math::Vector& nativeSize = Video::GetCurrentWindowSize();
     //const float ratio = nativeSize.y / iPhone6SSize.y;
 
-    //const math::Vector2f& size = iPhone6SSize * ratio;
-    const math::Vector2f size(1280, 800);
+    //const math::Vector& size = iPhone6SSize * ratio;
+    const math::Vector size(1280, 800);
 
     mono::IWindowPtr window = mono::CreateWindow("Mono1", size.x, size.y, false);
     window->SetBackgroundColor(mono::Color::RGBA(0.6, 0.6, 0.6));

@@ -44,7 +44,7 @@ namespace game
         
         void ApplyRotationForce(float force);
         void ApplyThrustForce(float force);
-        void ApplyImpulse(const math::Vector2f& force);
+        void ApplyImpulse(const math::Vector& force);
 
         void Fire();
         void StopFire();

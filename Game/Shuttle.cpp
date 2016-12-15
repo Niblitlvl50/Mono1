@@ -69,8 +69,8 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
       mEventHandler(eventHandler),
       m_fire(false)
 {
-    mPosition = math::Vector2f(x, y);
-    mScale = math::Vector2f(20.0f, 20.0f);
+    mPosition = math::Vector(x, y);
+    mScale = math::Vector(20.0f, 20.0f);
     
     mPhysicsObject.body = mono::PhysicsFactory::CreateBody(10.0f, INFINITY);
     mPhysicsObject.body->SetPosition(mPosition);
@@ -85,14 +85,14 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     mSprite->SetAnimation(constants::IDLE);
 
     m_left_booster = std::make_shared<SpriteEntity>("sprites/booster.sprite");
-    m_left_booster->SetScale(math::Vector2f(0.5f, 0.5f));
+    m_left_booster->SetScale(math::Vector(0.5f, 0.5f));
     m_left_booster->SetRotation(-math::PI_2());
-    m_left_booster->SetPosition(math::Vector2f(-0.6f, 0.0f));
+    m_left_booster->SetPosition(math::Vector(-0.6f, 0.0f));
 
     m_right_booster = std::make_shared<SpriteEntity>("sprites/booster.sprite");
-    m_right_booster->SetScale(math::Vector2f(0.5f, 0.5f));
+    m_right_booster->SetScale(math::Vector(0.5f, 0.5f));
     m_right_booster->SetRotation(math::PI_2());
-    m_right_booster->SetPosition(math::Vector2f(0.6f, 0.0f));
+    m_right_booster->SetPosition(math::Vector(0.6f, 0.0f));
     
     AddChild(m_left_booster);
     AddChild(m_right_booster);
@@ -111,7 +111,7 @@ void Shuttle::Update(unsigned int delta)
     mSprite->doUpdate(delta);
     //mono::ListenerPosition(mPosition);
 
-    constexpr math::Vector2f bullet_offset(0.0f, 15.0f);
+    constexpr math::Vector bullet_offset(0.0f, 15.0f);
 
     if(m_fire)
         mWeapon->Fire(mPosition + bullet_offset, mRotation);
@@ -130,23 +130,23 @@ void Shuttle::SelectWeapon(WeaponType weapon)
 
 void Shuttle::ApplyRotationForce(float force)
 {
-    const math::Vector2f forceVector(force, 0.0);
+    const math::Vector forceVector(force, 0.0);
 
     // First apply the rotational force at an offset of 20 in y axis, then negate the vector
     // and apply it to zero to counter the movement when we only want rotation.
-    mPhysicsObject.body->ApplyForce(forceVector, math::Vector2f(0, 20));
+    mPhysicsObject.body->ApplyForce(forceVector, math::Vector(0, 20));
     mPhysicsObject.body->ApplyForce(forceVector * -1, math::zeroVec);
 }
 
 void Shuttle::ApplyThrustForce(float force)
 {
     const float rotation = Rotation();
-    const math::Vector2f unit(-std::sin(rotation), std::cos(rotation));
+    const math::Vector unit(-std::sin(rotation), std::cos(rotation));
 
     mPhysicsObject.body->ApplyForce(unit * force, math::zeroVec);
 }
 
-void Shuttle::ApplyImpulse(const math::Vector2f& force)
+void Shuttle::ApplyImpulse(const math::Vector& force)
 {
     mPhysicsObject.body->ApplyImpulse(force, mPosition);
 }

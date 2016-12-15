@@ -16,12 +16,12 @@ PhysicsEntityBase::PhysicsEntityBase()
       mRotation(0.0f)
 { }
 
-const math::Vector2f& PhysicsEntityBase::Position() const
+const math::Vector& PhysicsEntityBase::Position() const
 {
     return mPosition;
 }
 
-const math::Vector2f& PhysicsEntityBase::BasePoint() const
+const math::Vector& PhysicsEntityBase::BasePoint() const
 {
     return math::zeroVec;
 }
@@ -31,12 +31,12 @@ float PhysicsEntityBase::Rotation() const
     return mRotation;
 }
 
-const math::Vector2f& PhysicsEntityBase::Scale() const
+const math::Vector& PhysicsEntityBase::Scale() const
 {
     return mScale;
 }
 
-void PhysicsEntityBase::SetPosition(const math::Vector2f& position)
+void PhysicsEntityBase::SetPosition(const math::Vector& position)
 {
     mPosition = position;
     mPhysicsObject.body->SetPosition(position);
@@ -48,14 +48,14 @@ void PhysicsEntityBase::SetRotation(float rotation)
     mPhysicsObject.body->SetAngle(rotation);
 }
 
-void PhysicsEntityBase::SetScale(const math::Vector2f& scale)
+void PhysicsEntityBase::SetScale(const math::Vector& scale)
 {
     mScale = scale;
 }
 
 math::Quad PhysicsEntityBase::BoundingBox() const
 {
-    const math::Vector2f& halfScale = mScale / 2.0f;
+    const math::Vector& halfScale = mScale / 2.0f;
     math::Quad thisbb(mPosition - halfScale, mPosition + halfScale);
 
     for(const auto& child : m_children)

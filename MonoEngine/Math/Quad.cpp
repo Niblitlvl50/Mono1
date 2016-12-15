@@ -15,7 +15,7 @@ math::Quad math::operator * (const math::Quad& left, float value)
     return math::Quad(left.mA * value, left.mB * value);
 }
 
-math::Quad math::operator * (const math::Quad& left, const math::Vector2f& right)
+math::Quad math::operator * (const math::Quad& left, const math::Vector& right)
 {
     return math::Quad(left.mA * right, left.mB * right);
 }
@@ -28,7 +28,7 @@ void math::operator |= (math::Quad& left, const math::Quad& right)
     left.mB.y = std::max(left.mB.y, right.mB.y);
 }
 
-void math::operator |= (math::Quad& left, const math::Vector2f& right)
+void math::operator |= (math::Quad& left, const math::Vector& right)
 {
     left.mA.x = std::min(left.mA.x, right.x);
     left.mA.y = std::min(left.mA.y, right.y);

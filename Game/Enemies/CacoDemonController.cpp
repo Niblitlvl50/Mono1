@@ -33,8 +33,8 @@ void CacoDemonController::doUpdate(unsigned int delta)
 {
     const float rotation = m_enemy->Rotation();
 
-    const math::Vector2f unit(-std::sin(rotation), std::cos(rotation));
-    const math::Vector2f offset = unit * 30.0f;
+    const math::Vector unit(-std::sin(rotation), std::cos(rotation));
+    const math::Vector offset = unit * 30.0f;
 
     m_weapon->Fire(m_enemy->Position() + offset, rotation);
 }

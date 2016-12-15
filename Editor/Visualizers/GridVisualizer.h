@@ -26,6 +26,6 @@ namespace editor
     private:
         
         const mono::ICameraPtr& m_camera;
-        std::vector<math::Vector2f> m_gridVertices;
+        std::vector<math::Vector> m_gridVertices;
     };
 }

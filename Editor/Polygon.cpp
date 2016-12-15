@@ -73,7 +73,7 @@ math::Quad PolygonEntity::BoundingBox() const
     return bb;
 }
 
-void PolygonEntity::AddVertex(const math::Vector2f& vertex)
+void PolygonEntity::AddVertex(const math::Vector& vertex)
 {
     m_points.push_back(vertex);
     RecalculateTextureCoordinates();
@@ -82,7 +82,7 @@ void PolygonEntity::AddVertex(const math::Vector2f& vertex)
         mBasePoint = math::CentroidOfPolygon(m_points);
 }
 
-void PolygonEntity::SetVertex(const math::Vector2f& vertex, size_t index)
+void PolygonEntity::SetVertex(const math::Vector& vertex, size_t index)
 {
     math::Matrix transform = Transformation();
     math::Inverse(transform);
@@ -90,7 +90,7 @@ void PolygonEntity::SetVertex(const math::Vector2f& vertex, size_t index)
     m_points[index] = math::Transform(transform, vertex);
 }
 
-const std::vector<math::Vector2f>& PolygonEntity::GetVertices() const
+const std::vector<math::Vector>& PolygonEntity::GetVertices() const
 {
     return m_points;
 }
@@ -147,7 +147,7 @@ void PolygonEntity::RecalculateTextureCoordinates()
     m_textureCoordinates.clear();
 
     const math::Quad& bb = LocalBoundingBox();
-    for(const math::Vector2f& point : m_points)
+    for(const math::Vector& point : m_points)
         m_textureCoordinates.push_back(math::MapVectorInQuad(point, bb) * m_texture_repeate);
 }
 

@@ -1,5 +1,5 @@
 //
-//  Vector2f.h
+//  Vector.h
 //  Mono1
 //
 //  Created by Niblit on 2012-04-09.
@@ -10,12 +10,12 @@
 
 namespace math
 {
-    struct Vector2f
+    struct Vector
     {
-        constexpr Vector2f()
+        constexpr Vector()
         { }
 
-        constexpr Vector2f(float x, float y)
+        constexpr Vector(float x, float y)
             : x(x),
               y(y)
         { }
@@ -26,30 +26,30 @@ namespace math
 
 
     // Operators!
-    Vector2f operator + (const Vector2f& left, const Vector2f& right);
-    Vector2f operator - (const Vector2f& left, const Vector2f& right);
-    Vector2f operator * (const Vector2f& left, float value);
-    Vector2f operator * (const Vector2f& left, const Vector2f& right);
-    Vector2f operator / (const Vector2f& left, const Vector2f& right);
-    Vector2f operator / (const Vector2f& left, float value);
+    Vector operator + (const Vector& left, const Vector& right);
+    Vector operator - (const Vector& left, const Vector& right);
+    Vector operator * (const Vector& left, float value);
+    Vector operator * (const Vector& left, const Vector& right);
+    Vector operator / (const Vector& left, const Vector& right);
+    Vector operator / (const Vector& left, float value);
 
-    Vector2f operator - (const Vector2f& vector);
+    Vector operator - (const Vector& vector);
 
     // Assigment operators!
-    void operator *= (Vector2f& left, float value);
-    void operator *= (Vector2f& left, const Vector2f& right);
-    void operator += (Vector2f& left, const Vector2f& right);
-    void operator -= (Vector2f& left, const Vector2f& right);
+    void operator *= (Vector& left, float value);
+    void operator *= (Vector& left, const Vector& right);
+    void operator += (Vector& left, const Vector& right);
+    void operator -= (Vector& left, const Vector& right);
 
-    bool operator == (const Vector2f& left, const Vector2f& right);
+    bool operator == (const Vector& left, const Vector& right);
 
     // Calculates the length of a vector
-    float Length(const Vector2f& vector);
+    float Length(const Vector& vector);
 
     // Normalizes the vector
-    void Normalize(Vector2f& vector);
+    void Normalize(Vector& vector);
 
     // Just a convineince vector declared to zero.
-    constexpr Vector2f zeroVec = Vector2f();
+    constexpr Vector zeroVec = Vector();
 }
 

@@ -46,7 +46,7 @@ namespace
         SpriteDrawable(const char* file)
         {
             m_sprite = mono::CreateSprite(file);
-            SetScale(math::Vector2f(50, 50));
+            SetScale(math::Vector(50, 50));
         }
         virtual void Draw(mono::IRenderer& renderer) const
         {
@@ -171,7 +171,7 @@ void Editor::OnUnload()
 bool Editor::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 {
     if(event.width > 0 && event.height > 0)
-        m_guiRenderer->SetWindowSize(math::Vector2f(event.width, event.height));
+        m_guiRenderer->SetWindowSize(math::Vector(event.width, event.height));
 
     return false;
 }
@@ -183,7 +183,7 @@ void Editor::UpdateUI()
 
     if(m_selected_polygon)
     {
-        const math::Vector2f& position = m_selected_polygon->Position();
+        const math::Vector& position = m_selected_polygon->Position();
         m_context.position_x = position.x;
         m_context.position_y = position.y;
         m_context.rotation = m_selected_polygon->Rotation();
@@ -192,7 +192,7 @@ void Editor::UpdateUI()
     }
     else if(m_selected_path)
     {
-        const math::Vector2f& position = m_selected_path->Position();
+        const math::Vector& position = m_selected_path->Position();
         m_context.position_x = position.x;
         m_context.position_y = position.y;
         m_context.rotation = 0.0f;
@@ -237,7 +237,7 @@ void Editor::SelectEntity(const mono::IEntityPtr& entity)
     UpdateUI();
 }
 
-void Editor::SelectGrabber(const math::Vector2f& position)
+void Editor::SelectGrabber(const math::Vector& position)
 {
     for(auto& grabber : m_grabbers)
         grabber.hoover = false;
@@ -247,7 +247,7 @@ void Editor::SelectGrabber(const math::Vector2f& position)
         grabber->hoover = true;
 }
 
-editor::Grabber* Editor::FindGrabber(const math::Vector2f& position)
+editor::Grabber* Editor::FindGrabber(const math::Vector& position)
 {
     const float threshold = m_camera->GetViewport().mB.x / m_window->Size().x * 5.0f;
 

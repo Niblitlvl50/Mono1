@@ -15,7 +15,7 @@ using namespace game;
 Enemy::Enemy(EnemySetup& setup)
 {
     mPosition = setup.position;
-    mScale = math::Vector2f(setup.size, setup.size);
+    mScale = math::Vector(setup.size, setup.size);
 
     mPhysicsObject.body = mono::PhysicsFactory::CreateBody(setup.mass, 1.0f);
     mPhysicsObject.shapes.push_back(mono::PhysicsFactory::CreateShape(mPhysicsObject.body, setup.size / 2.0f, math::zeroVec));

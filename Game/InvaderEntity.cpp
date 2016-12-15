@@ -19,7 +19,7 @@ InvaderEntity::InvaderEntity(float x, float y)
     : mColor(0.0f, 0.5f, 0.5f)
 {
     mSprite = mono::CreateSprite("sprites/invader.sprite");
-    mPosition = math::Vector2f(x, y);
+    mPosition = math::Vector(x, y);
 }
 
 void InvaderEntity::Draw(mono::IRenderer& renderer) const

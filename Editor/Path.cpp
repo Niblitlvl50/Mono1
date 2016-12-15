@@ -13,7 +13,7 @@ PathEntity::PathEntity(const std::string& name)
       m_selected(false)
 { }
 
-PathEntity::PathEntity(const std::string& name, const std::vector<math::Vector2f>& points)
+PathEntity::PathEntity(const std::string& name, const std::vector<math::Vector>& points)
     : PathEntity(name)
 {
       m_points = points;
@@ -60,7 +60,7 @@ void PathEntity::SetSelected(bool selected)
     m_selected = selected;
 }
 
-void PathEntity::AddVertex(const math::Vector2f& vertex)
+void PathEntity::AddVertex(const math::Vector& vertex)
 {
     if(m_points.empty())
     {
@@ -74,7 +74,7 @@ void PathEntity::AddVertex(const math::Vector2f& vertex)
         mBasePoint = math::CentroidOfPolygon(m_points);
 }
 
-void PathEntity::SetVertex(const math::Vector2f& vertex, size_t index)
+void PathEntity::SetVertex(const math::Vector& vertex, size_t index)
 {
     math::Matrix transform = Transformation();
     math::Inverse(transform);

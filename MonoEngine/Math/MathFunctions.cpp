@@ -12,7 +12,7 @@
 
 #include <cmath>
 
-bool math::PointInsideQuad(const math::Vector2f& point, const math::Quad& quad)
+bool math::PointInsideQuad(const math::Vector& point, const math::Quad& quad)
 {
     if(point.x > quad.mA.x &&
        point.x < quad.mB.x &&
@@ -25,11 +25,11 @@ bool math::PointInsideQuad(const math::Vector2f& point, const math::Quad& quad)
 
 bool math::QuadOverlaps(const math::Quad& left, const math::Quad& right)
 {
-    const Vector2f& left1 = left.mA;
-    const Vector2f& left2 = left.mB;
+    const Vector& left1 = left.mA;
+    const Vector& left2 = left.mB;
     
-    const Vector2f& right1 = right.mA;
-    const Vector2f& right2 = right.mB;
+    const Vector& right1 = right.mA;
+    const Vector& right2 = right.mB;
     
     if( left1.x < right2.x && left2.x > right1.x &&
         left1.y < right2.y && left2.y > right1.y )
@@ -50,17 +50,17 @@ void math::ResizeQuad(math::Quad& quad, float value, float aspect)
     quad.mB.y += resizeY;
 }
 
-float math::AngleBetweenPoints(const math::Vector2f& first, const math::Vector2f& second)
+float math::AngleBetweenPoints(const math::Vector& first, const math::Vector& second)
 {
     return std::atan2(second.y - first.y, second.x - first.x);
 }
 
-math::Vector2f math::CentroidOfPolygon(const std::vector<math::Vector2f>& points)
+math::Vector math::CentroidOfPolygon(const std::vector<math::Vector>& points)
 {
-    math::Vector2f centroid;
+    math::Vector centroid;
     float area = 0.0f;
 
-    const auto func = [&centroid, &area](const math::Vector2f& first, const math::Vector2f& second) {
+    const auto func = [&centroid, &area](const math::Vector& first, const math::Vector& second) {
         const float partial_area = first.x * second.y - second.x * first.y;
 
         area += partial_area;
@@ -82,14 +82,14 @@ math::Vector2f math::CentroidOfPolygon(const std::vector<math::Vector2f>& points
     return centroid;
 }
 
-bool math::IsPolygonClockwise(const std::vector<math::Vector2f>& points)
+bool math::IsPolygonClockwise(const std::vector<math::Vector>& points)
 {
     float sum = 0.0f;
 
     for(size_t point_index = 0; point_index < points.size(); ++point_index)
     {
-        const math::Vector2f& v1 = points[point_index];
-        const math::Vector2f& v2 = points[(point_index + 1) % points.size()];
+        const math::Vector& v1 = points[point_index];
+        const math::Vector& v2 = points[(point_index + 1) % points.size()];
 
         sum += (v2.x - v1.x) * (v2.y + v1.y);
     }
@@ -97,13 +97,13 @@ bool math::IsPolygonClockwise(const std::vector<math::Vector2f>& points)
     return sum > 0.0f;
 }
 
-math::Vector2f math::MapVectorInQuad(const math::Vector2f& point, const math::Quad& quad)
+math::Vector math::MapVectorInQuad(const math::Vector& point, const math::Quad& quad)
 {
-    const math::Vector2f& temp = point - quad.mA;
-    const math::Vector2f& size = quad.mB - quad.mA;
+    const math::Vector& temp = point - quad.mA;
+    const math::Vector& size = quad.mB - quad.mA;
 
     // We need to flip the y axis
-    return math::Vector2f(temp.x / size.x, (size.y - temp.y) / size.y);
+    return math::Vector(temp.x / size.x, (size.y - temp.y) / size.y);
 }
 
 

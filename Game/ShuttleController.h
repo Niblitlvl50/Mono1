@@ -42,6 +42,6 @@ namespace game
         mono::EventToken<event::KeyUpEvent> m_keyUpToken;
 
         bool mMouseDown;
-        math::Vector2f mMouseDownPosition;
+        math::Vector mMouseDownPosition;
     };
 }

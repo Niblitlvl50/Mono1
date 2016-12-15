@@ -38,10 +38,10 @@ namespace
 
             m_boundingBox = math::Quad(math::INF, math::INF, -math::INF, -math::INF);
 
-            for(const math::Vector2f& vertex : polygon.vertices)
+            for(const math::Vector& vertex : polygon.vertices)
                 m_boundingBox |= vertex;
 
-            for(const math::Vector2f& point : m_vertices)
+            for(const math::Vector& point : m_vertices)
                 m_texture_coordinates.push_back(math::MapVectorInQuad(point, m_boundingBox) * polygon.texture_repeate);
 
             for(size_t index = 0; index < m_vertices.size(); ++index)
@@ -63,8 +63,8 @@ namespace
         virtual void Update(unsigned int delta)
         { }
 
-        const std::vector<math::Vector2f> m_vertices;
-        std::vector<math::Vector2f> m_texture_coordinates;
+        const std::vector<math::Vector> m_vertices;
+        std::vector<math::Vector> m_texture_coordinates;
         std::vector<unsigned short> m_indices;
 
         mono::ITexturePtr m_texture;

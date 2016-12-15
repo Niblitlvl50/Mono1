@@ -70,9 +70,9 @@ namespace
         }
         void GravityFunc(const mono::IBodyPtr& body)
         {
-            math::Vector2f impulse;
+            math::Vector impulse;
             
-            math::Vector2f newPos = body->GetPosition() - mMoon1->Position();
+            math::Vector newPos = body->GetPosition() - mMoon1->Position();
             const float distance = math::Length(newPos);
             if(distance < 300.0f)
             {
@@ -85,7 +85,7 @@ namespace
                 impulse += newPos;
             }
             
-            math::Vector2f newPos2 = body->GetPosition() - mMoon2->Position();
+            math::Vector newPos2 = body->GetPosition() - mMoon2->Position();
             const float distance2 = math::Length(newPos2);
             if(distance2 < 200.0f)
             {
@@ -123,16 +123,16 @@ namespace
         mono::ICameraPtr m_camera;
     };
 
-    void ApplyShockwave(const mono::IBodyPtr& body, const math::Vector2f& position, float magnitude)
+    void ApplyShockwave(const mono::IBodyPtr& body, const math::Vector& position, float magnitude)
     {
-        math::Vector2f unit = body->GetPosition() - position;
+        math::Vector unit = body->GetPosition() - position;
         const float length = math::Length(unit);
         if(length > 50)
             return;
 
         math::Normalize(unit);
         
-        const math::Vector2f& impulse = unit * magnitude;
+        const math::Vector& impulse = unit * magnitude;
         body->ApplyImpulse(impulse, body->GetPosition());
     }
 
@@ -159,7 +159,7 @@ namespace
 }
 
 TestZone::TestZone(mono::EventHandler& eventHandler)
-    : PhysicsZone(math::Vector2f(0.0f, 0.0f), 0.9f),
+    : PhysicsZone(math::Vector(0.0f, 0.0f), 0.9f),
       mEventHandler(eventHandler),
       m_spawner(eventHandler)
 {
@@ -205,16 +205,16 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(0.0f, 0.0f, mEventHandler);
     AddPhysicsEntity(shuttle, FOREGROUND);
 
-    AddPhysicsEntity(game::CreateCacoDemon(math::Vector2f(100, 100), mEventHandler), FOREGROUND);
-    //AddPhysicsEntity(game::CreateRyu(math::Vector2f(100.0f, 50.0f), mEventHandler), MIDDLEGROUND);
+    AddPhysicsEntity(game::CreateCacoDemon(math::Vector(100, 100), mEventHandler), FOREGROUND);
+    //AddPhysicsEntity(game::CreateRyu(math::Vector(100.0f, 50.0f), mEventHandler), MIDDLEGROUND);
 
-    AddPhysicsEntity(game::CreateInvader(math::Vector2f(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
-    AddPhysicsEntity(game::CreateInvader(math::Vector2f(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
-    AddPhysicsEntity(game::CreateInvader(math::Vector2f(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
-    AddPhysicsEntity(game::CreateInvader(math::Vector2f(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
-    AddPhysicsEntity(game::CreateInvader(math::Vector2f(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
+    AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
+    AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
+    AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
+    AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
+    AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
 
-    AddEntity(std::make_shared<InvaderGroup>(math::Vector2f(300.0f, 800.0f)), BACKGROUND);
+    AddEntity(std::make_shared<InvaderGroup>(math::Vector(300.0f, 800.0f)), BACKGROUND);
     AddEntity(std::make_shared<DotEntity>(), FOREGROUND);
     AddEntity(std::make_shared<PathPoint>(), BACKGROUND);
     //AddEntity(std::make_shared<Morpher>(), FOREGROUND);
@@ -223,7 +223,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddMeteorCluster(this);
 
     camera->SetPosition(shuttle->Position());
-    camera->Follow(shuttle, math::Vector2f(0, -100));
+    camera->Follow(shuttle, math::Vector(0, -100));
 
     m_backgroundMusic->Play();
 }

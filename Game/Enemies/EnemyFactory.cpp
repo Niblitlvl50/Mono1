@@ -6,7 +6,7 @@
 #include "RyuController.h"
 #include "InvaderController.h"
 
-std::shared_ptr<game::Enemy> game::CreateCacoDemon(const math::Vector2f& position, mono::EventHandler& event_handler)
+std::shared_ptr<game::Enemy> game::CreateCacoDemon(const math::Vector& position, mono::EventHandler& event_handler)
 {
     EnemySetup setup;
     setup.sprite_file = "sprites/cacodemon.sprite";
@@ -18,7 +18,7 @@ std::shared_ptr<game::Enemy> game::CreateCacoDemon(const math::Vector2f& positio
     return std::make_shared<game::Enemy>(setup);
 }
 
-std::shared_ptr<game::Enemy> game::CreateRyu(const math::Vector2f& position, mono::EventHandler& event_handler)
+std::shared_ptr<game::Enemy> game::CreateRyu(const math::Vector& position, mono::EventHandler& event_handler)
 {
     EnemySetup setup;
     setup.sprite_file = "sprites/ryu.sprite";
@@ -30,7 +30,7 @@ std::shared_ptr<game::Enemy> game::CreateRyu(const math::Vector2f& position, mon
     return std::make_shared<game::Enemy>(setup);
 }
 
-std::shared_ptr<game::Enemy> game::CreateInvader(const math::Vector2f& position, mono::EventHandler& event_handler)
+std::shared_ptr<game::Enemy> game::CreateInvader(const math::Vector& position, mono::EventHandler& event_handler)
 {
     EnemySetup setup;
     setup.sprite_file = "sprites/invader.sprite";

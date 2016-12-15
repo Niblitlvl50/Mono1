@@ -44,8 +44,8 @@ namespace editor
 
         void SelectEntity(const mono::IEntityPtr& entity);
 
-        void SelectGrabber(const math::Vector2f& position);
-        Grabber* FindGrabber(const math::Vector2f& position);
+        void SelectGrabber(const math::Vector& position);
+        Grabber* FindGrabber(const math::Vector& position);
         void UpdateGrabbers();
 
         void OnContextMenu(int index);

@@ -18,15 +18,15 @@ using namespace game;
 PathPoint::PathPoint()
     : mElapsedTime(0)
 {
-    mScale = math::Vector2f(10, 10);
+    mScale = math::Vector(10, 10);
 
-    const std::vector<math::Vector2f> points = {
-        math::Vector2f(0, 0),
-        math::Vector2f(0, 100),
-        math::Vector2f(50, 100),
-        math::Vector2f(250, 200),
-        math::Vector2f(30, 30),
-        math::Vector2f(0, 0)
+    const std::vector<math::Vector> points = {
+        math::Vector(0, 0),
+        math::Vector(0, 100),
+        math::Vector(50, 100),
+        math::Vector(250, 200),
+        math::Vector(30, 30),
+        math::Vector(0, 0)
     };
 
     mPath = mono::CreatePath(math::zeroVec, points);
@@ -34,7 +34,7 @@ PathPoint::PathPoint()
 
 void PathPoint::Draw(mono::IRenderer& renderer) const
 {
-    const std::vector<math::Vector2f> points = { math::Vector2f(0, 0) };
+    const std::vector<math::Vector> points = { math::Vector(0, 0) };
     constexpr mono::Color::RGBA color(0.7, 0.0, 0.0);
     constexpr float size = 14.0f;
 

@@ -104,7 +104,7 @@ mono::IEntityPtr ZoneBase::FindEntityFromId(uint id) const
     return nullptr;
 }
 
-mono::IEntityPtr ZoneBase::FindEntityFromPoint(const math::Vector2f& point) const
+mono::IEntityPtr ZoneBase::FindEntityFromPoint(const math::Vector& point) const
 {
     const auto find_func = [&point](const mono::IEntityPtr& entity) {
         const math::Quad& bb = entity->BoundingBox();

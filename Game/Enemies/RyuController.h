@@ -24,7 +24,7 @@ namespace game
         mono::EventHandler& m_eventHandler;
         mono::EventToken<event::KeyDownEvent> m_keyDownToken;
 
-        math::Vector2f m_target;
+        math::Vector m_target;
         Enemy* m_enemy;
     };
 }

@@ -22,17 +22,17 @@ namespace math
               mB(w, h)
         { }
 
-        constexpr Quad(const Vector2f& a, const Vector2f& b)
+        constexpr Quad(const Vector& a, const Vector& b)
             : mA(a),
               mB(b)
         { }
 
-        Vector2f mA;
-        Vector2f mB;
+        Vector mA;
+        Vector mB;
     };
     
     Quad operator * (const Quad& left, float value);
-    Quad operator * (const Quad& left, const Vector2f& right);
+    Quad operator * (const Quad& left, const Vector& right);
     
     //!
     //! Be aware that this only checks for max/min values.
@@ -41,7 +41,7 @@ namespace math
     //!
     void operator |= (Quad& left, const Quad& right);
 
-    void operator |= (Quad& left, const Vector2f& right);
+    void operator |= (Quad& left, const Vector& right);
 
     bool operator == (const Quad& left, const Quad& right);
 

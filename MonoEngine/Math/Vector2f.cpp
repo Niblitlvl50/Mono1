@@ -1,5 +1,5 @@
 //
-//  Vector2f.cpp
+//  Vector.cpp
 //  MonoiOS
 //
 //  Created by Niklas Damberg on 03/11/13.
@@ -9,77 +9,77 @@
 #include "Vector2f.h"
 #include <cmath>
 
-math::Vector2f math::operator + (const math::Vector2f& left, const math::Vector2f& right)
+math::Vector math::operator + (const math::Vector& left, const math::Vector& right)
 {
-    return Vector2f(left.x + right.x, left.y + right.y);
+    return Vector(left.x + right.x, left.y + right.y);
 }
 
-math::Vector2f math::operator - (const math::Vector2f& left, const math::Vector2f& right)
+math::Vector math::operator - (const math::Vector& left, const math::Vector& right)
 {
-    return Vector2f(left.x - right.x, left.y - right.y);
+    return Vector(left.x - right.x, left.y - right.y);
 }
 
-math::Vector2f math::operator * (const math::Vector2f& left, float value)
+math::Vector math::operator * (const math::Vector& left, float value)
 {
-    return Vector2f(left.x * value, left.y * value);
+    return Vector(left.x * value, left.y * value);
 }
 
-math::Vector2f math::operator * (const math::Vector2f& left, const math::Vector2f& right)
+math::Vector math::operator * (const math::Vector& left, const math::Vector& right)
 {
-    return math::Vector2f(left.x * right.x, left.y * right.y);
+    return math::Vector(left.x * right.x, left.y * right.y);
 }
 
-math::Vector2f math::operator / (const math::Vector2f& left, const math::Vector2f& right)
+math::Vector math::operator / (const math::Vector& left, const math::Vector& right)
 {
-    return Vector2f(left.x / right.x, left.y / right.y);
+    return Vector(left.x / right.x, left.y / right.y);
 }
 
-math::Vector2f math::operator / (const math::Vector2f& left, float value)
+math::Vector math::operator / (const math::Vector& left, float value)
 {
-    return Vector2f(left.x / value, left.y / value);
+    return Vector(left.x / value, left.y / value);
 }
 
-math::Vector2f math::operator - (const math::Vector2f& vector)
+math::Vector math::operator - (const math::Vector& vector)
 {
-    return Vector2f(-vector.x, -vector.y);
+    return Vector(-vector.x, -vector.y);
 }
 
-void math::operator *= (math::Vector2f& left, float value)
+void math::operator *= (math::Vector& left, float value)
 {
     left.x *= value;
     left.y *= value;
 }
 
-void math::operator *= (math::Vector2f& left, const math::Vector2f& right)
+void math::operator *= (math::Vector& left, const math::Vector& right)
 {
     left.x *= right.x;
     left.y *= right.y;
 }
 
-void math::operator += (math::Vector2f& left, const math::Vector2f& right)
+void math::operator += (math::Vector& left, const math::Vector& right)
 {
     left.x += right.x;
     left.y += right.y;
 }
 
-void math::operator -= (math::Vector2f& left, const math::Vector2f& right)
+void math::operator -= (math::Vector& left, const math::Vector& right)
 {
     left.x -= right.x;
     left.y -= right.y;
 }
 
-bool math::operator == (const math::Vector2f& left, const math::Vector2f& right)
+bool math::operator == (const math::Vector& left, const math::Vector& right)
 {
     return left.x == right.x &&
            left.y == right.y;
 }
 
-float math::Length(const math::Vector2f& vector)
+float math::Length(const math::Vector& vector)
 {
     return std::sqrt(vector.x * vector.x + vector.y * vector.y);
 }
 
-void math::Normalize(math::Vector2f& vector)
+void math::Normalize(math::Vector& vector)
 {
     const float length = Length(vector);
     if(length == 0.0f)

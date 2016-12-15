@@ -18,7 +18,7 @@
 
 namespace
 {
-    std::vector<math::Vector2f> BuildGridVertices(const math::Quad& bounds)
+    std::vector<math::Vector> BuildGridVertices(const math::Quad& bounds)
     {
         constexpr float cellSize = 50.0f;
 
@@ -28,22 +28,22 @@ namespace
         const float cellsWidth = width / cellSize;
         const float cellsHeight = height / cellSize;
 
-        std::vector<math::Vector2f> vertices;
+        std::vector<math::Vector> vertices;
 
         for(int index = 0; index < cellsWidth; ++index)
         {
             const float x = bounds.mA.x + index * cellSize;
 
-            vertices.push_back(math::Vector2f(x, bounds.mA.y));
-            vertices.push_back(math::Vector2f(x, bounds.mB.y));
+            vertices.push_back(math::Vector(x, bounds.mA.y));
+            vertices.push_back(math::Vector(x, bounds.mB.y));
         }
 
         for(int index = 0; index < cellsHeight; ++index)
         {
             const float y = bounds.mA.y + index * cellSize;
 
-            vertices.push_back(math::Vector2f(bounds.mA.x, y));
-            vertices.push_back(math::Vector2f(bounds.mB.x, y));
+            vertices.push_back(math::Vector(bounds.mA.x, y));
+            vertices.push_back(math::Vector(bounds.mB.x, y));
         }
         
         return vertices;
@@ -72,8 +72,8 @@ void GridVisualizer::doDraw(mono::IRenderer& renderer) const
     char text[100];
     std::sprintf(text, "%3.2f m", scale);
 
-    constexpr math::Vector2f position(1050, 15);
-    const std::vector<math::Vector2f> points = { math::Vector2f(950, 25), math::Vector2f(1150, 25) };
+    constexpr math::Vector position(1050, 15);
+    const std::vector<math::Vector> points = { math::Vector(950, 25), math::Vector(1150, 25) };
 
     renderer.PushNewProjection(projection);
     renderer.PushNewTransform(transform);

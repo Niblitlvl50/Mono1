@@ -22,15 +22,15 @@ class ImGuiRenderer : public mono::IDrawable
 public:
 
     ImGuiRenderer(const char* config_file,
-                  const math::Vector2f& window_size);
+                  const math::Vector& window_size);
 
     ImGuiRenderer(const char* config_file,
-                  const math::Vector2f& window_size,
+                  const math::Vector& window_size,
                   const std::unordered_map<unsigned int, mono::ITexturePtr>& textures);
 
     virtual ~ImGuiRenderer();
 
-    void SetWindowSize(const math::Vector2f& window_size);
+    void SetWindowSize(const math::Vector& window_size);
 
 private:
 
@@ -39,7 +39,7 @@ private:
     virtual void doDraw(mono::IRenderer& renderer) const;
     virtual math::Quad BoundingBox() const;
 
-    math::Vector2f m_windowSize;
+    math::Vector m_windowSize;
 
     std::shared_ptr<ImGuiShader> m_shader;
     std::unordered_map<unsigned int, mono::ITexturePtr> m_textures;

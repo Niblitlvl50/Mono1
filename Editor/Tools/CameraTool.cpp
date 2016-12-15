@@ -16,7 +16,7 @@
 
 using namespace editor;
 
-CameraTool::CameraTool(const mono::ICameraPtr& camera, const math::Vector2f& window_size)
+CameraTool::CameraTool(const mono::ICameraPtr& camera, const math::Vector& window_size)
     : m_camera(camera),
       m_windowSize(window_size),
       m_translate(false)
@@ -27,31 +27,31 @@ bool CameraTool::IsActive() const
     return m_translate;
 }
 
-void CameraTool::HandleMouseDown(const math::Vector2f& screen_position)
+void CameraTool::HandleMouseDown(const math::Vector& screen_position)
 {
     m_translate = true;
     m_translateDelta = screen_position;
 }
 
-void CameraTool::HandleMouseUp(const math::Vector2f& screen_position)
+void CameraTool::HandleMouseUp(const math::Vector& screen_position)
 {
     m_translate = false;
 }
 
-void CameraTool::HandleMousePosition(const math::Vector2f& screen_position)
+void CameraTool::HandleMousePosition(const math::Vector& screen_position)
 {
     if(!m_translate)
         return;
 
     const math::Quad& viewport = m_camera->GetViewport();
-    const math::Vector2f& scale = viewport.mB / m_windowSize;
+    const math::Vector& scale = viewport.mB / m_windowSize;
 
-    math::Vector2f delta = (screen_position - m_translateDelta);
+    math::Vector delta = (screen_position - m_translateDelta);
     delta.y = -delta.y;
     delta *= scale;
 
-    const math::Vector2f& cam_pos = m_camera->GetPosition();
-    const math::Vector2f& new_pos = cam_pos - delta;
+    const math::Vector& cam_pos = m_camera->GetPosition();
+    const math::Vector& new_pos = cam_pos - delta;
 
     m_camera->SetPosition(new_pos);
 
@@ -70,7 +70,7 @@ void CameraTool::HandleMouseWheel(float x, float y)
     m_camera->SetTargetViewport(quad);
 }
 
-void CameraTool::HandleMultiGesture(const math::Vector2f& screen_position, float distance)
+void CameraTool::HandleMultiGesture(const math::Vector& screen_position, float distance)
 {
     if(std::fabs(distance) < 1e-3)
         return;

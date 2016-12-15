@@ -21,8 +21,8 @@ using namespace game;
 Moon::Moon(float x, float y, float radius)
 {
     mSprite = mono::CreateSprite("sprites/moon.sprite");
-    mPosition = math::Vector2f(x, y);
-    mScale = math::Vector2f(radius, radius) * 2.0f;
+    mPosition = math::Vector(x, y);
+    mScale = math::Vector(radius, radius) * 2.0f;
     
     mPhysicsObject.body = mono::PhysicsFactory::CreateStaticBody();
     mPhysicsObject.body->SetPosition(mPosition);

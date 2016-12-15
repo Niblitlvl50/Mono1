@@ -12,7 +12,7 @@ namespace math
 {
     extern const float INF;
 
-    struct Vector2f;
+    struct Vector;
     struct Quad;
     struct Point;
     struct Matrix;

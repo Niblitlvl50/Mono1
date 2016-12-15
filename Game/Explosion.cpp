@@ -18,7 +18,7 @@ using namespace game;
 Explosion::Explosion(const ExplosionConfiguration& config, mono::EventHandler& event_handler)
 {
     mPosition = config.position;
-    mScale = math::Vector2f(config.scale, config.scale);
+    mScale = math::Vector(config.scale, config.scale);
     mRotation = config.rotation;
 
     const uint id = Id();

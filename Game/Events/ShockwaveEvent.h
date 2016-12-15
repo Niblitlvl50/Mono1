@@ -17,12 +17,12 @@ namespace game
 {
     struct ShockwaveEvent
     {
-        ShockwaveEvent(const math::Vector2f& position, float magnitude)
+        ShockwaveEvent(const math::Vector& position, float magnitude)
             : position(position),
               magnitude(magnitude)
         { }
 
-        const math::Vector2f position;
+        const math::Vector position;
         const float magnitude;
     };
 

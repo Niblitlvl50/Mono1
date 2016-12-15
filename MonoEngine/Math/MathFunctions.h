@@ -13,20 +13,20 @@
 
 namespace math
 {    
-    bool PointInsideQuad(const math::Vector2f& point, const math::Quad& quad);
+    bool PointInsideQuad(const math::Vector& point, const math::Quad& quad);
     bool QuadOverlaps(const math::Quad& left, const math::Quad& right);
     void ResizeQuad(math::Quad& quad, float value, float aspect = 1.0f);
 
     // Return angle in radians
-    float AngleBetweenPoints(const math::Vector2f& first, const math::Vector2f& second);
+    float AngleBetweenPoints(const math::Vector& first, const math::Vector& second);
 
     // Pass in at least 3 points, else you will get "nan nan" back.
-    math::Vector2f CentroidOfPolygon(const std::vector<math::Vector2f>& points);
+    math::Vector CentroidOfPolygon(const std::vector<math::Vector>& points);
 
     // Check if a polygon is clockwise oriented or not
-    bool IsPolygonClockwise(const std::vector<math::Vector2f>& points);
+    bool IsPolygonClockwise(const std::vector<math::Vector>& points);
 
-    math::Vector2f MapVectorInQuad(const math::Vector2f& point, const math::Quad& quad);
+    math::Vector MapVectorInQuad(const math::Vector& point, const math::Quad& quad);
 
     constexpr float PI()
     {

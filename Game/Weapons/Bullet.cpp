@@ -18,7 +18,7 @@ Bullet::Bullet(const BulletConfiguration& config, mono::EventHandler& event_hand
     : m_eventHandler(event_handler),
       m_collisionCallback(config.collision_callback)
 {
-    mScale = math::Vector2f(25.0f, 25.0f);
+    mScale = math::Vector(25.0f, 25.0f);
 
     mPhysicsObject.body = mono::PhysicsFactory::CreateBody(1.0f, 1.0f);
     mPhysicsObject.body->SetCollisionHandler(this);
@@ -26,7 +26,7 @@ Bullet::Bullet(const BulletConfiguration& config, mono::EventHandler& event_hand
     mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(
         mPhysicsObject.body,
         config.collision_radius,
-        math::Vector2f(0.0f, 0.0f)
+        math::Vector(0.0f, 0.0f)
     );
 
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());

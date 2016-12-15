@@ -17,22 +17,22 @@ namespace editor
     {
     public:
 
-        CameraTool(const mono::ICameraPtr& camera, const math::Vector2f& window_size);
+        CameraTool(const mono::ICameraPtr& camera, const math::Vector& window_size);
 
         bool IsActive() const;
-        void HandleMouseDown(const math::Vector2f& screen_position);
-        void HandleMouseUp(const math::Vector2f& screen_position);
-        void HandleMousePosition(const math::Vector2f& screen_position);
+        void HandleMouseDown(const math::Vector& screen_position);
+        void HandleMouseUp(const math::Vector& screen_position);
+        void HandleMousePosition(const math::Vector& screen_position);
 
         void HandleMouseWheel(float x, float y);
-        void HandleMultiGesture(const math::Vector2f& screen_position, float distance);
+        void HandleMultiGesture(const math::Vector& screen_position, float distance);
 
     private:
     
         mono::ICameraPtr m_camera;
-        const math::Vector2f m_windowSize;
+        const math::Vector m_windowSize;
 
         bool m_translate;
-        math::Vector2f m_translateDelta;
+        math::Vector m_translateDelta;
     };
 }

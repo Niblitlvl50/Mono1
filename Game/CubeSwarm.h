@@ -33,7 +33,7 @@ namespace game
             Cube()
             { }
 
-            Cube(const math::Vector2f& position, float size, const mono::Color::HSL& color)
+            Cube(const math::Vector& position, float size, const mono::Color::HSL& color)
                 : quad(position.x, position.y, position.x + size, position.y + size),
                   rotation(0.0f),
                   color(color)

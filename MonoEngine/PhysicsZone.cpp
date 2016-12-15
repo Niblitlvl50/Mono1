@@ -15,7 +15,7 @@ using namespace mono;
 
 struct PhysicsZone::PhysicsImpl : IUpdatable
 {
-    PhysicsImpl(const math::Vector2f& gravity, float damping)
+    PhysicsImpl(const math::Vector& gravity, float damping)
         : mSpace(gravity, damping)
     { }
     void doUpdate(unsigned int delta)
@@ -26,7 +26,7 @@ struct PhysicsZone::PhysicsImpl : IUpdatable
     mono::Space mSpace;
 };
 
-PhysicsZone::PhysicsZone(const math::Vector2f& gravity, float damping)
+PhysicsZone::PhysicsZone(const math::Vector& gravity, float damping)
     : mPhysics(new PhysicsImpl(gravity, damping))
 {
     // Add space physics as an updatable

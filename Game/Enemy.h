@@ -22,7 +22,7 @@ namespace game
         const char* sprite_file = nullptr;
         float size = 1.0f;
         float mass = 1.0f;
-        math::Vector2f position;
+        math::Vector position;
         std::unique_ptr<IEnemyController> controller;
     };
 

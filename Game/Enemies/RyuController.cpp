@@ -59,7 +59,7 @@ void RyuController::doUpdate(unsigned int delta)
     constexpr float SPEED = 0.1f;
     const float value = (delta * SPEED);
 
-    math::Vector2f position = m_enemy->Position();
+    math::Vector position = m_enemy->Position();
 
     const bool xzero = (std::floor(std::abs(position.x - m_target.x)) == 0.0f);
     const bool yzero = (std::floor(std::abs(position.y - m_target.y)) == 0.0f);

@@ -15,7 +15,7 @@ namespace editor
 {
     struct Config
     {
-        math::Vector2f cameraPosition;
+        math::Vector cameraPosition;
         math::Quad cameraViewport;
     };
 

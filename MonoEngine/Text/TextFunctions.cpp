@@ -102,7 +102,7 @@ void mono::UnloadFonts()
     fonts.clear();
 }
 
-mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char* text, const math::Vector2f& pos, bool center)
+mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char* text, const math::Vector& pos, bool center)
 {
     mono::TextDefinition textDef;
     textDef.chars = static_cast<unsigned int>(std::strlen(text));
@@ -172,11 +172,11 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
     return textDef;
 }
 
-math::Vector2f mono::MeasureString(int font_id, const char* text)
+math::Vector mono::MeasureString(int font_id, const char* text)
 {
     const FontData& font_data = fonts.find(font_id)->second;
 
-    math::Vector2f size;
+    math::Vector size;
     
     while(*text != '\0')
     {

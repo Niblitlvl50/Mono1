@@ -17,7 +17,7 @@ int main(int argc, const char* argv[])
     // This is assumed to be the file argument
     const char* file_name = (argc < 2) ? nullptr : argv[1];
 
-    constexpr math::Vector2f window_size(1200.0f, 800.0f);
+    constexpr math::Vector window_size(1200.0f, 800.0f);
 
     System::Init();
 

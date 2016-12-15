@@ -208,7 +208,7 @@ bool Animator::OnMultiGesture(const event::MultiGestureEvent& event)
 bool Animator::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 {
     if(event.width > 0 && event.height > 0)
-        m_guiRenderer->SetWindowSize(math::Vector2f(event.width, event.height));
+        m_guiRenderer->SetWindowSize(math::Vector(event.width, event.height));
 
     return false;
 }

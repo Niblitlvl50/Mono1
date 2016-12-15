@@ -55,7 +55,7 @@ bool ShuttleController::OnMouseDown(const event::MouseDownEvent& event)
 {
     mShuttle->Fire();
 
-    mMouseDownPosition = math::Vector2f(event.screenX, -event.screenY);
+    mMouseDownPosition = math::Vector(event.screenX, -event.screenY);
     mMouseDown = true;
 
     return true;
@@ -81,9 +81,9 @@ bool ShuttleController::OnMouseMotion(const event::MouseMotionEvent& event)
     // Reset forces first.
     mShuttle->mPhysicsObject.body->ResetForces();
 
-    const math::Vector2f current(event.screenX, -event.screenY);
+    const math::Vector current(event.screenX, -event.screenY);
 
-    math::Vector2f force = current - mMouseDownPosition;
+    math::Vector force = current - mMouseDownPosition;
     math::Normalize(force);
 
     mShuttle->ApplyImpulse(force * 100);

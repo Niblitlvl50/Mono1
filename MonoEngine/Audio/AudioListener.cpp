@@ -10,7 +10,7 @@
 #include "Math/Vector2f.h"
 #include "OpenAL/al.h"
 
-void mono::ListenerPosition(const math::Vector2f& position)
+void mono::ListenerPosition(const math::Vector& position)
 {
     alListener3f(AL_POSITION, position.x, position.y, 0.0f);
 }

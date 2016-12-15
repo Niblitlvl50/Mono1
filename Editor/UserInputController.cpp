@@ -136,7 +136,7 @@ bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)
 
     if(event.key == MouseButton::LEFT)
     {
-        const math::Vector2f world_position(event.worldX, event.worldY);
+        const math::Vector world_position(event.worldX, event.worldY);
 
         // Check for grabbers first
         m_grabber = m_editor->FindGrabber(world_position);
@@ -150,7 +150,7 @@ bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)
     }
 
     if(!handled)
-        m_cameraTool.HandleMouseDown(math::Vector2f(event.screenX, event.screenY));
+        m_cameraTool.HandleMouseDown(math::Vector(event.screenX, event.screenY));
 
     return true;
 }
@@ -160,19 +160,19 @@ bool UserInputController::OnMouseUp(const event::MouseUpEvent& event)
     m_grabber = nullptr;
 
     if(event.key == MouseButton::LEFT)
-        m_activeTool->HandleMouseUp(math::Vector2f(event.worldX, event.worldY));
+        m_activeTool->HandleMouseUp(math::Vector(event.worldX, event.worldY));
     else if(event.key == MouseButton::RIGHT)
         m_context->showContextMenu = !m_context->contextMenuItems.empty();
 
-    m_cameraTool.HandleMouseUp(math::Vector2f(event.screenX, event.screenY));
+    m_cameraTool.HandleMouseUp(math::Vector(event.screenX, event.screenY));
 
     return true;
 }
 
 bool UserInputController::OnMouseMove(const event::MouseMotionEvent& event)
 {
-    const math::Vector2f world_position(event.worldX, event.worldY);
-    const math::Vector2f screen_position(event.screenX, event.screenY);
+    const math::Vector world_position(event.worldX, event.worldY);
+    const math::Vector screen_position(event.screenX, event.screenY);
 
     m_editor->SelectGrabber(world_position);
 
@@ -202,7 +202,7 @@ bool UserInputController::OnMouseWheel(const event::MouseWheelEvent& event)
 
 bool UserInputController::OnMultiGesture(const event::MultiGestureEvent& event)
 {
-    m_cameraTool.HandleMultiGesture(math::Vector2f(event.x, event.y), event.distance);
+    m_cameraTool.HandleMultiGesture(math::Vector(event.x, event.y), event.distance);
     return true;
 }
 

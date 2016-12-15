@@ -16,12 +16,12 @@ namespace world
 {
     struct PolygonData
     {
-        math::Vector2f position;
-        math::Vector2f local_offset;
+        math::Vector position;
+        math::Vector local_offset;
         float rotation = 0.0f;
         float texture_repeate = 1.0f;
         char texture[64] = { 0 };
-        std::vector<math::Vector2f> vertices;
+        std::vector<math::Vector> vertices;
     };
 
     struct LevelFileHeader

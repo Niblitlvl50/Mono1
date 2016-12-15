@@ -22,13 +22,13 @@ bool world::WriteWorld(File::FilePtr& file, const LevelFileHeader& level)
         const world::PolygonData& polygon = level.polygons[index];
         const int n_vertices = static_cast<int>(polygon.vertices.size());
 
-        std::fwrite(&polygon.position,          sizeof(math::Vector2f), 1,          file.get());
-        std::fwrite(&polygon.local_offset,      sizeof(math::Vector2f), 1,          file.get());
+        std::fwrite(&polygon.position,          sizeof(math::Vector), 1,          file.get());
+        std::fwrite(&polygon.local_offset,      sizeof(math::Vector), 1,          file.get());
         std::fwrite(&polygon.rotation,          sizeof(float),          1,          file.get());
         std::fwrite(&polygon.texture_repeate,   sizeof(float),          1,          file.get());
         std::fwrite(&polygon.texture,           sizeof(char),          64,          file.get());
         std::fwrite(&n_vertices,                sizeof(int),            1,          file.get());
-        std::fwrite(polygon.vertices.data(),    sizeof(math::Vector2f), n_vertices, file.get());
+        std::fwrite(polygon.vertices.data(),    sizeof(math::Vector), n_vertices, file.get());
     }
 
     return true;
@@ -54,11 +54,11 @@ bool world::ReadWorld(File::FilePtr& file, LevelFileHeader& level)
     {
         world::PolygonData& polygon = level.polygons[index];
 
-        std::memcpy(&polygon.position, bytes.data() + offset, sizeof(math::Vector2f));
-        offset += sizeof(math::Vector2f);
+        std::memcpy(&polygon.position, bytes.data() + offset, sizeof(math::Vector));
+        offset += sizeof(math::Vector);
 
-        std::memcpy(&polygon.local_offset, bytes.data() + offset, sizeof(math::Vector2f));
-        offset += sizeof(math::Vector2f);
+        std::memcpy(&polygon.local_offset, bytes.data() + offset, sizeof(math::Vector));
+        offset += sizeof(math::Vector);
 
         std::memcpy(&polygon.rotation, bytes.data() + offset, sizeof(float));
         offset += sizeof(float);
@@ -75,8 +75,8 @@ bool world::ReadWorld(File::FilePtr& file, LevelFileHeader& level)
 
         polygon.vertices.resize(n_vertices);
 
-        std::memcpy(polygon.vertices.data(), bytes.data() + offset, sizeof(math::Vector2f) * n_vertices);
-        offset += sizeof(math::Vector2f) * n_vertices;
+        std::memcpy(polygon.vertices.data(), bytes.data() + offset, sizeof(math::Vector) * n_vertices);
+        offset += sizeof(math::Vector) * n_vertices;
     }
 
     return true;

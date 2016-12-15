@@ -12,13 +12,13 @@ namespace mono
     {
     public:
 
-        virtual const math::Vector2f& Position() const;
-        virtual const math::Vector2f& BasePoint() const;
+        virtual const math::Vector& Position() const;
+        virtual const math::Vector& BasePoint() const;
         virtual float Rotation() const;
-        virtual const math::Vector2f& Scale() const;
-        virtual void SetPosition(const math::Vector2f& position);
+        virtual const math::Vector& Scale() const;
+        virtual void SetPosition(const math::Vector& position);
         virtual void SetRotation(float rotation);
-        virtual void SetScale(const math::Vector2f& scale);
+        virtual void SetScale(const math::Vector& scale);
         virtual math::Quad BoundingBox() const;
         virtual math::Matrix Transformation() const;
         virtual mono::Object& GetPhysics();
@@ -42,8 +42,8 @@ namespace mono
         const uint m_uid;
         uint m_properties;
 
-        math::Vector2f mPosition;
-        math::Vector2f mScale;
+        math::Vector mPosition;
+        math::Vector mScale;
         float mRotation;
 
         mono::Object mPhysicsObject;

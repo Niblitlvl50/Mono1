@@ -38,17 +38,17 @@ void EntityBase::doUpdate(unsigned int delta)
     Update(delta);
 }
 
-const math::Vector2f& EntityBase::Position() const
+const math::Vector& EntityBase::Position() const
 {
     return mPosition;
 }
 
-const math::Vector2f& EntityBase::BasePoint() const
+const math::Vector& EntityBase::BasePoint() const
 {
     return mBasePoint;
 }
 
-void EntityBase::SetScale(const math::Vector2f& scale)
+void EntityBase::SetScale(const math::Vector& scale)
 {
     mScale = scale;
 }
@@ -58,17 +58,17 @@ float EntityBase::Rotation() const
     return mRotation;
 }
 
-const math::Vector2f& EntityBase::Scale() const
+const math::Vector& EntityBase::Scale() const
 {
     return mScale;
 }
 
-void EntityBase::SetPosition(const math::Vector2f& position)
+void EntityBase::SetPosition(const math::Vector& position)
 {
     mPosition = position;
 }
 
-void EntityBase::SetBasePoint(const math::Vector2f& base_point)
+void EntityBase::SetBasePoint(const math::Vector& base_point)
 {
     mBasePoint = base_point;
 }
@@ -80,7 +80,7 @@ void EntityBase::SetRotation(float rotation)
 
 math::Quad EntityBase::BoundingBox() const
 {
-    const math::Vector2f& halfScale = mScale / 2.0f;
+    const math::Vector& halfScale = mScale / 2.0f;
     math::Quad thisbb(mPosition - halfScale, mPosition + halfScale);
 
     for(const auto& child : mChildren)
@@ -96,8 +96,8 @@ math::Quad EntityBase::BoundingBox() const
 
 math::Matrix EntityBase::Transformation() const
 {
-    const math::Vector2f& rotationPoint = mBasePoint * mScale;
-    const math::Vector2f& translate = mPosition + rotationPoint;
+    const math::Vector& rotationPoint = mBasePoint * mScale;
+    const math::Vector& translate = mPosition + rotationPoint;
 
     math::Matrix translation;
     math::Translate(translation, translate);
