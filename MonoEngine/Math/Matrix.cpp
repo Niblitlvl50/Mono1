@@ -8,7 +8,7 @@
 
 #include "Matrix.h"
 #include "MathFunctions.h"
-#include "Vector2f.h"
+#include "Vector.h"
 #include <cmath>
 
 void math::Identity(Matrix& matrix)

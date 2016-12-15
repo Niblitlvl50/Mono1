@@ -9,7 +9,7 @@
 #pragma once
 
 #include "IDrawable.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include "MonoPtrFwd.h"
 
 #include <memory>

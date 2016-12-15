@@ -7,7 +7,7 @@
 //
 
 #include "SysVideo.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include "SDL_video.h"
 
 math::Vector Video::GetCurrentWindowSize()

@@ -7,7 +7,7 @@
 //
 
 #include "MathFunctions.h"
-#include "Vector2f.h"
+#include "Vector.h"
 #include "Quad.h"
 
 #include <cmath>

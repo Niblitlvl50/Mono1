@@ -9,7 +9,7 @@
 #pragma once
 
 #include "MonoPtrFwd.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 
 namespace editor
 {

@@ -9,7 +9,7 @@
 #include "gtest/gtest.h"
 #include "Paths/IPath.h"
 #include "Paths/PathFactory.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include <vector>
 
 TEST(PathTest, CreatePathAndVerifyLength)

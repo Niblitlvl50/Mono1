@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include "EntityBase.h"
 
 #include <vector>

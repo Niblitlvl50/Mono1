@@ -4,7 +4,7 @@
 #include "IEntity.h"
 #include "ICamera.h"
 #include "IWindow.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
 #include "Math/MathFunctions.h"

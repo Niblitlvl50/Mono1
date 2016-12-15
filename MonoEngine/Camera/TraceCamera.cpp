@@ -8,7 +8,7 @@
 
 #include "TraceCamera.h"
 #include "IEntity.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include "Math/MathFunctions.h"
 
 #include <cmath>

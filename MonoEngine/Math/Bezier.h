@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Vector2f.h"
+#include "Vector.h"
 
 namespace math
 {

@@ -2,7 +2,7 @@
 #include "Weapon.h"
 #include "Bullet.h"
 
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include "System/SysTime.h"
 #include "EventHandler/EventHandler.h"
 #include "Audio/ISound.h"

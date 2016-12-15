@@ -10,7 +10,7 @@
 #include "CMFactory.h"
 #include "CMIBody.h"
 #include "CMIShape.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include "Utils.h"
 
 #include "chipmunk/chipmunk.h"

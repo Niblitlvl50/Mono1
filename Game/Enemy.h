@@ -4,7 +4,7 @@
 #include "MonoFwd.h"
 #include "MonoPtrFwd.h"
 #include "PhysicsEntityBase.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 
 namespace game
 {

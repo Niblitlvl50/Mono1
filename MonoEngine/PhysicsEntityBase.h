@@ -3,7 +3,7 @@
 
 #include "IPhysicsEntity.h"
 #include "MonoPtrFwd.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include "Physics/CMObject.h"
 
 namespace mono

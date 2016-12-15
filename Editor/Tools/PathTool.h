@@ -2,7 +2,7 @@
 #pragma once
 
 #include "ITool.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include <vector>
 
 namespace editor

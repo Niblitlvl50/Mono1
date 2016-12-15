@@ -19,7 +19,7 @@
 #include "Shader/IMorphingShader.h"
 #include "Shader/ShaderFunctions.h"
 
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include "Math/Quad.h"
 
 #include "EventHandler/EventHandler.h"

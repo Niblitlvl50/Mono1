@@ -3,7 +3,7 @@
 
 #include "IEntity.h"
 #include "MonoPtrFwd.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include <vector>
 
 namespace mono

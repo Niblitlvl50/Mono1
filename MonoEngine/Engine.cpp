@@ -28,7 +28,7 @@
 
 #include "Renderer.h"
 
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include "Math/Quad.h"
 
 using namespace mono;

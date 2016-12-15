@@ -10,7 +10,7 @@
 
 #include "EntityBase.h"
 #include "Math/Quad.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include "Color.h"
 #include <vector>
 

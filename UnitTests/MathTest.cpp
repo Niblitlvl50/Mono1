@@ -8,7 +8,7 @@
 
 #include "gtest/gtest.h"
 #include "Math/Quad.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 #include "Math/MathFunctions.h"
 #include "Math/Bezier.h"
 

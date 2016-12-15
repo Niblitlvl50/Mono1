@@ -11,7 +11,7 @@
 #include "MonoFwd.h"
 #include "Events/EventFwd.h"
 #include "EventHandler/EventToken.h"
-#include "Math/Vector2f.h"
+#include "Math/Vector.h"
 
 namespace game
 {
