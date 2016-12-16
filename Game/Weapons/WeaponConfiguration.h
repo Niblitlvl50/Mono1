@@ -5,16 +5,19 @@
 #include "MonoPtrFwd.h"
 #include "Physics/CMFwd.h"
 
+#include <functional>
+
 namespace game
 {
-    using bullet_impact_callback = void (*)(const mono::IPhysicsEntity*, const mono::IBodyPtr&, mono::EventHandler&);
+    using BulletImpactCallback = std::function<void (const mono::IPhysicsEntity*, const mono::IBodyPtr&)>;
 
     struct BulletConfiguration
     {
         float life_span = 1.0f;
         float fuzzy_life_span = 0.0f;
         float collision_radius = 1.0f;
-        bullet_impact_callback collision_callback = nullptr;
+        float scale = 1.0f;
+        BulletImpactCallback collision_callback;
 
         const char* sprite_file = nullptr;
         const char* sound_file = nullptr;

@@ -42,7 +42,7 @@ void Weapon::Fire(const math::Vector& position, float direction)
         const math::Vector unit(-std::sin(direction), std::cos(direction));
         const math::Vector& impulse = unit * m_weaponConfig.bullet_force;
 
-        auto bullet = std::make_shared<Bullet>(m_weaponConfig.bullet_config, m_eventHandler);
+        auto bullet = std::make_shared<Bullet>(m_weaponConfig.bullet_config);
         bullet->SetPosition(position);
         bullet->SetRotation(direction);
         bullet->GetPhysics().body->ApplyImpulse(impulse, position);

@@ -13,7 +13,7 @@ namespace game
     {
     public:
 
-        Bullet(const BulletConfiguration& config, mono::EventHandler& event_handler);
+        Bullet(const BulletConfiguration& config);
 
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
@@ -22,11 +22,10 @@ namespace game
         virtual void OnPostStep();
 
     private:
-        mono::EventHandler& m_eventHandler;
         mono::ISpritePtr m_sprite;
         mono::ISoundPtr m_sound;
 
-        bullet_impact_callback m_collisionCallback;
+        BulletImpactCallback m_collisionCallback;
         int m_lifeSpan;
     };
 }

@@ -14,18 +14,17 @@
 
 using namespace game;
 
-Bullet::Bullet(const BulletConfiguration& config, mono::EventHandler& event_handler)
-    : m_eventHandler(event_handler),
-      m_collisionCallback(config.collision_callback)
+Bullet::Bullet(const BulletConfiguration& config)
+    : m_collisionCallback(config.collision_callback)
 {
-    mScale = math::Vector(25.0f, 25.0f);
+    mScale = math::Vector(25.0f, 25.0f) * config.scale;
 
     mPhysicsObject.body = mono::PhysicsFactory::CreateBody(1.0f, 1.0f);
     mPhysicsObject.body->SetCollisionHandler(this);
 
     mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(
         mPhysicsObject.body,
-        config.collision_radius,
+        config.collision_radius * config.scale,
         math::Vector(0.0f, 0.0f)
     );
 
@@ -63,7 +62,7 @@ void Bullet::Update(unsigned int delta)
 
 void Bullet::OnCollideWith(const mono::IBodyPtr& body)
 {
-    m_collisionCallback(this, body, m_eventHandler);
+    m_collisionCallback(this, body);
 }
 
 void Bullet::OnPostStep()
