@@ -202,7 +202,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     //AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
     AddUpdatable(std::make_shared<ListenerPositionUpdater>(camera));
 
-    std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(0.0f, 0.0f, mEventHandler);
+    std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(math::zeroVec, mEventHandler);
     AddPhysicsEntity(shuttle, FOREGROUND);
 
     AddPhysicsEntity(game::CreateCacoDemon(math::Vector(100, 100), mEventHandler), FOREGROUND);

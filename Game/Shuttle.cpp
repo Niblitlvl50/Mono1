@@ -64,12 +64,12 @@ public:
 };
 
 
-Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
-    : mController(this, eventHandler),
-      mEventHandler(eventHandler),
+Shuttle::Shuttle(const math::Vector& position, mono::EventHandler& eventHandler)
+    : m_controller(this, eventHandler),
+      m_event_handler(eventHandler),
       m_fire(false)
 {
-    mPosition = math::Vector(x, y);
+    mPosition = position;
     mScale = math::Vector(20.0f, 20.0f);
     
     mPhysicsObject.body = mono::PhysicsFactory::CreateBody(10.0f, INFINITY);
@@ -81,8 +81,8 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
     
     mPhysicsObject.shapes.push_back(shape);
 
-    mSprite = mono::CreateSprite("sprites/shuttle.sprite");
-    mSprite->SetAnimation(constants::IDLE);
+    m_sprite = mono::CreateSprite("sprites/shuttle.sprite");
+    m_sprite->SetAnimation(constants::IDLE);
 
     m_left_booster = std::make_shared<SpriteEntity>("sprites/booster.sprite");
     m_left_booster->SetScale(math::Vector(0.5f, 0.5f));
@@ -103,18 +103,22 @@ Shuttle::Shuttle(float x, float y, mono::EventHandler& eventHandler)
 
 void Shuttle::Draw(mono::IRenderer& renderer) const
 {
-    renderer.DrawSprite(*mSprite);
+    renderer.DrawSprite(*m_sprite);
 }
 
 void Shuttle::Update(unsigned int delta)
 {
-    mSprite->doUpdate(delta);
+    m_sprite->doUpdate(delta);
     //mono::ListenerPosition(mPosition);
 
-    constexpr math::Vector bullet_offset(0.0f, 15.0f);
+    constexpr math::Vector bullet_offset1(-5.0f, 15.0f);
+    constexpr math::Vector bullet_offset2( 5.0f, 15.0f);
 
     if(m_fire)
-        mWeapon->Fire(mPosition + bullet_offset, mRotation);
+    {
+        m_weapon1->Fire(mPosition + bullet_offset1, mRotation);
+        m_weapon2->Fire(mPosition + bullet_offset2, mRotation);
+    }
 }
 
 void Shuttle::OnCollideWith(const mono::IBodyPtr& body)
@@ -125,7 +129,8 @@ void Shuttle::OnPostStep()
 
 void Shuttle::SelectWeapon(WeaponType weapon)
 {
-    mWeapon = Factory::CreateWeapon(weapon, mEventHandler);
+    m_weapon1 = Factory::CreateWeapon(weapon, m_event_handler);
+    m_weapon2 = Factory::CreateWeapon(weapon, m_event_handler);
 }
 
 void Shuttle::ApplyRotationForce(float force)
@@ -174,12 +179,12 @@ void Shuttle::SetBoosterThrusting(BoosterPosition position, bool enable)
             m_right_booster->SetAnimation(state);
             break;
         case BoosterPosition::MAIN:
-            mSprite->SetAnimation(state);
+            m_sprite->SetAnimation(state);
             break;
         case BoosterPosition::ALL:
             m_left_booster->SetAnimation(state);
             m_right_booster->SetAnimation(state);
-            mSprite->SetAnimation(state);
+            m_sprite->SetAnimation(state);
             break;
     }
 }

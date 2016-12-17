@@ -34,7 +34,7 @@ namespace game
     {
     public:
         
-        Shuttle(float x, float y, mono::EventHandler& eventHandler);
+        Shuttle(const math::Vector& postiion, mono::EventHandler& eventHandler);
 
     private:
 
@@ -57,11 +57,12 @@ namespace game
         virtual void OnCollideWith(const mono::IBodyPtr& body);
         virtual void OnPostStep();
 
-        std::unique_ptr<IWeaponSystem> mWeapon;
+        std::unique_ptr<IWeaponSystem> m_weapon1;
+        std::unique_ptr<IWeaponSystem> m_weapon2;
 
-        mono::ISpritePtr mSprite;
-        ShuttleController mController;
-        mono::EventHandler& mEventHandler;
+        mono::ISpritePtr m_sprite;
+        ShuttleController m_controller;
+        mono::EventHandler& m_event_handler;
 
         bool m_fire;
 
