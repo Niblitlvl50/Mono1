@@ -50,7 +50,10 @@ void Weapon::Fire(const math::Vector& position, float direction)
         m_eventHandler.DispatchEvent(game::SpawnPhysicsEntityEvent(bullet, BACKGROUND));
 
         if(m_fireSound)
+        {
+            m_fireSound->Position(position.x, position.y);
             m_fireSound->Play();
+        }
 
         m_lastFireTimestamp = now;
         m_currentFireRate *= m_weaponConfig.fire_rate_multiplier;
