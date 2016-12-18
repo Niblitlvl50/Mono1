@@ -16,14 +16,10 @@
 #include "InvaderGroup.h"
 #include "DotEntity.h"
 #include "Shuttle.h"
-#include "Moon.h"
 #include "Meteor.h"
 #include "Explosion.h"
 #include "PathPoint.h"
 #include "CubeSwarm.h"
-#include "Morpher.h"
-
-#include "Math/Quad.h"
 
 #include "EventHandler/EventHandler.h"
 #include "Events/SpawnEntityEvent.h"
@@ -45,10 +41,8 @@
 
 #include <thread>
 
-
 using namespace game;
 using namespace std::placeholders;
-
 
 namespace
 {
@@ -125,7 +119,6 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
 
     AddUpdatable(std::make_shared<ListenerPositionUpdater>(camera));
     AddUpdatable(std::make_shared<HealthbarUpdater>(m_healthbars, m_damageController, *this));
-
     AddDrawable(std::make_shared<HealthbarDrawer>(m_healthbars), FOREGROUND);
 
     std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(math::zeroVec, mEventHandler);
@@ -252,6 +245,3 @@ void TestZone::RemoveEntity(const mono::IEntityPtr& entity)
     if(damagable)
         m_damageController.RemoveRecord(entity->Id());
 }
-
-
-

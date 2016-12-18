@@ -14,10 +14,9 @@
 
 #include "Spawner.h"
 #include "DamageController.h"
-
 #include "Network/RemoteConnection.h"
-
 #include "Hud/Healthbar.h"
+
 #include <vector>
 
 namespace game
