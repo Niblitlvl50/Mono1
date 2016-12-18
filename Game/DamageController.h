@@ -19,6 +19,7 @@ namespace game
         int weak_against;
         int multipier;
         int health;
+        uint last_damaged_timestamp;
     };
 
     struct DamageResult
@@ -33,8 +34,8 @@ namespace game
 
         DamageRecord& CreateRecord(uint record_id);
         void RemoveRecord(uint record_id);
-
         DamageResult ApplyDamage(uint record_id, int damage);
+        const std::unordered_map<uint, DamageRecord>& GetDamageRecords() const;
 
     private:
 

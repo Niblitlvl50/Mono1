@@ -15,6 +15,11 @@
 #include "Spawner.h"
 #include "DamageController.h"
 
+#include "Network/RemoteConnection.h"
+
+#include "Hud/Healthbar.h"
+#include <vector>
+
 namespace game
 {
     struct SpawnEntityEvent;
@@ -22,7 +27,7 @@ namespace game
     struct RemoveEntityEvent;
     struct ShockwaveEvent;
     struct DamageEvent;
-    
+
     class TestZone : public mono::PhysicsZone
     {
     public:
@@ -56,8 +61,10 @@ namespace game
         mono::EventHandler& mEventHandler;
         Spawner m_spawner;
         DamageController m_damageController;
-        
         mono::ISoundPtr m_backgroundMusic;
+        RemoteConnection m_connection;
+
+        std::vector<Healthbar> m_healthbars;
     };
 }
 

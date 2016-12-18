@@ -25,7 +25,7 @@ namespace
 {
     void StandardCollision(const mono::IPhysicsEntity* bullet, const mono::IBodyPtr& other, mono::EventHandler& event_handler)
     {
-        event_handler.DispatchEvent(game::DamageEvent(other, 20));
+        event_handler.DispatchEvent(game::DamageEvent(other, 10));
         event_handler.DispatchEvent(game::RemoveEntityEvent(bullet->Id()));
     }
 

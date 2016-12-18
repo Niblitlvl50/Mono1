@@ -36,12 +36,13 @@
 #include "Utils.h"
 #include "EntityProperties.h"
 #include "RenderLayers.h"
-#include "Audio/AudioListener.h"
 
 #include "WorldFile.h"
 #include "World.h"
 
-#include <cmath>
+#include "UpdateTasks/ListenerPositionUpdater.h"
+#include "UpdateTasks/HealthbarUpdater.h"
+
 #include <thread>
 
 
@@ -51,78 +52,6 @@ using namespace std::placeholders;
 
 namespace
 {
-    struct GravityUpdater : mono::IUpdatable
-    {
-        GravityUpdater(mono::IPhysicsZone* zone, mono::IEntityPtr moon1, mono::IEntityPtr moon2)
-            : mZone(zone),
-              mMoon1(moon1),
-              mMoon2(moon2),
-              mElapsedTime(0)
-        { }
-        virtual void doUpdate(unsigned int delta)
-        {
-            mElapsedTime += delta;
-            if(mElapsedTime < 16)
-                return;
-            
-            mZone->ForEachBody(std::bind(&GravityUpdater::GravityFunc, this, _1));
-            mElapsedTime = 0;
-        }
-        void GravityFunc(const mono::IBodyPtr& body)
-        {
-            math::Vector impulse;
-            
-            math::Vector newPos = body->GetPosition() - mMoon1->Position();
-            const float distance = math::Length(newPos);
-            if(distance < 300.0f)
-            {
-                const float gravity = 1e4f;
-                const float value = -gravity / (distance * std::sqrtf(distance));
-            
-                math::Normalize(newPos);
-                newPos *= value;
-                
-                impulse += newPos;
-            }
-            
-            math::Vector newPos2 = body->GetPosition() - mMoon2->Position();
-            const float distance2 = math::Length(newPos2);
-            if(distance2 < 200.0f)
-            {
-                const float gravity = 1e4f;
-                const float value = -gravity / (distance2 * std::sqrtf(distance2));
-                
-                math::Normalize(newPos2);
-                newPos2 *= value;
-                
-                impulse += newPos2;
-            }
-            
-            body->ApplyImpulse(impulse, body->GetPosition());
-        }
-        
-        mono::IPhysicsZone* mZone;
-        mono::IEntityPtr mMoon1;
-        mono::IEntityPtr mMoon2;
-        unsigned int mElapsedTime;
-    };
-
-    class ListenerPositionUpdater : public mono::IUpdatable
-    {
-    public:
-
-        ListenerPositionUpdater(const mono::ICameraPtr& camera)
-            : m_camera(camera)
-        { }
-
-        virtual void doUpdate(unsigned int delta)
-        {
-            mono::ListenerPosition(m_camera->GetPosition());
-        }
-
-        mono::ICameraPtr m_camera;
-    };
-
     void ApplyShockwave(const mono::IBodyPtr& body, const math::Vector& position, float magnitude)
     {
         math::Vector unit = body->GetPosition() - position;
@@ -155,7 +84,6 @@ namespace
             zone->AddPhysicsEntity(entity, FOREGROUND);
         }
     }
-
 }
 
 TestZone::TestZone(mono::EventHandler& eventHandler)
@@ -195,19 +123,15 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     world::ReadWorld(world_file, world_header);
     game::LoadWorld(this, world_header.polygons);
 
-    //std::shared_ptr<Moon> moon1 = std::make_shared<Moon>(550.0f, 300.0f, 100.0f);
-    //std::shared_ptr<Moon> moon2 = std::make_shared<Moon>(-400.0f, 400.0f, 50.0f);
-    //AddPhysicsEntity(moon1, FOREGROUND);
-    //AddPhysicsEntity(moon2, FOREGROUND);
-    //AddUpdatable(std::make_shared<GravityUpdater>(this, moon1, moon2));
     AddUpdatable(std::make_shared<ListenerPositionUpdater>(camera));
+    AddUpdatable(std::make_shared<HealthbarUpdater>(m_healthbars, m_damageController, *this));
+
+    AddDrawable(std::make_shared<HealthbarDrawer>(m_healthbars), FOREGROUND);
 
     std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(math::zeroVec, mEventHandler);
     AddPhysicsEntity(shuttle, FOREGROUND);
 
     AddPhysicsEntity(game::CreateCacoDemon(math::Vector(100, 100), mEventHandler), FOREGROUND);
-    //AddPhysicsEntity(game::CreateRyu(math::Vector(100.0f, 50.0f), mEventHandler), MIDDLEGROUND);
-
     AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
     AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
     AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
@@ -217,7 +141,6 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddEntity(std::make_shared<InvaderGroup>(math::Vector(300.0f, 800.0f)), BACKGROUND);
     AddEntity(std::make_shared<DotEntity>(), FOREGROUND);
     AddEntity(std::make_shared<PathPoint>(), BACKGROUND);
-    //AddEntity(std::make_shared<Morpher>(), FOREGROUND);
     AddEntity(std::make_shared<game::CubeSwarm>(), FOREGROUND);
 
     AddMeteorCluster(this);

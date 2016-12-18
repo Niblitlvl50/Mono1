@@ -7,7 +7,9 @@
 //
 
 #include "DamageController.h"
+#include "System/SysTime.h"
 
+#include <limits>
 
 using namespace game;
 
@@ -19,6 +21,8 @@ DamageRecord& DamageController::CreateRecord(uint record_id)
     pair.first->second.strong_against = 0;
     pair.first->second.weak_against = 0;
     pair.first->second.multipier = 1;
+    //pair.first->second.last_damaged_timestamp = 10000000;
+    pair.first->second.last_damaged_timestamp = std::numeric_limits<uint>::max();
 
     return pair.first->second;
 }
@@ -37,10 +41,16 @@ DamageResult DamageController::ApplyDamage(uint record_id, int damage)
     {
         DamageRecord& record = it->second;
         record.health -= damage * record.multipier;
+        record.last_damaged_timestamp = Time::GetMilliseconds();
 
         result.success = true;
         result.health_left = record.health;
     }
 
     return result;
+}
+
+const std::unordered_map<uint, DamageRecord>& DamageController::GetDamageRecords() const
+{
+    return m_DamageRecords;
 }
