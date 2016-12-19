@@ -14,7 +14,7 @@ namespace game
     public:
 
         Weapon(const WeaponConfiguration& config, mono::EventHandler& eventHandler);
-        virtual void Fire(const math::Vector& position, float direction);
+        virtual bool Fire(const math::Vector& position, float direction);
 
     private:
 

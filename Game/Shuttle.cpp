@@ -20,7 +20,6 @@
 
 #include "Math/MathFunctions.h"
 #include "Math/Matrix.h"
-#include "Audio/AudioListener.h"
 
 #include <cmath>
 
@@ -67,7 +66,8 @@ public:
 Shuttle::Shuttle(const math::Vector& position, mono::EventHandler& eventHandler)
     : m_controller(this, eventHandler),
       m_event_handler(eventHandler),
-      m_fire(false)
+      m_fire(false),
+      m_didFire(false)
 {
     mPosition = position;
     mScale = math::Vector(20.0f, 20.0f);
@@ -109,15 +109,14 @@ void Shuttle::Draw(mono::IRenderer& renderer) const
 void Shuttle::Update(unsigned int delta)
 {
     m_sprite->doUpdate(delta);
-    //mono::ListenerPosition(mPosition);
 
-    constexpr math::Vector bullet_offset1(-5.0f, 15.0f);
-    constexpr math::Vector bullet_offset2( 5.0f, 15.0f);
+    constexpr math::Vector left_offset(-5.0f, 15.0f);
+    constexpr math::Vector right_offset(5.0f, 15.0f);
 
     if(m_fire)
     {
-        m_weapon1->Fire(mPosition + bullet_offset1, mRotation);
-        m_weapon2->Fire(mPosition + bullet_offset2, mRotation);
+        const math::Vector& shift_vector = m_didFire ? left_offset : right_offset;
+        m_didFire = (m_weapon->Fire(mPosition + shift_vector, mRotation) != m_didFire);
     }
 }
 
@@ -129,8 +128,7 @@ void Shuttle::OnPostStep()
 
 void Shuttle::SelectWeapon(WeaponType weapon)
 {
-    m_weapon1 = Factory::CreateWeapon(weapon, m_event_handler);
-    m_weapon2 = Factory::CreateWeapon(weapon, m_event_handler);
+    m_weapon = Factory::CreateWeapon(weapon, m_event_handler);
 }
 
 void Shuttle::ApplyRotationForce(float force)

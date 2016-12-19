@@ -19,6 +19,6 @@ namespace game
         virtual ~IWeaponSystem()
         { }
 
-        virtual void Fire(const math::Vector& position, float direction) = 0;
+        virtual bool Fire(const math::Vector& position, float direction) = 0;
     };
 }
