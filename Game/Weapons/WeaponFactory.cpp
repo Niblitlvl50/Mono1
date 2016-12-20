@@ -31,28 +31,28 @@ namespace
 
     void RocketCollision(const mono::IPhysicsEntity* bullet, const mono::IBodyPtr& other, mono::EventHandler& event_handler)
     {
-        game::ExplosionConfiguration config;
-        config.position = bullet->Position();
-        config.scale = 60.0f;
-        config.rotation = 0.0f;
-        config.sprite_file = "sprites/explosion.sprite";
+        game::ExplosionConfiguration explosion_config;
+        explosion_config.position = bullet->Position();
+        explosion_config.scale = 60.0f;
+        explosion_config.rotation = 0.0f;
+        explosion_config.sprite_file = "sprites/explosion.sprite";
 
-        const game::SpawnEntityEvent event(std::make_shared<game::Explosion>(config, event_handler));
+        const game::SpawnEntityEvent event(std::make_shared<game::Explosion>(explosion_config, event_handler));
         event_handler.DispatchEvent(event);
         event_handler.DispatchEvent(game::DamageEvent(other, 20));
-        event_handler.DispatchEvent(game::ShockwaveEvent(config.position, 300));
+        event_handler.DispatchEvent(game::ShockwaveEvent(explosion_config.position, 500));
         event_handler.DispatchEvent(game::RemoveEntityEvent(bullet->Id()));
     }
 
     void CacoPlasmaCollision(const mono::IPhysicsEntity* bullet, const mono::IBodyPtr& other, mono::EventHandler& event_handler)
     {
-        game::ExplosionConfiguration config;
-        config.position = bullet->Position();
-        config.scale = 60.0f;
-        config.rotation = 0.0f;
-        config.sprite_file = "sprites/cacoexplosion.sprite";
+        game::ExplosionConfiguration explosion_config;
+        explosion_config.position = bullet->Position();
+        explosion_config.scale = 60.0f;
+        explosion_config.rotation = 0.0f;
+        explosion_config.sprite_file = "sprites/cacoexplosion.sprite";
 
-        const game::SpawnEntityEvent event(std::make_shared<game::Explosion>(config, event_handler));
+        const game::SpawnEntityEvent event(std::make_shared<game::Explosion>(explosion_config, event_handler));
         event_handler.DispatchEvent(event);
         event_handler.DispatchEvent(game::DamageEvent(other, 20));
         event_handler.DispatchEvent(game::RemoveEntityEvent(bullet->Id()));
@@ -63,13 +63,13 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponTyp
 {
     using namespace std::placeholders;
 
-    WeaponConfiguration config;
+    WeaponConfiguration weapon_config;
+    BulletConfiguration& bullet_config = weapon_config.bullet_config;
 
     switch(weapon)
     {
         case game::WeaponType::STANDARD:
         {
-            BulletConfiguration bullet_config;
             bullet_config.life_span = math::INF;
             bullet_config.fuzzy_life_span = 0;
             bullet_config.collision_radius = 2.0f;
@@ -78,18 +78,16 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponTyp
             bullet_config.sprite_file = "sprites/firebullet.sprite";
             bullet_config.sound_file = nullptr;
 
-            config.rounds_per_second = 6.0f;
-            config.fire_rate_multiplier = 1.1f;
-            config.max_fire_rate = 3.0f;
-            config.bullet_force = 400.0f;
-            config.fire_sound = "sound/laser.wav";
-            config.bullet_config = std::move(bullet_config);
+            weapon_config.rounds_per_second = 6.0f;
+            weapon_config.fire_rate_multiplier = 1.1f;
+            weapon_config.max_fire_rate = 3.0f;
+            weapon_config.bullet_force = 400.0f;
+            weapon_config.fire_sound = "sound/laser.wav";
 
             break;
         }
         case game::WeaponType::ROCKET:
         {
-            BulletConfiguration bullet_config;
             bullet_config.life_span = 0.6f;
             bullet_config.fuzzy_life_span = 0.3f;
             bullet_config.collision_radius = 2.0f;
@@ -97,15 +95,13 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponTyp
             bullet_config.sprite_file = "sprites/laser.sprite";
             bullet_config.sound_file = nullptr;
 
-            config.rounds_per_second = 1.5f;
-            config.bullet_force = 300.0f;
-            config.bullet_config = std::move(bullet_config);
+            weapon_config.rounds_per_second = 1.5f;
+            weapon_config.bullet_force = 300.0f;
 
             break;
         }
         case game::WeaponType::CACOPLASMA:
         {
-            BulletConfiguration bullet_config;
             bullet_config.life_span = 1.0f;
             bullet_config.fuzzy_life_span = 0.3f;
             bullet_config.collision_radius = 5.0f;
@@ -113,13 +109,12 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponTyp
             bullet_config.sprite_file = "sprites/cacobullet.sprite";
             bullet_config.sound_file = nullptr;
 
-            config.rounds_per_second = 2.0f;
-            config.bullet_force = 400.0f;
-            config.bullet_config = std::move(bullet_config);
+            weapon_config.rounds_per_second = 2.0f;
+            weapon_config.bullet_force = 400.0f;
 
             break;
         }
     }
 
-    return std::make_unique<game::Weapon>(config, eventHandler);
+    return std::make_unique<game::Weapon>(weapon_config, eventHandler);
 }
