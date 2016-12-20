@@ -64,7 +64,6 @@ namespace game
         mono::EventHandler& m_event_handler;
 
         bool m_fire;
-        bool m_didFire;
 
         std::shared_ptr<SpriteEntity> m_left_booster;
         std::shared_ptr<SpriteEntity> m_right_booster;

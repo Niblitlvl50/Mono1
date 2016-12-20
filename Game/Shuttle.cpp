@@ -10,6 +10,7 @@
 #include "Physics/CMIBody.h"
 #include "Physics/CMIShape.h"
 #include "Physics/CMFactory.h"
+#include "Utils.h"
 
 #include "IRenderer.h"
 #include "EntityBase.h"
@@ -66,8 +67,7 @@ public:
 Shuttle::Shuttle(const math::Vector& position, mono::EventHandler& eventHandler)
     : m_controller(this, eventHandler),
       m_event_handler(eventHandler),
-      m_fire(false),
-      m_didFire(false)
+      m_fire(false)
 {
     mPosition = position;
     mScale = math::Vector(20.0f, 20.0f);
@@ -110,13 +110,11 @@ void Shuttle::Update(unsigned int delta)
 {
     m_sprite->doUpdate(delta);
 
-    constexpr math::Vector left_offset(-5.0f, 15.0f);
-    constexpr math::Vector right_offset(5.0f, 15.0f);
 
     if(m_fire)
     {
-        const math::Vector& shift_vector = m_didFire ? left_offset : right_offset;
-        m_didFire = (m_weapon->Fire(mPosition + shift_vector, mRotation) != m_didFire);
+        const float x_shift = mono::Random() * 12.0f - 6.0f;
+        m_weapon->Fire(mPosition + math::Vector(x_shift, 15.0f), mRotation);
     }
 }
 
