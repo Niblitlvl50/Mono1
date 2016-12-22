@@ -74,11 +74,6 @@ bool math::operator == (const math::Vector& left, const math::Vector& right)
            left.y == right.y;
 }
 
-float math::Length(const math::Vector& vector)
-{
-    return std::sqrt(vector.x * vector.x + vector.y * vector.y);
-}
-
 void math::Normalize(math::Vector& vector)
 {
     const float length = Length(vector);
@@ -87,4 +82,14 @@ void math::Normalize(math::Vector& vector)
 
     vector.x /= length;
     vector.y /= length;
+}
+
+float math::Length(const math::Vector& vector)
+{
+    return std::sqrt(vector.x * vector.x + vector.y * vector.y);
+}
+
+float math::Dot(const math::Vector& first, const math::Vector& second)
+{
+   return (first.x * second.x) + (first.y * second.y);
 }

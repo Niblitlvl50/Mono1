@@ -24,7 +24,6 @@ namespace math
         float y = 0.0f;
     };
 
-
     // Operators!
     Vector operator + (const Vector& left, const Vector& right);
     Vector operator - (const Vector& left, const Vector& right);
@@ -43,11 +42,9 @@ namespace math
 
     bool operator == (const Vector& left, const Vector& right);
 
-    // Calculates the length of a vector
-    float Length(const Vector& vector);
-
-    // Normalizes the vector
     void Normalize(Vector& vector);
+    float Length(const Vector& vector);
+    float Dot(const Vector& first, const Vector& second);
 
     // Just a convineince vector declared to zero.
     constexpr Vector zeroVec = Vector();
