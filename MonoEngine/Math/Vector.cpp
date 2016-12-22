@@ -89,6 +89,11 @@ float math::Length(const math::Vector& vector)
     return std::sqrt(vector.x * vector.x + vector.y * vector.y);
 }
 
+float math::LengthSquared(const math::Vector& vector)
+{
+    return vector.x * vector.x + vector.y * vector.y;
+}
+
 float math::Dot(const math::Vector& first, const math::Vector& second)
 {
    return (first.x * second.x) + (first.y * second.y);

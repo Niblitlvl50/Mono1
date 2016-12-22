@@ -44,6 +44,7 @@ namespace math
 
     void Normalize(Vector& vector);
     float Length(const Vector& vector);
+    float LengthSquared(const Vector& vector);
     float Dot(const Vector& first, const Vector& second);
 
     // Just a convineince vector declared to zero.
