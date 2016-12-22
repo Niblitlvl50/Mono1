@@ -37,9 +37,14 @@ namespace
             return m_length;
         }
 
-        virtual const math::Vector& Position() const
+        virtual const math::Vector& GetGlobalPosition() const
         {
             return m_position;
+        }
+
+        virtual void SetGlobalPosition(const math::Vector& position)
+        {
+            m_position = position;
         }
 
         virtual math::Vector GetPositionByLength(float length) const
@@ -77,7 +82,7 @@ namespace
             return m_path;
         }
 
-        const math::Vector m_position;
+        math::Vector m_position;
         const std::vector<math::Vector> m_path;
         float m_length;
     };
@@ -94,15 +99,13 @@ std::shared_ptr<mono::IPath> mono::CreatePath(const char* path_file)
 
     const nlohmann::json& json = nlohmann::json::parse(file_data);
     const std::vector<float>& points = json["path"];
-    const float x = json["x"];
-    const float y = json["y"];
+    const math::Vector position(json["x"], json["y"]);
 
     std::vector<math::Vector> coords;
     coords.resize(points.size() / 2);
-
     std::memcpy(coords.data(), points.data(), sizeof(float) * points.size());
     
-    return std::make_shared<DefaultPath>(math::Vector(x, y), coords);
+    return std::make_shared<DefaultPath>(position, coords);
 }
 
 std::shared_ptr<mono::IPath> mono::CreatePath(const math::Vector& position, const std::vector<math::Vector>& coords)
