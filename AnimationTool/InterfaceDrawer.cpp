@@ -113,7 +113,7 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
         ImGui::Spacing();
 
         ImGui::PushID(index);
-        ImGui::SliderInt("frame", &frame.frame, 1, m_context.max_frame_id);
+        ImGui::SliderInt("frame", &frame.frame, 0, m_context.max_frame_id);
 
         ImGui::SameLine(0.0f, 20.0f);
         if(ImGui::ImageButton(texture_id, small_button_size, delete_icon.uv1, delete_icon.uv2, 0, delete_bg_color))
