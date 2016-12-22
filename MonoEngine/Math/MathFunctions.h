@@ -1,10 +1,3 @@
-//
-//  MathFunctions.h
-//  Mono1
-//
-//  Created by Niblit on 2012-07-27.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #pragma once
 
@@ -27,24 +20,21 @@ namespace math
     bool IsPolygonClockwise(const std::vector<math::Vector>& points);
 
     math::Vector MapVectorInQuad(const math::Vector& point, const math::Quad& quad);
+    math::Vector ClosestPointOnLine(const math::Vector& start, const math::Vector& end, const math::Vector& point);
 
-    constexpr float PI()
-    {
+    constexpr float PI() {
         return 3.14159265359f;
     }
 
-    constexpr float PI_2()
-    {
-        return 1.57079632679f;
+    constexpr float PI_2() {
+        return PI() / 2.0f;
     }
 
-    constexpr float ToRadians(float degrees)
-    {
+    constexpr float ToRadians(float degrees) {
         return degrees * PI() / 180.0f;
     }
 
-    constexpr float ToDegrees(float radians)
-    {
+    constexpr float ToDegrees(float radians) {
         return radians * 180.0f / PI();
     }
 }

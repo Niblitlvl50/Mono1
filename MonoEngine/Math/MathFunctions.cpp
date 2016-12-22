@@ -1,10 +1,3 @@
-//
-//  MathFunctions.cpp
-//  Mono1
-//
-//  Created by Niblit on 2012-07-27.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #include "MathFunctions.h"
 #include "Vector.h"
@@ -106,4 +99,24 @@ math::Vector math::MapVectorInQuad(const math::Vector& point, const math::Quad& 
     return math::Vector(temp.x / size.x, (size.y - temp.y) / size.y);
 }
 
+math::Vector math::ClosestPointOnLine(const math::Vector& start, const math::Vector& end, const math::Vector& point)
+{
+    const float length = math::LengthSquared(start - end);
+    if(length == 0.0f)
+        return start;
+
+    // Consider the line extending the segment, parameterized as v + t (w - v).
+    // We find projection of point p onto the line. 
+    // It falls where t = [(p-v) . (w-v)] / |w-v|^2
+    const float t = math::Dot((point - start), (end - start)) / length;
+
+    if(t <= 0.0f)
+        return start; // Beyond the 'v' end of the segment
+    else if(t >= 1.0f)
+        return end;   // Beyond the 'w' end of the segment
+
+    // Projection falls on the segment
+    const math::Vector& projection = start + (end - start) * t;
+    return projection;
+}
 
