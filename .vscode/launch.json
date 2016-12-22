@@ -1,0 +1,65 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C++ Launch game",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/game",
+//            "args": ["world.world"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}/Resources",
+            "environment": [],
+            "externalConsole": false,
+            "linux": {
+                "MIMode": "gdb"
+            },
+            "osx": {
+                "MIMode": "lldb"
+            },
+            "windows": {
+                "MIMode": "gdb"
+            }
+        },
+        {
+            "name": "C++ Launch editor",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/editor",
+            "args": ["world.world"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}/Resources",
+            "environment": [],
+            "externalConsole": false,
+            "linux": {
+                "MIMode": "gdb"
+            },
+            "osx": {
+                "MIMode": "lldb"
+            },
+            "windows": {
+                "MIMode": "gdb"
+            }
+        },
+        {
+            "name": "C++ Launch animator",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/animationtool",
+            "args": ["sprites/cacodemon.sprite"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}/Resources",
+            "environment": [],
+            "externalConsole": false,
+            "linux": {
+                "MIMode": "gdb"
+            },
+            "osx": {
+                "MIMode": "lldb"
+            },
+            "windows": {
+                "MIMode": "gdb"
+            }
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "sh",
+    "suppressTaskName": true,
+    "isShellCommand": true,
+    "showOutput": "always",
+    "tasks": [
+        {
+            "taskName": "build",
+            "isBuildCommand": true,
+            "args": ["-c", "make -j8"]
+        },
+        {
+            "taskName": "clean",
+            "isBuildCommand": false,
+            "args": ["-c", "make clean"]
+        },
+        {
+            "taskName": "cmake",
+            "isBuildCommand": false,
+            "args": ["-c", "cmake ."]
+        },
+        {
+            "taskName": "game",
+            "isTestCommand": true,
+            "args": ["./run_task.sh", "game"]
+        },
+        {
+            "taskName": "editor",
+            "args": ["./run_task.sh", "editor", "world.world"]
+        },
+        {
+            "taskName": "animator",
+            "args": ["./run_task.sh", "animationtool", "sprites/mushroom.sprite"]
+        },
+        {
+            "taskName": "unittest",
+            "args": ["./run_unittest.sh", "--gtest_filter=MathTest.Bezier"]
+        }
+    ]
+}

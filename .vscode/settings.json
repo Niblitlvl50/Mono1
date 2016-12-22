@@ -1,0 +1,17 @@
+{
+    "python.linting.pylintEnabled": false,
+
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/.vscode": false,
+        "**/*.VC.db": true,
+        "bin/": true,
+        "CMakeFiles": true,
+        "cmake_install.cmake": true,
+        "CMakeCache.txt": true,
+        "Makefile": true
+    }
+}
