@@ -21,7 +21,6 @@ DamageRecord& DamageController::CreateRecord(uint record_id)
     pair.first->second.strong_against = 0;
     pair.first->second.weak_against = 0;
     pair.first->second.multipier = 1;
-    //pair.first->second.last_damaged_timestamp = 10000000;
     pair.first->second.last_damaged_timestamp = std::numeric_limits<uint>::max();
 
     return pair.first->second;
