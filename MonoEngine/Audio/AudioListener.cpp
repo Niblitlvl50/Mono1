@@ -14,3 +14,8 @@ void mono::ListenerPosition(const math::Vector& position)
 {
     alListener3f(AL_POSITION, position.x, position.y, 0.0f);
 }
+
+void mono::ListenerGain(float gain)
+{
+    alListenerf(AL_GAIN, gain);
+}

@@ -14,4 +14,7 @@ namespace mono
 {
     // Set the listener position
     void ListenerPosition(const math::Vector& position);
+
+    // Set the listener volume (gain)
+    void ListenerGain(float gain);
 }

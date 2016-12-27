@@ -117,11 +117,11 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     world::ReadWorld(world_file, world_header);
     game::LoadWorld(this, world_header.polygons);
 
-    AddUpdatable(std::make_shared<ListenerPositionUpdater>(camera));
+    std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(math::zeroVec, mEventHandler);
+
+    AddUpdatable(std::make_shared<ListenerPositionUpdater>(shuttle));
     AddUpdatable(std::make_shared<HealthbarUpdater>(m_healthbars, m_damageController, *this));
     AddDrawable(std::make_shared<HealthbarDrawer>(m_healthbars), FOREGROUND);
-
-    std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(math::zeroVec, mEventHandler);
     AddPhysicsEntity(shuttle, FOREGROUND);
 
     AddPhysicsEntity(game::CreateCacoDemon(math::Vector(100, 100), mEventHandler), FOREGROUND);

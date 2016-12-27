@@ -9,12 +9,10 @@ namespace game
     class ListenerPositionUpdater : public mono::IUpdatable
     {
     public:
-
-        ListenerPositionUpdater(const mono::ICameraPtr& camera);
+        ListenerPositionUpdater(const mono::IEntityPtr& entity);
         virtual void doUpdate(unsigned int delta);
 
     private:
-
-        mono::ICameraPtr m_camera;
+        const mono::IEntityPtr m_entity;
     };
 }
