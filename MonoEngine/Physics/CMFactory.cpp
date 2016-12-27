@@ -107,7 +107,7 @@ namespace
             if(mHandler)
                 mHandler->OnPostStep();
         }
-        cpBody* Body()
+        cpBody* Handle()
         {
             return mBody;
         }
@@ -120,17 +120,17 @@ namespace
     {
         CMShape(mono::IBodyPtr body, float radius, const math::Vector& offset)
         {
-            mShape = cpCircleShapeNew(body->Body(), radius, cpv(offset.x, offset.y));
+            mShape = cpCircleShapeNew(body->Handle(), radius, cpv(offset.x, offset.y));
             mInertiaValue = cpMomentForCircle(body->GetMass(), 0.0f, radius, cpv(offset.x, offset.y));
         }
         CMShape(mono::IBodyPtr body, float width, float height)
         {
-            mShape = cpBoxShapeNew(body->Body(), width, height, 1.0f);
+            mShape = cpBoxShapeNew(body->Handle(), width, height, 1.0f);
             mInertiaValue = cpMomentForBox(body->GetMass(), width, height);
         }
         CMShape(mono::IBodyPtr body, const math::Vector& first, const math::Vector& second, float radius)
         {
-            mShape = cpSegmentShapeNew(body->Body(), cpv(first.x, first.y), cpv(second.x, second.y), radius);
+            mShape = cpSegmentShapeNew(body->Handle(), cpv(first.x, first.y), cpv(second.x, second.y), radius);
             mInertiaValue = cpMomentForSegment(body->GetMass(), cpv(first.x, first.y), cpv(second.x, second.y), radius);
         }
         CMShape(mono::IBodyPtr body, const std::vector<math::Vector>& vertices, const math::Vector& offset)
@@ -146,7 +146,7 @@ namespace
             if(clockwice)
                 std::reverse(vects.begin(), vects.end());
 
-            mShape = cpPolyShapeNewRaw(body->Body(), int(vects.size()), vects.data(), 1.0f);
+            mShape = cpPolyShapeNewRaw(body->Handle(), int(vects.size()), vects.data(), 1.0f);
             mInertiaValue = cpMomentForPoly(body->GetMass(), int(vects.size()), vects.data(), cpv(offset.x, offset.y), 1.0f);
         }
         ~CMShape()
@@ -165,7 +165,7 @@ namespace
         {
             return mInertiaValue;
         }
-        cpShape* Shape()
+        cpShape* Handle()
         {
             return mShape;
         }

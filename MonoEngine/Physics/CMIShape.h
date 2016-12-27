@@ -30,7 +30,7 @@ namespace mono
     private:
         
         friend class Space;
-        virtual cpShape* Shape() = 0;
+        virtual cpShape* Handle() = 0;
     };
 }
 

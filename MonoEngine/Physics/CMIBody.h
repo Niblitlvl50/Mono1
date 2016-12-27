@@ -103,7 +103,7 @@ namespace mono
         
         //! Gets the underlying cpBody object, dont use this one
         //! @return cpBody* A pointer to a cpBody struct
-        virtual cpBody* Body() = 0;
+        virtual cpBody* Handle() = 0;
     };
 }
 

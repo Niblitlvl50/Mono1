@@ -13,7 +13,7 @@ namespace
 
         Constraint(const mono::IBodyPtr& a, const mono::IBodyPtr& b)
         {
-            m_constraint = cpPivotJointNew(a->Body(), b->Body(), cpvzero);
+            m_constraint = cpPivotJointNew(a->Handle(), b->Handle(), cpvzero);
         }
 
         ~Constraint()

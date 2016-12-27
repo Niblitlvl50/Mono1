@@ -55,14 +55,14 @@ void Space::Tick(float delta)
 void Space::AddBody(const IBodyPtr& body)
 {
     if(!body->IsStatic())
-        cpSpaceAddBody(mSpace, body->Body());
+        cpSpaceAddBody(mSpace, body->Handle());
     mBodies.push_back(body);
 }
 
 void Space::RemoveBody(const IBodyPtr& body)
 {
     if(!body->IsStatic())
-        cpSpaceRemoveBody(mSpace, body->Body());
+        cpSpaceRemoveBody(mSpace, body->Handle());
     
     const bool result = mono::FindAndRemove(mBodies, body);
     if(!result)
@@ -71,12 +71,12 @@ void Space::RemoveBody(const IBodyPtr& body)
 
 void Space::AddShape(const IShapePtr& shape)
 {
-    cpSpaceAddShape(mSpace, shape->Shape());
+    cpSpaceAddShape(mSpace, shape->Handle());
 }
 
 void Space::RemoveShape(const IShapePtr& shape)
 {
-    cpSpaceRemoveShape(mSpace, shape->Shape());
+    cpSpaceRemoveShape(mSpace, shape->Handle());
 }
 
 void Space::Add(const IConstraintPtr& constraint)
@@ -106,7 +106,7 @@ void Space::DoForEachFuncOnBody(cpBody* body)
 {
     for(auto& bodyPtr : mBodies)
     {
-        if(body == bodyPtr->Body())
+        if(body == bodyPtr->Handle())
         {
             mForEachFunc(bodyPtr);
             break;
@@ -123,7 +123,7 @@ IBodyPtr Space::QueryFirst(const math::Vector& start, const math::Vector& end)
     const cpBody* body = cpShapeGetBody(shape);
 
     const auto func = [body](const IBodyPtr& bodyPtr) {
-        return bodyPtr->Body() == body;
+        return bodyPtr->Handle() == body;
     };
 
     const auto& it = std::find_if(mBodies.begin(), mBodies.end(), func);
@@ -144,9 +144,9 @@ bool Space::OnCollision(cpArbiter* arb)
     
     for(auto& body : mBodies)
     {
-        if(body->Body() == b1)
+        if(body->Handle() == b1)
             first = body;
-        else if(body->Body() == b2)
+        else if(body->Handle() == b2)
             second = body;
         
         if(first && second)
@@ -173,9 +173,9 @@ void Space::OnPostStep(cpArbiter* arb)
 
     for(auto& body : mBodies)
     {
-        if(body->Body() == b1)
+        if(body->Handle() == b1)
             first = body;
-        else if(body->Body() == b2)
+        else if(body->Handle() == b2)
             second = body;
 
         if(first && second)
