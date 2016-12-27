@@ -10,7 +10,7 @@
 #include "ICamera.h"
 #include "Audio/AudioFactory.h"
 
-#include "Enemy.h"
+#include "Enemies/Enemy.h"
 #include "Enemies/EnemyFactory.h"
 
 #include "InvaderGroup.h"
