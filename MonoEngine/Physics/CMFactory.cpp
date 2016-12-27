@@ -7,8 +7,8 @@
 //
 
 #include "CMFactory.h"
-#include "CMIBody.h"
-#include "CMIShape.h"
+#include "IBody.h"
+#include "IShape.h"
 #include "Math/Vector.h"
 #include "Math/MathFunctions.h"
 

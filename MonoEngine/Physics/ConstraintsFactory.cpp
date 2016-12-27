@@ -1,7 +1,7 @@
 
 #include "ConstraintsFactory.h"
 #include "IConstraint.h"
-#include "CMIBody.h"
+#include "IBody.h"
 
 #include "chipmunk/chipmunk.h"
 

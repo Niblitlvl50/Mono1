@@ -3,7 +3,7 @@
 #include "IPhysicsZone.h"
 #include "IEntity.h"
 #include "Math/Vector.h"
-#include "Physics/CMIBody.h"
+#include "Physics/IBody.h"
 
 #include <cmath>
 

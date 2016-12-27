@@ -2,7 +2,7 @@
 #include "PhysicsEntityBase.h"
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
-#include "Physics/CMIBody.h"
+#include "Physics/IBody.h"
 #include "IRenderer.h"
 #include "System/SysUID.h"
 #include "Utils.h"

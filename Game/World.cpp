@@ -9,8 +9,8 @@
 #include "World.h"
 #include "PhysicsEntityBase.h"
 
-#include "Physics/CMIBody.h"
-#include "Physics/CMIShape.h"
+#include "Physics/IBody.h"
+#include "Physics/IShape.h"
 #include "Physics/CMFactory.h"
 
 #include "IRenderer.h"

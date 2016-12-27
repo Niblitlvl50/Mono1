@@ -3,7 +3,7 @@
 
 #include "MonoPtrFwd.h"
 #include "PhysicsEntityBase.h"
-#include "Physics/CMIBody.h"
+#include "Physics/IBody.h"
 
 #include "WeaponConfiguration.h"
 

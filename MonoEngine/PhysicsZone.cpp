@@ -5,7 +5,7 @@
 #include "IUpdatable.h"
 #include "Physics/CMSpace.h"
 #include "Physics/CMObject.h"
-#include "Physics/CMIShape.h"
+#include "Physics/IShape.h"
 #include "IPhysicsEntity.h"
 
 #include "Utils.h"

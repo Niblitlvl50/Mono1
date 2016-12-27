@@ -11,7 +11,7 @@
 #include "MonoPtrFwd.h"
 #include "PhysicsEntityBase.h"
 #include "ShuttleController.h"
-#include "Physics/CMIBody.h"
+#include "Physics/IBody.h"
 
 #include "Weapons/IWeaponSystem.h"
 

@@ -11,7 +11,7 @@
 #include "Math/MathFwd.h"
 
 #include "Explosion.h"
-#include "Physics/CMIBody.h"
+#include "Physics/IBody.h"
 #include "IPhysicsEntity.h"
 
 #include "EventHandler/EventHandler.h"
