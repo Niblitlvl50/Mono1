@@ -52,14 +52,14 @@ void Space::Tick(float delta)
     cpSpaceStep(mSpace, delta);
 }
 
-void Space::AddBody(const IBodyPtr& body)
+void Space::Add(const IBodyPtr& body)
 {
     if(!body->IsStatic())
         cpSpaceAddBody(mSpace, body->Handle());
     mBodies.push_back(body);
 }
 
-void Space::RemoveBody(const IBodyPtr& body)
+void Space::Remove(const IBodyPtr& body)
 {
     if(!body->IsStatic())
         cpSpaceRemoveBody(mSpace, body->Handle());
@@ -69,12 +69,12 @@ void Space::RemoveBody(const IBodyPtr& body)
         throw std::runtime_error("Unable to remove body from collection");
 }
 
-void Space::AddShape(const IShapePtr& shape)
+void Space::Add(const IShapePtr& shape)
 {
     cpSpaceAddShape(mSpace, shape->Handle());
 }
 
-void Space::RemoveShape(const IShapePtr& shape)
+void Space::Remove(const IShapePtr& shape)
 {
     cpSpaceRemoveShape(mSpace, shape->Handle());
 }

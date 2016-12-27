@@ -44,10 +44,10 @@ void PhysicsZone::AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int la
     AddUpdatable(entity);
     
     const mono::Object& object = entity->GetPhysics();
-    mPhysics->mSpace.AddBody(object.body);
+    mPhysics->mSpace.Add(object.body);
     
     for(auto& shape : object.shapes)
-        mPhysics->mSpace.AddShape(shape);
+        mPhysics->mSpace.Add(shape);
     
     mPhysicsEntities.push_back(entity);
 }
@@ -61,10 +61,10 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
     if(result)
     {
         mono::Object& object = entity->GetPhysics();
-        mPhysics->mSpace.RemoveBody(object.body);
+        mPhysics->mSpace.Remove(object.body);
         
         for(auto& shape : object.shapes)
-            mPhysics->mSpace.RemoveShape(shape);
+            mPhysics->mSpace.Remove(shape);
     }
     else
     {

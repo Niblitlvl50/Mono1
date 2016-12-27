@@ -28,13 +28,12 @@ namespace mono
         
         void Tick(float delta);
         
-        void AddBody(const IBodyPtr& body);
-        void RemoveBody(const IBodyPtr& body);
-        
-        void AddShape(const IShapePtr& shape);
-        void RemoveShape(const IShapePtr& shape);
-
+        void Add(const IBodyPtr& body);
+        void Add(const IShapePtr& shape);
         void Add(const IConstraintPtr& constraint);
+        
+        void Remove(const IBodyPtr& body);
+        void Remove(const IShapePtr& shape);
         void Remove(const IConstraintPtr& constraint);
         
         void ForEachBody(const BodyFunc& func);

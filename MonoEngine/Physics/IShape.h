@@ -27,9 +27,6 @@ namespace mono
         //! Get the calculated inertia value for this shape
         virtual float GetInertiaValue() const = 0;
 
-    private:
-        
-        friend class Space;
         virtual cpShape* Handle() = 0;
     };
 }
