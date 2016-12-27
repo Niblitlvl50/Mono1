@@ -33,6 +33,9 @@ namespace mono
         
         void AddShape(const IShapePtr& shape);
         void RemoveShape(const IShapePtr& shape);
+
+        void Add(const IConstraintPtr& constraint);
+        void Remove(const IConstraintPtr& constraint);
         
         void ForEachBody(const BodyFunc& func);
         IBodyPtr QueryFirst(const math::Vector& start, const math::Vector& end);

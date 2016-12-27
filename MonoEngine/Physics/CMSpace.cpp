@@ -10,6 +10,7 @@
 #include "CMFactory.h"
 #include "CMIBody.h"
 #include "CMIShape.h"
+#include "IConstraint.h"
 #include "Math/Vector.h"
 #include "Utils.h"
 
@@ -42,6 +43,7 @@ Space::Space(const math::Vector& gravity, float damping)
 
 Space::~Space()
 {
+    mBodies.clear();
     cpSpaceDestroy(mSpace);
 }
 
@@ -75,6 +77,16 @@ void Space::AddShape(const IShapePtr& shape)
 void Space::RemoveShape(const IShapePtr& shape)
 {
     cpSpaceRemoveShape(mSpace, shape->Shape());
+}
+
+void Space::Add(const IConstraintPtr& constraint)
+{
+    cpSpaceAddConstraint(mSpace, constraint->Handle());
+}
+
+void Space::Remove(const IConstraintPtr& constraint)
+{
+    cpSpaceRemoveConstraint(mSpace, constraint->Handle());
 }
 
 void Space::ForEachBody(const BodyFunc& func)
@@ -176,7 +188,3 @@ void Space::OnPostStep(cpArbiter* arb)
         second->OnPostStep();
     }
 }
-
-
-
-
