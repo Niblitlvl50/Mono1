@@ -95,13 +95,15 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
     const game::ShockwaveFunc& shockwaveFunc = std::bind(&TestZone::OnShockwaveEvent, this, _1);
     const game::DamageFunc& damageFunc = std::bind(&TestZone::OnDamageEvent, this, _1);
     const game::SpawnConstraintFunc& constraintFunc = std::bind(&TestZone::OnSpawnConstraint, this, _1);
+    const game::DespawnConstraintFunc& despawnConstraintFunc = std::bind(&TestZone::OnDespawnConstraint, this, _1);
 
     mSpawnEntityToken = mEventHandler.AddListener(spawnEntityFunc);
     mSpawnPhysicsEntityToken = mEventHandler.AddListener(spawnPhysicsFunc);
     mRemoveEntityByIdToken = mEventHandler.AddListener(removeFunc);
     mShockwaveEventToken = mEventHandler.AddListener(shockwaveFunc);
     mDamageEventToken = mEventHandler.AddListener(damageFunc);
-    m_constraintToken = mEventHandler.AddListener(constraintFunc);
+    m_spawnConstraintToken = mEventHandler.AddListener(constraintFunc);
+    m_despawnConstraintToken = mEventHandler.AddListener(despawnConstraintFunc);
 
     m_backgroundMusic = mono::AudioFactory::CreateSound("sound/InGame_Phoenix.wav", true, true);
 }
@@ -113,7 +115,8 @@ TestZone::~TestZone()
     mEventHandler.RemoveListener(mRemoveEntityByIdToken);
     mEventHandler.RemoveListener(mShockwaveEventToken);
     mEventHandler.RemoveListener(mDamageEventToken);
-    mEventHandler.RemoveListener(m_constraintToken);
+    mEventHandler.RemoveListener(m_spawnConstraintToken);
+    mEventHandler.RemoveListener(m_despawnConstraintToken);
 }
 
 void TestZone::OnLoad(mono::ICameraPtr camera)
@@ -260,5 +263,11 @@ void TestZone::RemoveEntity(const mono::IEntityPtr& entity)
 bool TestZone::OnSpawnConstraint(const game::SpawnConstraintEvent& event)
 {
     PhysicsZone::AddConstraint(event.constraint);
+    return true;
+}
+
+bool TestZone::OnDespawnConstraint(const game::DespawnConstraintEvent& event)
+{
+    PhysicsZone::RemoveConstraint(event.constraint);
     return true;
 }

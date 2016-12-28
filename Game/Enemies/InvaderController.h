@@ -39,8 +39,6 @@ namespace game
         math::Vector m_point;
 
         mono::IBodyPtr m_controlBody;
-        mono::IConstraintPtr m_joint;
-        mono::IConstraintPtr m_gear;
         mono::IConstraintPtr m_spring;
         Enemy* m_enemy;
     };
