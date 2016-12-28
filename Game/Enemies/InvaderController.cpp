@@ -88,13 +88,15 @@ InvaderPathController::~InvaderPathController()
 void InvaderPathController::Initialize(Enemy* enemy)
 {
     m_enemy = enemy;
+    m_enemy->SetProperty(EntityProperties::DAMAGABLE);
+
     m_weapon = game::Factory::CreateWeapon(WeaponType::STANDARD, m_eventHandler);
 
     m_controlBody = mono::PhysicsFactory::CreateKinematicBody();
     m_spring = mono::ConstraintsFactory::CreateSpring(m_controlBody, m_enemy->GetPhysics().body, 1.0f, 20.0f, 0.5f);
 
     m_eventHandler.DispatchEvent(SpawnConstraintEvent(m_spring));
-    m_eventHandler.DispatchEvent(SpawnEntityEvent(std::make_shared<DotEntity>(m_point)));
+    //m_eventHandler.DispatchEvent(SpawnEntityEvent(std::make_shared<DotEntity>(m_point)));
 }
 
 void InvaderPathController::doUpdate(unsigned int delta)
@@ -110,7 +112,6 @@ void InvaderPathController::doUpdate(unsigned int delta)
     if(m_currentPosition > m_path->Length())
         m_currentPosition = 0.0f;
 
-
     if(m_fireCooldown > 0)
     {
         m_fireCooldown -= delta;
@@ -118,8 +119,11 @@ void InvaderPathController::doUpdate(unsigned int delta)
     }
 
     const math::Vector& enemy_position = m_enemy->Position();
-    const float distance = math::Length(player_position - enemy_position);
+    const bool is_visible = math::PointInsideQuad(enemy_position, camera_viewport);
+    if(!is_visible)
+        return;
 
+    const float distance = math::Length(player_position - enemy_position);
     if(distance < 200.0f)
     {
         const float angle = math::AngleBetweenPoints(player_position, enemy_position) + math::PI_2();

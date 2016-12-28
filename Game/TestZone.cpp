@@ -42,6 +42,7 @@
 
 #include "UpdateTasks/ListenerPositionUpdater.h"
 #include "UpdateTasks/HealthbarUpdater.h"
+#include "UpdateTasks/CameraViewportReporter.h"
 
 #include <thread>
 
@@ -130,6 +131,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     std::shared_ptr<Shuttle> shuttle = std::make_shared<Shuttle>(math::zeroVec, mEventHandler);
 
     AddUpdatable(std::make_shared<ListenerPositionUpdater>(shuttle));
+    AddUpdatable(std::make_shared<CameraViewportReporter>(camera));
     AddUpdatable(std::make_shared<HealthbarUpdater>(m_healthbars, m_damageController, *this));
     AddDrawable(std::make_shared<HealthbarDrawer>(m_healthbars), FOREGROUND);
     AddPhysicsEntity(shuttle, FOREGROUND);

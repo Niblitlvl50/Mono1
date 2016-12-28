@@ -13,6 +13,7 @@
 #include "Utils.h"
 
 #include "AIKnowledge.h"
+#include "EntityProperties.h"
 
 #include "IRenderer.h"
 #include "EntityBase.h"
@@ -99,6 +100,8 @@ Shuttle::Shuttle(const math::Vector& position, mono::EventHandler& eventHandler)
     AddChild(m_left_booster);
     AddChild(m_right_booster);
 
+    SetProperty(EntityProperties::DAMAGABLE);
+    
     // Make sure we have a weapon
     SelectWeapon(WeaponType::STANDARD);
 }
