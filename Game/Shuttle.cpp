@@ -12,6 +12,8 @@
 #include "Physics/CMFactory.h"
 #include "Utils.h"
 
+#include "AIKnowledge.h"
+
 #include "IRenderer.h"
 #include "EntityBase.h"
 #include "Sprite/ISprite.h"
@@ -110,12 +112,13 @@ void Shuttle::Update(unsigned int delta)
 {
     m_sprite->doUpdate(delta);
 
-
     if(m_fire)
     {
         const float x_shift = mono::Random() * 12.0f - 6.0f;
         m_weapon->Fire(mPosition + math::Vector(x_shift, 15.0f), mRotation);
     }
+
+    game::player_position = mPosition;
 }
 
 void Shuttle::OnCollideWith(const mono::IBodyPtr& body)

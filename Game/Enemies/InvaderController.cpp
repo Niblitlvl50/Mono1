@@ -1,6 +1,10 @@
 
 #include "InvaderController.h"
 #include "EntityProperties.h"
+#include "AIKnowledge.h"
+#include "Weapons/IWeaponSystem.h"
+#include "Weapons/WeaponFactory.h"
+#include "Weapons/WeaponTypes.h"
 #include "Events/SpawnConstraintEvent.h"
 
 #include "EventHandler/EventHandler.h"
@@ -11,6 +15,7 @@
 #include "Physics/ConstraintsFactory.h"
 #include "Paths/IPath.h"
 
+#include "Math/MathFunctions.h"
 
 #include "Events/SpawnEntityEvent.h"
 #include "EntityBase.h"
@@ -70,7 +75,9 @@ void InvaderController::doUpdate(unsigned int delta)
 InvaderPathController::InvaderPathController(const mono::IPathPtr& path, mono::EventHandler& event_handler)
     : m_path(path),
       m_eventHandler(event_handler),
-      m_currentPosition(0.0f)
+      m_currentPosition(0.0f),
+      m_fireCount(0),
+      m_fireCooldown(0)
 { }
 
 InvaderPathController::~InvaderPathController()
@@ -81,9 +88,10 @@ InvaderPathController::~InvaderPathController()
 void InvaderPathController::Initialize(Enemy* enemy)
 {
     m_enemy = enemy;
+    m_weapon = game::Factory::CreateWeapon(WeaponType::STANDARD, m_eventHandler);
 
     m_controlBody = mono::PhysicsFactory::CreateKinematicBody();
-    m_spring = mono::ConstraintsFactory::CreateSpring(m_controlBody, m_enemy->GetPhysics().body, 5.0f, 3.0f, 0.3f);
+    m_spring = mono::ConstraintsFactory::CreateSpring(m_controlBody, m_enemy->GetPhysics().body, 1.0f, 20.0f, 0.5f);
 
     m_eventHandler.DispatchEvent(SpawnConstraintEvent(m_spring));
     m_eventHandler.DispatchEvent(SpawnEntityEvent(std::make_shared<DotEntity>(m_point)));
@@ -92,13 +100,38 @@ void InvaderPathController::Initialize(Enemy* enemy)
 void InvaderPathController::doUpdate(unsigned int delta)
 {
     constexpr float speed_mps = 50.0f;
-    const float position_add = speed_mps * float(delta) / 1000.0f;
-    m_currentPosition += position_add;
+    m_currentPosition += speed_mps * float(delta) / 1000.0f;
 
-    const math::Vector& position = m_path->GetPositionByLength(m_currentPosition) + m_path->GetGlobalPosition();
-    m_point = position;
-    m_controlBody->SetPosition(position);
+    const math::Vector& global_position = m_path->GetGlobalPosition();
+    const math::Vector& path_position = m_path->GetPositionByLength(m_currentPosition);
+    m_point = global_position + path_position;
+    m_controlBody->SetPosition(m_point);
 
     if(m_currentPosition > m_path->Length())
         m_currentPosition = 0.0f;
+
+
+    if(m_fireCooldown > 0)
+    {
+        m_fireCooldown -= delta;
+        return;
+    }
+
+    const math::Vector& enemy_position = m_enemy->Position();
+    const float distance = math::Length(player_position - enemy_position);
+
+    if(distance < 200.0f)
+    {
+        const float angle = math::AngleBetweenPoints(player_position, enemy_position) + math::PI_2();
+        const math::Vector unit(-std::sin(angle), std::cos(angle));
+        const math::Vector& offset = unit * 10.0f;
+
+        m_fireCount += m_weapon->Fire(enemy_position + offset, angle);
+    }
+
+    if(m_fireCount == 5)
+    {
+        m_fireCooldown = 2000;
+        m_fireCount = 0;
+    }
 }

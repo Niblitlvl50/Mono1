@@ -7,6 +7,8 @@
 
 namespace game
 {
+    class IWeaponSystem;
+
     class InvaderController : public IEnemyController
     {
     public:
@@ -35,11 +37,14 @@ namespace game
         mono::IPathPtr m_path;
         mono::EventHandler& m_eventHandler;
         float m_currentPosition;
+        int m_fireCount;
+        int m_fireCooldown;
 
         math::Vector m_point;
 
         mono::IBodyPtr m_controlBody;
         mono::IConstraintPtr m_spring;
+        std::unique_ptr<IWeaponSystem> m_weapon;
         Enemy* m_enemy;
     };
 }
