@@ -20,4 +20,5 @@ namespace mono
     using ISoundPtr = std::shared_ptr<ISound>;
     using IShaderPtr = std::shared_ptr<IShader>;
     using ISpritePtr = std::shared_ptr<ISprite>;
+    using IPathPtr = std::shared_ptr<IPath>;
 }

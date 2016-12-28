@@ -73,6 +73,18 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
     }
 }
 
+void PhysicsZone::AddConstraint(const mono::IConstraintPtr& constraint)
+{
+    mPhysics->mSpace.Add(constraint);
+    m_constraints.push_back(constraint);
+}
+
+void PhysicsZone::RemoveConstraint(const mono::IConstraintPtr& constraint)
+{
+    mPhysics->mSpace.Remove(constraint);
+    mono::FindAndRemove(m_constraints, constraint);
+}
+
 IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromBody(const mono::IBodyPtr& body) const
 {
     for(auto& entity : mPhysicsEntities)

@@ -19,13 +19,18 @@ namespace mono
         virtual void ForEachBody(const mono::BodyFunc& func);
         virtual IPhysicsEntityPtr FindPhysicsEntityFromBody(const mono::IBodyPtr& body) const;
         virtual IPhysicsEntityPtr FindPhysicsEntityFromId(uint id) const;
+
         virtual void AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer);
         virtual void RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity);
+
+        virtual void AddConstraint(const mono::IConstraintPtr& constraint);
+        virtual void RemoveConstraint(const mono::IConstraintPtr& constraint);
 
     private:
 
         struct PhysicsImpl;
         std::shared_ptr<PhysicsImpl> mPhysics;
         std::vector<IPhysicsEntityPtr> mPhysicsEntities;
+        std::vector<IConstraintPtr> m_constraints;
     };
 }

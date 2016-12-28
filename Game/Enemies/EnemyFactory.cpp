@@ -1,6 +1,7 @@
 
 #include "EnemyFactory.h"
 #include "Enemy.h"
+#include "Paths/IPath.h"
 
 #include "CacoDemonController.h"
 #include "RyuController.h"
@@ -38,6 +39,18 @@ std::shared_ptr<game::Enemy> game::CreateInvader(const math::Vector& position, m
     setup.mass = 50.0f;
     setup.position = position;
     setup.controller = std::make_unique<InvaderController>(event_handler);
+
+    return std::make_shared<game::Enemy>(setup);
+}
+
+game::EnemyPtr game::CreatePathInvader(const mono::IPathPtr& path, mono::EventHandler& event_handler)
+{
+    EnemySetup setup;
+    setup.sprite_file = "sprites/invader.sprite";
+    setup.size = 20.0f;
+    setup.mass = 10.0f;
+    setup.position = path->GetGlobalPosition();
+    setup.controller = std::make_unique<InvaderPathController>(path, event_handler);
 
     return std::make_shared<game::Enemy>(setup);
 }

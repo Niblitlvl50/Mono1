@@ -22,16 +22,20 @@
 #include "CubeSwarm.h"
 
 #include "EventHandler/EventHandler.h"
+#include "Events/GameEventFuncFwd.h"
 #include "Events/SpawnEntityEvent.h"
 #include "Events/SpawnPhysicsEntityEvent.h"
 #include "Events/RemoveEntityEvent.h"
 #include "Events/ShockwaveEvent.h"
 #include "Events/DamageEvent.h"
+#include "Events/SpawnConstraintEvent.h"
 
 #include "Math/MathFunctions.h"
 #include "Utils.h"
 #include "EntityProperties.h"
 #include "RenderLayers.h"
+
+#include "Paths/PathFactory.h"
 
 #include "WorldFile.h"
 #include "World.h"
@@ -85,17 +89,19 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
       mEventHandler(eventHandler),
       m_spawner(eventHandler)
 {
-    const game::SpawnEntityFunc spawnEntityFunc = std::bind(&TestZone::SpawnEntity, this, _1);
-    const game::SpawnPhysicsEntityFunc spawnPhysicsFunc = std::bind(&TestZone::SpawnPhysicsEntity, this, _1);
+    const game::SpawnEntityFunc& spawnEntityFunc = std::bind(&TestZone::SpawnEntity, this, _1);
+    const game::SpawnPhysicsEntityFunc& spawnPhysicsFunc = std::bind(&TestZone::SpawnPhysicsEntity, this, _1);
     const game::RemoveEntityFunc& removeFunc = std::bind(&TestZone::OnRemoveEntity, this, _1);
-    const game::ShockwaveEventFunc shockwaveFunc = std::bind(&TestZone::OnShockwaveEvent, this, _1);
-    const std::function<bool (const game::DamageEvent&)>& damageFunc = std::bind(&TestZone::OnDamageEvent, this, _1);
+    const game::ShockwaveFunc& shockwaveFunc = std::bind(&TestZone::OnShockwaveEvent, this, _1);
+    const game::DamageFunc& damageFunc = std::bind(&TestZone::OnDamageEvent, this, _1);
+    const game::SpawnConstraintFunc& constraintFunc = std::bind(&TestZone::OnSpawnConstraint, this, _1);
 
     mSpawnEntityToken = mEventHandler.AddListener(spawnEntityFunc);
     mSpawnPhysicsEntityToken = mEventHandler.AddListener(spawnPhysicsFunc);
     mRemoveEntityByIdToken = mEventHandler.AddListener(removeFunc);
     mShockwaveEventToken = mEventHandler.AddListener(shockwaveFunc);
     mDamageEventToken = mEventHandler.AddListener(damageFunc);
+    m_constraintToken = mEventHandler.AddListener(constraintFunc);
 
     m_backgroundMusic = mono::AudioFactory::CreateSound("sound/InGame_Phoenix.wav", true, true);
 }
@@ -107,6 +113,7 @@ TestZone::~TestZone()
     mEventHandler.RemoveListener(mRemoveEntityByIdToken);
     mEventHandler.RemoveListener(mShockwaveEventToken);
     mEventHandler.RemoveListener(mDamageEventToken);
+    mEventHandler.RemoveListener(m_constraintToken);
 }
 
 void TestZone::OnLoad(mono::ICameraPtr camera)
@@ -130,6 +137,10 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
     AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
     AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
+
+
+    const mono::IPathPtr& path = mono::CreatePath("paths/center_loop.path");
+    AddPhysicsEntity(game::CreatePathInvader(path, mEventHandler), MIDDLEGROUND);
 
     AddEntity(std::make_shared<InvaderGroup>(math::Vector(300.0f, 800.0f)), BACKGROUND);
     AddEntity(std::make_shared<DotEntity>(), FOREGROUND);
@@ -244,4 +255,10 @@ void TestZone::RemoveEntity(const mono::IEntityPtr& entity)
     const bool damagable = entity->HasProperty(EntityProperties::DAMAGABLE);
     if(damagable)
         m_damageController.RemoveRecord(entity->Id());
+}
+
+bool TestZone::OnSpawnConstraint(const game::SpawnConstraintEvent& event)
+{
+    PhysicsZone::AddConstraint(event.constraint);
+    return true;
 }

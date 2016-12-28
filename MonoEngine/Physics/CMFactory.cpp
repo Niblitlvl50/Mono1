@@ -16,12 +16,21 @@
 
 namespace
 {
+    enum class BodyType
+    {
+        STATIC,
+        KINEMATIC
+    };
+
     struct CMBody : mono::IBody
-    {        
-        CMBody()
+    {
+        CMBody(BodyType type)
             : mHandler(nullptr)
         {
-            mBody = cpBodyNewStatic();
+            if(type == BodyType::STATIC)
+                mBody = cpBodyNewStatic();
+            else if(type == BodyType::KINEMATIC)
+                mBody = cpBodyNewKinematic();
         }
         CMBody(float mass, float inertia)
             : mHandler(nullptr)
@@ -177,7 +186,12 @@ namespace
 
 mono::IBodyPtr mono::PhysicsFactory::CreateStaticBody()
 {
-    return std::make_shared<CMBody>();
+    return std::make_shared<CMBody>(BodyType::STATIC);
+}
+
+mono::IBodyPtr mono::PhysicsFactory::CreateKinematicBody()
+{
+    return std::make_shared<CMBody>(BodyType::KINEMATIC);
 }
 
 mono::IBodyPtr mono::PhysicsFactory::CreateBody(float mass, float inertia)

@@ -1,17 +1,8 @@
-//
-//  ShockwaveEvent.h
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 16/11/14.
-//
-//
 
 #pragma once
 
 #include "MonoFwd.h"
 #include "Math/Vector.h"
-
-#include <functional>
 
 namespace game
 {
@@ -25,6 +16,4 @@ namespace game
         const math::Vector position;
         const float magnitude;
     };
-
-    using ShockwaveEventFunc = std::function<bool (const game::ShockwaveEvent&)>;
 }

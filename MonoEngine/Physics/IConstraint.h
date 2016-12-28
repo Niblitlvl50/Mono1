@@ -18,6 +18,9 @@ namespace mono
         virtual void SetMaxBias(float bias) = 0;
         virtual float GetMaxBias() const = 0;
 
+        virtual void SetErrorBias(float bias) = 0;
+        virtual float GetErrorBias() const = 0;
+
         virtual cpConstraint* Handle() = 0;
     };
 }

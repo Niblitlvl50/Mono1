@@ -15,5 +15,8 @@ namespace mono
 
         virtual void AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer) = 0;
         virtual void RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity) = 0;
+
+        virtual void AddConstraint(const mono::IConstraintPtr& constraint) = 0;
+        virtual void RemoveConstraint(const mono::IConstraintPtr& constraint) = 0;
     };
 }
