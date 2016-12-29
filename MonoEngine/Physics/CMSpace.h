@@ -1,18 +1,9 @@
-//
-//  CMSpace.h
-//  Mono1
-//
-//  Created by Niblit on 2012-08-23.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
-
 
 #pragma once
 
 #include "CMFwd.h"
 #include "Math/MathFwd.h"
 #include <vector>
-#include <functional>
 
 struct cpSpace;
 struct cpArbiter;
@@ -49,7 +40,6 @@ namespace mono
         BodyFunc mForEachFunc;
         
         cpSpace* mSpace;
-        std::vector<IBodyPtr> mBodies;        
+        std::vector<IBodyPtr> mBodies;
     };
-    
 }

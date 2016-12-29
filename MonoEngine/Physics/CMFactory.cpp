@@ -1,10 +1,3 @@
-//
-//  CMShapeFactory.cpp
-//  Mono1
-//
-//  Created by Niblit on 2012-08-23.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #include "CMFactory.h"
 #include "IBody.h"
@@ -16,27 +9,12 @@
 
 namespace
 {
-    enum class BodyType
-    {
-        STATIC,
-        KINEMATIC
-    };
-
     struct CMBody : mono::IBody
     {
-        CMBody(BodyType type)
-            : mHandler(nullptr)
-        {
-            if(type == BodyType::STATIC)
-                mBody = cpBodyNewStatic();
-            else if(type == BodyType::KINEMATIC)
-                mBody = cpBodyNewKinematic();
-        }
-        CMBody(float mass, float inertia)
-            : mHandler(nullptr)
-        {
-            mBody = cpBodyNew(mass, inertia);
-        }
+        CMBody(cpBody* body)
+            : mBody(body),
+              mHandler(nullptr)
+        { }
         ~CMBody()
         {
             cpBodyFree(mBody);
@@ -121,28 +99,28 @@ namespace
             return mBody;
         }
         
-        mono::ICollisionHandler* mHandler;
         cpBody* mBody;
+        mono::ICollisionHandler* mHandler;
     };
     
     struct CMShape : mono::IShape
     {
-        CMShape(mono::IBodyPtr body, float radius, const math::Vector& offset)
+        CMShape(mono::IBodyPtr& body, float radius, const math::Vector& offset)
         {
             mShape = cpCircleShapeNew(body->Handle(), radius, cpv(offset.x, offset.y));
             mInertiaValue = cpMomentForCircle(body->GetMass(), 0.0f, radius, cpv(offset.x, offset.y));
         }
-        CMShape(mono::IBodyPtr body, float width, float height)
+        CMShape(mono::IBodyPtr& body, float width, float height)
         {
             mShape = cpBoxShapeNew(body->Handle(), width, height, 1.0f);
             mInertiaValue = cpMomentForBox(body->GetMass(), width, height);
         }
-        CMShape(mono::IBodyPtr body, const math::Vector& first, const math::Vector& second, float radius)
+        CMShape(mono::IBodyPtr& body, const math::Vector& first, const math::Vector& second, float radius)
         {
             mShape = cpSegmentShapeNew(body->Handle(), cpv(first.x, first.y), cpv(second.x, second.y), radius);
             mInertiaValue = cpMomentForSegment(body->GetMass(), cpv(first.x, first.y), cpv(second.x, second.y), radius);
         }
-        CMShape(mono::IBodyPtr body, const std::vector<math::Vector>& vertices, const math::Vector& offset)
+        CMShape(mono::IBodyPtr& body, const std::vector<math::Vector>& vertices, const math::Vector& offset)
         {
             const auto transformFunc = [](const math::Vector& position) {
                 return cpv(position.x, position.y);
@@ -174,6 +152,10 @@ namespace
         {
             return mInertiaValue;
         }
+        void SetCollisionType(unsigned int type)
+        {
+            cpShapeSetCollisionType(mShape, type);
+        }
         cpShape* Handle()
         {
             return mShape;
@@ -186,35 +168,35 @@ namespace
 
 mono::IBodyPtr mono::PhysicsFactory::CreateStaticBody()
 {
-    return std::make_shared<CMBody>(BodyType::STATIC);
+    return std::make_shared<CMBody>(cpBodyNewStatic());
 }
 
 mono::IBodyPtr mono::PhysicsFactory::CreateKinematicBody()
 {
-    return std::make_shared<CMBody>(BodyType::KINEMATIC);
+    return std::make_shared<CMBody>(cpBodyNewKinematic());
 }
 
 mono::IBodyPtr mono::PhysicsFactory::CreateBody(float mass, float inertia)
 {
-    return std::make_shared<CMBody>(mass, inertia);
+    return std::make_shared<CMBody>(cpBodyNew(mass, inertia));
 }
 
-mono::IShapePtr mono::PhysicsFactory::CreateShape(mono::IBodyPtr body, float radius, const math::Vector& offset)
+mono::IShapePtr mono::PhysicsFactory::CreateShape(mono::IBodyPtr& body, float radius, const math::Vector& offset)
 {
     return std::make_shared<CMShape>(body, radius, offset);
 }
 
-mono::IShapePtr mono::PhysicsFactory::CreateShape(mono::IBodyPtr body, float width, float height)
+mono::IShapePtr mono::PhysicsFactory::CreateShape(mono::IBodyPtr& body, float width, float height)
 {
     return std::make_shared<CMShape>(body, width, height);
 }
 
-mono::IShapePtr mono::PhysicsFactory::CreateShape(mono::IBodyPtr body, const math::Vector& first, const math::Vector& second, float radius)
+mono::IShapePtr mono::PhysicsFactory::CreateShape(mono::IBodyPtr& body, const math::Vector& first, const math::Vector& second, float radius)
 {
     return std::make_shared<CMShape>(body, first, second, radius);
 }
 
-mono::IShapePtr mono::PhysicsFactory::CreateShape(mono::IBodyPtr body, const std::vector<math::Vector>& vertices, const math::Vector& offset)
+mono::IShapePtr mono::PhysicsFactory::CreateShape(mono::IBodyPtr& body, const std::vector<math::Vector>& vertices, const math::Vector& offset)
 {
     return std::make_shared<CMShape>(body, vertices, offset);
 }

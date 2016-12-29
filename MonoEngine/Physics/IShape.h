@@ -1,10 +1,3 @@
-//
-//  CMIShape.h
-//  Mono1
-//
-//  Created by Niblit on 2012-08-24.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #pragma once
 
@@ -16,7 +9,7 @@ namespace mono
     {
         virtual ~IShape()
         { }
-        
+
         //! How bouncy this shape is.
         //! 0.0 means no bounce, 1.0 means perfect bounce
         virtual void SetElasticity(float value) = 0;
@@ -27,7 +20,8 @@ namespace mono
         //! Get the calculated inertia value for this shape
         virtual float GetInertiaValue() const = 0;
 
+        virtual void SetCollisionType(unsigned int type) = 0;
+
         virtual cpShape* Handle() = 0;
     };
 }
-

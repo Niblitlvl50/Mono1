@@ -1,10 +1,3 @@
-//
-//  CMIBody.h
-//  Mono1
-//
-//  Created by Niblit on 2012-08-24.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #pragma once
 
@@ -21,7 +14,7 @@ namespace mono
         virtual void OnCollideWith(const mono::IBodyPtr& body) = 0;
         virtual void OnPostStep() = 0;
     };
-        
+
     struct IBody
     {
         virtual ~IBody()
@@ -106,4 +99,3 @@ namespace mono
         virtual cpBody* Handle() = 0;
     };
 }
-

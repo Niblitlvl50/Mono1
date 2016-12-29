@@ -1,10 +1,3 @@
-//
-//  CMSpace.cpp
-//  Mono1
-//
-//  Created by Niblit on 2012-08-23.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #include "CMSpace.h"
 #include "CMFactory.h"
@@ -15,11 +8,9 @@
 #include "Utils.h"
 
 #include "chipmunk/chipmunk.h"
-
 #include <stdexcept>
 
 using namespace mono;
-
 
 Space::Space(const math::Vector& gravity, float damping)
 {
