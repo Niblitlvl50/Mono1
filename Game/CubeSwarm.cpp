@@ -40,8 +40,8 @@ void CubeSwarm::Update(unsigned int delta)
 
     for(Cube& cube : mCubes)
     {
-        const float add_x = mono::Random() * 2.0 - 1.0;
-        const float add_y = mono::Random() * 2.0 - 1.0;
+        const float add_x = mono::Random(-1.0f, 1.0f);
+        const float add_y = mono::Random(-1.0f, 1.0f);
         const math::Vector add(add_x, add_y);
 
         cube.quad.mA += add;
@@ -62,9 +62,9 @@ math::Quad CubeSwarm::BoundingBox() const
 
 CubeSwarm::Cube CubeSwarm::GenerateCube()
 {
-    const float random_x = mono::Random() * 100 - 50;
-    const float random_y = mono::Random() * 100 - 50;
-    const float random_size = mono::Random() * 10;
+    const float random_x = mono::Random(-50.0f, 50.0f);
+    const float random_y = mono::Random(-50.0f, 50.0f);
+    const float random_size = mono::Random(0.0f, 10.0f);
 
     const mono::Color::HSL color(mono::Random(), 0.7f, 0.5f);
 

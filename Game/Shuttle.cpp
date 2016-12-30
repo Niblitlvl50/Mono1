@@ -112,7 +112,7 @@ void Shuttle::Update(unsigned int delta)
 
     if(m_fire)
     {
-        const float x_shift = mono::Random() * 12.0f - 6.0f;
+        const float x_shift = mono::Random(-6.0f, 6.0f);
         m_weapon->Fire(mPosition + math::Vector(x_shift, 0.0f), mRotation);
     }
 

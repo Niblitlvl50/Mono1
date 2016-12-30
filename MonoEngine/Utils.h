@@ -38,6 +38,6 @@ namespace mono
         unsigned int mFps;
     };
 
-    //! Generates a random float between 0.0 and 1.0
-    float Random();
+    //! Generates a random float between min and max
+    float Random(float min = 0.0f, float max = 1.0f);
 }

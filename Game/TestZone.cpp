@@ -177,7 +177,7 @@ bool TestZone::OnDamageEvent(const game::DamageEvent& event)
         game::ExplosionConfiguration config;
         config.position = entity->Position();
         config.scale = 20.0f;
-        config.rotation = mono::Random() * math::PI() * 2.0f;
+        config.rotation = mono::Random(0.0f, math::PI() * 2.0f);
         config.sprite_file = "sprites/explosion.sprite";
 
         AddEntity(std::make_shared<Explosion>(config, mEventHandler), FOREGROUND);
