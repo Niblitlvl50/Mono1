@@ -1,10 +1,3 @@
-//
-//  WeaponTypes.h
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 19/07/15.
-//
-//
 
 #pragma once
 
@@ -15,5 +8,11 @@ namespace game
         STANDARD,
         ROCKET,
         CACOPLASMA
+    };
+
+    enum class WeaponFaction
+    {
+        PLAYER,
+        ENEMY
     };
 }

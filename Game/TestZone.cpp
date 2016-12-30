@@ -146,6 +146,8 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
 
     const mono::IPathPtr& path = mono::CreatePath("paths/center_loop.path");
     AddPhysicsEntity(game::CreatePathInvader(path, mEventHandler), MIDDLEGROUND);
+    AddPhysicsEntity(game::CreatePathInvader(path, mEventHandler), MIDDLEGROUND);
+    AddPhysicsEntity(game::CreatePathInvader(path, mEventHandler), MIDDLEGROUND);
 
     AddEntity(std::make_shared<InvaderGroup>(math::Vector(300.0f, 800.0f)), BACKGROUND);
     AddEntity(std::make_shared<DotEntity>(), FOREGROUND);

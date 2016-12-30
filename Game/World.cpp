@@ -1,12 +1,6 @@
-//
-//  World.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 26/07/16.
-//
-//
 
 #include "World.h"
+#include "CollisionConfiguration.h"
 #include "PhysicsEntityBase.h"
 
 #include "Physics/IBody.h"
@@ -33,16 +27,21 @@ namespace
         {
             m_texture = mono::CreateTexture(polygon.texture);
 
-            mPhysicsObject.body = mono::PhysicsFactory::CreateStaticBody();
-            mPhysicsObject.shapes.push_back(mono::PhysicsFactory::CreateShape(mPhysicsObject.body, polygon.vertices, math::zeroVec));
+            mono::IBodyPtr body = mono::PhysicsFactory::CreateStaticBody();
+
+            mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(body, m_vertices, math::zeroVec);
+            shape->SetCollisionFilter(game::CollisionCategory::STATIC, game::STATIC_MASK);
+
+            mPhysicsObject.body = body;
+            mPhysicsObject.shapes.push_back(shape);
 
             m_boundingBox = math::Quad(math::INF, math::INF, -math::INF, -math::INF);
 
-            for(const math::Vector& vertex : polygon.vertices)
+            for(const math::Vector& vertex : m_vertices)
                 m_boundingBox |= vertex;
 
-            for(const math::Vector& point : m_vertices)
-                m_texture_coordinates.push_back(math::MapVectorInQuad(point, m_boundingBox) * polygon.texture_repeate);
+            for(const math::Vector& vertex : m_vertices)
+                m_texture_coordinates.push_back(math::MapVectorInQuad(vertex, m_boundingBox) * polygon.texture_repeate);
 
             for(size_t index = 0; index < m_vertices.size(); ++index)
                 m_indices.push_back(index);

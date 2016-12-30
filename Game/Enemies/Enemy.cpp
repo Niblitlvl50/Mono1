@@ -1,5 +1,6 @@
 
 #include "Enemy.h"
+#include "CollisionConfiguration.h"
 
 #include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"
@@ -17,13 +18,16 @@ Enemy::Enemy(EnemySetup& setup)
     mPosition = setup.position;
     mScale = math::Vector(setup.size, setup.size);
 
-    mPhysicsObject.body = mono::PhysicsFactory::CreateBody(setup.mass, 1.0f);
-    mPhysicsObject.shapes.push_back(mono::PhysicsFactory::CreateShape(mPhysicsObject.body, setup.size / 2.0f, math::zeroVec));
-
-    mPhysicsObject.body->SetPosition(mPosition);
+    mono::IBodyPtr body = mono::PhysicsFactory::CreateBody(setup.mass, 1.0f);
+    body->SetPosition(mPosition);
+    
+    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(body, setup.size / 2.0f, math::zeroVec);
+    shape->SetCollisionFilter(CollisionCategory::ENEMY, ENEMY_MASK);
+    
+    mPhysicsObject.body = body;
+    mPhysicsObject.shapes.push_back(shape);
 
     m_sprite = mono::CreateSprite(setup.sprite_file);
-
     m_controller = std::move(setup.controller);
     m_controller->Initialize(this);
 }

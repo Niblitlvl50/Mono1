@@ -1,5 +1,6 @@
 
 #include "Bullet.h"
+#include "CollisionConfiguration.h"
 
 #include "Physics/IBody.h"
 #include "Physics/IShape.h"
@@ -27,6 +28,8 @@ Bullet::Bullet(const BulletConfiguration& config)
         config.collision_radius * config.scale,
         math::Vector(0.0f, 0.0f)
     );
+
+    shape->SetCollisionFilter(config.collision_category, config.collision_mask);
 
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());
     mPhysicsObject.shapes.push_back(shape);

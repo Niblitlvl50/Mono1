@@ -59,12 +59,19 @@ namespace
     }
 }
 
-std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(game::WeaponType weapon, mono::EventHandler& eventHandler)
+std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(
+    game::WeaponType weapon,
+    game::WeaponFaction faction,
+    mono::EventHandler& eventHandler)
 {
     using namespace std::placeholders;
 
     WeaponConfiguration weapon_config;
     BulletConfiguration& bullet_config = weapon_config.bullet_config;
+
+    const bool enemy_weapon = (faction == WeaponFaction::ENEMY);
+    bullet_config.collision_category = enemy_weapon ? CollisionCategory::ENEMY_BULLET : CollisionCategory::PLAYER_BULLET;
+    bullet_config.collision_mask = enemy_weapon ? ENEMY_BULLET_MASK : PLAYER_BULLET_MASK;
 
     switch(weapon)
     {

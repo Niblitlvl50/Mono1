@@ -1,9 +1,11 @@
 
 #pragma once
 
+#include "System/SysTypes.h"
 #include "MonoFwd.h"
 #include "MonoPtrFwd.h"
 #include "Physics/CMFwd.h"
+#include "CollisionConfiguration.h"
 
 #include <functional>
 
@@ -17,6 +19,8 @@ namespace game
         float fuzzy_life_span = 0.0f;
         float collision_radius = 1.0f;
         float scale = 1.0f;
+        CollisionCategory collision_category = CollisionCategory::NONE;
+        uint collision_mask = 0;
         BulletImpactCallback collision_callback;
 
         const char* sprite_file = nullptr;

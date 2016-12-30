@@ -20,7 +20,7 @@ namespace
 
 CacoDemonController::CacoDemonController(mono::EventHandler& event_handler)
 {
-    m_weapon = Factory::CreateWeapon(game::WeaponType::CACOPLASMA, event_handler);
+    m_weapon = Factory::CreateWeapon(WeaponType::CACOPLASMA, WeaponFaction::ENEMY, event_handler);
 }
 
 void CacoDemonController::Initialize(Enemy* enemy)

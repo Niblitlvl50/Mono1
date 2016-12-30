@@ -20,7 +20,7 @@ namespace mono
         //! Get the calculated inertia value for this shape
         virtual float GetInertiaValue() const = 0;
 
-        virtual void SetCollisionType(unsigned int type) = 0;
+        virtual void SetCollisionFilter(unsigned int category, unsigned int mask) = 0;
 
         virtual cpShape* Handle() = 0;
     };

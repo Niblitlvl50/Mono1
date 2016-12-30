@@ -1,10 +1,3 @@
-//
-//  Shuttle.cpp
-//  Mono1
-//
-//  Created by Niblit on 2012-08-25.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #include "Shuttle.h"
 #include "Physics/IBody.h"
@@ -14,6 +7,7 @@
 
 #include "AIKnowledge.h"
 #include "EntityProperties.h"
+#include "CollisionConfiguration.h"
 
 #include "IRenderer.h"
 #include "EntityBase.h"
@@ -81,6 +75,7 @@ Shuttle::Shuttle(const math::Vector& position, mono::EventHandler& eventHandler)
 
     mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, mScale.x, mScale.y);
     shape->SetElasticity(0.1f);
+    shape->SetCollisionFilter(CollisionCategory::PLAYER, PLAYER_MASK);
     
     mPhysicsObject.shapes.push_back(shape);
 
@@ -132,7 +127,7 @@ void Shuttle::OnPostStep()
 
 void Shuttle::SelectWeapon(WeaponType weapon)
 {
-    m_weapon = Factory::CreateWeapon(weapon, m_event_handler);
+    m_weapon = Factory::CreateWeapon(weapon, WeaponFaction::PLAYER, m_event_handler);
 }
 
 void Shuttle::ApplyRotationForce(float force)

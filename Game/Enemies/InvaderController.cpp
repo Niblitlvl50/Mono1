@@ -90,7 +90,7 @@ void InvaderPathController::Initialize(Enemy* enemy)
     m_enemy = enemy;
     m_enemy->SetProperty(EntityProperties::DAMAGABLE);
 
-    m_weapon = game::Factory::CreateWeapon(WeaponType::STANDARD, m_eventHandler);
+    m_weapon = game::Factory::CreateWeapon(WeaponType::STANDARD, WeaponFaction::ENEMY, m_eventHandler);
 
     m_controlBody = mono::PhysicsFactory::CreateKinematicBody();
     m_spring = mono::ConstraintsFactory::CreateSpring(m_controlBody, m_enemy->GetPhysics().body, 1.0f, 20.0f, 0.5f);
@@ -127,10 +127,10 @@ void InvaderPathController::doUpdate(unsigned int delta)
     if(distance < 200.0f)
     {
         const float angle = math::AngleBetweenPoints(player_position, enemy_position) + math::PI_2();
-        const math::Vector unit(-std::sin(angle), std::cos(angle));
-        const math::Vector& offset = unit * 10.0f;
+        //const math::Vector unit(-std::sin(angle), std::cos(angle));
+        //const math::Vector& offset = unit * 10.0f;
 
-        m_fireCount += m_weapon->Fire(enemy_position + offset, angle);
+        m_fireCount += m_weapon->Fire(enemy_position, angle);
     }
 
     if(m_fireCount == 5)

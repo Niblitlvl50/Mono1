@@ -152,9 +152,12 @@ namespace
         {
             return mInertiaValue;
         }
-        void SetCollisionType(unsigned int type)
+        void SetCollisionFilter(unsigned int category, unsigned int mask)
         {
-            cpShapeSetCollisionType(mShape, type);
+            cpShapeFilter filter = cpShapeGetFilter(mShape);
+            filter.categories = category;
+            filter.mask = mask;
+            cpShapeSetFilter(mShape, filter);
         }
         cpShape* Handle()
         {

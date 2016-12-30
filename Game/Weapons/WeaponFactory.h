@@ -20,6 +20,6 @@ namespace game
 
     namespace Factory
     {
-        std::unique_ptr<IWeaponSystem> CreateWeapon(WeaponType weapon, mono::EventHandler& eventHandler);
+        std::unique_ptr<IWeaponSystem> CreateWeapon(WeaponType weapon, WeaponFaction faction, mono::EventHandler& eventHandler);
     }
 }
