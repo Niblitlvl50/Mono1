@@ -113,7 +113,7 @@ void Shuttle::Update(unsigned int delta)
     if(m_fire)
     {
         const float x_shift = mono::Random() * 12.0f - 6.0f;
-        m_weapon->Fire(mPosition + math::Vector(x_shift, 15.0f), mRotation);
+        m_weapon->Fire(mPosition + math::Vector(x_shift, 0.0f), mRotation);
     }
 
     game::player_position = mPosition;
