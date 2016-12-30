@@ -1,10 +1,3 @@
-//
-//  Spawner.hpp
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 03/10/15.
-//
-//
 
 #pragma once
 

@@ -1,10 +1,3 @@
-//
-//  TestZone.cpp
-//  Mono1
-//
-//  Created by Niblit on 2012-04-06.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #include "TestZone.h"
 #include "ICamera.h"
@@ -13,12 +6,8 @@
 #include "Enemies/Enemy.h"
 #include "Enemies/EnemyFactory.h"
 
-#include "InvaderGroup.h"
-#include "DotEntity.h"
 #include "Shuttle.h"
-#include "Meteor.h"
 #include "Explosion.h"
-#include "PathPoint.h"
 #include "CubeSwarm.h"
 
 #include "EventHandler/EventHandler.h"
@@ -44,52 +33,15 @@
 #include "UpdateTasks/HealthbarUpdater.h"
 #include "UpdateTasks/CameraViewportReporter.h"
 
-#include <thread>
-
 using namespace game;
-using namespace std::placeholders;
-
-namespace
-{
-    void ApplyShockwave(const mono::IBodyPtr& body, const math::Vector& position, float magnitude)
-    {
-        math::Vector unit = body->GetPosition() - position;
-        const float length = math::Length(unit);
-        if(length > 50)
-            return;
-
-        math::Normalize(unit);
-        
-        const math::Vector& impulse = unit * magnitude;
-        body->ApplyImpulse(impulse, body->GetPosition());
-    }
-
-    void AddMeteorCluster(mono::IPhysicsZone* zone)
-    {
-        const float x = -400.0f;
-        const float y = 400.0f;
-
-        for(int index = 0; index < 10; ++index)
-        {
-            const float radius = mono::Random() * 50.0f + 80.0f;
-
-            const float sinex = std::sin(mono::Random() * math::PI() * 2.0f);
-            const float cosiney = std::cos(mono::Random() * math::PI() * 2.0f);
-
-            const float posx = sinex * radius + x;
-            const float posy = cosiney * radius + y;
-
-            auto entity = std::make_shared<Meteor>(posx, posy);
-            zone->AddPhysicsEntity(entity, FOREGROUND);
-        }
-    }
-}
 
 TestZone::TestZone(mono::EventHandler& eventHandler)
     : PhysicsZone(math::Vector(0.0f, 0.0f), 0.9f),
       mEventHandler(eventHandler),
       m_spawner(eventHandler)
 {
+    using namespace std::placeholders;
+    
     const game::SpawnEntityFunc& spawnEntityFunc = std::bind(&TestZone::SpawnEntity, this, _1);
     const game::SpawnPhysicsEntityFunc& spawnPhysicsFunc = std::bind(&TestZone::SpawnPhysicsEntity, this, _1);
     const game::RemoveEntityFunc& removeFunc = std::bind(&TestZone::OnRemoveEntity, this, _1);
@@ -149,12 +101,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(game::CreatePathInvader(path, mEventHandler), MIDDLEGROUND);
     AddPhysicsEntity(game::CreatePathInvader(path, mEventHandler), MIDDLEGROUND);
 
-    AddEntity(std::make_shared<InvaderGroup>(math::Vector(300.0f, 800.0f)), BACKGROUND);
-    AddEntity(std::make_shared<DotEntity>(), FOREGROUND);
-    AddEntity(std::make_shared<PathPoint>(), BACKGROUND);
     AddEntity(std::make_shared<game::CubeSwarm>(), FOREGROUND);
-
-    AddMeteorCluster(this);
 
     camera->SetPosition(shuttle->Position());
     camera->Follow(shuttle, math::Vector(0, -100));
@@ -195,8 +142,19 @@ bool TestZone::OnRemoveEntity(const game::RemoveEntityEvent& event)
 
 bool TestZone::OnShockwaveEvent(const game::ShockwaveEvent& event)
 {
-    const auto func = std::bind(ApplyShockwave, _1, event.position, event.magnitude);
-    this->ForEachBody(func);
+    const auto shockwave_func = [&event](const mono::IBodyPtr& body) {
+        math::Vector unit = body->GetPosition() - event.position;
+        const float length = math::Length(unit);
+        if(length > 50)
+            return;
+
+        math::Normalize(unit);
+        
+        const math::Vector& impulse = unit * event.magnitude;
+        body->ApplyImpulse(impulse, body->GetPosition());
+    };
+
+    PhysicsZone::ForEachBody(shockwave_func);
 
     return true;
 }

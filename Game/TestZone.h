@@ -1,11 +1,3 @@
-//
-//  TestZone.h
-//  Mono1
-//
-//  Created by Niblit on 2012-04-06.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
-
 
 #pragma once
 
@@ -72,4 +64,3 @@ namespace game
         std::vector<Healthbar> m_healthbars;
     };
 }
-
