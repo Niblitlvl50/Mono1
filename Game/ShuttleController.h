@@ -1,10 +1,3 @@
-//
-//  ShuttleController.h
-//  Mono1
-//
-//  Created by Niblit on 2012-10-07.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
 
 #pragma once
 
