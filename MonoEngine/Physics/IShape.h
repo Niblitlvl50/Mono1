@@ -20,8 +20,11 @@ namespace mono
         //! Get the calculated inertia value for this shape
         virtual float GetInertiaValue() const = 0;
 
+        //! Category that the shape belongs to, and a bitmask with which other
+        //! categories the shape should collide with
         virtual void SetCollisionFilter(unsigned int category, unsigned int mask) = 0;
 
+        //! Native chipmunk handle
         virtual cpShape* Handle() = 0;
     };
 }
