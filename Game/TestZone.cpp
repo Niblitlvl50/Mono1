@@ -58,7 +58,7 @@ TestZone::TestZone(mono::EventHandler& eventHandler)
     m_spawnConstraintToken = mEventHandler.AddListener(constraintFunc);
     m_despawnConstraintToken = mEventHandler.AddListener(despawnConstraintFunc);
 
-    m_backgroundMusic = mono::AudioFactory::CreateSound("sound/InGame_Phoenix.wav", true, true);
+    m_backgroundMusic = mono::AudioFactory::CreateSound("sound/ingame_phoenix.wav", true, true);
 }
 
 TestZone::~TestZone()
