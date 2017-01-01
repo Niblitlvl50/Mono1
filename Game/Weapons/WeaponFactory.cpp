@@ -93,6 +93,7 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(
 
             break;
         }
+
         case game::WeaponType::ROCKET:
         {
             bullet_config.life_span = 0.6f;
@@ -107,6 +108,7 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(
 
             break;
         }
+
         case game::WeaponType::CACOPLASMA:
         {
             bullet_config.life_span = 1.0f;
@@ -118,6 +120,23 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(
 
             weapon_config.rounds_per_second = 2.0f;
             weapon_config.bullet_force = 400.0f;
+
+            break;
+        }
+
+        case game::WeaponType::GENERIC:
+        {
+            bullet_config.life_span = math::INF;
+            bullet_config.fuzzy_life_span = 0;
+            bullet_config.scale = 0.3;
+            bullet_config.collision_radius = 2.0f;
+            bullet_config.collision_callback = std::bind(StandardCollision, _1, _2, std::ref(eventHandler));
+            bullet_config.shade = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
+            bullet_config.sprite_file = "sprites/generic_bullet.sprite";
+            bullet_config.sound_file = nullptr;
+
+            weapon_config.rounds_per_second = 4.0f;
+            weapon_config.bullet_force = 150.0f;
 
             break;
         }

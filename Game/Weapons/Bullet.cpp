@@ -35,6 +35,7 @@ Bullet::Bullet(const BulletConfiguration& config)
     mPhysicsObject.shapes.push_back(shape);
 
     m_sprite = mono::CreateSprite(config.sprite_file);
+    m_sprite->SetShade(config.shade);
 
     if(config.sound_file)
     {

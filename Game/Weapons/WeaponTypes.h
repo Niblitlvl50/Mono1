@@ -7,7 +7,8 @@ namespace game
     {
         STANDARD,
         ROCKET,
-        CACOPLASMA
+        CACOPLASMA,
+        GENERIC
     };
 
     enum class WeaponFaction

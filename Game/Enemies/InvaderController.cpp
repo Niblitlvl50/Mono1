@@ -90,7 +90,7 @@ void InvaderPathController::Initialize(Enemy* enemy)
     m_enemy = enemy;
     m_enemy->SetProperty(EntityProperties::DAMAGABLE);
 
-    m_weapon = game::Factory::CreateWeapon(WeaponType::STANDARD, WeaponFaction::ENEMY, m_eventHandler);
+    m_weapon = game::Factory::CreateWeapon(WeaponType::GENERIC, WeaponFaction::ENEMY, m_eventHandler);
 
     m_controlBody = mono::PhysicsFactory::CreateKinematicBody();
     m_spring = mono::ConstraintsFactory::CreateSpring(m_controlBody, m_enemy->GetPhysics().body, 1.0f, 20.0f, 0.5f);

@@ -5,6 +5,7 @@
 #include "MonoFwd.h"
 #include "MonoPtrFwd.h"
 #include "Physics/CMFwd.h"
+#include "Color.h"
 #include "CollisionConfiguration.h"
 
 #include <functional>
@@ -22,6 +23,8 @@ namespace game
         CollisionCategory collision_category = CollisionCategory::NONE;
         uint collision_mask = 0;
         BulletImpactCallback collision_callback;
+
+        mono::Color::RGBA shade;
 
         const char* sprite_file = nullptr;
         const char* sound_file = nullptr;
