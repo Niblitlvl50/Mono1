@@ -127,9 +127,6 @@ void InvaderPathController::doUpdate(unsigned int delta)
     if(distance < 200.0f)
     {
         const float angle = math::AngleBetweenPoints(player_position, enemy_position) + math::PI_2();
-        //const math::Vector unit(-std::sin(angle), std::cos(angle));
-        //const math::Vector& offset = unit * 10.0f;
-
         m_fireCount += m_weapon->Fire(enemy_position, angle);
     }
 
