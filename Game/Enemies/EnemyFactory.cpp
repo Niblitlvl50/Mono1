@@ -57,7 +57,7 @@ game::EnemyPtr EnemyFactory::CreatePathInvader(const mono::IPathPtr& path)
     setup.sprite_file = "sprites/invader.sprite";
     setup.size = 20.0f;
     setup.mass = 50.0f;
-    setup.position = path->GetGlobalPosition();
+    setup.position = path->GetGlobalPosition() + path->GetPositionByLength(0.0f);
     setup.controller = std::make_unique<InvaderPathController>(path, m_eventHandler);
 
     return std::make_shared<game::Enemy>(setup);
