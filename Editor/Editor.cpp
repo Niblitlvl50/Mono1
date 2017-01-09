@@ -60,6 +60,7 @@ namespace
     };
 
     const char* avalible_textures[] = {
+        "textures/placeholder.png",
         "textures/stone_tileable.png",
         "textures/gray_stone.png",
         "textures/dark_stone.png",
@@ -68,7 +69,7 @@ namespace
         "textures/lava2.png"
         };
 
-    constexpr int n_textures = 6;
+    constexpr int n_textures = 7;
 
     int FindTextureIndex(const char* texture)
     {
