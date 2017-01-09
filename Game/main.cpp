@@ -14,7 +14,6 @@
 #include "Factories.h"
 #include "Weapons/WeaponFactory.h"
 #include "Enemies/EnemyFactory.h"
-#include "GameContext.h"
 #include "FontIds.h"
 
 int main(int argc, char* argv[])
@@ -26,7 +25,6 @@ int main(int argc, char* argv[])
 
     game::weapon_factory = new game::WeaponFactory(eventHandler);
     game::enemy_factory = new game::EnemyFactory(eventHandler);
-    game::context.event_handler = &eventHandler;
 
     //constexpr math::Vector iPhone6SSize(750.0f, 1334.0f);
     //const math::Vector& nativeSize = Video::GetCurrentWindowSize();
