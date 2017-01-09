@@ -1,11 +1,3 @@
-//
-//  Explosion.h
-//  Mono1
-//
-//  Created by Niblit on 2012-04-21.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
-
 
 #pragma once
 
@@ -18,7 +10,7 @@ namespace game
         math::Vector position;
         float scale = 20.0f;
         float rotation = 0.0f;
-        const char* sprite_file;
+        const char* sprite_file = nullptr;
     };
 
     class Explosion : public mono::EntityBase
