@@ -1,9 +1,7 @@
 
-
 #include "System/SysLibs.h"
 #include "System/SysVideo.h"
 #include "System/WindowFactory.h"
-#include "TestZone.h"
 #include "Camera/TraceCamera.h"
 #include "Engine.h"
 #include "Text/TextFunctions.h"
@@ -11,6 +9,7 @@
 #include "EventHandler/EventHandler.h"
 #include "IWindow.h"
 
+#include "TestZone.h"
 #include "Factories.h"
 #include "Weapons/WeaponFactory.h"
 #include "Enemies/EnemyFactory.h"
