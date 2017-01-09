@@ -13,8 +13,10 @@
 #include "EntityBase.h"
 #include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"
+
+#include "Factories.h"
 #include "Weapons/IWeaponSystem.h"
-#include "Weapons/WeaponFactory.h"
+#include "Weapons/IWeaponFactory.h"
 
 #include "Math/MathFunctions.h"
 #include "Math/Matrix.h"
@@ -127,7 +129,7 @@ void Shuttle::OnPostStep()
 
 void Shuttle::SelectWeapon(WeaponType weapon)
 {
-    m_weapon = Factory::CreateWeapon(weapon, WeaponFaction::PLAYER, m_event_handler);
+    m_weapon = weapon_factory->CreateWeapon(weapon, WeaponFaction::PLAYER);
 }
 
 void Shuttle::ApplyRotationForce(float force)

@@ -2,9 +2,9 @@
 #include "InvaderController.h"
 #include "EntityProperties.h"
 #include "AIKnowledge.h"
+#include "Factories.h"
 #include "Weapons/IWeaponSystem.h"
-#include "Weapons/WeaponFactory.h"
-#include "Weapons/WeaponTypes.h"
+#include "Weapons/IWeaponFactory.h"
 #include "Events/SpawnConstraintEvent.h"
 
 #include "EventHandler/EventHandler.h"
@@ -90,7 +90,7 @@ void InvaderPathController::Initialize(Enemy* enemy)
     m_enemy = enemy;
     m_enemy->SetProperty(EntityProperties::DAMAGABLE);
 
-    m_weapon = game::Factory::CreateWeapon(WeaponType::GENERIC, WeaponFaction::ENEMY, m_eventHandler);
+    m_weapon = weapon_factory->CreateWeapon(WeaponType::GENERIC, WeaponFaction::ENEMY);
 
     m_controlBody = mono::PhysicsFactory::CreateKinematicBody();
     m_spring = mono::ConstraintsFactory::CreateSpring(m_controlBody, m_enemy->GetPhysics().body, 1.0f, 20.0f, 0.5f);

@@ -59,10 +59,13 @@ namespace
     }
 }
 
-std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(
-    game::WeaponType weapon,
-    game::WeaponFaction faction,
-    mono::EventHandler& eventHandler)
+using namespace game;
+
+WeaponFactory::WeaponFactory(mono::EventHandler& eventHandler)
+    : m_eventHandler(eventHandler)
+{ }
+
+std::unique_ptr<game::IWeaponSystem> WeaponFactory::CreateWeapon(WeaponType weapon, WeaponFaction faction)
 {
     using namespace std::placeholders;
 
@@ -81,7 +84,7 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(
             bullet_config.fuzzy_life_span = 0;
             bullet_config.collision_radius = 2.0f;
             bullet_config.scale = 0.5;
-            bullet_config.collision_callback = std::bind(StandardCollision, _1, _2, std::ref(eventHandler));
+            bullet_config.collision_callback = std::bind(StandardCollision, _1, _2, std::ref(m_eventHandler));
             bullet_config.sprite_file = "sprites/firebullet.sprite";
             bullet_config.sound_file = nullptr;
 
@@ -99,7 +102,7 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(
             bullet_config.life_span = 0.6f;
             bullet_config.fuzzy_life_span = 0.3f;
             bullet_config.collision_radius = 2.0f;
-            bullet_config.collision_callback = std::bind(RocketCollision, _1, _2, std::ref(eventHandler));
+            bullet_config.collision_callback = std::bind(RocketCollision, _1, _2, std::ref(m_eventHandler));
             bullet_config.sprite_file = "sprites/laser.sprite";
             bullet_config.sound_file = nullptr;
 
@@ -114,7 +117,7 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(
             bullet_config.life_span = 1.0f;
             bullet_config.fuzzy_life_span = 0.3f;
             bullet_config.collision_radius = 5.0f;
-            bullet_config.collision_callback = std::bind(CacoPlasmaCollision, _1, _2, std::ref(eventHandler));
+            bullet_config.collision_callback = std::bind(CacoPlasmaCollision, _1, _2, std::ref(m_eventHandler));
             bullet_config.sprite_file = "sprites/cacobullet.sprite";
             bullet_config.sound_file = nullptr;
 
@@ -130,7 +133,7 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(
             bullet_config.fuzzy_life_span = 0;
             bullet_config.scale = 0.3;
             bullet_config.collision_radius = 2.0f;
-            bullet_config.collision_callback = std::bind(StandardCollision, _1, _2, std::ref(eventHandler));
+            bullet_config.collision_callback = std::bind(StandardCollision, _1, _2, std::ref(m_eventHandler));
             bullet_config.shade = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
             bullet_config.sprite_file = "sprites/generic_bullet.sprite";
             bullet_config.sound_file = nullptr;
@@ -142,5 +145,5 @@ std::unique_ptr<game::IWeaponSystem> game::Factory::CreateWeapon(
         }
     }
 
-    return std::make_unique<game::Weapon>(weapon_config, eventHandler);
+    return std::make_unique<game::Weapon>(weapon_config, m_eventHandler);
 }

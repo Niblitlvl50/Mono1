@@ -3,8 +3,9 @@
 #include "ICamera.h"
 #include "Audio/AudioFactory.h"
 
+#include "Factories.h"
 #include "Enemies/Enemy.h"
-#include "Enemies/EnemyFactory.h"
+#include "Enemies/IEnemyFactory.h"
 
 #include "Shuttle.h"
 #include "Explosion.h"
@@ -88,18 +89,22 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddDrawable(std::make_shared<HealthbarDrawer>(m_healthbars), FOREGROUND);
     AddPhysicsEntity(shuttle, FOREGROUND);
 
-    AddPhysicsEntity(game::CreateCacoDemon(math::Vector(100, 100), mEventHandler), FOREGROUND);
-    AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
-    AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
-    AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
-    AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
-    AddPhysicsEntity(game::CreateInvader(math::Vector(200.0f, 1000.0f), mEventHandler), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateCacoDemon(math::Vector(100, 100)), FOREGROUND);
+    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(200.0f, 1000.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(200.0f, 1000.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(200.0f, 1000.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(200.0f, 1000.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(200.0f, 1000.0f)), MIDDLEGROUND);
+
+    AddPhysicsEntity(enemy_factory->CreateBlackSquare(math::Vector(-300.0f, 700.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateBlackSquare(math::Vector(-300.0f, 700.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateBlackSquare(math::Vector(-300.0f, 700.0f)), MIDDLEGROUND);
 
 
     const mono::IPathPtr& path = mono::CreatePath("paths/center_loop.path");
-    AddPhysicsEntity(game::CreatePathInvader(path, mEventHandler), MIDDLEGROUND);
-    AddPhysicsEntity(game::CreatePathInvader(path, mEventHandler), MIDDLEGROUND);
-    AddPhysicsEntity(game::CreatePathInvader(path, mEventHandler), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
 
     AddEntity(std::make_shared<game::CubeSwarm>(), FOREGROUND);
 
@@ -177,7 +182,7 @@ bool TestZone::OnDamageEvent(const game::DamageEvent& event)
         game::ExplosionConfiguration config;
         config.position = entity->Position();
         config.scale = 20.0f;
-        config.rotation = mono::Random(0.0f, math::PI() * 2.0f);
+        //config.rotation = mono::Random(0.0f, math::PI() * 2.0f);
         config.sprite_file = "sprites/explosion.sprite";
 
         AddEntity(std::make_shared<Explosion>(config, mEventHandler), FOREGROUND);

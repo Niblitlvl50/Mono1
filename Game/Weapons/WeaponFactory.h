@@ -1,25 +1,18 @@
 
-//
-//  Header.h
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 19/07/15.
-//
-//
-
 #pragma once
 
-#include "Weapons/WeaponTypes.h"
+#include "IWeaponFactory.h"
 #include "MonoFwd.h"
-
-#include <memory>
 
 namespace game
 {
-    class IWeaponSystem;
-
-    namespace Factory
+    class WeaponFactory : public IWeaponFactory
     {
-        std::unique_ptr<IWeaponSystem> CreateWeapon(WeaponType weapon, WeaponFaction faction, mono::EventHandler& eventHandler);
-    }
+    public:
+        WeaponFactory(mono::EventHandler& eventHandler);
+        std::unique_ptr<IWeaponSystem> CreateWeapon(WeaponType weapon, WeaponFaction faction) override;
+
+    private:
+        mono::EventHandler& m_eventHandler;
+    };
 }

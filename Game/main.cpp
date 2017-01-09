@@ -11,6 +11,9 @@
 #include "EventHandler/EventHandler.h"
 #include "IWindow.h"
 
+#include "Factories.h"
+#include "Weapons/WeaponFactory.h"
+#include "Enemies/EnemyFactory.h"
 #include "GameContext.h"
 #include "FontIds.h"
 
@@ -21,6 +24,8 @@ int main(int argc, char* argv[])
     // The "global" event handler used throughout the game
     mono::EventHandler eventHandler;
 
+    game::weapon_factory = new game::WeaponFactory(eventHandler);
+    game::enemy_factory = new game::EnemyFactory(eventHandler);
     game::context.event_handler = &eventHandler;
 
     //constexpr math::Vector iPhone6SSize(750.0f, 1334.0f);
@@ -41,6 +46,9 @@ int main(int argc, char* argv[])
 
     mono::Engine engine(window, camera, eventHandler);
     engine.Run(std::make_shared<game::TestZone>(eventHandler));
+
+    delete game::weapon_factory;
+    delete game::enemy_factory;
 
     System::Exit();
 

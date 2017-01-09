@@ -1,7 +1,8 @@
 
 #include "CacoDemonController.h"
 #include "Weapons/IWeaponSystem.h"
-#include "Weapons/WeaponFactory.h"
+#include "Weapons/IWeaponFactory.h"
+#include "Factories.h"
 #include "Sprite/ISprite.h"
 #include <cmath>
 
@@ -20,7 +21,7 @@ namespace
 
 CacoDemonController::CacoDemonController(mono::EventHandler& event_handler)
 {
-    m_weapon = Factory::CreateWeapon(WeaponType::CACOPLASMA, WeaponFaction::ENEMY, event_handler);
+    m_weapon = weapon_factory->CreateWeapon(WeaponType::CACOPLASMA, WeaponFaction::ENEMY);
 }
 
 void CacoDemonController::Initialize(Enemy* enemy)
