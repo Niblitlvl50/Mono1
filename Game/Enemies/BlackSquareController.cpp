@@ -63,6 +63,8 @@ void BlackSquareController::TransitionToState(State new_state)
     {
         case State::SLEEPING:
             m_enemy->m_sprite->SetShade(mono::Color::RGBA(0.0f, 0.0f, 0.0f, 1.0f));
+            m_enemy->GetPhysics().body->ResetForces();
+            m_controlBody->SetPosition(m_enemy->Position());
             break;
         case State::AWAKE:
             m_enemy->m_sprite->SetShade(mono::Color::RGBA(1.0f, 1.0f, 1.0f, 1.0f));
