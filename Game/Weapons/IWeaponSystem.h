@@ -1,10 +1,3 @@
-//
-//  IWeaponSystem.h
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 19/07/15.
-//
-//
 
 #pragma once
 

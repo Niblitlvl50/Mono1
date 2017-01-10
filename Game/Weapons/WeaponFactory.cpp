@@ -1,10 +1,3 @@
-//
-//  WeaponFactory.cpp
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 19/07/15.
-//
-//
 
 #include "WeaponFactory.h"
 #include "Weapons/Weapon.h"
@@ -80,7 +73,7 @@ std::unique_ptr<game::IWeaponSystem> WeaponFactory::CreateWeapon(WeaponType weap
     {
         case game::WeaponType::STANDARD:
         {
-            bullet_config.life_span = math::INF;
+            bullet_config.life_span = 10.0f;
             bullet_config.fuzzy_life_span = 0;
             bullet_config.collision_radius = 2.0f;
             bullet_config.scale = 0.5;
@@ -129,7 +122,7 @@ std::unique_ptr<game::IWeaponSystem> WeaponFactory::CreateWeapon(WeaponType weap
 
         case game::WeaponType::GENERIC:
         {
-            bullet_config.life_span = math::INF;
+            bullet_config.life_span = 10.0f;
             bullet_config.fuzzy_life_span = 0;
             bullet_config.scale = 0.3;
             bullet_config.collision_radius = 2.0f;
