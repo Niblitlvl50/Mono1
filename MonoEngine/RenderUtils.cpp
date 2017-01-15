@@ -9,6 +9,7 @@
 #include "Shader/IColorShader.h"
 #include "Shader/ITextureShader.h"
 #include "Shader/IMorphingShader.h"
+#include "Shader/IPointSpriteShader.h"
 
 #include <cmath>
 
@@ -193,6 +194,25 @@ void mono::DrawPoints(const std::vector<math::Vector>& vertices,
     glVertexAttribPointer(shader->GetColorAttributeLocation(), 4, GL_FLOAT, GL_FALSE, 0, colors.data());
 
     glDrawArrays(GL_POINTS, 0, static_cast<GLsizei>(vertices.size()));
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+}
+
+void mono::DrawParticlePoints(const std::vector<math::Vector>& points,
+                              const std::vector<mono::Color::RGBA>& colors,
+                              size_t count,
+                              const std::shared_ptr<IPointSpriteShader>& shader)
+{
+    shader->SetPointSize(5.0f);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, points.data());
+    glVertexAttribPointer(shader->GetColorAttributeLocation(), 4, GL_FLOAT, GL_FALSE, 0, colors.data());
+
+    glDrawArrays(GL_POINTS, 0, count);
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);

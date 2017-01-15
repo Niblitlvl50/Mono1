@@ -1,10 +1,3 @@
-//
-//  ShaderFactory.h
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 26/12/14.
-//
-//
 
 #pragma once
 
@@ -19,6 +12,7 @@ namespace mono
         virtual std::shared_ptr<ITextureShader> CreateTextureShader() const;
         virtual std::shared_ptr<IColorShader> CreateColorShader() const;
         virtual std::shared_ptr<IMorphingShader> CreateMorphingShader() const;
+        virtual std::shared_ptr<IPointSpriteShader> CreatePointSpriteShader() const;
     };
 }
 

@@ -3,13 +3,11 @@
 
 #include "MonoFwd.h"
 #include "Math/MathFwd.h"
+#include "Shader/ShaderFwd.h"
 #include <vector>
 
 namespace mono
 {
-    class IColorShader;
-    class ITextureShader;
-    class IMorphingShader;
     struct TextDefinition;
 
     //! Draws a quad
@@ -56,6 +54,11 @@ namespace mono
                     const mono::Color::RGBA& color,
                     float size,
                     const std::shared_ptr<IColorShader>& shader);
+
+    void DrawParticlePoints(const std::vector<math::Vector>& points,
+                            const std::vector<mono::Color::RGBA>& colors,
+                            size_t count,
+                            const std::shared_ptr<IPointSpriteShader>& shader);
 
     void DrawShape(const std::vector<math::Vector>& shape1,
                    const std::vector<math::Vector>& shape2,

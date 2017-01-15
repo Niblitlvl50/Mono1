@@ -3,13 +3,10 @@
 
 #include "IRenderer.h"
 #include "Math/Matrix.h"
+#include "Shader/ShaderFwd.h"
 
 namespace mono
 {
-    class IColorShader;
-    class ITextureShader;
-    class IMorphingShader;
-
     class Renderer : public IRenderer
     {
     public:
@@ -36,6 +33,10 @@ namespace mono
                                   const std::vector<math::Vector>& texture_coordinates,
                                   const std::vector<unsigned short>& indices,
                                   const ITexturePtr& texture);
+
+        virtual void DrawPoints(const std::vector<math::Vector>& points,
+                                const std::vector<mono::Color::RGBA>& colors,
+                                size_t count) const;
 
         virtual void UseShader(const IShaderPtr& shader) const;
         virtual void UseTexture(const ITexturePtr& texture) const;
@@ -69,6 +70,7 @@ namespace mono
         std::shared_ptr<IColorShader> mColorShader;
         std::shared_ptr<ITextureShader> mTextureShader;
         std::shared_ptr<IMorphingShader> m_morphShader;
+        std::shared_ptr<IPointSpriteShader> m_pointSpriteShader;
 
         std::vector<IDrawablePtr> mDrawables;
         std::vector<IUpdatablePtr> mUpdatables;

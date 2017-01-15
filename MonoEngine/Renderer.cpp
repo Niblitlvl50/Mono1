@@ -16,6 +16,7 @@
 #include "Shader/ITextureShader.h"
 #include "Shader/IColorShader.h"
 #include "Shader/IMorphingShader.h"
+#include "Shader/IPointSpriteShader.h"
 
 #include "Sprite/ISprite.h"
 #include "Texture/ITexture.h"
@@ -32,6 +33,7 @@ Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
     mColorShader = GetShaderFactory()->CreateColorShader();
     mTextureShader = GetShaderFactory()->CreateTextureShader();
     m_morphShader = GetShaderFactory()->CreateMorphingShader();
+    m_pointSpriteShader = GetShaderFactory()->CreatePointSpriteShader();
 }
 
 void Renderer::PrepareDraw()
@@ -175,6 +177,12 @@ void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std
     UseShader(mTextureShader);
 
     ::DrawTexturedGeometry(vertices, texture_coordinates, indices, mTextureShader);
+}
+
+void Renderer::DrawPoints(const std::vector<math::Vector>& points, const std::vector<mono::Color::RGBA>& colors, size_t count) const
+{
+    UseShader(m_pointSpriteShader);
+    ::DrawParticlePoints(points, colors, count, m_pointSpriteShader);
 }
 
 void Renderer::UseShader(const IShaderPtr& shader) const

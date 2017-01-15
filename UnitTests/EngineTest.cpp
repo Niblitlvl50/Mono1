@@ -1,10 +1,3 @@
-//
-//  EngineTest.cpp
-//  UnitTests
-//
-//  Created by Niblit on 2012-04-08.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #include "gtest/gtest.h"
 
@@ -17,6 +10,7 @@
 #include "Shader/IColorShader.h"
 #include "Shader/ITextureShader.h"
 #include "Shader/IMorphingShader.h"
+#include "Shader/IPointSpriteShader.h"
 #include "Shader/ShaderFunctions.h"
 
 #include "Math/Vector.h"
@@ -225,6 +219,32 @@ namespace
         }
     };
 
+    class NullPointSpriteShader : public mono::IPointSpriteShader
+    {
+    public:
+
+        virtual void Use()
+        { }
+        virtual unsigned int GetShaderId() const
+        {
+            return 0;
+        }
+        virtual void LoadProjectionMatrix(const math::Matrix& projection)
+        { }
+        virtual void LoadModelViewMatrix(const math::Matrix& modelView)
+        { }
+        virtual void SetPointSize(float size)
+        { }
+        virtual unsigned int GetPositionAttributeLocation() const
+        {
+            return 0;
+        }
+        virtual unsigned int GetColorAttributeLocation() const
+        {
+            return 0;
+        }
+    };
+
     class NullFactory : public mono::IShaderFactory
     {
     public:
@@ -241,6 +261,11 @@ namespace
         virtual std::shared_ptr<mono::IMorphingShader> CreateMorphingShader() const
         {
             return std::make_shared<NullMorphShader>();
+        }
+
+        virtual std::shared_ptr<mono::IPointSpriteShader> CreatePointSpriteShader() const
+        {
+            return std::make_shared<NullPointSpriteShader>();
         }
     };
 }
