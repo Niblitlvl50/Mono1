@@ -2,9 +2,10 @@
 #include "Color.h"
 #include <algorithm>
 
-mono::Color::RGBA mono::Color::ToRGBA(const mono::Color::HSL& hsl)
+mono::Color::RGBA mono::Color::ToRGBA(const mono::Color::HSL& hsl, float alpha)
 {
     mono::Color::RGBA rgb;
+    rgb.alpha = alpha;
 
     if(hsl.saturation == 0.0)
     {
@@ -94,4 +95,14 @@ mono::Color::HSL mono::Color::ToHSL(const mono::Color::RGBA& rgb)
     }
 
     return hsl;
+}
+
+mono::Color::RGBA mono::Color::Lerp(const mono::Color::RGBA& first, const mono::Color::RGBA& second, float t)
+{
+    const float red   = (1 - t) * first.red + t * second.red;
+    const float green = (1 - t) * first.green + t * second.green;
+    const float blue  = (1 - t) * first.blue + t * second.blue;
+    const float alpha = (1 - t) * first.alpha + t * second.alpha;
+
+    return mono::Color::RGBA(red, green, blue, alpha);
 }

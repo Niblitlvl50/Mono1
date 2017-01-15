@@ -47,9 +47,11 @@ namespace mono
         };
 
         //! Convert HSL to RGBA
-        mono::Color::RGBA ToRGBA(const mono::Color::HSL& hsl);
+        mono::Color::RGBA ToRGBA(const mono::Color::HSL& hsl, float alpha = 1.0f);
 
         //! Convert RGBA to HSL
         mono::Color::HSL ToHSL(const mono::Color::RGBA& rgb);
+
+        mono::Color::RGBA Lerp(const mono::Color::RGBA& first, const mono::Color::RGBA& second, float t);
     }
 }
