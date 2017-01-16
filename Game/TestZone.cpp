@@ -7,6 +7,8 @@
 #include "Enemies/Enemy.h"
 #include "Enemies/IEnemyFactory.h"
 
+#include "Texture/TextureFactory.h"
+
 #include "Shuttle.h"
 #include "Explosion.h"
 #include "CubeSwarm.h"
@@ -34,12 +36,16 @@
 #include "UpdateTasks/HealthbarUpdater.h"
 #include "UpdateTasks/CameraViewportReporter.h"
 
+#include "Particle/ParticleEmitter.h"
+#include "Particle/ParticleSystemDefaults.h"
+
 using namespace game;
 
 TestZone::TestZone(mono::EventHandler& eventHandler)
     : PhysicsZone(math::Vector(0.0f, 0.0f), 0.9f),
       mEventHandler(eventHandler),
-      m_spawner(eventHandler)
+      m_spawner(eventHandler),
+      m_pool(100000)
 {
     using namespace std::placeholders;
     
@@ -107,6 +113,19 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
 
     AddEntity(std::make_shared<game::CubeSwarm>(), FOREGROUND);
+
+    mono::ParticleEmitter::Configuration config;
+    config.position = math::Vector(-100.0f, 100.0f);
+    config.generator = mono::DefaultGenerator;
+    config.updater = mono::DefaultUpdater;
+    config.texture = mono::CreateTexture("textures/placeholder.png");
+    config.emit_rate = 1.0f;
+    config.point_size = 20.0f;
+
+    auto emitter = std::make_shared<mono::ParticleEmitter>(config, m_pool);
+
+    AddDrawable(emitter, FOREGROUND);
+    AddUpdatable(emitter);
 
     camera->SetPosition(shuttle->Position());
     camera->Follow(shuttle, math::Vector(0, -100));

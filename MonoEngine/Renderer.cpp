@@ -179,9 +179,16 @@ void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std
     ::DrawTexturedGeometry(vertices, texture_coordinates, indices, mTextureShader);
 }
 
-void Renderer::DrawPoints(const std::vector<math::Vector>& points, const std::vector<mono::Color::RGBA>& colors, size_t count) const
+void Renderer::DrawPoints(  const std::vector<math::Vector>& points,
+                            const std::vector<mono::Color::RGBA>& colors,
+                            size_t count,
+                            float point_size,
+                            const ITexturePtr& texture) const
 {
+    UseTexture(texture);
     UseShader(m_pointSpriteShader);
+    m_pointSpriteShader->SetPointSize(point_size);
+
     ::DrawParticlePoints(points, colors, count, m_pointSpriteShader);
 }
 

@@ -31,15 +31,20 @@ namespace
 
     constexpr const char* fragmentSource =
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+    "#version 120\n"
+#endif
+
 #ifdef __IPHONEOS__
     "precision mediump float;"
 #endif
 
     "varying vec4 color;"
+    "uniform sampler2D sampler;"
 
     "void main()"
     "{"
-    "    gl_FragColor = color;"
+    "    gl_FragColor = texture2D(sampler, gl_PointCoord) * color;"
     "}";
 }
 

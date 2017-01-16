@@ -12,6 +12,7 @@
 #include "Shader/IPointSpriteShader.h"
 
 #include <cmath>
+#include <cassert>
 
 void mono::DrawQuad(const math::Quad& quad,
                     const mono::Color::RGBA& color,
@@ -204,7 +205,7 @@ void mono::DrawParticlePoints(const std::vector<math::Vector>& points,
                               size_t count,
                               const std::shared_ptr<IPointSpriteShader>& shader)
 {
-    shader->SetPointSize(5.0f);
+    glEnable(GL_POINT_SPRITE);
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -216,6 +217,8 @@ void mono::DrawParticlePoints(const std::vector<math::Vector>& points,
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+
+    glDisable(GL_POINT_SPRITE);
 }
 
 void mono::DrawShape(const std::vector<math::Vector>& shape1,
