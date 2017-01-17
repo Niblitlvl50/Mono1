@@ -3,13 +3,13 @@
 #include "ParticlePool.h"
 #include "Utils.h"
 
-void mono::DefaultGenerator(ParticlePool& pool, size_t index)
+void mono::DefaultGenerator(const math::Vector& position, ParticlePool& pool, size_t index)
 {
     const float x = mono::Random(-80.0f, 80.0f);
     const float y = mono::Random(-80.0f, 80.0f);
     const float life = mono::Random(0.0f, 500.0f);
 
-    pool.m_position[index] = math::Vector(-100.0f, 100.0f);
+    pool.m_position[index] = position;
     pool.m_velocity[index] = math::Vector(x, y);
     //pool.m_color[index];
     pool.m_startColor[index] = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);

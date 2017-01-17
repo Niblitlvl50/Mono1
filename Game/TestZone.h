@@ -9,8 +9,6 @@
 #include "Network/RemoteConnection.h"
 #include "Hud/Healthbar.h"
 
-#include "Particle/ParticlePool.h"
-
 #include <vector>
 
 namespace game
@@ -64,7 +62,5 @@ namespace game
         RemoteConnection m_connection;
 
         std::vector<Healthbar> m_healthbars;
-
-        mono::ParticlePool m_pool;
     };
 }
