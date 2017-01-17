@@ -206,6 +206,10 @@ void mono::DrawParticlePoints(const std::vector<math::Vector>& points,
                               const std::shared_ptr<IPointSpriteShader>& shader)
 {
     glEnable(GL_POINT_SPRITE);
+    glDepthMask(GL_FALSE);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -219,6 +223,7 @@ void mono::DrawParticlePoints(const std::vector<math::Vector>& points,
     glDisableVertexAttribArray(1);
 
     glDisable(GL_POINT_SPRITE);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void mono::DrawShape(const std::vector<math::Vector>& shape1,

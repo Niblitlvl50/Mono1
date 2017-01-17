@@ -11,7 +11,6 @@
 
 #include "Shuttle.h"
 #include "Explosion.h"
-#include "CubeSwarm.h"
 
 #include "EventHandler/EventHandler.h"
 #include "Events/GameEventFuncFwd.h"
@@ -112,15 +111,13 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
     AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
 
-    AddEntity(std::make_shared<game::CubeSwarm>(), FOREGROUND);
-
     mono::ParticleEmitter::Configuration config;
     config.position = math::Vector(-100.0f, 100.0f);
     config.generator = mono::DefaultGenerator;
     config.updater = mono::DefaultUpdater;
-    config.texture = mono::CreateTexture("textures/placeholder.png");
+    config.texture = mono::CreateTexture("textures/flare.png");
     config.emit_rate = 1.0f;
-    config.point_size = 20.0f;
+    config.point_size = 32.0f;
 
     auto emitter = std::make_shared<mono::ParticleEmitter>(config, m_pool);
 

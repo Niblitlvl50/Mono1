@@ -12,10 +12,10 @@ void mono::DefaultGenerator(ParticlePool& pool, size_t index)
     pool.m_position[index] = math::Vector(-100.0f, 100.0f);
     pool.m_velocity[index] = math::Vector(x, y);
     //pool.m_color[index];
-    pool.m_startColor[index] = mono::Color::RGBA(1.0f, 1.0f, 1.0f, 1.0f);
-    pool.m_endColor[index] = mono::Color::RGBA(1.0f, 1.0f, 1.0f, 0.3f);
-    pool.m_startLife[index] = 2000 + life;
-    pool.m_life[index] = 2000 + life;
+    pool.m_startColor[index] = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
+    pool.m_endColor[index] = mono::Color::RGBA(0.0f, 1.0f, 0.0f, 0.1f);
+    pool.m_startLife[index] = 1000 + life;
+    pool.m_life[index] = 1000 + life;
 }
 
 void mono::DefaultUpdater(ParticlePool& pool, size_t count, unsigned int delta)
