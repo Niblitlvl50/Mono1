@@ -2,7 +2,6 @@
 #include "Utils.h"
 #include "System/SysTime.h"
 #include <cmath>
-#include <random>
 
 using namespace mono;
 
@@ -39,11 +38,3 @@ unsigned int FPSCounter::Frames() const
 }
 
 
-float mono::Random(float min, float max)
-{
-    constexpr int seed = 666;
-    static std::default_random_engine engine(seed);
-    
-    std::uniform_real_distribution<float> distribution(min, max);
-    return distribution(engine);
-}

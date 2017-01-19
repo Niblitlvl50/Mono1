@@ -3,7 +3,7 @@
 #include "Physics/IBody.h"
 #include "Physics/IShape.h"
 #include "Physics/CMFactory.h"
-#include "Utils.h"
+#include "Random.h"
 
 #include "AIKnowledge.h"
 #include "EntityProperties.h"

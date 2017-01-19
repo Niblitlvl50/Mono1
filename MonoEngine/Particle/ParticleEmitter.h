@@ -25,12 +25,14 @@ namespace mono
         };
 
         ParticleEmitter(const Configuration& config, ParticlePool& pool);
+        void SetPosition(const math::Vector& position);
 
         virtual void doUpdate(unsigned int delta);
         virtual void doDraw(mono::IRenderer& renderer) const;
         virtual math::Quad BoundingBox() const;
 
         const Configuration m_config;
+        math::Vector m_position;
         ParticlePool& m_pool;
     };
 }

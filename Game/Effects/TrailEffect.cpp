@@ -1,26 +1,24 @@
 
-#include "SmokeEffect.h"
+#include "TrailEffect.h"
 #include "Particle/ParticlePool.h"
 #include "Particle/ParticleEmitter.h"
 #include "Particle/ParticleSystemDefaults.h"
 #include "Texture/TextureFactory.h"
-#include "Random.h"
+#include "IRenderer.h"
+#include "Math/Matrix.h"
 
-#include "Math/MathFunctions.h"
+#include "AIKnowledge.h"
 
 using namespace game;
 
 namespace
 {
-    void SmokeGenerator(const math::Vector& position, mono::ParticlePool& pool, size_t index)
+    void TrailGenerator(const math::Vector& position, mono::ParticlePool& pool, size_t index)
     {
-        const float x = mono::Random(-20.0f, 20.0f);
-        const float y = mono::Random(-20.0f, 20.0f);
+        constexpr int life = 1000;
 
-        const int life = mono::RandomInt(0, 500) + 2000;
-
-        pool.m_position[index] = position;
-        pool.m_velocity[index] = math::Vector(x, y);
+        //pool.m_position[index] = position;
+        pool.m_position[index] = game::player_position;
         pool.m_startColor[index] = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
         pool.m_endColor[index] = mono::Color::RGBA(0.0f, 1.0f, 0.0f, 0.1f);
         pool.m_startLife[index] = life;
@@ -28,15 +26,13 @@ namespace
     }
 }
 
-SmokeEffect::SmokeEffect(const math::Vector& position)
+TrailEffect::TrailEffect()
 {
-    mPosition = position;
-
     mono::ParticleEmitter::Configuration config;
     //config.position = position;
-    config.generator = SmokeGenerator;
+    config.generator = TrailGenerator;
     config.updater = mono::DefaultUpdater;
-    config.texture = mono::CreateTexture("textures/smoke.png");
+    config.texture = mono::CreateTexture("textures/flare.png");
     config.emit_rate = 0.1f;
     config.point_size = 32.0f;
 
@@ -44,16 +40,21 @@ SmokeEffect::SmokeEffect(const math::Vector& position)
     m_emitter = std::make_unique<mono::ParticleEmitter>(config, *m_pool.get());
 }
 
-SmokeEffect::~SmokeEffect()
+TrailEffect::~TrailEffect()
 { }
 
-void SmokeEffect::Draw(mono::IRenderer& renderer) const
+void TrailEffect::Draw(mono::IRenderer& renderer) const
 {
     m_emitter->doDraw(renderer);
 }
 
-void SmokeEffect::Update(unsigned int delta)
+void TrailEffect::Update(unsigned int delta)
 {
     m_emitter->doUpdate(delta);
-    mRotation += math::ToRadians(1);
+}
+
+math::Quad TrailEffect::BoundingBox() const
+{
+    constexpr float inf = std::numeric_limits<float>::infinity();
+    return math::Quad(-inf, -inf, inf, inf);
 }

@@ -1,7 +1,7 @@
 
 #include "ParticleSystemDefaults.h"
 #include "ParticlePool.h"
-#include "Utils.h"
+#include "Random.h"
 
 void mono::DefaultGenerator(const math::Vector& position, ParticlePool& pool, size_t index)
 {

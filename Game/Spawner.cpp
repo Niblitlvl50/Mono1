@@ -3,7 +3,7 @@
 #include "EventHandler/EventHandler.h"
 #include "Events/SpawnPhysicsEntityEvent.h"
 #include "Meteor.h"
-#include "Utils.h"
+#include "Random.h"
 #include "RenderLayers.h"
 
 using namespace game;
