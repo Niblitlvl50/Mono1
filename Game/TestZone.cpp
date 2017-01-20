@@ -7,7 +7,6 @@
 #include "Enemies/Enemy.h"
 #include "Enemies/IEnemyFactory.h"
 
-#include "Effects/TrailEffect.h"
 #include "Effects/SmokeEffect.h"
 
 #include "Shuttle.h"
@@ -109,7 +108,6 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
 
     AddEntity(std::make_shared<SmokeEffect>(math::Vector(-100.0f, 100.0f)), BACKGROUND);
-    AddEntity(std::make_shared<TrailEffect>(), BACKGROUND);
 
     camera->SetPosition(shuttle->Position());
     camera->Follow(shuttle, math::Vector(0, -100));

@@ -6,8 +6,7 @@
 #include "Texture/TextureFactory.h"
 #include "IRenderer.h"
 #include "Math/Matrix.h"
-
-#include "AIKnowledge.h"
+#include "Math/Quad.h"
 
 using namespace game;
 
@@ -17,8 +16,7 @@ namespace
     {
         constexpr int life = 1000;
 
-        //pool.m_position[index] = position;
-        pool.m_position[index] = game::player_position;
+        pool.m_position[index] = position;
         pool.m_startColor[index] = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
         pool.m_endColor[index] = mono::Color::RGBA(0.0f, 1.0f, 0.0f, 0.1f);
         pool.m_startLife[index] = life;
@@ -26,7 +24,8 @@ namespace
     }
 }
 
-TrailEffect::TrailEffect()
+TrailEffect::TrailEffect(const math::Vector& position)
+    : m_position(position)
 {
     mono::ParticleEmitter::Configuration config;
     //config.position = position;
@@ -45,12 +44,14 @@ TrailEffect::~TrailEffect()
 
 void TrailEffect::Draw(mono::IRenderer& renderer) const
 {
+    renderer.PushGlobalTransform();
     m_emitter->doDraw(renderer);
 }
 
 void TrailEffect::Update(unsigned int delta)
 {
     m_emitter->doUpdate(delta);
+    m_emitter->SetPosition(m_position);
 }
 
 math::Quad TrailEffect::BoundingBox() const

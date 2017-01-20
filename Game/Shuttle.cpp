@@ -18,6 +18,8 @@
 #include "Weapons/IWeaponSystem.h"
 #include "Weapons/IWeaponFactory.h"
 
+#include "Effects/TrailEffect.h"
+
 #include "Math/MathFunctions.h"
 #include "Math/Matrix.h"
 
@@ -96,6 +98,7 @@ Shuttle::Shuttle(const math::Vector& position, mono::EventHandler& eventHandler)
     
     AddChild(m_left_booster);
     AddChild(m_right_booster);
+    AddChild(std::make_shared<game::TrailEffect>(mPosition));
 
     SetProperty(EntityProperties::DAMAGABLE);
     

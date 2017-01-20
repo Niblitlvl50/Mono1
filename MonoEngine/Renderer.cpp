@@ -220,6 +220,11 @@ void Renderer::ClearTexture()
     m_currentTextureId = -1;
 }
 
+void Renderer::PushGlobalTransform()
+{
+    m_current_transform = mModelView;
+}
+
 void Renderer::PushNewTransform(const math::Matrix& transform)
 {
     m_current_transform = transform;

@@ -44,6 +44,8 @@ namespace mono
         virtual void UseTexture(const ITexturePtr& texture) const;
         virtual void ClearTexture();
 
+        virtual void PushGlobalTransform();
+
         virtual void PushNewTransform(const math::Matrix& transform);
         virtual const math::Matrix& GetCurrentTransform() const;
 
