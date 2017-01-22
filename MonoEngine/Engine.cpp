@@ -33,7 +33,7 @@
 
 using namespace mono;
 
-namespace Func
+namespace
 {
     void ScreenToWorld(float& x, float& y, IWindowPtr window, ICameraPtr camera)
     {
@@ -53,7 +53,6 @@ namespace Func
     }
 }
 
-
 Engine::Engine(const IWindowPtr& window, const ICameraPtr& camera, EventHandler& eventHandler)
     : mPause(false),
       mQuit(false),
@@ -64,26 +63,22 @@ Engine::Engine(const IWindowPtr& window, const ICameraPtr& camera, EventHandler&
       mEventHandler(eventHandler)
 {
     using namespace std::placeholders;
-    
-    const auto func = std::bind(Func::ScreenToWorld, _1, _2, mWindow, mCamera);
+
+    const auto func = std::bind(ScreenToWorld, _1, _2, mWindow, mCamera);
     mInputHandler = std::make_shared<InputHandler>(func, mEventHandler);
-    
+
     const event::PauseEventFunc pauseFunc = std::bind(&Engine::OnPause, this, _1);
-    mPauseToken = mEventHandler.AddListener(pauseFunc);
-    
     const event::QuitEventFunc quitFunc = std::bind(&Engine::OnQuit, this, _1);
-    mQuitToken = mEventHandler.AddListener(quitFunc);
-
     const event::ApplicationEventFunc appFunc = std::bind(&Engine::OnApplication, this, _1);
-    mApplicationToken = mEventHandler.AddListener(appFunc);
-
     const event::SurfaceChangedEventFunc surfaceChangedFunc = std::bind(&Engine::OnSurfaceChanged, this, _1);
-    mSurfaceChangedToken = mEventHandler.AddListener(surfaceChangedFunc);
-	
     const event::ActivatedEventFunc activatedFunc = std::bind(&Engine::OnActivated, this, _1);
-    mActivatedToken = mEventHandler.AddListener(activatedFunc);
-
     const event::TimeScaleEventFunc timeScaleFunc = std::bind(&Engine::OnTimeScale, this, _1);
+
+    mPauseToken = mEventHandler.AddListener(pauseFunc);
+    mQuitToken = mEventHandler.AddListener(quitFunc);
+    mApplicationToken = mEventHandler.AddListener(appFunc);
+    mSurfaceChangedToken = mEventHandler.AddListener(surfaceChangedFunc);
+    mActivatedToken = mEventHandler.AddListener(activatedFunc);
     mTimeScaleToken = mEventHandler.AddListener(timeScaleFunc);
 }
 
@@ -100,7 +95,7 @@ Engine::~Engine()
 void Engine::Run(IZonePtr zone)
 {
     zone->OnLoad(mCamera);
-    
+
     Renderer renderer(mCamera, mWindow);
     unsigned int lastTime = Time::GetMilliseconds();
 
@@ -123,18 +118,18 @@ void Engine::Run(IZonePtr zone)
         Events::ProcessSystemEvents(mInputHandler);
         if(!mPause)
         {
-            // Let the zone add stuff that will be rendered
+            // Let the zone add stuff that will be rendered and updated
             zone->Accept(renderer);
 
             // Update all the stuff, and draw complete frame
             renderer.Update(delta);
             renderer.DrawFrame();
         }
-        
+
         lastTime = beforeTime;
 
         // Sleep for a millisecond
-        Time::Sleep(1);        
+        //Time::Sleep(1);
     }
 
     // Remove possible follow entity and unload the zone
@@ -192,5 +187,3 @@ bool Engine::OnTimeScale(const event::TimeScaleEvent& event)
     mTimeScale = event.time_scale;
     return false;
 }
-
-
