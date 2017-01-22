@@ -35,6 +35,50 @@
 #include "UpdateTasks/HealthbarUpdater.h"
 #include "UpdateTasks/CameraViewportReporter.h"
 
+#include "IRenderer.h"
+#include "Math/Matrix.h"
+#include "Math/Quad.h"
+#include "Color.h"
+#include "FontIds.h"
+
+namespace
+{
+    class FPSEntity : public mono::EntityBase
+    {
+    public:
+    
+        FPSEntity()
+        {
+            m_projection = math::Ortho(0.0f, 600.0f, 0.0f, 400.0f, -10.0f, 10.0f);
+        }
+
+        virtual void Draw(mono::IRenderer& renderer) const
+        {
+            constexpr math::Matrix identity;
+            renderer.PushNewTransform(identity);
+            renderer.PushNewProjection(m_projection);
+
+            char text[32] = { '\0' };
+            std::snprintf(text, 32, "fps: %u frames: %u", m_counter.Fps(), m_counter.Frames());
+
+            constexpr mono::Color::RGBA color(1, 0, 0, 1);
+            renderer.DrawText(game::LARGE, text, math::Vector(10, 10), false, color);
+        }
+
+        virtual void Update(unsigned int delta)
+        {
+            m_counter++;
+        }
+
+        virtual math::Quad BoundingBox() const
+        {
+            return math::Quad(-math::INF, -math::INF, math::INF, math::INF);
+        }
+
+        mono::FPSCounter m_counter;
+        math::Matrix m_projection;
+    };
+}
 
 using namespace game;
 
@@ -108,9 +152,10 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
 
     AddEntity(std::make_shared<SmokeEffect>(math::Vector(-100.0f, 100.0f)), BACKGROUND);
+    AddEntity(std::make_shared<FPSEntity>(), FOREGROUND);
 
     camera->SetPosition(shuttle->Position());
-    camera->Follow(shuttle, math::Vector(0, -100));
+    camera->Follow(shuttle, math::Vector(0, -4));
 
     m_backgroundMusic->Play();
 }
@@ -182,7 +227,7 @@ bool TestZone::OnDamageEvent(const game::DamageEvent& event)
 
         game::ExplosionConfiguration config;
         config.position = entity->Position();
-        config.scale = 20.0f;
+        config.scale = 2.0f;
         //config.rotation = mono::Random(0.0f, math::PI() * 2.0f);
         config.sprite_file = "sprites/explosion.sprite";
 

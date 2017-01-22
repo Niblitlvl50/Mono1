@@ -46,7 +46,7 @@ namespace
         SpriteDrawable(const char* file)
         {
             m_sprite = mono::CreateSprite(file);
-            SetScale(math::Vector(50, 50));
+            SetScale(math::Vector(1, 1));
         }
         virtual void Draw(mono::IRenderer& renderer) const
         {

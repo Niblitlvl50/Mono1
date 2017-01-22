@@ -71,7 +71,7 @@ Shuttle::Shuttle(const math::Vector& position, mono::EventHandler& eventHandler)
       m_fire(false)
 {
     mPosition = position;
-    mScale = math::Vector(20.0f, 20.0f);
+    mScale = math::Vector(1.0f, 1.0f);
     
     mPhysicsObject.body = mono::PhysicsFactory::CreateBody(10.0f, INFINITY);
     mPhysicsObject.body->SetPosition(mPosition);
@@ -117,7 +117,7 @@ void Shuttle::Update(unsigned int delta)
 
     if(m_fire)
     {
-        constexpr math::Vector position_shift(0.0f, 8.0f);
+        constexpr math::Vector position_shift(0.0f, 0.5f);
         const float direction_shift = math::ToRadians(mono::Random(-4.0f, 4.0f));
         m_weapon->Fire(mPosition + position_shift, mRotation + direction_shift);
     }

@@ -55,5 +55,5 @@ void SmokeEffect::Draw(mono::IRenderer& renderer) const
 void SmokeEffect::Update(unsigned int delta)
 {
     m_emitter->doUpdate(delta);
-    mRotation += math::ToRadians(1);
+    mRotation += math::ToRadians(0.1) * float(delta);
 }

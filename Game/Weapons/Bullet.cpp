@@ -18,7 +18,7 @@ using namespace game;
 Bullet::Bullet(const BulletConfiguration& config)
     : m_collisionCallback(config.collision_callback)
 {
-    mScale = math::Vector(25.0f, 25.0f) * config.scale;
+    mScale = math::Vector(1.0f, 1.0f) * config.scale;
 
     mPhysicsObject.body = mono::PhysicsFactory::CreateBody(1.0f, 1.0f);
     mPhysicsObject.body->SetCollisionHandler(this);

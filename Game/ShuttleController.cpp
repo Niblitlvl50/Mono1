@@ -78,7 +78,7 @@ bool ShuttleController::OnMouseMotion(const event::MouseMotionEvent& event)
     math::Vector force = current - mMouseDownPosition;
     math::Normalize(force);
 
-    mShuttle->ApplyImpulse(force * 100);
+    mShuttle->ApplyImpulse(force * 10);
 
 
     const bool leftBoosterOn = (force.x > 0.0f);

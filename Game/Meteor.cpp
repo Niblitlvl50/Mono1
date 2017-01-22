@@ -23,14 +23,14 @@ Meteor::Meteor(float x, float y)
     mSprite = mono::CreateSprite("sprites/meteorite.sprite");
 
     mPosition = math::Vector(x, y);
-    mScale = math::Vector(20.0f, 20.0f);
+    mScale = math::Vector(1.0f, 1.0f);
 
     SetProperty(EntityProperties::DAMAGABLE);
     
     mPhysicsObject.body = mono::PhysicsFactory::CreateBody(15.0f, 1.0f);
     mPhysicsObject.body->SetPosition(mPosition);
 
-    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, 10.0f, math::zeroVec);
+    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, 1.0f, math::zeroVec);
     shape->SetElasticity(0.9f);
     
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());

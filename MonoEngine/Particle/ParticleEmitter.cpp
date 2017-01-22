@@ -21,7 +21,7 @@ void ParticleEmitter::SetPosition(const math::Vector& position)
 
 void ParticleEmitter::doUpdate(unsigned int delta)
 {
-    const size_t new_particles = static_cast<size_t>(delta * m_config.emit_rate);
+    const size_t new_particles = std::max(static_cast<size_t>(float(delta) * m_config.emit_rate), size_t(1));
     const size_t start_index = m_pool.m_countAlive;
     const size_t end_index = std::min(start_index + new_particles, m_pool.m_poolSize -1);
 

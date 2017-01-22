@@ -26,7 +26,7 @@ namespace
     {
         game::ExplosionConfiguration explosion_config;
         explosion_config.position = bullet->Position();
-        explosion_config.scale = 60.0f;
+        explosion_config.scale = 6.0f;
         explosion_config.rotation = 0.0f;
         explosion_config.sprite_file = "sprites/explosion.sprite";
 
@@ -41,7 +41,7 @@ namespace
     {
         game::ExplosionConfiguration explosion_config;
         explosion_config.position = bullet->Position();
-        explosion_config.scale = 60.0f;
+        explosion_config.scale = 6.0f;
         explosion_config.rotation = 0.0f;
         explosion_config.sprite_file = "sprites/cacoexplosion.sprite";
 
@@ -84,7 +84,7 @@ std::unique_ptr<game::IWeaponSystem> WeaponFactory::CreateWeapon(WeaponType weap
             weapon_config.rounds_per_second = 6.0f;
             weapon_config.fire_rate_multiplier = 1.1f;
             weapon_config.max_fire_rate = 3.0f;
-            weapon_config.bullet_force = 400.0f;
+            weapon_config.bullet_force = 20.0f;
             weapon_config.fire_sound = "sound/laser.wav";
 
             break;
@@ -100,7 +100,7 @@ std::unique_ptr<game::IWeaponSystem> WeaponFactory::CreateWeapon(WeaponType weap
             bullet_config.sound_file = nullptr;
 
             weapon_config.rounds_per_second = 1.5f;
-            weapon_config.bullet_force = 300.0f;
+            weapon_config.bullet_force = 30.0f;
 
             break;
         }
@@ -115,7 +115,7 @@ std::unique_ptr<game::IWeaponSystem> WeaponFactory::CreateWeapon(WeaponType weap
             bullet_config.sound_file = nullptr;
 
             weapon_config.rounds_per_second = 2.0f;
-            weapon_config.bullet_force = 400.0f;
+            weapon_config.bullet_force = 20.0f;
 
             break;
         }
@@ -132,7 +132,7 @@ std::unique_ptr<game::IWeaponSystem> WeaponFactory::CreateWeapon(WeaponType weap
             bullet_config.sound_file = nullptr;
 
             weapon_config.rounds_per_second = 4.0f;
-            weapon_config.bullet_force = 150.0f;
+            weapon_config.bullet_force = 15.0f;
 
             break;
         }

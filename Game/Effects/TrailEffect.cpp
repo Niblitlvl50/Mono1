@@ -14,11 +14,11 @@ namespace
 {
     void TrailGenerator(const math::Vector& position, mono::ParticlePool& pool, size_t index)
     {
-        constexpr int life = 1000;
+        constexpr int life = 500;
 
         pool.m_position[index] = position;
         pool.m_startColor[index] = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
-        pool.m_endColor[index] = mono::Color::RGBA(0.0f, 1.0f, 0.0f, 0.1f);
+        pool.m_endColor[index] = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 0.1f);
         pool.m_startLife[index] = life;
         pool.m_life[index] = life;
     }
@@ -32,8 +32,8 @@ TrailEffect::TrailEffect(const math::Vector& position)
     config.generator = TrailGenerator;
     config.updater = mono::DefaultUpdater;
     config.texture = mono::CreateTexture("textures/flare.png");
-    config.emit_rate = 0.1f;
-    config.point_size = 32.0f;
+    config.emit_rate = 0.2f;
+    config.point_size = 16.0f;
 
     m_pool = std::make_unique<mono::ParticlePool>(1000);
     m_emitter = std::make_unique<mono::ParticleEmitter>(config, *m_pool.get());

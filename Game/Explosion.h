@@ -8,7 +8,7 @@ namespace game
     struct ExplosionConfiguration
     {
         math::Vector position;
-        float scale = 20.0f;
+        float scale = 1.0f;
         float rotation = 0.0f;
         const char* sprite_file = nullptr;
     };
