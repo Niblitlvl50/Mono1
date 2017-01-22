@@ -1,11 +1,3 @@
-/*
- *  SDLView.cpp
- *  Monolith1
- *
- *  Created by Niblit on 2011-02-08.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
- *
- */
 
 #include "SDLWindow.h"
 #include "System/SysOpenGL.h"
@@ -51,6 +43,9 @@ namespace
 #endif
         glEnable(GL_POINT_SMOOTH);
         glEnable(GL_LINE_SMOOTH);
+
+        // vsync on/off
+        SDL_GL_SetSwapInterval(1);
     }
 }
 
