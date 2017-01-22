@@ -26,14 +26,14 @@ namespace
     {
         game::ExplosionConfiguration explosion_config;
         explosion_config.position = bullet->Position();
-        explosion_config.scale = 6.0f;
+        explosion_config.scale = 2.0f;
         explosion_config.rotation = 0.0f;
         explosion_config.sprite_file = "sprites/explosion.sprite";
 
         const game::SpawnEntityEvent event(std::make_shared<game::Explosion>(explosion_config, event_handler));
         event_handler.DispatchEvent(event);
         event_handler.DispatchEvent(game::DamageEvent(other, 20));
-        event_handler.DispatchEvent(game::ShockwaveEvent(explosion_config.position, 500));
+        event_handler.DispatchEvent(game::ShockwaveEvent(explosion_config.position, 100));
         event_handler.DispatchEvent(game::RemoveEntityEvent(bullet->Id()));
     }
 
@@ -41,7 +41,7 @@ namespace
     {
         game::ExplosionConfiguration explosion_config;
         explosion_config.position = bullet->Position();
-        explosion_config.scale = 6.0f;
+        explosion_config.scale = 2.0f;
         explosion_config.rotation = 0.0f;
         explosion_config.sprite_file = "sprites/cacoexplosion.sprite";
 
@@ -75,8 +75,8 @@ std::unique_ptr<game::IWeaponSystem> WeaponFactory::CreateWeapon(WeaponType weap
         {
             bullet_config.life_span = 10.0f;
             bullet_config.fuzzy_life_span = 0;
-            bullet_config.collision_radius = 2.0f;
-            bullet_config.scale = 0.5;
+            bullet_config.collision_radius = 1.0f;
+            bullet_config.scale = 1.0;
             bullet_config.collision_callback = std::bind(StandardCollision, _1, _2, std::ref(m_eventHandler));
             bullet_config.sprite_file = "sprites/firebullet.sprite";
             bullet_config.sound_file = nullptr;
@@ -92,7 +92,7 @@ std::unique_ptr<game::IWeaponSystem> WeaponFactory::CreateWeapon(WeaponType weap
 
         case game::WeaponType::ROCKET:
         {
-            bullet_config.life_span = 0.6f;
+            bullet_config.life_span = 0.2f;
             bullet_config.fuzzy_life_span = 0.3f;
             bullet_config.collision_radius = 2.0f;
             bullet_config.collision_callback = std::bind(RocketCollision, _1, _2, std::ref(m_eventHandler));
@@ -100,7 +100,7 @@ std::unique_ptr<game::IWeaponSystem> WeaponFactory::CreateWeapon(WeaponType weap
             bullet_config.sound_file = nullptr;
 
             weapon_config.rounds_per_second = 1.5f;
-            weapon_config.bullet_force = 30.0f;
+            weapon_config.bullet_force = 20.0f;
 
             break;
         }
@@ -109,12 +109,13 @@ std::unique_ptr<game::IWeaponSystem> WeaponFactory::CreateWeapon(WeaponType weap
         {
             bullet_config.life_span = 1.0f;
             bullet_config.fuzzy_life_span = 0.3f;
-            bullet_config.collision_radius = 5.0f;
+            bullet_config.collision_radius = 1.0f;
             bullet_config.collision_callback = std::bind(CacoPlasmaCollision, _1, _2, std::ref(m_eventHandler));
             bullet_config.sprite_file = "sprites/cacobullet.sprite";
+            bullet_config.scale = 0.5;
             bullet_config.sound_file = nullptr;
 
-            weapon_config.rounds_per_second = 2.0f;
+            weapon_config.rounds_per_second = 5.0f;
             weapon_config.bullet_force = 20.0f;
 
             break;
@@ -125,7 +126,7 @@ std::unique_ptr<game::IWeaponSystem> WeaponFactory::CreateWeapon(WeaponType weap
             bullet_config.life_span = 10.0f;
             bullet_config.fuzzy_life_span = 0;
             bullet_config.scale = 0.3;
-            bullet_config.collision_radius = 2.0f;
+            bullet_config.collision_radius = 1.0f;
             bullet_config.collision_callback = std::bind(StandardCollision, _1, _2, std::ref(m_eventHandler));
             bullet_config.shade = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
             bullet_config.sprite_file = "sprites/generic_bullet.sprite";

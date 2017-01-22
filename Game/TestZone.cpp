@@ -196,7 +196,7 @@ bool TestZone::OnShockwaveEvent(const game::ShockwaveEvent& event)
     const auto shockwave_func = [&event](const mono::IBodyPtr& body) {
         math::Vector unit = body->GetPosition() - event.position;
         const float length = math::Length(unit);
-        if(length > 50)
+        if(length > 4)
             return;
 
         math::Normalize(unit);
