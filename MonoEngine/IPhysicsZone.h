@@ -18,5 +18,8 @@ namespace mono
 
         virtual void AddConstraint(const mono::IConstraintPtr& constraint) = 0;
         virtual void RemoveConstraint(const mono::IConstraintPtr& constraint) = 0;
+
+        virtual void AddPhysicsData(const mono::PhysicsData& physics_data) = 0;
+        virtual void RemovePhysicsData(const mono::PhysicsData& physics_data) = 0;
     };
 }

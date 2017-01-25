@@ -42,13 +42,8 @@ void PhysicsZone::AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int la
 {
     AddDrawable(entity, layer);
     AddUpdatable(entity);
-    
-    const mono::PhysicsData& object = entity->GetPhysics();
-    mPhysics->mSpace.Add(object.body);
-    
-    for(auto& shape : object.shapes)
-        mPhysics->mSpace.Add(shape);
-    
+    AddPhysicsData(entity->GetPhysics());
+
     mPhysicsEntities.push_back(entity);
 }
 
@@ -59,18 +54,10 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
 
     const bool result = FindAndRemove(mPhysicsEntities, entity);
     if(result)
-    {
-        mono::PhysicsData& object = entity->GetPhysics();
-        mPhysics->mSpace.Remove(object.body);
-        
-        for(auto& shape : object.shapes)
-            mPhysics->mSpace.Remove(shape);
-    }
+        RemovePhysicsData(entity->GetPhysics());
     else
-    {
         std::printf("PhysicsZone - Unable to remove physics entity\n");
         //throw std::runtime_error("PhysicsZone - Unable to remove physics entity");
-    }
 }
 
 void PhysicsZone::AddConstraint(const mono::IConstraintPtr& constraint)
@@ -83,6 +70,22 @@ void PhysicsZone::RemoveConstraint(const mono::IConstraintPtr& constraint)
 {
     mPhysics->mSpace.Remove(constraint);
     mono::FindAndRemove(m_constraints, constraint);
+}
+
+void PhysicsZone::AddPhysicsData(const mono::PhysicsData& physics_data)
+{
+    mPhysics->mSpace.Add(physics_data.body);
+    
+    for(auto& shape : physics_data.shapes)
+        mPhysics->mSpace.Add(shape);
+}
+
+void PhysicsZone::RemovePhysicsData(const mono::PhysicsData& physics_data)
+{
+    mPhysics->mSpace.Remove(physics_data.body);
+    
+    for(auto& shape : physics_data.shapes)
+        mPhysics->mSpace.Remove(shape);
 }
 
 IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromBody(const mono::IBodyPtr& body) const

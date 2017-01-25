@@ -101,4 +101,5 @@ void game::LoadWorld(mono::IPhysicsZone* zone, const std::vector<world::PolygonD
         static_terrain->AddPolygon(polygon);
 
     zone->AddDrawable(static_terrain, BACKGROUND);
+    zone->AddPhysicsData(static_terrain->m_static_physics);
 }

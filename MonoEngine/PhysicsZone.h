@@ -26,6 +26,9 @@ namespace mono
         virtual void AddConstraint(const mono::IConstraintPtr& constraint);
         virtual void RemoveConstraint(const mono::IConstraintPtr& constraint);
 
+        virtual void AddPhysicsData(const mono::PhysicsData& physics_data);
+        virtual void RemovePhysicsData(const mono::PhysicsData& physics_data);
+
     private:
 
         struct PhysicsImpl;
