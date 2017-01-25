@@ -69,7 +69,7 @@ math::Quad PhysicsEntityBase::BoundingBox() const
     return thisbb;
 }
 
-mono::Object& PhysicsEntityBase::GetPhysics()
+mono::PhysicsData& PhysicsEntityBase::GetPhysics()
 {
     return mPhysicsObject;
 }

@@ -21,7 +21,7 @@ namespace mono
         virtual void SetScale(const math::Vector& scale);
         virtual math::Quad BoundingBox() const;
         virtual math::Matrix Transformation() const;
-        virtual mono::Object& GetPhysics();
+        virtual mono::PhysicsData& GetPhysics();
         virtual uint Id() const;
         virtual void SetProperty(uint property);
         virtual bool HasProperty(uint property) const;
@@ -46,7 +46,7 @@ namespace mono
         math::Vector mScale;
         float mRotation;
 
-        mono::Object mPhysicsObject;
+        mono::PhysicsData mPhysicsObject;
         std::vector<IEntityPtr> m_children;
     };
 }

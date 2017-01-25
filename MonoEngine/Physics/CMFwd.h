@@ -10,7 +10,7 @@ struct cpConstraint;
 
 namespace mono
 {
-    struct Object;
+    struct PhysicsData;
     struct IBody;
     struct IShape;
     class IConstraint;

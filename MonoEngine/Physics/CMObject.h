@@ -6,7 +6,7 @@
 
 namespace mono
 {
-    struct Object
+    struct PhysicsData
     {
         IBodyPtr body;
         std::vector<IShapePtr> shapes;
