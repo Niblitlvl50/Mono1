@@ -18,7 +18,7 @@ namespace game
     {
         float life_span = 1.0f;
         float fuzzy_life_span = 0.0f;
-        float collision_radius = 1.0f;
+        float collision_radius = 0.5f;
         float scale = 1.0f;
         CollisionCategory collision_category = CollisionCategory::NONE;
         uint collision_mask = 0;

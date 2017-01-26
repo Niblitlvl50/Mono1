@@ -77,7 +77,7 @@ Shuttle::Shuttle(const math::Vector& position, mono::EventHandler& eventHandler)
     mPhysicsObject.body->SetPosition(mPosition);
     mPhysicsObject.body->SetCollisionHandler(this);
 
-    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, mScale.x / 4.0f, math::zeroVec);
+    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, mScale.x / 2.0f, math::zeroVec);
     shape->SetElasticity(0.1f);
     shape->SetCollisionFilter(CollisionCategory::PLAYER, PLAYER_MASK);
     

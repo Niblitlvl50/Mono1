@@ -47,7 +47,7 @@ void HealthbarUpdater::doUpdate(unsigned int delta)
         const math::Vector& scale = entity->Scale();
 
         Healthbar bar;
-        bar.position = position - math::Vector(0.0f, scale.y / 2.0f + 5.0f);
+        bar.position = position - math::Vector(0.0f, scale.y / 2.0f + 0.5f);
         bar.width = scale.x;
         bar.health_percentage = float(record.second.health) / 100.0f;
         m_healthbars.push_back(bar);

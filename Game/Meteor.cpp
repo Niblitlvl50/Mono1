@@ -30,7 +30,7 @@ Meteor::Meteor(float x, float y)
     mPhysicsObject.body = mono::PhysicsFactory::CreateBody(15.0f, 1.0f);
     mPhysicsObject.body->SetPosition(mPosition);
 
-    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, 1.0f, math::zeroVec);
+    mono::IShapePtr shape = mono::PhysicsFactory::CreateShape(mPhysicsObject.body, mScale.x * 0.5, math::zeroVec);
     shape->SetElasticity(0.9f);
     
     mPhysicsObject.body->SetMoment(shape->GetInertiaValue());

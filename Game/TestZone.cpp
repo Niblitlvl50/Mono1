@@ -136,22 +136,22 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(shuttle, FOREGROUND);
 
     AddPhysicsEntity(enemy_factory->CreateCacoDemon(math::Vector(100, 100)), FOREGROUND);
-    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(200.0f, 1000.0f)), MIDDLEGROUND);
-    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(200.0f, 1000.0f)), MIDDLEGROUND);
-    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(200.0f, 1000.0f)), MIDDLEGROUND);
-    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(200.0f, 1000.0f)), MIDDLEGROUND);
-    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(200.0f, 1000.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(20.0f, 100.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(20.0f, 100.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(20.0f, 100.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(20.0f, 100.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateInvader(math::Vector(20.0f, 100.0f)), MIDDLEGROUND);
 
-    AddPhysicsEntity(enemy_factory->CreateBlackSquare(math::Vector(-300.0f, 700.0f)), MIDDLEGROUND);
-    AddPhysicsEntity(enemy_factory->CreateBlackSquare(math::Vector(-300.0f, 700.0f)), MIDDLEGROUND);
-    AddPhysicsEntity(enemy_factory->CreateBlackSquare(math::Vector(-300.0f, 700.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateBlackSquare(math::Vector(-30.0f, 70.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateBlackSquare(math::Vector(-30.0f, 70.0f)), MIDDLEGROUND);
+    AddPhysicsEntity(enemy_factory->CreateBlackSquare(math::Vector(-30.0f, 70.0f)), MIDDLEGROUND);
 
     const mono::IPathPtr& path = mono::CreatePath("paths/center_loop.path");
     AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
     AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
     AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
 
-    AddEntity(std::make_shared<SmokeEffect>(math::Vector(-100.0f, 100.0f)), BACKGROUND);
+    AddEntity(std::make_shared<SmokeEffect>(math::Vector(-10.0f, 10.0f)), BACKGROUND);
     AddEntity(std::make_shared<FPSEntity>(), FOREGROUND);
 
     camera->SetPosition(shuttle->Position());
@@ -227,7 +227,7 @@ bool TestZone::OnDamageEvent(const game::DamageEvent& event)
 
         game::ExplosionConfiguration config;
         config.position = entity->Position();
-        config.scale = 2.0f;
+        config.scale = 1.5f;
         //config.rotation = mono::Random(0.0f, math::PI() * 2.0f);
         config.sprite_file = "sprites/explosion.sprite";
 

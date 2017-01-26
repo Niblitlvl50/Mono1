@@ -11,8 +11,8 @@ using namespace game;
 Spawner::Spawner(mono::EventHandler& eventHandler)
 {
     const auto spawn_func = [&eventHandler]() {
-        const float x = mono::Random(-500.0f, 500.0f) + 300.0f;
-        const float y = mono::Random(-500.0f, 500.0f) + 800.0f;
+        const float x = mono::Random(-50.0f, 50.0f);
+        const float y = mono::Random(-50.0f, 50.0f);
 
         const game::SpawnPhysicsEntityEvent event(std::make_shared<Meteor>(x, y), BACKGROUND);
         eventHandler.DispatchEvent(event);
