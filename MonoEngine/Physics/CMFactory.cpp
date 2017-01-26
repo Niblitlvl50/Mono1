@@ -133,7 +133,7 @@ namespace
             if(clockwice)
                 std::reverse(vects.begin(), vects.end());
 
-            mShape = cpPolyShapeNewRaw(body->Handle(), int(vects.size()), vects.data(), 1.0f);
+            mShape = cpPolyShapeNewRaw(body->Handle(), int(vects.size()), vects.data(), 0.1f);
             mInertiaValue = cpMomentForPoly(body->GetMass(), int(vects.size()), vects.data(), cpv(offset.x, offset.y), 1.0f);
         }
         ~CMShape()
