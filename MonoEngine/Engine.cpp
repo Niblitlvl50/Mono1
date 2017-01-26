@@ -26,7 +26,7 @@
 #include "Events/ActivatedEvent.h"
 #include "Events/TimeScaleEvent.h"
 
-#include "Renderer.h"
+#include "Rendering/Renderer.h"
 
 #include "Math/Vector.h"
 #include "Math/Quad.h"

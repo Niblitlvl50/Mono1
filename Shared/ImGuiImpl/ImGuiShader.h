@@ -1,14 +1,7 @@
-//
-//  ImGuiShader.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 19/06/16.
-//
-//
 
 #pragma once
 
-#include "Shader/IShader.h"
+#include "Rendering/Shader/IShader.h"
 
 class ImGuiShader : public mono::IShader
 {

@@ -1,16 +1,9 @@
-//
-//  SysLibs.cpp
-//  Monolith1
-//
-//  Created by Niblit on 2011-12-12.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
 
 #include "SysLibs.h"
 #include "SysSound.h"
 #include "SysNetwork.h"
 #include "Text/TextFunctions.h"
-#include "Shader/ShaderFunctions.h"
+#include "Rendering/Shader/ShaderFunctions.h"
 #include "SDL.h"
 
 #include <stdexcept>

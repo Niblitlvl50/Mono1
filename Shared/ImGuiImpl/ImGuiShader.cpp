@@ -1,13 +1,6 @@
-//
-//  ImGuiShader.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 19/06/16.
-//
-//
 
 #include "ImGuiShader.h"
-#include "Shader/ShaderFunctions.h"
+#include "Rendering/Shader/ShaderFunctions.h"
 #include "System/SysOpenGL.h"
 #include "Math/Matrix.h"
 
