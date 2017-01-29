@@ -179,17 +179,16 @@ void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std
     ::DrawTexturedGeometry(vertices, texture_coordinates, indices, mTextureShader);
 }
 
-void Renderer::DrawPoints(  const std::vector<math::Vector>& points,
-                            const std::vector<mono::Color::RGBA>& colors,
-                            size_t count,
-                            float point_size,
-                            const ITexturePtr& texture) const
+void Renderer::DrawParticlePoints(const IRenderBuffer* position,
+                                  const IRenderBuffer* color,
+                                  float point_size,
+                                  const ITexturePtr& texture,
+                                  size_t count)
 {
     UseTexture(texture);
     UseShader(m_pointSpriteShader);
     m_pointSpriteShader->SetPointSize(point_size);
-
-    ::DrawParticlePoints(points, colors, count, m_pointSpriteShader);
+    ::DrawParticlePoints(position, color, count, m_pointSpriteShader);
 }
 
 void Renderer::UseShader(const IShaderPtr& shader) const
@@ -218,6 +217,7 @@ void Renderer::UseTexture(const ITexturePtr& texture) const
 void Renderer::ClearTexture()
 {
     m_currentTextureId = -1;
+    mono::ClearTexture();
 }
 
 void Renderer::PushGlobalTransform()

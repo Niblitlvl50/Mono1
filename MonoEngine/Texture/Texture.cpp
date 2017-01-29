@@ -51,7 +51,7 @@ Texture::Texture(const IImagePtr& image)
 
     const GLenum error = glGetError();
     if(error != GL_NO_ERROR)
-        std::printf("OpenGL error in Texture. Error no: %X\n", error);
+        std::printf("OpenGL error in Texture. Error no: 0x%X\n", error);
 }
 
 Texture::~Texture()
@@ -77,4 +77,9 @@ unsigned int Texture::Width() const
 unsigned int Texture::Height() const
 {
     return mHeight;
+}
+
+void mono::ClearTexture()
+{
+    glBindTexture(GL_TEXTURE_2D, 0);
 }

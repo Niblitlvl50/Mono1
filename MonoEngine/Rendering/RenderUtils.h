@@ -9,6 +9,7 @@
 namespace mono
 {
     struct TextDefinition;
+    class IRenderBuffer;
 
     //! Draws a quad
     void DrawQuad(const math::Quad& quad,
@@ -55,11 +56,6 @@ namespace mono
                     float size,
                     const std::shared_ptr<IColorShader>& shader);
 
-    void DrawParticlePoints(const std::vector<math::Vector>& points,
-                            const std::vector<mono::Color::RGBA>& colors,
-                            size_t count,
-                            const std::shared_ptr<IPointSpriteShader>& shader);
-
     void DrawShape(const std::vector<math::Vector>& shape1,
                    const std::vector<math::Vector>& shape2,
                    const mono::Color::RGBA& color,
@@ -69,4 +65,9 @@ namespace mono
                               const std::vector<math::Vector>& texture_coordinates,
                               const std::vector<unsigned short>& indices,
                               const std::shared_ptr<ITextureShader>& shader);
+
+    void DrawParticlePoints(const mono::IRenderBuffer* position,
+                            const mono::IRenderBuffer* color,
+                            size_t count,
+                            const std::shared_ptr<IPointSpriteShader>& shader);
 }

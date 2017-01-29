@@ -10,6 +10,8 @@
 
 namespace mono
 {
+    class IRenderBuffer;
+
     class ParticleEmitter : public mono::IUpdatable, public mono::IDrawable
     {
     public:
@@ -25,6 +27,8 @@ namespace mono
         };
 
         ParticleEmitter(const Configuration& config, ParticlePool& pool);
+        ~ParticleEmitter();
+
         void SetPosition(const math::Vector& position);
 
         virtual void doUpdate(unsigned int delta);
@@ -34,5 +38,8 @@ namespace mono
         const Configuration m_config;
         math::Vector m_position;
         ParticlePool& m_pool;
+
+        std::unique_ptr<IRenderBuffer> m_positionBuffer;
+        std::unique_ptr<IRenderBuffer> m_colorBuffer;
     };
 }

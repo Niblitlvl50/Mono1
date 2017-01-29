@@ -10,9 +10,11 @@
 #include "Shader/ITextureShader.h"
 #include "Shader/IMorphingShader.h"
 #include "Shader/IPointSpriteShader.h"
+#include "IRenderBuffer.h"
 
 #include <cmath>
 #include <cassert>
+#include <cstdio>
 
 void mono::DrawQuad(const math::Quad& quad,
                     const mono::Color::RGBA& color,
@@ -200,32 +202,6 @@ void mono::DrawPoints(const std::vector<math::Vector>& vertices,
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawParticlePoints(const std::vector<math::Vector>& points,
-                              const std::vector<mono::Color::RGBA>& colors,
-                              size_t count,
-                              const std::shared_ptr<IPointSpriteShader>& shader)
-{
-    glEnable(GL_POINT_SPRITE);
-    glDepthMask(GL_FALSE);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-
-    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, points.data());
-    glVertexAttribPointer(shader->GetColorAttributeLocation(), 4, GL_FLOAT, GL_FALSE, 0, colors.data());
-
-    glDrawArrays(GL_POINTS, 0, count);
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-
-    glDisable(GL_POINT_SPRITE);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
-
 void mono::DrawShape(const std::vector<math::Vector>& shape1,
                      const std::vector<math::Vector>& shape2,
                      const mono::Color::RGBA& color,
@@ -272,3 +248,31 @@ void mono::DrawTexturedGeometry(const std::vector<math::Vector>& vertices,
     glDisableVertexAttribArray(1);
 }
 
+void mono::DrawParticlePoints(const IRenderBuffer* position,
+                              const IRenderBuffer* color,
+                              size_t count,
+                              const std::shared_ptr<IPointSpriteShader>& shader)
+{
+    glEnable(GL_POINT_SPRITE);
+    glDepthMask(GL_FALSE);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    position->Use();
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    color->Use();
+    glVertexAttribPointer(shader->GetColorAttributeLocation(), 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+    glDrawArrays(GL_POINTS, 0, count);
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+
+    glDisable(GL_POINT_SPRITE);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    ClearRenderBuffer();
+}

@@ -30,5 +30,7 @@ namespace mono
         //! \return int
         virtual unsigned int Height() const = 0;
     };
+
+    void ClearTexture();
 }
 

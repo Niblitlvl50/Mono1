@@ -34,11 +34,12 @@ namespace mono
                                   const std::vector<unsigned short>& indices,
                                   const ITexturePtr& texture);
 
-        virtual void DrawPoints(const std::vector<math::Vector>& points,
-                                const std::vector<mono::Color::RGBA>& colors,
-                                size_t count,
-                                float point_size,
-                                const ITexturePtr& texture) const;
+        virtual void DrawParticlePoints(const IRenderBuffer* position,
+                                        const IRenderBuffer* color,
+                                        float point_size,
+                                        const ITexturePtr& texture,
+                                        size_t count);
+
 
         virtual void UseShader(const IShaderPtr& shader) const;
         virtual void UseTexture(const ITexturePtr& texture) const;
