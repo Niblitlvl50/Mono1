@@ -6,5 +6,17 @@
 
 namespace mono
 {
-    std::unique_ptr<IRenderBuffer> CreateRenderBuffer(mono::BufferType type, mono::BufferData data);
+    enum class BufferType
+    {
+        STATIC,
+        DYNAMIC
+    };
+
+    enum class BufferData
+    {
+        INT,
+        FLOAT
+    };
+
+    std::unique_ptr<IRenderBuffer> CreateRenderBuffer(mono::BufferType type, mono::BufferData data, uint count);
 }

@@ -2,6 +2,7 @@
 #pragma once
 
 #include "IRenderBuffer.h"
+#include "BufferFactory.h"
 
 namespace mono
 {
@@ -9,10 +10,9 @@ namespace mono
     {
     public:
     
-        RenderBuffer(BufferType type, BufferData data);
+        RenderBuffer(BufferType type, BufferData data, uint count);
         ~RenderBuffer();
 
-        void Initialize(uint count);
         void UpdateData(const void* data, uint offset, uint count);
         void Use() const;
         uint Id() const;

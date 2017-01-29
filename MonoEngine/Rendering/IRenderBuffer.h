@@ -5,18 +5,6 @@
 
 namespace mono
 {
-    enum class BufferType
-    {
-        STATIC,
-        DYNAMIC
-    };
-
-    enum class BufferData
-    {
-        INT,
-        FLOAT
-    };
-
     class IRenderBuffer
     {
     public:
@@ -24,7 +12,6 @@ namespace mono
         virtual ~IRenderBuffer()
         { }
 
-        virtual void Initialize(uint count) = 0;
         virtual void UpdateData(const void* data, uint offset, uint count) = 0;
         virtual void Use() const = 0;
         virtual uint Id() const = 0;

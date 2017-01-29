@@ -15,11 +15,10 @@ ParticleEmitter::ParticleEmitter(const Configuration& config, ParticlePool& pool
       m_position(config.position),
       m_pool(pool)
 {
-    m_positionBuffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT);
-    m_positionBuffer->Initialize(m_pool.m_poolSize * 2);
+    const uint pool_size = m_pool.m_poolSize;
 
-    m_colorBuffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT); 
-    m_colorBuffer->Initialize(m_pool.m_poolSize * 4);
+    m_positionBuffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 2);
+    m_colorBuffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 4); 
 
     ClearRenderBuffer();
 }
