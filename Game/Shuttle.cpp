@@ -96,9 +96,9 @@ Shuttle::Shuttle(const math::Vector& position, mono::EventHandler& eventHandler)
     m_right_booster->SetRotation(math::PI_2());
     m_right_booster->SetPosition(math::Vector(0.6f, 0.0f));
     
+    AddChild(std::make_shared<game::TrailEffect>(mPosition));
     AddChild(m_left_booster);
     AddChild(m_right_booster);
-    AddChild(std::make_shared<game::TrailEffect>(mPosition));
 
     SetProperty(EntityProperties::DAMAGABLE);
     
