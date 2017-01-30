@@ -34,6 +34,12 @@ namespace mono
                                   const std::vector<unsigned short>& indices,
                                   const ITexturePtr& texture);
 
+        virtual void DrawGeometry(const IRenderBuffer* vertices,
+                                  const IRenderBuffer* texture_coordinates,
+                                  size_t offset,
+                                  size_t count,
+                                  const ITexturePtr& texture);
+
         virtual void DrawParticlePoints(const IRenderBuffer* position,
                                         const IRenderBuffer* color,
                                         float point_size,

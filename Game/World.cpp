@@ -11,6 +11,8 @@
 #include "IRenderer.h"
 #include "IPhysicsZone.h"
 #include "RenderLayers.h"
+#include "Rendering/IRenderBuffer.h"
+#include "Rendering/BufferFactory.h"
 #include "Texture/TextureFactory.h"
 
 #include "Math/Quad.h"
@@ -21,7 +23,7 @@ namespace
     struct TerrainDrawData
     {
         mono::ITexturePtr texture;
-        size_t index;
+        size_t offset;
         size_t count;
     };
 
@@ -30,12 +32,13 @@ namespace
     public:
 
         StaticTerrainBlock(size_t vertex_count, size_t polygon_count)
+            : m_index(0)
         {
             m_static_physics.body = mono::PhysicsFactory::CreateStaticBody();
 
-            m_vertices.reserve(vertex_count);
-            m_texture_coordinates.reserve(vertex_count);
             m_draw_data.reserve(polygon_count);
+            m_vertex_buffer = mono::CreateRenderBuffer(mono::BufferType::STATIC, mono::BufferData::FLOAT, vertex_count * 2);
+            m_texture_buffer = mono::CreateRenderBuffer(mono::BufferType::STATIC, mono::BufferData::FLOAT, vertex_count * 2);
         }
 
         void AddPolygon(const world::PolygonData& polygon)
@@ -45,33 +48,37 @@ namespace
             m_static_physics.shapes.push_back(shape);
 
             TerrainDrawData draw_data;
-            draw_data.texture = mono::CreateTexture(polygon.texture);
-            draw_data.index = m_vertices.size();
+            draw_data.offset = m_index;
             draw_data.count = polygon.vertices.size();
+            draw_data.texture = mono::CreateTexture(polygon.texture);
 
             m_draw_data.emplace_back(draw_data);
 
-            m_vertices.insert(m_vertices.end(), polygon.vertices.begin(), polygon.vertices.end());
+            std::vector<math::Vector> texture_coordinates;
+            texture_coordinates.reserve(polygon.vertices.size());
 
             math::Quad bounding_box = math::Quad(math::INF, math::INF, -math::INF, -math::INF);
             for(const math::Vector& vertex : polygon.vertices)
                 bounding_box |= vertex;
 
             for(const math::Vector& vertex : polygon.vertices)
-                m_texture_coordinates.push_back(math::MapVectorInQuad(vertex, bounding_box) * polygon.texture_repeate);
+                texture_coordinates.push_back(math::MapVectorInQuad(vertex, bounding_box) * polygon.texture_repeate);
+
+            m_vertex_buffer->UpdateData(polygon.vertices.data(), draw_data.offset * 2, draw_data.count * 2);
+            m_texture_buffer->UpdateData(texture_coordinates.data(), draw_data.offset * 2, draw_data.count * 2);
+
+            m_index += draw_data.count;
         }
 
         virtual void doDraw(mono::IRenderer& renderer) const
         {
             for(const TerrainDrawData& draw_data : m_draw_data)
             {
-                std::vector<unsigned short> indices;
-                indices.reserve(draw_data.count);
-
-                for(unsigned int index = 0; index < draw_data.count; ++index)
-                    indices.push_back(index + draw_data.index);
-
-                renderer.DrawGeometry(m_vertices, m_texture_coordinates, indices, draw_data.texture);
+                renderer.DrawGeometry(m_vertex_buffer.get(),
+                                      m_texture_buffer.get(),
+                                      draw_data.offset,
+                                      draw_data.count,
+                                      draw_data.texture);
             }
         }
 
@@ -80,10 +87,11 @@ namespace
             return math::Quad(-math::INF, -math::INF, math::INF, math::INF);
         }
 
+        uint m_index;
         mono::PhysicsData m_static_physics;
 
-        std::vector<math::Vector> m_vertices;
-        std::vector<math::Vector> m_texture_coordinates;
+        std::unique_ptr<mono::IRenderBuffer> m_vertex_buffer;
+        std::unique_ptr<mono::IRenderBuffer> m_texture_buffer;
         std::vector<TerrainDrawData> m_draw_data;
     };
 }

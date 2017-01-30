@@ -248,6 +248,32 @@ void mono::DrawTexturedGeometry(const std::vector<math::Vector>& vertices,
     glDisableVertexAttribArray(1);
 }
 
+void mono::DrawTexturedGeometry(const mono::IRenderBuffer* vertices,
+                                const mono::IRenderBuffer* texture_coordinates,
+                                size_t offset,
+                                size_t count,
+                                const std::shared_ptr<ITextureShader>& shader)
+{
+    shader->SetShade(mono::Color::RGBA());
+    shader->SetAlphaTexture(false);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    vertices->Use();
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    texture_coordinates->Use();
+    glVertexAttribPointer(shader->GetTextureAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    glDrawArrays(GL_TRIANGLE_FAN, offset, count);
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+
+    ClearRenderBuffer();
+}
+
 void mono::DrawParticlePoints(const IRenderBuffer* position,
                               const IRenderBuffer* color,
                               size_t count,

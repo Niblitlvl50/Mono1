@@ -49,7 +49,8 @@ std::vector<std::shared_ptr<editor::PolygonEntity>> editor::LoadPolygons(const c
         for(const math::Vector& vertex : polygon.vertices)
             polygon_entity->AddVertex(math::Transform(invert_transform, vertex));
 
-        polygon_data.push_back(polygon_entity);
+        if(!polygon.vertices.empty())
+            polygon_data.push_back(polygon_entity);
     }
 
     return polygon_data;

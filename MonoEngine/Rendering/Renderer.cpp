@@ -179,6 +179,18 @@ void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std
     ::DrawTexturedGeometry(vertices, texture_coordinates, indices, mTextureShader);
 }
 
+void Renderer::DrawGeometry(const IRenderBuffer* vertices,
+                            const IRenderBuffer* texture_coordinates,
+                            size_t offset,
+                            size_t count,
+                            const ITexturePtr& texture)
+{
+    UseTexture(texture);
+    UseShader(mTextureShader);
+
+    ::DrawTexturedGeometry(vertices, texture_coordinates, offset, count, mTextureShader);
+}
+
 void Renderer::DrawParticlePoints(const IRenderBuffer* position,
                                   const IRenderBuffer* color,
                                   float point_size,
