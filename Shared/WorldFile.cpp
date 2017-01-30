@@ -1,10 +1,3 @@
-//
-//  WorldFile.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 21/07/16.
-//
-//
 
 #include "WorldFile.h"
 #include <cstdio>
@@ -24,10 +17,10 @@ bool world::WriteWorld(File::FilePtr& file, const LevelFileHeader& level)
 
         std::fwrite(&polygon.position,          sizeof(math::Vector), 1,          file.get());
         std::fwrite(&polygon.local_offset,      sizeof(math::Vector), 1,          file.get());
-        std::fwrite(&polygon.rotation,          sizeof(float),          1,          file.get());
-        std::fwrite(&polygon.texture_repeate,   sizeof(float),          1,          file.get());
-        std::fwrite(&polygon.texture,           sizeof(char),          64,          file.get());
-        std::fwrite(&n_vertices,                sizeof(int),            1,          file.get());
+        std::fwrite(&polygon.rotation,          sizeof(float),        1,          file.get());
+        std::fwrite(&polygon.texture_repeate,   sizeof(float),        1,          file.get());
+        std::fwrite(&polygon.texture,           sizeof(char),        64,          file.get());
+        std::fwrite(&n_vertices,                sizeof(int),          1,          file.get());
         std::fwrite(polygon.vertices.data(),    sizeof(math::Vector), n_vertices, file.get());
     }
 
