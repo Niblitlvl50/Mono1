@@ -7,7 +7,7 @@
 namespace mono
 {
     template <typename T>
-    inline bool FindAndRemove(std::vector<std::shared_ptr<T>>& collection, const std::shared_ptr<T>& object)
+    inline bool FindAndRemove(std::vector<T>& collection, const T& object)
     {
         const auto it = std::find(collection.begin(), collection.end(), object);
         if(it != collection.end())
