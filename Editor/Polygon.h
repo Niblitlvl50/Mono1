@@ -1,10 +1,3 @@
-//
-//  Polygon.h
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 25/06/16.
-//
-//
 
 #pragma once
 
@@ -51,13 +44,5 @@ namespace editor
         std::vector<math::Vector> m_textureCoordinates;
         float m_texture_repeate;
         char m_texture_name[32];
-    };
-
-    struct Polygon
-    {
-        std::vector<math::Vector> vertices;
-        std::vector<math::Vector> texture_coordinates;
-        math::Vector centroid;
-        float texture_repeate;
     };
 }

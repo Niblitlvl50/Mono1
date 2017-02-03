@@ -3,11 +3,18 @@
 
 #include "IDrawable.h"
 #include "MonoPtrFwd.h"
+#include "Math/Vector.h"
 #include <vector>
 
 namespace editor
 {
-    struct Polygon;
+    struct Polygon
+    {
+        std::vector<math::Vector> vertices;
+        std::vector<math::Vector> texture_coordinates;
+        math::Vector centroid;
+        float texture_repeate;
+    };
     
     class PolygonVisualizer : public mono::IDrawable
     {
