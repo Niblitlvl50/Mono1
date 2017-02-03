@@ -1,10 +1,3 @@
-//
-//  Editor.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 02/07/16.
-//
-//
 
 #pragma once
 
@@ -19,6 +12,8 @@
 #include "Polygon.h"
 #include "Path.h"
 #include "Grabber.h"
+
+#include "IObjectProxy.h"
 
 class ImGuiRenderer;
 
@@ -52,12 +47,12 @@ namespace editor
         void OnTextureRepeate(float repeate);
         void OnTextureChanged(int texture_index);
         void OnPathName(const char* new_name);
-        void OnDeletePolygon();
+        void OnDeleteObject();
 
         void EditorMenuCallback(EditorMenuOptions index);
         void ToolsMenuCallback(ToolsMenuOptions index);
 
-    private:
+    //private:
 
         mono::IWindowPtr m_window;
         mono::EventHandler& m_eventHandler;
@@ -69,13 +64,12 @@ namespace editor
         std::shared_ptr<ImGuiRenderer> m_guiRenderer;
         std::shared_ptr<editor::UserInputController> m_userInputController;
 
-        std::shared_ptr<editor::PolygonEntity> m_selected_polygon;
-        std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
-
-        std::shared_ptr<editor::PathEntity> m_selected_path;
-        std::vector<std::shared_ptr<editor::PathEntity>> m_paths;
-
         std::vector<editor::Grabber> m_grabbers;
+
+        uint m_seleced_id;
+        std::vector<std::unique_ptr<IObjectProxy>> m_object_proxies;
+        std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
+        std::vector<std::shared_ptr<editor::PathEntity>> m_paths;
 
         mono::EventToken<event::SurfaceChangedEvent> m_surfaceChangedToken;
     };

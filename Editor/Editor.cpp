@@ -1,10 +1,3 @@
-//
-//  Editor.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 02/07/16.
-//
-//
 
 #include "Editor.h"
 
@@ -34,6 +27,9 @@
 
 #include "EditorConfig.h"
 #include "WorldSerializer.h"
+
+#include "ObjectProxies/PolygonProxy.h"
+#include "ObjectProxies/PathProxy.h"
 
 #include "Visualizers/GridVisualizer.h"
 #include "Visualizers/GrabberVisualizer.h"
@@ -83,6 +79,20 @@ namespace
         return -1;
     }
 
+    template <typename T>
+    T FindObject(uint id, std::vector<T>& collection)
+    {
+        const auto find_func = [id](const T& object) {
+            return id == object->Id();
+        };
+
+        auto it = std::find_if(collection.begin(), collection.end(), find_func);
+        if(it != collection.end())
+            return *it;
+
+        return nullptr;
+    }
+
     void SetupIcons(editor::UIContext& context, std::unordered_map<unsigned int, mono::ITexturePtr>& textures)
     {
         mono::ITexturePtr texture = mono::CreateTexture("textures/placeholder.png");
@@ -99,7 +109,8 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     : m_window(window),
       m_eventHandler(event_handler),
       m_inputHandler(event_handler),
-      m_fileName(file_name)
+      m_fileName(file_name),
+      m_seleced_id(-1)
 {
     using namespace std::placeholders;
 
@@ -110,7 +121,7 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     m_context.texture_repeate_callback = std::bind(&Editor::OnTextureRepeate, this, _1);
     m_context.texture_changed_callback = std::bind(&Editor::OnTextureChanged, this, _1);
     m_context.path_name_callback = std::bind(&Editor::OnPathName, this, _1);
-    m_context.delete_callback = std::bind(&Editor::OnDeletePolygon, this);
+    m_context.delete_callback = std::bind(&Editor::OnDeleteObject, this);
     m_context.editorMenuCallback = std::bind(&Editor::EditorMenuCallback, this, _1);
     m_context.toolsMenuCallback = std::bind(&Editor::ToolsMenuCallback, this, _1);
 
@@ -126,9 +137,9 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     for(auto& polygon : polygons)
         AddPolygon(polygon);
 
-    m_paths = LoadPaths("world.paths");
-    for(auto& path : m_paths)
-        AddEntity(path, 1);
+    const auto& paths = LoadPaths("world.paths");
+    for(auto& path : paths)
+        AddPath(path);
 }
 
 Editor::~Editor()
@@ -179,59 +190,53 @@ bool Editor::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 
 void Editor::UpdateUI()
 {
-    m_context.has_polygon_selection = (m_selected_polygon != nullptr);
-    m_context.has_path_selection    = (m_selected_path != nullptr);
+    auto polygon = FindObject(m_seleced_id, m_polygons);
+    auto path = FindObject(m_seleced_id, m_paths);
 
-    if(m_selected_polygon)
+    m_context.has_polygon_selection = (polygon != nullptr);
+    m_context.has_path_selection    = (path != nullptr);
+
+    if(polygon)
     {
-        const math::Vector& position = m_selected_polygon->Position();
+        const math::Vector& position = polygon->Position();
         m_context.position_x = position.x;
         m_context.position_y = position.y;
-        m_context.rotation = m_selected_polygon->Rotation();
-        m_context.texture_repeate = m_selected_polygon->GetTextureRepate();
-        m_context.texture_index = FindTextureIndex(m_selected_polygon->GetTexture());
+        m_context.rotation = polygon->Rotation();
+        m_context.texture_repeate = polygon->GetTextureRepate();
+        m_context.texture_index = FindTextureIndex(polygon->GetTexture());
     }
-    else if(m_selected_path)
+    else if(path)
     {
-        const math::Vector& position = m_selected_path->Position();
+        const math::Vector& position = path->Position();
         m_context.position_x = position.x;
         m_context.position_y = position.y;
         m_context.rotation = 0.0f;
-        m_context.path_name = m_selected_path->m_name.c_str();
+        m_context.path_name = path->m_name.c_str();
     }
 }
 
 void Editor::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
 {
     AddEntity(polygon, 1);
+    m_object_proxies.push_back(std::make_unique<PolygonProxy>(polygon->Id(), this));
     m_polygons.push_back(polygon);
 }
 
 void Editor::AddPath(const std::shared_ptr<editor::PathEntity>& path)
 {
     AddEntity(path, 1);
+    m_object_proxies.push_back(std::make_unique<PathProxy>(path->Id(), this));
     m_paths.push_back(path);
 }
 
 void Editor::SelectEntity(const mono::IEntityPtr& entity)
 {
-    m_selected_polygon = nullptr;
-    m_selected_path = nullptr;
+    m_seleced_id = (entity != nullptr) ? entity->Id() : -1;
 
-    for(auto& polygon : m_polygons)
+    for(auto& proxy : m_object_proxies)
     {
-        const bool selected = (polygon == entity);
-        polygon->SetSelected(selected);
-        if(selected)
-            m_selected_polygon = polygon;
-    }
-
-    for(auto& path : m_paths)
-    {
-        const bool selected = (path == entity);
-        path->SetSelected(selected);
-        if(selected)
-            m_selected_path = path;
+        const bool selected = (proxy->Id() == m_seleced_id);
+        proxy->SetSelected(selected);
     }
 
     UpdateGrabbers();
@@ -264,36 +269,15 @@ editor::Grabber* Editor::FindGrabber(const math::Vector& position)
 
 void Editor::UpdateGrabbers()
 {
-    using namespace std::placeholders;
+    const uint id = m_seleced_id;
 
-    m_grabbers.clear();
+    const auto find_func = [id](const std::unique_ptr<IObjectProxy>& proxy) {
+        return id == proxy->Id();
+    };
 
-    if(m_selected_polygon)
-    {
-        const math::Matrix& transform = m_selected_polygon->Transformation();
-
-        const auto& vertices = m_selected_polygon->GetVertices();
-        for(size_t index = 0; index < vertices.size(); ++index)
-        {
-            Grabber grab;
-            grab.position = math::Transform(transform, vertices[index]);
-            grab.callback = std::bind(&PolygonEntity::SetVertex, m_selected_polygon, _1, index);
-            m_grabbers.push_back(grab);
-        }
-    }
-    else if(m_selected_path)
-    {
-        const math::Matrix& transform = m_selected_path->Transformation();
-
-        const auto& vertices = m_selected_path->m_points;
-        for(size_t index = 0; index < vertices.size(); ++index)
-        {
-            Grabber grab;
-            grab.position = math::Transform(transform, vertices[index]);
-            grab.callback = std::bind(&PathEntity::SetVertex, m_selected_path, _1, index);
-            m_grabbers.push_back(grab);
-        }
-    }
+    auto it = std::find_if(m_object_proxies.begin(), m_object_proxies.end(), find_func);
+    if(it != m_object_proxies.end())
+        m_grabbers = (*it)->GetGrabbers();
 }
 
 void Editor::OnContextMenu(int index)
@@ -303,47 +287,63 @@ void Editor::OnContextMenu(int index)
 
 void Editor::OnTextureRepeate(float repeate)
 {
-    m_selected_polygon->SetTextureRepeate(repeate);
+    std::shared_ptr<PolygonEntity> polygon = FindObject(m_seleced_id, m_polygons);
+    if(polygon)
+        polygon->SetTextureRepeate(repeate);
 }
 
 void Editor::OnTextureChanged(int texture_index)
 {
-    m_selected_polygon->SetTexture(avalible_textures[texture_index]);
+    std::shared_ptr<PolygonEntity> polygon = FindObject(m_seleced_id, m_polygons);
+    if(polygon)
+        polygon->SetTexture(avalible_textures[texture_index]);
 }
 
 void Editor::OnPathName(const char* new_name)
 {
-    m_selected_path->m_name = new_name;
+    std::shared_ptr<PathEntity> path = FindObject(m_seleced_id, m_paths);
+    if(path)
+        path->m_name = new_name;
 }
 
-void Editor::OnDeletePolygon()
+void Editor::OnDeleteObject()
 {
-    m_context.has_polygon_selection = false;
-    m_context.has_path_selection = false;
-    m_grabbers.clear();
+    auto polygon = FindObject(m_seleced_id, m_polygons);
+    auto path = FindObject(m_seleced_id, m_paths);
 
-    if(m_selected_polygon)
+    const uint id = m_seleced_id;
+    const auto find_func = [id](const std::unique_ptr<IObjectProxy>& proxy) {
+        return id == proxy->Id();
+    };
+
+    auto it = std::find_if(m_object_proxies.begin(), m_object_proxies.end(), find_func);
+    if(it != m_object_proxies.end())
+        m_object_proxies.erase(it);
+
+    if(polygon)
     {
-        const auto remove_polygon_func = [this] {
-            auto it = std::find(m_polygons.begin(), m_polygons.end(), m_selected_polygon);
+        const auto remove_polygon_func = [this, polygon] {
+            auto it = std::find(m_polygons.begin(), m_polygons.end(), polygon);
             m_polygons.erase(it);
-            RemoveEntity(m_selected_polygon);
-            m_selected_polygon = nullptr;
+            RemoveEntity(polygon);
         };
 
         SchedulePreFrameTask(remove_polygon_func);
     }
-    else if(m_selected_path)
+    else if(path)
     {
-        const auto remove_path_func = [this] {
-            auto it = std::find(m_paths.begin(), m_paths.end(), m_selected_path);
+        const auto remove_path_func = [this, path] {
+            auto it = std::find(m_paths.begin(), m_paths.end(), path);
             m_paths.erase(it);
-            RemoveEntity(m_selected_path);
-            m_selected_path = nullptr;
+            RemoveEntity(path);
         };
 
         SchedulePreFrameTask(remove_path_func);
     }
+
+    m_context.has_polygon_selection = false;
+    m_context.has_path_selection = false;
+    m_grabbers.clear();
 }
 
 void Editor::EditorMenuCallback(EditorMenuOptions option)
