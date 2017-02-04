@@ -75,6 +75,25 @@ math::Vector math::CentroidOfPolygon(const std::vector<math::Vector>& points)
     return centroid;
 }
 
+bool math::PointInsidePolygon(const math::Vector& point, const std::vector<math::Vector>& polygon)
+{
+    bool inside = false;
+
+    for(size_t i = 0, j = polygon.size() -1; i < polygon.size(); j = i++)
+    {
+        const math::Vector& i_point = polygon[i];
+        const math::Vector& j_point = polygon[j];
+
+        const bool test1 = (i_point.y > point.y) != (j_point.y > point.y);
+        const bool test2 = (point.x < (j_point.x - i_point.x) * (point.y - i_point.y) / (j_point.y - i_point.y) + i_point.x);
+
+        if(test1 && test2)
+            inside = !inside;
+    }
+
+    return inside;
+}
+
 bool math::IsPolygonClockwise(const std::vector<math::Vector>& points)
 {
     float sum = 0.0f;

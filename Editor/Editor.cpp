@@ -218,14 +218,14 @@ void Editor::UpdateUI()
 void Editor::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
 {
     AddEntity(polygon, 1);
-    m_object_proxies.push_back(std::make_unique<PolygonProxy>(polygon->Id(), this));
+    m_object_proxies.push_back(std::make_unique<PolygonProxy>(polygon));
     m_polygons.push_back(polygon);
 }
 
 void Editor::AddPath(const std::shared_ptr<editor::PathEntity>& path)
 {
     AddEntity(path, 1);
-    m_object_proxies.push_back(std::make_unique<PathProxy>(path->Id(), this));
+    m_object_proxies.push_back(std::make_unique<PathProxy>(path));
     m_paths.push_back(path);
 }
 
@@ -241,6 +241,17 @@ void Editor::SelectEntity(const mono::IEntityPtr& entity)
 
     UpdateGrabbers();
     UpdateUI();
+}
+
+IObjectProxy* Editor::FindProxyObject(const math::Vector& position)
+{
+    for(auto& proxy : m_object_proxies)
+    {
+        if(proxy->Intersects(position))
+            return proxy.get();
+    }
+
+    return nullptr;
 }
 
 void Editor::SelectGrabber(const math::Vector& position)

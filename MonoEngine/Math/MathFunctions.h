@@ -15,6 +15,7 @@ namespace math
 
     // Pass in at least 3 points, else you will get "nan nan" back.
     math::Vector CentroidOfPolygon(const std::vector<math::Vector>& points);
+    bool PointInsidePolygon(const math::Vector& point, const std::vector<math::Vector>& polygon);
 
     // Check if a polygon is clockwise oriented or not
     bool IsPolygonClockwise(const std::vector<math::Vector>& points);

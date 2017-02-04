@@ -2,23 +2,25 @@
 #pragma once
 
 #include "IObjectProxy.h"
+#include <memory>
 
 namespace editor
 {
-    class Editor;
+    class PathEntity;
 
     class PathProxy : public editor::IObjectProxy
     {
     public:
-    
-        PathProxy(uint id, Editor* editor);
+
+        PathProxy(const std::shared_ptr<PathEntity>& path);
 
         virtual uint Id() const;
+        virtual mono::IEntityPtr Entity();
         virtual void SetSelected(bool selected);
         virtual bool Intersects(const math::Vector& position) const;
         virtual std::vector<Grabber> GetGrabbers() const;
 
-        const uint m_id;
-        Editor* m_editor;
+    private:
+        std::shared_ptr<PathEntity> m_path;
     };
 }

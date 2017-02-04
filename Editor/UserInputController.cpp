@@ -143,7 +143,13 @@ bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)
         if(m_grabber)
             return true;
 
-        auto entity = m_editor->FindEntityFromPoint(world_position);
+        //auto entity = m_editor->FindEntityFromPoint(world_position);
+        
+        mono::IEntityPtr entity;
+        IObjectProxy* proxy = m_editor->FindProxyObject(world_position);
+        if(proxy)
+            entity = proxy->Entity();
+
         m_editor->SelectEntity(entity);
         m_activeTool->HandleMouseDown(world_position, entity);
         handled = m_activeTool->IsActive();
