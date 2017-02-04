@@ -225,7 +225,7 @@ void Editor::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
 void Editor::AddPath(const std::shared_ptr<editor::PathEntity>& path)
 {
     AddEntity(path, 1);
-    m_object_proxies.push_back(std::make_unique<PathProxy>(path));
+    m_object_proxies.push_back(std::make_unique<PathProxy>(path, this));
     m_paths.push_back(path);
 }
 
@@ -266,7 +266,7 @@ void Editor::SelectGrabber(const math::Vector& position)
 
 editor::Grabber* Editor::FindGrabber(const math::Vector& position)
 {
-    const float threshold = m_camera->GetViewport().mB.x / m_window->Size().x * 5.0f;
+    const float threshold = GetPickingDistance();
 
     for(auto& grabber : m_grabbers)
     {
@@ -280,6 +280,8 @@ editor::Grabber* Editor::FindGrabber(const math::Vector& position)
 
 void Editor::UpdateGrabbers()
 {
+    m_grabbers.clear();
+
     const uint id = m_seleced_id;
 
     const auto find_func = [id](const std::unique_ptr<IObjectProxy>& proxy) {
@@ -289,6 +291,11 @@ void Editor::UpdateGrabbers()
     auto it = std::find_if(m_object_proxies.begin(), m_object_proxies.end(), find_func);
     if(it != m_object_proxies.end())
         m_grabbers = (*it)->GetGrabbers();
+}
+
+float Editor::GetPickingDistance() const
+{
+    return m_camera->GetViewport().mB.x / m_window->Size().x * 5.0f;
 }
 
 void Editor::OnContextMenu(int index)

@@ -45,6 +45,8 @@ namespace editor
         Grabber* FindGrabber(const math::Vector& position);
         void UpdateGrabbers();
 
+        float GetPickingDistance() const;
+
         void OnContextMenu(int index);
         void OnTextureRepeate(float repeate);
         void OnTextureChanged(int texture_index);

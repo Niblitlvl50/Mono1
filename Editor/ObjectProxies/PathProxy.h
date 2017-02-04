@@ -7,12 +7,13 @@
 namespace editor
 {
     class PathEntity;
+    class Editor;
 
     class PathProxy : public editor::IObjectProxy
     {
     public:
 
-        PathProxy(const std::shared_ptr<PathEntity>& path);
+        PathProxy(const std::shared_ptr<PathEntity>& path, Editor* editor);
 
         virtual uint Id() const;
         virtual mono::IEntityPtr Entity();
@@ -22,5 +23,6 @@ namespace editor
 
     private:
         std::shared_ptr<PathEntity> m_path;
+        Editor* m_editor;
     };
 }
