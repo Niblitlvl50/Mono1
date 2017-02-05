@@ -34,20 +34,21 @@ void PolygonEntity::Draw(mono::IRenderer& renderer) const
     
     constexpr mono::Color::RGBA line_color(0.0f, 0.0f, 0.0f);
     constexpr mono::Color::RGBA point_color(0.0f, 1.0f, 0.7f);
-    constexpr mono::Color::RGBA selected_color(0.5f, 0.5f, 0.5f);
+    constexpr mono::Color::RGBA selected_color(0.0f, 1.0f, 0.0f);
 
     std::vector<unsigned short> indices;
 
     for(size_t index = 0; index < m_points.size(); ++index)
         indices.push_back(index);
 
-    const float line_width = m_selected ? 5.0f : 2.0f;
-    const mono::Color::RGBA& color = m_selected ? selected_color : line_color;
+    if(m_selected)
+        renderer.DrawClosedPolyline(m_points, selected_color, 6.0f);
 
     renderer.DrawGeometry(m_points, m_textureCoordinates, indices, m_texture);
-    renderer.DrawClosedPolyline(m_points, color, line_width);
+    renderer.DrawClosedPolyline(m_points, line_color, 2.0f);
     renderer.DrawPoints(m_points, point_color, 4.0f);
     renderer.DrawPoints({ mBasePoint }, point_color, 4.0f);
+
 }
 
 void PolygonEntity::Update(unsigned int delta)

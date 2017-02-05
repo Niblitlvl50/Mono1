@@ -21,12 +21,12 @@ PathEntity::PathEntity(const std::string& name, const std::vector<math::Vector>&
 
 void PathEntity::Draw(mono::IRenderer& renderer) const
 {
-    constexpr mono::Color::RGBA line_color(1.0f, 0.0f, 0.0f, 0.2f);
-    constexpr mono::Color::RGBA point_color(1.0f, 0.0f, 1.0f, 0.8f);
-    constexpr mono::Color::RGBA selected_color(0.4f, 0.4f, 0.4f);
+    constexpr mono::Color::RGBA line_color(0.0f, 0.0f, 0.0f, 1.0f);
+    constexpr mono::Color::RGBA point_color(0.0f, 1.0f, 0.7f);
+    constexpr mono::Color::RGBA selected_color(0.0f, 1.0f, 0.0f);
 
     if(m_selected)
-        renderer.DrawPolyline(m_points, selected_color, 3.0f);
+        renderer.DrawPolyline(m_points, selected_color, 5.0f);
 
     renderer.DrawPolyline(m_points, line_color, 2.0f);
     renderer.DrawPoints(m_points, point_color, 4.0f);
