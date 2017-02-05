@@ -25,6 +25,8 @@ namespace editor
         void AddVertex(const math::Vector& vertex);
         void SetVertex(const math::Vector& vertex, size_t index);
 
+        void SetName(const char* new_name);
+
         std::string m_name;
         std::vector<math::Vector> m_points;
         bool m_selected;

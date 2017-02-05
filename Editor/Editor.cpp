@@ -8,6 +8,10 @@
 #include "Texture/TextureFactory.h"
 #include "Texture/ITexture.h"
 
+#include "Events/EventFuncFwd.h"
+#include "Events/SurfaceChangedEvent.h"
+#include "EventHandler/EventHandler.h"
+
 #include "ZoneBase.h"
 #include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"
@@ -17,20 +21,13 @@
 #include "Math/MathFunctions.h"
 
 #include "UserInputController.h"
-
 #include "ImGuiInterfaceDrawer.h"
 #include "ImGuiImpl/ImGuiRenderer.h"
-
-#include "Events/EventFuncFwd.h"
-#include "Events/SurfaceChangedEvent.h"
-#include "EventHandler/EventHandler.h"
-
 #include "EditorConfig.h"
+#include "Textures.h"
 #include "WorldSerializer.h"
-
 #include "ObjectProxies/PolygonProxy.h"
 #include "ObjectProxies/PathProxy.h"
-
 #include "Visualizers/GridVisualizer.h"
 #include "Visualizers/GrabberVisualizer.h"
 
@@ -54,30 +51,6 @@ namespace
         }
         mono::ISpritePtr m_sprite;
     };
-
-    const char* avalible_textures[] = {
-        "textures/placeholder.png",
-        "textures/stone_tileable.png",
-        "textures/gray_stone.png",
-        "textures/dark_stone.png",
-        "textures/brown_stone.png",
-        "textures/lava1.png",
-        "textures/lava2.png"
-        };
-
-    constexpr int n_textures = 7;
-
-    int FindTextureIndex(const char* texture)
-    {
-        for(int index = 0; index < n_textures; ++index)
-        {
-            const bool found = std::strstr(texture, avalible_textures[index]) != nullptr;
-            if(found)
-                return index;
-        }
-
-        return -1;
-    }
 
     template <typename T>
     T FindObject(uint id, std::vector<T>& collection)
@@ -118,9 +91,6 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     m_context.texture_items = avalible_textures;
 
     m_context.contextMenuCallback = std::bind(&Editor::OnContextMenu, this, _1);
-    m_context.texture_repeate_callback = std::bind(&Editor::OnTextureRepeate, this, _1);
-    m_context.texture_changed_callback = std::bind(&Editor::OnTextureChanged, this, _1);
-    m_context.path_name_callback = std::bind(&Editor::OnPathName, this, _1);
     m_context.delete_callback = std::bind(&Editor::OnDeleteObject, this);
     m_context.editorMenuCallback = std::bind(&Editor::EditorMenuCallback, this, _1);
     m_context.toolsMenuCallback = std::bind(&Editor::ToolsMenuCallback, this, _1);
@@ -190,29 +160,17 @@ bool Editor::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 
 void Editor::UpdateUI()
 {
-    auto polygon = FindObject(m_seleced_id, m_polygons);
-    auto path = FindObject(m_seleced_id, m_paths);
+    m_context.has_polygon_selection = false;
+    m_context.has_path_selection    = false;
 
-    m_context.has_polygon_selection = (polygon != nullptr);
-    m_context.has_path_selection    = (path != nullptr);
+    const uint id = m_seleced_id;
+    const auto find_func = [id](const std::unique_ptr<IObjectProxy>& proxy) {
+        return id == proxy->Id();
+    };
 
-    if(polygon)
-    {
-        const math::Vector& position = polygon->Position();
-        m_context.position_x = position.x;
-        m_context.position_y = position.y;
-        m_context.rotation = polygon->Rotation();
-        m_context.texture_repeate = polygon->GetTextureRepate();
-        m_context.texture_index = FindTextureIndex(polygon->GetTexture());
-    }
-    else if(path)
-    {
-        const math::Vector& position = path->Position();
-        m_context.position_x = position.x;
-        m_context.position_y = position.y;
-        m_context.rotation = 0.0f;
-        m_context.path_name = path->m_name.c_str();
-    }
+    auto it = std::find_if(m_object_proxies.begin(), m_object_proxies.end(), find_func);
+    if(it != m_object_proxies.end())
+        (*it)->UpdateUIContext(m_context);
 }
 
 void Editor::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
@@ -298,32 +256,6 @@ float Editor::GetPickingDistance() const
     return m_camera->GetViewport().mB.x / m_window->Size().x * 5.0f;
 }
 
-void Editor::OnContextMenu(int index)
-{
-    m_userInputController->HandleContextMenu(index);
-}
-
-void Editor::OnTextureRepeate(float repeate)
-{
-    std::shared_ptr<PolygonEntity> polygon = FindObject(m_seleced_id, m_polygons);
-    if(polygon)
-        polygon->SetTextureRepeate(repeate);
-}
-
-void Editor::OnTextureChanged(int texture_index)
-{
-    std::shared_ptr<PolygonEntity> polygon = FindObject(m_seleced_id, m_polygons);
-    if(polygon)
-        polygon->SetTexture(avalible_textures[texture_index]);
-}
-
-void Editor::OnPathName(const char* new_name)
-{
-    std::shared_ptr<PathEntity> path = FindObject(m_seleced_id, m_paths);
-    if(path)
-        path->m_name = new_name;
-}
-
 void Editor::OnDeleteObject()
 {
     auto polygon = FindObject(m_seleced_id, m_polygons);
@@ -362,6 +294,11 @@ void Editor::OnDeleteObject()
     m_context.has_polygon_selection = false;
     m_context.has_path_selection = false;
     m_grabbers.clear();
+}
+
+void Editor::OnContextMenu(int index)
+{
+    m_userInputController->HandleContextMenu(index);
 }
 
 void Editor::EditorMenuCallback(EditorMenuOptions option)

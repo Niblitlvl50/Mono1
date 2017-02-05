@@ -47,12 +47,8 @@ namespace editor
 
         float GetPickingDistance() const;
 
-        void OnContextMenu(int index);
-        void OnTextureRepeate(float repeate);
-        void OnTextureChanged(int texture_index);
-        void OnPathName(const char* new_name);
         void OnDeleteObject();
-
+        void OnContextMenu(int index);
         void EditorMenuCallback(EditorMenuOptions index);
         void ToolsMenuCallback(ToolsMenuOptions index);
 

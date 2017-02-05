@@ -11,7 +11,6 @@
 
 namespace editor
 {
-
     struct UIContext
     {
         int tools_texture_id = 0;

@@ -81,3 +81,8 @@ void PathEntity::SetVertex(const math::Vector& vertex, size_t index)
 
     m_points[index] = math::Transform(transform, vertex);
 }
+
+void PathEntity::SetName(const char* new_name)
+{
+    m_name = new_name;
+}

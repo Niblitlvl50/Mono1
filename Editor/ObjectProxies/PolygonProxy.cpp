@@ -1,7 +1,9 @@
 
 #include "PolygonProxy.h"
 #include "Grabber.h"
+#include "UIContext.h"
 #include "Polygon.h"
+#include "Textures.h"
 #include "Math/MathFunctions.h"
 #include "Math/Matrix.h"
 #include "Math/Quad.h"
@@ -61,4 +63,25 @@ std::vector<Grabber> PolygonProxy::GetGrabbers() const
     }
 
     return grabbers;
+}
+
+void PolygonProxy::UpdateUIContext(UIContext& context) const
+{
+    using namespace std::placeholders;
+    context.texture_repeate_callback = std::bind(&PolygonEntity::SetTextureRepeate, m_polygon, _1);
+
+    const auto callback = [this](int texture_index) {
+        m_polygon->SetTexture(avalible_textures[texture_index]);
+    };
+
+    context.texture_changed_callback = callback;
+
+    const math::Vector& position = m_polygon->Position();
+    context.position_x = position.x;
+    context.position_y = position.y;
+    context.rotation = m_polygon->Rotation();
+    context.texture_repeate = m_polygon->GetTextureRepate();
+    context.texture_index = FindTextureIndex(m_polygon->GetTexture());
+
+    context.has_polygon_selection = true;
 }
