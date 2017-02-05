@@ -158,21 +158,6 @@ bool Editor::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
     return false;
 }
 
-void Editor::UpdateUI()
-{
-    m_context.has_polygon_selection = false;
-    m_context.has_path_selection    = false;
-
-    const uint id = m_seleced_id;
-    const auto find_func = [id](const std::unique_ptr<IObjectProxy>& proxy) {
-        return id == proxy->Id();
-    };
-
-    auto it = std::find_if(m_object_proxies.begin(), m_object_proxies.end(), find_func);
-    if(it != m_object_proxies.end())
-        (*it)->UpdateUIContext(m_context);
-}
-
 void Editor::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
 {
     AddEntity(polygon, 1);
@@ -187,18 +172,23 @@ void Editor::AddPath(const std::shared_ptr<editor::PathEntity>& path)
     m_paths.push_back(path);
 }
 
-void Editor::SelectEntity(const mono::IEntityPtr& entity)
+void Editor::SelectProxyObject(IObjectProxy* proxy_object)
 {
-    m_seleced_id = (entity != nullptr) ? entity->Id() : -1;
+    m_seleced_id = -1;
+    m_context.has_polygon_selection = false;
+    m_context.has_path_selection    = false;
 
     for(auto& proxy : m_object_proxies)
+        proxy->SetSelected(false);
+
+    if(proxy_object)
     {
-        const bool selected = (proxy->Id() == m_seleced_id);
-        proxy->SetSelected(selected);
+        proxy_object->SetSelected(true);
+        proxy_object->UpdateUIContext(m_context);
+        m_seleced_id = proxy_object->Id();
     }
 
     UpdateGrabbers();
-    UpdateUI();
 }
 
 IObjectProxy* Editor::FindProxyObject(const math::Vector& position)

@@ -143,12 +143,10 @@ bool UserInputController::OnMouseDown(const event::MouseDownEvent& event)
         if(m_grabber)
             return true;
 
-        mono::IEntityPtr entity;
         IObjectProxy* proxy = m_editor->FindProxyObject(world_position);
-        if(proxy)
-            entity = proxy->Entity();
+        m_editor->SelectProxyObject(proxy);
 
-        m_editor->SelectEntity(entity);
+        mono::IEntityPtr entity = (proxy != nullptr) ? proxy->Entity() : nullptr;
         m_activeTool->HandleMouseDown(world_position, entity);
         handled = m_activeTool->IsActive();
     }

@@ -32,12 +32,11 @@ namespace editor
         virtual void OnUnload();
 
         bool OnSurfaceChanged(const event::SurfaceChangedEvent& event);
-        void UpdateUI();
 
         void AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon);
         void AddPath(const std::shared_ptr<editor::PathEntity>& path);
 
-        void SelectEntity(const mono::IEntityPtr& entity);
+        void SelectProxyObject(IObjectProxy* proxy_object);
 
         IObjectProxy* FindProxyObject(const math::Vector& position);
 
