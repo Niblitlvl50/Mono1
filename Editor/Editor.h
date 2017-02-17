@@ -9,11 +9,13 @@
 #include "UIContext.h"
 #include "ImGuiImpl/ImGuiInputHandler.h"
 
+#include "IObjectProxy.h"
 #include "Polygon.h"
 #include "Path.h"
 #include "Grabber.h"
 
-#include "IObjectProxy.h"
+#include "EntityRepository.h"
+
 
 class ImGuiRenderer;
 
@@ -60,6 +62,8 @@ namespace editor
         mono::ICameraPtr m_camera;
 
         editor::UIContext m_context;
+        EntityRepository m_entityRepository;
+
         std::shared_ptr<ImGuiRenderer> m_guiRenderer;
         std::shared_ptr<editor::UserInputController> m_userInputController;
 

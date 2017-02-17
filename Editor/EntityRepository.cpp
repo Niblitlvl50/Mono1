@@ -1,0 +1,40 @@
+
+#include "EntityRepository.h"
+#include "System/SysFile.h"
+
+#include "nlohmann_json/json.hpp"
+
+using namespace editor;
+
+namespace
+{
+    constexpr const char* entity_file = "editor_entities.json";
+}
+
+EntityRepository::EntityRepository()
+{
+}
+
+bool EntityRepository::LoadDefinitions()
+{
+    File::FilePtr file = File::OpenAsciiFile(entity_file);
+    if(!file)
+        return false;
+
+    std::vector<byte> file_data;
+    File::FileRead(file, file_data);
+    const nlohmann::json& json = nlohmann::json::parse(file_data);
+
+    const nlohmann::json& entities = json["entities"];
+    m_entities.reserve(entities.size());
+
+    for(auto& object : entities)
+    {
+        EntityDefinition definition;
+        definition.name = object["name"];
+        definition.sprite_file = object["sprite"];
+        m_entities.push_back(definition);
+    }
+
+    return true;
+}

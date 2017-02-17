@@ -39,7 +39,6 @@ namespace
         SpriteDrawable(const char* file)
         {
             m_sprite = mono::CreateSprite(file);
-            SetScale(math::Vector(1, 1));
         }
         virtual void Draw(mono::IRenderer& renderer) const
         {
@@ -66,13 +65,29 @@ namespace
         return nullptr;
     }
 
-    void SetupIcons(editor::UIContext& context, std::unordered_map<unsigned int, mono::ITexturePtr>& textures)
+    void SetupIcons(
+        editor::UIContext& context,
+        editor::EntityRepository& repository,
+        std::unordered_map<unsigned int, mono::ITexturePtr>& textures)
     {
         mono::ITexturePtr texture = mono::CreateTexture("textures/placeholder.png");
         textures.insert(std::make_pair(texture->Id(), texture));
 
         context.tools_texture_id = texture->Id();
         context.default_icon = math::Quad(0.0f, 0.0f, 1.0f, 1.0f);
+
+        for(const editor::EntityDefinition& def : repository.m_entities)
+        {
+            const mono::ISpritePtr sprite = mono::CreateSprite(def.sprite_file.c_str());
+            const mono::ITexturePtr sprite_texture = sprite->GetTexture();
+
+            textures.insert(std::make_pair(sprite_texture->Id(), sprite_texture));
+
+            editor::UIEntityItem item;
+            item.texture_id = sprite_texture->Id();
+            item.icon = sprite->GetTextureCoords();
+            context.entity_items.push_back(item);
+        }
     }
 }
 
@@ -95,8 +110,10 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     m_context.editorMenuCallback = std::bind(&Editor::EditorMenuCallback, this, _1);
     m_context.toolsMenuCallback = std::bind(&Editor::ToolsMenuCallback, this, _1);
 
+    m_entityRepository.LoadDefinitions();
+
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
-    SetupIcons(m_context, textures);
+    SetupIcons(m_context, m_entityRepository, textures);
 
     m_guiRenderer = std::make_shared<ImGuiRenderer>("editor_imgui.ini", m_window->Size(), textures);
 

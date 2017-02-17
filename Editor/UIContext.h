@@ -11,6 +11,12 @@
 
 namespace editor
 {
+    struct UIEntityItem
+    {
+        int texture_id = 0;
+        math::Quad icon;
+    };
+
     struct UIContext
     {
         int tools_texture_id = 0;
@@ -35,6 +41,9 @@ namespace editor
 
         int active_tool_index = 0;
 
+        std::vector<UIEntityItem> entity_items;
+        std::vector<Notification> notifications;
+
         std::function<void (float)> texture_repeate_callback;
         std::function<void (int)> texture_changed_callback;
         std::function<void (const char*)> path_name_callback;
@@ -42,7 +51,5 @@ namespace editor
         std::function<void (int)> contextMenuCallback;
         std::function<void (EditorMenuOptions option)> editorMenuCallback;
         std::function<void (ToolsMenuOptions option)> toolsMenuCallback;
-
-        std::vector<Notification> notifications;
     };
 }

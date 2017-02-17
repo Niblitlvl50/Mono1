@@ -1,0 +1,20 @@
+{
+    "entities": [
+        {
+            "name": "invader",
+            "sprite": "sprites/invader.sprite"
+        },
+        {
+            "name": "cacodemon",
+            "sprite": "sprites/cacodemon.sprite"
+        },
+        {
+            "name": "pathinvader",
+            "sprite": "sprites/invader.sprite"
+        },
+        {
+            "name": "blacksquare",
+            "sprite": "sprites/invader.sprite"
+        }
+    ]
+}
