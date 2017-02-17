@@ -77,6 +77,9 @@ namespace
             void* texture_id = reinterpret_cast<void*>(item.texture_id);
             const ImageCoords& icon = QuadToImageCoords(item.icon);
             ImGui::Image(texture_id, ImVec2(48.0f, 48.0f), icon.uv1, icon.uv2);
+            if(ImGui::IsItemHovered())
+                ImGui::SetTooltip("%s", item.tooltip.c_str());
+
             ImGui::NextColumn();
         }
 

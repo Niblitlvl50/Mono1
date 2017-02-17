@@ -15,6 +15,7 @@ namespace editor
     {
         int texture_id = 0;
         math::Quad icon;
+        std::string tooltip;
     };
 
     struct UIContext

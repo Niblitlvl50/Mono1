@@ -86,6 +86,7 @@ namespace
             editor::UIEntityItem item;
             item.texture_id = sprite_texture->Id();
             item.icon = sprite->GetTextureCoords();
+            item.tooltip = def.name;
             context.entity_items.push_back(item);
         }
     }
