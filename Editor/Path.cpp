@@ -6,7 +6,39 @@
 #include "Math/Matrix.h"
 #include "Math/MathFunctions.h"
 
+#include <cmath>
+
 using namespace editor;
+
+namespace
+{
+    std::vector<math::Vector> GenerateArrows(const std::vector<math::Vector>& points)
+    {
+        std::vector<math::Vector> vertices;
+        vertices.reserve(points.size() * 4);
+
+        for(size_t index = 1; index < points.size(); ++index)
+        {
+            const math::Vector& first = points[index -1];
+            const math::Vector& second = points[index];
+
+            const float angle = math::AngleBetweenPoints(first, second);
+
+            const float x1 = std::sin(angle + math::PI() + math::PI_4()) + second.x;
+            const float y1 = -std::cos(angle + math::PI() + math::PI_4()) + second.y;
+
+            const float x2 = std::sin(angle - math::PI_4()) + second.x;
+            const float y2 = -std::cos(angle - math::PI_4()) + second.y;
+
+            vertices.emplace_back(x1, y1);
+            vertices.emplace_back(second);
+            vertices.emplace_back(second);
+            vertices.emplace_back(x2, y2);
+        }
+
+        return vertices;
+    }
+}
 
 PathEntity::PathEntity(const std::string& name)
     : m_name(name),
@@ -16,7 +48,8 @@ PathEntity::PathEntity(const std::string& name)
 PathEntity::PathEntity(const std::string& name, const std::vector<math::Vector>& points)
     : PathEntity(name)
 {
-      m_points = points;
+    m_points = points;
+    mBasePoint = math::CentroidOfPolygon(m_points);
 }
 
 void PathEntity::Draw(mono::IRenderer& renderer) const
@@ -31,6 +64,9 @@ void PathEntity::Draw(mono::IRenderer& renderer) const
     renderer.DrawPolyline(m_points, line_color, 2.0f);
     renderer.DrawPoints(m_points, point_color, 4.0f);
     renderer.DrawPoints( { mBasePoint }, point_color, 4.0f);
+
+    const std::vector<math::Vector>& arrow_vertices = GenerateArrows(m_points);
+    renderer.DrawLines(arrow_vertices, point_color, 2.0f);
 }
 
 void PathEntity::Update(unsigned int delta)

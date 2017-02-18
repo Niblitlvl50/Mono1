@@ -31,6 +31,10 @@ namespace math
         return PI() / 2.0f;
     }
 
+    constexpr float PI_4() {
+        return PI() / 4.0f;
+    }
+
     constexpr float ToRadians(float degrees) {
         return degrees * PI() / 180.0f;
     }
