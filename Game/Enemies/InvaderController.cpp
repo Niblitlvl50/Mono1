@@ -101,7 +101,7 @@ void InvaderPathController::Initialize(Enemy* enemy)
 
 void InvaderPathController::doUpdate(unsigned int delta)
 {
-    constexpr float speed_mps = 50.0f;
+    constexpr float speed_mps = 2.0f;
     m_currentPosition += speed_mps * float(delta) / 1000.0f;
 
     const math::Vector& global_position = m_path->GetGlobalPosition();
@@ -124,7 +124,7 @@ void InvaderPathController::doUpdate(unsigned int delta)
         return;
 
     const float distance = math::Length(player_position - enemy_position);
-    if(distance < 200.0f)
+    if(distance < 7.0f)
     {
         const float angle = math::AngleBetweenPoints(player_position, enemy_position) + math::PI_2();
         m_fireCount += m_weapon->Fire(enemy_position, angle);
