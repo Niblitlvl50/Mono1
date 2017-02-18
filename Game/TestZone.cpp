@@ -146,7 +146,7 @@ void TestZone::OnLoad(mono::ICameraPtr camera)
     AddPhysicsEntity(enemy_factory->CreateBlackSquare(math::Vector(-30.0f, 70.0f)), MIDDLEGROUND);
     AddPhysicsEntity(enemy_factory->CreateBlackSquare(math::Vector(-30.0f, 70.0f)), MIDDLEGROUND);
 
-    const mono::IPathPtr& path = mono::CreatePath("paths/center_loop.path");
+    const mono::IPathPtr& path = mono::CreatePath("paths/smaller_loop.path");
     AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
     AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);
     AddPhysicsEntity(enemy_factory->CreatePathInvader(path), MIDDLEGROUND);

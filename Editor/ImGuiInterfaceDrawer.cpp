@@ -60,7 +60,8 @@ namespace
     void DrawEntityView(editor::UIContext& context)
     {
         constexpr int flags =
-            ImGuiWindowFlags_NoTitleBar |
+            //ImGuiWindowFlags_NoTitleBar |
+            ImGuiWindowFlags_AlwaysAutoResize |
             ImGuiWindowFlags_NoResize |
             ImGuiWindowFlags_NoMove |
             ImGuiWindowFlags_NoScrollbar |
@@ -68,17 +69,24 @@ namespace
 
         ImGui::SetNextWindowPos(ImVec2(30, 40));
         ImGui::SetNextWindowSize(ImVec2(135, 400));
-        ImGui::Begin("Entities", nullptr, flags);
-        ImGui::Text("Objects");
+
+        ImGui::Begin("Objects", nullptr, flags);
         ImGui::Columns(2, nullptr, false);
 
         for(const UIEntityItem& item : context.entity_items)
         {
             void* texture_id = reinterpret_cast<void*>(item.texture_id);
             const ImageCoords& icon = QuadToImageCoords(item.icon);
-            ImGui::Image(texture_id, ImVec2(48.0f, 48.0f), icon.uv1, icon.uv2);
-            if(ImGui::IsItemHovered())
+            ImGui::ImageButton(texture_id, ImVec2(48.0f, 48.0f), icon.uv1, icon.uv2, 0);
+
+            if(ImGui::IsItemActive())
+            {
+
+            }
+            else if(ImGui::IsItemHovered())
+            {
                 ImGui::SetTooltip("%s", item.tooltip.c_str());
+            }
 
             ImGui::NextColumn();
         }
@@ -100,7 +108,7 @@ namespace
             ImGui::SameLine();
             ImGui::Value("Y", context.position_y);
             ImGui::Value("Rotation", context.rotation);
-            if(ImGui::SliderFloat("Repeate", &context.texture_repeate, 1.0f, 10.0f))
+            if(ImGui::SliderFloat("Repeat", &context.texture_repeate, 1.0f, 10.0f))
                 context.texture_repeate_callback(context.texture_repeate);
 
             if(ImGui::Combo("Texture", &context.texture_index, context.texture_items, context.texture_items_count))
@@ -206,7 +214,7 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
     DrawContextMenu(m_context);
     DrawNotifications(m_context);
 
-    //ImGui::ShowTestWindow();
+    ImGui::ShowTestWindow();
     ImGui::Render();
 
     // Update UI stuff below
