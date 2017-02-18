@@ -1,5 +1,6 @@
 {
     "path_files": [
-        "paths/center_loop.path"
+        "paths/center_loop.path",
+        "paths/smaller_loop.path"
     ]
 }
