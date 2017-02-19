@@ -19,7 +19,6 @@ namespace editor
         virtual void Update(unsigned int delta);
         virtual math::Quad BoundingBox() const;
 
-        math::Quad LocalBoundingBox() const;
         void SetSelected(bool selected);
 
         void AddVertex(const math::Vector& vertex);
