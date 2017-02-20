@@ -106,10 +106,11 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     m_context.texture_items_count = n_textures;
     m_context.texture_items = avalible_textures;
 
-    m_context.contextMenuCallback = std::bind(&Editor::OnContextMenu, this, _1);
+    m_context.context_menu_callback = std::bind(&Editor::OnContextMenu, this, _1);
     m_context.delete_callback = std::bind(&Editor::OnDeleteObject, this);
-    m_context.editorMenuCallback = std::bind(&Editor::EditorMenuCallback, this, _1);
-    m_context.toolsMenuCallback = std::bind(&Editor::ToolsMenuCallback, this, _1);
+    m_context.editor_menu_callback = std::bind(&Editor::EditorMenuCallback, this, _1);
+    m_context.tools_menu_callback = std::bind(&Editor::ToolsMenuCallback, this, _1);
+    m_context.drop_callback = std::bind(&Editor::DropItemCallback, this, _1, _2);
 
     m_entityRepository.LoadDefinitions();
 
@@ -321,4 +322,9 @@ void Editor::EditorMenuCallback(EditorMenuOptions option)
 void Editor::ToolsMenuCallback(ToolsMenuOptions option)
 {
     m_userInputController->SelectTool(option);
+}
+
+void Editor::DropItemCallback(const std::string& id, const math::Vector& position)
+{
+    std::printf("Dropped: %s at %f - %f\n", id.c_str(), position.x, position.y);
 }

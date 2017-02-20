@@ -42,6 +42,8 @@ namespace editor
 
         int active_tool_index = 0;
 
+        std::string drag_name;
+
         std::vector<UIEntityItem> entity_items;
         std::vector<Notification> notifications;
 
@@ -49,8 +51,9 @@ namespace editor
         std::function<void (int)> texture_changed_callback;
         std::function<void (const char*)> path_name_callback;
         std::function<void ()> delete_callback;
-        std::function<void (int)> contextMenuCallback;
-        std::function<void (EditorMenuOptions option)> editorMenuCallback;
-        std::function<void (ToolsMenuOptions option)> toolsMenuCallback;
+        std::function<void (int)> context_menu_callback;
+        std::function<void (EditorMenuOptions option)> editor_menu_callback;
+        std::function<void (ToolsMenuOptions option)> tools_menu_callback;
+        std::function<void (const std::string& id, const math::Vector& position)> drop_callback;
     };
 }

@@ -52,6 +52,7 @@ namespace editor
         void OnContextMenu(int index);
         void EditorMenuCallback(EditorMenuOptions index);
         void ToolsMenuCallback(ToolsMenuOptions index);
+        void DropItemCallback(const std::string& id, const math::Vector& position);
 
     //private:
 

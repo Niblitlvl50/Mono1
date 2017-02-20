@@ -16,13 +16,13 @@ namespace
         if(ImGui::BeginMenu("Editor"))
         {
             if(ImGui::MenuItem("Open"))
-                context.editorMenuCallback(EditorMenuOptions::OPEN);
+                context.editor_menu_callback(EditorMenuOptions::OPEN);
 
             if(ImGui::MenuItem("Save"))
-                context.editorMenuCallback(EditorMenuOptions::SAVE);
+                context.editor_menu_callback(EditorMenuOptions::SAVE);
 
             if(ImGui::MenuItem("Export"))
-                context.editorMenuCallback(EditorMenuOptions::EXPORT);
+                context.editor_menu_callback(EditorMenuOptions::EXPORT);
 
             ImGui::EndMenu();
         }
@@ -30,19 +30,19 @@ namespace
         if(ImGui::BeginMenu("Tools"))
         {
             if(ImGui::MenuItem("Translate", "1", context.active_tool_index == 0))
-                context.toolsMenuCallback(ToolsMenuOptions::TRANSLATE_TOOL);
+                context.tools_menu_callback(ToolsMenuOptions::TRANSLATE_TOOL);
 
             if(ImGui::MenuItem("Rotate", "2", context.active_tool_index == 1))
-                context.toolsMenuCallback(ToolsMenuOptions::ROTATE_TOOL);
+                context.tools_menu_callback(ToolsMenuOptions::ROTATE_TOOL);
 
             if(ImGui::MenuItem("Polygon", "3", context.active_tool_index == 2))
-                context.toolsMenuCallback(ToolsMenuOptions::POLYGON_TOOL);
+                context.tools_menu_callback(ToolsMenuOptions::POLYGON_TOOL);
 
             if(ImGui::MenuItem("Polygon Brush", "4", context.active_tool_index == 3))
-                context.toolsMenuCallback(ToolsMenuOptions::POLYGON_BRUSH_TOOL);
+                context.tools_menu_callback(ToolsMenuOptions::POLYGON_BRUSH_TOOL);
 
             if(ImGui::MenuItem("Path drawer", "5", context.active_tool_index == 4))
-                context.toolsMenuCallback(ToolsMenuOptions::PATH_TOOL);
+                context.tools_menu_callback(ToolsMenuOptions::PATH_TOOL);
 
             ImGui::EndMenu();
         }
@@ -73,22 +73,29 @@ namespace
         ImGui::Begin("Objects", nullptr, flags);
         ImGui::Columns(2, nullptr, false);
 
-        for(const UIEntityItem& item : context.entity_items)
+        for(size_t index = 0; index < context.entity_items.size(); ++index)
         {
+            const UIEntityItem& item = context.entity_items[index];
+
             void* texture_id = reinterpret_cast<void*>(item.texture_id);
             const ImageCoords& icon = QuadToImageCoords(item.icon);
+
+            ImGui::PushID(index);
             ImGui::ImageButton(texture_id, ImVec2(48.0f, 48.0f), icon.uv1, icon.uv2, 0);
 
-            if(ImGui::IsItemActive())
-            {
-
-            }
+            if(ImGui::IsItemActive() && ImGui::IsMouseDragging())
+                context.drag_name = item.tooltip;
             else if(ImGui::IsItemHovered())
-            {
                 ImGui::SetTooltip("%s", item.tooltip.c_str());
-            }
 
             ImGui::NextColumn();
+            ImGui::PopID();
+        }
+
+        if(ImGui::IsMouseReleased(0) && !context.drag_name.empty())
+        {
+            const ImVec2& mouse_pos = ImGui::GetMousePos();
+            context.drop_callback(context.drag_name, math::Vector(mouse_pos.x, mouse_pos.y));
         }
 
         ImGui::End();
@@ -153,7 +160,7 @@ namespace
             ImGui::EndPopup();
 
             if(menu_index != -1)
-                context.contextMenuCallback(menu_index);
+                context.context_menu_callback(menu_index);
         }
     }
 
