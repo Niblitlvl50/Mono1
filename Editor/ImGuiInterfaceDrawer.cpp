@@ -92,10 +92,18 @@ namespace
             ImGui::PopID();
         }
 
-        if(ImGui::IsMouseReleased(0) && !context.drag_name.empty())
+        if(!context.drag_name.empty())
         {
-            const ImVec2& mouse_pos = ImGui::GetMousePos();
-            context.drop_callback(context.drag_name, math::Vector(mouse_pos.x, mouse_pos.y));
+            if(ImGui::IsMouseDragging())
+            {
+                ImGui::SetTooltip("%s", context.drag_name.c_str());
+            }
+            else if(ImGui::IsMouseReleased(0))
+            {
+                const ImVec2& mouse_pos = ImGui::GetMousePos();
+                context.drop_callback(context.drag_name, math::Vector(mouse_pos.x, mouse_pos.y));
+                context.drag_name.clear();
+            }
         }
 
         ImGui::End();
@@ -221,7 +229,7 @@ void ImGuiInterfaceDrawer::doUpdate(unsigned int delta)
     DrawContextMenu(m_context);
     DrawNotifications(m_context);
 
-    ImGui::ShowTestWindow();
+    //ImGui::ShowTestWindow();
     ImGui::Render();
 
     // Update UI stuff below
