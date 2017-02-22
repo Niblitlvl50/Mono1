@@ -33,7 +33,7 @@
         },
         {
             "taskName": "animator",
-            "args": ["./run_task.sh", "animationtool", "sprites/mushroom.sprite"]
+            "args": ["./run_task.sh", "animationtool", "sprites/cacodemon.sprite"]
         },
         {
             "taskName": "unittest",
