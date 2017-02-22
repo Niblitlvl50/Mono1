@@ -12,6 +12,7 @@
 #include "IObjectProxy.h"
 #include "Polygon.h"
 #include "Path.h"
+#include "SpriteEntity.h"
 #include "Grabber.h"
 
 #include "EntityRepository.h"
@@ -74,6 +75,7 @@ namespace editor
         std::vector<std::unique_ptr<IObjectProxy>> m_object_proxies;
         std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
         std::vector<std::shared_ptr<editor::PathEntity>> m_paths;
+        std::vector<std::shared_ptr<editor::SpriteEntity>> m_objects;
 
         mono::EventToken<event::SurfaceChangedEvent> m_surfaceChangedToken;
     };

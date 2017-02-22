@@ -15,6 +15,10 @@
         {
             "name": "blacksquare",
             "sprite": "sprites/invader.sprite"
+        },
+        {
+            "name": "shuttle",
+            "sprite": "sprites/shuttle.sprite"
         }
     ]
 }

@@ -1,24 +1,18 @@
 
 #include "Editor.h"
 
-#include "IRenderer.h"
 #include "ICamera.h"
 #include "IWindow.h"
 
 #include "Texture/TextureFactory.h"
 #include "Texture/ITexture.h"
 
+#include "Sprite/ISprite.h"
+#include "Sprite/SpriteFactory.h"
+
 #include "Events/EventFuncFwd.h"
 #include "Events/SurfaceChangedEvent.h"
 #include "EventHandler/EventHandler.h"
-
-#include "ZoneBase.h"
-#include "Sprite/ISprite.h"
-#include "Sprite/SpriteFactory.h"
-#include "EntityBase.h"
-#include "Color.h"
-#include "Math/Matrix.h"
-#include "Math/MathFunctions.h"
 
 #include "UserInputController.h"
 #include "ImGuiInterfaceDrawer.h"
@@ -28,29 +22,12 @@
 #include "WorldSerializer.h"
 #include "ObjectProxies/PolygonProxy.h"
 #include "ObjectProxies/PathProxy.h"
+#include "ObjectProxies/EntityProxy.h"
 #include "Visualizers/GridVisualizer.h"
 #include "Visualizers/GrabberVisualizer.h"
 
 namespace
 {
-    class SpriteDrawable : public mono::EntityBase
-    {
-    public:
-        SpriteDrawable(const char* file)
-        {
-            m_sprite = mono::CreateSprite(file);
-        }
-        virtual void Draw(mono::IRenderer& renderer) const
-        {
-            renderer.DrawSprite(*m_sprite);
-        }
-        virtual void Update(unsigned int delta)
-        {
-            m_sprite->doUpdate(delta);
-        }
-        mono::ISpritePtr m_sprite;
-    };
-
     template <typename T>
     T FindObject(uint id, std::vector<T>& collection)
     {
@@ -163,7 +140,6 @@ void Editor::OnLoad(mono::ICameraPtr camera)
     AddDrawable(m_guiRenderer, 2);
     AddDrawable(std::make_shared<GridVisualizer>(camera), 0);
     AddDrawable(std::make_shared<GrabberVisualizer>(m_grabbers), 2);
-    AddEntity(std::make_shared<SpriteDrawable>("sprites/shuttle.sprite"), 0);
 }
 
 void Editor::OnUnload()
@@ -330,8 +306,10 @@ void Editor::DropItemCallback(const std::string& id, const math::Vector& positio
     const math::Vector& world_pos = m_camera->ScreenToWorld(position, window_size);
 
     const EntityDefinition& def = m_entityRepository.GetDefinitionFromName(id);
-    auto sprite_entity = std::make_shared<SpriteDrawable>(def.sprite_file.c_str());
+    auto sprite_entity = std::make_shared<SpriteEntity>(def.sprite_file.c_str());
     sprite_entity->SetPosition(world_pos);
 
-    AddEntity(sprite_entity, 0);
+    m_object_proxies.push_back(std::make_unique<EntityProxy>(sprite_entity));
+
+    AddEntity(sprite_entity, 2);
 }
