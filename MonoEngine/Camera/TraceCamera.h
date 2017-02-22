@@ -1,10 +1,3 @@
-//
-//  TraceCamera.h
-//  Mono1
-//
-//  Created by Niblit on 2012-05-11.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #pragma once
 
@@ -31,6 +24,7 @@ namespace mono
         virtual void SetViewport(const math::Quad& viewport);
         virtual void SetTargetViewport(const math::Quad& target);
         virtual void SetPosition(const math::Vector& position);
+        virtual math::Vector ScreenToWorld(const math::Vector& screen_pos, const math::Vector& window_size) const;
 
     private:
 

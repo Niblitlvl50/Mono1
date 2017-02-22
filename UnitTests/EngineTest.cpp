@@ -89,7 +89,11 @@ namespace
         { }
         virtual void SetPosition(const math::Vector& position)
         { }
-        
+        math::Vector ScreenToWorld(const math::Vector& screen_pos, const math::Vector& window_size) const
+        {
+            return screen_pos;
+        }
+
         math::Quad mViewport;
         bool mUpdateCalled = false;
         bool mUnfollowCalled = false;

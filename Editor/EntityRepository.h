@@ -17,7 +17,9 @@ namespace editor
     public:
 
         EntityRepository();
+
         bool LoadDefinitions();
+        const EntityDefinition& GetDefinitionFromName(const std::string& name) const;
 
         std::vector<EntityDefinition> m_entities;
     };

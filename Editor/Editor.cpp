@@ -326,5 +326,12 @@ void Editor::ToolsMenuCallback(ToolsMenuOptions option)
 
 void Editor::DropItemCallback(const std::string& id, const math::Vector& position)
 {
-    std::printf("Dropped: %s at %f - %f\n", id.c_str(), position.x, position.y);
+    const math::Vector& window_size = m_window->Size();
+    const math::Vector& world_pos = m_camera->ScreenToWorld(position, window_size);
+
+    const EntityDefinition& def = m_entityRepository.GetDefinitionFromName(id);
+    auto sprite_entity = std::make_shared<SpriteDrawable>(def.sprite_file.c_str());
+    sprite_entity->SetPosition(world_pos);
+
+    AddEntity(sprite_entity, 0);
 }

@@ -38,3 +38,12 @@ bool EntityRepository::LoadDefinitions()
 
     return true;
 }
+
+const EntityDefinition& EntityRepository::GetDefinitionFromName(const std::string& name) const
+{
+    const auto find_func = [&name](const EntityDefinition& definition) {
+        return definition.name == name;
+    };
+
+    return *std::find_if(m_entities.begin(), m_entities.end(), find_func);
+}
