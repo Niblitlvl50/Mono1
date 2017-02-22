@@ -311,5 +311,5 @@ void Editor::DropItemCallback(const std::string& id, const math::Vector& positio
 
     m_object_proxies.push_back(std::make_unique<EntityProxy>(sprite_entity));
 
-    AddEntity(sprite_entity, 2);
+    AddEntity(sprite_entity, 1);
 }
