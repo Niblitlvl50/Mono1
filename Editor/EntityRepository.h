@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "Math/Vector.h"
+
 #include <string>
 #include <vector>
 
@@ -10,6 +12,7 @@ namespace editor
     {
         std::string name;
         std::string sprite_file;
+        math::Vector scale;
     };
 
     class EntityRepository

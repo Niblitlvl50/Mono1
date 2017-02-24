@@ -308,6 +308,7 @@ void Editor::DropItemCallback(const std::string& id, const math::Vector& positio
     const EntityDefinition& def = m_entityRepository.GetDefinitionFromName(id);
     auto sprite_entity = std::make_shared<SpriteEntity>(def.sprite_file.c_str());
     sprite_entity->SetPosition(world_pos);
+    sprite_entity->SetScale(def.scale);
 
     m_object_proxies.push_back(std::make_unique<EntityProxy>(sprite_entity));
 

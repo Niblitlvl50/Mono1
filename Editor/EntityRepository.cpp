@@ -1,7 +1,7 @@
 
 #include "EntityRepository.h"
 #include "System/SysFile.h"
-
+#include "Math/Serialize.h"
 #include "nlohmann_json/json.hpp"
 
 using namespace editor;
@@ -33,6 +33,7 @@ bool EntityRepository::LoadDefinitions()
         EntityDefinition definition;
         definition.name = object["name"];
         definition.sprite_file = object["sprite"];
+        definition.scale = object["scale"];
         m_entities.push_back(definition);
     }
 
