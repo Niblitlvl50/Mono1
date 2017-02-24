@@ -1,13 +1,7 @@
-//
-//  EditorConfig.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 24/07/16.
-//
-//
 
 #include "EditorConfig.h"
 #include "System/SysFile.h"
+#include "Math/Serialize.h"
 #include "nlohmann_json/json.hpp"
 
 #include <cstdio>
@@ -22,17 +16,8 @@ bool editor::SaveConfig(const char* config_file, const editor::Config& config)
 {
     nlohmann::json json;
 
-    json[camera_position] = {
-        config.cameraPosition.x,
-        config.cameraPosition.y
-    };
-    
-    json[camera_viewport] = {
-        config.cameraViewport.mA.x,
-        config.cameraViewport.mA.y,
-        config.cameraViewport.mB.x,
-        config.cameraViewport.mB.y
-    };
+    json[camera_position] = config.cameraPosition;
+    json[camera_viewport] = config.cameraViewport;
 
     const std::string& serialized_config = json.dump(4);
 
@@ -53,13 +38,8 @@ bool editor::LoadConfig(const char* config_file, editor::Config& config)
 
     const nlohmann::json& json = nlohmann::json::parse(file_data);
 
-    config.cameraPosition.x = json[camera_position][0];
-    config.cameraPosition.y = json[camera_position][1];
-
-    config.cameraViewport.mA.x = json[camera_viewport][0];
-    config.cameraViewport.mA.y = json[camera_viewport][1];
-    config.cameraViewport.mB.x = json[camera_viewport][2];
-    config.cameraViewport.mB.y = json[camera_viewport][3];
+    config.cameraPosition = json[camera_position];
+    config.cameraViewport = json[camera_viewport];
 
     return true;
 }
