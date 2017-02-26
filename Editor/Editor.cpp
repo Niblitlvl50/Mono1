@@ -19,6 +19,7 @@
 #include "ImGuiImpl/ImGuiRenderer.h"
 #include "EditorConfig.h"
 #include "Textures.h"
+#include "RenderLayers.h"
 #include "WorldSerializer.h"
 #include "ObjectProxies/PolygonProxy.h"
 #include "ObjectProxies/PathProxy.h"
@@ -137,9 +138,9 @@ void Editor::OnLoad(mono::ICameraPtr camera)
     m_userInputController = std::make_shared<editor::UserInputController>(camera, m_window, this, &m_context, m_eventHandler);
 
     AddUpdatable(std::make_shared<editor::ImGuiInterfaceDrawer>(m_context));
-    AddDrawable(m_guiRenderer, 2);
-    AddDrawable(std::make_shared<GridVisualizer>(camera), 0);
-    AddDrawable(std::make_shared<GrabberVisualizer>(m_grabbers), 2);
+    AddDrawable(m_guiRenderer, RenderLayer::UI);
+    AddDrawable(std::make_shared<GridVisualizer>(camera), RenderLayer::BACKGROUND);
+    AddDrawable(std::make_shared<GrabberVisualizer>(m_grabbers), RenderLayer::GRABBERS);
 }
 
 void Editor::OnUnload()
@@ -155,14 +156,14 @@ bool Editor::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 
 void Editor::AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon)
 {
-    AddEntity(polygon, 1);
+    AddEntity(polygon, RenderLayer::OBJECTS);
     m_object_proxies.push_back(std::make_unique<PolygonProxy>(polygon));
     m_polygons.push_back(polygon);
 }
 
 void Editor::AddPath(const std::shared_ptr<editor::PathEntity>& path)
 {
-    AddEntity(path, 1);
+    AddEntity(path, RenderLayer::OBJECTS);
     m_object_proxies.push_back(std::make_unique<PathProxy>(path, this));
     m_paths.push_back(path);
 }
@@ -312,5 +313,5 @@ void Editor::DropItemCallback(const std::string& id, const math::Vector& positio
 
     m_object_proxies.push_back(std::make_unique<EntityProxy>(sprite_entity));
 
-    AddEntity(sprite_entity, 1);
+    AddEntity(sprite_entity, RenderLayer::OBJECTS);
 }
