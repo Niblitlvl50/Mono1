@@ -67,6 +67,8 @@ std::vector<Grabber> PolygonProxy::GetGrabbers() const
 
 void PolygonProxy::UpdateUIContext(UIContext& context) const
 {
+    context.components = UIComponent::POSITIONAL | UIComponent::TEXTURAL;
+
     using namespace std::placeholders;
     context.texture_repeate_callback = std::bind(&PolygonEntity::SetTextureRepeate, m_polygon, _1);
 
@@ -82,6 +84,4 @@ void PolygonProxy::UpdateUIContext(UIContext& context) const
     context.rotation = m_polygon->Rotation();
     context.texture_repeate = m_polygon->GetTextureRepate();
     context.texture_index = FindTextureIndex(m_polygon->GetTexture());
-
-    context.has_polygon_selection = true;
 }

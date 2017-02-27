@@ -84,7 +84,7 @@ namespace
             ImGui::ImageButton(texture_id, ImVec2(48.0f, 48.0f), icon.uv1, icon.uv2, 0);
 
             if(ImGui::IsItemActive() && ImGui::IsMouseDragging())
-                context.drag_name = item.tooltip;
+                context.drag_context = item.tooltip;
             else if(ImGui::IsItemHovered())
                 ImGui::SetTooltip("%s", item.tooltip.c_str());
 
@@ -92,17 +92,17 @@ namespace
             ImGui::PopID();
         }
 
-        if(!context.drag_name.empty())
+        if(!context.drag_context.empty())
         {
             if(ImGui::IsMouseDragging())
             {
-                ImGui::SetTooltip("%s", context.drag_name.c_str());
+                ImGui::SetTooltip("%s", context.drag_context.c_str());
             }
             else if(ImGui::IsMouseReleased(0))
             {
                 const ImVec2& mouse_pos = ImGui::GetMousePos();
-                context.drop_callback(context.drag_name, math::Vector(mouse_pos.x, mouse_pos.y));
-                context.drag_name.clear();
+                context.drop_callback(context.drag_context, math::Vector(mouse_pos.x, mouse_pos.y));
+                context.drag_context.clear();
             }
         }
 
@@ -111,35 +111,35 @@ namespace
 
     void DrawSelectionView(editor::UIContext& context)
     {
-        if(!context.has_polygon_selection && !context.has_path_selection)
+        if(context.components & UIComponent::NONE)
             return;
 
         constexpr int flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
         ImGui::Begin("Selection", nullptr, ImVec2(250, 120), true, flags);
 
-        if(context.has_polygon_selection)
+        if(context.components & UIComponent::NAME)
+        {
+            char buffer[100] = { 0 };
+            snprintf(buffer, 100, "%s", context.name);
+            if(ImGui::InputText("", buffer, 100))
+                context.name_callback(buffer);
+        }
+
+        if(context.components & UIComponent::POSITIONAL)
         {
             ImGui::Value("X", context.position_x);
             ImGui::SameLine();
             ImGui::Value("Y", context.position_y);
             ImGui::Value("Rotation", context.rotation);
+        }
+        
+        if(context.components & UIComponent::TEXTURAL)
+        {
             if(ImGui::SliderFloat("Repeat", &context.texture_repeate, 1.0f, 10.0f))
                 context.texture_repeate_callback(context.texture_repeate);
 
             if(ImGui::Combo("Texture", &context.texture_index, context.texture_items, context.texture_items_count))
                 context.texture_changed_callback(context.texture_index);
-        }
-        else if(context.has_path_selection)
-        {
-            char buffer[100] = { 0 };
-            snprintf(buffer, 100, "%s", context.path_name);
-            if(ImGui::InputText("", buffer, 100))
-                context.path_name_callback(buffer);
-
-            ImGui::Value("X", context.position_x);
-            ImGui::SameLine();
-            ImGui::Value("Y", context.position_y);
-            ImGui::Value("Rotation", context.rotation);
         }
 
         if(ImGui::Button("Delete"))

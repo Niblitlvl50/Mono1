@@ -80,14 +80,14 @@ std::vector<Grabber> PathProxy::GetGrabbers() const
 
 void PathProxy::UpdateUIContext(UIContext& context) const
 {
+    context.components = UIComponent::NAME | UIComponent::POSITIONAL;
+
     using namespace std::placeholders;
-    context.path_name_callback = std::bind(&PathEntity::SetName, m_path, _1);
+    context.name_callback = std::bind(&PathEntity::SetName, m_path, _1);
+    context.name = m_path->m_name.c_str();
 
     const math::Vector& position = m_path->Position();
     context.position_x = position.x;
     context.position_y = position.y;
     context.rotation = 0.0f;
-    context.path_name = m_path->m_name.c_str();
-
-    context.has_path_selection = true;
 }

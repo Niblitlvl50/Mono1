@@ -183,8 +183,7 @@ void Editor::AddObject(const std::shared_ptr<editor::SpriteEntity>& object)
 void Editor::SelectProxyObject(IObjectProxy* proxy_object)
 {
     m_seleced_id = -1;
-    m_context.has_polygon_selection = false;
-    m_context.has_path_selection    = false;
+    m_context.components = UIComponent::NONE;
 
     for(auto& proxy : m_object_proxies)
         proxy->SetSelected(false);
@@ -258,6 +257,7 @@ void Editor::OnDeleteObject()
 {
     auto polygon = FindObject(m_seleced_id, m_polygons);
     auto path = FindObject(m_seleced_id, m_paths);
+    auto object = FindObject(m_seleced_id, m_objects);
 
     const uint id = m_seleced_id;
     const auto find_func = [id](const std::unique_ptr<IObjectProxy>& proxy) {
@@ -288,9 +288,18 @@ void Editor::OnDeleteObject()
 
         SchedulePreFrameTask(remove_path_func);
     }
+    else if(object)
+    {
+        const auto remove_object_func = [this, object] {
+            auto it = std::find(m_objects.begin(), m_objects.end(), object);
+            m_objects.erase(it);
+            RemoveEntity(object);
+        };
 
-    m_context.has_polygon_selection = false;
-    m_context.has_path_selection = false;
+        SchedulePreFrameTask(remove_object_func);
+    }
+
+    m_context.components = UIComponent::NONE;
     m_grabbers.clear();
 }
 
