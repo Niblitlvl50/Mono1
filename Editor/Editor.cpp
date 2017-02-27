@@ -107,6 +107,10 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     const auto& paths = LoadPaths("world.paths");
     for(auto& path : paths)
         AddPath(path);
+
+    const auto& objects = LoadObjects("world.objects", m_entityRepository);
+    for(auto& object : objects)
+        AddObject(object);
 }
 
 Editor::~Editor()
@@ -115,6 +119,7 @@ Editor::~Editor()
 
     SavePolygons(m_fileName, m_polygons);
     SavePaths("world.paths", m_paths);
+    SaveObjects("world.objects", m_objects);
 
     editor::Config config;
     config.cameraPosition = m_camera->GetPosition();
@@ -166,6 +171,13 @@ void Editor::AddPath(const std::shared_ptr<editor::PathEntity>& path)
     AddEntity(path, RenderLayer::OBJECTS);
     m_object_proxies.push_back(std::make_unique<PathProxy>(path, this));
     m_paths.push_back(path);
+}
+
+void Editor::AddObject(const std::shared_ptr<editor::SpriteEntity>& object)
+{
+    AddEntity(object, RenderLayer::OBJECTS);
+    m_object_proxies.push_back(std::make_unique<EntityProxy>(object));
+    m_objects.push_back(object);
 }
 
 void Editor::SelectProxyObject(IObjectProxy* proxy_object)
@@ -293,6 +305,7 @@ void Editor::EditorMenuCallback(EditorMenuOptions option)
     {
         SavePolygons(m_fileName, m_polygons);
         SavePaths("world.paths", m_paths);
+        SaveObjects("world.objects", m_objects);
     }
 }
 
@@ -307,11 +320,9 @@ void Editor::DropItemCallback(const std::string& id, const math::Vector& positio
     const math::Vector& world_pos = m_camera->ScreenToWorld(position, window_size);
 
     const EntityDefinition& def = m_entityRepository.GetDefinitionFromName(id);
-    auto sprite_entity = std::make_shared<SpriteEntity>(def.sprite_file.c_str());
+    auto sprite_entity = std::make_shared<SpriteEntity>(def.name.c_str(), def.sprite_file.c_str());
     sprite_entity->SetPosition(world_pos);
     sprite_entity->SetScale(def.scale);
 
-    m_object_proxies.push_back(std::make_unique<EntityProxy>(sprite_entity));
-
-    AddEntity(sprite_entity, RenderLayer::OBJECTS);
+    AddObject(sprite_entity);
 }

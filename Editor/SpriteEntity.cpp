@@ -8,8 +8,9 @@
 
 using namespace editor;
 
-SpriteEntity::SpriteEntity(const char* file)
-    : m_selected(false)
+SpriteEntity::SpriteEntity(const char* name, const char* file)
+    : m_name(name),
+      m_selected(false)
 {
     m_sprite = mono::CreateSprite(file);
 }
@@ -37,4 +38,9 @@ void SpriteEntity::Update(unsigned int delta)
 void SpriteEntity::SetSelected(bool selected)
 {
     m_selected = selected;
+}
+
+const std::string& SpriteEntity::Name() const
+{
+    return m_name;
 }

@@ -38,6 +38,7 @@ namespace editor
 
         void AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon);
         void AddPath(const std::shared_ptr<editor::PathEntity>& path);
+        void AddObject(const std::shared_ptr<editor::SpriteEntity>& object);
 
         void SelectProxyObject(IObjectProxy* proxy_object);
 

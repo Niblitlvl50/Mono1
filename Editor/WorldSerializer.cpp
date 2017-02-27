@@ -2,9 +2,12 @@
 #include "WorldSerializer.h"
 #include "Polygon.h"
 #include "Path.h"
+#include "SpriteEntity.h"
 #include "Math/Matrix.h"
+#include "Math/Serialize.h"
 #include "System/SysFile.h"
 #include "WorldFile.h"
+#include "EntityRepository.h"
 
 #include "Paths/IPath.h"
 #include "Paths/PathFactory.h"
@@ -142,4 +145,61 @@ void editor::SavePaths(const char* file_name, const std::vector<std::shared_ptr<
 
     File::FilePtr file = File::CreateAsciiFile(file_name);
     std::fwrite(serialized_json.data(), serialized_json.length(), sizeof(char), file.get());
+}
+
+void editor::SaveObjects(const char* file_name, const std::vector<std::shared_ptr<editor::SpriteEntity>>& objects)
+{
+    nlohmann::json json_object_collection;
+
+    for(auto& object : objects)
+    {
+        nlohmann::json json_object;
+        json_object["name"] = object->Name();
+        json_object["position"] = object->Position();
+        //json_object["scale"] = object->Scale();
+        json_object["rotation"] = object->Rotation();
+
+        json_object_collection.push_back(json_object);
+    }
+
+    nlohmann::json json;
+    json["objects"] = json_object_collection;
+
+    const std::string& serialized_json = json.dump(4);
+
+    File::FilePtr file = File::CreateAsciiFile(file_name);
+    std::fwrite(serialized_json.data(), serialized_json.length(), sizeof(char), file.get());
+}
+
+std::vector<std::shared_ptr<editor::SpriteEntity>> editor::LoadObjects(const char* file_name, const editor::EntityRepository& entity_repo)
+{
+    std::vector<std::shared_ptr<editor::SpriteEntity>> objects;
+
+    File::FilePtr file = File::OpenAsciiFile(file_name);
+    if(!file)
+        return objects;
+
+    std::vector<byte> file_data;
+    File::FileRead(file, file_data);
+
+    const nlohmann::json& json = nlohmann::json::parse(file_data);
+    const nlohmann::json& json_objects = json["objects"];
+
+    for(const auto& json_object : json_objects)
+    {
+        const std::string& name = json_object["name"];
+        const math::Vector& position = json_object["position"];
+        const float rotation = json_object["rotation"];
+
+        const editor::EntityDefinition& def = entity_repo.GetDefinitionFromName(name);
+
+        auto sprite_object = std::make_shared<editor::SpriteEntity>(name.c_str(), def.sprite_file.c_str());
+        sprite_object->SetPosition(position);
+        sprite_object->SetScale(def.scale);
+        sprite_object->SetRotation(rotation);
+
+        objects.push_back(sprite_object);
+    }
+
+    return objects;
 }
