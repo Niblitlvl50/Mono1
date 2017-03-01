@@ -39,6 +39,14 @@
                 "x": 1.0,
                 "y": 1.0
             }
+        },
+        {
+            "name": "meteorite",
+            "sprite": "sprites/meteorite.sprite",
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
         }
     ]
 }
