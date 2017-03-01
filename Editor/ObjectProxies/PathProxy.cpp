@@ -80,7 +80,10 @@ std::vector<Grabber> PathProxy::GetGrabbers() const
 
 void PathProxy::UpdateUIContext(UIContext& context) const
 {
-    context.components = UIComponent::NAME | UIComponent::POSITIONAL;
+    context.components =
+        UIComponent::NAME |
+        UIComponent::NAME_EDITABLE |
+        UIComponent::POSITIONAL;
 
     using namespace std::placeholders;
     context.name_callback = std::bind(&PathEntity::SetName, m_path, _1);

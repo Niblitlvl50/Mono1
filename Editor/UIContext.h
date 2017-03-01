@@ -16,8 +16,9 @@ namespace editor
     {
         NONE = 1,
         NAME = 2,
-        POSITIONAL = 4,
-        TEXTURAL = 8
+        NAME_EDITABLE = 4,
+        POSITIONAL = 8,
+        TEXTURAL = 16
     };
 
     struct UIEntityItem

@@ -119,10 +119,20 @@ namespace
 
         if(context.components & UIComponent::NAME)
         {
+            const bool editable = context.components & UIComponent::NAME_EDITABLE;
+
             char buffer[100] = { 0 };
             snprintf(buffer, 100, "%s", context.name);
-            if(ImGui::InputText("", buffer, 100))
-                context.name_callback(buffer);
+
+            if(editable)
+            {
+                if(ImGui::InputText("", buffer, 100))
+                    context.name_callback(buffer);
+            }
+            else
+            {
+                ImGui::Text("%s", buffer);
+            }
         }
 
         if(context.components & UIComponent::POSITIONAL)
