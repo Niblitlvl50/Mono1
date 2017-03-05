@@ -1,11 +1,3 @@
-//
-//  Polygon.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 25/06/16.
-//
-//
-
 
 #include "Polygon.h"
 #include "IRenderer.h"
@@ -19,34 +11,44 @@
 
 #include <cassert>
 
+namespace
+{
+    constexpr mono::Color::RGBA line_color(0.0f, 0.0f, 0.0f);
+    constexpr mono::Color::RGBA point_color(0.0f, 1.0f, 0.7f);
+}
+
 using namespace editor;
 
 PolygonEntity::PolygonEntity()
     : m_selected(false),
-      m_texture_repeate(1.0f),
       m_texture_name("textures/placeholder.png")
 { }
+
+PolygonEntity::PolygonEntity(const std::vector<math::Vector>& points)
+    : PolygonEntity()
+{
+    mPosition = points.front();
+
+    m_points = points;
+    
+    for(math::Vector& vertex : m_points)
+        vertex -= mPosition;
+
+    RecalculateTextureCoordinates();
+    if(m_points.size() > 2)
+        mBasePoint = math::CentroidOfPolygon(m_points);
+}
 
 void PolygonEntity::Draw(mono::IRenderer& renderer) const
 {
     if(!m_texture)
         return;
     
-    constexpr mono::Color::RGBA line_color(0.0f, 0.0f, 0.0f);
-    constexpr mono::Color::RGBA point_color(0.0f, 1.0f, 0.7f);
     constexpr mono::Color::RGBA selected_color(0.0f, 1.0f, 0.0f);
-
-    std::vector<unsigned short> indices;
-
-    for(size_t index = 0; index < m_points.size(); ++index)
-        indices.push_back(index);
-
     if(m_selected)
         renderer.DrawClosedPolyline(m_points, selected_color, 6.0f);
 
-    renderer.DrawGeometry(m_points, m_textureCoordinates, indices, m_texture);
-    renderer.DrawClosedPolyline(m_points, line_color, 2.0f);
-    renderer.DrawPoints(m_points, point_color, 4.0f);
+    DrawPolygon(renderer, m_texture, m_points, m_textureCoordinates);
     renderer.DrawPoints({ mBasePoint }, point_color, 4.0f);
 }
 
@@ -83,6 +85,7 @@ void PolygonEntity::SetVertex(const math::Vector& vertex, size_t index)
     math::Inverse(transform);
 
     m_points[index] = math::Transform(transform, vertex);
+    RecalculateTextureCoordinates();
 }
 
 const std::vector<math::Vector>& PolygonEntity::GetVertices() const
@@ -98,17 +101,6 @@ void PolygonEntity::SetSelected(bool selected)
 bool PolygonEntity::IsSelected() const
 {
     return m_selected;
-}
-
-void PolygonEntity::SetTextureRepeate(float repeate)
-{
-    m_texture_repeate = repeate;
-    RecalculateTextureCoordinates();
-}
-
-float PolygonEntity::GetTextureRepate() const
-{
-    return m_texture_repeate;
 }
 
 void PolygonEntity::SetTexture(const char* texture)
@@ -142,8 +134,23 @@ void PolygonEntity::RecalculateTextureCoordinates()
     m_textureCoordinates.clear();
 
     const math::Quad& bb = LocalBoundingBox();
+    const math::Vector& repeate = (bb.mB - bb.mA) / 2.0f;
+
     for(const math::Vector& point : m_points)
-        m_textureCoordinates.push_back(math::MapVectorInQuad(point, bb) * m_texture_repeate);
+        m_textureCoordinates.push_back(math::MapVectorInQuad(point, bb) * repeate);
 }
 
+void editor::DrawPolygon(mono::IRenderer& renderer,
+                         const mono::ITexturePtr& texture,
+                         const std::vector<math::Vector>& points,
+                         const std::vector<math::Vector>& texture_coords)
+{
+    std::vector<unsigned short> indices;
+    for(size_t index = 0; index < points.size(); ++index)
+        indices.push_back(index);
+
+    renderer.DrawGeometry(points, texture_coords, indices, texture);
+    renderer.DrawClosedPolyline(points, line_color, 2.0f);
+    renderer.DrawPoints(points, point_color, 4.0f);
+}
 

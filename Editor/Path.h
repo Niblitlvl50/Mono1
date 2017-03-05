@@ -30,4 +30,6 @@ namespace editor
         std::vector<math::Vector> m_points;
         bool m_selected;
     };
+
+    void DrawPath(mono::IRenderer& renderer, const std::vector<math::Vector>& points);
 }

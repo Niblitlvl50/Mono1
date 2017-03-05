@@ -13,6 +13,7 @@ namespace editor
     public:
 
         PolygonEntity();
+        PolygonEntity(const std::vector<math::Vector>& points);
 
         virtual void Draw(mono::IRenderer& renderer) const;
         virtual void Update(unsigned int delta);
@@ -24,9 +25,6 @@ namespace editor
 
         void SetSelected(bool selected);
         bool IsSelected() const;
-
-        void SetTextureRepeate(float repeate);
-        float GetTextureRepate() const;
 
         void SetTexture(const char* texture);
         const char* GetTexture() const;
@@ -42,7 +40,11 @@ namespace editor
 
         std::vector<math::Vector> m_points;
         std::vector<math::Vector> m_textureCoordinates;
-        float m_texture_repeate;
         char m_texture_name[32];
     };
+
+    void DrawPolygon(mono::IRenderer& renderer,
+                     const mono::ITexturePtr& texture,
+                     const std::vector<math::Vector>& points,
+                     const std::vector<math::Vector>& texture_coords);
 }

@@ -1,21 +1,14 @@
-//
-//  PolygonTool.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 02/07/16.
-//
-//
 
 #pragma once
 
 #include "ITool.h"
 #include "Math/Vector.h"
 #include <memory>
+#include <vector>
 
 namespace editor
 {
     class Editor;
-    class PolygonEntity;
 
     class PolygonTool : public ITool
     {
@@ -32,11 +25,9 @@ namespace editor
         virtual void HandleMousePosition(const math::Vector& world_pos);
 
         Editor* m_editor;
-        std::shared_ptr<editor::PolygonEntity> m_polygon;
-        bool m_firstPoint;
 
-        math::Vector m_lastAddedPoint;
         math::Vector m_mousePosition;
+        std::vector<math::Vector> m_points;
 
         class Visualizer;
         std::shared_ptr<Visualizer> m_visualizer;

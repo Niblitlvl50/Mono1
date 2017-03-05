@@ -1,10 +1,4 @@
-//
-//  EditorCameraController.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 26/06/16.
-//
-//
+
 
 #include "UserInputController.h"
 #include "Editor.h"
@@ -120,6 +114,9 @@ void UserInputController::HandleContextMenu(int item_index)
 
 void UserInputController::SelectTool(ToolsMenuOptions option)
 {
+    if(m_activeTool)
+        m_activeTool->End();
+
     const ToolData& tool_data = tools[option];
 
     m_activeTool = tool_data.tool;

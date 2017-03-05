@@ -38,6 +38,10 @@ namespace
 
         return vertices;
     }
+
+    constexpr mono::Color::RGBA line_color(0.0f, 0.0f, 0.0f, 0.4f);
+    constexpr mono::Color::RGBA arrow_color(0.0f, 1.0f, 0.7f, 0.4f);
+    constexpr mono::Color::RGBA selected_color(0.0f, 1.0f, 0.0f);
 }
 
 PathEntity::PathEntity(const std::string& name)
@@ -54,18 +58,11 @@ PathEntity::PathEntity(const std::string& name, const std::vector<math::Vector>&
 
 void PathEntity::Draw(mono::IRenderer& renderer) const
 {
-    constexpr mono::Color::RGBA line_color(0.0f, 0.0f, 0.0f, 0.4f);
-    constexpr mono::Color::RGBA arrow_color(0.0f, 1.0f, 0.7f, 0.4f);
-    constexpr mono::Color::RGBA selected_color(0.0f, 1.0f, 0.0f);
-
     if(m_selected)
         renderer.DrawPolyline(m_points, selected_color, 4.0f);
 
-    renderer.DrawPolyline(m_points, line_color, 2.0f);
+    DrawPath(renderer, m_points);
     renderer.DrawPoints( { mBasePoint }, arrow_color, 4.0f);
-
-    const std::vector<math::Vector>& arrow_vertices = GenerateArrows(m_points);
-    renderer.DrawLines(arrow_vertices, arrow_color, 2.0f);
 }
 
 void PathEntity::Update(unsigned int delta)
@@ -111,4 +108,12 @@ void PathEntity::SetVertex(const math::Vector& vertex, size_t index)
 void PathEntity::SetName(const char* new_name)
 {
     m_name = new_name;
+}
+
+void editor::DrawPath(mono::IRenderer& renderer, const std::vector<math::Vector>& points)
+{
+    renderer.DrawPolyline(points, line_color, 2.0f);
+
+    const std::vector<math::Vector>& arrow_vertices = GenerateArrows(points);
+    renderer.DrawLines(arrow_vertices, arrow_color, 2.0f);
 }

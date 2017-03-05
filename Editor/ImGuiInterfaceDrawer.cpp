@@ -145,9 +145,6 @@ namespace
         
         if(context.components & UIComponent::TEXTURAL)
         {
-            if(ImGui::SliderFloat("Repeat", &context.texture_repeate, 1.0f, 10.0f))
-                context.texture_repeate_callback(context.texture_repeate);
-
             if(ImGui::Combo("Texture", &context.texture_index, context.texture_items, context.texture_items_count))
                 context.texture_changed_callback(context.texture_index);
         }

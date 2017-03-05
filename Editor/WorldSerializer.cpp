@@ -43,7 +43,6 @@ std::vector<std::shared_ptr<editor::PolygonEntity>> editor::LoadPolygons(const c
         polygon_entity->SetPosition(polygon.position);
         polygon_entity->SetBasePoint(polygon.local_offset);
         polygon_entity->SetRotation(polygon.rotation);
-        polygon_entity->SetTextureRepeate(polygon.texture_repeate);
         polygon_entity->SetTexture(polygon.texture);
 
         math::Matrix invert_transform = polygon_entity->Transformation();
@@ -76,7 +75,6 @@ void editor::SavePolygons(const char* file_name, const std::vector<std::shared_p
         polygon_data.position = polygon_entity->Position();
         polygon_data.local_offset = polygon_entity->BasePoint();
         polygon_data.rotation = polygon_entity->Rotation();
-        polygon_data.texture_repeate = polygon_entity->GetTextureRepate();
 
         const char* texture = polygon_entity->GetTexture();
         const std::size_t string_length = std::strlen(texture);

@@ -69,9 +69,6 @@ void PolygonProxy::UpdateUIContext(UIContext& context) const
 {
     context.components = UIComponent::POSITIONAL | UIComponent::TEXTURAL;
 
-    using namespace std::placeholders;
-    context.texture_repeate_callback = std::bind(&PolygonEntity::SetTextureRepeate, m_polygon, _1);
-
     const auto callback = [this](int texture_index) {
         m_polygon->SetTexture(avalible_textures[texture_index]);
     };
@@ -82,6 +79,5 @@ void PolygonProxy::UpdateUIContext(UIContext& context) const
     context.position_x = position.x;
     context.position_y = position.y;
     context.rotation = m_polygon->Rotation();
-    context.texture_repeate = m_polygon->GetTextureRepate();
     context.texture_index = FindTextureIndex(m_polygon->GetTexture());
 }

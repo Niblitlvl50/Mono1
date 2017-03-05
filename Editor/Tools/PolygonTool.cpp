@@ -1,10 +1,3 @@
-//
-//  PolygonTool.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 02/07/16.
-//
-//
 
 #include "PolygonTool.h"
 #include "Editor.h"
@@ -13,21 +6,33 @@
 #include "Color.h"
 #include "Math/Quad.h"
 
+#include "Texture/TextureFactory.h"
+
 using namespace editor;
 
 class PolygonTool::Visualizer : public mono::IDrawable
 {
 public:
 
-    Visualizer(const math::Vector& last_point, const math::Vector& mouse_position)
-        : m_lastAddedPoint(last_point),
+    Visualizer(const std::vector<math::Vector>& points, const math::Vector& mouse_position)
+        : m_points(points),
           m_mousePosition(mouse_position)
-    { }
+    {
+        m_texture = mono::CreateTexture("textures/placeholder.png");
+    }
 
     virtual void doDraw(mono::IRenderer& renderer) const
     {
+        if(m_points.empty())
+            return;
+
+        std::vector<math::Vector> texture_points;
+        texture_points.resize(m_points.size());
+
+        DrawPolygon(renderer, m_texture, m_points, texture_points);
+
         constexpr mono::Color::RGBA color(1.0f, 0.0f, 0.0f, 0.2f);
-        const std::vector<math::Vector>& line = { m_lastAddedPoint, m_mousePosition };
+        const std::vector<math::Vector>& line = { m_points.front(), m_mousePosition };
         renderer.DrawLines(line, color, 2.0f);
     }
 
@@ -36,40 +41,40 @@ public:
         return math::Quad(-math::INF, -math::INF, math::INF, math::INF);
     }
 
-    const math::Vector& m_lastAddedPoint;
+    const std::vector<math::Vector>& m_points;
     const math::Vector& m_mousePosition;
+
+    mono::ITexturePtr m_texture;
 };
 
 PolygonTool::PolygonTool(Editor* editor)
     : m_editor(editor)
 {
-    m_visualizer = std::make_shared<Visualizer>(m_lastAddedPoint, m_mousePosition);
+    m_visualizer = std::make_shared<Visualizer>(m_points, m_mousePosition);
 }
 
 void PolygonTool::Begin()
 {
-    m_polygon = std::make_shared<editor::PolygonEntity>();
-    m_editor->AddPolygon(m_polygon);
-    m_firstPoint = true;
-
     m_editor->AddDrawable(m_visualizer, 1);
 }
 
 void PolygonTool::End()
 {
-    m_polygon = nullptr;
     m_editor->RemoveDrawable(m_visualizer);
 }
 
 bool PolygonTool::IsActive() const
 {
-    return m_polygon != nullptr;
+    return true;
 }
 
 void PolygonTool::HandleContextMenu(int menu_index)
 {
     if(menu_index == 0)
-        End();
+    {
+        m_editor->AddPolygon(std::make_shared<editor::PolygonEntity>(m_points));
+        m_points.clear();
+    }
 }
 
 void PolygonTool::HandleMouseDown(const math::Vector& world_pos, mono::IEntityPtr entity)
@@ -77,29 +82,10 @@ void PolygonTool::HandleMouseDown(const math::Vector& world_pos, mono::IEntityPt
 
 void PolygonTool::HandleMouseUp(const math::Vector& world_pos)
 {
-    if(!m_polygon)
-        return;
-
-    if(m_firstPoint)
-    {
-        m_polygon->SetPosition(world_pos);
-        m_polygon->AddVertex(math::zeroVec);
-
-        m_firstPoint = false;
-    }
-    else
-    {
-        const math::Vector& position = m_polygon->Position();
-        m_polygon->AddVertex(world_pos - position);
-    }
-
-    m_lastAddedPoint = world_pos;
+    m_points.push_back(world_pos);
 }
 
 void PolygonTool::HandleMousePosition(const math::Vector& world_pos)
 {
     m_mousePosition = world_pos;
-
-    if(m_firstPoint)
-        m_lastAddedPoint = world_pos;
 }

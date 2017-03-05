@@ -110,7 +110,7 @@ void PolygonBrushTool::HandleMousePosition(const math::Vector& world_pos)
     const math::Vector& position_diff = world_pos - m_previouslyAddedPoint;
     const float distance = math::Length(position_diff);
 
-    if(angle > threashold && distance > 5.0f)
+    if(angle > threashold && distance > 1.0f)
     {
         const math::Vector& position = m_polygon->Position();
         m_polygon->AddVertex(m_previousPoint - position);

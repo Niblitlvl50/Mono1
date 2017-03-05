@@ -49,7 +49,6 @@ namespace editor
         float position_y = 0.0f;
         float rotation = 0.0f;
 
-        float texture_repeate = 0.0f;
         int texture_index = 0;
 
         std::string drag_context;
@@ -57,7 +56,6 @@ namespace editor
         std::vector<UIEntityItem> entity_items;
         std::vector<Notification> notifications;
 
-        std::function<void (float)> texture_repeate_callback;
         std::function<void (int)> texture_changed_callback;
         std::function<void (const char*)> name_callback;
         std::function<void ()> delete_callback;
