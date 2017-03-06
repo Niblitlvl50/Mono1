@@ -75,9 +75,7 @@ void PolygonProxy::UpdateUIContext(UIContext& context) const
 
     context.texture_changed_callback = callback;
 
-    const math::Vector& position = m_polygon->Position();
-    context.position_x = position.x;
-    context.position_y = position.y;
+    context.position = m_polygon->Position();
     context.rotation = m_polygon->Rotation();
     context.texture_index = FindTextureIndex(m_polygon->GetTexture());
 }

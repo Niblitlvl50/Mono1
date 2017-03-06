@@ -35,8 +35,7 @@ PolygonEntity::PolygonEntity(const std::vector<math::Vector>& points)
         vertex -= mPosition;
 
     RecalculateTextureCoordinates();
-    if(m_points.size() > 2)
-        mBasePoint = math::CentroidOfPolygon(m_points);
+    mBasePoint = math::CentroidOfPolygon(m_points);
 }
 
 void PolygonEntity::Draw(mono::IRenderer& renderer) const
@@ -74,9 +73,7 @@ void PolygonEntity::AddVertex(const math::Vector& vertex)
 {
     m_points.push_back(vertex);
     RecalculateTextureCoordinates();
-
-    if(m_points.size() > 2)
-        mBasePoint = math::CentroidOfPolygon(m_points);
+    mBasePoint = math::CentroidOfPolygon(m_points);
 }
 
 void PolygonEntity::SetVertex(const math::Vector& vertex, size_t index)
@@ -86,6 +83,7 @@ void PolygonEntity::SetVertex(const math::Vector& vertex, size_t index)
 
     m_points[index] = math::Transform(transform, vertex);
     RecalculateTextureCoordinates();
+    //mBasePoint = math::CentroidOfPolygon(m_points);
 }
 
 const std::vector<math::Vector>& PolygonEntity::GetVertices() const

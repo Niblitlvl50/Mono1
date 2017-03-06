@@ -87,10 +87,8 @@ void PathProxy::UpdateUIContext(UIContext& context) const
 
     using namespace std::placeholders;
     context.name_callback = std::bind(&PathEntity::SetName, m_path, _1);
-    context.name = m_path->m_name.c_str();
 
-    const math::Vector& position = m_path->Position();
-    context.position_x = position.x;
-    context.position_y = position.y;
+    context.name = m_path->m_name.c_str();
+    context.position = m_path->Position();
     context.rotation = 0.0f;
 }

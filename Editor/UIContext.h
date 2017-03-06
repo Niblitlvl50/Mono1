@@ -45,8 +45,7 @@ namespace editor
 
         const char* name = nullptr;
 
-        float position_x = 0.0f;
-        float position_y = 0.0f;
+        math::Vector position;
         float rotation = 0.0f;
 
         int texture_index = 0;

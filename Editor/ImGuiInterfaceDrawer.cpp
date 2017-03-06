@@ -137,9 +137,9 @@ namespace
 
         if(context.components & UIComponent::POSITIONAL)
         {
-            ImGui::Value("X", context.position_x);
+            ImGui::Value("X", context.position.x);
             ImGui::SameLine();
-            ImGui::Value("Y", context.position_y);
+            ImGui::Value("Y", context.position.y);
             ImGui::Value("Rotation", context.rotation);
         }
         

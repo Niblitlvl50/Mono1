@@ -43,10 +43,7 @@ void EntityProxy::UpdateUIContext(UIContext& context) const
 {
     context.components = UIComponent::NAME | UIComponent::POSITIONAL;
 
-    const math::Vector& position = m_entity->Position();
-
     context.name = m_entity->Name().c_str();
-    context.position_x = position.x;
-    context.position_y = position.y;
+    context.position = m_entity->Position();
     context.rotation = m_entity->Rotation();
 }

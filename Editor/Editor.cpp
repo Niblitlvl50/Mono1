@@ -90,15 +90,15 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     m_context.tools_menu_callback = std::bind(&Editor::ToolsMenuCallback, this, _1);
     m_context.drop_callback = std::bind(&Editor::DropItemCallback, this, _1, _2);
 
+    const event::SurfaceChangedEventFunc surface_func = std::bind(&Editor::OnSurfaceChanged, this, _1);
+    m_surfaceChangedToken = m_eventHandler.AddListener(surface_func);
+
     m_entityRepository.LoadDefinitions();
 
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
     SetupIcons(m_context, m_entityRepository, textures);
 
     m_guiRenderer = std::make_shared<ImGuiRenderer>("editor_imgui.ini", m_window->Size(), textures);
-
-    const event::SurfaceChangedEventFunc surface_func = std::bind(&Editor::OnSurfaceChanged, this, _1);
-    m_surfaceChangedToken = m_eventHandler.AddListener(surface_func);
 
     const auto& polygons = LoadPolygons(m_fileName);
     for(auto& polygon : polygons)
