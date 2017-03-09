@@ -20,7 +20,7 @@ namespace editor
     {
         std::string name;
         std::string sprite_file;
-        //math::Vector scale;
+        math::Vector scale;
         std::vector<math::Vector> collision_shape;
         std::vector<SnapPoint> snap_points;
     };

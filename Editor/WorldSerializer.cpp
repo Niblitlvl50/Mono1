@@ -232,7 +232,7 @@ std::vector<std::shared_ptr<editor::Prefab>> editor::LoadPrefabs(const char* fil
         
         auto prefab_object = std::make_shared<editor::Prefab>(name.c_str(), def.sprite_file.c_str(), def.snap_points);
         prefab_object->SetPosition(position);
-        //prefab_object->SetScale(def.scale);
+        prefab_object->SetScale(def.scale);
         prefab_object->SetRotation(rotation);
 
         prefabs.push_back(prefab_object);

@@ -51,6 +51,7 @@ namespace
             PrefabDefinition definition;
             definition.name = prefab["name"];
             definition.sprite_file = prefab["sprite"];
+            definition.scale = prefab["scale"];
 
             const nlohmann::json& collision_shape = prefab["collision_shape"];
             definition.collision_shape.reserve(collision_shape.size());
