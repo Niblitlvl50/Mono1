@@ -9,9 +9,8 @@
 
 using namespace editor;
 
-PrefabProxy::PrefabProxy(const std::shared_ptr<Prefab>& prefab, Editor* editor)
-    : m_prefab(prefab),
-      m_editor(editor)
+PrefabProxy::PrefabProxy(const std::shared_ptr<Prefab>& prefab)
+    : m_prefab(prefab)
 { }
 
 uint PrefabProxy::Id() const

@@ -7,13 +7,12 @@
 namespace editor
 {
     class Prefab;
-    class Editor;
 
     class PrefabProxy : public IObjectProxy
     {
     public:
 
-        PrefabProxy(const std::shared_ptr<Prefab>& prefab, Editor* editor);
+        PrefabProxy(const std::shared_ptr<Prefab>& prefab);
 
         virtual uint Id() const;
         virtual mono::IEntityPtr Entity();
@@ -24,6 +23,5 @@ namespace editor
 
     private:
         std::shared_ptr<Prefab> m_prefab;
-        Editor* m_editor;
     };
 }

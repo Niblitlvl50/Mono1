@@ -188,7 +188,7 @@ void Editor::AddObject(const std::shared_ptr<editor::SpriteEntity>& object)
 void Editor::AddPrefab(const std::shared_ptr<editor::Prefab>& prefab)
 {
     AddEntity(prefab, RenderLayer::OBJECTS);
-    m_object_proxies.push_back(std::make_unique<PrefabProxy>(prefab, this));
+    m_object_proxies.push_back(std::make_unique<PrefabProxy>(prefab));
     m_prefabs.push_back(prefab);
 }
 
