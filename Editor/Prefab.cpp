@@ -32,11 +32,8 @@ void Prefab::Draw(mono::IRenderer& renderer) const
 
     if(m_selected)
     {
-        constexpr mono::Color::RGBA selected_color(0.0f, 1.0f, 0.0f);
-        math::Quad bb = BoundingBox();
-        bb.mA -= Position();
-        bb.mB -= Position();
-        renderer.DrawQuad(bb, selected_color, 2.0f);
+        math::Quad bb(-0.5f, -0.5f, 0.5f, 0.5f);
+        renderer.DrawQuad(bb, mono::Color::RGBA(0.0f, 1.0f, 0.0f), 2.0f);
     }
 }
 
