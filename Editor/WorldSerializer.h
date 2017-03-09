@@ -9,6 +9,7 @@ namespace editor
     class PolygonEntity;
     class PathEntity;
     class SpriteEntity;
+    class Prefab;
 
     class EntityRepository;
 
@@ -20,4 +21,7 @@ namespace editor
 
     void SaveObjects(const char* file_name, const std::vector<std::shared_ptr<editor::SpriteEntity>>& objects);
     std::vector<std::shared_ptr<editor::SpriteEntity>> LoadObjects(const char* file_name, const editor::EntityRepository& entity_repo);
+
+    void SavePrefabs(const char* file_name, const std::vector<std::shared_ptr<editor::Prefab>>& prefabs);
+    std::vector<std::shared_ptr<editor::Prefab>> LoadPrefabs(const char* file_name, const editor::EntityRepository& entity_repo);
 }

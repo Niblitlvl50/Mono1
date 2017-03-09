@@ -24,6 +24,7 @@
 #include "ObjectProxies/PolygonProxy.h"
 #include "ObjectProxies/PathProxy.h"
 #include "ObjectProxies/EntityProxy.h"
+#include "ObjectProxies/PrefabProxy.h"
 #include "Visualizers/GridVisualizer.h"
 #include "Visualizers/GrabberVisualizer.h"
 
@@ -111,6 +112,10 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     const auto& objects = LoadObjects("world.objects", m_entityRepository);
     for(auto& object : objects)
         AddObject(object);
+
+    const auto& prefabs = LoadPrefabs("world.prefabs", m_entityRepository);
+    for(auto& prefab : prefabs)
+        AddPrefab(prefab);
 }
 
 Editor::~Editor()
@@ -178,6 +183,13 @@ void Editor::AddObject(const std::shared_ptr<editor::SpriteEntity>& object)
     AddEntity(object, RenderLayer::OBJECTS);
     m_object_proxies.push_back(std::make_unique<EntityProxy>(object));
     m_objects.push_back(object);
+}
+
+void Editor::AddPrefab(const std::shared_ptr<editor::Prefab>& prefab)
+{
+    AddEntity(prefab, RenderLayer::OBJECTS);
+    m_object_proxies.push_back(std::make_unique<PrefabProxy>(prefab, this));
+    m_prefabs.push_back(prefab);
 }
 
 void Editor::SelectProxyObject(IObjectProxy* proxy_object)

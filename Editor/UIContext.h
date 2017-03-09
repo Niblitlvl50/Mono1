@@ -35,23 +35,19 @@ namespace editor
 
         int active_tool_index = 0;
 
-        bool showContextMenu = false;
-        std::vector<std::string> contextMenuItems;
-
         const char** texture_items = nullptr;
         int texture_items_count = 0;
 
         uint components = UIComponent::NONE;
-
         const char* name = nullptr;
-
         math::Vector position;
         float rotation = 0.0f;
-
         int texture_index = 0;
 
         std::string drag_context;
+        bool showContextMenu = false;
 
+        std::vector<std::string> contextMenuItems;
         std::vector<UIEntityItem> entity_items;
         std::vector<Notification> notifications;
 

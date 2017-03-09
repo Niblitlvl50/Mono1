@@ -14,6 +14,7 @@
 #include "Path.h"
 #include "SpriteEntity.h"
 #include "Grabber.h"
+#include "Prefab.h"
 
 #include "EntityRepository.h"
 
@@ -39,6 +40,7 @@ namespace editor
         void AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon);
         void AddPath(const std::shared_ptr<editor::PathEntity>& path);
         void AddObject(const std::shared_ptr<editor::SpriteEntity>& object);
+        void AddPrefab(const std::shared_ptr<editor::Prefab>& prefab);
 
         void SelectProxyObject(IObjectProxy* proxy_object);
 
@@ -77,6 +79,7 @@ namespace editor
         std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
         std::vector<std::shared_ptr<editor::PathEntity>> m_paths;
         std::vector<std::shared_ptr<editor::SpriteEntity>> m_objects;
+        std::vector<std::shared_ptr<editor::Prefab>> m_prefabs;
 
         mono::EventToken<event::SurfaceChangedEvent> m_surfaceChangedToken;
     };

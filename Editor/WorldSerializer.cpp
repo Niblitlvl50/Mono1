@@ -3,6 +3,7 @@
 #include "Polygon.h"
 #include "Path.h"
 #include "SpriteEntity.h"
+#include "Prefab.h"
 #include "Math/Matrix.h"
 #include "Math/Serialize.h"
 #include "System/SysFile.h"
@@ -200,4 +201,42 @@ std::vector<std::shared_ptr<editor::SpriteEntity>> editor::LoadObjects(const cha
     }
 
     return objects;
+}
+
+void editor::SavePrefabs(const char* file_name, const std::vector<std::shared_ptr<editor::Prefab>>& prefabs)
+{
+
+}
+
+std::vector<std::shared_ptr<editor::Prefab>> editor::LoadPrefabs(const char* file_name, const editor::EntityRepository& entity_repo)
+{
+    std::vector<std::shared_ptr<editor::Prefab>> prefabs;
+
+    File::FilePtr file = File::OpenAsciiFile(file_name);
+    if(!file)
+        return prefabs;
+
+    std::vector<byte> file_data;
+    File::FileRead(file, file_data);
+
+    const nlohmann::json& json = nlohmann::json::parse(file_data);
+    const nlohmann::json& json_prefabs = json["prefabs"];
+
+    for(const auto& json_prefab : json_prefabs)
+    {
+        const std::string& name = json_prefab["name"];
+        const math::Vector& position = json_prefab["position"];
+        const float rotation = json_prefab["rotation"];
+
+        const PrefabDefinition& def = entity_repo.GetPrefabFromName(name);
+        
+        auto prefab_object = std::make_shared<editor::Prefab>(name.c_str(), def.sprite_file.c_str(), def.snap_points);
+        prefab_object->SetPosition(position);
+        //prefab_object->SetScale(def.scale);
+        prefab_object->SetRotation(rotation);
+
+        prefabs.push_back(prefab_object);
+    }
+
+    return prefabs;
 }

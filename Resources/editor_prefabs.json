@@ -1,8 +1,8 @@
 {
     "prefabs": [
         {
-            "name": "test",
-            "sprite": "sprites/test.sprite",
+            "name": "moon",
+            "sprite": "sprites/moon.sprite",
             "collision_shape": [
                 {
                     "x": 0.0,

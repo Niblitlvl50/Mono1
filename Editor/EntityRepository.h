@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Math/Vector.h"
+#include "SnapPoint.h"
 
 #include <string>
 #include <vector>
@@ -15,16 +16,11 @@ namespace editor
         math::Vector scale;
     };
 
-    struct SnapPoint
-    {
-        math::Vector position;
-        float normal = 0;
-    };
-
     struct PrefabDefinition
     {
         std::string name;
         std::string sprite_file;
+        //math::Vector scale;
         std::vector<math::Vector> collision_shape;
         std::vector<SnapPoint> snap_points;
     };
