@@ -9,6 +9,7 @@
 namespace editor
 {
     struct Grabber;
+    struct SnapPoint;
     struct UIContext;
 
     class IObjectProxy
@@ -24,6 +25,7 @@ namespace editor
         virtual void SetSelected(bool selected) = 0;
         virtual bool Intersects(const math::Vector& position) const = 0;
         virtual std::vector<Grabber> GetGrabbers() const = 0;
+        virtual std::vector<SnapPoint> GetSnappers() const = 0;
 
         virtual void UpdateUIContext(UIContext& context) const = 0;
     };

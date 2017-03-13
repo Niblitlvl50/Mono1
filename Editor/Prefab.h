@@ -20,6 +20,7 @@ namespace editor
 
         void SetSelected(bool selected);
         const std::string& Name() const;
+        const std::vector<SnapPoint>& SnapPoints() const;
 
     private:
 

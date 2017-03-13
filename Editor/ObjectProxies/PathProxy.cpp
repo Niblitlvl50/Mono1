@@ -1,6 +1,7 @@
 
 #include "PathProxy.h"
 #include "Grabber.h"
+#include "SnapPoint.h"
 #include "UIContext.h"
 #include "Path.h"
 #include "Editor.h"
@@ -76,6 +77,11 @@ std::vector<Grabber> PathProxy::GetGrabbers() const
     }
 
     return grabbers;
+}
+
+std::vector<SnapPoint> PathProxy::GetSnappers() const
+{
+    return std::vector<SnapPoint>();
 }
 
 void PathProxy::UpdateUIContext(UIContext& context) const

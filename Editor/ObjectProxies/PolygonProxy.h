@@ -19,6 +19,7 @@ namespace editor
         virtual void SetSelected(bool selected);
         virtual bool Intersects(const math::Vector& position) const;
         virtual std::vector<Grabber> GetGrabbers() const;
+        virtual std::vector<SnapPoint> GetSnappers() const;
         virtual void UpdateUIContext(UIContext& context) const;
 
     private:

@@ -1,6 +1,7 @@
 
 #include "PolygonProxy.h"
 #include "Grabber.h"
+#include "SnapPoint.h"
 #include "UIContext.h"
 #include "Polygon.h"
 #include "Textures.h"
@@ -63,6 +64,11 @@ std::vector<Grabber> PolygonProxy::GetGrabbers() const
     }
 
     return grabbers;
+}
+
+std::vector<SnapPoint> PolygonProxy::GetSnappers() const
+{
+    return std::vector<SnapPoint>();
 }
 
 void PolygonProxy::UpdateUIContext(UIContext& context) const

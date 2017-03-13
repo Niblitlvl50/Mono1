@@ -1,6 +1,7 @@
 
 #include "EntityProxy.h"
 #include "Grabber.h"
+#include "SnapPoint.h"
 #include "SpriteEntity.h"
 #include "UIContext.h"
 
@@ -37,6 +38,11 @@ bool EntityProxy::Intersects(const math::Vector& position) const
 std::vector<Grabber> EntityProxy::GetGrabbers() const
 {
     return std::vector<Grabber>();
+}
+
+std::vector<SnapPoint> EntityProxy::GetSnappers() const
+{
+    return std::vector<SnapPoint>();
 }
 
 void EntityProxy::UpdateUIContext(UIContext& context) const
