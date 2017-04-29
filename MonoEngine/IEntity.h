@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "IDrawable.h"
+#include "Rendering/IDrawable.h"
 #include "IUpdatable.h"
 #include "System/SysTypes.h"
 #include "Math/MathFwd.h"

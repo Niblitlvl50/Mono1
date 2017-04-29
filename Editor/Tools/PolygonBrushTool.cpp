@@ -6,7 +6,7 @@
 #include "Math/MathFunctions.h"
 #include "Math/Quad.h"
 
-#include "IDrawable.h"
+#include "Rendering/IDrawable.h"
 #include "Rendering/IRenderer.h"
 #include "Rendering/Color.h"
 

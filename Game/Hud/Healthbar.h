@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Math/Vector.h"
-#include "IDrawable.h"
+#include "Rendering/IDrawable.h"
 #include <vector>
 
 namespace game

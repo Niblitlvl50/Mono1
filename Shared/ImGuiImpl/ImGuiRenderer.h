@@ -1,14 +1,7 @@
-//
-//  ImGuiDrawable.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 20/06/16.
-//
-//
 
 #pragma once
 
-#include "IDrawable.h"
+#include "Rendering/IDrawable.h"
 #include "Math/Vector.h"
 #include "MonoPtrFwd.h"
 

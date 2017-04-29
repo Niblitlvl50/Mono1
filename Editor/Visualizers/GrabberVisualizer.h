@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "IDrawable.h"
+#include "Rendering/IDrawable.h"
 #include <vector>
 
 namespace editor

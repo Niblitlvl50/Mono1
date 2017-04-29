@@ -7,9 +7,10 @@
 #include "Physics/CMFactory.h"
 #include "Physics/CMObject.h"
 
-#include "IDrawable.h"
 #include "IPhysicsZone.h"
 #include "RenderLayers.h"
+
+#include "Rendering/IDrawable.h"
 #include "Rendering/IRenderer.h"
 #include "Rendering/IRenderBuffer.h"
 #include "Rendering/BufferFactory.h"

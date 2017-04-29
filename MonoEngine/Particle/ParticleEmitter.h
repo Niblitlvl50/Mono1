@@ -5,7 +5,7 @@
 #include "Particle/ParticleFwd.h"
 
 #include "IUpdatable.h"
-#include "IDrawable.h"
+#include "Rendering/IDrawable.h"
 #include "Math/Vector.h"
 
 namespace mono
