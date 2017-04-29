@@ -1,6 +1,6 @@
 
 #include "HealthbarUpdater.h"
-#include "IPhysicsZone.h"
+#include "Zone/IPhysicsZone.h"
 #include "Entity/IEntity.h"
 #include "Entity/IPhysicsEntity.h"
 #include "DamageController.h"

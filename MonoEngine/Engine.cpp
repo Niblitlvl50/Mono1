@@ -12,7 +12,7 @@
 
 #include "IWindow.h"
 #include "Camera/ICamera.h"
-#include "IZone.h"
+#include "Zone/IZone.h"
 
 #include "System/SysTime.h"
 #include "System/SysEvents.h"

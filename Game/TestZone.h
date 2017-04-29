@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "PhysicsZone.h"
+#include "Zone/PhysicsZone.h"
 #include "EventHandler/EventToken.h"
 
 #include "Spawner.h"

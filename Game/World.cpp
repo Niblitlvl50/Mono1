@@ -7,7 +7,7 @@
 #include "Physics/CMFactory.h"
 #include "Physics/CMObject.h"
 
-#include "IPhysicsZone.h"
+#include "Zone/IPhysicsZone.h"
 #include "RenderLayers.h"
 
 #include "Rendering/IDrawable.h"
