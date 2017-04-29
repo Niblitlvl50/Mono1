@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "System/SysTypes.h"
 #include <vector>
 
 namespace mono
