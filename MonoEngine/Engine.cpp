@@ -11,7 +11,7 @@
 #include "InputHandler.h"
 
 #include "IWindow.h"
-#include "ICamera.h"
+#include "Camera/ICamera.h"
 #include "IZone.h"
 
 #include "System/SysTime.h"

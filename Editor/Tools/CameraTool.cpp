@@ -1,14 +1,7 @@
-//
-//  CameraTool.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 03/07/16.
-//
-//
 
 #include "CameraTool.h"
 
-#include "ICamera.h"
+#include "Camera/ICamera.h"
 #include "Math/Quad.h"
 #include "Math/MathFunctions.h"
 

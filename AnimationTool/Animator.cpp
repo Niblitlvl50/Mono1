@@ -9,7 +9,7 @@
 #include "Events/MultiGestureEvent.h"
 #include "Events/SurfaceChangedEvent.h"
 
-#include "ICamera.h"
+#include "Camera/ICamera.h"
 #include "IWindow.h"
 
 #include "Math/Vector.h"

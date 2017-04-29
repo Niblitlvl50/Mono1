@@ -1,8 +1,7 @@
 
-
 #include "Renderer.h"
 #include "IDrawable.h"
-#include "ICamera.h"
+#include "Camera/ICamera.h"
 #include "IWindow.h"
 #include "Math/Vector.h"
 #include "Math/Quad.h"

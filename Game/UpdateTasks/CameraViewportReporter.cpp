@@ -1,6 +1,6 @@
 
 #include "CameraViewportReporter.h"
-#include "ICamera.h"
+#include "Camera/ICamera.h"
 #include "AIKnowledge.h"
 
 using namespace game;
