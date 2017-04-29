@@ -13,9 +13,9 @@ namespace mono
     struct IInputHandler;
     struct IZone;
     struct IPhysicsZone;
-    struct ITexture;
     struct IAction;
     struct IPath;
+    class ITexture;
     class ISprite;
     class ISound;
     class IShader;

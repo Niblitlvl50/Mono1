@@ -1,10 +1,3 @@
-//
-//  TextureFactory.cpp
-//  Monolith1
-//
-//  Created by Niblit on 2011-12-10.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
 
 #include "TextureFactory.h"
 #include "Texture.h"
@@ -48,7 +41,7 @@ mono::ITexturePtr mono::CreateTexture(const char* source)
     return texture;
 }
 
-mono::ITexturePtr mono::CreateTexture(const byte* data, int width, int height, int colorComponents)
+mono::ITexturePtr mono::CreateTexture(const unsigned char* data, int width, int height, int colorComponents)
 {
     const mono::IImagePtr image = CreateImage(data, width, height, colorComponents);
     return std::make_shared<Texture>(image);

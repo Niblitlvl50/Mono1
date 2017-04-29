@@ -1,21 +1,16 @@
-//
-//  TextureFactory.h
-//  Monolith1
-//
-//  Created by Niblit on 2011-12-10.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
 
 #pragma once
 
-#include "MonoPtrFwd.h"
-#include "System/SysTypes.h"
+#include <memory>
 
 namespace mono
 {
+    class ITexture;
+    using ITexturePtr = std::shared_ptr<ITexture>;
+
     //! Create a texture from disk, only PNG is supported at the moment
     ITexturePtr CreateTexture(const char* source);
 
     //! Create a texture from memory
-    ITexturePtr CreateTexture(const byte* data, int width, int height, int colorComponents);
+    ITexturePtr CreateTexture(const unsigned char* data, int width, int height, int colorComponents);
 }

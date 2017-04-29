@@ -1,7 +1,7 @@
 
 
 #include "Renderer.h"
-#include "Rendering/IDrawable.h"
+#include "IDrawable.h"
 #include "ICamera.h"
 #include "IWindow.h"
 #include "Math/Vector.h"
