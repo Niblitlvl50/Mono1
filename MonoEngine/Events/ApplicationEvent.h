@@ -1,10 +1,3 @@
-//
-//  ApplicationEvent.h
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 06/12/15.
-//
-//
 
 #pragma once
 

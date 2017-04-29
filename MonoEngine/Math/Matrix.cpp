@@ -1,10 +1,3 @@
-//
-//  Matrix.cpp
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 26/11/14.
-//
-//
 
 #include "Matrix.h"
 #include "MathFunctions.h"

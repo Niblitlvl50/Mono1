@@ -1,10 +1,3 @@
-//
-//  TextFunctions.cpp
-//  Mono1
-//
-//  Created by Niblit on 2012-07-02.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #include "TextFunctions.h"
 #include "System/SysFile.h"

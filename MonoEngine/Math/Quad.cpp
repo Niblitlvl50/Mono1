@@ -1,14 +1,6 @@
-//
-//  Quad.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 03/11/13.
-//
-//
 
 #include "Quad.h"
 #include <algorithm>
-
 
 math::Quad math::operator * (const math::Quad& left, float value)
 {

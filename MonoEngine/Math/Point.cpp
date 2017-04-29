@@ -1,10 +1,3 @@
-//
-//  Point.cpp
-//  Worksample_2
-//
-//  Created by Niklas Damberg on 09/11/13.
-//
-//
 
 #include "Point.h"
 

@@ -1,10 +1,3 @@
-//
-//  TextInputEvent.h
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 23/06/16.
-//
-//
 
 #pragma once
 

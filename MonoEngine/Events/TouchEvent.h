@@ -1,10 +1,3 @@
-//
-//  TouchEvent.h
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 9/30/13.
-//
-//
 
 #pragma once
 

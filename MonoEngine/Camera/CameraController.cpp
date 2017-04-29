@@ -1,10 +1,3 @@
-//
-//  CameraController.cpp
-//  Mono1
-//
-//  Created by Niblit on 2012-08-26.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #include "CameraController.h"
 #include "EventHandler/EventHandler.h"
@@ -18,7 +11,6 @@
 #include <cmath>
 
 using namespace mono;
-
 
 CameraController::CameraController(ICamera* cam, EventHandler& eventHandler)
     : mCam(cam),

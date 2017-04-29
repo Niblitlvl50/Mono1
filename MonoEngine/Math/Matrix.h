@@ -1,10 +1,3 @@
-//
-//  Matrix.h
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 26/11/14.
-//
-//
 
 #pragma once
 

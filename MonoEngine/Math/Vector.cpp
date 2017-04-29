@@ -1,10 +1,3 @@
-//
-//  Vector.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 03/11/13.
-//
-//
 
 #include "Vector.h"
 #include <cmath>
