@@ -1,10 +1,3 @@
-//
-//  DamageController.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 11/06/16.
-//
-//
 
 #include "DamageController.h"
 #include "System/SysTime.h"
@@ -13,7 +6,7 @@
 
 using namespace game;
 
-DamageRecord& DamageController::CreateRecord(uint record_id)
+DamageRecord& DamageController::CreateRecord(unsigned int record_id)
 {
     const auto& pair = m_DamageRecords.insert(std::make_pair(record_id, DamageRecord()));
 
@@ -21,17 +14,17 @@ DamageRecord& DamageController::CreateRecord(uint record_id)
     pair.first->second.strong_against = 0;
     pair.first->second.weak_against = 0;
     pair.first->second.multipier = 1;
-    pair.first->second.last_damaged_timestamp = std::numeric_limits<uint>::max();
+    pair.first->second.last_damaged_timestamp = std::numeric_limits<unsigned int>::max();
 
     return pair.first->second;
 }
 
-void DamageController::RemoveRecord(uint record_id)
+void DamageController::RemoveRecord(unsigned int record_id)
 {
     m_DamageRecords.erase(record_id);
 }
 
-DamageResult DamageController::ApplyDamage(uint record_id, int damage)
+DamageResult DamageController::ApplyDamage(unsigned int record_id, int damage)
 {
     DamageResult result = { false, 0 };
 
@@ -49,7 +42,7 @@ DamageResult DamageController::ApplyDamage(uint record_id, int damage)
     return result;
 }
 
-const std::unordered_map<uint, DamageRecord>& DamageController::GetDamageRecords() const
+const std::unordered_map<unsigned int, DamageRecord>& DamageController::GetDamageRecords() const
 {
     return m_DamageRecords;
 }

@@ -18,7 +18,7 @@ namespace mono
 
         virtual void ForEachBody(const mono::BodyFunc& func);
         virtual IPhysicsEntityPtr FindPhysicsEntityFromBody(const mono::IBodyPtr& body) const;
-        virtual IPhysicsEntityPtr FindPhysicsEntityFromId(uint id) const;
+        virtual IPhysicsEntityPtr FindPhysicsEntityFromId(unsigned int id) const;
 
         virtual void AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer);
         virtual void RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity);

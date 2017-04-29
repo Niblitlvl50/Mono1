@@ -22,9 +22,9 @@ namespace mono
         virtual math::Quad BoundingBox() const;
         virtual math::Matrix Transformation() const;
         virtual mono::PhysicsData& GetPhysics();
-        virtual uint Id() const;
-        virtual void SetProperty(uint property);
-        virtual bool HasProperty(uint property) const;
+        virtual unsigned int Id() const;
+        virtual void SetProperty(unsigned int property);
+        virtual bool HasProperty(unsigned int property) const;
 
         void AddChild(const IEntityPtr& child);
         void RemoveChild(const IEntityPtr& child);
@@ -39,8 +39,8 @@ namespace mono
         virtual void Draw(mono::IRenderer& renderer) const = 0;
         virtual void Update(unsigned int delta) = 0;
 
-        const uint m_uid;
-        uint m_properties;
+        const unsigned int m_uid;
+        unsigned int m_properties;
 
         math::Vector mPosition;
         math::Vector mScale;

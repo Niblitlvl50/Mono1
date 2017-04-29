@@ -1,7 +1,6 @@
 
 #include "TextFunctions.h"
 #include "System/SysFile.h"
-#include "System/SysTypes.h"
 #include "Rendering/Texture/ITexture.h"
 #include "Rendering/Texture/TextureFactory.h"
 #include "Math/Vector.h"

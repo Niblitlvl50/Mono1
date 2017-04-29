@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "System/SysTypes.h"
 #include "MonoFwd.h"
 #include "MonoPtrFwd.h"
 #include "Physics/CMFwd.h"
@@ -21,7 +20,7 @@ namespace game
         float collision_radius = 0.5f;
         float scale = 1.0f;
         CollisionCategory collision_category = CollisionCategory::NONE;
-        uint collision_mask = 0;
+        unsigned int collision_mask = 0;
         BulletImpactCallback collision_callback;
 
         mono::Color::RGBA shade;

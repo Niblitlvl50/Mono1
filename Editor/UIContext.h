@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "System/SysTypes.h"
 #include "MainMenuOptions.h"
 #include "Math/Quad.h"
 #include "UINotification.h"
@@ -38,7 +37,7 @@ namespace editor
         const char** texture_items = nullptr;
         int texture_items_count = 0;
 
-        uint components = UIComponent::NONE;
+        unsigned int components = UIComponent::NONE;
         const char* name = nullptr;
         math::Vector position;
         float rotation = 0.0f;

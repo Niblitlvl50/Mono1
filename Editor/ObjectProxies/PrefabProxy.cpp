@@ -15,7 +15,7 @@ PrefabProxy::PrefabProxy(const std::shared_ptr<Prefab>& prefab)
     : m_prefab(prefab)
 { }
 
-uint PrefabProxy::Id() const
+unsigned int PrefabProxy::Id() const
 {
     return m_prefab->Id();
 }

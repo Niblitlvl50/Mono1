@@ -88,7 +88,7 @@ namespace
             return math::Quad(-math::INF, -math::INF, math::INF, math::INF);
         }
 
-        uint m_index;
+        unsigned int m_index;
         mono::PhysicsData m_static_physics;
 
         std::unique_ptr<mono::IRenderBuffer> m_vertex_buffer;

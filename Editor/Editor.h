@@ -80,7 +80,7 @@ namespace editor
         std::vector<editor::Grabber> m_grabbers;
         std::vector<editor::SnapPoint> m_snap_points;
 
-        uint m_seleced_id;
+        unsigned int m_seleced_id;
         std::vector<std::unique_ptr<IObjectProxy>> m_object_proxies;
         std::vector<std::shared_ptr<editor::PolygonEntity>> m_polygons;
         std::vector<std::shared_ptr<editor::PathEntity>> m_paths;

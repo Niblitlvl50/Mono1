@@ -3,7 +3,6 @@
 
 #include "Rendering/IDrawable.h"
 #include "IUpdatable.h"
-#include "System/SysTypes.h"
 #include "Math/MathFwd.h"
 
 namespace mono
@@ -29,9 +28,9 @@ namespace mono
         virtual math::Matrix Transformation() const = 0;
 
         // Unique id
-        virtual uint Id() const = 0;
+        virtual unsigned int Id() const = 0;
 
-        virtual void SetProperty(uint property) = 0;
-        virtual bool HasProperty(uint property) const = 0;
+        virtual void SetProperty(unsigned int property) = 0;
+        virtual bool HasProperty(unsigned int property) const = 0;
     };
 }

@@ -21,9 +21,9 @@ void HealthbarUpdater::doUpdate(unsigned int delta)
 {
     m_healthbars.clear();
 
-    constexpr uint max_uint = std::numeric_limits<uint>::max();
-    const std::unordered_map<uint, DamageRecord>& records = m_damageController.GetDamageRecords();
-    const uint now = Time::GetMilliseconds();
+    constexpr unsigned int max_uint = std::numeric_limits<unsigned int>::max();
+    const std::unordered_map<unsigned int, DamageRecord>& records = m_damageController.GetDamageRecords();
+    const unsigned int now = Time::GetMilliseconds();
 
     for(auto& record : records)
     {
@@ -31,7 +31,7 @@ void HealthbarUpdater::doUpdate(unsigned int delta)
         if(ignore_record)
             continue;
 
-        const uint delta = now - record.second.last_damaged_timestamp;
+        const unsigned int delta = now - record.second.last_damaged_timestamp;
         if(delta > 5000)
             continue;
 

@@ -15,7 +15,7 @@ PolygonProxy::PolygonProxy(const std::shared_ptr<PolygonEntity>& polygon)
     : m_polygon(polygon)
 { }
 
-uint PolygonProxy::Id() const
+unsigned int PolygonProxy::Id() const
 {
     return m_polygon->Id();
 }

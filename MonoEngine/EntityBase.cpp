@@ -120,17 +120,17 @@ math::Matrix EntityBase::Transformation() const
     return matrix;
 }
 
-uint EntityBase::Id() const
+unsigned int EntityBase::Id() const
 {
     return m_uid;
 }
 
-void EntityBase::SetProperty(uint property)
+void EntityBase::SetProperty(unsigned int property)
 {
     m_properties |= property;
 }
 
-bool EntityBase::HasProperty(uint property) const
+bool EntityBase::HasProperty(unsigned int property) const
 {
     return m_properties & property;
 }

@@ -14,7 +14,7 @@ EntityProxy::EntityProxy(const std::shared_ptr<SpriteEntity>& entity)
     : m_entity(entity)
 { }
 
-uint EntityProxy::Id() const
+unsigned int EntityProxy::Id() const
 {
     return m_entity->Id();
 }

@@ -3,7 +3,6 @@
 
 #include "MonoPtrFwd.h"
 #include "Math/MathFwd.h"
-#include "System/SysTypes.h"
 #include <vector>
 
 namespace editor
@@ -19,7 +18,7 @@ namespace editor
         virtual ~IObjectProxy()
         { }
 
-        virtual uint Id() const = 0;
+        virtual unsigned int Id() const = 0;
         virtual mono::IEntityPtr Entity() = 0;
 
         virtual void SetSelected(bool selected) = 0;

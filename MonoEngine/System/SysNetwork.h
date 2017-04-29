@@ -1,17 +1,11 @@
-//
-//  SysNetwork.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 22/01/16.
-//
-//
 
 #pragma once
 
-#include "SysTypes.h"
 #include <vector>
 #include <memory>
 #include <string>
+
+using byte = unsigned char;
 
 namespace Network
 {

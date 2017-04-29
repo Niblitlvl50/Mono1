@@ -1,14 +1,6 @@
-//
-//  DamageController.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 11/06/16.
-//
-//
 
 #pragma once
 
-#include "System/SysTypes.h"
 #include <unordered_map>
 
 namespace game
@@ -19,7 +11,7 @@ namespace game
         int weak_against;
         int multipier;
         int health;
-        uint last_damaged_timestamp;
+        unsigned int last_damaged_timestamp;
     };
 
     struct DamageResult
@@ -32,13 +24,13 @@ namespace game
     {
     public:
 
-        DamageRecord& CreateRecord(uint record_id);
-        void RemoveRecord(uint record_id);
-        DamageResult ApplyDamage(uint record_id, int damage);
-        const std::unordered_map<uint, DamageRecord>& GetDamageRecords() const;
+        DamageRecord& CreateRecord(unsigned int record_id);
+        void RemoveRecord(unsigned int record_id);
+        DamageResult ApplyDamage(unsigned int record_id, int damage);
+        const std::unordered_map<unsigned int, DamageRecord>& GetDamageRecords() const;
 
     private:
 
-        std::unordered_map<uint, DamageRecord> m_DamageRecords;
+        std::unordered_map<unsigned int, DamageRecord> m_DamageRecords;
     };
 }

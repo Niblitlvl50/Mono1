@@ -14,7 +14,7 @@ Explosion::Explosion(const ExplosionConfiguration& config, mono::EventHandler& e
     mScale = math::Vector(config.scale, config.scale);
     mRotation = config.rotation;
 
-    const uint id = Id();
+    const unsigned int id = Id();
 
     const auto func = [&event_handler, id] {
         event_handler.DispatchEvent(game::RemoveEntityEvent(id));

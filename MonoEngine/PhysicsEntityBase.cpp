@@ -74,17 +74,17 @@ mono::PhysicsData& PhysicsEntityBase::GetPhysics()
     return mPhysicsObject;
 }
 
-uint PhysicsEntityBase::Id() const
+unsigned int PhysicsEntityBase::Id() const
 {
     return m_uid;
 }
 
-void PhysicsEntityBase::SetProperty(uint property)
+void PhysicsEntityBase::SetProperty(unsigned int property)
 {
     m_properties |= property;
 }
 
-bool PhysicsEntityBase::HasProperty(uint property) const
+bool PhysicsEntityBase::HasProperty(unsigned int property) const
 {
     return m_properties & property;
 }

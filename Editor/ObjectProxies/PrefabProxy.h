@@ -14,7 +14,7 @@ namespace editor
 
         PrefabProxy(const std::shared_ptr<Prefab>& prefab);
 
-        virtual uint Id() const;
+        virtual unsigned int Id() const;
         virtual mono::IEntityPtr Entity();
         virtual void SetSelected(bool selected);
         virtual bool Intersects(const math::Vector& position) const;

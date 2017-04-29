@@ -3,7 +3,6 @@
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
 #include "System/SysOpenGL.h"
-#include "System/SysTypes.h"
 #include "ImGuiShader.h"
 #include "Rendering/Texture/ITexture.h"
 #include "Rendering/Texture/TextureFactory.h"
@@ -43,7 +42,7 @@ void ImGuiRenderer::Initialize(const char* config_file)
 
     int width;
     int height;
-    byte* pixels;
+    unsigned char* pixels;
     ImGui::GetIO().Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
     mono::ITexturePtr font_texture = mono::CreateTexture(pixels, width, height, 4);

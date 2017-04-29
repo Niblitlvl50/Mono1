@@ -99,7 +99,7 @@ IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromBody(const mono::IBodyPtr& b
     return nullptr;
 }
 
-IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromId(uint id) const
+IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromId(unsigned int id) const
 {
     for(auto& entity : mPhysicsEntities)
     {

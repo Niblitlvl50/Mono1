@@ -129,7 +129,7 @@ namespace
         { }
         virtual void RemoveUpdatable(const mono::IUpdatablePtr& updatable)
         { }
-        virtual mono::IEntityPtr FindEntityFromId(uint id) const
+        virtual mono::IEntityPtr FindEntityFromId(unsigned int id) const
         {
             return nullptr;
         }

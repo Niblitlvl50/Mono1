@@ -31,7 +31,7 @@
 namespace
 {
     template <typename T>
-    T FindObject(uint id, const std::vector<T>& collection)
+    T FindObject(unsigned int id, const std::vector<T>& collection)
     {
         const auto find_func = [id](const T& object) {
             return id == object->Id();
@@ -270,7 +270,7 @@ void Editor::UpdateGrabbers()
 {
     m_grabbers.clear();
 
-    const uint id = m_seleced_id;
+    const unsigned int id = m_seleced_id;
 
     const auto find_func = [id](const std::unique_ptr<IObjectProxy>& proxy) {
         return id == proxy->Id();
@@ -290,7 +290,7 @@ std::pair<int, math::Vector> Editor::FindSnapPosition(const math::Vector& positi
 {
     std::vector<SnapPoint> snappers;
 
-    const uint id = m_seleced_id;
+    const unsigned int id = m_seleced_id;
     const auto find_func = [id](const std::unique_ptr<IObjectProxy>& proxy) {
         return id == proxy->Id();
     };
@@ -331,7 +331,7 @@ void Editor::OnDeleteObject()
     auto object = FindObject(m_seleced_id, m_objects);
     auto prefab = FindObject(m_seleced_id, m_prefabs);
 
-    const uint id = m_seleced_id;
+    const unsigned int id = m_seleced_id;
     const auto find_func = [id](const std::unique_ptr<IObjectProxy>& proxy) {
         return id == proxy->Id();
     };

@@ -16,7 +16,7 @@ PathProxy::PathProxy(const std::shared_ptr<PathEntity>& path, Editor* editor)
       m_editor(editor)
 { }
 
-uint PathProxy::Id() const
+unsigned int PathProxy::Id() const
 {
     return m_path->Id();
 }
