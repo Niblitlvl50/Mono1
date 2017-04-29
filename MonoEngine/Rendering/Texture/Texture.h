@@ -2,7 +2,7 @@
 #pragma once
 
 #include "ITexture.h"
-#include "System/IImage.h"
+#include "System/Image/IImage.h"
 
 namespace mono
 {
@@ -11,7 +11,7 @@ namespace mono
     {
     public:
 
-        Texture(const IImagePtr& image);
+        Texture(const System::IImagePtr& image);
         ~Texture();
         
     private:

@@ -1,16 +1,9 @@
-//
-//  ImageFactory.h
-//  Monolith1
-//
-//  Created by Niblit on 2011-12-10.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
 
 #pragma once
 
 #include "IImage.h"
 
-namespace mono
+namespace System
 {
     //! Load an image from disk, right now only PNG is supported
     //! \param source Where the image is located

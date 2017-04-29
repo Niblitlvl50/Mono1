@@ -1,10 +1,3 @@
-//
-//  ImageFactory.cpp
-//  Monolith1
-//
-//  Created by Niblit on 2011-12-10.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
 
 #include "ImageFactory.h"
 #include <stdexcept>
@@ -14,7 +7,7 @@
 
 namespace
 {
-    struct Bitmap : public mono::IImage
+    struct Bitmap : public System::IImage
     {
         Bitmap(const byte* data, unsigned int width, unsigned int height, int colorComponents)
             : mData(data),
@@ -47,7 +40,7 @@ namespace
     };
 }
 
-mono::IImagePtr mono::LoadImage(const char* source)
+System::IImagePtr System::LoadImage(const char* source)
 {
     int width;
     int height;
@@ -59,7 +52,7 @@ mono::IImagePtr mono::LoadImage(const char* source)
     return std::make_shared<Bitmap>(data, width, height, components);
 }
 
-mono::IImagePtr mono::CreateImage(const byte* data, int width, int height, int colorComponents)
+System::IImagePtr System::CreateImage(const byte* data, int width, int height, int colorComponents)
 {
     return std::make_shared<Bitmap>(data, width, height, colorComponents);
 }

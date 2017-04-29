@@ -1,8 +1,8 @@
 
 #include "TextureFactory.h"
 #include "Texture.h"
-#include "System/IImage.h"
-#include "System/ImageFactory.h"
+#include "System/Image/IImage.h"
+#include "System/Image/ImageFactory.h"
 
 #include <cstdio>
 #include <unordered_map>
@@ -26,7 +26,7 @@ mono::ITexturePtr mono::CreateTexture(const char* source)
         std::printf("TextureFactory - Unable to create a shared_ptr from weak_ptr using source: %s\n", source);
     }
     
-    const mono::IImagePtr image = LoadImage(source);
+    const System::IImagePtr image = System::LoadImage(source);
 
     // Custom deleter that erases the texture from the map
     // when all the references are gone.
@@ -43,7 +43,7 @@ mono::ITexturePtr mono::CreateTexture(const char* source)
 
 mono::ITexturePtr mono::CreateTexture(const unsigned char* data, int width, int height, int colorComponents)
 {
-    const mono::IImagePtr image = CreateImage(data, width, height, colorComponents);
+    const System::IImagePtr image = System::CreateImage(data, width, height, colorComponents);
     return std::make_shared<Texture>(image);
 }
 
