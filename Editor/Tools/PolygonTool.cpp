@@ -4,9 +4,9 @@
 #include "Polygon.h"
 #include "Rendering/IRenderer.h"
 #include "Rendering/Color.h"
+#include "Rendering/Texture/TextureFactory.h"
 #include "Math/Quad.h"
 
-#include "Texture/TextureFactory.h"
 
 using namespace editor;
 

@@ -14,6 +14,7 @@
 #include "Path.h"
 #include "SpriteEntity.h"
 #include "Grabber.h"
+#include "SnapPoint.h"
 #include "Prefab.h"
 
 #include "EntityRepository.h"
@@ -35,6 +36,9 @@ namespace editor
         virtual void OnLoad(mono::ICameraPtr camera);
         virtual void OnUnload();
 
+        void Load();
+        void Save();
+
         bool OnSurfaceChanged(const event::SurfaceChangedEvent& event);
 
         void AddPolygon(const std::shared_ptr<editor::PolygonEntity>& polygon);
@@ -43,12 +47,13 @@ namespace editor
         void AddPrefab(const std::shared_ptr<editor::Prefab>& prefab);
 
         void SelectProxyObject(IObjectProxy* proxy_object);
-
         IObjectProxy* FindProxyObject(const math::Vector& position);
 
         void SelectGrabber(const math::Vector& position);
         Grabber* FindGrabber(const math::Vector& position);
         void UpdateGrabbers();
+
+        std::pair<int, math::Vector> FindSnapPosition(const math::Vector& position) const;
 
         float GetPickingDistance() const;
 
@@ -73,6 +78,7 @@ namespace editor
         std::shared_ptr<editor::UserInputController> m_userInputController;
 
         std::vector<editor::Grabber> m_grabbers;
+        std::vector<editor::SnapPoint> m_snap_points;
 
         uint m_seleced_id;
         std::vector<std::unique_ptr<IObjectProxy>> m_object_proxies;

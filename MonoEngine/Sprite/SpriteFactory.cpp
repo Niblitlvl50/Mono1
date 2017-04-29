@@ -14,8 +14,8 @@
 #include "SpriteFactory.h"
 #include "Sprite.h"
 
-#include "Texture/ITexture.h"
-#include "Texture/TextureFactory.h"
+#include "Rendering/Texture/ITexture.h"
+#include "Rendering/Texture/TextureFactory.h"
 
 #include "Math/Quad.h"
 #include "System/SysFile.h"

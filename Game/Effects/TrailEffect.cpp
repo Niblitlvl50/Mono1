@@ -3,7 +3,7 @@
 #include "Particle/ParticlePool.h"
 #include "Particle/ParticleEmitter.h"
 #include "Particle/ParticleSystemDefaults.h"
-#include "Texture/TextureFactory.h"
+#include "Rendering/Texture/TextureFactory.h"
 #include "Rendering/IRenderer.h"
 #include "Math/Matrix.h"
 #include "Math/Quad.h"

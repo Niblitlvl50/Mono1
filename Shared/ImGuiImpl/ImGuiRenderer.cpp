@@ -5,8 +5,8 @@
 #include "System/SysOpenGL.h"
 #include "System/SysTypes.h"
 #include "ImGuiShader.h"
-#include "Texture/ITexture.h"
-#include "Texture/TextureFactory.h"
+#include "Rendering/Texture/ITexture.h"
+#include "Rendering/Texture/TextureFactory.h"
 #include "Rendering/IRenderer.h"
 
 #include "imgui/imgui.h"

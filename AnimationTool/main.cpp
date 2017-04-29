@@ -7,7 +7,7 @@
 
 #include "IWindow.h"
 #include "Rendering/Color.h"
-#include "Text/TextFunctions.h"
+#include "Rendering/Text/TextFunctions.h"
 #include "Animator.h"
 
 #include <cstdio>

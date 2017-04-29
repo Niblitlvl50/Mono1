@@ -4,8 +4,8 @@
 #include "ICamera.h"
 #include "IWindow.h"
 
-#include "Texture/TextureFactory.h"
-#include "Texture/ITexture.h"
+#include "Rendering/Texture/TextureFactory.h"
+#include "Rendering/Texture/ITexture.h"
 
 #include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"
@@ -31,7 +31,7 @@
 namespace
 {
     template <typename T>
-    T FindObject(uint id, std::vector<T>& collection)
+    T FindObject(uint id, const std::vector<T>& collection)
     {
         const auto find_func = [id](const T& object) {
             return id == object->Id();
@@ -100,37 +100,19 @@ Editor::Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler
     SetupIcons(m_context, m_entityRepository, textures);
 
     m_guiRenderer = std::make_shared<ImGuiRenderer>("editor_imgui.ini", m_window->Size(), textures);
-
-    const auto& polygons = LoadPolygons(m_fileName);
-    for(auto& polygon : polygons)
-        AddPolygon(polygon);
-
-    const auto& paths = LoadPaths("world.paths");
-    for(auto& path : paths)
-        AddPath(path);
-
-    const auto& objects = LoadObjects("world.objects", m_entityRepository);
-    for(auto& object : objects)
-        AddObject(object);
-
-    const auto& prefabs = LoadPrefabs("world.prefabs", m_entityRepository);
-    for(auto& prefab : prefabs)
-        AddPrefab(prefab);
+    Load();
 }
 
 Editor::~Editor()
 {
     m_eventHandler.RemoveListener(m_surfaceChangedToken);
 
-    SavePolygons(m_fileName, m_polygons);
-    SavePaths("world.paths", m_paths);
-    SaveObjects("world.objects", m_objects);
-
     editor::Config config;
     config.cameraPosition = m_camera->GetPosition();
     config.cameraViewport = m_camera->GetViewport();
 
     editor::SaveConfig("editor_config.json", config);
+    Save();
 }
 
 void Editor::OnLoad(mono::ICameraPtr camera)
@@ -155,6 +137,33 @@ void Editor::OnLoad(mono::ICameraPtr camera)
 
 void Editor::OnUnload()
 { }
+
+void Editor::Load()
+{
+    const auto& polygons = LoadPolygons(m_fileName);
+    for(auto& polygon : polygons)
+        AddPolygon(polygon);
+
+    const auto& paths = LoadPaths("world.paths");
+    for(auto& path : paths)
+        AddPath(path);
+
+    const auto& objects = LoadObjects("world.objects", m_entityRepository);
+    for(auto& object : objects)
+        AddObject(object);
+
+    const auto& prefabs = LoadPrefabs("world.prefabs", m_entityRepository);
+    for(auto& prefab : prefabs)
+        AddPrefab(prefab);
+}
+
+void Editor::Save()
+{
+    SavePolygons(m_fileName, m_polygons);
+    SavePaths("world.paths", m_paths);
+    SaveObjects("world.objects", m_objects);
+    SavePrefabs("world.prefabs", m_prefabs);
+}
 
 bool Editor::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 {
@@ -205,6 +214,18 @@ void Editor::SelectProxyObject(IObjectProxy* proxy_object)
         proxy_object->SetSelected(true);
         proxy_object->UpdateUIContext(m_context);
         m_seleced_id = proxy_object->Id();
+    }
+
+    m_snap_points.clear();
+
+    for(const auto& proxy : m_object_proxies)
+    {
+        // Skip the selected one, we dont want that one
+        if(proxy->Id() == m_seleced_id)
+            continue;
+
+        const std::vector<SnapPoint>& snappers = proxy->GetSnappers();
+        m_snap_points.insert(m_snap_points.end(), snappers.begin(), snappers.end());
     }
 
     UpdateGrabbers();
@@ -265,11 +286,50 @@ float Editor::GetPickingDistance() const
     return m_camera->GetViewport().mB.x / m_window->Size().x * 5.0f;
 }
 
+std::pair<int, math::Vector> Editor::FindSnapPosition(const math::Vector& position) const
+{
+    std::vector<SnapPoint> snappers;
+
+    const uint id = m_seleced_id;
+    const auto find_func = [id](const std::unique_ptr<IObjectProxy>& proxy) {
+        return id == proxy->Id();
+    };
+
+    auto it = std::find_if(m_object_proxies.begin(), m_object_proxies.end(), find_func);
+    if(it != m_object_proxies.end())
+        snappers = (*it)->GetSnappers();
+
+    int best_index = -1;
+    float best_distance = math::INF;
+    math::Vector snapped_point = position;
+
+    for(size_t index = 0; index < snappers.size(); ++index)
+    {
+        const SnapPoint& snap_point = snappers[index];
+        for(const SnapPoint& other : m_snap_points)
+        {
+            const float distance = math::Length(snap_point.position - other.position);
+            if(distance < 0.2f && distance < best_distance)
+            {
+                best_index = index;
+                best_distance = distance;
+                snapped_point = other.position;
+            }
+        }
+    }
+
+    if(best_index != -1)
+        snapped_point = position - snapped_point;
+
+    return { best_index, snapped_point };
+}
+
 void Editor::OnDeleteObject()
 {
     auto polygon = FindObject(m_seleced_id, m_polygons);
     auto path = FindObject(m_seleced_id, m_paths);
     auto object = FindObject(m_seleced_id, m_objects);
+    auto prefab = FindObject(m_seleced_id, m_prefabs);
 
     const uint id = m_seleced_id;
     const auto find_func = [id](const std::unique_ptr<IObjectProxy>& proxy) {
@@ -310,6 +370,16 @@ void Editor::OnDeleteObject()
 
         SchedulePreFrameTask(remove_object_func);
     }
+    else if(prefab)
+    {
+        const auto remove_prefab_func = [this, prefab] {
+            auto it = std::find(m_prefabs.begin(), m_prefabs.end(), prefab);
+            m_prefabs.erase(it);
+            RemoveEntity(prefab);
+        };
+
+        SchedulePreFrameTask(remove_prefab_func);
+    }
 
     m_context.components = UIComponent::NONE;
     m_grabbers.clear();
@@ -323,11 +393,7 @@ void Editor::OnContextMenu(int index)
 void Editor::EditorMenuCallback(EditorMenuOptions option)
 {
     if(option == EditorMenuOptions::SAVE)
-    {
-        SavePolygons(m_fileName, m_polygons);
-        SavePaths("world.paths", m_paths);
-        SaveObjects("world.objects", m_objects);
-    }
+        Save();
 }
 
 void Editor::ToolsMenuCallback(ToolsMenuOptions option)

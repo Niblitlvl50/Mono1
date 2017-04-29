@@ -1,6 +1,6 @@
 
 #include "Sprite.h"
-#include "Texture/ITexture.h"
+#include "Rendering/Texture/ITexture.h"
 
 #include <stdexcept>
 

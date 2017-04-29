@@ -1,13 +1,12 @@
 
 #include "Polygon.h"
-#include "IRenderer.h"
-#include "Color.h"
+#include "Rendering/IRenderer.h"
+#include "Rendering/Color.h"
+#include "Rendering/Texture/TextureFactory.h"
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
 #include "Math/MathFwd.h"
 #include "Math/MathFunctions.h"
-
-#include "Texture/TextureFactory.h"
 
 #include <cassert>
 

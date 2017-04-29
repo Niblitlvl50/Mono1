@@ -2,7 +2,7 @@
 #include "SysLibs.h"
 #include "SysSound.h"
 #include "SysNetwork.h"
-#include "Text/TextFunctions.h"
+#include "Rendering/Text/TextFunctions.h"
 #include "Rendering/Shader/ShaderFunctions.h"
 #include "SDL.h"
 

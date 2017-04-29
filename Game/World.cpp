@@ -14,7 +14,7 @@
 #include "Rendering/IRenderer.h"
 #include "Rendering/IRenderBuffer.h"
 #include "Rendering/BufferFactory.h"
-#include "Texture/TextureFactory.h"
+#include "Rendering/Texture/TextureFactory.h"
 
 #include "Math/Quad.h"
 #include "Math/MathFunctions.h"

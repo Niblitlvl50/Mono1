@@ -2,8 +2,8 @@
 #include "TextFunctions.h"
 #include "System/SysFile.h"
 #include "System/SysTypes.h"
-#include "Texture/ITexture.h"
-#include "Texture/TextureFactory.h"
+#include "Rendering/Texture/ITexture.h"
+#include "Rendering/Texture/TextureFactory.h"
 #include "Math/Vector.h"
 
 #define STB_TRUETYPE_IMPLEMENTATION

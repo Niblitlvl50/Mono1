@@ -1,9 +1,9 @@
 
 #include "PolygonVisualizer.h"
-#include "Texture/TextureFactory.h"
 #include "Math/Quad.h"
 #include "Rendering/Color.h"
 #include "Rendering/IRenderer.h"
+#include "Rendering/Texture/TextureFactory.h"
 #include "Polygon.h"
 
 using namespace editor;

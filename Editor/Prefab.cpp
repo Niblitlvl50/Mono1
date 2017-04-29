@@ -3,8 +3,8 @@
 #include "SnapPoint.h"
 #include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"
-#include "IRenderer.h"
-#include "Color.h"
+#include "Rendering/IRenderer.h"
+#include "Rendering/Color.h"
 #include "Math/Quad.h"
 
 #include <cmath>
@@ -39,11 +39,12 @@ void Prefab::Draw(mono::IRenderer& renderer) const
         const float x = std::sin(snap_point.normal);
         const float y = std::cos(snap_point.normal);
 
-        points.emplace_back(snap_point.position + math::Vector(x, y));
+        points.emplace_back(snap_point.position + math::Vector(x, y) * 0.5f);
     }
 
     constexpr mono::Color::RGBA color(1.0f, 0.0f, 0.0f);
     renderer.DrawPoints(points, color, 4.0f);
+    renderer.DrawLines(points, color, 1.0f);
 }
 
 void Prefab::Update(unsigned int delta)

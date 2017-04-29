@@ -4,7 +4,7 @@
 #include "System/WindowFactory.h"
 #include "Camera/TraceCamera.h"
 #include "Engine.h"
-#include "Text/TextFunctions.h"
+#include "Rendering/Text/TextFunctions.h"
 #include "Rendering/Color.h"
 #include "EventHandler/EventHandler.h"
 #include "IWindow.h"
