@@ -1,21 +1,14 @@
-//
-//  AudioFactory.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 02/01/16.
-//
-//
 
 #pragma once
 
 #include "ISound.h"
-#include "System/SysTypes.h"
-#include "MonoPtrFwd.h"
-
 #include <vector>
+#include <memory>
 
 namespace mono
 {
+    using ISoundPtr = std::shared_ptr<ISound>;
+
     enum class SoundFormat
     {
         MONO_8BIT,
@@ -28,7 +21,7 @@ namespace mono
     {
         int frequency;
         SoundFormat format;
-        std::vector<byte> data;
+        std::vector<unsigned char> data;
     };
 
     namespace AudioFactory

@@ -18,5 +18,5 @@ namespace mono
         FLOAT
     };
 
-    std::unique_ptr<IRenderBuffer> CreateRenderBuffer(mono::BufferType type, mono::BufferData data, uint count);
+    std::unique_ptr<IRenderBuffer> CreateRenderBuffer(mono::BufferType type, mono::BufferData data, size_t count);
 }

@@ -10,17 +10,17 @@ namespace mono
     {
     public:
     
-        RenderBuffer(BufferType type, BufferData data, uint count);
+        RenderBuffer(BufferType type, BufferData data, size_t count);
         ~RenderBuffer();
 
-        void UpdateData(const void* data, uint offset, uint count);
+        void UpdateData(const void* data, size_t offset, size_t count);
         void Use() const;
-        uint Id() const;
+        size_t Id() const;
 
     private:
 
         BufferType m_type;
         BufferData m_data;
-        uint m_buffer_id;
+        unsigned int m_buffer_id;
     };
 }

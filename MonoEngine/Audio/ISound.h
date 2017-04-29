@@ -1,10 +1,3 @@
-//
-//  ISound.h
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 02/01/16.
-//
-//
 
 #pragma once
 

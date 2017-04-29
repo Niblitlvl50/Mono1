@@ -5,10 +5,9 @@
 #include "IShape.h"
 #include "IConstraint.h"
 #include "Math/Vector.h"
-#include "Utils.h"
 
 #include "chipmunk/chipmunk.h"
-#include <stdexcept>
+#include <cstdio>
 
 using namespace mono;
 
@@ -54,10 +53,16 @@ void Space::Remove(const IBodyPtr& body)
 {
     if(!body->IsStatic())
         cpSpaceRemoveBody(mSpace, body->Handle());
-    
-    const bool result = mono::FindAndRemove(mBodies, body);
-    if(!result)
-        throw std::runtime_error("Unable to remove body from collection");
+
+    const auto it = std::find(mBodies.begin(), mBodies.end(), body);
+    if(it != mBodies.end())
+    {
+        mBodies.erase(it);
+    }
+    else
+    {
+        std::printf("Unable to remove body from collection!\n");
+    }
 }
 
 void Space::Add(const IShapePtr& shape)

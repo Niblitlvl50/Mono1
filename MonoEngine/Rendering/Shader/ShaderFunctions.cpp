@@ -1,14 +1,8 @@
-//
-//  ShaderFunctions.cpp
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 26/12/14.
-//
-//
 
 #include "ShaderFunctions.h"
 #include "IShaderFactory.h"
 #include "ShaderFactory.h"
+
 #include "System/SysOpenGL.h"
 
 #include <vector>
@@ -19,7 +13,7 @@ namespace
     const mono::IShaderFactory* shaderFactory = nullptr;
 }
 
-uint mono::CompileShader(mono::ShaderType type, const char* source)
+size_t mono::CompileShader(mono::ShaderType type, const char* source)
 {
     const GLenum shaderType = (type == mono::ShaderType::VERTEX) ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER;
     const GLuint shader = glCreateShader(shaderType);
@@ -54,7 +48,7 @@ uint mono::CompileShader(mono::ShaderType type, const char* source)
     return shader;
 }
 
-uint mono::LinkProgram(uint vertexShader, uint fragmentShader)
+size_t mono::LinkProgram(size_t vertexShader, size_t fragmentShader)
 {
     const GLuint program = glCreateProgram();
     glAttachShader(program, vertexShader);

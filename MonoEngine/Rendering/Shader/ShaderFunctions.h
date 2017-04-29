@@ -1,14 +1,7 @@
-//
-//  ShaderFunctions.h
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 26/12/14.
-//
-//
 
 #pragma once
 
-#include "System/SysTypes.h"
+#include <cstddef>
 
 namespace mono
 {
@@ -27,7 +20,7 @@ namespace mono
     //! @param source The shader source
     //!
     //! @return A shader id
-    uint CompileShader(ShaderType type, const char* source);
+    size_t CompileShader(ShaderType type, const char* source);
 
     //! Link a shader program, will throw std::runtime_error
     //! if linking failed
@@ -36,7 +29,7 @@ namespace mono
     //! @param fragmentShader A compiled fragment shader
     //!
     //! @return A program id
-    uint LinkProgram(uint vertexShader, uint fragmentShader);
+    size_t LinkProgram(size_t vertexShader, size_t fragmentShader);
 
     //! Load a default implementation of the shader factory
     void LoadDefaultShaderFactory();

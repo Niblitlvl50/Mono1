@@ -15,7 +15,7 @@ ParticleEmitter::ParticleEmitter(const Configuration& config, ParticlePool& pool
       m_position(config.position),
       m_pool(pool)
 {
-    const uint pool_size = m_pool.m_poolSize;
+    const size_t pool_size = m_pool.m_poolSize;
 
     m_positionBuffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 2);
     m_colorBuffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 4); 

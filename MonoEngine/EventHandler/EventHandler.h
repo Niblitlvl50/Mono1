@@ -1,11 +1,3 @@
-/*
- *  EventHandler.h
- *  Monolith1
- *
- *  Created by Niblit on 2011-02-09.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
- *
- */
 
 #pragma once
 

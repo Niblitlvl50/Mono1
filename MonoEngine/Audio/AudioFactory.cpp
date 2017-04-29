@@ -1,13 +1,5 @@
-//
-//  AudioFactory.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 02/01/16.
-//
-//
 
 #include "AudioFactory.h"
-#include "System/SysTypes.h"
 #include "System/SysFile.h"
 
 #include "OpenAL/al.h"
@@ -60,7 +52,7 @@ namespace
     {
     public:
 
-        SoundData(const std::vector<byte>& data, ALenum format, ALsizei frequency)
+        SoundData(const std::vector<unsigned char>& data, ALenum format, ALsizei frequency)
         {
             alGenBuffers(1, &m_buffer);
             
@@ -183,7 +175,7 @@ mono::SoundFile mono::AudioFactory::LoadFile(const char* fileName)
     if(!soundFile)
         throw std::runtime_error("Unable to open sound file");
 
-    std::vector<byte> bytes;
+    std::vector<unsigned char> bytes;
     File::FileRead(soundFile, bytes);
 
     RIFF_Header riffHeader;
