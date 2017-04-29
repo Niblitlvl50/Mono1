@@ -1,16 +1,9 @@
-//
-//  PolygonVisualizer.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 03/09/16.
-//
-//
 
 #include "PolygonVisualizer.h"
 #include "Texture/TextureFactory.h"
 #include "Math/Quad.h"
-#include "Color.h"
-#include "IRenderer.h"
+#include "Rendering/Color.h"
+#include "Rendering/IRenderer.h"
 #include "Polygon.h"
 
 using namespace editor;

@@ -1,10 +1,3 @@
-//
-//  ImGuiDrawable.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 20/06/16.
-//
-//
 
 #include "ImGuiRenderer.h"
 #include "Math/Quad.h"
@@ -14,7 +7,7 @@
 #include "ImGuiShader.h"
 #include "Texture/ITexture.h"
 #include "Texture/TextureFactory.h"
-#include "IRenderer.h"
+#include "Rendering/IRenderer.h"
 
 #include "imgui/imgui.h"
 

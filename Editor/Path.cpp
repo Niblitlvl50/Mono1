@@ -1,7 +1,7 @@
 
 #include "Path.h"
-#include "IRenderer.h"
-#include "Color.h"
+#include "Rendering/IRenderer.h"
+#include "Rendering/Color.h"
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
 #include "Math/MathFunctions.h"

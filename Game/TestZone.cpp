@@ -35,10 +35,10 @@
 #include "UpdateTasks/HealthbarUpdater.h"
 #include "UpdateTasks/CameraViewportReporter.h"
 
-#include "IRenderer.h"
+#include "Rendering/IRenderer.h"
+#include "Rendering/Color.h"
 #include "Math/Matrix.h"
 #include "Math/Quad.h"
-#include "Color.h"
 #include "FontIds.h"
 
 namespace

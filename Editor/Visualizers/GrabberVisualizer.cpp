@@ -3,8 +3,8 @@
 #include "Math/MathFwd.h"
 #include "Math/Quad.h"
 #include "Grabber.h"
-#include "Color.h"
-#include "IRenderer.h"
+#include "Rendering/Color.h"
+#include "Rendering/IRenderer.h"
 
 using namespace editor;
 

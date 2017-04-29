@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Math/Vector.h"
-#include "Color.h"
+#include "Rendering/Color.h"
 #include <vector>
 
 namespace mono

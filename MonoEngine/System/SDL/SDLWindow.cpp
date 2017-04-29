@@ -1,7 +1,7 @@
 
 #include "SDLWindow.h"
 #include "System/SysOpenGL.h"
-#include "Color.h"
+#include "Rendering/Color.h"
 
 #include "SDL_video.h"
 

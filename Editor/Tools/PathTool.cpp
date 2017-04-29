@@ -1,8 +1,8 @@
 
 #include "PathTool.h"
 #include "Editor.h"
-#include "IRenderer.h"
-#include "Color.h"
+#include "Rendering/IRenderer.h"
+#include "Rendering/Color.h"
 #include "Path.h"
 
 using namespace editor;

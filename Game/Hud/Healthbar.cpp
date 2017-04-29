@@ -1,7 +1,7 @@
 
 #include "Healthbar.h"
-#include "IRenderer.h"
-#include "Color.h"
+#include "Rendering/IRenderer.h"
+#include "Rendering/Color.h"
 #include "Math/Quad.h"
 
 using namespace game;

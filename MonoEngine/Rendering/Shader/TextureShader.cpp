@@ -1,15 +1,8 @@
-//
-//  TextureShader.cpp
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 26/12/14.
-//
-//
 
 #include "TextureShader.h"
 #include "System/SysOpenGL.h"
 #include "Math/Matrix.h"
-#include "Color.h"
+#include "Rendering/Color.h"
 
 #include "ShaderFunctions.h"
 

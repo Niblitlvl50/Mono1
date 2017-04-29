@@ -19,8 +19,7 @@
 
 #include "Events/SpawnEntityEvent.h"
 #include "EntityBase.h"
-#include "IRenderer.h"
-#include "Color.h"
+#include "Rendering/IRenderer.h"
 
 namespace
 {

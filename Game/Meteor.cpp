@@ -1,13 +1,6 @@
-//
-//  Meteor.cpp
-//  Mono1
-//
-//  Created by Niblit on 2013-01-27.
-//  Copyright (c) 2013 __MyCompanyName__. All rights reserved.
-//
 
 #include "Meteor.h"
-#include "IRenderer.h"
+#include "Rendering/IRenderer.h"
 #include "Physics/IBody.h"
 #include "Physics/IShape.h"
 #include "Physics/CMFactory.h"

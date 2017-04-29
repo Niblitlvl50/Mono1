@@ -8,9 +8,9 @@
 #include "Physics/CMObject.h"
 
 #include "IDrawable.h"
-#include "IRenderer.h"
 #include "IPhysicsZone.h"
 #include "RenderLayers.h"
+#include "Rendering/IRenderer.h"
 #include "Rendering/IRenderBuffer.h"
 #include "Rendering/BufferFactory.h"
 #include "Texture/TextureFactory.h"

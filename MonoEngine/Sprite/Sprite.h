@@ -1,19 +1,10 @@
-//
-//  AnimatedSprite.h
-//  Mono1
-//
-//  Created by Niblit on 2012-04-09.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
-
-
 
 #pragma once
 
 #include "ISprite.h"
 #include "AnimationSequence.h"
 #include "Math/Quad.h"
-#include "Color.h"
+#include "Rendering/Color.h"
 
 #include <functional>
 

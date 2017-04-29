@@ -10,7 +10,7 @@
 #include "Physics/ConstraintsFactory.h"
 #include "EventHandler/EventHandler.h"
 #include "Sprite/ISprite.h"
-#include "Color.h"
+#include "Rendering/Color.h"
 
 using namespace game;
 

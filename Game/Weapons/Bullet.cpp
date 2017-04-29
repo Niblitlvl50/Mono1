@@ -6,7 +6,7 @@
 #include "Physics/IShape.h"
 #include "Physics/CMFactory.h"
 
-#include "IRenderer.h"
+#include "Rendering/IRenderer.h"
 #include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"
 #include "Audio/ISound.h"

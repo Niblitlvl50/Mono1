@@ -9,7 +9,7 @@
 #include "Physics/IShape.h"
 #include "Physics/CMFactory.h"
 
-#include "IRenderer.h"
+#include "Rendering/IRenderer.h"
 
 using namespace game;
 

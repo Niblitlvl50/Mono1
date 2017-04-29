@@ -3,7 +3,7 @@
 
 #include "MonoPtrFwd.h"
 #include "Enemy.h"
-#include "Color.h"
+#include "Rendering/Color.h"
 
 namespace game
 {

@@ -1,10 +1,9 @@
 
 #include "ParticleEmitter.h"
 #include "ParticlePool.h"
-#include "IRenderer.h"
-#include "Math/Quad.h"
-
+#include "Rendering/IRenderer.h"
 #include "Rendering/BufferFactory.h"
+#include "Math/Quad.h"
 
 #include <limits>
 

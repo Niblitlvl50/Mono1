@@ -8,7 +8,7 @@
 #include "EventHandler/EventHandler.h"
 #include "IWindow.h"
 #include "Text/TextFunctions.h"
-#include "Color.h"
+#include "Rendering/Color.h"
 
 #include "Editor.h"
 

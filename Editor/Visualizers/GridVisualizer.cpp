@@ -1,15 +1,8 @@
-//
-//  GridVisualizer.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 12/08/16.
-//
-//
 
 #include "GridVisualizer.h"
-#include "IRenderer.h"
 #include "ICamera.h"
-#include "Color.h"
+#include "Rendering/IRenderer.h"
+#include "Rendering/Color.h"
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
 

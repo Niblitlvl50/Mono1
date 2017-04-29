@@ -1,15 +1,8 @@
-//
-//  TextDefinition.h
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 25/12/14.
-//
-//
 
 #pragma once
 
 #include <vector>
-#include "Color.h"
+#include "Rendering/Color.h"
 
 namespace mono
 {

@@ -1,10 +1,3 @@
-//
-//  PolygonBrushTool.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 09/08/16.
-//
-//
 
 #include "PolygonBrushTool.h"
 #include "Editor.h"
@@ -14,8 +7,8 @@
 #include "Math/Quad.h"
 
 #include "IDrawable.h"
-#include "IRenderer.h"
-#include "Color.h"
+#include "Rendering/IRenderer.h"
+#include "Rendering/Color.h"
 
 #include <cmath>
 

@@ -1,7 +1,7 @@
 
 
 #include "PhysicsZone.h"
-#include "IRenderer.h"
+#include "Rendering/IRenderer.h"
 #include "IUpdatable.h"
 #include "Physics/CMSpace.h"
 #include "Physics/CMObject.h"

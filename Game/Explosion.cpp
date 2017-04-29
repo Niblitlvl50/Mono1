@@ -1,6 +1,6 @@
 
 #include "Explosion.h"
-#include "IRenderer.h"
+#include "Rendering/IRenderer.h"
 #include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"
 #include "Events/RemoveEntityEvent.h"

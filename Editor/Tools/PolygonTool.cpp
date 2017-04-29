@@ -2,8 +2,8 @@
 #include "PolygonTool.h"
 #include "Editor.h"
 #include "Polygon.h"
-#include "IRenderer.h"
-#include "Color.h"
+#include "Rendering/IRenderer.h"
+#include "Rendering/Color.h"
 #include "Math/Quad.h"
 
 #include "Texture/TextureFactory.h"

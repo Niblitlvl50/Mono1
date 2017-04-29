@@ -2,8 +2,8 @@
 #include "SpriteEntity.h"
 #include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"
-#include "IRenderer.h"
-#include "Color.h"
+#include "Rendering/IRenderer.h"
+#include "Rendering/Color.h"
 #include "Math/Quad.h"
 
 using namespace editor;

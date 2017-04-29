@@ -9,7 +9,7 @@
 #include "EntityProperties.h"
 #include "CollisionConfiguration.h"
 
-#include "IRenderer.h"
+#include "Rendering/IRenderer.h"
 #include "EntityBase.h"
 #include "Sprite/ISprite.h"
 #include "Sprite/SpriteFactory.h"

@@ -1,10 +1,3 @@
-//
-//  main.cpp
-//  AnimationTool
-//
-//  Created by Niklas Damberg on 28/11/15.
-//
-//
 
 #include "System/SysLibs.h"
 #include "System/WindowFactory.h"
@@ -13,7 +6,7 @@
 #include "EventHandler/EventHandler.h"
 
 #include "IWindow.h"
-#include "Color.h"
+#include "Rendering/Color.h"
 #include "Text/TextFunctions.h"
 #include "Animator.h"
 
