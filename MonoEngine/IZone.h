@@ -7,8 +7,10 @@
 
 namespace mono
 {
-    struct IZone
+    class IZone
     {
+    public:
+
         virtual ~IZone()
         { }
 

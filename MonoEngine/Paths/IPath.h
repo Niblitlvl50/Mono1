@@ -13,8 +13,10 @@
 
 namespace mono
 {
-    struct IPath
+    class IPath
     {
+    public:
+    
         virtual ~IPath()
         { }
 

@@ -3,18 +3,18 @@
 
 namespace mono
 {
-    struct IWindow;
-    struct ICamera;
-    struct IRenderer;
-    struct IDrawable;
-    struct IEntity;
-    struct IPhysicsEntity;
-    struct IUpdatable;
-    struct IInputHandler;
-    struct IZone;
-    struct IPhysicsZone;
-    struct IAction;
-    struct IPath;
+    class IWindow;
+    class ICamera;
+    class IRenderer;
+    class IDrawable;
+    class IEntity;
+    class IPhysicsEntity;
+    class IUpdatable;
+    class IInputHandler;
+    class IZone;
+    class IPhysicsZone;
+    class IAction;
+    class IPath;
     class ITexture;
     class ISprite;
     class ISound;

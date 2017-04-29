@@ -1,10 +1,3 @@
-//
-//  PathFactory.cpp
-//  Worksample_2
-//
-//  Created by Niklas Damberg on 13/11/13.
-//
-//
 
 #include "PathFactory.h"
 #include "IPath.h"
@@ -15,8 +8,10 @@
 
 namespace
 {
-    struct DefaultPath : mono::IPath
+    class DefaultPath : public mono::IPath
     {
+    public:
+
         DefaultPath(const math::Vector& position, const std::vector<math::Vector>& coords)
             : m_position(position),
               m_path(coords),

@@ -3,8 +3,10 @@
 
 namespace mono
 {
-    struct IAction
+    class IAction
     {
+    public:
+    
         virtual ~IAction()
         { }
         

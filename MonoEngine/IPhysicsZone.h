@@ -7,8 +7,10 @@
 
 namespace mono
 {
-    struct IPhysicsZone : public virtual IZone
+    class IPhysicsZone : public virtual mono::IZone
     {
+    public:
+
         virtual void ForEachBody(const mono::BodyFunc& func) = 0;
         virtual IPhysicsEntityPtr FindPhysicsEntityFromBody(const mono::IBodyPtr& body) const = 0;
         virtual mono::IPhysicsEntityPtr FindPhysicsEntityFromId(uint id) const = 0;

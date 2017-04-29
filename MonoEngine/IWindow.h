@@ -6,8 +6,10 @@
 
 namespace mono
 {
-    struct IWindow
+    class IWindow
     {
+    public:
+
         virtual ~IWindow()
         { }
 

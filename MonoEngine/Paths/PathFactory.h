@@ -1,10 +1,3 @@
-//
-//  PathFactory.h
-//  Worksample_2
-//
-//  Created by Niklas Damberg on 13/11/13.
-//
-//
 
 #pragma once
 
@@ -14,7 +7,7 @@
 
 namespace mono
 {
-    struct IPath;
+    class IPath;
     
     std::shared_ptr<mono::IPath> CreatePath(const char* path_file);
     std::shared_ptr<mono::IPath> CreatePath(const math::Vector& position, const std::vector<math::Vector>& coords);

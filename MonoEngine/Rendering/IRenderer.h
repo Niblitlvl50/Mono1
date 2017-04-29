@@ -10,8 +10,10 @@ namespace mono
 {
     class IRenderBuffer;
 
-    struct IRenderer
+    class IRenderer
     {
+    public:
+
         virtual ~IRenderer()
         { }
 

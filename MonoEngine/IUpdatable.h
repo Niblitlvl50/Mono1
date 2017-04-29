@@ -3,8 +3,10 @@
 
 namespace mono
 {
-    struct IUpdatable
+    class IUpdatable
     {
+    public:
+    
         virtual ~IUpdatable()
         { }
 

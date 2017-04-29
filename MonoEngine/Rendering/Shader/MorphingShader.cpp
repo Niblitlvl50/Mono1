@@ -1,10 +1,3 @@
-//
-//  MorphingShader.cpp
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 21/12/15.
-//
-//
 
 #include "MorphingShader.h"
 #include "ShaderFunctions.h"

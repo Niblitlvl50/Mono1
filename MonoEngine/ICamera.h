@@ -6,8 +6,10 @@
 
 namespace mono
 {
-    struct ICamera
+    class ICamera
     {
+    public:
+
         virtual ~ICamera()
         { }
 

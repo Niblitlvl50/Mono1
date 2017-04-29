@@ -8,8 +8,10 @@
 
 namespace mono
 {
-    struct IEntity : public IDrawable, public IUpdatable
+    class IEntity : public IDrawable, public IUpdatable
     {
+    public:
+
         virtual ~IEntity()
         { }
 

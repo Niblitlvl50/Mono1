@@ -1,10 +1,3 @@
-//
-//  MorphingShader.hpp
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 21/12/15.
-//
-//
 
 #pragma once
 

@@ -1,10 +1,3 @@
-//
-//  TextureShader.h
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 26/12/14.
-//
-//
 
 #pragma once
 

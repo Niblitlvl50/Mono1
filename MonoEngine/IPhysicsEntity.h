@@ -6,8 +6,10 @@
 
 namespace mono
 {
-    struct IPhysicsEntity : public IEntity
+    class IPhysicsEntity : public IEntity
     {
+    public:
+
         virtual ~IPhysicsEntity()
         { }
 

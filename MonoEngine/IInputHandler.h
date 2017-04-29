@@ -5,8 +5,10 @@
 
 namespace mono
 {
-    struct IInputHandler
+    class IInputHandler
     {
+    public:
+
         virtual ~IInputHandler()
         { }
 

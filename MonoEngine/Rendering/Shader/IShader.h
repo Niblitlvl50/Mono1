@@ -1,10 +1,3 @@
-//
-//  IShader.h
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 21/12/14.
-//
-//
 
 #pragma once
 

@@ -6,8 +6,10 @@
 
 namespace mono
 {
-    struct IDrawable
+    class IDrawable
     {
+    public:
+    
         virtual ~IDrawable()
         { }
 

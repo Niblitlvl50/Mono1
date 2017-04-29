@@ -1,10 +1,3 @@
-//
-//  ColorShader.cpp
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 25/12/14.
-//
-//
 
 #include "ColorShader.h"
 #include "ShaderFunctions.h"
