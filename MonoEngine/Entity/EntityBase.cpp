@@ -1,5 +1,5 @@
 
-#include "EntityBase.h"
+#include "Entity/EntityBase.h"
 #include "Utils.h"
 #include "Math/Quad.h"
 #include "Math/Matrix.h"

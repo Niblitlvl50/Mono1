@@ -1,7 +1,7 @@
 
 #include "GravityUpdater.h"
 #include "IPhysicsZone.h"
-#include "IEntity.h"
+#include "Entity/IEntity.h"
 #include "Math/Vector.h"
 #include "Physics/IBody.h"
 

@@ -1,16 +1,9 @@
-//
-//  RotateTool.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 03/07/16.
-//
-//
 
 #include "RotateTool.h"
 #include "Math/MathFunctions.h"
 #include "Math/Vector.h"
 #include "Math/Quad.h"
-#include "IEntity.h"
+#include "Entity/IEntity.h"
 #include "Editor.h"
 
 using namespace editor;

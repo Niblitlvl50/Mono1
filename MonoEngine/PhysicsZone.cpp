@@ -6,7 +6,7 @@
 #include "Physics/CMSpace.h"
 #include "Physics/CMObject.h"
 #include "Physics/IShape.h"
-#include "IPhysicsEntity.h"
+#include "Entity/IPhysicsEntity.h"
 
 #include "Utils.h"
 #include <cstdio>

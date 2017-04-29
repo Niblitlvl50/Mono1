@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "EntityBase.h"
+#include "Entity/EntityBase.h"
 #include "MonoPtrFwd.h"
 
 namespace animator

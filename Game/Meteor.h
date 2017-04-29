@@ -1,14 +1,7 @@
-//
-//  Meteor.h
-//  Mono1
-//
-//  Created by Niblit on 2013-01-27.
-//  Copyright (c) 2013 __MyCompanyName__. All rights reserved.
-//
 
 #pragma once
 
-#include "PhysicsEntityBase.h"
+#include "Entity/PhysicsEntityBase.h"
 #include "MonoPtrFwd.h"
 
 namespace game

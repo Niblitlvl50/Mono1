@@ -2,7 +2,7 @@
 #pragma once
 
 #include "MonoPtrFwd.h"
-#include "PhysicsEntityBase.h"
+#include "Entity/PhysicsEntityBase.h"
 #include "Physics/IBody.h"
 
 #include "WeaponConfiguration.h"

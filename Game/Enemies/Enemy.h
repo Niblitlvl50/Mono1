@@ -3,7 +3,7 @@
 
 #include "MonoFwd.h"
 #include "MonoPtrFwd.h"
-#include "PhysicsEntityBase.h"
+#include "Entity/PhysicsEntityBase.h"
 #include "Math/Vector.h"
 
 namespace game

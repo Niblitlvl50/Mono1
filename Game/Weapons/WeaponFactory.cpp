@@ -5,7 +5,7 @@
 
 #include "Explosion.h"
 #include "Physics/IBody.h"
-#include "IPhysicsEntity.h"
+#include "Entity/IPhysicsEntity.h"
 
 #include "EventHandler/EventHandler.h"
 #include "Events/DamageEvent.h"

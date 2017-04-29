@@ -1,8 +1,8 @@
 
 #include "HealthbarUpdater.h"
 #include "IPhysicsZone.h"
-#include "IEntity.h"
-#include "IPhysicsEntity.h"
+#include "Entity/IEntity.h"
+#include "Entity/IPhysicsEntity.h"
 #include "DamageController.h"
 #include "Hud/Healthbar.h"
 #include "System/SysTime.h"

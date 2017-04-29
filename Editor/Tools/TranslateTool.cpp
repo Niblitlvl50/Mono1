@@ -1,6 +1,6 @@
 
 #include "TranslateTool.h"
-#include "IEntity.h"
+#include "Entity/IEntity.h"
 #include "Math/Vector.h"
 #include "Editor.h"
 

@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Math/Vector.h"
-#include "EntityBase.h"
+#include "Entity/EntityBase.h"
 
 #include <vector>
 

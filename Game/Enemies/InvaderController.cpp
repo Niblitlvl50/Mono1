@@ -18,7 +18,7 @@
 #include "Math/MathFunctions.h"
 
 #include "Events/SpawnEntityEvent.h"
-#include "EntityBase.h"
+#include "Entity/EntityBase.h"
 #include "Rendering/IRenderer.h"
 
 namespace

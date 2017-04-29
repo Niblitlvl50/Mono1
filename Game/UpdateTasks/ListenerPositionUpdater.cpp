@@ -2,7 +2,7 @@
 #include "ListenerPositionUpdater.h"
 #include "Audio/AudioListener.h"
 #include "Math/Vector.h"
-#include "IEntity.h"
+#include "Entity/IEntity.h"
 
 using namespace game;
 
