@@ -5,7 +5,7 @@
 #include "Physics/IBody.h"
 #include "Physics/IShape.h"
 #include "Physics/CMFactory.h"
-#include "Physics/CMObject.h"
+#include "Physics/CMPhysicsData.h"
 
 #include "Zone/IPhysicsZone.h"
 #include "RenderLayers.h"

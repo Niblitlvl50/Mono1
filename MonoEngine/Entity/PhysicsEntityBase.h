@@ -4,7 +4,7 @@
 #include "IPhysicsEntity.h"
 #include "MonoPtrFwd.h"
 #include "Math/Vector.h"
-#include "Physics/CMObject.h"
+#include "Physics/CMPhysicsData.h"
 
 namespace mono
 {
