@@ -1,8 +1,9 @@
 
 #pragma once
 
-#include "System/SysTime.h"
+#include "System/System.h"
 #include "MonoFwd.h"
+#include <memory>
 
 namespace game
 {
@@ -14,6 +15,6 @@ namespace game
 
     private:
 
-        Time::ITimerPtr m_timer;
+        std::unique_ptr<System2::ITimer> m_timer;
     };
 }

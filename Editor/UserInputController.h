@@ -1,10 +1,3 @@
-//
-//  EditorCameraController.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 26/06/16.
-//
-//
 
 #pragma once
 
@@ -21,6 +14,8 @@
 #include "Tools/CameraTool.h"
 #include "Tools/PathTool.h"
 
+#include "System/System.h"
+
 namespace editor
 {
     struct UIContext;
@@ -31,7 +26,7 @@ namespace editor
     public:
 
         UserInputController(const mono::ICameraPtr& camera,
-                            const mono::IWindowPtr& window,
+                            System2::IWindow* window,
                             editor::Editor* editor,
                             editor::UIContext* context,
                             mono::EventHandler& event_handler);
@@ -49,7 +44,7 @@ namespace editor
         bool OnMultiGesture(const event::MultiGestureEvent& event);
         bool OnKeyDown(const event::KeyDownEvent& event);
 
-        mono::IWindowPtr m_window;
+        System2::IWindow* m_window;
         mono::EventHandler& m_eventHandler;
         editor::Editor* m_editor;
 

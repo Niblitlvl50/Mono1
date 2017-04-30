@@ -13,12 +13,18 @@
 #include "Events/EventFwd.h"
 #include "EventHandler/EventToken.h"
 
+namespace System2
+{
+    class IWindow;
+    class IInputHandler;
+};
+
 namespace mono
 {
     class Engine
     {
     public:
-        Engine(const IWindowPtr& view, const ICameraPtr& camera, EventHandler& eventHandler);
+        Engine(System2::IWindow* window, const ICameraPtr& camera, EventHandler& eventHandler);
         ~Engine();
 
         void Run(IZonePtr zone);
@@ -38,10 +44,10 @@ namespace mono
 
         float mTimeScale;
 
-        IWindowPtr mWindow;
+        System2::IWindow* m_window;
         ICameraPtr mCamera;
         EventHandler& mEventHandler;
-        IInputHandlerPtr mInputHandler;
+        std::shared_ptr<System2::IInputHandler> m_input_handler;
 
         EventToken<event::PauseEvent> mPauseToken;
         EventToken<event::QuitEvent> mQuitToken;

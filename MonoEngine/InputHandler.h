@@ -2,14 +2,14 @@
 #pragma once
 
 #include "MonoFwd.h"
-#include "IInputHandler.h"
+#include "System/System.h"
 #include <functional>
 
 namespace mono
 {
     using CoordinateFunc = std::function<void (float&, float&)>;
 
-    class InputHandler : public IInputHandler
+    class InputHandler : public System2::IInputHandler
     {
     public:
 

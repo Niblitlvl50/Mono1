@@ -10,12 +10,10 @@
 #include "Engine.h"
 #include "InputHandler.h"
 
-#include "IWindow.h"
 #include "Camera/ICamera.h"
 #include "Zone/IZone.h"
 
-#include "System/SysTime.h"
-#include "System/SysEvents.h"
+#include "System/System.h"
 
 #include "EventHandler/EventHandler.h"
 #include "Events/EventFuncFwd.h"
@@ -35,37 +33,39 @@ using namespace mono;
 
 namespace
 {
-    void ScreenToWorld(float& x, float& y, IWindowPtr window, ICameraPtr camera)
+    void ScreenToWorld(float& x, float& y, System2::IWindow* window, ICameraPtr camera)
     {
-        const math::Vector& windowSize = window->Size();
+        const System2::Size& window_size = window->Size();
+        const math::Vector size(window_size.width, window_size.height);
+
         const math::Quad& viewport = camera->GetViewport();
         
-        const math::Vector& scale = viewport.mB / windowSize;
+        const math::Vector& scale = viewport.mB / size;
         
-        const float screenX = x;
-        const float screenY = windowSize.y - y;
+        const float screen_x = x;
+        const float screen_y = size.y - y;
         
-        const float tempx = screenX * scale.x;
-        const float tempy = screenY * scale.y;
+        const float temp_x = screen_x * scale.x;
+        const float temp_y = screen_y * scale.y;
         
-        x = tempx + viewport.mA.x;
-        y = tempy + viewport.mA.y;
+        x = temp_x + viewport.mA.x;
+        y = temp_y + viewport.mA.y;
     }
 }
 
-Engine::Engine(const IWindowPtr& window, const ICameraPtr& camera, EventHandler& eventHandler)
+Engine::Engine(System2::IWindow* window, const ICameraPtr& camera, EventHandler& eventHandler)
     : mPause(false),
       mQuit(false),
       mUpdateLastTime(false),
       mTimeScale(1.0f),
-      mWindow(window),
+      m_window(window),
       mCamera(camera),
       mEventHandler(eventHandler)
 {
     using namespace std::placeholders;
 
-    const auto func = std::bind(ScreenToWorld, _1, _2, mWindow, mCamera);
-    mInputHandler = std::make_shared<InputHandler>(func, mEventHandler);
+    const auto func = std::bind(ScreenToWorld, _1, _2, m_window, mCamera);
+    m_input_handler = std::make_shared<InputHandler>(func, mEventHandler);
 
     const event::PauseEventFunc pauseFunc = std::bind(&Engine::OnPause, this, _1);
     const event::QuitEventFunc quitFunc = std::bind(&Engine::OnQuit, this, _1);
@@ -96,8 +96,8 @@ void Engine::Run(IZonePtr zone)
 {
     zone->OnLoad(mCamera);
 
-    Renderer renderer(mCamera, mWindow);
-    unsigned int lastTime = Time::GetMilliseconds();
+    Renderer renderer(mCamera);
+    unsigned int lastTime = System2::GetMilliseconds();
 
     while(!mQuit)
     {
@@ -107,29 +107,33 @@ void Engine::Run(IZonePtr zone)
         // everything up, thats why we need to update it here.
         if(mUpdateLastTime)
         {
-            lastTime = Time::GetMilliseconds();
+            lastTime = System2::GetMilliseconds();
             mUpdateLastTime = false;
         }
 
-        const unsigned int beforeTime = Time::GetMilliseconds();
+        const unsigned int beforeTime = System2::GetMilliseconds();
         const unsigned int delta = (beforeTime - lastTime) * mTimeScale;
 
         // Handle input events
-        Events::ProcessSystemEvents(mInputHandler);
+        System2::ProcessSystemEvents(m_input_handler.get());
         if(!mPause)
         {
             // Let the zone add stuff that will be rendered and updated
             zone->Accept(renderer);
 
-            // Update all the stuff, and draw complete frame
+            // Update all the stuff...
             renderer.Update(delta);
+
+            // Draw...
+            m_window->MakeCurrent();
             renderer.DrawFrame();
+            m_window->SwapBuffers();
         }
 
         lastTime = beforeTime;
 
         // Sleep for a millisecond
-        //Time::Sleep(1);
+        //System2::Sleep(1);
     }
 
     // Remove possible follow entity and unload the zone
@@ -172,13 +176,13 @@ bool Engine::OnApplication(const event::ApplicationEvent& event)
 
 bool Engine::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 {
-    mWindow->SurfaceChanged(event.width, event.height);
+    m_window->SurfaceChanged(event.width, event.height);
     return false;
 }
 
 bool Engine::OnActivated(const event::ActivatedEvent& event)
 {
-    mWindow->Activated(event.gain);
+    //m_window->Activated(event.gain);
     return false;
 }
 

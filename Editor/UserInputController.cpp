@@ -30,7 +30,7 @@ namespace
 using namespace editor;
 
 UserInputController::UserInputController(const mono::ICameraPtr& camera,
-                                         const mono::IWindowPtr& window,
+                                         System2::IWindow* window,
                                          editor::Editor* editor,
                                          editor::UIContext* context,
                                          mono::EventHandler& event_handler)
@@ -38,7 +38,7 @@ UserInputController::UserInputController(const mono::ICameraPtr& camera,
       m_eventHandler(event_handler),
       m_editor(editor),
       m_context(context),
-      m_cameraTool(camera, window->Size()),
+      m_cameraTool(camera, window),
       m_translateTool(editor),
       m_rotateTool(editor),
       m_polygonTool(editor),

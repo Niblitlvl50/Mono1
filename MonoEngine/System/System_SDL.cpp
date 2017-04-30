@@ -233,7 +233,7 @@ namespace
     };
 }
 
-void System2::Initalize()
+void System2::Initialize()
 {
     // Init SDL video subsystem
     const int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);

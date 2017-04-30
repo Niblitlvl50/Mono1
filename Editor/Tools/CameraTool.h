@@ -1,15 +1,9 @@
-//
-//  CameraTool.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 03/07/16.
-//
-//
 
 #pragma once
 
 #include "MonoPtrFwd.h"
 #include "Math/Vector.h"
+#include "System/System.h"
 
 namespace editor
 {
@@ -17,7 +11,7 @@ namespace editor
     {
     public:
 
-        CameraTool(const mono::ICameraPtr& camera, const math::Vector& window_size);
+        CameraTool(const mono::ICameraPtr& camera, const System2::IWindow* window);
 
         bool IsActive() const;
         void HandleMouseDown(const math::Vector& screen_position);
@@ -30,7 +24,7 @@ namespace editor
     private:
     
         mono::ICameraPtr m_camera;
-        const math::Vector m_windowSize;
+        const System2::IWindow* m_window;
 
         bool m_translate;
         math::Vector m_translateDelta;

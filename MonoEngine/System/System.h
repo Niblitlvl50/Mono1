@@ -68,7 +68,7 @@ namespace System2
         virtual void Stop() = 0;
     };
 
-    void Initalize();
+    void Initialize();
     void Shutdown();
 
     unsigned int GetMilliseconds();

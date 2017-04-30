@@ -49,7 +49,7 @@ namespace
     }
 }
 
-Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHandler, const char* sprite_file)
+Animator::Animator(System2::IWindow* window, mono::EventHandler& eventHandler, const char* sprite_file)
     : m_eventHandler(eventHandler),
       m_spriteFile(sprite_file),
       m_inputHandler(eventHandler)
@@ -69,7 +69,9 @@ Animator::Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHand
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
     SetupIcons(m_context, textures);
 
-    m_guiRenderer = std::make_shared<ImGuiRenderer>("animator_imgui.ini", window->Size(), textures);
+    const System2::Size& size = window->Size();
+    const math::Vector window_size(size.width, size.height);
+    m_guiRenderer = std::make_shared<ImGuiRenderer>("animator_imgui.ini", window_size, textures);
     mono::CreateSprite(m_sprite, sprite_file);
     
     AddEntity(std::make_shared<MutableSprite>(m_sprite), 0);

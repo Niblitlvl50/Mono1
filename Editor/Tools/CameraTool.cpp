@@ -9,9 +9,9 @@
 
 using namespace editor;
 
-CameraTool::CameraTool(const mono::ICameraPtr& camera, const math::Vector& window_size)
+CameraTool::CameraTool(const mono::ICameraPtr& camera, const System2::IWindow* window)
     : m_camera(camera),
-      m_windowSize(window_size),
+      m_window(window),
       m_translate(false)
 { }
 
@@ -36,8 +36,12 @@ void CameraTool::HandleMousePosition(const math::Vector& screen_position)
     if(!m_translate)
         return;
 
+    const System2::Size& size = m_window->Size();
+
     const math::Quad& viewport = m_camera->GetViewport();
-    const math::Vector& scale = viewport.mB / m_windowSize;
+    const math::Vector window_size(size.width, size.height);
+
+    const math::Vector& scale = viewport.mB / window_size;
 
     math::Vector delta = (screen_position - m_translateDelta);
     delta.y = -delta.y;

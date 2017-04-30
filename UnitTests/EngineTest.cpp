@@ -1,9 +1,10 @@
 
 #include "gtest/gtest.h"
 
+#include "System/System.h"
+
 #include "Engine.h"
 #include "MonoFwd.h"
-#include "IWindow.h"
 #include "Camera/ICamera.h"
 #include "Zone/IZone.h"
 #include "Rendering/Shader/IShaderFactory.h"
@@ -21,15 +22,16 @@
 
 namespace
 {
-    struct MocWindow : mono::IWindow
+    class MocWindow : public System2::IWindow
     {
+    public:
         MocWindow(mono::EventHandler& handler)
-            : mHandler(handler),
-              mSize(640, 480)
-        { }
+            : mHandler(handler)
+        {
+            m_size.width = 640;
+            m_size.height = 480;
+        }
         virtual void SurfaceChanged(int width, int height)
-        { }
-        virtual void Activated(bool activated)
         { }
         virtual void Maximize()
         { }
@@ -46,15 +48,15 @@ namespace
         {
             mMakeCurrentCalled = true;
         }
-        virtual void SetBackgroundColor(const mono::Color::RGBA& color)
+        virtual void SetBackgroundColor(float red, float green, float blue)
         { }
-        virtual const math::Vector& Size() const
+        virtual const System2::Size& Size() const
         {
-            return mSize;
+            return m_size;
         }
 
         mono::EventHandler& mHandler;
-        math::Vector mSize;
+        System2::Size m_size;
 
         bool mMakeCurrentCalled = false;
         mutable bool mSwapBuffersCalled = false;
@@ -279,17 +281,17 @@ TEST(EngineTest, Basic)
     mono::EventHandler handler;
     mono::LoadCustomShaderFactory(new NullFactory);
 
-    std::shared_ptr<MocWindow> window = std::make_shared<MocWindow>(handler);
+    MocWindow window(handler);
     std::shared_ptr<MocCamera> camera = std::make_shared<MocCamera>();
     std::shared_ptr<MocZone> zone = std::make_shared<MocZone>();
     
     {
-        mono::Engine engine(window, camera, handler);
+        mono::Engine engine(&window, camera, handler);
         EXPECT_NO_THROW(engine.Run(zone));
     }
 
-    EXPECT_TRUE(window->mMakeCurrentCalled);
-    EXPECT_TRUE(window->mSwapBuffersCalled);
+    EXPECT_TRUE(window.mMakeCurrentCalled);
+    EXPECT_TRUE(window.mSwapBuffersCalled);
 
     EXPECT_TRUE(camera->mUpdateCalled);
     EXPECT_TRUE(camera->mUnfollowCalled);

@@ -5,7 +5,7 @@
 #include "Entity/IPhysicsEntity.h"
 #include "DamageController.h"
 #include "Hud/Healthbar.h"
-#include "System/SysTime.h"
+#include "System/System.h"
 
 #include <limits>
 
@@ -23,7 +23,7 @@ void HealthbarUpdater::doUpdate(unsigned int delta)
 
     constexpr unsigned int max_uint = std::numeric_limits<unsigned int>::max();
     const std::unordered_map<unsigned int, DamageRecord>& records = m_damageController.GetDamageRecords();
-    const unsigned int now = Time::GetMilliseconds();
+    const unsigned int now = System2::GetMilliseconds();
 
     for(auto& record : records)
     {

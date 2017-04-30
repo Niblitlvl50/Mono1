@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "System/System.h"
+
 #include "Zone/ZoneBase.h"
 #include "Events/EventFwd.h"
 #include "EventHandler/EventToken.h"
@@ -30,7 +32,7 @@ namespace editor
     {
     public:
 
-        Editor(const mono::IWindowPtr& window, mono::EventHandler& event_handler, const char* file_name);
+        Editor(System2::IWindow* window, mono::EventHandler& event_handler, const char* file_name);
         virtual ~Editor();
 
         virtual void OnLoad(mono::ICameraPtr camera);
@@ -65,7 +67,7 @@ namespace editor
 
     //private:
 
-        mono::IWindowPtr m_window;
+        System2::IWindow* m_window;
         mono::EventHandler& m_eventHandler;
         ImGuiInputHandler m_inputHandler;
         const char* m_fileName;

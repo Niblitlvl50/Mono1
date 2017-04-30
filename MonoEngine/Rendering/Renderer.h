@@ -11,7 +11,7 @@ namespace mono
     {
     public:
 
-        Renderer(ICameraPtr camera, IWindowPtr window);
+        Renderer(ICameraPtr camera);
 
         virtual void DrawFrame();
         virtual void Update(unsigned int milliseconds);
@@ -67,7 +67,6 @@ namespace mono
         void doDrawTexts() const;
 
         ICameraPtr mCamera;
-        IWindowPtr mWindow;
 
         math::Matrix mProjectionMatrix;
         math::Matrix mModelView;

@@ -3,7 +3,7 @@
 #include "Bullet.h"
 
 #include "Math/Vector.h"
-#include "System/SysTime.h"
+#include "System/System.h"
 #include "EventHandler/EventHandler.h"
 #include "Audio/ISound.h"
 #include "Audio/AudioFactory.h"
@@ -30,7 +30,7 @@ bool Weapon::Fire(const math::Vector& position, float direction)
     const float rpsHz = 1.0f / m_weaponConfig.rounds_per_second;
     const unsigned int weapon_delta = rpsHz * 1000.0f;
 
-    const unsigned int now = Time::GetMilliseconds();
+    const unsigned int now = System2::GetMilliseconds();
     const unsigned int delta = now - m_lastFireTimestamp;
     const unsigned int modified_delta = delta * m_currentFireRate;
 

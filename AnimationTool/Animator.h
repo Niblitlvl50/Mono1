@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "System/System.h"
 #include "MonoFwd.h"
 #include "Zone/ZoneBase.h"
 #include "EventHandler/EventToken.h"
@@ -21,7 +22,7 @@ namespace animator
     {
     public:
 
-        Animator(const mono::IWindowPtr& window, mono::EventHandler& eventHandler, const char* sprite_file);
+        Animator(System2::IWindow* window, mono::EventHandler& eventHandler, const char* sprite_file);
         ~Animator();
 
         virtual void OnLoad(mono::ICameraPtr camera);

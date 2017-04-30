@@ -1,13 +1,12 @@
 
-#include "System/SysLibs.h"
-#include "System/WindowFactory.h"
-#include "Camera/TraceCamera.h"
-#include "Engine.h"
-#include "EventHandler/EventHandler.h"
+#include "System/System.h"
+#include "Rendering/RenderSystem.h"
 
-#include "IWindow.h"
-#include "Rendering/Color.h"
+#include "Camera/TraceCamera.h"
+#include "EventHandler/EventHandler.h"
 #include "Rendering/Text/TextFunctions.h"
+
+#include "Engine.h"
 #include "Animator.h"
 
 #include <cstdio>
@@ -23,21 +22,27 @@ int main(int argc, const char * argv[])
     // This is assumed to be the file argument
     const char* file = argv[1];
 
-    System::Init();
+    System2::Initialize();
+    mono::InitializeRender();
 
-    // The "global" event handler used throughout the game
-    mono::EventHandler eventHandler;
+    {
+        // The "global" event handler used throughout the game
+        mono::EventHandler eventHandler;
 
-    auto window = mono::CreateWindow("Animator", 1200, 800, false);
-    window->SetBackgroundColor(mono::Color::RGBA(0.6, 0.6, 0.6));
+        System2::IWindow* window = System2::CreateWindow("Animator", 1200, 800, false);
+        window->SetBackgroundColor(0.6, 0.6, 0.6);
 
-    mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(300, 200);
-    mono::LoadFont(0, "pixelette.ttf", 10.0f);
+        mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(300, 200);
+        mono::LoadFont(0, "pixelette.ttf", 10.0f);
 
-    mono::Engine engine(window, camera, eventHandler);
-    engine.Run(std::make_shared<animator::Animator>(window, eventHandler, file));
+        mono::Engine engine(window, camera, eventHandler);
+        engine.Run(std::make_shared<animator::Animator>(window, eventHandler, file));
 
-    System::Exit();
+        delete window;
+    }
+
+    mono::ShutdownRender();
+    System2::Shutdown();
     
     return 0;
 }

@@ -2,7 +2,6 @@
 #include "Renderer.h"
 #include "IDrawable.h"
 #include "Camera/ICamera.h"
-#include "IWindow.h"
 #include "Math/Vector.h"
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
@@ -23,9 +22,8 @@
 
 using namespace mono;
 
-Renderer::Renderer(ICameraPtr camera, IWindowPtr window)
+Renderer::Renderer(ICameraPtr camera)
     : mCamera(camera),
-      mWindow(window),
       m_currentShaderId(-1),
       m_currentTextureId(-1)
 {
@@ -42,14 +40,10 @@ void Renderer::PrepareDraw()
 
     math::Identity(mModelView);
     math::Translate(mModelView, -viewport.mA);
-
-    mWindow->MakeCurrent();
 }
 
 void Renderer::EndDraw()
 {
-    mWindow->SwapBuffers();
-
     // Clear all the stuff once the frame has been drawn
     mDrawables.clear();
     mUpdatables.clear();
