@@ -1,16 +1,19 @@
 
 #include "RenderUtils.h"
-#include "Math/Quad.h"
-#include "Sprite/ISprite.h"
-#include "System/OpenGL.h"
-#include "Math/MathFunctions.h"
-#include "Text/TextDefinition.h"
-#include "Texture/ITexture.h"
+#include "IRenderBuffer.h"
 #include "Shader/IColorShader.h"
 #include "Shader/ITextureShader.h"
 #include "Shader/IMorphingShader.h"
 #include "Shader/IPointSpriteShader.h"
-#include "IRenderBuffer.h"
+#include "Text/TextDefinition.h"
+#include "Texture/ITexture.h"
+
+#include "Math/MathFunctions.h"
+#include "Math/Quad.h"
+
+#include "Sprite/ISprite.h"
+
+#include "System/OpenGL.h"
 
 #include <cmath>
 #include <cassert>

@@ -1,6 +1,6 @@
 
 #include "TestZone.h"
-#include "Camera/ICamera.h"
+#include "Rendering/ICamera.h"
 #include "Audio/AudioFactory.h"
 
 #include "Factories.h"

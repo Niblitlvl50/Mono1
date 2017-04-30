@@ -1,8 +1,7 @@
 
 #include "Editor.h"
 
-#include "Camera/ICamera.h"
-
+#include "Rendering/ICamera.h"
 #include "Rendering/Texture/TextureFactory.h"
 #include "Rendering/Texture/ITexture.h"
 

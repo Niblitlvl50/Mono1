@@ -3,7 +3,7 @@
 #include "EventHandler/EventHandler.h"
 #include "Events/EventFuncFwd.h"
 #include "Events/MultiGestureEvent.h"
-#include "Camera/ICamera.h"
+#include "Rendering/ICamera.h"
 #include "Math/MathFunctions.h"
 #include "Math/Quad.h"
 

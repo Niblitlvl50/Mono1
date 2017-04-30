@@ -1,13 +1,10 @@
 
 #include "Renderer.h"
 #include "IDrawable.h"
-#include "Camera/ICamera.h"
-#include "Math/Vector.h"
-#include "Math/Quad.h"
-#include "Math/Matrix.h"
-#include "Math/MathFunctions.h"
+#include "ICamera.h"
 #include "RenderUtils.h"
 #include "Text/TextFunctions.h"
+#include "Texture/ITexture.h"
 
 #include "Shader/IShaderFactory.h"
 #include "Shader/ShaderFunctions.h"
@@ -16,9 +13,12 @@
 #include "Shader/IMorphingShader.h"
 #include "Shader/IPointSpriteShader.h"
 
-#include "Sprite/ISprite.h"
-#include "Texture/ITexture.h"
+#include "Math/Vector.h"
+#include "Math/Quad.h"
+#include "Math/Matrix.h"
+#include "Math/MathFunctions.h"
 
+#include "Sprite/ISprite.h"
 
 using namespace mono;
 

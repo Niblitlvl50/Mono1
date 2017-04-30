@@ -10,7 +10,7 @@
 #include "Engine.h"
 #include "InputHandler.h"
 
-#include "Camera/ICamera.h"
+#include "Rendering/ICamera.h"
 #include "Zone/IZone.h"
 
 #include "System/System.h"

@@ -5,7 +5,7 @@
 
 #include "Engine.h"
 #include "MonoFwd.h"
-#include "Camera/ICamera.h"
+#include "Rendering/ICamera.h"
 #include "Zone/IZone.h"
 #include "Rendering/Shader/IShaderFactory.h"
 #include "Rendering/Shader/IColorShader.h"

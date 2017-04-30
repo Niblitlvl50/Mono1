@@ -1,11 +1,12 @@
 
 #pragma once
 
-#include "MonoFwd.h"
 #include "Math/MathFwd.h"
 
 namespace mono
 {
+    class IRenderer;
+
     class IDrawable
     {
     public:

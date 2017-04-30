@@ -1,7 +1,7 @@
 
 #include "CameraTool.h"
 
-#include "Camera/ICamera.h"
+#include "Rendering/ICamera.h"
 #include "Math/Quad.h"
 #include "Math/MathFunctions.h"
 
