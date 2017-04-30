@@ -2,7 +2,7 @@
 #pragma once
 
 #include "ITexture.h"
-#include "System/Image/IImage.h"
+#include "IImage.h"
 
 namespace mono
 {

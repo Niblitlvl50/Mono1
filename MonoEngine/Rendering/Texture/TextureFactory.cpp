@@ -1,8 +1,8 @@
 
 #include "TextureFactory.h"
 #include "Texture.h"
-#include "System/Image/IImage.h"
-#include "System/Image/ImageFactory.h"
+#include "IImage.h"
+#include "ImageFactory.h"
 
 #include <cstdio>
 #include <unordered_map>
