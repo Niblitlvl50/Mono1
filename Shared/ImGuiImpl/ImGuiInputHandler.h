@@ -1,10 +1,3 @@
-//
-//  ImGuiInputHandler.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 24/06/16.
-//
-//
 
 #pragma once
 

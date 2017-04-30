@@ -1,10 +1,3 @@
-//
-//  EventHandlerTest.cpp
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 20/12/13.
-//
-//
 
 #include "gtest/gtest.h"
 #include "EventHandler/EventHandler.h"

@@ -1,10 +1,3 @@
-//
-//  ITool.h
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 03/07/16.
-//
-//
 
 #pragma once
 

@@ -1,13 +1,5 @@
-//
-//  SoundTest.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 03/01/16.
-//
-//
 
 #include <gtest/gtest.h>
-
 #include "Audio/AudioFactory.h"
 
 TEST(Sound, LoadWaveAndExpectSuccess)

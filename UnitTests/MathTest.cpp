@@ -1,10 +1,3 @@
-//
-//  MathTest.cpp
-//  Mono1
-//
-//  Created by Niblit on 2012-08-12.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
-//
 
 #include "gtest/gtest.h"
 #include "Math/Quad.h"

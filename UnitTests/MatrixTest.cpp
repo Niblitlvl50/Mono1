@@ -1,10 +1,3 @@
-//
-//  MatrixTest.cpp
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 26/11/14.
-//
-//
 
 #include <gtest/gtest.h>
 #include "Math/Matrix.h"

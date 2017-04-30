@@ -1,10 +1,3 @@
-//
-//  TranslateTool.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 03/07/16.
-//
-//
 
 #pragma once
 

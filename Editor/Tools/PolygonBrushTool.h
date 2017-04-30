@@ -1,10 +1,3 @@
-//
-//  PolygonBrushTool.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 09/08/16.
-//
-//
 
 #pragma once
 
