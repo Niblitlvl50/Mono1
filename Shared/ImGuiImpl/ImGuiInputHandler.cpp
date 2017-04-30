@@ -1,16 +1,9 @@
-//
-//  ImGuiInputHandler.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 24/06/16.
-//
-//
 
 #include "ImGuiInputHandler.h"
 #include "Events/EventFuncFwd.h"
 #include "EventHandler/EventHandler.h"
 
-#include "System/SysKeycodes.h"
+#include "System/Keycodes.h"
 
 #include "Events/KeyEvent.h"
 #include "Events/TextInputEvent.h"

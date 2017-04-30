@@ -1,6 +1,6 @@
 
 #include "FrameBufferCD.h"
-#include "System/SysOpenGL.h"
+#include "System/OpenGL.h"
 #include "Texture/TextureFactory.h"
 
 using namespace mono;

@@ -23,7 +23,7 @@ void HealthbarUpdater::doUpdate(unsigned int delta)
 
     constexpr unsigned int max_uint = std::numeric_limits<unsigned int>::max();
     const std::unordered_map<unsigned int, DamageRecord>& records = m_damageController.GetDamageRecords();
-    const unsigned int now = System2::GetMilliseconds();
+    const unsigned int now = System::GetMilliseconds();
 
     for(auto& record : records)
     {

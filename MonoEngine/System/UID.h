@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace system
+namespace System
 {
     // Create a unique id 
     unsigned int CreateUID();

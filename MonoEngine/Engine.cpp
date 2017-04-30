@@ -33,9 +33,9 @@ using namespace mono;
 
 namespace
 {
-    void ScreenToWorld(float& x, float& y, System2::IWindow* window, ICameraPtr camera)
+    void ScreenToWorld(float& x, float& y, System::IWindow* window, ICameraPtr camera)
     {
-        const System2::Size& window_size = window->Size();
+        const System::Size& window_size = window->Size();
         const math::Vector size(window_size.width, window_size.height);
 
         const math::Quad& viewport = camera->GetViewport();
@@ -53,7 +53,7 @@ namespace
     }
 }
 
-Engine::Engine(System2::IWindow* window, const ICameraPtr& camera, EventHandler& eventHandler)
+Engine::Engine(System::IWindow* window, const ICameraPtr& camera, EventHandler& eventHandler)
     : mPause(false),
       mQuit(false),
       mUpdateLastTime(false),
@@ -97,7 +97,7 @@ void Engine::Run(IZonePtr zone)
     zone->OnLoad(mCamera);
 
     Renderer renderer(mCamera);
-    unsigned int lastTime = System2::GetMilliseconds();
+    unsigned int lastTime = System::GetMilliseconds();
 
     while(!mQuit)
     {
@@ -107,15 +107,15 @@ void Engine::Run(IZonePtr zone)
         // everything up, thats why we need to update it here.
         if(mUpdateLastTime)
         {
-            lastTime = System2::GetMilliseconds();
+            lastTime = System::GetMilliseconds();
             mUpdateLastTime = false;
         }
 
-        const unsigned int beforeTime = System2::GetMilliseconds();
+        const unsigned int beforeTime = System::GetMilliseconds();
         const unsigned int delta = (beforeTime - lastTime) * mTimeScale;
 
         // Handle input events
-        System2::ProcessSystemEvents(m_input_handler.get());
+        System::ProcessSystemEvents(m_input_handler.get());
         if(!mPause)
         {
             // Let the zone add stuff that will be rendered and updated
@@ -133,7 +133,7 @@ void Engine::Run(IZonePtr zone)
         lastTime = beforeTime;
 
         // Sleep for a millisecond
-        //System2::Sleep(1);
+        //System::Sleep(1);
     }
 
     // Remove possible follow entity and unload the zone

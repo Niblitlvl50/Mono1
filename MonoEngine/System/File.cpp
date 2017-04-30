@@ -1,12 +1,5 @@
-//
-//  File.cpp
-//  Monolith1
-//
-//  Created by Niblit on 2011-12-10.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
 
-#include "SysFile.h"
+#include "File.h"
 #include <cstdio>
 
 namespace

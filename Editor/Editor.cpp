@@ -2,7 +2,6 @@
 #include "Editor.h"
 
 #include "Camera/ICamera.h"
-#include "IWindow.h"
 
 #include "Rendering/Texture/TextureFactory.h"
 #include "Rendering/Texture/ITexture.h"
@@ -73,7 +72,7 @@ namespace
 
 using namespace editor;
 
-Editor::Editor(System2::IWindow* window, mono::EventHandler& event_handler, const char* file_name)
+Editor::Editor(System::IWindow* window, mono::EventHandler& event_handler, const char* file_name)
     : m_window(window),
       m_eventHandler(event_handler),
       m_inputHandler(event_handler),
@@ -99,7 +98,7 @@ Editor::Editor(System2::IWindow* window, mono::EventHandler& event_handler, cons
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
     SetupIcons(m_context, m_entityRepository, textures);
 
-    const System2::Size& size = m_window->Size();
+    const System::Size& size = m_window->Size();
     const math::Vector window_size(size.width, size.height);
     m_guiRenderer = std::make_shared<ImGuiRenderer>("editor_imgui.ini", window_size, textures);
     Load();
@@ -285,7 +284,7 @@ void Editor::UpdateGrabbers()
 
 float Editor::GetPickingDistance() const
 {
-    const System2::Size& size = m_window->Size();
+    const System::Size& size = m_window->Size();
     return m_camera->GetViewport().mB.x / size.width * 5.0f;
 }
 
@@ -406,7 +405,7 @@ void Editor::ToolsMenuCallback(ToolsMenuOptions option)
 
 void Editor::DropItemCallback(const std::string& id, const math::Vector& position)
 {
-    const System2::Size& size = m_window->Size();
+    const System::Size& size = m_window->Size();
     const math::Vector window_size(size.width, size.height);
     const math::Vector& world_pos = m_camera->ScreenToWorld(position, window_size);
 

@@ -1,6 +1,6 @@
 
 #include "RemoteConnection.h"
-#include "System/SysNetwork.h"
+#include "System/Network.h"
 #include "System/System.h"
 
 using namespace game;
@@ -26,7 +26,7 @@ RemoteConnection::RemoteConnection()
             }
             else
             {
-                System2::Sleep(10);
+                System::Sleep(10);
             }
         }
     };
@@ -39,7 +39,7 @@ RemoteConnection::RemoteConnection()
         {
             if(broadcast_socket)
                 broadcast_socket->Send(data);
-            System2::Sleep(1000);
+            System::Sleep(1000);
         }
     };
 

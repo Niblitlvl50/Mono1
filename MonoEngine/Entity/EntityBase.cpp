@@ -5,12 +5,12 @@
 #include "Math/Matrix.h"
 #include "Rendering/IRenderer.h"
 
-#include "System/SysUID.h"
+#include "System/UID.h"
 
 using namespace mono;
 
 EntityBase::EntityBase()
-    : m_uid(system::CreateUID()),
+    : m_uid(System::CreateUID()),
       m_properties(0),
       mScale(1.0f, 1.0f),
       mRotation(0.0f)

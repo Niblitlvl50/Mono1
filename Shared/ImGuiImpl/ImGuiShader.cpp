@@ -1,7 +1,7 @@
 
 #include "ImGuiShader.h"
 #include "Rendering/Shader/ShaderFunctions.h"
-#include "System/SysOpenGL.h"
+#include "System/OpenGL.h"
 #include "Math/Matrix.h"
 
 namespace

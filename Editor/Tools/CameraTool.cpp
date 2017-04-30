@@ -9,7 +9,7 @@
 
 using namespace editor;
 
-CameraTool::CameraTool(const mono::ICameraPtr& camera, const System2::IWindow* window)
+CameraTool::CameraTool(const mono::ICameraPtr& camera, const System::IWindow* window)
     : m_camera(camera),
       m_window(window),
       m_translate(false)
@@ -36,7 +36,7 @@ void CameraTool::HandleMousePosition(const math::Vector& screen_position)
     if(!m_translate)
         return;
 
-    const System2::Size& size = m_window->Size();
+    const System::Size& size = m_window->Size();
 
     const math::Quad& viewport = m_camera->GetViewport();
     const math::Vector window_size(size.width, size.height);

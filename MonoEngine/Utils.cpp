@@ -17,7 +17,7 @@ void FPSCounter::operator ++ (int)
     ++mFrames;
     ++mTotalFrames;
     
-    const unsigned int currentTime = System2::GetMilliseconds();
+    const unsigned int currentTime = System::GetMilliseconds();
     const unsigned int delta = currentTime - mTime;
     if(delta >= 1000)
     {

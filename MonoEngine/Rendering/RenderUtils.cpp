@@ -2,7 +2,7 @@
 #include "RenderUtils.h"
 #include "Math/Quad.h"
 #include "Sprite/ISprite.h"
-#include "System/SysOpenGL.h"
+#include "System/OpenGL.h"
 #include "Math/MathFunctions.h"
 #include "Text/TextDefinition.h"
 #include "Texture/ITexture.h"

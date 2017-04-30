@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-namespace System2
+namespace System
 {
     struct Size
     {
@@ -25,7 +25,7 @@ namespace System2
         virtual void SwapBuffers() const = 0;
         virtual void MakeCurrent() = 0;
         virtual void SetBackgroundColor(float red, float green, float blue) = 0;
-        virtual const System2::Size& Size() const = 0;
+        virtual const System::Size& Size() const = 0;
     };
 
     class IInputHandler

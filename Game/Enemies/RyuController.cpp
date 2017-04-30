@@ -4,7 +4,7 @@
 #include "EventHandler/EventHandler.h"
 #include "Events/EventFuncFwd.h"
 #include "Events/KeyEvent.h"
-#include "System/SysKeycodes.h"
+#include "System/Keycodes.h"
 
 using namespace game;
 

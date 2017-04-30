@@ -16,13 +16,13 @@ int main(int argc, const char* argv[])
 
     constexpr math::Vector window_size(1200.0f, 800.0f);
 
-    System2::Initialize();
+    System::Initialize();
     mono::InitializeRender();
 
     {
         mono::EventHandler eventHandler;
 
-        System2::IWindow* window = System2::CreateWindow("Editor", window_size.x, window_size.y, false);
+        System::IWindow* window = System::CreateWindow("Editor", window_size.x, window_size.y, false);
         window->SetBackgroundColor(0.7, 0.7, 0.7);
 
         mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(window_size.x, window_size.y);
@@ -35,7 +35,7 @@ int main(int argc, const char* argv[])
     }
 
     mono::ShutdownRender();
-    System2::Shutdown();
+    System::Shutdown();
 
     return 0;
 }

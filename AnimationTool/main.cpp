@@ -22,14 +22,14 @@ int main(int argc, const char * argv[])
     // This is assumed to be the file argument
     const char* file = argv[1];
 
-    System2::Initialize();
+    System::Initialize();
     mono::InitializeRender();
 
     {
         // The "global" event handler used throughout the game
         mono::EventHandler eventHandler;
 
-        System2::IWindow* window = System2::CreateWindow("Animator", 1200, 800, false);
+        System::IWindow* window = System::CreateWindow("Animator", 1200, 800, false);
         window->SetBackgroundColor(0.6, 0.6, 0.6);
 
         mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(300, 200);
@@ -42,7 +42,7 @@ int main(int argc, const char * argv[])
     }
 
     mono::ShutdownRender();
-    System2::Shutdown();
+    System::Shutdown();
     
     return 0;
 }

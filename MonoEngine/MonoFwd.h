@@ -3,14 +3,12 @@
 
 namespace mono
 {
-    class IWindow;
     class ICamera;
     class IRenderer;
     class IDrawable;
     class IEntity;
     class IPhysicsEntity;
     class IUpdatable;
-    class IInputHandler;
     class IZone;
     class IPhysicsZone;
     class IAction;

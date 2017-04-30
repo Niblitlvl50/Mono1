@@ -1,6 +1,6 @@
 
 #include "TextureShader.h"
-#include "System/SysOpenGL.h"
+#include "System/OpenGL.h"
 #include "Math/Matrix.h"
 #include "Rendering/Color.h"
 

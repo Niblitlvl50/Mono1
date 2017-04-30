@@ -10,12 +10,11 @@
 #include "Events/SurfaceChangedEvent.h"
 
 #include "Camera/ICamera.h"
-#include "IWindow.h"
 
 #include "Math/Vector.h"
 #include "Math/Quad.h"
 #include "Math/MathFunctions.h"
-#include "System/SysKeycodes.h"
+#include "System/Keycodes.h"
 
 #include "InterfaceDrawer.h"
 
@@ -49,7 +48,7 @@ namespace
     }
 }
 
-Animator::Animator(System2::IWindow* window, mono::EventHandler& eventHandler, const char* sprite_file)
+Animator::Animator(System::IWindow* window, mono::EventHandler& eventHandler, const char* sprite_file)
     : m_eventHandler(eventHandler),
       m_spriteFile(sprite_file),
       m_inputHandler(eventHandler)
@@ -69,7 +68,7 @@ Animator::Animator(System2::IWindow* window, mono::EventHandler& eventHandler, c
     std::unordered_map<unsigned int, mono::ITexturePtr> textures;
     SetupIcons(m_context, textures);
 
-    const System2::Size& size = window->Size();
+    const System::Size& size = window->Size();
     const math::Vector window_size(size.width, size.height);
     m_guiRenderer = std::make_shared<ImGuiRenderer>("animator_imgui.ini", window_size, textures);
     mono::CreateSprite(m_sprite, sprite_file);

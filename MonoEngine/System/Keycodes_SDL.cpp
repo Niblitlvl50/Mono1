@@ -1,12 +1,5 @@
-//
-//  SysKeycodes.cpp
-//  MonoOSX
-//
-//  Created by Niklas Damberg on 19/07/15.
-//
-//
 
-#include "SysKeycodes.h"
+#include "Keycodes.h"
 #include "SDL_keycode.h"
 #include "SDL_mouse.h"
 

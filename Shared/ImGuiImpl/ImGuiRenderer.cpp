@@ -2,7 +2,7 @@
 #include "ImGuiRenderer.h"
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
-#include "System/SysOpenGL.h"
+#include "System/OpenGL.h"
 #include "ImGuiShader.h"
 #include "Rendering/Texture/ITexture.h"
 #include "Rendering/Texture/TextureFactory.h"

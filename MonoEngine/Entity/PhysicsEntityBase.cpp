@@ -4,13 +4,13 @@
 #include "Math/Matrix.h"
 #include "Physics/IBody.h"
 #include "Rendering/IRenderer.h"
-#include "System/SysUID.h"
+#include "System/UID.h"
 #include "Utils.h"
 
 using namespace mono;
 
 PhysicsEntityBase::PhysicsEntityBase()
-    : m_uid(system::CreateUID()),
+    : m_uid(System::CreateUID()),
       m_properties(0),
       mScale(1.0f, 1.0f),
       mRotation(0.0f)

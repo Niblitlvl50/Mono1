@@ -32,7 +32,7 @@ namespace editor
     {
     public:
 
-        Editor(System2::IWindow* window, mono::EventHandler& event_handler, const char* file_name);
+        Editor(System::IWindow* window, mono::EventHandler& event_handler, const char* file_name);
         virtual ~Editor();
 
         virtual void OnLoad(mono::ICameraPtr camera);
@@ -67,7 +67,7 @@ namespace editor
 
     //private:
 
-        System2::IWindow* m_window;
+        System::IWindow* m_window;
         mono::EventHandler& m_eventHandler;
         ImGuiInputHandler m_inputHandler;
         const char* m_fileName;

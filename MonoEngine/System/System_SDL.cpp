@@ -1,7 +1,7 @@
 
 #include "System.h"
 
-#include "SysOpenGL.h"
+#include "OpenGL.h"
 
 #include "SDL.h"
 
@@ -52,7 +52,7 @@ namespace
         SDL_GL_SetSwapInterval(1);
     }
 
-    class SDLWindow : public System2::IWindow
+    class SDLWindow : public System::IWindow
     {
     public:
 
@@ -120,17 +120,17 @@ namespace
         {
             glClearColor(red, green, blue, 1.0f);
         }
-        const System2::Size& Size() const override
+        const System::Size& Size() const override
         {
             return m_size;
         }
 
-        System2::Size m_size;
+        System::Size m_size;
         SDL_Window* m_window = nullptr;
         void* m_context = nullptr;
     };
 
-    void HandleWindowEvent(const SDL_WindowEvent& event, System2::IInputHandler* handler)
+    void HandleWindowEvent(const SDL_WindowEvent& event, System::IInputHandler* handler)
     {
         switch(event.event)
         {
@@ -157,7 +157,7 @@ namespace
         }
     }
 
-    void HandleUserEvent(const SDL_UserEvent& event, System2::IInputHandler* handler)
+    void HandleUserEvent(const SDL_UserEvent& event, System::IInputHandler* handler)
     {
         if(event.code != TIMER_CALLBACK)
             return;
@@ -170,11 +170,11 @@ namespace
         handler->OnUserEvent(event.code, event.data1, event.data2);
     }
 
-    class Timer : public System2::ITimer
+    class Timer : public System::ITimer
     {
     public:
 
-        Timer(unsigned int ms, bool repeatingTimer, System2::timer_callback_t callback, void* data)
+        Timer(unsigned int ms, bool repeatingTimer, System::timer_callback_t callback, void* data)
             : m_ms(ms),
               m_repeatingTimer(repeatingTimer),
               m_callback(callback),
@@ -192,7 +192,7 @@ namespace
                 return;
 
             const auto callback_func = [] (Uint32 interval, void* data) -> Uint32 {
-                const System2::timer_callback_t sync_func = [](void* data) {
+                const System::timer_callback_t sync_func = [](void* data) {
                     Timer* object = static_cast<Timer*>(data);
                     object->DoCallback();
                 };
@@ -225,7 +225,7 @@ namespace
 
         const unsigned int m_ms;
         const bool m_repeatingTimer;
-        const System2::timer_callback_t m_callback;
+        const System::timer_callback_t m_callback;
         void* m_data;
 
         SDL_TimerID m_timerId = -1;
@@ -233,7 +233,7 @@ namespace
     };
 }
 
-void System2::Initialize()
+void System::Initialize()
 {
     // Init SDL video subsystem
     const int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
@@ -247,32 +247,32 @@ void System2::Initialize()
     std::printf("\tversion: %u.%u.%u\n", version.major, version.minor, version.patch);
 }
 
-void System2::Shutdown()
+void System::Shutdown()
 {
     SDL_Quit();
 }
 
-unsigned int System2::GetMilliseconds()
+unsigned int System::GetMilliseconds()
 {
     return SDL_GetTicks();
 }
 
-void System2::Sleep(unsigned int ms)
+void System::Sleep(unsigned int ms)
 {
     SDL_Delay(ms);
 }
 
-System2::ITimer* System2::CreateOneShotTimer(unsigned int ms, System2::timer_callback_t callback, void* data)
+System::ITimer* System::CreateOneShotTimer(unsigned int ms, System::timer_callback_t callback, void* data)
 {
     return new Timer(ms, false, callback, data);
 }
 
-System2::ITimer* System2::CreateRepeatingTimer(unsigned int ms, System2::timer_callback_t callback, void* data)
+System::ITimer* System::CreateRepeatingTimer(unsigned int ms, System::timer_callback_t callback, void* data)
 {
     return new Timer(ms, true, callback, data);
 }
 
-System2::Size System2::GetCurrentWindowSize()
+System::Size System::GetCurrentWindowSize()
 {
     SDL_DisplayMode mode;
     SDL_GetCurrentDisplayMode(0, &mode);
@@ -280,12 +280,12 @@ System2::Size System2::GetCurrentWindowSize()
     return { mode.w, mode.h };
 }
 
-System2::IWindow* System2::CreateWindow(const char* title, int width, int height, bool fullscreen)
+System::IWindow* System::CreateWindow(const char* title, int width, int height, bool fullscreen)
 {
     return new SDLWindow(title, width, height, fullscreen);
 }
 
-void System2::ProcessSystemEvents(System2::IInputHandler* handler)
+void System::ProcessSystemEvents(System::IInputHandler* handler)
 {
     // Our SDL event placeholder.
     SDL_Event event;

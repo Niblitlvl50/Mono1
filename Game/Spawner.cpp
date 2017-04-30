@@ -20,5 +20,5 @@ Spawner::Spawner(mono::EventHandler& eventHandler)
         event_handler->DispatchEvent(event);
     };
 
-    m_timer.reset(System2::CreateRepeatingTimer(1000, spawn_func, &eventHandler));
+    m_timer.reset(System::CreateRepeatingTimer(1000, spawn_func, &eventHandler));
 }

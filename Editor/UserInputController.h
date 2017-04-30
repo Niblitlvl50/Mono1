@@ -26,7 +26,7 @@ namespace editor
     public:
 
         UserInputController(const mono::ICameraPtr& camera,
-                            System2::IWindow* window,
+                            System::IWindow* window,
                             editor::Editor* editor,
                             editor::UIContext* context,
                             mono::EventHandler& event_handler);
@@ -44,7 +44,7 @@ namespace editor
         bool OnMultiGesture(const event::MultiGestureEvent& event);
         bool OnKeyDown(const event::KeyDownEvent& event);
 
-        System2::IWindow* m_window;
+        System::IWindow* m_window;
         mono::EventHandler& m_eventHandler;
         editor::Editor* m_editor;
 

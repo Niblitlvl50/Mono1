@@ -22,7 +22,7 @@ namespace animator
     {
     public:
 
-        Animator(System2::IWindow* window, mono::EventHandler& eventHandler, const char* sprite_file);
+        Animator(System::IWindow* window, mono::EventHandler& eventHandler, const char* sprite_file);
         ~Animator();
 
         virtual void OnLoad(mono::ICameraPtr camera);

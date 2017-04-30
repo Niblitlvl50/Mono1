@@ -3,7 +3,7 @@
 #include "IShaderFactory.h"
 #include "ShaderFactory.h"
 
-#include "System/SysOpenGL.h"
+#include "System/OpenGL.h"
 
 #include <vector>
 #include <string>

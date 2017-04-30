@@ -22,7 +22,7 @@
 
 namespace
 {
-    class MocWindow : public System2::IWindow
+    class MocWindow : public System::IWindow
     {
     public:
         MocWindow(mono::EventHandler& handler)
@@ -50,13 +50,13 @@ namespace
         }
         virtual void SetBackgroundColor(float red, float green, float blue)
         { }
-        virtual const System2::Size& Size() const
+        virtual const System::Size& Size() const
         {
             return m_size;
         }
 
         mono::EventHandler& mHandler;
-        System2::Size m_size;
+        System::Size m_size;
 
         bool mMakeCurrentCalled = false;
         mutable bool mSwapBuffersCalled = false;

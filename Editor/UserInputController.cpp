@@ -4,13 +4,12 @@
 #include "Editor.h"
 #include "Grabber.h"
 
-#include "IWindow.h"
 #include "EventHandler/EventHandler.h"
 #include "Events/EventFuncFwd.h"
 #include "Events/MouseEvent.h"
 #include "Events/MultiGestureEvent.h"
 #include "Events/KeyEvent.h"
-#include "System/SysKeycodes.h"
+#include "System/Keycodes.h"
 
 #include "ImGuiInterfaceDrawer.h"
 
@@ -30,7 +29,7 @@ namespace
 using namespace editor;
 
 UserInputController::UserInputController(const mono::ICameraPtr& camera,
-                                         System2::IWindow* window,
+                                         System::IWindow* window,
                                          editor::Editor* editor,
                                          editor::UIContext* context,
                                          mono::EventHandler& event_handler)

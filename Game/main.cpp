@@ -16,7 +16,7 @@
 
 int main(int argc, char* argv[])
 {
-    System2::Initialize();
+    System::Initialize();
     mono::InitializeAudio();
     mono::InitializeRender();
 
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
         //const math::Vector& size = iPhone6SSize * ratio;
         const math::Vector size(1280, 800);
 
-        System2::IWindow* window = System2::CreateWindow("Shmup", size.x, size.y, false);
+        System::IWindow* window = System::CreateWindow("Shmup", size.x, size.y, false);
         window->SetBackgroundColor(0.6, 0.6, 0.6);
 
         mono::ICameraPtr camera = std::make_shared<mono::TraceCamera>(24, 16);
@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 
     mono::ShutdownRender();
     mono::ShutdownAudio();
-    System2::Shutdown();
+    System::Shutdown();
 
     return 0;
 }

@@ -9,7 +9,7 @@ namespace mono
 {
     using CoordinateFunc = std::function<void (float&, float&)>;
 
-    class InputHandler : public System2::IInputHandler
+    class InputHandler : public System::IInputHandler
     {
     public:
 

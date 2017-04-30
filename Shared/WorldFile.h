@@ -1,15 +1,8 @@
-//
-//  WorldFile.hpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 21/07/16.
-//
-//
 
 #pragma once
 
 #include "Math/Vector.h"
-#include "System/SysFile.h"
+#include "System/File.h"
 #include <vector>
 
 namespace world

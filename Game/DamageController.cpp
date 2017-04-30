@@ -33,7 +33,7 @@ DamageResult DamageController::ApplyDamage(unsigned int record_id, int damage)
     {
         DamageRecord& record = it->second;
         record.health -= damage * record.multipier;
-        record.last_damaged_timestamp = System2::GetMilliseconds();
+        record.last_damaged_timestamp = System::GetMilliseconds();
 
         result.success = true;
         result.health_left = record.health;

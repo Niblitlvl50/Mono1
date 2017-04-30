@@ -1,12 +1,5 @@
-//
-//  SysNetwork.cpp
-//  MonoiOS
-//
-//  Created by Niklas Damberg on 22/01/16.
-//
-//
 
-#include "SysNetwork.h"
+#include "Network.h"
 #include <stdexcept>
 #include <cstdio>
 

@@ -1,7 +1,7 @@
 
 #include "ColorShader.h"
 #include "ShaderFunctions.h"
-#include "System/SysOpenGL.h"
+#include "System/OpenGL.h"
 #include "Math/Matrix.h"
 
 

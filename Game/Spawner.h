@@ -15,6 +15,6 @@ namespace game
 
     private:
 
-        std::unique_ptr<System2::ITimer> m_timer;
+        std::unique_ptr<System::ITimer> m_timer;
     };
 }
