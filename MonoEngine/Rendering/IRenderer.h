@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "MonoPtrFwd.h"
 #include "RenderPtrFwd.h"
 #include "Math/MathFwd.h"
 
@@ -19,7 +18,6 @@ namespace mono
         { }
 
         virtual void AddDrawable(const IDrawablePtr& drawable) = 0;
-        virtual void AddUpdatable(const IUpdatablePtr& updatable) = 0;
 
         virtual void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) = 0;
         virtual void DrawSprite(const ISprite& sprite) const = 0;

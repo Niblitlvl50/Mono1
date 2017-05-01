@@ -30,6 +30,7 @@ namespace mono
     protected:
 
         virtual void Accept(IRenderer& renderer);
+        virtual void Accept(mono::IUpdater& updater);
         virtual void DoPreAccept();
 
     private:

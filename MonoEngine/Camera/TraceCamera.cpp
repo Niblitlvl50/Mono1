@@ -19,7 +19,7 @@ TraceCamera::TraceCamera(int width, int height)
       mTargetViewport(mViewport)
 { }
 
-void TraceCamera::Update(unsigned int delta)
+void TraceCamera::doUpdate(unsigned int delta)
 {
     const float change = (mTargetViewport.mB.x - mViewport.mB.x);
     const float xzero = std::floor(std::abs(change));

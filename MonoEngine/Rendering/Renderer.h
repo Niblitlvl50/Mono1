@@ -14,10 +14,7 @@ namespace mono
         Renderer(ICameraPtr camera);
 
         virtual void DrawFrame();
-        virtual void Update(unsigned int milliseconds);
-
         virtual void AddDrawable(const IDrawablePtr& drawable);
-        virtual void AddUpdatable(const IUpdatablePtr& updatable);
 
         virtual void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color);
         virtual void DrawSprite(const ISprite& sprite) const;
@@ -83,6 +80,5 @@ namespace mono
         std::shared_ptr<IPointSpriteShader> m_pointSpriteShader;
 
         std::vector<IDrawablePtr> mDrawables;
-        std::vector<IUpdatablePtr> mUpdatables;
     };
 }

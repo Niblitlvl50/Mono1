@@ -1,5 +1,6 @@
 
 #include "ZoneBase.h"
+#include "IUpdater.h"
 #include "Rendering/IRenderer.h"
 #include "Entity/IEntity.h"
 #include "Utils.h"
@@ -12,13 +13,16 @@ using namespace mono;
 
 void ZoneBase::Accept(IRenderer& renderer)
 {
-    DoPreAccept();
-
     for(auto& pair : mDrawables)
         renderer.AddDrawable(pair.second);
+}
+
+void ZoneBase::Accept(mono::IUpdater& updater)
+{
+    DoPreAccept();
 
     for(auto& updatable : mUpdatables)
-        renderer.AddUpdatable(updatable);
+        updater.AddUpdatable(updatable);
 }
 
 void ZoneBase::DoPreAccept()

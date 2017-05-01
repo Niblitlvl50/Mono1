@@ -9,6 +9,7 @@
 
 #include "Engine.h"
 #include "InputHandler.h"
+#include "Updater.h"
 
 #include "Rendering/ICamera.h"
 #include "Zone/IZone.h"
@@ -97,6 +98,8 @@ void Engine::Run(IZonePtr zone)
     zone->OnLoad(mCamera);
 
     Renderer renderer(mCamera);
+    Updater updater;
+
     unsigned int lastTime = System::GetMilliseconds();
 
     while(!mQuit)
@@ -120,9 +123,12 @@ void Engine::Run(IZonePtr zone)
         {
             // Let the zone add stuff that will be rendered and updated
             zone->Accept(renderer);
+            zone->Accept(updater);
+
+            updater.AddUpdatable(mCamera);
 
             // Update all the stuff...
-            renderer.Update(delta);
+            updater.Update(delta);
 
             // Draw...
             m_window->MakeCurrent();

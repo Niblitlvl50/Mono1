@@ -13,12 +13,13 @@
 #include "Shader/IMorphingShader.h"
 #include "Shader/IPointSpriteShader.h"
 
+#include "Sprite/ISprite.h"
+
 #include "Math/Vector.h"
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
 #include "Math/MathFunctions.h"
 
-#include "Sprite/ISprite.h"
 
 using namespace mono;
 
@@ -46,7 +47,6 @@ void Renderer::EndDraw()
 {
     // Clear all the stuff once the frame has been drawn
     mDrawables.clear();
-    mUpdatables.clear();
 }
 
 void Renderer::DrawFrame()
@@ -80,22 +80,9 @@ void Renderer::DrawFrame()
     EndDraw();
 }
 
-void Renderer::Update(unsigned int milliseconds)
-{
-    mCamera->Update(milliseconds);
-    
-    for(auto& updatable : mUpdatables)
-        updatable->doUpdate(milliseconds);
-}
-
 void Renderer::AddDrawable(const IDrawablePtr& drawable)
 {
     mDrawables.push_back(drawable);
-}
-
-void Renderer::AddUpdatable(const IUpdatablePtr& updatable)
-{
-    mUpdatables.push_back(updatable);
 }
 
 void Renderer::DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color)

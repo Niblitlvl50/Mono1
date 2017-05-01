@@ -67,7 +67,7 @@ namespace
         MocCamera()
             : mViewport(0.0f, 0.0f, 100.0f, 50.0f)
         { }
-        virtual void Update(unsigned int delta)
+        virtual void doUpdate(unsigned int delta)
         {
             mUpdateCalled = true;
         }
@@ -109,6 +109,8 @@ namespace
         {
             mAcceptCalled = true;
         }
+        virtual void Accept(mono::IUpdater& updater)
+        { }
         virtual void OnLoad(mono::ICameraPtr camera)
         {
             mOnLoadCalled = true;

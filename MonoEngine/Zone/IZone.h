@@ -15,6 +15,7 @@ namespace mono
         { }
 
         virtual void Accept(mono::IRenderer& renderer) = 0;
+        virtual void Accept(mono::IUpdater& updater) = 0;
         virtual void OnLoad(mono::ICameraPtr camera) = 0;
         virtual void OnUnload() = 0;
 

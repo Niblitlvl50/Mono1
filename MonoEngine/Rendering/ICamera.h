@@ -4,16 +4,16 @@
 #include "MonoPtrFwd.h"
 #include "Math/MathFwd.h"
 
+#include "IUpdatable.h"
+
 namespace mono
 {
-    class ICamera
+    class ICamera : public IUpdatable
     {
     public:
 
         virtual ~ICamera()
         { }
-
-        virtual void Update(unsigned int delta) = 0;
 
         virtual void Follow(const mono::IEntityPtr& entity, const math::Vector& offset) = 0;
         virtual void Unfollow() = 0;
