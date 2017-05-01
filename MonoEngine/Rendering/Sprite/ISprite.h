@@ -2,7 +2,7 @@
 #pragma once
 
 #include "IUpdatable.h"
-#include "MonoPtrFwd.h"
+#include "Rendering/RenderPtrFwd.h"
 #include "Math/MathFwd.h"
 
 #include <functional>

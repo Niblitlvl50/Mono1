@@ -3,6 +3,7 @@
 
 #include "Math/Vector.h"
 #include "Entity/EntityBase.h"
+#include "Rendering/RenderPtrFwd.h"
 
 #include <vector>
 

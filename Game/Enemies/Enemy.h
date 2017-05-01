@@ -1,8 +1,7 @@
 
 #pragma once
 
-#include "MonoFwd.h"
-#include "MonoPtrFwd.h"
+#include "Rendering/RenderPtrFwd.h"
 #include "Entity/PhysicsEntityBase.h"
 #include "Math/Vector.h"
 

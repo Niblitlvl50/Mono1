@@ -4,6 +4,7 @@
 #include "MonoPtrFwd.h"
 #include "Entity/PhysicsEntityBase.h"
 #include "Physics/IBody.h"
+#include "Rendering/RenderPtrFwd.h"
 
 #include "WeaponConfiguration.h"
 

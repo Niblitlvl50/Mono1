@@ -12,6 +12,7 @@
 #include "MonoPtrFwd.h"
 #include "Events/EventFwd.h"
 #include "EventHandler/EventToken.h"
+#include "Rendering/RenderPtrFwd.h"
 
 namespace System
 {

@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Rendering/IDrawable.h"
-#include "MonoPtrFwd.h"
+#include "Rendering/RenderPtrFwd.h"
 #include <vector>
 
 namespace editor

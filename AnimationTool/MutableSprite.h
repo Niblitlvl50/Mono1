@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Entity/EntityBase.h"
-#include "MonoPtrFwd.h"
+#include "Rendering/RenderPtrFwd.h"
 
 namespace animator
 {

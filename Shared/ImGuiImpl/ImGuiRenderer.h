@@ -2,8 +2,8 @@
 #pragma once
 
 #include "Rendering/IDrawable.h"
+#include "Rendering/RenderPtrFwd.h"
 #include "Math/Vector.h"
-#include "MonoPtrFwd.h"
 
 #include <memory>
 #include <unordered_map>

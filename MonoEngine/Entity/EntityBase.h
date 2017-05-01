@@ -4,6 +4,7 @@
 #include "IEntity.h"
 #include "MonoPtrFwd.h"
 #include "Math/Vector.h"
+#include "Rendering/RenderFwd.h"
 #include <vector>
 
 namespace mono

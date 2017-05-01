@@ -5,13 +5,12 @@
 #include "Shader/ITextureShader.h"
 #include "Shader/IMorphingShader.h"
 #include "Shader/IPointSpriteShader.h"
+#include "Sprite/ISprite.h"
 #include "Text/TextDefinition.h"
 #include "Texture/ITexture.h"
 
 #include "Math/MathFunctions.h"
 #include "Math/Quad.h"
-
-#include "Sprite/ISprite.h"
 
 #include "System/OpenGL.h"
 

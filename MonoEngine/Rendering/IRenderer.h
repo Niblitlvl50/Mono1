@@ -2,6 +2,7 @@
 #pragma once
 
 #include "MonoPtrFwd.h"
+#include "RenderPtrFwd.h"
 #include "Math/MathFwd.h"
 
 #include <vector>

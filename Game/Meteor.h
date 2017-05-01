@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Entity/PhysicsEntityBase.h"
-#include "MonoPtrFwd.h"
+#include "Rendering/RenderPtrFwd.h"
 
 namespace game
 {

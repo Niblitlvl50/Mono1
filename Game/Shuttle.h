@@ -3,6 +3,7 @@
 
 #include "MonoPtrFwd.h"
 #include "Entity/PhysicsEntityBase.h"
+#include "Rendering/RenderPtrFwd.h"
 #include "ShuttleController.h"
 #include "Physics/IBody.h"
 

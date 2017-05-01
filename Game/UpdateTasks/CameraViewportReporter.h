@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "MonoPtrFwd.h"
+#include "Rendering/RenderPtrFwd.h"
 #include "IUpdatable.h"
 
 namespace game

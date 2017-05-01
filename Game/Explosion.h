@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Entity/EntityBase.h"
+#include "Rendering/RenderPtrFwd.h"
 
 namespace game
 {
