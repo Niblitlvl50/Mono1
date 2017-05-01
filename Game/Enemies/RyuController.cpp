@@ -1,6 +1,6 @@
 
 #include "RyuController.h"
-#include "Sprite/ISprite.h"
+#include "Rendering/Sprite/ISprite.h"
 #include "EventHandler/EventHandler.h"
 #include "Events/EventFuncFwd.h"
 #include "Events/KeyEvent.h"

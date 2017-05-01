@@ -6,8 +6,8 @@
 #include "Physics/CMFactory.h"
 
 #include "EntityProperties.h"
-#include "Sprite/ISprite.h"
-#include "Sprite/SpriteFactory.h"
+#include "Rendering/Sprite/ISprite.h"
+#include "Rendering/Sprite/SpriteFactory.h"
 
 using namespace game;
 

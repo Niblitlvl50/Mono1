@@ -9,10 +9,10 @@
 #include "EntityProperties.h"
 #include "CollisionConfiguration.h"
 
-#include "Rendering/IRenderer.h"
 #include "Entity/EntityBase.h"
-#include "Sprite/ISprite.h"
-#include "Sprite/SpriteFactory.h"
+#include "Rendering/IRenderer.h"
+#include "Rendering/Sprite/ISprite.h"
+#include "Rendering/Sprite/SpriteFactory.h"
 
 #include "Factories.h"
 #include "Weapons/IWeaponSystem.h"

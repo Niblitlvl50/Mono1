@@ -18,9 +18,9 @@
 
 #include "InterfaceDrawer.h"
 
-#include "Sprite/ISprite.h"
-#include "Sprite/SpriteFactory.h"
-#include "Sprite/AnimationSequence.h"
+#include "Rendering/Sprite/ISprite.h"
+#include "Rendering/Sprite/SpriteFactory.h"
+#include "Rendering/Sprite/AnimationSequence.h"
 
 #include "Rendering/Texture/ITexture.h"
 #include "Rendering/Texture/TextureFactory.h"

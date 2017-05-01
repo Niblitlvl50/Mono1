@@ -2,8 +2,8 @@
 #include "Enemy.h"
 #include "CollisionConfiguration.h"
 
-#include "Sprite/ISprite.h"
-#include "Sprite/SpriteFactory.h"
+#include "Rendering/Sprite/ISprite.h"
+#include "Rendering/Sprite/SpriteFactory.h"
 
 #include "Physics/IBody.h"
 #include "Physics/IShape.h"

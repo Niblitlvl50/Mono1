@@ -5,8 +5,8 @@
 #include "Rendering/Texture/TextureFactory.h"
 #include "Rendering/Texture/ITexture.h"
 
-#include "Sprite/ISprite.h"
-#include "Sprite/SpriteFactory.h"
+#include "Rendering/Sprite/ISprite.h"
+#include "Rendering/Sprite/SpriteFactory.h"
 
 #include "Events/EventFuncFwd.h"
 #include "Events/SurfaceChangedEvent.h"

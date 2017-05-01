@@ -7,8 +7,8 @@
 #include "Physics/CMFactory.h"
 
 #include "Rendering/IRenderer.h"
-#include "Sprite/ISprite.h"
-#include "Sprite/SpriteFactory.h"
+#include "Rendering/Sprite/ISprite.h"
+#include "Rendering/Sprite/SpriteFactory.h"
 #include "Audio/ISound.h"
 #include "Audio/AudioFactory.h"
 #include "Random.h"

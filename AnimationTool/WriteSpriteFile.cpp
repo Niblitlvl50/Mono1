@@ -1,7 +1,7 @@
 
 #include "WriteSpriteFile.h"
 #include "System/File.h"
-#include "Sprite/AnimationSequence.h"
+#include "Rendering/Sprite/AnimationSequence.h"
 #include "nlohmann_json/json.hpp"
 
 void animator::WriteSpriteFile(const char* sprite_file, const std::vector<mono::AnimationSequence>& animations)

@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Sprite/AnimationSequence.h"
+#include "Rendering/Sprite/AnimationSequence.h"
 #include "Math/Quad.h"
 #include <vector>
 #include <functional>

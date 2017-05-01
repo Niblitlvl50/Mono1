@@ -1,6 +1,6 @@
 
 #include "MutableSprite.h"
-#include "Sprite/ISprite.h"
+#include "Rendering/Sprite/ISprite.h"
 #include "Rendering/IRenderer.h"
 
 using namespace animator;

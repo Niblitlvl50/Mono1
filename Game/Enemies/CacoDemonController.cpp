@@ -3,7 +3,7 @@
 #include "Weapons/IWeaponSystem.h"
 #include "Weapons/IWeaponFactory.h"
 #include "Factories.h"
-#include "Sprite/ISprite.h"
+#include "Rendering/Sprite/ISprite.h"
 #include <cmath>
 
 using namespace game;

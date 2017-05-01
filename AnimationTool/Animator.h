@@ -7,7 +7,7 @@
 #include "EventHandler/EventToken.h"
 #include "Events/EventFwd.h"
 #include "UIContext.h"
-#include "Sprite/Sprite.h"
+#include "Rendering/Sprite/Sprite.h"
 
 #include "ImGuiImpl/ImGuiInputHandler.h"
 #include "ImGuiImpl/ImGuiRenderer.h"

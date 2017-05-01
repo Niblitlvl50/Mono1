@@ -8,7 +8,7 @@
 #include "Events/SpawnConstraintEvent.h"
 
 #include "EventHandler/EventHandler.h"
-#include "Sprite/ISprite.h"
+#include "Rendering/Sprite/ISprite.h"
 #include "Physics/CMFactory.h"
 #include "Physics/IBody.h"
 #include "Physics/IConstraint.h"

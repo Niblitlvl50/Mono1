@@ -1,8 +1,8 @@
 
 #include "Prefab.h"
 #include "SnapPoint.h"
-#include "Sprite/ISprite.h"
-#include "Sprite/SpriteFactory.h"
+#include "Rendering/Sprite/ISprite.h"
+#include "Rendering/Sprite/SpriteFactory.h"
 #include "Rendering/IRenderer.h"
 #include "Rendering/Color.h"
 #include "Math/Quad.h"
