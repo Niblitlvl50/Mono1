@@ -1,10 +1,12 @@
 
 #pragma once
 
+#include <cstring>
+
 namespace mono
 {
     // This is the "FNV-1a alternate algorithm", taken from here: http://isthe.com/chongo/tech/comp/fnv/
-    unsigned int Hash(const char* text)
+    inline unsigned int Hash(const char* text)
     {
         constexpr unsigned int offset_bias = 2166136261u;
         constexpr unsigned int FNV_prime = 16777619u;

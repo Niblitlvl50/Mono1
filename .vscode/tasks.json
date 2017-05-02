@@ -37,7 +37,7 @@
         },
         {
             "taskName": "unittest",
-            "args": ["./run_unittest.sh", "--gtest_filter=MathTest.Bezier"]
+            "args": ["./run_unittest.sh"]
         }
     ]
 }
