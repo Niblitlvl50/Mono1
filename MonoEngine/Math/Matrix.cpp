@@ -2,6 +2,7 @@
 #include "Matrix.h"
 #include "MathFunctions.h"
 #include "Vector.h"
+#include "Quad.h"
 #include <cmath>
 
 void math::Identity(Matrix& matrix)
@@ -263,6 +264,13 @@ math::Vector math::Transform(const Matrix& matrix, const math::Vector& vector)
     const float x = matrix.data[0] * vector.x + matrix.data[1] * -vector.y + matrix.data[12];
     const float y = matrix.data[4] * -vector.x + matrix.data[5] * vector.y + matrix.data[13];
     return math::Vector(x, y);
+}
+
+math::Quad math::Transform(const Matrix& matrix, const math::Quad& quad)
+{
+    const math::Vector& first = Transform(matrix, quad.mA);
+    const math::Vector& second = Transform(matrix, quad.mB);
+    return math::Quad(first, second);
 }
 
 void math::operator *= (Matrix& left, const Matrix& right)
