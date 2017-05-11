@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "Keycodes.h"
 #include <cstdint>
 
 namespace System
@@ -35,8 +36,8 @@ namespace System
         virtual ~IInputHandler()
         { }
 
-        virtual void OnKeyDown(unsigned int key, int modifier) = 0;
-        virtual void OnKeyUp(unsigned int key, int modifier) = 0;
+        virtual void OnKeyDown(Key::Keycode key, bool ctrl, bool shift, bool alt) = 0;
+        virtual void OnKeyUp(Key::Keycode key, bool ctrl, bool shift, bool alt) = 0;
         virtual void OnTextInput(const char* text) = 0;
         virtual void OnMouseDown(unsigned int button, int x, int y) = 0;
         virtual void OnMouseUp(unsigned int button, int x, int y) = 0;
@@ -92,4 +93,6 @@ namespace System
 
     //! Process the system events, input and other events
     void ProcessSystemEvents(IInputHandler* handler);
+
+    int KeycodeToNative(Key::Keycode key);
 }

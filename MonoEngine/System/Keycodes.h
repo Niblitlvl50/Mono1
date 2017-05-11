@@ -3,36 +3,44 @@
 
 namespace Key
 {
-    extern const unsigned int ESCAPE;
+    enum class Keycode
+    {
+        NONE,
 
-    extern const unsigned int ZERO;
-    extern const unsigned int ONE;
-    extern const unsigned int TWO;
-    extern const unsigned int THREE;
-    extern const unsigned int FOUR;
-    extern const unsigned int FIVE;
-    extern const unsigned int SIX;
-    extern const unsigned int SEVEN;
-    extern const unsigned int EIGHT;
-    extern const unsigned int NINE;
+        ZERO,
+        ONE,
+        TWO,
+        THREE,
+        FOUR,
+        FIVE,
+        SIX,
+        SEVEN,
+        EIGHT,
+        NINE,
 
-    extern const unsigned int LEFT;
-    extern const unsigned int RIGHT;
-    extern const unsigned int UP;
-    extern const unsigned int DOWN;
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN,
 
-    extern const unsigned int TAB;
-    extern const unsigned int ENTER;
-    extern const unsigned int SPACE;
-    extern const unsigned int BACKSPACE;
-    extern const unsigned int DELETE;
+        ESCAPE,
+        TAB,
+        ENTER,
+        SPACE,
+        BACKSPACE,
+        DELETE,
 
-    extern const unsigned int L_CTRL;
-    extern const unsigned int R_CTRL;
-    extern const unsigned int L_SHIFT;
-    extern const unsigned int R_SHIFT;
-    extern const unsigned int L_ALT;
-    extern const unsigned int R_ALT;
+        L_CTRL,
+        R_CTRL,
+        L_SHIFT,
+        R_SHIFT,
+        L_ALT,
+        R_ALT,
+
+        Q,
+        W,
+        E
+    };
 }
 
 namespace MouseButton

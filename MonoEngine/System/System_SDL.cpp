@@ -1,9 +1,10 @@
 
 #include "System.h"
-
+#include "Keycodes.h"
 #include "OpenGL.h"
 
 #include "SDL.h"
+#include "SDL_keycode.h"
 
 #include <stdexcept>
 #include <cstdio>
@@ -129,6 +130,78 @@ namespace
         SDL_Window* m_window = nullptr;
         void* m_context = nullptr;
     };
+
+
+    Key::Keycode KeycodeFromSDL(SDL_Keycode sdl_key)
+    {
+        switch(sdl_key)
+        {
+            case SDLK_0:
+                return Key::Keycode::ZERO;
+            case SDLK_1:
+                return Key::Keycode::ONE;
+            case SDLK_2:
+                return Key::Keycode::TWO;
+            case SDLK_3:
+                return Key::Keycode::THREE;
+            case SDLK_4:
+                return Key::Keycode::FOUR;
+            case SDLK_5:
+                return Key::Keycode::FIVE;
+            case SDLK_6:
+                return Key::Keycode::SIX;
+            case SDLK_7:
+                return Key::Keycode::SEVEN;
+            case SDLK_8:
+                return Key::Keycode::EIGHT;
+            case SDLK_9:
+                return Key::Keycode::NINE;
+
+            case SDLK_LEFT:
+                return Key::Keycode::LEFT;
+            case SDLK_RIGHT:
+                return Key::Keycode::RIGHT;
+            case SDLK_UP:
+                return Key::Keycode::UP;
+            case SDLK_DOWN:
+                return Key::Keycode::DOWN;
+
+            case SDLK_ESCAPE:
+                return Key::Keycode::ESCAPE;
+            case SDLK_TAB:
+                return Key::Keycode::TAB;
+            case SDLK_RETURN:
+                return Key::Keycode::ENTER;
+            case SDLK_SPACE:
+                return Key::Keycode::SPACE;
+            case SDLK_BACKSPACE:
+                return Key::Keycode::BACKSPACE;
+            case SDLK_DELETE:
+                return Key::Keycode::DELETE;
+
+            case KMOD_LCTRL:
+                return Key::Keycode::L_CTRL;
+            case KMOD_RCTRL:
+                return Key::Keycode::R_CTRL;
+            case KMOD_LSHIFT:
+                return Key::Keycode::L_SHIFT;
+            case KMOD_RSHIFT:
+                return Key::Keycode::R_SHIFT;
+            case KMOD_LALT:
+                return Key::Keycode::L_ALT;
+            case KMOD_RALT:
+                return Key::Keycode::R_ALT;
+
+            case SDLK_q:
+                return Key::Keycode::Q;
+            case SDLK_w:
+                return Key::Keycode::W;
+            case SDLK_e:
+                return Key::Keycode::E;
+        }
+
+        return Key::Keycode::NONE;
+    }
 
     void HandleWindowEvent(const SDL_WindowEvent& event, System::IInputHandler* handler)
     {
@@ -296,11 +369,22 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
         switch(event.type)
         {
             case SDL_KEYDOWN:
-                handler->OnKeyDown(event.key.keysym.sym, SDL_GetModState());
-                break;
             case SDL_KEYUP:
-                handler->OnKeyUp(event.key.keysym.sym, SDL_GetModState());
+            {
+                const Key::Keycode keycode = KeycodeFromSDL(event.key.keysym.sym);
+
+                const int modifier = SDL_GetModState();
+                const bool ctrl  = (modifier & KMOD_LCTRL)  || (modifier & KMOD_RCTRL);
+                const bool shift = (modifier & KMOD_LSHIFT) || (modifier & KMOD_RSHIFT);
+                const bool alt   = (modifier & KMOD_LALT)   || (modifier & KMOD_RALT);
+
+                if(event.type == SDL_KEYDOWN)
+                    handler->OnKeyDown(keycode, ctrl, shift, alt);
+                else
+                    handler->OnKeyUp(keycode, ctrl, shift, alt);
+
                 break;
+            }
             case SDL_TEXTINPUT:
                 handler->OnTextInput(event.text.text);
                 break;
@@ -354,4 +438,77 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 break;
         }
     }
+}
+
+int System::KeycodeToNative(Key::Keycode key)
+{
+    switch(key)
+    {
+        case Key::Keycode::ZERO:
+            return SDLK_0;
+        case Key::Keycode::ONE:
+            return SDLK_1;
+        case Key::Keycode::TWO:
+            return SDLK_2;
+        case Key::Keycode::THREE:
+            return SDLK_3;
+        case Key::Keycode::FOUR:
+            return SDLK_4;
+        case Key::Keycode::FIVE:
+            return SDLK_5;
+        case Key::Keycode::SIX:
+            return SDLK_6;
+        case Key::Keycode::SEVEN:
+            return SDLK_7;
+        case Key::Keycode::EIGHT:
+            return SDLK_8;
+        case Key::Keycode::NINE:
+            return SDLK_9;
+
+        case Key::Keycode::LEFT:
+            return SDLK_LEFT;
+        case Key::Keycode::RIGHT:
+            return SDLK_RIGHT;
+        case Key::Keycode::UP:
+            return SDLK_UP;
+        case Key::Keycode::DOWN:
+            return SDLK_DOWN;
+
+        case Key::Keycode::ESCAPE:
+            return SDLK_ESCAPE;
+        case Key::Keycode::TAB:
+            return SDLK_TAB;
+        case Key::Keycode::ENTER:
+            return SDLK_RETURN;
+        case Key::Keycode::SPACE:
+            return SDLK_SPACE;
+        case Key::Keycode::BACKSPACE:
+            return SDLK_BACKSPACE;
+        case Key::Keycode::DELETE:
+            return SDLK_DELETE;
+
+        case Key::Keycode::L_CTRL:
+            return KMOD_LCTRL;
+        case Key::Keycode::R_CTRL:
+            return KMOD_RCTRL;
+        case Key::Keycode::L_SHIFT:
+            return KMOD_LSHIFT;
+        case Key::Keycode::R_SHIFT:
+            return KMOD_RSHIFT;
+        case Key::Keycode::L_ALT:
+            return KMOD_LALT;
+        case Key::Keycode::R_ALT:
+            return KMOD_RALT;
+
+        case Key::Keycode::Q:
+            return SDLK_q;
+        case Key::Keycode::W:
+            return SDLK_w;
+        case Key::Keycode::E:
+            return SDLK_e;
+        default:
+            break;
+    }
+
+    return SDLK_q;
 }
