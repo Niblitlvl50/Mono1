@@ -4,6 +4,7 @@
 #include "EventHandler/EventHandler.h"
 
 #include "System/Keycodes.h"
+#include "System/System.h"
 
 #include "Events/KeyEvent.h"
 #include "Events/TextInputEvent.h"
@@ -36,7 +37,7 @@ ImGuiInputHandler::ImGuiInputHandler(mono::EventHandler& event_handler)
     m_multiGestureToken = m_eventHandler.AddListener(multi_gesture);
 
     ImGuiIO& io = ImGui::GetIO();
-    io.KeyMap[ImGuiKey_Tab] = Key::TAB;
+    io.KeyMap[ImGuiKey_Tab] = System::KeycodeToNative(Key::Keycode::TAB);
     //io.KeyMap[ImGuiKey_LeftArrow] = Key::LEFT;
     //io.KeyMap[ImGuiKey_RightArrow] = Key::RIGHT;
     //io.KeyMap[ImGuiKey_UpArrow] = Key::UP;
@@ -45,9 +46,9 @@ ImGuiInputHandler::ImGuiInputHandler(mono::EventHandler& event_handler)
     //io.KeyMap[ImGuiKey_PageDown] = SDL_SCANCODE_PAGEDOWN;
     //io.KeyMap[ImGuiKey_Home] = SDL_SCANCODE_HOME;
     //io.KeyMap[ImGuiKey_End] = SDL_SCANCODE_END;
-    io.KeyMap[ImGuiKey_Delete] = Key::DELETE;
-    io.KeyMap[ImGuiKey_Backspace] = Key::BACKSPACE;
-    io.KeyMap[ImGuiKey_Enter] = Key::ENTER;
+    io.KeyMap[ImGuiKey_Delete] = System::KeycodeToNative(Key::Keycode::DELETE);
+    io.KeyMap[ImGuiKey_Backspace] = System::KeycodeToNative(Key::Keycode::BACKSPACE);
+    io.KeyMap[ImGuiKey_Enter] = System::KeycodeToNative(Key::Keycode::ENTER);
     //io.KeyMap[ImGuiKey_Escape] = SDLK_ESCAPE;
 }
 
@@ -65,10 +66,11 @@ ImGuiInputHandler::~ImGuiInputHandler()
 
 bool ImGuiInputHandler::OnKeyDown(const event::KeyDownEvent& event)
 {
-    if(event.key >= 512)
+    const int key = System::KeycodeToNative(event.key);
+    if(key >= 512)
         return false;
 
-    ImGui::GetIO().KeysDown[event.key] = true;
+    ImGui::GetIO().KeysDown[key] = true;
     ImGui::GetIO().KeyCtrl = event.ctrl;
     ImGui::GetIO().KeyShift = event.shift;
     ImGui::GetIO().KeyAlt = event.alt;
@@ -77,10 +79,11 @@ bool ImGuiInputHandler::OnKeyDown(const event::KeyDownEvent& event)
 
 bool ImGuiInputHandler::OnKeyUp(const event::KeyUpEvent& event)
 {
-    if(event.key >= 512)
+    const int key = System::KeycodeToNative(event.key);
+    if(key >= 512)
         return false;
 
-    ImGui::GetIO().KeysDown[event.key] = false;
+    ImGui::GetIO().KeysDown[key] = false;
     ImGui::GetIO().KeyCtrl = event.ctrl;
     ImGui::GetIO().KeyShift = event.shift;
     ImGui::GetIO().KeyAlt = event.alt;
