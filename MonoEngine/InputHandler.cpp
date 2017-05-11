@@ -22,15 +22,15 @@ InputHandler::InputHandler(const CoordinateFunc& func, EventHandler& eventHandle
       mEventHandler(eventHandler)
 { }
 
-void InputHandler::OnKeyDown(Key::Keycode key, bool ctrl, bool shift, bool alt)
+void InputHandler::OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt)
 {
     const event::KeyDownEvent event(key, ctrl, shift, alt);
     mEventHandler.DispatchEvent(event);
 }
 
-void InputHandler::OnKeyUp(Key::Keycode key, bool ctrl, bool shift, bool alt)
+void InputHandler::OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt)
 {
-    if(key == Key::Keycode::ESCAPE)
+    if(key == Keycode::ESCAPE)
     {
         mEventHandler.DispatchEvent(event::QuitEvent());
         return;
@@ -46,7 +46,7 @@ void InputHandler::OnTextInput(const char* text)
     mEventHandler.DispatchEvent(event);
 }
 
-void InputHandler::OnMouseDown(unsigned int button, int x, int y)
+void InputHandler::OnMouseDown(MouseButton button, int x, int y)
 {
     float worldX = x;
     float worldY = y;
@@ -55,7 +55,7 @@ void InputHandler::OnMouseDown(unsigned int button, int x, int y)
     mEventHandler.DispatchEvent(event);
 }
 
-void InputHandler::OnMouseUp(unsigned int button, int x, int y)
+void InputHandler::OnMouseUp(MouseButton button, int x, int y)
 {
     float worldX = x;
     float worldY = y;

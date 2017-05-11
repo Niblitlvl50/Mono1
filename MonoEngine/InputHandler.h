@@ -17,11 +17,11 @@ namespace mono
 
     private:
 
-        virtual void OnKeyDown(Key::Keycode key, bool ctrl, bool shift, bool alt);
-        virtual void OnKeyUp(Key::Keycode key, bool ctrl, bool shift, bool alt);
+        virtual void OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt);
+        virtual void OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt);
         virtual void OnTextInput(const char* text);
-        virtual void OnMouseDown(unsigned int button, int x, int y);
-        virtual void OnMouseUp(unsigned int button, int x, int y);
+        virtual void OnMouseDown(MouseButton button, int x, int y);
+        virtual void OnMouseUp(MouseButton button, int x, int y);
         virtual void OnMouseMotion(int x, int y);
         virtual void OnMouseWheel(int x, int y);
         virtual void OnTouchDown(int64_t touchId, float x, float y, float dx, float dy);

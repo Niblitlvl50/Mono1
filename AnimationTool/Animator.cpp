@@ -139,56 +139,56 @@ bool Animator::OnDownUp(const event::KeyDownEvent& event)
     
     switch(event.key)
     {
-        case Key::Keycode::ENTER:
-        case Key::Keycode::SPACE:
+        case Keycode::ENTER:
+        case Keycode::SPACE:
         {
             m_sprite.RestartAnimation();
             return true;
         }
-        case Key::Keycode::LEFT:
-        case Key::Keycode::DOWN:
+        case Keycode::LEFT:
+        case Keycode::DOWN:
         {
             int id = m_sprite.GetActiveAnimation();
             --id;
             animation = std::max(id, 0);
             break;
         }
-        case Key::Keycode::RIGHT:
-        case Key::Keycode::UP:
+        case Keycode::RIGHT:
+        case Keycode::UP:
         {
             int id = m_sprite.GetActiveAnimation();
             ++id;
             animation = std::min(id, m_sprite.GetDefinedAnimations() -1);
             break;
         }
-        case Key::Keycode::ZERO:
+        case Keycode::ZERO:
             animation = 0;
             break;
-        case Key::Keycode::ONE:
+        case Keycode::ONE:
             animation = 1;
             break;
-        case Key::Keycode::TWO:
+        case Keycode::TWO:
             animation = 2;
             break;
-        case Key::Keycode::THREE:
+        case Keycode::THREE:
             animation = 3;
             break;
-        case Key::Keycode::FOUR:
+        case Keycode::FOUR:
             animation = 4;
             break;
-        case Key::Keycode::FIVE:
+        case Keycode::FIVE:
             animation = 5;
             break;
-        case Key::Keycode::SIX:
+        case Keycode::SIX:
             animation = 6;
             break;
-        case Key::Keycode::SEVEN:
+        case Keycode::SEVEN:
             animation = 7;
             break;
-        case Key::Keycode::EIGHT:
+        case Keycode::EIGHT:
             animation = 8;
             break;
-        case Key::Keycode::NINE:
+        case Keycode::NINE:
             animation = 9;
             break;
         default:

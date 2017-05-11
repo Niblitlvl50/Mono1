@@ -1,11 +1,13 @@
 
 #pragma once
 
+#include "System/Keycodes.h"
+
 namespace event
 {
     struct MouseDownEvent
     {
-        constexpr MouseDownEvent(unsigned int key, int screenX, int screenY, float worldX, float worldY)
+        constexpr MouseDownEvent(MouseButton key, int screenX, int screenY, float worldX, float worldY)
             : key(key),
               screenX(screenX),
               screenY(screenY),
@@ -13,7 +15,7 @@ namespace event
               worldY(worldY)
         { }
         
-        const unsigned int key;
+        const MouseButton key;
         const int screenX;
         const int screenY;
         const float worldX;
@@ -22,7 +24,7 @@ namespace event
 
     struct MouseUpEvent
     {
-        constexpr MouseUpEvent(unsigned int key, int screenX, int screenY, float worldX, float worldY)
+        constexpr MouseUpEvent(MouseButton key, int screenX, int screenY, float worldX, float worldY)
             : key(key),
               screenX(screenX),
               screenY(screenY),
@@ -30,7 +32,7 @@ namespace event
               worldY(worldY)
         { }
         
-        const unsigned int key;
+        const MouseButton key;
         const int screenX;
         const int screenY;
         const float worldX;

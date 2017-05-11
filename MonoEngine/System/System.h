@@ -36,11 +36,11 @@ namespace System
         virtual ~IInputHandler()
         { }
 
-        virtual void OnKeyDown(Key::Keycode key, bool ctrl, bool shift, bool alt) = 0;
-        virtual void OnKeyUp(Key::Keycode key, bool ctrl, bool shift, bool alt) = 0;
+        virtual void OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt) = 0;
+        virtual void OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt) = 0;
         virtual void OnTextInput(const char* text) = 0;
-        virtual void OnMouseDown(unsigned int button, int x, int y) = 0;
-        virtual void OnMouseUp(unsigned int button, int x, int y) = 0;
+        virtual void OnMouseDown(MouseButton button, int x, int y) = 0;
+        virtual void OnMouseUp(MouseButton button, int x, int y) = 0;
         virtual void OnMouseMotion(int x, int y) = 0;
         virtual void OnMouseWheel(int x, int y) = 0;
         virtual void OnTouchDown(int64_t touchId, float x, float y, float dx, float dy) = 0;
@@ -94,5 +94,5 @@ namespace System
     //! Process the system events, input and other events
     void ProcessSystemEvents(IInputHandler* handler);
 
-    int KeycodeToNative(Key::Keycode key);
+    int KeycodeToNative(Keycode key);
 }

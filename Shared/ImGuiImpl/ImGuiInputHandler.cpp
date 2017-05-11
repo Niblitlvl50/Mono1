@@ -37,18 +37,18 @@ ImGuiInputHandler::ImGuiInputHandler(mono::EventHandler& event_handler)
     m_multiGestureToken = m_eventHandler.AddListener(multi_gesture);
 
     ImGuiIO& io = ImGui::GetIO();
-    io.KeyMap[ImGuiKey_Tab] = System::KeycodeToNative(Key::Keycode::TAB);
-    //io.KeyMap[ImGuiKey_LeftArrow] = Key::LEFT;
-    //io.KeyMap[ImGuiKey_RightArrow] = Key::RIGHT;
-    //io.KeyMap[ImGuiKey_UpArrow] = Key::UP;
-    //io.KeyMap[ImGuiKey_DownArrow] = Key::DOWN;
+    io.KeyMap[ImGuiKey_Tab] = System::KeycodeToNative(Keycode::TAB);
+    //io.KeyMap[ImGuiKey_LeftArrow] = LEFT;
+    //io.KeyMap[ImGuiKey_RightArrow] = RIGHT;
+    //io.KeyMap[ImGuiKey_UpArrow] = UP;
+    //io.KeyMap[ImGuiKey_DownArrow] = DOWN;
     //io.KeyMap[ImGuiKey_PageUp] = SDL_SCANCODE_PAGEUP;
     //io.KeyMap[ImGuiKey_PageDown] = SDL_SCANCODE_PAGEDOWN;
     //io.KeyMap[ImGuiKey_Home] = SDL_SCANCODE_HOME;
     //io.KeyMap[ImGuiKey_End] = SDL_SCANCODE_END;
-    io.KeyMap[ImGuiKey_Delete] = System::KeycodeToNative(Key::Keycode::DELETE);
-    io.KeyMap[ImGuiKey_Backspace] = System::KeycodeToNative(Key::Keycode::BACKSPACE);
-    io.KeyMap[ImGuiKey_Enter] = System::KeycodeToNative(Key::Keycode::ENTER);
+    io.KeyMap[ImGuiKey_Delete] = System::KeycodeToNative(Keycode::DELETE);
+    io.KeyMap[ImGuiKey_Backspace] = System::KeycodeToNative(Keycode::BACKSPACE);
+    io.KeyMap[ImGuiKey_Enter] = System::KeycodeToNative(Keycode::ENTER);
     //io.KeyMap[ImGuiKey_Escape] = SDLK_ESCAPE;
 }
 
