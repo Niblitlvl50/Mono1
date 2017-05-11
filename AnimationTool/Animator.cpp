@@ -137,47 +137,62 @@ bool Animator::OnDownUp(const event::KeyDownEvent& event)
 {
     int animation = -1;
     
-    if(event.key == Key::ENTER || event.key == Key::SPACE)
+    switch(event.key)
     {
-        m_sprite.RestartAnimation();
-        return true;
-    }
-    else if(event.key == Key::LEFT || event.key == Key::DOWN)
-    {
-        int id = m_sprite.GetActiveAnimation();
-        --id;
-
-        animation = std::max(id, 0);
-    }
-    else if(event.key == Key::RIGHT || event.key == Key::UP)
-    {
-        int id = m_sprite.GetActiveAnimation();
-        ++id;
-
-        animation = std::min(id, m_sprite.GetDefinedAnimations() -1);
-    }
-    else
-    {
-        if(event.key == Key::ZERO)
+        case Key::Keycode::ENTER:
+        case Key::Keycode::SPACE:
+        {
+            m_sprite.RestartAnimation();
+            return true;
+        }
+        case Key::Keycode::LEFT:
+        case Key::Keycode::DOWN:
+        {
+            int id = m_sprite.GetActiveAnimation();
+            --id;
+            animation = std::max(id, 0);
+            break;
+        }
+        case Key::Keycode::RIGHT:
+        case Key::Keycode::UP:
+        {
+            int id = m_sprite.GetActiveAnimation();
+            ++id;
+            animation = std::min(id, m_sprite.GetDefinedAnimations() -1);
+            break;
+        }
+        case Key::Keycode::ZERO:
             animation = 0;
-        else if(event.key == Key::ONE)
+            break;
+        case Key::Keycode::ONE:
             animation = 1;
-        else if(event.key == Key::TWO)
+            break;
+        case Key::Keycode::TWO:
             animation = 2;
-        else if(event.key == Key::THREE)
+            break;
+        case Key::Keycode::THREE:
             animation = 3;
-        else if(event.key == Key::FOUR)
+            break;
+        case Key::Keycode::FOUR:
             animation = 4;
-        else if(event.key == Key::FIVE)
+            break;
+        case Key::Keycode::FIVE:
             animation = 5;
-        else if(event.key == Key::SIX)
+            break;
+        case Key::Keycode::SIX:
             animation = 6;
-        else if(event.key == Key::SEVEN)
+            break;
+        case Key::Keycode::SEVEN:
             animation = 7;
-        else if(event.key == Key::EIGHT)
+            break;
+        case Key::Keycode::EIGHT:
             animation = 8;
-        else if(event.key == Key::NINE)
+            break;
+        case Key::Keycode::NINE:
             animation = 9;
+            break;
+        default:
+            break;
     }
 
     if(animation != -1)
