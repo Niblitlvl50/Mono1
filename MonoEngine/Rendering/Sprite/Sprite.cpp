@@ -57,6 +57,19 @@ void Sprite::SetAnimation(int id)
     SetAnimation(id, nullptr);
 }
 
+void Sprite::SetAnimation(const char* name)
+{
+    for(size_t index = 0; index < m_animations.size(); ++index)
+    {
+        const bool found = (strcmp(name, m_animations[index].GetName()) == 0);
+        if(found)
+        {
+            SetAnimation(index, nullptr);
+            break;
+        }
+    }
+}
+
 void Sprite::SetAnimation(int id, const std::function<void ()>& func)
 {
     const bool same_id = (id == m_activeAnimation);

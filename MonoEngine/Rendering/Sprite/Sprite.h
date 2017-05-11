@@ -42,6 +42,7 @@ namespace mono
         //! Tell the sprite to run a specific animation.
         //! @param[in] id The animation to run.
         virtual void SetAnimation(int id);
+        virtual void SetAnimation(const char* name);
         
         //! Tell the sprite to run a specific animation, and get a callback when finished
         //! @param[in] id The animation to run.

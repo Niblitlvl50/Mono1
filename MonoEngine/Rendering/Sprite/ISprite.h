@@ -32,8 +32,8 @@ namespace mono
         virtual void SetShade(const mono::Color::RGBA& color) = 0;
 
         //! Tell the sprite to run a specific animation.
-        //! @param[in] id The animation to run.
         virtual void SetAnimation(int id) = 0;
+        virtual void SetAnimation(const char* name) = 0;
 
         //! Tell the sprite to run a specific animation, and get a callback when finished
         //! @param[in] id The animation to run.
