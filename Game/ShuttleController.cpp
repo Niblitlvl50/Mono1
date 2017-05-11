@@ -96,22 +96,22 @@ bool ShuttleController::OnMouseMotion(const event::MouseMotionEvent& event)
 
 bool ShuttleController::OnKeyDown(const event::KeyDownEvent& event)
 {
-    if(event.key != Key::ONE &&
-       event.key != Key::TWO &&
-       event.key != Key::THREE &&
-       event.key != Key::FOUR && 
-       event.key != Key::SPACE)
+    if(event.key != Key::Keycode::ONE &&
+       event.key != Key::Keycode::TWO &&
+       event.key != Key::Keycode::THREE &&
+       event.key != Key::Keycode::FOUR && 
+       event.key != Key::Keycode::SPACE)
         return false;
 
-    if(event.key == Key::ONE)
+    if(event.key == Key::Keycode::ONE)
        mShuttle->SelectWeapon(WeaponType::STANDARD);
-    else if(event.key == Key::TWO)
+    else if(event.key == Key::Keycode::TWO)
         mShuttle->SelectWeapon(WeaponType::ROCKET);
-    else if(event.key == Key::THREE)
+    else if(event.key == Key::Keycode::THREE)
         mShuttle->SelectWeapon(WeaponType::CACOPLASMA);
-    else if(event.key == Key::FOUR)
+    else if(event.key == Key::Keycode::FOUR)
         mShuttle->SelectWeapon(WeaponType::GENERIC);
-    else if(event.key == Key::SPACE)
+    else if(event.key == Key::Keycode::SPACE)
         mEventHandler.DispatchEvent(event::TimeScaleEvent(0.5f));
 
     return true;
@@ -119,7 +119,7 @@ bool ShuttleController::OnKeyDown(const event::KeyDownEvent& event)
 
 bool ShuttleController::OnKeyUp(const event::KeyUpEvent& event)
 {
-    if(event.key != Key::SPACE)
+    if(event.key != Key::Keycode::SPACE)
         return false;
 
     mEventHandler.DispatchEvent(event::TimeScaleEvent(1.0f));

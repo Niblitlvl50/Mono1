@@ -206,17 +206,17 @@ bool UserInputController::OnMultiGesture(const event::MultiGestureEvent& event)
 
 bool UserInputController::OnKeyDown(const event::KeyDownEvent& event)
 {
-    if(event.key == Key::ONE)
+    if(event.key == Key::Keycode::ONE)
         SelectTool(ToolsMenuOptions::TRANSLATE_TOOL);
-    else if(event.key == Key::TWO)
+    else if(event.key == Key::Keycode::TWO)
         SelectTool(ToolsMenuOptions::ROTATE_TOOL);
-    else if(event.key == Key::THREE)
+    else if(event.key == Key::Keycode::THREE)
         SelectTool(ToolsMenuOptions::POLYGON_TOOL);
-    else if(event.key == Key::FOUR)
+    else if(event.key == Key::Keycode::FOUR)
         SelectTool(ToolsMenuOptions::POLYGON_BRUSH_TOOL);
-    else if(event.key == Key::FIVE)
+    else if(event.key == Key::Keycode::FIVE)
         SelectTool(ToolsMenuOptions::PATH_TOOL);
-    else if(event.key == Key::ENTER && event.ctrl)
+    else if(event.key == Key::Keycode::ENTER && event.ctrl)
     {
         if(m_isMaximized)
             m_window->RestoreSize();

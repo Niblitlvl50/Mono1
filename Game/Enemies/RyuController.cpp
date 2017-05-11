@@ -35,14 +35,14 @@ RyuController::~RyuController()
 
 bool RyuController::OnKeyDown(const event::KeyDownEvent& event)
 {
-    if(event.key == Key::RIGHT)
+    if(event.key == Key::Keycode::RIGHT)
         m_target.x += 20.0f;
-    else if(event.key == Key::LEFT)
+    else if(event.key == Key::Keycode::LEFT)
         m_target.x -= 20.0f;
     
-    if(event.key == Key::UP)
+    if(event.key == Key::Keycode::UP)
         m_target.y += 20.0f;
-    else if(event.key == Key::DOWN)
+    else if(event.key == Key::Keycode::DOWN)
         m_target.y -= 20.0f;
 
     return true;
