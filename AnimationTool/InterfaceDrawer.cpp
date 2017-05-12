@@ -72,7 +72,9 @@ void InterfaceDrawer::doUpdate(unsigned int delta)
         const ImVec4& color = (index == m_context.animation_id) ? hovered_color : default_color;
 
         ImGui::PushStyleColor(ImGuiCol_Button, color);
-        ImGui::Button(buffer, number_button_size);
+        if(ImGui::Button(buffer, number_button_size))
+            m_context.on_set_animation(index);
+
         ImGui::PopStyleColor();
         ImGui::SameLine();
     }

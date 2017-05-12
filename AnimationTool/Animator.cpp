@@ -84,6 +84,7 @@ Animator::Animator(System::IWindow* window, mono::EventHandler& eventHandler, co
     m_context.on_add_frame        = std::bind(&Animator::OnAddFrame, this);
     m_context.on_delete_frame     = std::bind(&Animator::OnDeleteFrame, this, _1);
     m_context.on_name_animation   = std::bind(&Animator::OnNameAnimation, this, _1);
+    m_context.on_set_animation    = std::bind(&Animator::SetAnimation, this, _1);
     m_context.on_save             = std::bind(&Animator::SaveSprite, this);
 
     m_context.max_frame_id = m_sprite.GetUniqueFrames() -1;

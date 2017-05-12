@@ -30,6 +30,7 @@ namespace animator
         std::function<void ()> on_add_frame;
         std::function<void (int)> on_delete_frame;
         std::function<void (const char*)> on_name_animation;
+        std::function<void (int)> on_set_animation;
 
         std::function<void ()> on_save;
     };
