@@ -11,8 +11,6 @@ void Updater::AddUpdatable(const IUpdatablePtr& updatable)
 
 void Updater::Update(unsigned int milliseconds)
 {
-    //mCamera->Update(milliseconds);
-    
     for(auto& updatable : m_updatables)
         updatable->doUpdate(milliseconds);
 
