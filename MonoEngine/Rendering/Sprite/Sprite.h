@@ -31,6 +31,8 @@ namespace mono
         //! @return Math::Quad A reference to the texture coords.
         virtual const math::Quad& GetTextureCoords() const;
         
+        virtual const math::Quad& GetFullTexureCoords() const;
+
         //! Gets the color shade of the sprite
         //! @return Color A reference to the color shading.
         virtual const Color::RGBA& GetShade() const;
@@ -76,9 +78,11 @@ namespace mono
 
     private:
 
-        int m_activeAnimation;
+        int m_activeAnimation = 0;
         std::function<void ()> m_callback;
         ITexturePtr m_texture;
+
+        math::Quad m_texture_quad;
 
         std::vector<math::Quad> m_textureCoordinates;
         std::vector<AnimationSequence> m_animations;

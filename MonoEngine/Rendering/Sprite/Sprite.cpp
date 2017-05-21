@@ -7,19 +7,26 @@
 using namespace mono;
 
 Sprite::Sprite()
-    : m_activeAnimation(0)
 { }
 
 Sprite::Sprite(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates)
-    : m_activeAnimation(0),
-      m_texture(texture),
-      m_textureCoordinates(coordinates)
-{ }
+{
+    Init(texture, coordinates);
+}
 
 void Sprite::Init(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates)
 {
-      m_texture = texture;
-      m_textureCoordinates = coordinates;
+    m_texture = texture;
+    m_textureCoordinates = coordinates;
+
+    m_texture_quad = math::Quad(math::INF, -math::INF, -math::INF, math::INF);
+    for(const math::Quad& quad : coordinates)
+    {
+        m_texture_quad.mA.x = std::min(m_texture_quad.mA.x, quad.mA.x);
+        m_texture_quad.mA.y = std::max(m_texture_quad.mA.y, quad.mA.y);
+        m_texture_quad.mB.x = std::max(m_texture_quad.mB.x, quad.mB.x);
+        m_texture_quad.mB.y = std::min(m_texture_quad.mB.y, quad.mB.y);
+    }
 }
 
 ITexturePtr Sprite::GetTexture() const
@@ -31,6 +38,11 @@ const math::Quad& Sprite::GetTextureCoords() const
 {
     const AnimationSequence& anim = m_animations[m_activeAnimation];
     return anim.Finished() ? math::zeroQuad : m_textureCoordinates.at(anim.Frame());
+}
+
+const math::Quad& Sprite::GetFullTexureCoords() const
+{
+    return m_texture_quad;
 }
 
 const Color::RGBA& Sprite::GetShade() const

@@ -17,6 +17,7 @@
 namespace animator
 {
     class MutableSprite;
+    class SpriteTexture;
 
     class Animator : public mono::ZoneBase
     {
@@ -63,5 +64,7 @@ namespace animator
 
         mono::ICameraPtr m_camera;
         mono::Sprite m_sprite;
+
+        std::shared_ptr<SpriteTexture> m_sprite_texture;
     };
 }

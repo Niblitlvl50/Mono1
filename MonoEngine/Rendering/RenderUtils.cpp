@@ -72,7 +72,7 @@ void mono::DrawSprite(const mono::ISprite& sprite, const std::shared_ptr<ITextur
                                    -0.5f,  0.5f,
                                     0.5f,  0.5f,
                                     0.5f, -0.5f };
-    constexpr unsigned short indices[] = { 0, 2, 1, 0, 3, 2 };
+    constexpr unsigned short indices[] = { 0, 1, 2, 0, 2, 3 };
 
     const float coords[] = { quad.mA.x, quad.mA.y,
                              quad.mA.x, quad.mB.y,

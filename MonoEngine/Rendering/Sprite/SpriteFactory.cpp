@@ -11,6 +11,14 @@
 //  - - - - -
 //
 
+//
+// y
+// ^
+// |
+// |
+// 0-------> x
+//
+
 #include "SpriteFactory.h"
 #include "Sprite.h"
 
@@ -36,8 +44,9 @@ namespace
         int textureSizeY;
     };
 
-    void GenerateTextureCoordinates(const TextureData& data, std::vector<math::Quad>& coordinates)
+    std::vector<math::Quad> GenerateTextureCoordinates(const TextureData& data)
     {
+        std::vector<math::Quad> coordinates;
         coordinates.reserve(data.rows * data.columns);
 
         // +1 because the textures coordinates is zero indexed
@@ -55,12 +64,15 @@ namespace
         {
             for(int xindex = 0; xindex < data.columns; ++xindex)
             {
-                const float x = xstep * float(xindex) + x1;
-                const float y = ystep * float(yindex) + y1;
+                const float x = x1 + (float(xindex) * xstep);
+                const float y = y1 + (float(yindex) * ystep);
 
-                coordinates.emplace_back(x, ystep + y, x + xstep, y);
+                // first two is lower left of quad, second two is top right
+                coordinates.emplace_back(x, y + ystep, x + xstep, y);
             }
         }
+
+        return coordinates;
     }
 
     bool LoadSpriteData(mono::Sprite& sprite, const char* sprite_file)
@@ -88,10 +100,8 @@ namespace
         data.textureSizeX = texture->Width();
         data.textureSizeY = texture->Height();
 
-        std::vector<math::Quad> textureCoordinates;
-        GenerateTextureCoordinates(data, textureCoordinates);
-
-        sprite.Init(texture, textureCoordinates);
+        const std::vector<math::Quad>& texture_coordinates = GenerateTextureCoordinates(data);
+        sprite.Init(texture, texture_coordinates);
 
         for(const auto& animation : json["animations"])
         {
@@ -104,7 +114,6 @@ namespace
         return true;
     }
 }
-
 
 mono::ISpritePtr mono::CreateSprite(const char* sprite_file)
 {

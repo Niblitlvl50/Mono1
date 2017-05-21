@@ -1,6 +1,7 @@
 
 #include "Animator.h"
 #include "MutableSprite.h"
+#include "SpriteTexture.h"
 
 #include "EventHandler/EventHandler.h"
 #include "Events/EventFuncFwd.h"
@@ -71,9 +72,13 @@ Animator::Animator(System::IWindow* window, mono::EventHandler& eventHandler, co
     const System::Size& size = window->Size();
     const math::Vector window_size(size.width, size.height);
     m_guiRenderer = std::make_shared<ImGuiRenderer>("animator_imgui.ini", window_size, textures);
+
     mono::CreateSprite(m_sprite, sprite_file);
+
+    m_sprite_texture = std::make_shared<SpriteTexture>(m_sprite.GetTexture(), m_sprite.GetFullTexureCoords());
     
     AddEntity(std::make_shared<MutableSprite>(m_sprite), 0);
+    AddEntity(m_sprite_texture, 1);
     AddDrawable(m_guiRenderer, 2);
     AddUpdatable(std::make_shared<InterfaceDrawer>(m_context));
 
@@ -146,6 +151,9 @@ bool Animator::OnDownUp(const event::KeyDownEvent& event)
             m_sprite.RestartAnimation();
             return true;
         }
+        case Keycode::TAB:
+            m_sprite_texture->Enable(!m_sprite_texture->Enabled());
+            return true;
         case Keycode::LEFT:
         case Keycode::DOWN:
         {
