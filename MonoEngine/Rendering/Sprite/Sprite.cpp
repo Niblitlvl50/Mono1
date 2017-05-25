@@ -71,15 +71,13 @@ void Sprite::SetAnimation(int id)
 
 void Sprite::SetAnimation(const char* name)
 {
-    for(size_t index = 0; index < m_animations.size(); ++index)
-    {
-        const bool found = (strcmp(name, m_animations[index].GetName()) == 0);
-        if(found)
-        {
-            SetAnimation(index, nullptr);
-            break;
-        }
-    }
+    SetAnimation(name, nullptr);
+}
+
+void Sprite::SetAnimation(const char* name, const std::function<void ()>& func)
+{
+    const int index = FindAnimationByName(name);
+    SetAnimation(index, func);
 }
 
 void Sprite::SetAnimation(int id, const std::function<void ()>& func)
@@ -152,4 +150,16 @@ const std::vector<AnimationSequence>& Sprite::GetAnimations() const
 std::vector<AnimationSequence>& Sprite::GetAnimations()
 {
     return m_animations;
+}
+
+int Sprite::FindAnimationByName(const char* name) const
+{
+    for(size_t index = 0; index < m_animations.size(); ++index)
+    {
+        const bool found = (strcmp(name, m_animations[index].GetName()) == 0);
+        if(found)
+            return index;
+    }
+
+    return -1;
 }

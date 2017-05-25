@@ -50,6 +50,7 @@ namespace mono
         //! @param[in] id The animation to run.
         //! @param[in] func A callback function.
         virtual void SetAnimation(int id, const std::function<void ()>& func);
+        virtual void SetAnimation(const char* name, const std::function<void ()>& func);
 
         //! Restarts the current set animation
         virtual void RestartAnimation();
@@ -77,6 +78,8 @@ namespace mono
         virtual void doUpdate(unsigned int delta);
 
     private:
+
+        int FindAnimationByName(const char* name) const;
 
         int m_activeAnimation = 0;
         std::function<void ()> m_callback;
