@@ -3,6 +3,7 @@
 #include "Rendering/Texture/ITexture.h"
 
 #include <stdexcept>
+#include <cassert>
 
 using namespace mono;
 
@@ -34,10 +35,18 @@ ITexturePtr Sprite::GetTexture() const
     return m_texture;
 }
 
-const math::Quad& Sprite::GetTextureCoords() const
+math::Quad Sprite::GetTextureCoords() const
 {
     const AnimationSequence& anim = m_animations[m_activeAnimation];
-    return anim.Finished() ? math::zeroQuad : m_textureCoordinates.at(anim.Frame());
+    math::Quad coords = m_textureCoordinates.at(anim.Frame());
+
+    if(m_flip_horizontal)
+        std::swap(coords.mA.x, coords.mB.x);
+    
+    if(m_flip_vertical)
+        std::swap(coords.mA.y, coords.mB.y);
+
+    return coords;
 }
 
 const math::Quad& Sprite::GetFullTexureCoords() const
@@ -53,6 +62,16 @@ const Color::RGBA& Sprite::GetShade() const
 void Sprite::SetShade(const mono::Color::RGBA& color)
 {
     m_color = color;
+}
+
+void Sprite::SetHorizontalDirection(HorizontalDirection direction)
+{
+    m_flip_horizontal = (direction == HorizontalDirection::LEFT);
+}
+
+void Sprite::SetVerticalDirection(VerticalDirection direction)
+{
+    m_flip_vertical = (direction == VerticalDirection::DOWN);
 }
 
 void Sprite::doUpdate(unsigned int delta)
@@ -77,6 +96,8 @@ void Sprite::SetAnimation(const char* name)
 void Sprite::SetAnimation(const char* name, const std::function<void ()>& func)
 {
     const int index = FindAnimationByName(name);
+    assert(index != -1);
+
     SetAnimation(index, func);
 }
 

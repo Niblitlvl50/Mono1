@@ -9,6 +9,18 @@
 
 namespace mono
 {
+    enum class HorizontalDirection
+    {
+        LEFT,
+        RIGHT
+    };
+
+    enum class VerticalDirection
+    {
+        UP,
+        DOWN
+    };
+
     class ISprite : public IUpdatable
     {
     public:
@@ -21,8 +33,9 @@ namespace mono
         //! the sprite can return zeroQuad for texture coordinates
         //! if the animation is finished.
         //! @return Math::Quad A reference to the texture coords.
-        virtual const math::Quad& GetTextureCoords() const = 0;
+        virtual math::Quad GetTextureCoords() const = 0;
 
+        //! Gets the full texture coordinates of the texture used in the sprite
         virtual const math::Quad& GetFullTexureCoords() const = 0;
 
         //! Gets the color shade of the sprite
@@ -32,6 +45,9 @@ namespace mono
         //! Sets the color shade of the sprite
         //! @param[in] color The color shading
         virtual void SetShade(const mono::Color::RGBA& color) = 0;
+
+        virtual void SetHorizontalDirection(HorizontalDirection direction) = 0;
+        virtual void SetVerticalDirection(VerticalDirection direction) = 0;
 
         //! Tell the sprite to run a specific animation.
         virtual void SetAnimation(int id) = 0;

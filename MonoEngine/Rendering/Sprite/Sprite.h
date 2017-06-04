@@ -29,7 +29,7 @@ namespace mono
         
         //! Gets the quad representing the texture coordinates
         //! @return Math::Quad A reference to the texture coords.
-        virtual const math::Quad& GetTextureCoords() const;
+        virtual math::Quad GetTextureCoords() const;
         
         virtual const math::Quad& GetFullTexureCoords() const;
 
@@ -41,6 +41,9 @@ namespace mono
         //! @param[in] color The color shading
         virtual void SetShade(const mono::Color::RGBA& color);
         
+        virtual void SetHorizontalDirection(HorizontalDirection direction);
+        virtual void SetVerticalDirection(VerticalDirection direction);
+
         //! Tell the sprite to run a specific animation.
         //! @param[in] id The animation to run.
         virtual void SetAnimation(int id);
@@ -91,6 +94,9 @@ namespace mono
         std::vector<AnimationSequence> m_animations;
 
         Color::RGBA m_color;
+
+        bool m_flip_horizontal = false;
+        bool m_flip_vertical = false;
     };
 }
 
