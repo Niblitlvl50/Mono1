@@ -55,8 +55,8 @@ add_library(shared STATIC ${shared_source_files})
 # Mono
 file(GLOB_RECURSE engine_source_files "MonoEngine/*.cpp")
 add_library(mono STATIC ${engine_source_files})
-add_dependencies(mono chipmunk_static)
-target_link_libraries(mono chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENAL_LIBRARY})
+add_dependencies(mono imgui chipmunk_static)
+target_link_libraries(mono imgui chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENAL_LIBRARY})
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "UnitTests/*.cpp")
@@ -66,22 +66,22 @@ target_include_directories(unittest PRIVATE "External Libs/gtest-1.7.0/include")
 target_link_libraries(unittest mono gtest)
 
 # Animation tool
-file(GLOB_RECURSE animationtool_source_files "AnimationTool/*.cpp")
-add_executable(animationtool ${animationtool_source_files})
-add_dependencies(animationtool mono shared imgui)
-target_link_libraries(animationtool mono shared imgui)
+# file(GLOB_RECURSE animationtool_source_files "AnimationTool/*.cpp")
+# add_executable(animationtool ${animationtool_source_files})
+# add_dependencies(animationtool mono shared imgui)
+# target_link_libraries(animationtool mono shared imgui)
 
 # Editor
-file(GLOB_RECURSE editor_source_files "Editor/*.cpp")
-add_executable(editor ${editor_source_files})
-add_dependencies(editor mono shared imgui)
-target_include_directories(editor PRIVATE "Editor")
-target_link_libraries(editor mono shared imgui)
+# file(GLOB_RECURSE editor_source_files "Editor/*.cpp")
+# add_executable(editor ${editor_source_files})
+# add_dependencies(editor mono shared imgui)
+# target_include_directories(editor PRIVATE "Editor")
+# target_link_libraries(editor mono shared imgui)
 
 # Game
-file(GLOB_RECURSE game_source_files "Game/*.cpp")
-add_executable(game ${game_source_files})
-add_dependencies(game mono shared)
-target_include_directories(game PRIVATE "Game")
-target_link_libraries(game mono shared)
+# file(GLOB_RECURSE game_source_files "Game/*.cpp")
+# add_executable(game ${game_source_files})
+# add_dependencies(game mono shared)
+# target_include_directories(game PRIVATE "Game")
+# target_link_libraries(game mono shared)
 
