@@ -1,8 +1,7 @@
 
 #include "InterfaceDrawer.h"
 #include "UIContext.h"
-#include "ImGuiImpl/ImGuiUtils.h"
-#include "imgui/imgui.h"
+#include "ImGuiImpl/ImGuiImpl.h"
 
 using namespace animator;
 
