@@ -49,8 +49,8 @@ add_library(gtest STATIC ${gtest_source_files})
 target_include_directories(gtest PRIVATE "External Libs/gtest-1.7.0/include" "External Libs/gtest-1.7.0")
 
 # Shared code
-file(GLOB_RECURSE shared_source_files "Shared/*.cpp")
-add_library(shared STATIC ${shared_source_files})
+# file(GLOB_RECURSE shared_source_files "Shared/*.cpp")
+# add_library(shared STATIC ${shared_source_files})
 
 # Mono
 file(GLOB_RECURSE engine_source_files "MonoEngine/*.cpp")
@@ -64,12 +64,6 @@ add_executable(unittest ${unittest_source_files})
 add_dependencies(unittest mono gtest)
 target_include_directories(unittest PRIVATE "External Libs/gtest-1.7.0/include")
 target_link_libraries(unittest mono gtest)
-
-# Animation tool
-# file(GLOB_RECURSE animationtool_source_files "AnimationTool/*.cpp")
-# add_executable(animationtool ${animationtool_source_files})
-# add_dependencies(animationtool mono shared imgui)
-# target_link_libraries(animationtool mono shared imgui)
 
 # Editor
 # file(GLOB_RECURSE editor_source_files "Editor/*.cpp")
