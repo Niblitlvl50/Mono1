@@ -1,1 +1,0 @@
-{	"texture": "textures/spritesheet.png",	"rows": 1,	"columns": 2,	"x": 176,	"y": 192,	"u": 239,	"v": 239,	"animations": [		{			"name": "default",			"loop": true,			"frames": [ 0, 50, 1, 50 ]		}	]}

@@ -13,5 +13,8 @@
         "cmake_install.cmake": true,
         "CMakeCache.txt": true,
         "Makefile": true
+    },
+    "files.associations": {
+        "ios": "cpp"
     }
 }

@@ -23,20 +23,8 @@
             "args": ["-c", "cmake ."]
         },
         {
-            "taskName": "game",
-            "isTestCommand": true,
-            "args": ["./run_task.sh", "game"]
-        },
-        {
-            "taskName": "editor",
-            "args": ["./run_task.sh", "editor", "world.world"]
-        },
-        {
-            "taskName": "animator",
-            "args": ["./run_task.sh", "animationtool", "sprites/cacodemon.sprite"]
-        },
-        {
             "taskName": "unittest",
+            "isTestCommand": true,
             "args": ["./run_unittest.sh"]
         }
     ]

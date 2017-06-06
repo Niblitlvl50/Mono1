@@ -7,6 +7,3 @@ bin/
 build/
 CMakeFiles/
 DerivedData/
-Resources/editor_config.json
-Resources/editor_imgui.ini
-Resources/animator_imgui.ini

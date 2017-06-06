@@ -1,1 +1,0 @@
-{	"texture": "textures/explosions.png",	"rows": 7,	"columns": 1,	"x": 9,	"y": 9,	"u": 40,	"v": 232,	"animations": [		{			"name": "default",			"loop": false,			"frames": [ 0, 100, 1, 50, 2, 50, 3, 50, 4, 100, 5, 100, 6, 100 ]		}	]}
