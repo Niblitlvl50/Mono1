@@ -259,18 +259,30 @@ void math::Inverse(math::Matrix& matrix)
         matrix.data[i] = inv.data[i] * det;
 }
 
+void math::Transform(const Matrix& matrix, math::Vector& vector)
+{
+    vector.x = matrix.data[0] * vector.x + matrix.data[1] * -vector.y + matrix.data[12];
+    vector.y = matrix.data[4] * -vector.x + matrix.data[5] * vector.y + matrix.data[13];
+}
+
+void math::Transform(const Matrix& matrix, math::Quad& quad)
+{
+    math::Transform(matrix, quad.mA);
+    math::Transform(matrix, quad.mB);
+}
+
 math::Vector math::Transform(const Matrix& matrix, const math::Vector& vector)
 {
-    const float x = matrix.data[0] * vector.x + matrix.data[1] * -vector.y + matrix.data[12];
-    const float y = matrix.data[4] * -vector.x + matrix.data[5] * vector.y + matrix.data[13];
-    return math::Vector(x, y);
+    math::Vector out_vector = vector;
+    math::Transform(matrix, out_vector);
+    return out_vector;
 }
 
 math::Quad math::Transform(const Matrix& matrix, const math::Quad& quad)
 {
-    const math::Vector& first = Transform(matrix, quad.mA);
-    const math::Vector& second = Transform(matrix, quad.mB);
-    return math::Quad(first, second);
+    math::Quad out_quad = quad;
+    math::Transform(matrix, out_quad);
+    return out_quad;
 }
 
 void math::operator *= (Matrix& left, const Matrix& right)

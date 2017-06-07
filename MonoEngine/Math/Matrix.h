@@ -33,6 +33,8 @@ namespace math
     void Transpose(Matrix& matrix);
     void Inverse(Matrix& matrix);
 
+    void Transform(const Matrix& matrix, math::Vector& vector);
+    void Transform(const Matrix& matrix, math::Quad& quad);
     math::Vector Transform(const Matrix& matrix, const math::Vector& vector);
     math::Quad Transform(const Matrix& matrix, const math::Quad& quad);
 
