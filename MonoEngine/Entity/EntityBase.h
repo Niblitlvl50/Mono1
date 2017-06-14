@@ -45,11 +45,11 @@ namespace mono
         const unsigned int m_uid;
         unsigned int m_properties;
 
-        math::Vector mPosition;
-        math::Vector mBasePoint;
-        math::Vector mScale;
-        float mRotation;
+        math::Vector m_position;
+        math::Vector m_base_point;
+        math::Vector m_scale;
+        float m_rotation;
 
-        std::vector<IEntityPtr> mChildren;
+        std::vector<IEntityPtr> m_children;
     };
 }
