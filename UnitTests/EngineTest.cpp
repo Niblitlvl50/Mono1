@@ -111,7 +111,7 @@ namespace
         }
         virtual void Accept(mono::IUpdater& updater)
         { }
-        virtual void OnLoad(mono::ICameraPtr camera)
+        virtual void OnLoad(mono::ICameraPtr& camera)
         {
             mOnLoadCalled = true;
         }
