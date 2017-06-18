@@ -12,13 +12,13 @@ using namespace mono;
 PhysicsEntityBase::PhysicsEntityBase()
     : m_uid(System::CreateUID()),
       m_properties(0),
-      mScale(1.0f, 1.0f),
-      mRotation(0.0f)
+      m_scale(1.0f, 1.0f),
+      m_rotation(0.0f)
 { }
 
 const math::Vector& PhysicsEntityBase::Position() const
 {
-    return mPosition;
+    return m_position;
 }
 
 const math::Vector& PhysicsEntityBase::BasePoint() const
@@ -28,41 +28,41 @@ const math::Vector& PhysicsEntityBase::BasePoint() const
 
 float PhysicsEntityBase::Rotation() const
 {
-    return mRotation;
+    return m_rotation;
 }
 
 const math::Vector& PhysicsEntityBase::Scale() const
 {
-    return mScale;
+    return m_scale;
 }
 
 void PhysicsEntityBase::SetPosition(const math::Vector& position)
 {
-    mPosition = position;
-    mPhysicsObject.body->SetPosition(position);
+    m_position = position;
+    m_physics.body->SetPosition(position);
 }
 
 void PhysicsEntityBase::SetRotation(float rotation)
 {
-    mRotation = rotation;
-    mPhysicsObject.body->SetAngle(rotation);
+    m_rotation = rotation;
+    m_physics.body->SetAngle(rotation);
 }
 
 void PhysicsEntityBase::SetScale(const math::Vector& scale)
 {
-    mScale = scale;
+    m_scale = scale;
 }
 
 math::Quad PhysicsEntityBase::BoundingBox() const
 {
-    const math::Vector& halfScale = mScale / 2.0f;
-    math::Quad thisbb(mPosition - halfScale, mPosition + halfScale);
+    const math::Vector& halfScale = m_scale / 2.0f;
+    math::Quad thisbb(m_position - halfScale, m_position + halfScale);
 
     for(const auto& child : m_children)
     {
-        math::Quad childbb = (child->BoundingBox() * mScale);
-        childbb.mA += mPosition;
-        childbb.mB += mPosition;
+        math::Quad childbb = (child->BoundingBox() * m_scale);
+        childbb.mA += m_position;
+        childbb.mB += m_position;
         thisbb |= childbb;
     }
             
@@ -71,7 +71,7 @@ math::Quad PhysicsEntityBase::BoundingBox() const
 
 mono::PhysicsData& PhysicsEntityBase::GetPhysics()
 {
-    return mPhysicsObject;
+    return m_physics;
 }
 
 unsigned int PhysicsEntityBase::Id() const
@@ -106,8 +106,8 @@ void PhysicsEntityBase::doDraw(IRenderer& renderer) const
 
 void PhysicsEntityBase::doUpdate(unsigned int delta)
 {
-    mPosition = mPhysicsObject.body->GetPosition();
-    mRotation = mPhysicsObject.body->GetAngle();
+    m_position = m_physics.body->GetPosition();
+    m_rotation = m_physics.body->GetAngle();
 
     for(auto& child : m_children)
         child->doUpdate(delta);
@@ -118,13 +118,13 @@ void PhysicsEntityBase::doUpdate(unsigned int delta)
 math::Matrix PhysicsEntityBase::Transformation() const
 {
     math::Matrix translation;
-    math::Translate(translation, mPosition);
+    math::Translate(translation, m_position);
 
     math::Matrix rotation;
-    math::RotateZ(rotation, mRotation);
+    math::RotateZ(rotation, m_rotation);
 
     math::Matrix scale;
-    math::ScaleXY(scale, mScale);
+    math::ScaleXY(scale, m_scale);
 
     math::Matrix transform;
     transform *= translation;
