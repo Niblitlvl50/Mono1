@@ -1,6 +1,7 @@
 
 #include "ImageFactory.h"
 #include <stdexcept>
+#include <cstdio>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image/stb_image.h"
@@ -47,7 +48,10 @@ System::IImagePtr System::LoadImage(const char* source)
     int components;
     const unsigned char* data = stbi_load(source, &width, &height, &components, 0);
     if(!data)
+    {
+        std::printf("Unable to load '%s'\n", source);
         throw std::runtime_error("Unable to load image!");
+    }
 
     return std::make_shared<Bitmap>(data, width, height, components);
 }
