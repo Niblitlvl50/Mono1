@@ -1,15 +1,7 @@
 
 //
 // This is an example of a sprite file that you pass to this sprite factory
-
-//
-// An image with 2 rows and 5 columns and their indices.
-//  _ _ _ _ _
-// |0|1|2|3|4|
-//  - - - - -
-// |5|6|7|8|9|
-//  - - - - -
-//
+// ...
 
 //
 // y
@@ -32,49 +24,6 @@
 
 namespace
 {
-    struct TextureData
-    {
-        int rows;
-        int columns;
-        int x;
-        int y;
-        int u;
-        int v;
-        int textureSizeX;
-        int textureSizeY;
-    };
-
-    std::vector<math::Quad> GenerateTextureCoordinates(const TextureData& data)
-    {
-        std::vector<math::Quad> coordinates;
-        coordinates.reserve(data.rows * data.columns);
-
-        // +1 because the textures coordinates is zero indexed
-        const float x1 = float(data.x +1) / float(data.textureSizeX);
-        const float y1 = float(data.y) / float(data.textureSizeY);
-        const float x2 = float(data.u +1) / float(data.textureSizeX);
-        const float y2 = float(data.v) / float(data.textureSizeY);
-        const float sizex = x2 - x1;
-        const float sizey = y2 - y1;
-
-        const float xstep = sizex / data.columns;
-        const float ystep = sizey / data.rows;
-
-        for(int yindex = 0; yindex < data.rows; ++yindex)
-        {
-            for(int xindex = 0; xindex < data.columns; ++xindex)
-            {
-                const float x = x1 + (float(xindex) * xstep);
-                const float y = y1 + (float(yindex) * ystep);
-
-                // first two is lower left of quad, second two is top right
-                coordinates.emplace_back(x, y + ystep, x + xstep, y);
-            }
-        }
-
-        return coordinates;
-    }
-
     bool LoadSpriteData(mono::Sprite& sprite, const char* sprite_file)
     {
         File::FilePtr file = File::OpenAsciiFile(sprite_file);
@@ -88,19 +37,23 @@ namespace
         
         const std::string& texture_file = json["texture"];
         mono::ITexturePtr texture = mono::CreateTexture(texture_file.c_str());
+        const float texture_width = texture->Width();
+        const float texture_height = texture->Height();
 
-        TextureData data;
-        data.rows    = json["rows"];
-        data.columns = json["columns"];
-        data.x       = json["x"];
-        data.y       = json["y"];
-        data.u       = json["u"];
-        data.v       = json["v"];
+        const nlohmann::json& frames = json["frames"];
+        std::vector<math::Quad> texture_coordinates;
+        texture_coordinates.reserve(frames.size());
 
-        data.textureSizeX = texture->Width();
-        data.textureSizeY = texture->Height();
+        for(const nlohmann::json& frame : frames)
+        {
+            const float x = float(frame["x"]) / texture_width;
+            const float y = float(frame["y"]) / texture_height;
+            const float w = float(frame["w"]) / texture_width;
+            const float h = float(frame["h"]) / texture_height;
 
-        const std::vector<math::Quad>& texture_coordinates = GenerateTextureCoordinates(data);
+            texture_coordinates.emplace_back(x, y + h, x + w, y);
+        }
+
         sprite.Init(texture, texture_coordinates);
 
         for(const auto& animation : json["animations"])
