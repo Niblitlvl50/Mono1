@@ -11,6 +11,14 @@
 
 using namespace mono;
 
+namespace
+{
+    bool DrawableSortFunc(const std::pair<int, IDrawablePtr>& first, const std::pair<int, IDrawablePtr>& second)
+    {
+        return first.first < second.first;
+    }
+}
+
 void ZoneBase::Accept(IRenderer& renderer)
 {
     for(auto& pair : mDrawables)
@@ -71,13 +79,7 @@ void ZoneBase::AddDrawable(const IDrawablePtr& drawable, int layer)
 
     // Keep the drawable vector sorted so that we draw everything
     // in the correct order according to layers
-
-    const auto func = [](const std::pair<int, IDrawablePtr>& first,
-                         const std::pair<int, IDrawablePtr>& second) {
-        return first.first < second.first;
-    };
-
-    std::sort(mDrawables.begin(), mDrawables.end(), func);
+    std::sort(mDrawables.begin(), mDrawables.end(), DrawableSortFunc);
 }
 
 void ZoneBase::RemoveDrawable(const IDrawablePtr& drawable)
@@ -92,6 +94,20 @@ void ZoneBase::RemoveDrawable(const IDrawablePtr& drawable)
     else
         std::printf("ZoneBase - Unable to remove drawable\n");
         //throw std::runtime_error("ZoneBase - Unable to remove drawable");
+}
+
+void ZoneBase::SetDrawableLayer(const IDrawablePtr& drawable, int new_layer)
+{
+    const auto func = [drawable](const std::pair<int, IDrawablePtr>& pair) {
+        return pair.second == drawable;
+    };
+
+    auto it = std::find_if(mDrawables.begin(), mDrawables.end(), func);
+    if(it != mDrawables.end())
+    {
+        it->first = new_layer;
+        std::sort(mDrawables.begin(), mDrawables.end(), DrawableSortFunc);        
+    }    
 }
 
 mono::IEntityPtr ZoneBase::FindEntityFromId(unsigned int id) const

@@ -133,6 +133,8 @@ namespace
         { }
         virtual void RemoveUpdatable(const mono::IUpdatablePtr& updatable)
         { }
+        virtual void SetDrawableLayer(const mono::IDrawablePtr& drawable, int new_layer)
+        { }
         virtual mono::IEntityPtr FindEntityFromId(unsigned int id) const
         {
             return nullptr;

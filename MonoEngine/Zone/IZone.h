@@ -28,6 +28,8 @@ namespace mono
         virtual void AddUpdatable(const mono::IUpdatablePtr& updatable) = 0;
         virtual void RemoveUpdatable(const mono::IUpdatablePtr& updatable) = 0;
 
+        virtual void SetDrawableLayer(const IDrawablePtr& drawable, int new_layer) = 0;
+
         virtual mono::IEntityPtr FindEntityFromId(unsigned int id) const = 0;
         virtual void SchedulePreFrameTask(const std::function<void ()>& task) = 0;
     };

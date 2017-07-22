@@ -22,6 +22,8 @@ namespace mono
         virtual void AddDrawable(const IDrawablePtr& drawable, int layer);
         virtual void RemoveDrawable(const IDrawablePtr& drawable);
 
+        virtual void SetDrawableLayer(const IDrawablePtr& drawable, int new_layer);
+
         virtual mono::IEntityPtr FindEntityFromId(unsigned int id) const;
         virtual mono::IEntityPtr FindEntityFromPoint(const math::Vector& point) const;
 
