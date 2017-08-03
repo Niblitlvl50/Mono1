@@ -71,8 +71,8 @@ namespace mono
         math::Matrix m_current_projection;
         math::Matrix m_current_transform;
 
-        mutable unsigned int m_currentShaderId;
-        mutable unsigned int m_currentTextureId;
+        mutable unsigned int m_currentShaderId = -1;
+        mutable unsigned int m_currentTextureId = -1;
 
         std::shared_ptr<IColorShader> mColorShader;
         std::shared_ptr<ITextureShader> mTextureShader;

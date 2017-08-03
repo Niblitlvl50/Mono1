@@ -5,10 +5,7 @@ using namespace mono;
 
 AnimationSequence::AnimationSequence(const char* name, bool loop_sequence)
     : m_loop(loop_sequence),
-      m_name(name),
-      m_currentFrame(0),
-      m_elapsedTime(0),
-      m_done(false)
+      m_name(name)
 { }
 
 void AnimationSequence::AddFrame(int frame_number, int duration)

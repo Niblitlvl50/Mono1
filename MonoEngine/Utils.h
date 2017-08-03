@@ -22,18 +22,15 @@ namespace mono
     {
     public:
 
-        FPSCounter();
-
         void operator ++ (int i);
-
         unsigned int Fps() const;
         unsigned int Frames() const;
 
     private:
 
-        unsigned int mTime;
-        unsigned int mFrames;
-        unsigned int mTotalFrames;
-        unsigned int mFps;
+        unsigned int mTime = 0;
+        unsigned int mFrames = 0;
+        unsigned int mTotalFrames = 0;
+        unsigned int mFps = 0;
     };
 }

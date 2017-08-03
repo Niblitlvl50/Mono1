@@ -55,11 +55,7 @@ namespace
 }
 
 Engine::Engine(System::IWindow* window, const ICameraPtr& camera, EventHandler& eventHandler)
-    : mPause(false),
-      mQuit(false),
-      mUpdateLastTime(false),
-      mTimeScale(1.0f),
-      m_window(window),
+    : m_window(window),
       mCamera(camera),
       mEventHandler(eventHandler)
 {

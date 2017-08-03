@@ -39,11 +39,10 @@ namespace mono
         bool OnActivated(const event::ActivatedEvent& event);
         bool OnTimeScale(const event::TimeScaleEvent& event);
 
-        bool mPause;
-        bool mQuit;
-        bool mUpdateLastTime;
-
-        float mTimeScale;
+        bool mPause = false;
+        bool mQuit = false;
+        bool mUpdateLastTime = false;
+        float mTimeScale = 1.0f;
 
         System::IWindow* m_window;
         ICameraPtr mCamera;

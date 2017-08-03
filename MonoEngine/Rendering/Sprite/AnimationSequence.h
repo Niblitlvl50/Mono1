@@ -38,12 +38,12 @@ namespace mono
 
     private:
 
-        bool m_loop;
+        bool m_loop = false;
         std::string m_name;
         std::vector<mono::Frame> m_frames;
 
-        unsigned int m_currentFrame;
-        int m_elapsedTime;
-        bool m_done;
+        unsigned int m_currentFrame = 0;
+        int m_elapsedTime = 0;
+        bool m_done = false;
     };
 }

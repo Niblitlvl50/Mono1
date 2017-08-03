@@ -5,13 +5,6 @@
 
 using namespace mono;
 
-FPSCounter::FPSCounter()
-    : mTime(0),
-      mFrames(0),
-      mTotalFrames(0),
-      mFps(0)
-{ }
-
 void FPSCounter::operator ++ (int)
 {
     ++mFrames;

@@ -14,8 +14,7 @@ namespace
 
         DefaultPath(const math::Vector& position, const std::vector<math::Vector>& coords)
             : m_position(position),
-              m_path(coords),
-              m_length(0)
+              m_path(coords)
         {
             math::Vector last = coords.front();
             
@@ -79,7 +78,7 @@ namespace
 
         math::Vector m_position;
         const std::vector<math::Vector> m_path;
-        float m_length;
+        float m_length = 0.0f;
     };
 }
 

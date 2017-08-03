@@ -24,9 +24,7 @@
 using namespace mono;
 
 Renderer::Renderer(ICameraPtr camera)
-    : mCamera(camera),
-      m_currentShaderId(-1),
-      m_currentTextureId(-1)
+    : mCamera(camera)
 {
     mColorShader = GetShaderFactory()->CreateColorShader();
     mTextureShader = GetShaderFactory()->CreateTextureShader();
