@@ -96,3 +96,47 @@ namespace System
 
     int KeycodeToNative(Keycode key);
 }
+
+namespace Controller
+{
+    struct State
+    {
+        int id = -1;
+        const char* name = nullptr;
+
+        bool a = false;
+        bool b = false;
+        bool x = false;
+        bool y = false;
+
+        bool left_shoulder  = false;
+        bool right_shoulder = false;
+
+        bool left_stick  = false;
+        bool right_stick = false;
+
+        bool back = false;
+        bool guide = false;
+        bool start = false;
+
+        bool up    = false;
+        bool down  = false;
+        bool left  = false;
+        bool right = false;
+
+        float left_x    = 0.0f;
+        float left_y    = 0.0f;
+        float right_x   = 0.0f;
+        float right_y   = 0.0f;
+
+        float left_trigger  = 0.0f;
+        float right_trigger = 0.0f;
+    };
+
+    constexpr int num_states = 2;
+    extern State states[num_states];
+
+    void Initialize();
+    void Shutdown();
+    void ProcessControllerState();
+}

@@ -533,3 +533,109 @@ int System::KeycodeToNative(Keycode key)
 
     return SDLK_q;
 }
+
+Controller::State Controller::states[Controller::num_states];
+
+void Controller::Initialize()
+{
+    SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
+
+    for(int index = 0; index < SDL_NumJoysticks(); ++index)
+    {
+        const bool is_controller = SDL_IsGameController(index);
+        if(is_controller)
+        {
+            State* state_ptr = nullptr;
+
+            for(int index = 0; index < num_states; ++index)
+            {
+                State& state = states[index];
+                if(state.id == -1)
+                {
+                    state_ptr = &state;
+                    break;
+                }
+            }
+
+            if(!state_ptr)
+                break;
+
+            state_ptr->id = index;
+            state_ptr->name = SDL_GameControllerNameForIndex(index);
+            
+            SDL_GameController* handle = SDL_GameControllerOpen(index);
+            //assert(handle);
+        }
+    }
+
+    if(states[0].id != -1)
+    {
+        std::printf("Controllers\n");
+
+        for(int index = 0; index < num_states; ++index)
+        {
+            const State& state = states[index];
+            if(state.id != -1)
+                std::printf("\t%s\n", state.name);
+        }
+    }
+}
+
+void Controller::Shutdown()
+{
+    for(int index = 0; index < num_states; ++index)
+    {
+        State& state = states[index];
+        if(state.id != -1)
+        {
+            SDL_GameControllerClose(SDL_GameControllerFromInstanceID(state.id));
+            state.id = -1;
+        }
+    }
+
+    SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
+}
+
+void Controller::ProcessControllerState()
+{
+    SDL_GameControllerUpdate();
+    
+    const float max_value = float(std::numeric_limits<Sint16>::max());
+
+    for(int index = 0; index < num_states; ++index)
+    {
+        State& state = states[index];
+        if(state.id == -1)
+            continue;
+
+        SDL_GameController* handle = SDL_GameControllerFromInstanceID(state.id);
+
+        state.a = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_A);
+        state.b = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_B);
+        state.x = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_X);
+        state.y = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_Y);
+
+        state.left_shoulder  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
+        state.right_shoulder = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+        
+        state.left_stick  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_LEFTSTICK);
+        state.right_stick = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
+
+        state.back  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_BACK);
+        state.guide = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_GUIDE);
+        state.start = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_START);
+
+        state.up    = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_DPAD_UP);
+        state.down  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+        state.left  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+        state.right = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+
+        state.left_x  = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_LEFTX))  /  max_value;
+        state.left_y  = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_LEFTY))  / -max_value;
+        state.right_x = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_RIGHTX)) /  max_value;
+        state.right_y = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_RIGHTY)) / -max_value;
+
+        state.left_trigger  = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_TRIGGERLEFT)) /  max_value;
+        state.right_trigger = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_TRIGGERRIGHT)) / max_value;        
+    }
+}
