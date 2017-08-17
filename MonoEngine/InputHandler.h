@@ -28,7 +28,9 @@ namespace mono
         virtual void OnTouchUp(int64_t touchId, float x, float y, float dx, float dy);
         virtual void OnTouchMotion(int64_t touchId, float x, float y, float dx, float dy);
         virtual void OnMultiGesture(float x, float y, float theta, float distance);
-        virtual void OnUserEvent(int code, void* data1, void* data2);
+
+        virtual void OnControllerAdded(int controller_id);
+        virtual void OnControllerRemoved(int controller_id);
 
         virtual void OnAppTerminating();
         virtual void OnEnterBackground();

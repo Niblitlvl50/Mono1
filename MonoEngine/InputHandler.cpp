@@ -12,6 +12,7 @@
 #include "Events/MouseEvent.h"
 #include "Events/TouchEvent.h"
 #include "Events/MultiGestureEvent.h"
+#include "Events/ControllerEvent.h"
 
 #include "System/Keycodes.h"
 
@@ -103,8 +104,21 @@ void InputHandler::OnMultiGesture(float x, float y, float theta, float distance)
     mEventHandler.DispatchEvent(event);
 }
 
-void InputHandler::OnUserEvent(int, void*, void*)
-{ }
+void InputHandler::OnControllerAdded(int controller_id)
+{
+    const event::ControllerAddedEvent event(controller_id);
+    mEventHandler.DispatchEvent(event);
+
+    std::printf("Controller added, id: %d\n", controller_id);
+}
+
+void InputHandler::OnControllerRemoved(int controller_id)
+{
+    const event::ControllerRemovedEvent event(controller_id);
+    mEventHandler.DispatchEvent(event);
+
+    std::printf("Controller removed, id: %d\n", controller_id);
+}
 
 void InputHandler::OnAppTerminating()
 {
@@ -141,5 +155,3 @@ void InputHandler::OnActivated(bool gain)
     const event::ActivatedEvent event(gain);
     mEventHandler.DispatchEvent(event);
 }
-
-

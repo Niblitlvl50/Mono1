@@ -9,9 +9,14 @@
 #include <stdexcept>
 #include <cstdio>
 #include <string>
+#include <cmath>
+
 
 namespace
 {
+    constexpr int num_states = 2;
+    System::ControllerState g_controller_states[num_states];
+
     enum PredefinedUserEventCode
     {
         TIMER_CALLBACK = 1
@@ -254,8 +259,6 @@ namespace
         using callback = void (*)(void*);
         const callback func = reinterpret_cast<callback>(event.data1);
         func(event.data2);
-
-        handler->OnUserEvent(event.code, event.data1, event.data2);
     }
 
     class Timer : public System::ITimer
@@ -321,10 +324,11 @@ namespace
     };
 }
 
+
 void System::Initialize()
 {
     // Init SDL video subsystem
-    const int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
+    const int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
     if(result != 0)
         throw std::runtime_error("Couldn't initialize libSDL" + std::string(SDL_GetError()));
 
@@ -350,14 +354,9 @@ void System::Sleep(unsigned int ms)
     SDL_Delay(ms);
 }
 
-System::ITimer* System::CreateOneShotTimer(unsigned int ms, System::timer_callback_t callback, void* data)
+System::ITimer* System::CreateTimer(unsigned int ms, bool one_shot, System::timer_callback_t callback, void* data)
 {
-    return new Timer(ms, false, callback, data);
-}
-
-System::ITimer* System::CreateRepeatingTimer(unsigned int ms, System::timer_callback_t callback, void* data)
-{
-    return new Timer(ms, true, callback, data);
+    return new Timer(ms, !one_shot, callback, data);
 }
 
 System::Size System::GetCurrentWindowSize()
@@ -383,6 +382,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
     {
         switch(event.type)
         {
+            // Keyboard
             case SDL_KEYDOWN:
             case SDL_KEYUP:
             {
@@ -400,6 +400,8 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 break;
             }
+
+            // Mouse
             case SDL_MOUSEBUTTONDOWN:
             case SDL_MOUSEBUTTONUP:
             {
@@ -412,15 +414,14 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 break;
             }
-            case SDL_TEXTINPUT:
-                handler->OnTextInput(event.text.text);
-                break;
             case SDL_MOUSEMOTION:
                 handler->OnMouseMotion(event.motion.x, event.motion.y);
                 break;
             case SDL_MOUSEWHEEL:
                 handler->OnMouseWheel(event.wheel.x, event.wheel.y);
                 break;
+
+            // Touch
             case SDL_FINGERDOWN:
                 handler->OnTouchDown(event.tfinger.fingerId, event.tfinger.x, event.tfinger.y, event.tfinger.dx, event.tfinger.dy);
                 break;
@@ -433,12 +434,26 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
             case SDL_MULTIGESTURE:
                 handler->OnMultiGesture(event.mgesture.x, event.mgesture.y, event.mgesture.dTheta, event.mgesture.dDist);
                 break;
-            case SDL_USEREVENT:
-                HandleUserEvent(event.user, handler);
+
+            // Controller
+            case SDL_CONTROLLERDEVICEADDED:
+            {
+                const int id = event.cdevice.which;
+                SDL_GameController* controller = SDL_GameControllerOpen(id);
+                SDL_Joystick* joystick = SDL_GameControllerGetJoystick(controller);
+                g_controller_states[id].id = SDL_JoystickInstanceID(joystick);
+                handler->OnControllerAdded(id);
                 break;
-            case SDL_WINDOWEVENT:
-                HandleWindowEvent(event.window, handler);
+            }
+            case SDL_CONTROLLERDEVICEREMOVED:
+            {
+                const int id = event.cdevice.which;
+                handler->OnControllerRemoved(id);
+                SDL_GameControllerClose(SDL_GameControllerFromInstanceID(id));
                 break;
+            }
+
+            // App
             case SDL_APP_TERMINATING:
                 handler->OnAppTerminating();
                 break;
@@ -454,11 +469,24 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
             case SDL_APP_DIDENTERFOREGROUND:
                 handler->OnEnterForeground();
                 break;
+
+            // System
+            case SDL_TEXTINPUT:
+                handler->OnTextInput(event.text.text);
+                break;
+            case SDL_USEREVENT:
+                HandleUserEvent(event.user, handler);
+                break;
+            case SDL_WINDOWEVENT:
+                HandleWindowEvent(event.window, handler);
+                break;
             case SDL_QUIT:
                 handler->OnQuit();
                 break;
         }
     }
+
+    ProcessControllerState();
 }
 
 int System::KeycodeToNative(Keycode key)
@@ -534,77 +562,16 @@ int System::KeycodeToNative(Keycode key)
     return SDLK_q;
 }
 
-Controller::State Controller::states[Controller::num_states];
-
-void Controller::Initialize()
-{
-    SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
-
-    for(int index = 0; index < SDL_NumJoysticks(); ++index)
-    {
-        const bool is_controller = SDL_IsGameController(index);
-        if(is_controller)
-        {
-            State* state_ptr = nullptr;
-
-            for(int index = 0; index < num_states; ++index)
-            {
-                State& state = states[index];
-                if(state.id == -1)
-                {
-                    state_ptr = &state;
-                    break;
-                }
-            }
-
-            if(!state_ptr)
-                break;
-
-            state_ptr->id = index;
-            state_ptr->name = SDL_GameControllerNameForIndex(index);
-            
-            SDL_GameController* handle = SDL_GameControllerOpen(index);
-            //assert(handle);
-        }
-    }
-
-    if(states[0].id != -1)
-    {
-        std::printf("Controllers\n");
-
-        for(int index = 0; index < num_states; ++index)
-        {
-            const State& state = states[index];
-            if(state.id != -1)
-                std::printf("\t%s\n", state.name);
-        }
-    }
-}
-
-void Controller::Shutdown()
-{
-    for(int index = 0; index < num_states; ++index)
-    {
-        State& state = states[index];
-        if(state.id != -1)
-        {
-            SDL_GameControllerClose(SDL_GameControllerFromInstanceID(state.id));
-            state.id = -1;
-        }
-    }
-
-    SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
-}
-
-void Controller::ProcessControllerState()
+void System::ProcessControllerState()
 {
     SDL_GameControllerUpdate();
     
+    constexpr float dead_zone = 0.08f;
     const float max_value = float(std::numeric_limits<Sint16>::max());
 
     for(int index = 0; index < num_states; ++index)
     {
-        State& state = states[index];
+        ControllerState& state = g_controller_states[index];
         if(state.id == -1)
             continue;
 
@@ -616,7 +583,7 @@ void Controller::ProcessControllerState()
         state.y = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_Y);
 
         state.left_shoulder  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
-        state.right_shoulder = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+        state.right_shoulder = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);        
         
         state.left_stick  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_LEFTSTICK);
         state.right_stick = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
@@ -637,5 +604,28 @@ void Controller::ProcessControllerState()
 
         state.left_trigger  = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_TRIGGERLEFT)) /  max_value;
         state.right_trigger = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_TRIGGERRIGHT)) / max_value;        
+
+        if(std::fabs(state.left_shoulder) < dead_zone)
+            state.left_shoulder = 0.0f;
+
+        if(std::fabs(state.right_shoulder) < dead_zone)
+            state.right_shoulder = 0.0f;
+
+        if(std::fabs(state.left_x) < dead_zone)
+            state.left_x = 0.0f;
+
+        if(std::fabs(state.left_y) < dead_zone)
+            state.left_y = 0.0f;
+
+        if(std::fabs(state.right_x) < dead_zone)
+            state.right_x = 0.0f;
+
+        if(std::fabs(state.right_y) < dead_zone)
+            state.right_y = 0.0f;
     }
+}
+
+const System::ControllerState& System::GetController(int id)
+{
+    return g_controller_states[id];
 }
