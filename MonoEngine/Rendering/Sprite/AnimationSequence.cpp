@@ -50,6 +50,9 @@ void AnimationSequence::Update(unsigned int delta)
 
 int AnimationSequence::Frame() const
 {
+    if(m_done)
+        return m_frames.back().frame;
+
     return m_frames.at(m_currentFrame).frame;
 }
 
