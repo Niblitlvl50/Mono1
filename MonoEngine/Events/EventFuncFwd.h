@@ -20,4 +20,6 @@ namespace event
     using MouseWheelEventFunc = std::function<bool (const MouseWheelEvent&)>;
     using MultiGestureEventFunc = std::function<bool (const MultiGestureEvent&)>;
     using TimeScaleEventFunc = std::function<bool (const TimeScaleEvent&)>;
+    using ControllerAddedFunc = std::function<bool (const ControllerAddedEvent&)>;
+    using ControllerRemovedFunc = std::function<bool (const ControllerRemovedEvent&)>;
 }

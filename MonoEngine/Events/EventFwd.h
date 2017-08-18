@@ -17,5 +17,7 @@ namespace event
     struct MouseWheelEvent;
     struct MultiGestureEvent;
     struct TimeScaleEvent;
+    struct ControllerAddedEvent;
+    struct ControllerRemovedEvent;
 }
 

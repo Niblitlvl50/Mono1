@@ -108,16 +108,12 @@ void InputHandler::OnControllerAdded(int controller_id)
 {
     const event::ControllerAddedEvent event(controller_id);
     mEventHandler.DispatchEvent(event);
-
-    std::printf("Controller added, id: %d\n", controller_id);
 }
 
 void InputHandler::OnControllerRemoved(int controller_id)
 {
     const event::ControllerRemovedEvent event(controller_id);
     mEventHandler.DispatchEvent(event);
-
-    std::printf("Controller removed, id: %d\n", controller_id);
 }
 
 void InputHandler::OnAppTerminating()

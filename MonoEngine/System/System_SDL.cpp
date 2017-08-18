@@ -439,17 +439,30 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
             case SDL_CONTROLLERDEVICEADDED:
             {
                 const int id = event.cdevice.which;
+                
                 SDL_GameController* controller = SDL_GameControllerOpen(id);
                 SDL_Joystick* joystick = SDL_GameControllerGetJoystick(controller);
+
                 g_controller_states[id].id = SDL_JoystickInstanceID(joystick);
+                g_controller_states[id].name = SDL_GameControllerName(controller);
+
+                std::printf("Controller added: %d, %s\n", id, g_controller_states[id].name);
+
                 handler->OnControllerAdded(id);
                 break;
             }
             case SDL_CONTROLLERDEVICEREMOVED:
             {
                 const int id = event.cdevice.which;
+
                 handler->OnControllerRemoved(id);
                 SDL_GameControllerClose(SDL_GameControllerFromInstanceID(id));
+
+                g_controller_states[id].id = -1;
+                g_controller_states[id].name = nullptr;
+
+                std::printf("Controller removed: %d\n", id);
+
                 break;
             }
 
