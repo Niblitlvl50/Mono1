@@ -24,16 +24,16 @@
 
 namespace
 {
-    bool LoadSpriteData(mono::Sprite& sprite, const char* sprite_file)
+    bool LoadSpriteData(mono::Sprite& sprite, const char* sprite_raw_data)
     {
-        File::FilePtr file = File::OpenAsciiFile(sprite_file);
-        if(!file)
-            return false;
+//        File::FilePtr file = File::OpenAsciiFile(sprite_file);
+//        if(!file)
+//            return false;
+//
+//        std::vector<byte> file_data;
+//        File::FileRead(file, file_data);
 
-        std::vector<byte> file_data;
-        File::FileRead(file, file_data);
-
-        const nlohmann::json& json = nlohmann::json::parse(file_data);
+        const nlohmann::json& json = nlohmann::json::parse(sprite_raw_data);
         
         const std::string& texture_file = json["texture"];
         mono::ITexturePtr texture = mono::CreateTexture(texture_file.c_str());
@@ -70,15 +70,42 @@ namespace
 
 mono::ISpritePtr mono::CreateSprite(const char* sprite_file)
 {
+    File::FilePtr file = File::OpenAsciiFile(sprite_file);
+    if(!file)
+        return nullptr;
+
+    std::vector<byte> file_data;
+    File::FileRead(file, file_data);
+
+    file_data.push_back('\0');
+
     std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>();
-    const bool result = LoadSpriteData(*sprite.get(), sprite_file);
+    const bool result = LoadSpriteData(*sprite.get(), (const char*)file_data.data());
     if(result)
         return sprite;
 
     return nullptr;
 }
 
+mono::ISpritePtr mono::CreateSpriteFromRaw(const char* sprite_raw)
+{
+    std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>();
+    const bool result = LoadSpriteData(*sprite.get(), sprite_raw);
+    if(result)
+        return sprite;
+
+    return nullptr;    
+}
+
 bool mono::CreateSprite(mono::Sprite& sprite, const char* sprite_file)
 {
-    return LoadSpriteData(sprite, sprite_file);
+    File::FilePtr file = File::OpenAsciiFile(sprite_file);
+    if(!file)
+        return false;
+
+    std::vector<byte> file_data;
+    File::FileRead(file, file_data);
+    file_data.push_back('\0');
+    
+    return LoadSpriteData(sprite, (const char*)file_data.data());
 }

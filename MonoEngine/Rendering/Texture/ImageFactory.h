@@ -10,6 +10,8 @@ namespace System
     //! \return A smart image pointer
     IImagePtr LoadImage(const char* source);
 
+    IImagePtr LoadImageFromData(const unsigned char* data, int data_length);
+
     //! Create an image from memory
     //!
     //! \param data The image data

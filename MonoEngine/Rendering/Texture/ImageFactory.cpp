@@ -46,14 +46,29 @@ System::IImagePtr System::LoadImage(const char* source)
     int width;
     int height;
     int components;
-    const unsigned char* data = stbi_load(source, &width, &height, &components, 0);
-    if(!data)
+    const unsigned char* image_data = stbi_load(source, &width, &height, &components, 0);
+    if(!image_data)
     {
         std::printf("Unable to load '%s'\n", source);
         throw std::runtime_error("Unable to load image!");
     }
 
-    return std::make_shared<Bitmap>(data, width, height, components);
+    return std::make_shared<Bitmap>(image_data, width, height, components);
+}
+
+System::IImagePtr System::LoadImageFromData(const unsigned char* data, int data_length)
+{
+    int width;
+    int height;
+    int components;
+    const unsigned char* image_data = stbi_load_from_memory(data, data_length, &width, &height, &components, 0);
+    if(!image_data)
+    {
+        std::printf("Unable to load from data chunk\n");
+        throw std::runtime_error("Unable to load image!");
+    }
+
+    return std::make_shared<Bitmap>(image_data, width, height, components);
 }
 
 System::IImagePtr System::CreateImage(const byte* data, int width, int height, int colorComponents)

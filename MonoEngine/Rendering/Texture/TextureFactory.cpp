@@ -41,6 +41,12 @@ mono::ITexturePtr mono::CreateTexture(const char* source)
     return texture;
 }
 
+mono::ITexturePtr mono::CreateTextureFromData(const unsigned char* data, int data_length)
+{
+    const System::IImagePtr image = System::LoadImageFromData(data, data_length);
+    return std::make_shared<Texture>(image);    
+}
+
 mono::ITexturePtr mono::CreateTexture(const unsigned char* data, int width, int height, int colorComponents)
 {
     const System::IImagePtr image = System::CreateImage(data, width, height, colorComponents);
