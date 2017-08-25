@@ -43,10 +43,10 @@ void mono::LoadFont(int font_id, const char* font, float size, float scale)
     std::vector<byte> fontbuffer;
     File::FileRead(fontfile, fontbuffer);
     
-    LoadFont(font_id, fontbuffer.data(), size, scale);
+    LoadFontRaw(font_id, fontbuffer.data(), fontbuffer.size(), size, scale);
 }
 
-void mono::LoadFont(int font_id, const unsigned char* data_bytes, int data_size, float size, float scale)
+void mono::LoadFontRaw(int font_id, const unsigned char* data_bytes, int data_size, float size, float scale)
 {
     constexpr int width = 512;
     constexpr int height = 512;
