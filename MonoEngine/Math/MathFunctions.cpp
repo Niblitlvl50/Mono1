@@ -48,6 +48,11 @@ float math::AngleBetweenPoints(const math::Vector& first, const math::Vector& se
     return std::atan2(second.y - first.y, second.x - first.x);
 }
 
+math::Vector math::VectorFromAngle(float radians)
+{
+    return math::Vector(-std::sin(radians), std::cos(radians));
+}
+
 math::Vector math::CentroidOfPolygon(const std::vector<math::Vector>& points)
 {
     math::Vector centroid;
