@@ -438,30 +438,63 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
             // Controller
             case SDL_CONTROLLERDEVICEADDED:
             {
+                int free_index = -1;
+
+                for(int index = 0; index < num_states; ++index)
+                {
+                    if(g_controller_states[index].id == -1)
+                    {
+                        free_index = index;        
+                        break;
+                    }
+                }
+
+                if(free_index == -1)
+                {
+                    std::printf("Unable to find free controller index\n");
+                    return;
+                }
+
                 const int id = event.cdevice.which;
                 
                 SDL_GameController* controller = SDL_GameControllerOpen(id);
                 SDL_Joystick* joystick = SDL_GameControllerGetJoystick(controller);
 
-                g_controller_states[id].id = SDL_JoystickInstanceID(joystick);
-                g_controller_states[id].name = SDL_GameControllerName(controller);
+                g_controller_states[free_index].id = SDL_JoystickInstanceID(joystick);
+                g_controller_states[free_index].name = SDL_GameControllerName(controller);
 
-                std::printf("Controller added: %d, %s\n", id, g_controller_states[id].name);
+                std::printf("Controller added: %d, %d, %s\n", free_index, g_controller_states[id].id, g_controller_states[id].name);
 
-                handler->OnControllerAdded(id);
+                handler->OnControllerAdded(free_index);
                 break;
             }
             case SDL_CONTROLLERDEVICEREMOVED:
             {
-                const int id = event.cdevice.which;
+                const int instance_id = event.cdevice.which;
+                int id = -1;
+
+                for(int index = 0; index < num_states; ++index)
+                {
+                    if(g_controller_states[index].id == instance_id)
+                    {
+                        id = index;
+                        break;
+                    }
+                }
+
+                if(id == -1)
+                {
+                    std::printf("Unable to find controller with instance_id: %d\n", instance_id);                    
+                    return;
+                }
 
                 handler->OnControllerRemoved(id);
-                SDL_GameControllerClose(SDL_GameControllerFromInstanceID(id));
+                SDL_GameControllerClose(SDL_GameControllerFromInstanceID(instance_id));
 
                 g_controller_states[id].id = -1;
                 g_controller_states[id].name = nullptr;
 
-                std::printf("Controller removed: %d\n", id);
+                std::printf("Controller removed: %d, %d\n", id, instance_id);
 
                 break;
             }
