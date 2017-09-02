@@ -10,7 +10,7 @@ struct ImageCoords
     ImVec2 uv2;
 };
 
-ImageCoords QuadToImageCoords(const math::Quad& input)
+inline ImageCoords QuadToImageCoords(const math::Quad& input)
 {
     ImageCoords coords;
     coords.uv1 = ImVec2(input.mA.x, input.mB.y);
