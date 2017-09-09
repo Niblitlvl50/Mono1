@@ -19,6 +19,7 @@ namespace mono
         virtual const math::Vector& Scale() const = 0;
 
         virtual void SetPosition(const math::Vector& position) = 0;
+        virtual void SetBasePoint(const math::Vector& base_point) = 0;
         virtual void SetScale(const math::Vector& scale) = 0;
 
         // Rotation in radians

@@ -48,6 +48,9 @@ void PhysicsEntityBase::SetRotation(float rotation)
     m_physics.body->SetAngle(rotation);
 }
 
+void PhysicsEntityBase::SetBasePoint(const math::Vector& base_point)
+{ }
+
 void PhysicsEntityBase::SetScale(const math::Vector& scale)
 {
     m_scale = scale;

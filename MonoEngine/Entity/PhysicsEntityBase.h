@@ -18,6 +18,7 @@ namespace mono
         virtual const math::Vector& Scale() const;
         virtual void SetPosition(const math::Vector& position);
         virtual void SetRotation(float rotation);
+        virtual void SetBasePoint(const math::Vector& base_point);
         virtual void SetScale(const math::Vector& scale);
         virtual math::Quad BoundingBox() const;
         virtual math::Matrix Transformation() const;
