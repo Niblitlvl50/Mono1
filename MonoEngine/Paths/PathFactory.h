@@ -12,5 +12,5 @@ namespace mono
     std::shared_ptr<mono::IPath> CreatePath(const char* path_file);
     std::shared_ptr<mono::IPath> CreatePath(const math::Vector& position, const std::vector<math::Vector>& coords);
 
-    bool SavePath(const char* path_file, const math::Vector& position, const std::vector<math::Vector>& points);
+    bool SavePath(const char* path_file, const math::Vector& position, const std::vector<math::Vector>& local_points);
 }

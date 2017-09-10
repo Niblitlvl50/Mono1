@@ -107,11 +107,11 @@ std::shared_ptr<mono::IPath> mono::CreatePath(const math::Vector& position, cons
     return std::make_shared<DefaultPath>(position, coords);
 }
 
-bool mono::SavePath(const char* path_file, const math::Vector& position, const std::vector<math::Vector>& points)
+bool mono::SavePath(const char* path_file, const math::Vector& position, const std::vector<math::Vector>& local_points)
 {
     std::vector<float> float_points;
-    float_points.resize(points.size() * 2);
-    std::memcpy(float_points.data(), points.data(), sizeof(math::Vector) * points.size());
+    float_points.resize(local_points.size() * 2);
+    std::memcpy(float_points.data(), local_points.data(), sizeof(math::Vector) * local_points.size());
 
     nlohmann::json json;
     json["x"] = position.x;

@@ -31,7 +31,9 @@ namespace math
     void RotateZ(Matrix& matrix, float radians, const Vector& offset);
     void ScaleXY(Matrix& matrix, const Vector& scale);
     void Transpose(Matrix& matrix);
+
     void Inverse(Matrix& matrix);
+    math::Matrix Inverse(const Matrix& matrix);
 
     void Transform(const Matrix& matrix, math::Vector& vector);
     void Transform(const Matrix& matrix, math::Quad& quad);

@@ -4,7 +4,7 @@
 
 TEST(Sound, LoadWaveAndExpectSuccess)
 {
-    const mono::SoundFile& file = mono::AudioFactory::LoadFile("a.wav");
+    const mono::SoundFile& file = mono::AudioFactory::LoadFile("UnitTests/TestFiles/a.wav");
 
     EXPECT_EQ(file.format, mono::SoundFormat::MONO_8BIT);
     EXPECT_EQ(file.frequency, 11025);

@@ -109,5 +109,24 @@ TEST(MatrixTest, VerifyRotationFunction)
     EXPECT_EQ(1, matrix.data[15]);
 }
 
+TEST(MatrixTest, VerifyInverse)
+{
+    math::Matrix translation_matrix;
+    math::Translate(translation_matrix, math::Vector(10, 7));
 
+    math::Matrix rotation_matrix;
+    math::RotateZ(rotation_matrix, math::PI());
 
+    const math::Matrix& matrix = translation_matrix * rotation_matrix;
+    const math::Matrix& inverse = math::Inverse(matrix);
+
+    constexpr math::Vector point1(0, 0);
+    const math::Vector& transformed1 = math::Transform(matrix, point1);
+    const math::Vector& transformed_inverse1 = math::Transform(inverse, transformed1);
+
+    EXPECT_FLOAT_EQ(transformed1.x, 10.0f);
+    EXPECT_FLOAT_EQ(transformed1.y, 7.0f);
+
+    EXPECT_FLOAT_EQ(transformed_inverse1.x, 0.0f);
+    EXPECT_FLOAT_EQ(transformed_inverse1.y, 0.0f);
+}
