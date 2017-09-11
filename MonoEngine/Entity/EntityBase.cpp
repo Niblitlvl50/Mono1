@@ -80,15 +80,15 @@ void EntityBase::SetRotation(float rotation)
 
 math::Quad EntityBase::BoundingBox() const
 {
-    const math::Vector& halfScale = m_scale / 2.0f;
-    math::Quad thisbb(m_position - halfScale, m_position + halfScale);
-
-    for(const auto& child : m_children)
+    const math::Vector& half_scale = m_scale / 2.0f;
+    math::Quad thisbb = math::Quad(m_position - half_scale, m_position + half_scale);
+    
+    if(!m_children.empty())
     {
-        math::Quad childbb = (child->BoundingBox() * m_scale);
-        childbb.mA += m_position;
-        childbb.mB += m_position;
-        thisbb |= childbb;
+        const math::Matrix& transform = Transformation();
+    
+        for(const auto& child : m_children)
+            thisbb |= math::Transform(transform, child->BoundingBox());
     }
             
     return thisbb;
@@ -111,13 +111,7 @@ math::Matrix EntityBase::Transformation() const
     math::Matrix scale;
     math::ScaleXY(scale, m_scale);
 
-    math::Matrix matrix;
-    matrix *= translation;
-    matrix *= rotation;
-    matrix *= translateRotation;
-    matrix *= scale;
-
-    return matrix;
+    return translation * rotation * translateRotation * scale;
 }
 
 unsigned int EntityBase::Id() const

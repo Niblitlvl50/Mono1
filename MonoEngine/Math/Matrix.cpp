@@ -41,6 +41,7 @@ void math::Position(Matrix& matrix, const Vector& position)
     //matrix.data[14] += 0.0f;
 }
 
+/*
 void math::RotateZ(Matrix& matrix, float radians)
 {
     const float sine = std::sin(radians);
@@ -67,6 +68,20 @@ void math::RotateZ(Matrix& matrix, float radians)
 
     matrix.data[12] = m12 * cosine + m13 * -sine;
     matrix.data[13] = m12 * sine   + m13 * cosine;
+}
+*/
+
+void math::RotateZ(Matrix& matrix, float radians)
+{
+    math::Identity(matrix);
+
+    const float sine = std::sin(radians);
+    const float cosine = std::cos(radians);
+
+    matrix.data[0] = cosine;
+    matrix.data[1] = sine;
+    matrix.data[4] = -sine;
+    matrix.data[5] = cosine;
 }
 
 void math::RotateZ(math::Matrix& matrix, float radians, const math::Vector& offset)
@@ -106,14 +121,14 @@ void math::ScaleXY(Matrix& matrix, const Vector& scale)
     // |  3  7 11 15 |
 
     matrix.data[0] *= scale.x;
-    matrix.data[4] *= scale.x;
-    matrix.data[8] *= scale.x;
-    matrix.data[12] *= scale.x;
+    matrix.data[1] *= scale.x;
+    matrix.data[2] *= scale.x;
+    matrix.data[3] *= scale.x;
 
-    matrix.data[1] *= scale.y;
+    matrix.data[4] *= scale.y;
     matrix.data[5] *= scale.y;
-    matrix.data[9] *= scale.y;
-    matrix.data[13] *= scale.y;
+    matrix.data[4] *= scale.y;
+    matrix.data[7] *= scale.y;
 
     //matrix.data[2] *= scale.mZ;
     //matrix.data[6] *= scale.mZ;
@@ -289,8 +304,11 @@ math::Matrix math::Inverse(const math::Matrix& matrix)
 
 void math::Transform(const Matrix& matrix, math::Vector& vector)
 {
-    vector.x = matrix.data[0] * vector.x + matrix.data[1] * -vector.y + matrix.data[12];
-    vector.y = matrix.data[4] * -vector.x + matrix.data[5] * vector.y + matrix.data[13];
+    const float x = vector.x;
+    const float y = vector.y;
+
+    vector.x = matrix.data[0] * x + matrix.data[4] * y + matrix.data[12];
+    vector.y = matrix.data[1] * x + matrix.data[5] * y + matrix.data[13];
 }
 
 void math::Transform(const Matrix& matrix, math::Quad& quad)
