@@ -46,6 +46,12 @@ namespace System
         float right_trigger = 0.0f;
     };
 
+    enum class CursorVisibility
+    {
+        HIDDEN,
+        SHOWN
+    };
+
     class IWindow
     {
     public:
@@ -125,6 +131,8 @@ namespace System
     // Creates a opengl window
     // The caller is responsible for deleting the pointer
     IWindow* CreateWindow(const char* title, int width, int height, bool fullscreen);
+
+    void SetCursorVisibility(CursorVisibility state);
 
     // Process the system events, input and other events
     void ProcessSystemEvents(IInputHandler* handler);

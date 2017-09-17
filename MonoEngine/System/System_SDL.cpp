@@ -372,6 +372,12 @@ System::IWindow* System::CreateWindow(const char* title, int width, int height, 
     return new SDLWindow(title, width, height, fullscreen);
 }
 
+void System::SetCursorVisibility(System::CursorVisibility state)
+{
+    const int sdl_state = (state == CursorVisibility::SHOWN) ? SDL_ENABLE : SDL_DISABLE;
+    SDL_ShowCursor(sdl_state);
+}
+
 void System::ProcessSystemEvents(System::IInputHandler* handler)
 {
     // Our SDL event placeholder.
