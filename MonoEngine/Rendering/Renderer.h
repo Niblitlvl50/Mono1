@@ -12,11 +12,12 @@ namespace mono
     public:
 
         Renderer(ICameraPtr camera);
+        ~Renderer();
 
         virtual void DrawFrame();
         virtual void AddDrawable(const IDrawablePtr& drawable);
 
-        virtual void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color);
+        virtual void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const;
         virtual void DrawSprite(const ISprite& sprite) const;
         virtual void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const;
         virtual void DrawLines(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const;
@@ -43,8 +44,10 @@ namespace mono
                                         const ITexturePtr& texture,
                                         size_t count);
 
+        virtual void DrawPolyline(
+            const IRenderBuffer* vertices, const IRenderBuffer* colors, size_t offset, size_t count);                             
 
-        virtual void UseShader(const IShaderPtr& shader) const;
+        virtual void UseShader(IShader* shader) const;
         virtual void UseTexture(const ITexturePtr& texture) const;
         virtual void ClearTexture();
 
@@ -74,10 +77,10 @@ namespace mono
         mutable unsigned int m_currentShaderId = -1;
         mutable unsigned int m_currentTextureId = -1;
 
-        std::shared_ptr<IColorShader> mColorShader;
-        std::shared_ptr<ITextureShader> mTextureShader;
-        std::shared_ptr<IMorphingShader> m_morphShader;
-        std::shared_ptr<IPointSpriteShader> m_pointSpriteShader;
+        std::unique_ptr<IColorShader> m_color_shader;
+        std::unique_ptr<ITextureShader> m_texture_shader;
+        std::unique_ptr<IMorphingShader> m_morph_shader;
+        std::unique_ptr<IPointSpriteShader> m_point_sprite_shader;
 
         std::vector<IDrawablePtr> mDrawables;
     };

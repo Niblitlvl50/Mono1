@@ -21,7 +21,7 @@
 void mono::DrawQuad(const math::Quad& quad,
                     const mono::Color::RGBA& color,
                     float width,
-                    const std::shared_ptr<IColorShader>& shader)
+                    IColorShader* shader)
 {
     const std::vector<math::Vector> vertices = { math::Vector(quad.mA.x, quad.mA.y),
                                                    math::Vector(quad.mB.x, quad.mA.y),
@@ -37,7 +37,7 @@ void mono::DrawCircle(const math::Vector& position,
                       unsigned int segments,
                       float lineWidth,
                       const mono::Color::RGBA& color,
-                      const std::shared_ptr<IColorShader>& shader)
+                      IColorShader* shader)
 {
     std::vector<math::Vector> vertices;
     vertices.reserve(segments +1);
@@ -61,7 +61,7 @@ void mono::DrawCircle(const math::Vector& position,
     DrawLine(vertices, color, lineWidth, shader);
 }
 
-void mono::DrawSprite(const mono::ISprite& sprite, const std::shared_ptr<ITextureShader>& shader)
+void mono::DrawSprite(const mono::ISprite& sprite, ITextureShader* shader)
 {
     // The sprite can return zeroQuad as texture coordinates when the animation is finished
     const math::Quad& quad = sprite.GetTextureCoords();
@@ -94,7 +94,7 @@ void mono::DrawSprite(const mono::ISprite& sprite, const std::shared_ptr<ITextur
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawText(const TextDefinition& text, const std::shared_ptr<ITextureShader>& shader)
+void mono::DrawText(const TextDefinition& text, ITextureShader* shader)
 {
     shader->SetAlphaTexture(true);
 
@@ -119,7 +119,7 @@ void mono::DrawText(const TextDefinition& text, const std::shared_ptr<ITextureSh
 void mono::DrawLine(const std::vector<math::Vector>& vertices,
                     const mono::Color::RGBA& color,
                     float width,
-                    const std::shared_ptr<IColorShader>& shader)
+                    IColorShader* shader)
 {
     std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
@@ -141,7 +141,7 @@ void mono::DrawLine(const std::vector<math::Vector>& vertices,
 void mono::DrawClosedLine(const std::vector<math::Vector>& vertices,
                           const mono::Color::RGBA& color,
                           float width,
-                          const std::shared_ptr<IColorShader>& shader)
+                          IColorShader* shader)
 {
     std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
@@ -163,7 +163,7 @@ void mono::DrawClosedLine(const std::vector<math::Vector>& vertices,
 void mono::DrawLines(const std::vector<math::Vector>& vertices,
                      const mono::Color::RGBA& color,
                      float width,
-                     const std::shared_ptr<IColorShader>& shader)
+                     IColorShader* shader)
 {
     std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
@@ -185,7 +185,7 @@ void mono::DrawLines(const std::vector<math::Vector>& vertices,
 void mono::DrawPoints(const std::vector<math::Vector>& vertices,
                       const mono::Color::RGBA& color,
                       float size,
-                      const std::shared_ptr<IColorShader>& shader)
+                      IColorShader* shader)
 {
     std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
@@ -207,7 +207,7 @@ void mono::DrawPoints(const std::vector<math::Vector>& vertices,
 void mono::DrawShape(const std::vector<math::Vector>& shape1,
                      const std::vector<math::Vector>& shape2,
                      const mono::Color::RGBA& color,
-                     const std::shared_ptr<IMorphingShader>& shader)
+                     IMorphingShader* shader)
 {
     if(shape1.size() != shape2.size())
         return;
@@ -233,7 +233,7 @@ void mono::DrawShape(const std::vector<math::Vector>& shape1,
 void mono::DrawTexturedGeometry(const std::vector<math::Vector>& vertices,
                                 const std::vector<math::Vector>& texture_coordinates,
                                 const std::vector<unsigned short>& indices,
-                                const std::shared_ptr<ITextureShader>& shader)
+                                ITextureShader* shader)
 {
     shader->SetShade(mono::Color::RGBA());
     shader->SetAlphaTexture(false);
@@ -254,7 +254,7 @@ void mono::DrawTexturedGeometry(const mono::IRenderBuffer* vertices,
                                 const mono::IRenderBuffer* texture_coordinates,
                                 size_t offset,
                                 size_t count,
-                                const std::shared_ptr<ITextureShader>& shader)
+                                ITextureShader* shader)
 {
     shader->SetShade(mono::Color::RGBA());
     shader->SetAlphaTexture(false);
@@ -279,7 +279,7 @@ void mono::DrawTexturedGeometry(const mono::IRenderBuffer* vertices,
 void mono::DrawParticlePoints(const IRenderBuffer* position,
                               const IRenderBuffer* color,
                               size_t count,
-                              const std::shared_ptr<IPointSpriteShader>& shader)
+                              IPointSpriteShader* shader)
 {
     glEnable(GL_POINT_SPRITE);
     glDepthMask(GL_FALSE);
@@ -301,6 +301,34 @@ void mono::DrawParticlePoints(const IRenderBuffer* position,
 
     glDisable(GL_POINT_SPRITE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    ClearRenderBuffer();
+}
+
+
+void mono::DrawPolyline(
+    const mono::IRenderBuffer* vertices,
+    const mono::IRenderBuffer* colors,
+    size_t offset,
+    size_t count,
+    float width,
+    IColorShader* shader)
+{
+    glLineWidth(width);
+    
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    vertices->Use();
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    colors->Use();
+    glVertexAttribPointer(shader->GetColorAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    glDrawArrays(GL_LINE_LOOP, offset, count);
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
 
     ClearRenderBuffer();
 }

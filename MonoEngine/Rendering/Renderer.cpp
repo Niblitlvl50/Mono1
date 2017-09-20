@@ -26,11 +26,14 @@ using namespace mono;
 Renderer::Renderer(ICameraPtr camera)
     : mCamera(camera)
 {
-    mColorShader = GetShaderFactory()->CreateColorShader();
-    mTextureShader = GetShaderFactory()->CreateTextureShader();
-    m_morphShader = GetShaderFactory()->CreateMorphingShader();
-    m_pointSpriteShader = GetShaderFactory()->CreatePointSpriteShader();
+    m_color_shader = GetShaderFactory()->CreateColorShader();
+    m_texture_shader = GetShaderFactory()->CreateTextureShader();
+    m_morph_shader = GetShaderFactory()->CreateMorphingShader();
+    m_point_sprite_shader = GetShaderFactory()->CreatePointSpriteShader();
 }
+
+Renderer::~Renderer()
+{ }
 
 void Renderer::PrepareDraw()
 {
@@ -83,7 +86,7 @@ void Renderer::AddDrawable(const IDrawablePtr& drawable)
     mDrawables.push_back(drawable);
 }
 
-void Renderer::DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color)
+void Renderer::DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const
 {
     const mono::ITexturePtr& texture = mono::GetFontTexture(font_id);
     if(!texture)
@@ -93,68 +96,68 @@ void Renderer::DrawText(int font_id, const char* text, const math::Vector& pos, 
     def.color = color;
 
     UseTexture(texture);
-    UseShader(mTextureShader);
+    UseShader(m_texture_shader.get());
 
-    ::DrawText(def, mTextureShader);
+    ::DrawText(def, m_texture_shader.get());
 }
 
 void Renderer::DrawSprite(const ISprite& sprite) const
 {
     UseTexture(sprite.GetTexture());
-    UseShader(mTextureShader);
-    ::DrawSprite(sprite, mTextureShader);
+    UseShader(m_texture_shader.get());
+    ::DrawSprite(sprite, m_texture_shader.get());
 }
 
 void Renderer::DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const
 {
-    UseShader(mColorShader);
-    ::DrawPoints(points, color, size, mColorShader);
+    UseShader(m_color_shader.get());
+    ::DrawPoints(points, color, size, m_color_shader.get());
 }
 
 void Renderer::DrawLines(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const
 {
-    UseShader(mColorShader);
-    ::DrawLines(linePoints, color, width, mColorShader);
+    UseShader(m_color_shader.get());
+    ::DrawLines(linePoints, color, width, m_color_shader.get());
 }
 
 void Renderer::DrawPolyline(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const
 {
-    UseShader(mColorShader);
-    ::DrawLine(linePoints, color, width, mColorShader);
+    UseShader(m_color_shader.get());
+    ::DrawLine(linePoints, color, width, m_color_shader.get());
 }
 
 void Renderer::DrawClosedPolyline(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const
 {
-    UseShader(mColorShader);
-    ::DrawClosedLine(linePoints, color, width, mColorShader);
+    UseShader(m_color_shader.get());
+    ::DrawClosedLine(linePoints, color, width, m_color_shader.get());
 }
 
 void Renderer::DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const
 {
-    UseShader(mColorShader);
-    ::DrawQuad(quad, color, width, mColorShader);
+    UseShader(m_color_shader.get());
+    ::DrawQuad(quad, color, width, m_color_shader.get());
 }
 
 void Renderer::DrawCircle(const math::Vector& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const
 {
-    UseShader(mColorShader);
-    ::DrawCircle(pos, radie, segments, lineWidth, color, mColorShader);
+    UseShader(m_color_shader.get());
+    ::DrawCircle(pos, radie, segments, lineWidth, color, m_color_shader.get());
 }
 
 void Renderer::DrawShape(const std::vector<math::Vector>& shape1, const std::vector<math::Vector>& shape2, float morphGrade, const mono::Color::RGBA& color)
 {
-    UseShader(m_morphShader);
+    UseShader(m_morph_shader.get());
 
-    m_morphShader->SetMorphGrade(morphGrade);
-    ::DrawShape(shape1, shape2, color, m_morphShader);
+    m_morph_shader->SetMorphGrade(morphGrade);
+    ::DrawShape(shape1, shape2, color, m_morph_shader.get());
 }
 
 void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std::vector<math::Vector>& texture_coordinates, const std::vector<unsigned short>& indices, const ITexturePtr& texture)
 {
     UseTexture(texture);
-    UseShader(mTextureShader);
+    UseShader(m_texture_shader.get());
 
-    ::DrawTexturedGeometry(vertices, texture_coordinates, indices, mTextureShader);
+    ::DrawTexturedGeometry(vertices, texture_coordinates, indices, m_texture_shader.get());
 }
 
 void Renderer::DrawGeometry(const IRenderBuffer* vertices,
@@ -164,9 +167,9 @@ void Renderer::DrawGeometry(const IRenderBuffer* vertices,
                             const ITexturePtr& texture)
 {
     UseTexture(texture);
-    UseShader(mTextureShader);
+    UseShader(m_texture_shader.get());
 
-    ::DrawTexturedGeometry(vertices, texture_coordinates, offset, count, mTextureShader);
+    ::DrawTexturedGeometry(vertices, texture_coordinates, offset, count, m_texture_shader.get());
 }
 
 void Renderer::DrawParticlePoints(const IRenderBuffer* position,
@@ -176,12 +179,19 @@ void Renderer::DrawParticlePoints(const IRenderBuffer* position,
                                   size_t count)
 {
     UseTexture(texture);
-    UseShader(m_pointSpriteShader);
-    m_pointSpriteShader->SetPointSize(point_size);
-    ::DrawParticlePoints(position, color, count, m_pointSpriteShader);
+    UseShader(m_point_sprite_shader.get());
+    m_point_sprite_shader->SetPointSize(point_size);
+    ::DrawParticlePoints(position, color, count, m_point_sprite_shader.get());
 }
 
-void Renderer::UseShader(const IShaderPtr& shader) const
+void Renderer::DrawPolyline(
+    const IRenderBuffer* vertices, const IRenderBuffer* colors, size_t offset, size_t count)
+{
+    UseShader(m_color_shader.get());
+    ::DrawPolyline(vertices, colors, offset, count, 2.0f, m_color_shader.get());
+}
+
+void Renderer::UseShader(IShader* shader) const
 {
     const unsigned int id = shader->GetShaderId();
     if(id != m_currentShaderId)

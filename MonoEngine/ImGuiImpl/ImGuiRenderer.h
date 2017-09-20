@@ -34,6 +34,6 @@ private:
 
     math::Vector m_windowSize;
 
-    std::shared_ptr<ImGuiShader> m_shader;
+    std::unique_ptr<ImGuiShader> m_shader;
     std::unordered_map<unsigned int, mono::ITexturePtr> m_textures;
 };

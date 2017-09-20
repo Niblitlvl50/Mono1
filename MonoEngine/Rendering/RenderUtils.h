@@ -12,10 +12,8 @@ namespace mono
     class IRenderBuffer;
 
     //! Draws a quad
-    void DrawQuad(const math::Quad& quad,
-                  const mono::Color::RGBA& color,
-                  float width,
-                  const std::shared_ptr<IColorShader>& shader);
+    void DrawQuad(
+        const math::Quad& quad, const mono::Color::RGBA& color, float width, IColorShader* shader);
 
     //! Draws a circle
     void DrawCircle(const math::Vector& position,
@@ -23,57 +21,61 @@ namespace mono
                     unsigned int segments,
                     float lineWidth,
                     const mono::Color::RGBA& color,
-                    const std::shared_ptr<IColorShader>& shader);
+                    IColorShader* shader);
 
     //! Draws a sprite
-    void DrawSprite(const ISprite& sprite,
-                    const std::shared_ptr<ITextureShader>& shader);
+    void DrawSprite(const ISprite& sprite, ITextureShader* shader);
 
     //! Draws texts from the text definitions
-    void DrawText(const TextDefinition& text,
-                  const std::shared_ptr<ITextureShader>& shader);
+    void DrawText(const TextDefinition& text, ITextureShader* shader);
 
     //! Draws a single line
-    void DrawLine(const std::vector<math::Vector>& vertices,
-                  const mono::Color::RGBA& color,
-                  float width,
-                  const std::shared_ptr<IColorShader>& shader);
+    void DrawLine(
+        const std::vector<math::Vector>& vertices, const mono::Color::RGBA& color, float width, IColorShader* shader);
 
     void DrawClosedLine(const std::vector<math::Vector>& vertices,
                         const mono::Color::RGBA& color,
                         float width,
-                        const std::shared_ptr<IColorShader>& shader);
+                        IColorShader* shader);
 
     //! Draws lines, not connected to each other
     void DrawLines(const std::vector<math::Vector>& vertices,
                    const mono::Color::RGBA& color,
                    float width,
-                   const std::shared_ptr<IColorShader>& shader);
+                   IColorShader* shader);
 
     // Draw a collection of points
     void DrawPoints(const std::vector<math::Vector>& vertices,
                     const mono::Color::RGBA& color,
                     float size,
-                    const std::shared_ptr<IColorShader>& shader);
+                    IColorShader* shader);
 
     void DrawShape(const std::vector<math::Vector>& shape1,
                    const std::vector<math::Vector>& shape2,
                    const mono::Color::RGBA& color,
-                   const std::shared_ptr<IMorphingShader>& shader);
+                   IMorphingShader* shader);
 
     void DrawTexturedGeometry(const std::vector<math::Vector>& vertices,
                               const std::vector<math::Vector>& texture_coordinates,
                               const std::vector<unsigned short>& indices,
-                              const std::shared_ptr<ITextureShader>& shader);
+                              ITextureShader* shader);
 
     void DrawTexturedGeometry(const mono::IRenderBuffer* vertices,
                               const mono::IRenderBuffer* texture_coordinates,
                               size_t offset,
                               size_t count,
-                              const std::shared_ptr<ITextureShader>& shader);
+                              ITextureShader* shader);
 
     void DrawParticlePoints(const mono::IRenderBuffer* position,
                             const mono::IRenderBuffer* color,
                             size_t count,
-                            const std::shared_ptr<IPointSpriteShader>& shader);
+                            IPointSpriteShader* shader);
+
+    void DrawPolyline(
+        const mono::IRenderBuffer* vertices,
+        const mono::IRenderBuffer* colors,
+        size_t offset,
+        size_t count,
+        float width,
+        IColorShader* shader);
 }

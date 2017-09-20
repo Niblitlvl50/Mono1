@@ -19,7 +19,7 @@ namespace mono
 
         virtual void AddDrawable(const IDrawablePtr& drawable) = 0;
 
-        virtual void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) = 0;
+        virtual void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const = 0;
         virtual void DrawSprite(const ISprite& sprite) const = 0;
         virtual void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const = 0;
         virtual void DrawLines(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const = 0;
@@ -46,7 +46,10 @@ namespace mono
                                         const ITexturePtr& texture,
                                         size_t count) = 0;
 
-        virtual void UseShader(const IShaderPtr& shader) const = 0;
+        virtual void DrawPolyline(
+            const IRenderBuffer* vertices, const IRenderBuffer* colors, size_t offset, size_t count) = 0;
+
+        virtual void UseShader(IShader* shader) const = 0;
         virtual void UseTexture(const ITexturePtr& texture) const = 0;
         virtual void ClearTexture() = 0;
 

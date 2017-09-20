@@ -7,22 +7,22 @@
 
 using namespace mono;
 
-std::shared_ptr<mono::ITextureShader> ShaderFactory::CreateTextureShader() const
+std::unique_ptr<mono::ITextureShader> ShaderFactory::CreateTextureShader() const
 {
-    return std::make_shared<mono::TextureShader>();
+    return std::make_unique<mono::TextureShader>();
 }
 
-std::shared_ptr<mono::IColorShader> ShaderFactory::CreateColorShader() const
+std::unique_ptr<mono::IColorShader> ShaderFactory::CreateColorShader() const
 {
-    return std::make_shared<mono::ColorShader>();
+    return std::make_unique<mono::ColorShader>();
 }
 
-std::shared_ptr<mono::IMorphingShader> ShaderFactory::CreateMorphingShader() const
+std::unique_ptr<mono::IMorphingShader> ShaderFactory::CreateMorphingShader() const
 {
-    return std::make_shared<mono::MorphingShader>();
+    return std::make_unique<mono::MorphingShader>();
 }
 
-std::shared_ptr<mono::IPointSpriteShader> ShaderFactory::CreatePointSpriteShader() const
+std::unique_ptr<mono::IPointSpriteShader> ShaderFactory::CreatePointSpriteShader() const
 {
-    return std::make_shared<mono::PointSpriteShader>();
+    return std::make_unique<mono::PointSpriteShader>();
 }

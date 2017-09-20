@@ -38,7 +38,7 @@ void ImGuiRenderer::Initialize(const char* config_file)
     ImGui::GetIO().DisplaySize = ImVec2(m_windowSize.x, m_windowSize.y);
     ImGui::GetIO().IniFilename = config_file;
 
-    m_shader = std::make_shared<ImGuiShader>();
+    m_shader = std::make_unique<ImGuiShader>();
 
     int width;
     int height;
@@ -58,7 +58,7 @@ void ImGuiRenderer::doDraw(mono::IRenderer& renderer) const
     const math::Matrix& projection = math::Ortho(0.0f, m_windowSize.x, m_windowSize.y, 0.0f, -10.0f, 10.0f);
     constexpr math::Matrix model_view;
 
-    renderer.UseShader(m_shader);
+    renderer.UseShader(m_shader.get());
     m_shader->LoadProjectionMatrix(projection);
     m_shader->LoadModelViewMatrix(model_view);
 

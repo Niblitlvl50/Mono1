@@ -258,24 +258,24 @@ namespace
     class NullFactory : public mono::IShaderFactory
     {
     public:
-        virtual std::shared_ptr<mono::ITextureShader> CreateTextureShader() const
+        virtual std::unique_ptr<mono::ITextureShader> CreateTextureShader() const
         {
-            return std::make_shared<NullTextureShader>();
+            return std::make_unique<NullTextureShader>();
         }
 
-        virtual std::shared_ptr<mono::IColorShader> CreateColorShader() const
+        virtual std::unique_ptr<mono::IColorShader> CreateColorShader() const
         {
-            return std::make_shared<NullColorShader>();
+            return std::make_unique<NullColorShader>();
         }
 
-        virtual std::shared_ptr<mono::IMorphingShader> CreateMorphingShader() const
+        virtual std::unique_ptr<mono::IMorphingShader> CreateMorphingShader() const
         {
-            return std::make_shared<NullMorphShader>();
+            return std::make_unique<NullMorphShader>();
         }
 
-        virtual std::shared_ptr<mono::IPointSpriteShader> CreatePointSpriteShader() const
+        virtual std::unique_ptr<mono::IPointSpriteShader> CreatePointSpriteShader() const
         {
-            return std::make_shared<NullPointSpriteShader>();
+            return std::make_unique<NullPointSpriteShader>();
         }
     };
 }

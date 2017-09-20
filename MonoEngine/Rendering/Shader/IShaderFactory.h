@@ -13,9 +13,9 @@ namespace mono
         virtual ~IShaderFactory()
         { }
 
-        virtual std::shared_ptr<ITextureShader> CreateTextureShader() const = 0;
-        virtual std::shared_ptr<IColorShader> CreateColorShader() const = 0;
-        virtual std::shared_ptr<IMorphingShader> CreateMorphingShader() const = 0;
-        virtual std::shared_ptr<IPointSpriteShader> CreatePointSpriteShader() const = 0;
+        virtual std::unique_ptr<ITextureShader> CreateTextureShader() const = 0;
+        virtual std::unique_ptr<IColorShader> CreateColorShader() const = 0;
+        virtual std::unique_ptr<IMorphingShader> CreateMorphingShader() const = 0;
+        virtual std::unique_ptr<IPointSpriteShader> CreatePointSpriteShader() const = 0;
     };
 }
