@@ -20,7 +20,8 @@ CameraController::CameraController(int window_width, int window_height, ICamera*
       m_window_height(window_height),
       m_camera(camera),
       m_event_handler(event_handler),
-      m_enabled(true)
+      m_enabled(true),
+      m_translate(false)
 {
     using namespace std::placeholders;
     
