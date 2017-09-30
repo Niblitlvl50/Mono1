@@ -9,12 +9,15 @@
 
 namespace mono
 {
-    class CameraController
+    class MouseCameraController
     {
     public:
         
-        CameraController(int window_width, int window_height, ICamera* camera, EventHandler& event_handler);
-        ~CameraController();
+        MouseCameraController(int window_width, int window_height, ICamera* camera, EventHandler& event_handler);
+        ~MouseCameraController();
+
+        void Enable();
+        void Disable();
         
     private:
         

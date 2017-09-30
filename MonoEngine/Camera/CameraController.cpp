@@ -15,20 +15,20 @@
 
 using namespace mono;
 
-CameraController::CameraController(int window_width, int window_height, ICamera* camera, EventHandler& event_handler)
+MouseCameraController::MouseCameraController(int window_width, int window_height, ICamera* camera, EventHandler& event_handler)
     : m_window_width(window_width),
       m_window_height(window_height),
       m_camera(camera),
       m_event_handler(event_handler),
-      m_enabled(true),
+      m_enabled(false),
       m_translate(false)
 {
     using namespace std::placeholders;
     
-    const event::MouseDownEventFunc mouse_down_func = std::bind(&CameraController::OnMouseDown, this, _1);
-    const event::MouseUpEventFunc mouse_up_func = std::bind(&CameraController::OnMouseUp, this, _1);
-    const event::MouseMotionEventFunc mouse_move_func = std::bind(&CameraController::OnMouseMove, this, _1);
-    const event::MultiGestureEventFunc multi_gesture_func = std::bind(&CameraController::OnMultiGesture, this, _1);
+    const event::MouseDownEventFunc mouse_down_func = std::bind(&MouseCameraController::OnMouseDown, this, _1);
+    const event::MouseUpEventFunc mouse_up_func = std::bind(&MouseCameraController::OnMouseUp, this, _1);
+    const event::MouseMotionEventFunc mouse_move_func = std::bind(&MouseCameraController::OnMouseMove, this, _1);
+    const event::MultiGestureEventFunc multi_gesture_func = std::bind(&MouseCameraController::OnMultiGesture, this, _1);
 
     m_mouse_down_token = m_event_handler.AddListener(mouse_down_func);
     m_mouse_up_token = m_event_handler.AddListener(mouse_up_func);
@@ -36,7 +36,7 @@ CameraController::CameraController(int window_width, int window_height, ICamera*
     m_multi_gesture_token = m_event_handler.AddListener(multi_gesture_func);
 }
 
-CameraController::~CameraController()
+MouseCameraController::~MouseCameraController()
 {
     m_event_handler.RemoveListener(m_mouse_down_token);
     m_event_handler.RemoveListener(m_mouse_up_token);
@@ -44,22 +44,38 @@ CameraController::~CameraController()
     m_event_handler.RemoveListener(m_multi_gesture_token);
 }
 
-bool CameraController::OnMouseDown(const event::MouseDownEvent& event)
+void MouseCameraController::Enable()
 {
+    m_enabled = true;
+}
+
+void MouseCameraController::Disable()
+{
+    m_enabled = false;
+}
+
+bool MouseCameraController::OnMouseDown(const event::MouseDownEvent& event)
+{
+    if(!m_enabled)
+        return false;
+
     m_translate = true;
     m_translate_delta = math::Vector(event.screenX, event.screenY);
     return true;
 }
 
-bool CameraController::OnMouseUp(const event::MouseUpEvent& event)
+bool MouseCameraController::OnMouseUp(const event::MouseUpEvent& event)
 {
+    if(!m_enabled)
+        return false;
+
     m_translate = false;
     return true;
 }
 
-bool CameraController::OnMouseMove(const event::MouseMotionEvent& event)
+bool MouseCameraController::OnMouseMove(const event::MouseMotionEvent& event)
 {
-    if(!m_translate)
+    if(!m_enabled || !m_translate)
         return true;
 
     const math::Vector screen_position(event.screenX, event.screenY);
@@ -83,7 +99,7 @@ bool CameraController::OnMouseMove(const event::MouseMotionEvent& event)
     return true;
 }
 
-bool CameraController::OnMultiGesture(const event::MultiGestureEvent& event)
+bool MouseCameraController::OnMultiGesture(const event::MultiGestureEvent& event)
 {
     if(!m_enabled)
         return false;
