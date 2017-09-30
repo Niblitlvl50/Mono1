@@ -203,6 +203,13 @@ namespace
                 return Keycode::W;
             case SDLK_e:
                 return Keycode::E;
+
+            case SDLK_a:
+                return Keycode::A;
+            case SDLK_s:
+                return Keycode::S;
+            case SDLK_d:
+                return Keycode::D;
         }
 
         return Keycode::NONE;
@@ -607,6 +614,14 @@ int System::KeycodeToNative(Keycode key)
             return SDLK_w;
         case Keycode::E:
             return SDLK_e;
+
+        case Keycode::A:
+            return SDLK_a;
+        case Keycode::S:
+            return SDLK_s;
+        case Keycode::D:
+            return SDLK_d;
+
         default:
             break;
     }
