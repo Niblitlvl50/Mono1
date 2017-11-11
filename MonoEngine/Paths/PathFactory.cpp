@@ -8,77 +8,90 @@
 
 namespace
 {
-    class DefaultPath : public mono::IPath
+    struct LengthIndexPair
+    {
+        float start_length = 0.0f;
+        int point_index = 0;
+    };
+
+    class PathImpl : public mono::IPath
     {
     public:
 
-        DefaultPath(const math::Vector& position, const std::vector<math::Vector>& coords)
+        PathImpl(const math::Vector& position, const std::vector<math::Vector>& coords)
             : m_position(position),
-              m_path(coords)
+              m_points(coords),
+              m_total_length(0.0f)
         {
-            math::Vector last = coords.front();
-            
-            for(const auto& point : coords)
+            m_length_table.reserve(coords.size());
+
+            for(int index = 0; index < static_cast<int>(coords.size()); ++index)
             {
-                const math::Vector& diff = last - point;
-                m_length += math::Length(diff);
-                last = point;
+                const int previous_index = std::max(0, index -1);
+
+                const math::Vector& previous_point = coords[previous_index];
+                const math::Vector& current_point = coords[index];
+                
+                const math::Vector& diff = current_point - previous_point;
+
+                m_total_length += math::Length(diff);
+                m_length_table.push_back({m_total_length, index});
             }
         }
 
-        virtual float Length() const
+        float Length() const override
         {
-            return m_length;
+            return m_total_length;
         }
 
-        virtual const math::Vector& GetGlobalPosition() const
+        const math::Vector& GetGlobalPosition() const override
         {
             return m_position;
         }
 
-        virtual void SetGlobalPosition(const math::Vector& position)
+        void SetGlobalPosition(const math::Vector& position) override
         {
             m_position = position;
         }
 
-        virtual math::Vector GetPositionByLength(float length) const
+        const std::vector<math::Vector>& GetPathPoints() const override
         {
-            math::Vector last = m_path.front();
-            if(length == 0)
-                return last;
-            
-            float lengthCounter = 0;
-
-            for(const auto& point : m_path)
-            {
-                const math::Vector& diff = point - last;
-                const float diffLength = math::Length(diff);
-                lengthCounter += diffLength;
-                
-                if(lengthCounter >= length)
-                {
-                    const float prevLength = lengthCounter - diffLength;
-                    const float posLength = length - prevLength;
-                    const float percent = posLength / diffLength;
-                    
-                    const math::Vector& pos = last + (diff * percent);
-                    return pos;
-                }
-                
-                last = point;
-            }
-            
-            return math::Vector();
+            return m_points;
         }
 
-        virtual const std::vector<math::Vector>& GetPathPoints() const
+        math::Vector GetPositionByLength(float length) const override
         {
-            return m_path;
+            if(m_length_table.empty())
+                return math::zeroVec;
+
+            const auto find_func = [length](const LengthIndexPair& length_index) {
+                return length < length_index.start_length;
+            };
+
+            auto it = std::find_if(m_length_table.begin(), m_length_table.end(), find_func);
+            if(it == m_length_table.end())
+                return math::zeroVec;
+
+            --it;
+
+            const math::Vector& previous_point = m_points[it->point_index];
+            const math::Vector& current_point = m_points[it->point_index +1];
+
+            const math::Vector& diff = current_point - previous_point;
+            const float diff_length = math::Length(diff);
+
+            const float local_length = length - it->start_length;
+            const float percent = local_length / diff_length;
+            
+            const math::Vector& pos = previous_point + (diff * percent);
+            return pos;
         }
 
         math::Vector m_position;
-        const std::vector<math::Vector> m_path;
-        float m_length = 0.0f;
+        const std::vector<math::Vector> m_points;
+
+        float m_total_length;
+        std::vector<LengthIndexPair> m_length_table;
     };
 }
 
@@ -99,12 +112,12 @@ std::shared_ptr<mono::IPath> mono::CreatePath(const char* path_file)
     coords.resize(points.size() / 2);
     std::memcpy(coords.data(), points.data(), sizeof(float) * points.size());
     
-    return std::make_shared<DefaultPath>(position, coords);
+    return std::make_shared<PathImpl>(position, coords);
 }
 
 std::shared_ptr<mono::IPath> mono::CreatePath(const math::Vector& position, const std::vector<math::Vector>& coords)
 {
-    return std::make_shared<DefaultPath>(position, coords);
+    return std::make_shared<PathImpl>(position, coords);
 }
 
 bool mono::SavePath(const char* path_file, const math::Vector& position, const std::vector<math::Vector>& local_points)
