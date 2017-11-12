@@ -8,12 +8,6 @@
 
 namespace
 {
-    struct LengthIndexPair
-    {
-        float start_length = 0.0f;
-        int point_index = 0;
-    };
-
     class PathImpl : public mono::IPath
     {
     public:
@@ -35,7 +29,7 @@ namespace
                 const math::Vector& diff = current_point - previous_point;
 
                 m_total_length += math::Length(diff);
-                m_length_table.push_back({m_total_length, index});
+                m_length_table.push_back(m_total_length);
             }
         }
 
@@ -64,8 +58,8 @@ namespace
             if(m_length_table.empty())
                 return math::zeroVec;
 
-            const auto find_func = [length](const LengthIndexPair& length_index) {
-                return length < length_index.start_length;
+            const auto find_func = [length](float start_length) {
+                return length < start_length;
             };
 
             auto it = std::find_if(m_length_table.begin(), m_length_table.end(), find_func);
@@ -74,13 +68,15 @@ namespace
 
             --it;
 
-            const math::Vector& previous_point = m_points[it->point_index];
-            const math::Vector& current_point = m_points[it->point_index +1];
+            const size_t point_index = std::distance(m_length_table.begin(), it);
+
+            const math::Vector& previous_point = m_points[point_index];
+            const math::Vector& current_point = m_points[point_index +1];
 
             const math::Vector& diff = current_point - previous_point;
             const float diff_length = math::Length(diff);
 
-            const float local_length = length - it->start_length;
+            const float local_length = length - (*it);
             const float percent = local_length / diff_length;
             
             const math::Vector& pos = previous_point + (diff * percent);
@@ -91,7 +87,7 @@ namespace
         const std::vector<math::Vector> m_points;
 
         float m_total_length;
-        std::vector<LengthIndexPair> m_length_table;
+        std::vector<float> m_length_table;
     };
 }
 
