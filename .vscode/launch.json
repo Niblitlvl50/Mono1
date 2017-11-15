@@ -5,10 +5,10 @@
             "name": "C++ unit test",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/bin/game",
+            "program": "${workspaceRoot}/bin/unittest",
 //            "args": ["world.world"],
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}/Resources",
+            "cwd": "${workspaceRoot}",
             "environment": [],
             "externalConsole": false,
             "linux": {
