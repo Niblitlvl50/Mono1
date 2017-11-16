@@ -59,14 +59,15 @@ namespace
                 return math::zeroVec;
 
             const auto find_func = [length](float start_length) {
-                return length < start_length;
+                return length <= start_length;
             };
 
             auto it = std::find_if(m_length_table.begin(), m_length_table.end(), find_func);
             if(it == m_length_table.end())
                 return math::zeroVec;
 
-            --it;
+            if(it != m_length_table.begin())
+                --it;
 
             const size_t point_index = std::distance(m_length_table.begin(), it);
 
