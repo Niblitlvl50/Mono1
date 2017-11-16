@@ -8,7 +8,7 @@
 
 using namespace mono;
 
-ParticleDrawer::ParticleDrawer(const Config& config, ParticlePool& pool)
+ParticleDrawer::ParticleDrawer(const Configuration& config, ParticlePool& pool)
     : m_config(config),
       m_pool(pool)
 {
