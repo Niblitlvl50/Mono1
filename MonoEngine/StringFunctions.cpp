@@ -17,7 +17,9 @@ std::vector<std::string> mono::SplitString(const std::string& string, char delim
         }
     } while(find_position != std::string::npos);
 
-    tokens.push_back(string.substr(start_position));
+    const std::string& last_entry = string.substr(start_position);
+    if(!last_entry.empty())
+        tokens.push_back(last_entry);
 
     return tokens;
 }

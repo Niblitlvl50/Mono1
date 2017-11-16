@@ -21,3 +21,9 @@ TEST(StringFunctionsTest, SplitSingleToken)
     EXPECT_EQ(1u, tokens.size());
     EXPECT_STREQ(string_1, tokens[0].c_str());
 }
+
+TEST(StringFunctionsTest, SplitEmptyString)
+{
+    const std::vector<std::string>& tokens_1 = mono::SplitString("", ' ');
+    EXPECT_TRUE(tokens_1.empty());
+}
