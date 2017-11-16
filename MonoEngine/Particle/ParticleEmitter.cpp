@@ -1,11 +1,6 @@
 
 #include "ParticleEmitter.h"
 #include "ParticlePool.h"
-#include "Rendering/IRenderer.h"
-#include "Rendering/BufferFactory.h"
-#include "Math/Quad.h"
-
-#include <limits>
 
 using namespace mono;
 
@@ -13,16 +8,6 @@ ParticleEmitter::ParticleEmitter(const Configuration& config, ParticlePool& pool
     : m_config(config),
       m_position(config.position),
       m_pool(pool)
-{
-    const size_t pool_size = m_pool.m_poolSize;
-
-    m_positionBuffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 2);
-    m_colorBuffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 4); 
-
-    ClearRenderBuffer();
-}
-
-ParticleEmitter::~ParticleEmitter()
 { }
 
 void ParticleEmitter::SetPosition(const math::Vector& position)
@@ -51,18 +36,4 @@ void ParticleEmitter::doUpdate(unsigned int delta)
         if(life < 0.0f)
             m_pool.Kill(index);
     }
-}
-
-void ParticleEmitter::doDraw(mono::IRenderer& renderer) const
-{
-    m_positionBuffer->UpdateData(m_pool.m_position.data(), 0, m_pool.m_countAlive * 2);
-    m_colorBuffer->UpdateData(m_pool.m_color.data(), 0, m_pool.m_countAlive * 4);
-
-    renderer.DrawParticlePoints(m_positionBuffer.get(), m_colorBuffer.get(), m_config.point_size, m_config.texture, m_pool.m_countAlive);
-}
-
-math::Quad ParticleEmitter::BoundingBox() const
-{
-    constexpr float inf = std::numeric_limits<float>::infinity();
-    return math::Quad(-inf, -inf, inf, inf);
 }
