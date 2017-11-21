@@ -26,14 +26,4 @@ void ParticleEmitter::doUpdate(unsigned int delta)
 
     for(size_t index = start_index; index < end_index; ++index)
         m_pool.Wake(index);
-
-    m_config.updater(m_pool, m_pool.m_countAlive, delta);
-
-    for(size_t index = 0; index < m_pool.m_countAlive; ++index)
-    {
-        int& life = m_pool.m_life[index];
-        life -= delta;
-        if(life < 0.0f)
-            m_pool.Kill(index);
-    }
 }

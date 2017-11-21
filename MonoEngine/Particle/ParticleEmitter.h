@@ -16,7 +16,6 @@ namespace mono
         {
             math::Vector position;
             ParticleGenerator generator = nullptr;
-            ParticleUpdater updater = nullptr;
             float emit_rate = 0.2f;
         };
 

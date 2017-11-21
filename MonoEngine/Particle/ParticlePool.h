@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "Particle/ParticleFwd.h"
 #include "Math/Vector.h"
 #include "Rendering/Color.h"
 #include <vector>
@@ -11,11 +12,13 @@ namespace mono
     {
     public:
 
-        ParticlePool(int pool_size);
+        ParticlePool(int pool_size, ParticleUpdater update_function);
 
         void Kill(size_t index);
         void Wake(size_t index);
         void Swap(size_t first, size_t second);
+
+        void doUpdate(unsigned int delta);
 
         std::vector<math::Vector> m_position;
         std::vector<math::Vector> m_velocity;
@@ -27,5 +30,6 @@ namespace mono
 
         size_t m_poolSize = 0;
         size_t m_countAlive = 0;
+        ParticleUpdater m_update_function;
     };
 }

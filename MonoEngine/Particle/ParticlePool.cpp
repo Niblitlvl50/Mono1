@@ -3,8 +3,9 @@
 
 using namespace mono;
 
-ParticlePool::ParticlePool(int pool_size)
-    : m_poolSize(pool_size)
+ParticlePool::ParticlePool(int pool_size, ParticleUpdater update_function)
+    : m_poolSize(pool_size),
+      m_update_function(update_function)
 {
     m_position.resize(pool_size);
     m_velocity.resize(pool_size);
@@ -42,4 +43,17 @@ void ParticlePool::Swap(size_t first, size_t second)
     std::swap(m_endColor[first], m_endColor[second]);
     std::swap(m_startLife[first], m_startLife[second]);
     std::swap(m_life[first], m_life[second]);
+}
+
+void ParticlePool::doUpdate(unsigned int delta)
+{
+    m_update_function(*this, m_countAlive, delta);
+
+    for(size_t index = 0; index < m_countAlive; ++index)
+    {
+        int& life = m_life[index];
+        life -= delta;
+        if(life <= 0)
+            Kill(index);
+    }
 }
