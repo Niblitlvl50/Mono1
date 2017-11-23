@@ -5,8 +5,10 @@
 
 namespace mono
 {
-    struct IShape
+    class IShape
     {
+    public:
+
         virtual ~IShape()
         { }
 

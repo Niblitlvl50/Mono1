@@ -20,8 +20,7 @@ struct PhysicsZone::PhysicsImpl : IUpdatable
     { }
     void doUpdate(unsigned int delta)
     {
-        const float floatDelta = delta;
-        mSpace.Tick(floatDelta / 1000.0f);
+        mSpace.Tick(delta);
     }
     mono::Space mSpace;
 };

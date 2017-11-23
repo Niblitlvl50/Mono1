@@ -17,7 +17,7 @@ namespace mono
         Space(const math::Vector& gravity, float damping);
         ~Space();
         
-        void Tick(float delta);
+        void Tick(unsigned int delta);
         
         void Add(const IBodyPtr& body);
         void Add(const IShapePtr& shape);
@@ -32,9 +32,7 @@ namespace mono
         
     private:
         
-        bool OnCollision(cpArbiter* arb);
-        void OnPostStep(cpArbiter* arb);
-        
+        bool OnCollision(cpArbiter* arb);        
         void DoForEachFuncOnBody(cpBody* body);
 
         BodyFunc mForEachFunc;

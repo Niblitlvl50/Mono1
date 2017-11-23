@@ -11,8 +11,8 @@ struct cpConstraint;
 namespace mono
 {
     struct PhysicsData;
-    struct IBody;
-    struct IShape;
+    class IBody;
+    class IShape;
     class IConstraint;
 
     using IBodyPtr = std::shared_ptr<IBody>;

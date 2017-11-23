@@ -21,13 +21,8 @@ Space::Space(const math::Vector& gravity, float damping)
         return static_cast<Space*>(data)->OnCollision(arb);
     };
 
-    const auto postSolve = [](cpArbiter* arb, cpSpace*, cpDataPointer userData) {
-        static_cast<Space*>(userData)->OnPostStep(arb);
-    };
-
     cpCollisionHandler* ch = cpSpaceAddDefaultCollisionHandler(mSpace);
     ch->beginFunc = beginFunc;
-    ch->postSolveFunc = postSolve;
     ch->userData = this;
 }
 
@@ -37,9 +32,10 @@ Space::~Space()
     cpSpaceDestroy(mSpace);
 }
 
-void Space::Tick(float delta)
+void Space::Tick(unsigned int delta)
 {
-    cpSpaceStep(mSpace, delta);
+    const float float_delta = delta;
+    cpSpaceStep(mSpace, float_delta / 1000.0f);
 }
 
 void Space::Add(const IBodyPtr& body)
@@ -134,6 +130,13 @@ bool Space::OnCollision(cpArbiter* arb)
     cpBody* b1 = nullptr;
     cpBody* b2 = nullptr;
     cpArbiterGetBodies(arb, &b1, &b2);
+
+    cpShape* shape1 = nullptr;
+    cpShape* shape2 = nullptr;
+    cpArbiterGetShapes(arb, &shape1, &shape2);
+
+    const cpShapeFilter& filter1 = cpShapeGetFilter(shape1);
+    const cpShapeFilter& filter2 = cpShapeGetFilter(shape2);
     
     IBodyPtr first = nullptr;
     IBodyPtr second = nullptr;
@@ -151,36 +154,9 @@ bool Space::OnCollision(cpArbiter* arb)
     
     if(first && second)
     {
-        first->OnCollideWith(second);
-        second->OnCollideWith(first);
+        first->OnCollideWith(second, filter2.categories);
+        second->OnCollideWith(first, filter1.categories);
     }
     
     return true;
-}
-
-void Space::OnPostStep(cpArbiter* arb)
-{
-    cpBody* b1 = nullptr;
-    cpBody* b2 = nullptr;
-    cpArbiterGetBodies(arb, &b1, &b2);
-
-    IBodyPtr first = nullptr;
-    IBodyPtr second = nullptr;
-
-    for(auto& body : mBodies)
-    {
-        if(body->Handle() == b1)
-            first = body;
-        else if(body->Handle() == b2)
-            second = body;
-
-        if(first && second)
-            break;
-    }
-
-    if(first && second)
-    {
-        first->OnPostStep();
-        second->OnPostStep();
-    }
 }

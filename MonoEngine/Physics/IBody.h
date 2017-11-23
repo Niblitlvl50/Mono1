@@ -6,17 +6,20 @@
 
 namespace mono
 {
-    struct ICollisionHandler
+    class ICollisionHandler
     {
+    public:
+
         virtual ~ICollisionHandler()
         { }
         
-        virtual void OnCollideWith(const mono::IBodyPtr& body) = 0;
-        virtual void OnPostStep() = 0;
+        virtual void OnCollideWith(const mono::IBodyPtr& body, unsigned int categories) = 0;
     };
 
-    struct IBody
+    class IBody
     {
+    public:
+
         virtual ~IBody()
         { }
         
@@ -89,10 +92,7 @@ namespace mono
         
         //! Called by the framework when a collision occures
         //! @param body The other body of the collision
-        virtual void OnCollideWith(IBodyPtr body) = 0;
-
-        //! Called by the framework when a collison has been calculated
-        virtual void OnPostStep() = 0;
+        virtual void OnCollideWith(const IBodyPtr& body, unsigned int categories) = 0;
         
         //! Gets the underlying cpBody object, dont use this one
         //! @return cpBody* A pointer to a cpBody struct
