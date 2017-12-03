@@ -37,9 +37,10 @@ namespace Network
         virtual bool Receive(std::vector<byte>& buffer) = 0;
     };
 
-    using ISocketPtr = std::shared_ptr<ISocket>;
+    using ISocketPtr = std::unique_ptr<ISocket>;
 
     ISocketPtr CreateUDPSocket(int port, bool blocking);
     ISocketPtr OpenUDPSocket(const char* address, int port, bool blocking);
     ISocketPtr OpenBroadcastSocket(int port, bool blocking);
+    ISocketPtr OpenLoopbackSocket(int port, bool blocking);
 }

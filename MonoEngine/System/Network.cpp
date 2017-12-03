@@ -97,6 +97,34 @@ namespace
 
         return broadcast_string;
     }
+
+    std::string GetLoopbackAddress()
+    {
+        std::string loopback_address;
+
+        ifaddrs* devices = nullptr;
+        const int result = getifaddrs(&devices);
+        if(result != 0)
+            return loopback_address;
+
+        for(ifaddrs* it = devices; it != nullptr; it = it->ifa_next)
+        {
+            if(!it->ifa_addr || it->ifa_addr->sa_family != AF_INET)
+                continue;
+
+            const bool loopback = (it->ifa_flags & IFF_LOOPBACK);
+            if(!loopback)
+                continue;
+
+            const sockaddr_in* broadcast_addr = reinterpret_cast<const sockaddr_in*>(it->ifa_broadaddr);
+            loopback_address = inet_ntoa(broadcast_addr->sin_addr);
+            break;
+        }
+
+        freeifaddrs(devices);
+
+        return loopback_address;        
+    }
 }
 
 
@@ -121,16 +149,16 @@ std::string Network::GetLocalHostName()
     return buffer;
 }
 
-std::shared_ptr<Network::ISocket> Network::CreateUDPSocket(int port, bool blocking)
+Network::ISocketPtr Network::CreateUDPSocket(int port, bool blocking)
 {
     return OpenUDPSocket(0, port, blocking);
 }
 
-std::shared_ptr<Network::ISocket> Network::OpenUDPSocket(const char* address, int port, bool blocking)
+Network::ISocketPtr Network::OpenUDPSocket(const char* address, int port, bool blocking)
 {
     try
     {
-       return std::make_shared<UDPSocket>(address, port, blocking);
+       return std::make_unique<UDPSocket>(address, port, blocking);
     }
     catch(const std::runtime_error& error)
     {
@@ -141,8 +169,14 @@ std::shared_ptr<Network::ISocket> Network::OpenUDPSocket(const char* address, in
     return nullptr;
 }
 
-std::shared_ptr<Network::ISocket> Network::OpenBroadcastSocket(int port, bool blocking)
+Network::ISocketPtr Network::OpenBroadcastSocket(int port, bool blocking)
 {
     const std::string& broadcast_string = GetBroadcastAddress();
     return OpenUDPSocket(broadcast_string.c_str(), port, blocking);
+}
+
+Network::ISocketPtr Network::OpenLoopbackSocket(int port, bool blocking)
+{
+    const std::string& loopback_address = GetLoopbackAddress();
+    return OpenUDPSocket(loopback_address.c_str(), port, blocking);    
 }
