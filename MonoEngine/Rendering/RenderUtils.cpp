@@ -23,13 +23,14 @@ void mono::DrawQuad(const math::Quad& quad,
                     float width,
                     IColorShader* shader)
 {
-    const std::vector<math::Vector> vertices = { math::Vector(quad.mA.x, quad.mA.y),
-                                                   math::Vector(quad.mB.x, quad.mA.y),
-                                                   math::Vector(quad.mB.x, quad.mB.y),
-                                                   math::Vector(quad.mA.x, quad.mB.y),
-                                                   math::Vector(quad.mA.x, quad.mA.y) };
+    const std::vector<math::Vector> vertices = {
+        math::Vector(quad.mA.x, quad.mA.y),
+        math::Vector(quad.mB.x, quad.mA.y),
+        math::Vector(quad.mB.x, quad.mB.y),
+        math::Vector(quad.mA.x, quad.mB.y)
+    };
 
-    DrawLine(vertices, color, width, shader);
+    DrawClosedLine(vertices, color, width, shader);
 }
 
 void mono::DrawCircle(const math::Vector& position,
