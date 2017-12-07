@@ -41,7 +41,7 @@ void mono::DrawCircle(const math::Vector& position,
                       IColorShader* shader)
 {
     std::vector<math::Vector> vertices;
-    vertices.reserve(segments +1);
+    vertices.reserve(segments);
 
     const float coef = 2.0f * math::PI() / float(segments);
     
@@ -54,12 +54,7 @@ void mono::DrawCircle(const math::Vector& position,
         vertices.emplace_back(x, y);
 	}
 
-    // Add the last vertex to close the circle
-    const float x = radie * std::cos(0) + position.x;
-    const float y = radie * std::sin(0) + position.y;
-    vertices.emplace_back(x, y);
-
-    DrawLine(vertices, color, lineWidth, shader);
+    DrawClosedLine(vertices, color, lineWidth, shader);
 }
 
 void mono::DrawSprite(const mono::ISprite& sprite, ITextureShader* shader)
