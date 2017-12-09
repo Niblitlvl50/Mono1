@@ -138,6 +138,12 @@ void Renderer::DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, 
     ::DrawQuad(quad, color, width, m_color_shader.get());
 }
 
+void Renderer::DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color) const
+{
+    UseShader(m_color_shader.get());
+    ::DrawFilledQuad(quad, color, m_color_shader.get());
+}
+
 void Renderer::DrawCircle(const math::Vector& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const
 {
     UseShader(m_color_shader.get());

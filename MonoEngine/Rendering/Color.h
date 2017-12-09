@@ -42,7 +42,7 @@ namespace mono
             { }
 
             float hue = 0.0f;
-            float saturation = 0.5f;
+            float saturation = 1.0f;
             float lightness = 0.5f;
         };
 

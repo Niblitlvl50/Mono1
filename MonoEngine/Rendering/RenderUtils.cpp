@@ -33,6 +33,34 @@ void mono::DrawQuad(const math::Quad& quad,
     DrawClosedLine(vertices, color, width, shader);
 }
 
+void mono::DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color, IColorShader* shader)
+{
+    const float vertices[] = {
+        quad.mA.x, quad.mA.y,
+        quad.mB.x, quad.mA.y,
+        quad.mB.x, quad.mB.y,
+        quad.mA.x, quad.mB.y
+    };
+
+    const float colors[] = {
+        color.red, color.green, color.blue, color.alpha,        
+        color.red, color.green, color.blue, color.alpha,        
+        color.red, color.green, color.blue, color.alpha,        
+        color.red, color.green, color.blue, color.alpha
+    };
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(shader->GetColorAttributeLocation(), 4, GL_FLOAT, GL_FALSE, 0, colors);
+
+    glDrawArrays(GL_QUADS, 0, 4);
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+}
+
 void mono::DrawCircle(const math::Vector& position,
                       float radie,
                       unsigned int segments,

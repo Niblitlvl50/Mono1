@@ -15,6 +15,8 @@ namespace mono
     void DrawQuad(
         const math::Quad& quad, const mono::Color::RGBA& color, float width, IColorShader* shader);
 
+    void DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color, IColorShader* shader);
+
     //! Draws a circle
     void DrawCircle(const math::Vector& position,
                     float radie,
