@@ -18,6 +18,7 @@ namespace mono
         virtual void Accept(mono::IUpdater& updater) = 0;
         virtual void OnLoad(mono::ICameraPtr& camera) = 0;
         virtual void OnUnload() = 0;
+        virtual int ExitCode() = 0;
 
         virtual void AddEntity(const mono::IEntityPtr& entity, int layer) = 0;
         virtual void RemoveEntity(const mono::IEntityPtr& entity) = 0;

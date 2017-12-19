@@ -119,6 +119,10 @@ namespace
         {
             mOnUnloadCalled = true;
         }
+        virtual int ExitCode()
+        {
+            return 0;
+        }
         virtual void CreateLayer(int layer)
         { }
         virtual void AddEntity(const mono::IEntityPtr& entity, int layer)

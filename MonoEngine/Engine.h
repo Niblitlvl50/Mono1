@@ -28,7 +28,7 @@ namespace mono
         Engine(System::IWindow* window, const ICameraPtr& camera, EventHandler& eventHandler);
         ~Engine();
 
-        void Run(IZonePtr zone);
+        int Run(IZonePtr zone);
 
     private:
 

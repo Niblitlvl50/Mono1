@@ -89,7 +89,7 @@ Engine::~Engine()
     mEventHandler.RemoveListener(mTimeScaleToken);
 }
 
-void Engine::Run(IZonePtr zone)
+int Engine::Run(IZonePtr zone)
 {
     zone->OnLoad(mCamera);
 
@@ -147,6 +147,8 @@ void Engine::Run(IZonePtr zone)
     mQuit = false;
     mPause = false;
     mUpdateLastTime = false;
+
+    return zone->ExitCode();
 }
 
 bool Engine::OnPause(const event::PauseEvent& event)
