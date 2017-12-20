@@ -94,27 +94,33 @@ namespace
             Stop();
             alDeleteSources(1, &m_source);
         }
-        void Play()
+        void Play() override
         {
             alSourcePlay(m_source);
         }
-        void Pause()
+        void Pause() override
         {
             alSourcePause(m_source);
         }
-        void Stop()
+        void Stop() override
         {
             alSourceStop(m_source);
         }
-        void Pitch(float pitch)
+        bool IsPlaying() const override
+        {
+            ALint source_state;
+            alGetSourcei(m_source, AL_SOURCE_STATE, &source_state);
+            return source_state == AL_PLAYING;
+        }
+        void Pitch(float pitch) override
         {
             alSourcef(m_source, AL_PITCH, pitch);
         }
-        void Gain(float gain)
+        void Gain(float gain) override
         {
             alSourcef(m_source, AL_GAIN, gain);
         }
-        void Position(float x, float y)
+        void Position(float x, float y) override
         {
             alSource3f(m_source, AL_POSITION, x, y, 0.0f);
         }
