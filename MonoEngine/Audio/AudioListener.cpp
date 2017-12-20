@@ -1,6 +1,6 @@
 
 #include "AudioListener.h"
-#include "OpenAL/al.h"
+#include "open_al.h"
 
 void mono::ListenerPosition(float x, float y)
 {
