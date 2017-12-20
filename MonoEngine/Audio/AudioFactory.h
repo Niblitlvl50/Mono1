@@ -32,4 +32,4 @@ namespace mono
         // Load a sound file from disk, only supports WAV at the moment
         SoundFile LoadFile(const char* fileName);
     }
-};
+}
