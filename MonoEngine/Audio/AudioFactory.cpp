@@ -8,6 +8,7 @@
 #include <string>
 #include <exception>
 #include <cstdio>
+#include <cstring>
 
 
 namespace

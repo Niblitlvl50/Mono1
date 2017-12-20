@@ -7,6 +7,7 @@
 #include "Math/Vector.h"
 
 #include "chipmunk/chipmunk.h"
+#include <algorithm>
 #include <cstdio>
 
 using namespace mono;

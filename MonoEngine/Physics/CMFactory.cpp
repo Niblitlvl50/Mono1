@@ -7,6 +7,8 @@
 
 #include "chipmunk/chipmunk.h"
 
+#include <algorithm>
+
 namespace
 {
     struct CMBody : mono::IBody
