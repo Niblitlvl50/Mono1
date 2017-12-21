@@ -2,12 +2,13 @@
 #include "AudioFactory.h"
 #include "System/File.h"
 
-#include "OpenAL/al.h"
+#include "open_al.h"
 
 #include <unordered_map>
 #include <string>
 #include <exception>
 #include <cstdio>
+#include <cstring>
 
 
 namespace

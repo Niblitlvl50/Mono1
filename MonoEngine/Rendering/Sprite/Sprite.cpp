@@ -4,6 +4,7 @@
 
 #include <stdexcept>
 #include <cassert>
+#include <cstring>
 
 using namespace mono;
 
@@ -177,7 +178,7 @@ int Sprite::FindAnimationByName(const char* name) const
 {
     for(size_t index = 0; index < m_animations.size(); ++index)
     {
-        const bool found = (strcmp(name, m_animations[index].GetName()) == 0);
+        const bool found = (std::strcmp(name, m_animations[index].GetName()) == 0);
         if(found)
             return index;
     }

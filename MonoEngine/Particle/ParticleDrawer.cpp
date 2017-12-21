@@ -6,6 +6,8 @@
 #include "Rendering/BufferFactory.h"
 #include "Math/Quad.h"
 
+#include <limits>
+
 using namespace mono;
 
 ParticleDrawer::ParticleDrawer(const Configuration& config, ParticlePool& pool)

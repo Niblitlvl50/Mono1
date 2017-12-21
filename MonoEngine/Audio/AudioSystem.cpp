@@ -1,8 +1,7 @@
 
 #include "AudioSystem.h"
 
-#include "OpenAL/alc.h"
-#include "OpenAL/al.h"
+#include "open_al.h"
 
 #include <stdexcept>
 #include <cstdio>
