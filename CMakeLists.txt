@@ -21,32 +21,35 @@ set(LIB_INSTALL_DIR ${LIBRARY_OUTPUT_PATH})
 add_subdirectory("External Libs/Chipmunk2D")
 
 
-include_directories("External Libs" "MonoEngine")
-include_directories(${chipmunk_SOURCE_DIR}/include)
+include_directories("MonoEngine")
+include_directories(SYSTEM "External Libs")
+include_directories(SYSTEM ${chipmunk_SOURCE_DIR}/include)
 
 find_package(OpenGL REQUIRED)
 if(OPENGL_FOUND)
-    include_directories(${OPENGL_INCLUDE_DIR})
+    include_directories(SYSTEM ${OPENGL_INCLUDE_DIR})
 endif(OPENGL_FOUND)
 
 find_package(OpenAL REQUIRED)
 if(OPENAL_FOUND)
-    include_directories(${OPENAL_INCLUDE_DIR})
+    include_directories(SYSTEM ${OPENAL_INCLUDE_DIR})
 endif(OPENAL_FOUND)
 
 find_package(SDL2 REQUIRED)
 if(SDL2_FOUND)
-    include_directories(${SDL2_INCLUDE_DIR})
+    include_directories(SYSTEM ${SDL2_INCLUDE_DIR})
 endif(SDL2_FOUND)
 
 # imgui
 file(GLOB_RECURSE imgui_source_files "External Libs/imgui/*.cpp")
 add_library(imgui STATIC ${imgui_source_files})
+set_target_properties(imgui PROPERTIES COMPILE_FLAGS -Wno-implicit-fallthrough)
 
 # gtest
 file(GLOB_RECURSE gtest_source_files "External Libs/gtest-1.7.0/src/*.cc")
 add_library(gtest STATIC ${gtest_source_files})
 target_include_directories(gtest PRIVATE "External Libs/gtest-1.7.0/include" "External Libs/gtest-1.7.0")
+set_target_properties(gtest PROPERTIES COMPILE_FLAGS -Wno-missing-field-initializers)
 
 # Mono
 file(GLOB_RECURSE engine_source_files "MonoEngine/*.cpp")
