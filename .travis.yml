@@ -3,19 +3,27 @@ language: cpp
 sudo: required
 dist: trusty
 
+install:
+  # Steps copied from the rust-sdl2 project.
+  - wget https://www.libsdl.org/release/SDL2-2.0.4.tar.gz -O sdl2.tar.gz
+  - tar xzf sdl2.tar.gz
+  - pushd SDL2-2.0.4 && ./configure && make && sudo make install && popd
+
 matrix:
   include:
 
-#  - os: linux
-#    compiler: gcc
-#    env: COMPILER=g++-4.9
-#    addons:
-#      apt:
-#        sources: 
-#          - ubuntu-toolchain-r-test
-#        packages:
-#          - g++-4.9
-#          - libsdl2-dev
+  - os: linux
+    compiler: gcc
+    env: COMPILER=g++-4.9
+    addons:
+      apt:
+        sources: 
+          - ubuntu-toolchain-r-test
+          - llvm-toolchain-trusty-5.0
+        packages:
+          - g++-6
+          - clang-5.0
+          - libopenal-dev
 
   - os: linux
     compiler: clang
@@ -27,9 +35,12 @@ matrix:
         packages:
           - g++-6
           - clang-5.0
-          - libsdl2-dev
           - libopenal-dev
+
+  - os: osx
+    osx_image: xcode8.3
 
 script:
 
   - cmake -DCMAKE_CXX_COMPILER=$COMPILER . && make
+  - ./bin/unittest
