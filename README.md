@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Niblitlvl50/Mono1.svg?branch=master)](https://travis-ci.org/Niblitlvl50/Mono1)
+
 Mono1
 =====
 
