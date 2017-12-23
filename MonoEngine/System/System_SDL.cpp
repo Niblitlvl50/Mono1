@@ -4,6 +4,7 @@
 #include "OpenGL.h"
 
 #include "SDL.h"
+#include "SDL_gamecontroller.h"
 #include "SDL_keycode.h"
 
 #include <stdexcept>
