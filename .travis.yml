@@ -14,7 +14,7 @@ matrix:
 
   - os: linux
     compiler: gcc
-    env: COMPILER=g++-4.9
+    env: COMPILER=g++-6
     addons:
       apt:
         sources: 
