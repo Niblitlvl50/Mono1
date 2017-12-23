@@ -4,6 +4,7 @@
 #include "Quad.h"
 
 #include <cmath>
+#include <stdlib.h>
 
 bool math::PointInsideQuad(const math::Vector& point, const math::Quad& quad)
 {

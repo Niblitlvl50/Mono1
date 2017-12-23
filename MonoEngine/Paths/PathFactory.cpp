@@ -5,6 +5,7 @@
 #include "System/File.h"
 
 #include "nlohmann_json/json.hpp"
+#include <stdlib.h>
 
 namespace
 {

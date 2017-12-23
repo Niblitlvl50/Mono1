@@ -19,12 +19,14 @@ matrix:
 
   - os: linux
     compiler: clang
-    env: COMPILER=clang++-7.0
     addons:
       apt:
         sources:
           - ubuntu-toolchain-r-test
+          - llvm-toolchain-trusty-5.0
         packages:
+          - g++-6
+          - clang-5.0
           - libsdl2-dev
           - libopenal-dev
 

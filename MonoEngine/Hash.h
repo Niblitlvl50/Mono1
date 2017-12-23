@@ -12,7 +12,7 @@ namespace mono
         constexpr unsigned int FNV_prime = 16777619u;
 
         unsigned int hash = offset_bias;
-        const size_t length = std::strlen(text);
+        const std::size_t length = std::strlen(text);
         
         for(unsigned int index = 0; index < length; ++index)
             hash = (hash ^ text[index]) * FNV_prime;

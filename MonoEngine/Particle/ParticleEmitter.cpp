@@ -2,6 +2,8 @@
 #include "ParticleEmitter.h"
 #include "ParticlePool.h"
 
+#include <stdlib.h>
+
 using namespace mono;
 
 ParticleEmitter::ParticleEmitter(const Configuration& config, ParticlePool& pool)
