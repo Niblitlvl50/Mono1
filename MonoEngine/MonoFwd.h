@@ -9,7 +9,6 @@ namespace mono
     class IUpdater;
     class IZone;
     class IPhysicsZone;
-    class IAction;
     class IPath;
     class ISound;
 
