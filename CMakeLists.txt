@@ -19,11 +19,11 @@ set(BUILD_SHARED OFF)
 set(BUILD_STATIC ON)
 set(BUILD_DEMOS OFF CACHE BOOL "Build chipmunk demo application" FORCE)
 set(LIB_INSTALL_DIR ${LIBRARY_OUTPUT_PATH})
-add_subdirectory("External Libs/Chipmunk2D")
+add_subdirectory("third_party/Chipmunk2D")
 
 
 include_directories("MonoEngine")
-include_directories(SYSTEM "External Libs")
+include_directories(SYSTEM "third_party")
 include_directories(SYSTEM ${chipmunk_SOURCE_DIR}/include)
 
 find_package(OpenGL REQUIRED)
@@ -42,14 +42,14 @@ if(SDL2_FOUND)
 endif(SDL2_FOUND)
 
 # imgui
-file(GLOB_RECURSE imgui_source_files "External Libs/imgui/*.cpp")
+file(GLOB_RECURSE imgui_source_files "third_party/imgui/*.cpp")
 add_library(imgui STATIC ${imgui_source_files})
 set_target_properties(imgui PROPERTIES COMPILE_FLAGS -Wno-implicit-fallthrough)
 
 # gtest
-file(GLOB_RECURSE gtest_source_files "External Libs/gtest-1.7.0/src/*.cc")
+file(GLOB_RECURSE gtest_source_files "third_party/gtest-1.7.0/src/*.cc")
 add_library(gtest STATIC ${gtest_source_files})
-target_include_directories(gtest PRIVATE "External Libs/gtest-1.7.0/include" "External Libs/gtest-1.7.0")
+target_include_directories(gtest PRIVATE "third_party/gtest-1.7.0/include" "third_party/gtest-1.7.0")
 set_target_properties(gtest PROPERTIES COMPILE_FLAGS -Wno-missing-field-initializers)
 
 # Mono
@@ -62,5 +62,5 @@ target_link_libraries(mono imgui chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIB
 file(GLOB_RECURSE unittest_source_files "UnitTests/*.cpp")
 add_executable(unittest ${unittest_source_files})
 add_dependencies(unittest mono gtest)
-target_include_directories(unittest PRIVATE "External Libs/gtest-1.7.0/include")
+target_include_directories(unittest PRIVATE "third_party/gtest-1.7.0/include")
 target_link_libraries(unittest mono gtest)
