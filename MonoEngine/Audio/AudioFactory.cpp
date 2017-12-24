@@ -59,10 +59,25 @@ namespace
             
             const ALsizei n = static_cast<ALsizei>(data.size());
             alBufferData(m_buffer, format, data.data(), n, frequency);
+
+            ALint size_in_bytes;
+            ALint channels;
+            ALint bits;
+
+            alGetBufferi(m_buffer, AL_SIZE, &size_in_bytes);
+            alGetBufferi(m_buffer, AL_CHANNELS, &channels);
+            alGetBufferi(m_buffer, AL_BITS, &bits);
+
+            const int samples = size_in_bytes * 8 / (channels * bits);
+            m_sample_length_s = float(samples) / float(frequency);
         }
         ~SoundData()
         {
             alDeleteBuffers(1, &m_buffer);
+        }
+        float SampleLength() const
+        {
+            return m_sample_length_s;
         }
         ALuint BufferId() const
         {
@@ -72,6 +87,7 @@ namespace
     private:
 
         ALuint m_buffer;
+        float m_sample_length_s;
     };
 
     class SoundImpl : public mono::ISound
@@ -112,6 +128,10 @@ namespace
             ALint source_state;
             alGetSourcei(m_source, AL_SOURCE_STATE, &source_state);
             return source_state == AL_PLAYING;
+        }
+        float SampleLength() const override
+        {
+            return m_data->SampleLength();
         }
         void Pitch(float pitch) override
         {
