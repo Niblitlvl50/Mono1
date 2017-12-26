@@ -140,7 +140,7 @@ int Engine::Run(IZonePtr zone)
 
     // Remove possible follow entity and unload the zone
     mCamera->Unfollow();
-    zone->OnUnload();
+    const int exit_code = zone->OnUnload();
 
     // Reset the quit, pause and updateLastTime flag for when you want
     // to reuse the engine for another zone.
@@ -148,7 +148,7 @@ int Engine::Run(IZonePtr zone)
     mPause = false;
     mUpdateLastTime = false;
 
-    return zone->ExitCode();
+    return exit_code;
 }
 
 bool Engine::OnPause(const event::PauseEvent& event)

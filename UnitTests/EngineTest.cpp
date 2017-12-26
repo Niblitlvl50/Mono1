@@ -115,12 +115,9 @@ namespace
         {
             mOnLoadCalled = true;
         }
-        virtual void OnUnload()
+        virtual int OnUnload()
         {
             mOnUnloadCalled = true;
-        }
-        virtual int ExitCode()
-        {
             return 0;
         }
         virtual void CreateLayer(int layer)
