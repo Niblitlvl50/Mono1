@@ -46,12 +46,6 @@ namespace System
         float right_trigger = 0.0f;
     };
 
-    enum class CursorVisibility
-    {
-        HIDDEN,
-        SHOWN
-    };
-
     class IWindow
     {
     public:
@@ -132,7 +126,13 @@ namespace System
     // The caller is responsible for deleting the pointer
     IWindow* CreateWindow(const char* title, int width, int height, bool fullscreen);
 
-    void SetCursorVisibility(CursorVisibility state);
+    enum class CursorVisibility
+    {
+        Hidden,
+        Shown
+    };
+
+    void SetCursorVisibility(CursorVisibility visibility_state);
 
     // Process the system events, input and other events
     void ProcessSystemEvents(IInputHandler* handler);
@@ -140,5 +140,11 @@ namespace System
 
     int KeycodeToNative(Keycode key);
 
-    const ControllerState& GetController(int id);
+    enum class ControllerId : int
+    {
+        Primary,
+        Secondary
+    };
+
+    const ControllerState& GetController(ControllerId controller_id);
 }

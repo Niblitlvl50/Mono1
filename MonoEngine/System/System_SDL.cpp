@@ -383,7 +383,7 @@ System::IWindow* System::CreateWindow(const char* title, int width, int height, 
 
 void System::SetCursorVisibility(System::CursorVisibility state)
 {
-    const int sdl_state = (state == CursorVisibility::SHOWN) ? SDL_ENABLE : SDL_DISABLE;
+    const int sdl_state = (state == CursorVisibility::Shown) ? SDL_ENABLE : SDL_DISABLE;
     SDL_ShowCursor(sdl_state);
 }
 
@@ -694,7 +694,8 @@ void System::ProcessControllerState()
     }
 }
 
-const System::ControllerState& System::GetController(int id)
+const System::ControllerState& System::GetController(ControllerId controller_id)
 {
+    const int id = static_cast<int>(controller_id);
     return g_controller_states[id];
 }
