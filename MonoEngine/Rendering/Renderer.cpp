@@ -180,14 +180,13 @@ void Renderer::DrawGeometry(const IRenderBuffer* vertices,
 
 void Renderer::DrawParticlePoints(const IRenderBuffer* position,
                                   const IRenderBuffer* color,
-                                  float point_size,
+                                  const IRenderBuffer* point_size,
                                   const ITexturePtr& texture,
                                   size_t count)
 {
     UseTexture(texture);
     UseShader(m_point_sprite_shader.get());
-    m_point_sprite_shader->SetPointSize(point_size);
-    ::DrawParticlePoints(position, color, count, m_point_sprite_shader.get());
+    ::DrawParticlePoints(position, color, point_size, count, m_point_sprite_shader.get());
 }
 
 void Renderer::DrawPolyline(

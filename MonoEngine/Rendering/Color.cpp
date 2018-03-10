@@ -99,10 +99,10 @@ mono::Color::HSL mono::Color::ToHSL(const mono::Color::RGBA& rgb)
 
 mono::Color::RGBA mono::Color::Lerp(const mono::Color::RGBA& first, const mono::Color::RGBA& second, float t)
 {
-    const float red   = (1 - t) * first.red + t * second.red;
-    const float green = (1 - t) * first.green + t * second.green;
-    const float blue  = (1 - t) * first.blue + t * second.blue;
-    const float alpha = (1 - t) * first.alpha + t * second.alpha;
+    const float red   = (1.0f - t) * first.red + t * second.red;
+    const float green = (1.0f - t) * first.green + t * second.green;
+    const float blue  = (1.0f - t) * first.blue + t * second.blue;
+    const float alpha = (1.0f - t) * first.alpha + t * second.alpha;
 
     return mono::Color::RGBA(red, green, blue, alpha);
 }

@@ -15,7 +15,6 @@ namespace mono
 
         struct Configuration
         {
-            float point_size = 1.0f;
             mono::ITexturePtr texture;
         };
 
@@ -30,5 +29,6 @@ namespace mono
 
         std::unique_ptr<IRenderBuffer> m_positionBuffer;
         std::unique_ptr<IRenderBuffer> m_colorBuffer;
+        std::unique_ptr<IRenderBuffer> m_point_size_buffer;
     };
 }

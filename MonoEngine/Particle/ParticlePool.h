@@ -22,14 +22,20 @@ namespace mono
 
         std::vector<math::Vector> m_position;
         std::vector<math::Vector> m_velocity;
+
         std::vector<Color::RGBA> m_color;
-        std::vector<Color::RGBA> m_startColor;
-        std::vector<Color::RGBA> m_endColor;
-        std::vector<int> m_startLife;
+        std::vector<Color::RGBA> m_start_color;
+        std::vector<Color::RGBA> m_end_color;
+
+        std::vector<float> m_size;
+        std::vector<float> m_start_size;
+        std::vector<float> m_end_size;
+
+        std::vector<int> m_start_life;
         std::vector<int> m_life;
 
-        const size_t m_poolSize = 0;
-        size_t m_countAlive = 0;
+        const size_t m_pool_size = 0;
+        size_t m_count_alive = 0;
 
         const ParticleUpdater m_update_function;
         const void* m_update_context;

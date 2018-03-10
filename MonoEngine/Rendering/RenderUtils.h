@@ -71,6 +71,7 @@ namespace mono
 
     void DrawParticlePoints(const mono::IRenderBuffer* position,
                             const mono::IRenderBuffer* color,
+                            const mono::IRenderBuffer* point_size,
                             size_t count,
                             IPointSpriteShader* shader);
 

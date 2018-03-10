@@ -44,7 +44,7 @@ namespace mono
 
         virtual void DrawParticlePoints(const IRenderBuffer* position,
                                         const IRenderBuffer* color,
-                                        float point_size,
+                                        const IRenderBuffer* point_size,
                                         const ITexturePtr& texture,
                                         size_t count) = 0;
 

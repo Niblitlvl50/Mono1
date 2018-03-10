@@ -14,12 +14,13 @@ ParticleDrawer::ParticleDrawer(const Configuration& config, ParticlePool& pool)
     : m_config(config),
       m_pool(pool)
 {
-    const size_t pool_size = m_pool.m_poolSize;
+    const size_t pool_size = m_pool.m_pool_size;
 
     m_positionBuffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 2);
     m_colorBuffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 4); 
+    m_point_size_buffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, pool_size);
 
-    ClearRenderBuffer();    
+    ClearRenderBuffer();
 }
 
 ParticleDrawer::~ParticleDrawer()
@@ -27,10 +28,12 @@ ParticleDrawer::~ParticleDrawer()
 
 void ParticleDrawer::doDraw(mono::IRenderer& renderer) const
 {
-    m_positionBuffer->UpdateData(m_pool.m_position.data(), 0, m_pool.m_countAlive * 2);
-    m_colorBuffer->UpdateData(m_pool.m_color.data(), 0, m_pool.m_countAlive * 4);
+    m_positionBuffer->UpdateData(m_pool.m_position.data(), 0, m_pool.m_count_alive * 2);
+    m_colorBuffer->UpdateData(m_pool.m_color.data(), 0, m_pool.m_count_alive * 4);
+    m_point_size_buffer->UpdateData(m_pool.m_size.data(), 0, m_pool.m_count_alive);
 
-    renderer.DrawParticlePoints(m_positionBuffer.get(), m_colorBuffer.get(), m_config.point_size, m_config.texture, m_pool.m_countAlive);    
+    renderer.DrawParticlePoints(
+        m_positionBuffer.get(), m_colorBuffer.get(), m_point_size_buffer.get(), m_config.texture, m_pool.m_count_alive);
 }
 
 math::Quad ParticleDrawer::BoundingBox() const

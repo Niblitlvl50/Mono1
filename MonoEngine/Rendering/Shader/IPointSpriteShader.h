@@ -12,8 +12,8 @@ namespace mono
         virtual ~IPointSpriteShader()
         { }
 
-        virtual unsigned int GetPositionAttributeLocation() const = 0;
-        virtual unsigned int GetColorAttributeLocation() const = 0;
-        virtual void SetPointSize(float size) = 0;
+        virtual unsigned int GetPositionAttribute() const = 0;
+        virtual unsigned int GetColorAttribute() const = 0;
+        virtual unsigned int GetPointSizeAttribute() const = 0;
     };
 }

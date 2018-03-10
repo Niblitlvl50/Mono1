@@ -234,23 +234,25 @@ namespace
     {
     public:
 
-        virtual void Use()
+        virtual void Use() override
         { }
-        virtual unsigned int GetShaderId() const
+        virtual unsigned int GetShaderId() const override
         {
             return 0;
         }
-        virtual void LoadProjectionMatrix(const math::Matrix& projection)
+        virtual void LoadProjectionMatrix(const math::Matrix& projection) override
         { }
-        virtual void LoadModelViewMatrix(const math::Matrix& modelView)
+        virtual void LoadModelViewMatrix(const math::Matrix& modelView) override
         { }
-        virtual void SetPointSize(float size)
-        { }
-        virtual unsigned int GetPositionAttributeLocation() const
+        virtual unsigned int GetPositionAttribute() const override
         {
             return 0;
         }
-        virtual unsigned int GetColorAttributeLocation() const
+        virtual unsigned int GetColorAttribute() const override
+        {
+            return 0;
+        }
+        virtual unsigned int GetPointSizeAttribute() const override
         {
             return 0;
         }

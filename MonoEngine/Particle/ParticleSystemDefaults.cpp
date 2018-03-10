@@ -12,9 +12,11 @@ void mono::DefaultGenerator(const math::Vector& position, ParticlePool& pool, si
     pool.m_position[index] = position;
     pool.m_velocity[index] = math::Vector(x, y);
     //pool.m_color[index];
-    pool.m_startColor[index] = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
-    pool.m_endColor[index] = mono::Color::RGBA(0.0f, 1.0f, 0.0f, 0.1f);
-    pool.m_startLife[index] = 1000 + life;
+    pool.m_start_color[index] = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
+    pool.m_end_color[index] = mono::Color::RGBA(0.0f, 1.0f, 0.0f, 0.1f);
+    pool.m_start_size[index] = 10.0f;
+    pool.m_end_size[index] = 5.0f;
+    pool.m_start_life[index] = 1000 + life;
     pool.m_life[index] = 1000 + life;
 }
 
@@ -24,9 +26,10 @@ void mono::DefaultUpdater(ParticlePool& pool, size_t count, unsigned int delta, 
 
     for(size_t index = 0; index < count; ++index)
     {
-        const float t = 1.0f - float(pool.m_life[index]) / float(pool.m_startLife[index]);
+        const float t = 1.0f - float(pool.m_life[index]) / float(pool.m_start_life[index]);
 
         pool.m_position[index] += pool.m_velocity[index] * float_delta;
-        pool.m_color[index] = mono::Color::Lerp(pool.m_startColor[index], pool.m_endColor[index], t);
+        pool.m_color[index] = mono::Color::Lerp(pool.m_start_color[index], pool.m_end_color[index], t);
+        pool.m_size[index] = (1.0f - t) * pool.m_start_size[index] + t * pool.m_end_size[index];
     }
 }

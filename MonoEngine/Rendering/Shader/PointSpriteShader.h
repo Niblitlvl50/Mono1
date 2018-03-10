@@ -11,23 +11,24 @@ namespace mono
 
         PointSpriteShader();
 
-        virtual void Use();
-        virtual unsigned int GetShaderId() const;
-        virtual void LoadProjectionMatrix(const math::Matrix& projection);
-        virtual void LoadModelViewMatrix(const math::Matrix& modelView);
-        virtual void SetPointSize(float size);
-        virtual unsigned int GetPositionAttributeLocation() const;
-        virtual unsigned int GetColorAttributeLocation() const;
+        virtual void Use() override;
+        virtual unsigned int GetShaderId() const override;
+        virtual void LoadProjectionMatrix(const math::Matrix& projection) override;
+        virtual void LoadModelViewMatrix(const math::Matrix& modelView) override;
+
+        virtual unsigned int GetPositionAttribute() const override;
+        virtual unsigned int GetColorAttribute() const override;
+        virtual unsigned int GetPointSizeAttribute() const override;
 
     private:
 
-        unsigned int mProgram;
+        unsigned int m_program;
         
-        int mMVMatrixLocation;
-        int mPMatrixLocation;
-        int m_pointSizeLocation;
+        int m_mv_matrix_location;
+        int m_p_matrix_location;
         
-        unsigned int mPositionAttributeLocation;
-        unsigned int mColorAttributeLocation;
+        unsigned int m_position_attribute;
+        unsigned int m_color_attribute;
+        unsigned int m_point_size_attribute;
     };
 }
