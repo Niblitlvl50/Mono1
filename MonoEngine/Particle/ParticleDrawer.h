@@ -13,18 +13,13 @@ namespace mono
     {
     public:
 
-        struct Configuration
-        {
-            mono::ITexturePtr texture;
-        };
-
-        ParticleDrawer(const Configuration& config, ParticlePool& pool);
+        ParticleDrawer(const mono::ITexturePtr& texture, ParticlePool& pool);
         ~ParticleDrawer();
 
         void doDraw(mono::IRenderer& renderer) const override;
         math::Quad BoundingBox() const override;
 
-        const Configuration m_config;
+        const mono::ITexturePtr m_texture;
         ParticlePool& m_pool;
 
         std::unique_ptr<IRenderBuffer> m_positionBuffer;
