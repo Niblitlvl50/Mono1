@@ -9,7 +9,7 @@ using byte = unsigned char;
 namespace File
 {
     //! A smart file handle
-    using FilePtr = std::shared_ptr<FILE>;
+    using FilePtr = std::unique_ptr<FILE, int(*)(FILE*)>;
 
     //! Opens a binary file for reading
     FilePtr OpenBinaryFile(const char* file_name);
