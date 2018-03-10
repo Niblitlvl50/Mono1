@@ -15,8 +15,9 @@ namespace mono
         struct Configuration
         {
             math::Vector position;
-            ParticleGenerator generator = nullptr;
             float emit_rate = 0.2f;
+            ParticleGenerator generator = nullptr;
+            const void* generator_context = nullptr;
         };
 
         ParticleEmitter(const Configuration& config, ParticlePool& pool);
@@ -24,6 +25,8 @@ namespace mono
 
         void doUpdate(unsigned int delta) override;
 
+    private:
+    
         const Configuration m_config;
         math::Vector m_position;
         ParticlePool& m_pool;

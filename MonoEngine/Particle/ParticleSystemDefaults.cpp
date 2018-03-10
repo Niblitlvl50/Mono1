@@ -3,7 +3,7 @@
 #include "ParticlePool.h"
 #include "Random.h"
 
-void mono::DefaultGenerator(const math::Vector& position, ParticlePool& pool, size_t index)
+void mono::DefaultGenerator(const math::Vector& position, ParticlePool& pool, size_t index, const void* context)
 {
     const float x = mono::Random(-80.0f, 80.0f);
     const float y = mono::Random(-80.0f, 80.0f);
@@ -18,7 +18,7 @@ void mono::DefaultGenerator(const math::Vector& position, ParticlePool& pool, si
     pool.m_life[index] = 1000 + life;
 }
 
-void mono::DefaultUpdater(ParticlePool& pool, size_t count, unsigned int delta)
+void mono::DefaultUpdater(ParticlePool& pool, size_t count, unsigned int delta, const void* context)
 {
     const float float_delta = float(delta) / 1000.0f;
 

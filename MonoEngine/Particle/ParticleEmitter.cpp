@@ -24,7 +24,7 @@ void ParticleEmitter::doUpdate(unsigned int delta)
     const size_t end_index = std::min(start_index + new_particles, m_pool.m_poolSize -1);
 
     for(size_t index = start_index; index < end_index; ++index)
-        m_config.generator(m_position, m_pool, index);
+        m_config.generator(m_position, m_pool, index, m_config.generator_context);
 
     for(size_t index = start_index; index < end_index; ++index)
         m_pool.Wake(index);

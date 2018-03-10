@@ -12,7 +12,7 @@ namespace mono
     {
     public:
 
-        ParticlePool(int pool_size, ParticleUpdater update_function);
+        ParticlePool(int pool_size, ParticleUpdater update_function, const void* update_context);
 
         void Kill(size_t index);
         void Wake(size_t index);
@@ -28,8 +28,10 @@ namespace mono
         std::vector<int> m_startLife;
         std::vector<int> m_life;
 
-        size_t m_poolSize = 0;
+        const size_t m_poolSize = 0;
         size_t m_countAlive = 0;
-        ParticleUpdater m_update_function;
+
+        const ParticleUpdater m_update_function;
+        const void* m_update_context;
     };
 }
