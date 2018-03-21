@@ -53,5 +53,6 @@ namespace mono
         mono::Color::HSL ToHSL(const mono::Color::RGBA& rgb);
 
         mono::Color::RGBA Lerp(const mono::Color::RGBA& first, const mono::Color::RGBA& second, float t);
+        mono::Color::RGBA LerpRGB(const mono::Color::RGBA& first, const mono::Color::RGBA& second, float t);
     }
 }

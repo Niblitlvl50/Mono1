@@ -3,10 +3,9 @@
 
 using namespace mono;
 
-ParticlePool::ParticlePool(int pool_size, ParticleUpdater update_function, const void* update_context)
+ParticlePool::ParticlePool(int pool_size, ParticleUpdater update_function)
     : m_pool_size(pool_size)
     , m_update_function(update_function)
-    , m_update_context(update_context)
 {
     m_position.resize(pool_size);
     m_velocity.resize(pool_size);
@@ -51,7 +50,7 @@ void ParticlePool::Swap(size_t first, size_t second)
 
 void ParticlePool::doUpdate(unsigned int delta)
 {
-    m_update_function(*this, m_count_alive, delta, m_update_context);
+    m_update_function(*this, m_count_alive, delta);
 
     for(size_t index = 0; index < m_count_alive; ++index)
     {

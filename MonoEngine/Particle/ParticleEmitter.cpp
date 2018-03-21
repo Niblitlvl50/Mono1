@@ -6,7 +6,7 @@
 
 using namespace mono;
 
-ParticleEmitter::ParticleEmitter(const Configuration& config, ParticlePool& pool)
+ParticleEmitter::ParticleEmitter(const Configuration& config, ParticlePool* pool)
     : m_config(config)
     , m_burst_emitted(false)
     , m_duration(0.0f)
@@ -25,12 +25,17 @@ void ParticleEmitter::Stop()
     m_duration = m_config.duration;
 }
 
+bool ParticleEmitter::IsDone() const
+{
+    if(m_config.burst)
+        return m_burst_emitted;
+
+    return (m_config.duration > 0.0f && m_duration > m_config.duration);
+}
+
 void ParticleEmitter::doUpdate(unsigned int delta)
 {
-    if(m_config.burst && m_burst_emitted)
-        return;
-
-    if(m_config.duration > 0.0f && m_duration > m_config.duration)
+    if(IsDone())
         return;
 
     m_duration += float(delta) / 1000.0f;
@@ -51,14 +56,14 @@ void ParticleEmitter::doUpdate(unsigned int delta)
             m_carry_over = 0.0f;
     }
 
-    const size_t start_index = m_pool.m_count_alive;
-    const size_t end_index = std::min(start_index + new_particles, m_pool.m_pool_size -1);
+    const size_t start_index = m_pool->m_count_alive;
+    const size_t end_index = std::min(start_index + new_particles, m_pool->m_pool_size -1);
 
     for(size_t index = start_index; index < end_index; ++index)
-        m_config.generator(m_position, m_pool, index, m_config.generator_context);
+        m_config.generator(m_position, *m_pool, index);
 
     for(size_t index = start_index; index < end_index; ++index)
-        m_pool.Wake(index);
+        m_pool->Wake(index);
 
     m_burst_emitted = true;
 }

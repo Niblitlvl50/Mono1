@@ -19,23 +19,23 @@ namespace mono
             float emit_rate = 10.0f;    // particles per second
             bool burst = false;         // if true, one burst only and will emit duration * emit_rate particles
             ParticleGenerator generator = nullptr;
-            const void* generator_context = nullptr;
         };
 
-        ParticleEmitter(const Configuration& config, ParticlePool& pool);
+        ParticleEmitter(const Configuration& config, ParticlePool* pool);
         void SetPosition(const math::Vector& position);
         void Stop();
+        bool IsDone() const;
 
         void doUpdate(unsigned int delta) override;
 
     private:
     
-        const Configuration m_config;
+        Configuration m_config;
         bool m_burst_emitted;
         float m_duration;
         float m_carry_over;
 
         math::Vector m_position;
-        ParticlePool& m_pool;
+        ParticlePool* m_pool;
     };
 }

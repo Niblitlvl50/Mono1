@@ -300,11 +300,8 @@ void mono::DrawTexturedGeometry(const mono::IRenderBuffer* vertices,
     ClearRenderBuffer();
 }
 
-void mono::DrawParticlePoints(const IRenderBuffer* position,
-                              const IRenderBuffer* color,
-                              const mono::IRenderBuffer* point_size,
-                              size_t count,
-                              IPointSpriteShader* shader)
+void mono::DrawParticlePoints(
+    const IRenderBuffer* position, const IRenderBuffer* color, const IRenderBuffer* point_size, size_t count, IPointSpriteShader* shader)
 {
     glEnable(GL_POINT_SPRITE);
     glDepthMask(GL_FALSE);

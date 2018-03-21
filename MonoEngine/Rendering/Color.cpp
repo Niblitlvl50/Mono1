@@ -106,3 +106,13 @@ mono::Color::RGBA mono::Color::Lerp(const mono::Color::RGBA& first, const mono::
 
     return mono::Color::RGBA(red, green, blue, alpha);
 }
+
+mono::Color::RGBA mono::Color::LerpRGB(const mono::Color::RGBA& first, const mono::Color::RGBA& second, float t)
+{
+    const float red   = (1.0f - t) * first.red + t * second.red;
+    const float green = (1.0f - t) * first.green + t * second.green;
+    const float blue  = (1.0f - t) * first.blue + t * second.blue;
+
+    return mono::Color::RGBA(red, green, blue, first.alpha);
+}
+
