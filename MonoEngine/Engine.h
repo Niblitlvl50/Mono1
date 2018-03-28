@@ -25,7 +25,7 @@ namespace mono
     class Engine
     {
     public:
-        Engine(System::IWindow* window, const ICameraPtr& camera, EventHandler& eventHandler);
+        Engine(System::IWindow* window, const ICameraPtr& camera, EventHandler& event_handler);
         ~Engine();
 
         int Run(IZonePtr zone);
@@ -39,15 +39,15 @@ namespace mono
         bool OnActivated(const event::ActivatedEvent& event);
         bool OnTimeScale(const event::TimeScaleEvent& event);
 
-        bool mPause = false;
-        bool mQuit = false;
-        bool mUpdateLastTime = false;
-        float mTimeScale = 1.0f;
+        bool m_pause = false;
+        bool m_quit = false;
+        bool m_update_last_time = false;
+        float m_time_scale = 1.0f;
 
         System::IWindow* m_window;
-        ICameraPtr mCamera;
-        EventHandler& mEventHandler;
-        std::shared_ptr<System::IInputHandler> m_input_handler;
+        ICameraPtr m_camera;
+        EventHandler& m_event_handler;
+        std::unique_ptr<System::IInputHandler> m_input_handler;
 
         EventToken<event::PauseEvent> mPauseToken;
         EventToken<event::QuitEvent> mQuitToken;
