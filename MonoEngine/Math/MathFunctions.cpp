@@ -54,6 +54,11 @@ math::Vector math::VectorFromAngle(float radians)
     return math::Vector(-std::sin(radians), std::cos(radians));
 }
 
+float math::AngleFromVector(const math::Vector& normal)
+{
+    return atan2f(normal.x, normal.y);
+}
+
 math::Vector math::CentroidOfPolygon(const std::vector<math::Vector>& points)
 {
     math::Vector centroid;
