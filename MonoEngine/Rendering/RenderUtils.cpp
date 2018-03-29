@@ -89,7 +89,7 @@ void mono::DrawSprite(const mono::ISprite& sprite, ITextureShader* shader)
 {
     // The sprite can return zeroQuad as texture coordinates when the animation is finished
     const math::Quad& quad = sprite.GetTextureCoords();
-    if(quad == math::zeroQuad)
+    if(quad == math::ZeroQuad)
         return;
 
     constexpr float vertices[] = { -0.5f, -0.5f,

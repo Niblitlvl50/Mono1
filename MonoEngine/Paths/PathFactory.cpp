@@ -57,7 +57,7 @@ namespace
         math::Vector GetPositionByLength(float length) const override
         {
             if(m_length_table.empty())
-                return math::zeroVec;
+                return math::ZeroVec;
 
             const auto find_func = [length](float start_length) {
                 return length <= start_length;
@@ -65,7 +65,7 @@ namespace
 
             auto it = std::find_if(m_length_table.begin(), m_length_table.end(), find_func);
             if(it == m_length_table.end())
-                return math::zeroVec;
+                return math::ZeroVec;
 
             if(it != m_length_table.begin())
                 --it;

@@ -23,7 +23,7 @@ const math::Vector& PhysicsEntityBase::Position() const
 
 const math::Vector& PhysicsEntityBase::BasePoint() const
 {
-    return math::zeroVec;
+    return math::ZeroVec;
 }
 
 float PhysicsEntityBase::Rotation() const

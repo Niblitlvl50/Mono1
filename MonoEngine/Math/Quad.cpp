@@ -1,5 +1,6 @@
 
 #include "Quad.h"
+#include "MathFwd.h"
 #include <algorithm>
 
 math::Quad math::operator * (const math::Quad& left, float value)
@@ -33,3 +34,5 @@ bool math::operator == (const math::Quad& left, const math::Quad& right)
 {
     return left.mA == right.mA && left.mB == right.mB;
 }
+
+const math::Quad math::InfQuad = Quad(-math::INF, -math::INF, math::INF, math::INF);

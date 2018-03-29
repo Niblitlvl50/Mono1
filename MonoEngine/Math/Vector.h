@@ -41,6 +41,6 @@ namespace math
     float Dot(const Vector& first, const Vector& second);
 
     // Just a convineince vector declared to zero.
-    constexpr Vector zeroVec = Vector();
+    constexpr Vector ZeroVec = Vector();
 }
 

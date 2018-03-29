@@ -7,8 +7,8 @@
 
 TEST(MathTest, QuadZero)
 {
-    EXPECT_EQ(math::zeroQuad.mA, math::zeroVec);
-    EXPECT_EQ(math::zeroQuad.mB, math::zeroVec);
+    EXPECT_EQ(math::ZeroQuad.mA, math::ZeroVec);
+    EXPECT_EQ(math::ZeroQuad.mB, math::ZeroVec);
 }
 
 TEST(MathTest, QuadOverlap)

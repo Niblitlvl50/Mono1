@@ -39,5 +39,8 @@ namespace math
     bool operator == (const Quad& left, const Quad& right);
 
     //! Zero quad defined for convenience
-    constexpr Quad zeroQuad = Quad(zeroVec, zeroVec);
+    constexpr Quad ZeroQuad = Quad(ZeroVec, ZeroVec);
+
+    // Infinite quad, covers everything.
+    extern const Quad InfQuad;
 }

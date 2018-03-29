@@ -14,7 +14,7 @@ namespace constants
 }
 
 TraceCamera::TraceCamera(int width, int height)
-    : m_offset(math::zeroVec),
+    : m_offset(math::ZeroVec),
       mViewport(0.0f, 0.0f, width, height),
       mTargetViewport(mViewport)
 { }
