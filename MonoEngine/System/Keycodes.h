@@ -41,7 +41,9 @@ enum class Keycode
 
     A,
     S,
-    D
+    D,
+
+    N
 };
 
 enum class MouseButton
