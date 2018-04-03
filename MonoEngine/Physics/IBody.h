@@ -93,6 +93,9 @@ namespace mono
         //! Called by the framework when a collision occures
         //! @param body The other body of the collision
         virtual void OnCollideWith(const IBodyPtr& body, unsigned int categories) = 0;
+
+        //! Disable damping on this body, will cause no slowdowns. 
+        virtual void SetNoDamping() = 0;
         
         //! Gets the underlying cpBody object, dont use this one
         //! @return cpBody* A pointer to a cpBody struct
