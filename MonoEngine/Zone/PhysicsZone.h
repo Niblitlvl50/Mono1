@@ -32,8 +32,8 @@ namespace mono
     private:
 
         struct PhysicsImpl;
-        std::shared_ptr<PhysicsImpl> mPhysics;
-        std::vector<IPhysicsEntityPtr> mPhysicsEntities;
+        std::shared_ptr<PhysicsImpl> m_physics;
+        std::vector<IPhysicsEntityPtr> m_physics_entities;
         std::vector<IConstraintPtr> m_constraints;
     };
 }

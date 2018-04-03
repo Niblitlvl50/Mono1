@@ -12,49 +12,49 @@
 
 using namespace mono;
 
-Space::Space(const math::Vector& gravity, float damping)
+PhysicsSpace::PhysicsSpace(const math::Vector& gravity, float damping)
 {
-    mSpace = cpSpaceNew();
-    cpSpaceSetGravity(mSpace, cpv(gravity.x, gravity.y));
-    cpSpaceSetDamping(mSpace, damping);
+    m_space = cpSpaceNew();
+    cpSpaceSetGravity(m_space, cpv(gravity.x, gravity.y));
+    cpSpaceSetDamping(m_space, damping);
 
     const auto beginFunc = [](cpArbiter* arb, cpSpace*, cpDataPointer data) -> cpBool {
-        return static_cast<Space*>(data)->OnCollision(arb);
+        return static_cast<PhysicsSpace*>(data)->OnCollision(arb);
     };
 
-    cpCollisionHandler* ch = cpSpaceAddDefaultCollisionHandler(mSpace);
+    cpCollisionHandler* ch = cpSpaceAddDefaultCollisionHandler(m_space);
     ch->beginFunc = beginFunc;
     ch->userData = this;
 }
 
-Space::~Space()
+PhysicsSpace::~PhysicsSpace()
 {
-    mBodies.clear();
-    cpSpaceDestroy(mSpace);
+    m_bodies.clear();
+    cpSpaceDestroy(m_space);
 }
 
-void Space::Tick(unsigned int delta)
+void PhysicsSpace::Tick(unsigned int delta)
 {
     const float float_delta = delta;
-    cpSpaceStep(mSpace, float_delta / 1000.0f);
+    cpSpaceStep(m_space, float_delta / 1000.0f);
 }
 
-void Space::Add(const IBodyPtr& body)
+void PhysicsSpace::Add(const IBodyPtr& body)
 {
     if(!body->IsStatic())
-        cpSpaceAddBody(mSpace, body->Handle());
-    mBodies.push_back(body);
+        cpSpaceAddBody(m_space, body->Handle());
+    m_bodies.push_back(body);
 }
 
-void Space::Remove(const IBodyPtr& body)
+void PhysicsSpace::Remove(const IBodyPtr& body)
 {
     if(!body->IsStatic())
-        cpSpaceRemoveBody(mSpace, body->Handle());
+        cpSpaceRemoveBody(m_space, body->Handle());
 
-    const auto it = std::find(mBodies.begin(), mBodies.end(), body);
-    if(it != mBodies.end())
+    const auto it = std::find(m_bodies.begin(), m_bodies.end(), body);
+    if(it != m_bodies.end())
     {
-        mBodies.erase(it);
+        m_bodies.erase(it);
     }
     else
     {
@@ -62,54 +62,54 @@ void Space::Remove(const IBodyPtr& body)
     }
 }
 
-void Space::Add(const IShapePtr& shape)
+void PhysicsSpace::Add(const IShapePtr& shape)
 {
-    cpSpaceAddShape(mSpace, shape->Handle());
+    cpSpaceAddShape(m_space, shape->Handle());
 }
 
-void Space::Remove(const IShapePtr& shape)
+void PhysicsSpace::Remove(const IShapePtr& shape)
 {
-    cpSpaceRemoveShape(mSpace, shape->Handle());
+    cpSpaceRemoveShape(m_space, shape->Handle());
 }
 
-void Space::Add(const IConstraintPtr& constraint)
+void PhysicsSpace::Add(const IConstraintPtr& constraint)
 {
-    cpSpaceAddConstraint(mSpace, constraint->Handle());
+    cpSpaceAddConstraint(m_space, constraint->Handle());
 }
 
-void Space::Remove(const IConstraintPtr& constraint)
+void PhysicsSpace::Remove(const IConstraintPtr& constraint)
 {
-    cpSpaceRemoveConstraint(mSpace, constraint->Handle());
+    cpSpaceRemoveConstraint(m_space, constraint->Handle());
 }
 
-void Space::ForEachBody(const BodyFunc& func)
+void PhysicsSpace::ForEachBody(const BodyFunc& func)
 {
     const auto forEachBody = [](cpBody* body, void* data) {
-        static_cast<Space*>(data)->DoForEachFuncOnBody(body);
+        static_cast<PhysicsSpace*>(data)->DoForEachFuncOnBody(body);
     };
     
-    mForEachFunc = func;
-    cpSpaceEachBody(mSpace, forEachBody, this);
+    m_for_each_func = func;
+    cpSpaceEachBody(m_space, forEachBody, this);
     
     // Null the function, so it wont be used by misstake after this point
-    mForEachFunc = nullptr;
+    m_for_each_func = nullptr;
 }
 
-void Space::DoForEachFuncOnBody(cpBody* body)
+void PhysicsSpace::DoForEachFuncOnBody(cpBody* body)
 {
-    for(auto& bodyPtr : mBodies)
+    for(auto& bodyPtr : m_bodies)
     {
         if(body == bodyPtr->Handle())
         {
-            mForEachFunc(bodyPtr);
+            m_for_each_func(bodyPtr);
             break;
         }
     }
 }
 
-IBodyPtr Space::QueryFirst(const math::Vector& start, const math::Vector& end)
+IBodyPtr PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vector& end)
 {
-    const cpShape* shape = cpSpaceSegmentQueryFirst(mSpace, cpv(start.x, start.y), cpv(end.x, end.y), 1, CP_SHAPE_FILTER_ALL, nullptr);
+    const cpShape* shape = cpSpaceSegmentQueryFirst(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 1, CP_SHAPE_FILTER_ALL, nullptr);
     if(!shape)
         return nullptr;
 
@@ -119,14 +119,14 @@ IBodyPtr Space::QueryFirst(const math::Vector& start, const math::Vector& end)
         return bodyPtr->Handle() == body;
     };
 
-    const auto& it = std::find_if(mBodies.begin(), mBodies.end(), func);
-    if(it == mBodies.end())
+    const auto& it = std::find_if(m_bodies.begin(), m_bodies.end(), func);
+    if(it == m_bodies.end())
         return nullptr;
 
     return *it;
 }
 
-bool Space::OnCollision(cpArbiter* arb)
+bool PhysicsSpace::OnCollision(cpArbiter* arb)
 {
     cpBody* b1 = nullptr;
     cpBody* b2 = nullptr;
@@ -142,7 +142,7 @@ bool Space::OnCollision(cpArbiter* arb)
     IBodyPtr first = nullptr;
     IBodyPtr second = nullptr;
     
-    for(auto& body : mBodies)
+    for(auto& body : m_bodies)
     {
         if(body->Handle() == b1)
             first = body;

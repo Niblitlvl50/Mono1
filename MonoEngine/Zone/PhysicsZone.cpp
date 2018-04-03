@@ -16,25 +16,25 @@ using namespace mono;
 struct PhysicsZone::PhysicsImpl : IUpdatable
 {
     PhysicsImpl(const math::Vector& gravity, float damping)
-        : mSpace(gravity, damping)
+        : m_space(gravity, damping)
     { }
     void doUpdate(unsigned int delta)
     {
-        mSpace.Tick(delta);
+        m_space.Tick(delta);
     }
-    mono::Space mSpace;
+    mono::PhysicsSpace m_space;
 };
 
 PhysicsZone::PhysicsZone(const math::Vector& gravity, float damping)
-    : mPhysics(new PhysicsImpl(gravity, damping))
+    : m_physics(new PhysicsImpl(gravity, damping))
 {
     // Add space physics as an updatable
-    AddUpdatable(mPhysics);
+    AddUpdatable(m_physics);
 }
 
 void PhysicsZone::ForEachBody(const mono::BodyFunc& func)
 {
-    mPhysics->mSpace.ForEachBody(func);
+    m_physics->m_space.ForEachBody(func);
 }
 
 void PhysicsZone::AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer)
@@ -43,7 +43,7 @@ void PhysicsZone::AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int la
     AddUpdatable(entity);
     AddPhysicsData(entity->GetPhysics());
 
-    mPhysicsEntities.push_back(entity);
+    m_physics_entities.push_back(entity);
 }
 
 void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
@@ -51,7 +51,7 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
     RemoveDrawable(entity);
     RemoveUpdatable(entity);
 
-    const bool result = FindAndRemove(mPhysicsEntities, entity);
+    const bool result = FindAndRemove(m_physics_entities, entity);
     if(result)
         RemovePhysicsData(entity->GetPhysics());
     else
@@ -61,35 +61,35 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
 
 void PhysicsZone::AddConstraint(const mono::IConstraintPtr& constraint)
 {
-    mPhysics->mSpace.Add(constraint);
+    m_physics->m_space.Add(constraint);
     m_constraints.push_back(constraint);
 }
 
 void PhysicsZone::RemoveConstraint(const mono::IConstraintPtr& constraint)
 {
-    mPhysics->mSpace.Remove(constraint);
+    m_physics->m_space.Remove(constraint);
     mono::FindAndRemove(m_constraints, constraint);
 }
 
 void PhysicsZone::AddPhysicsData(const mono::PhysicsData& physics_data)
 {
-    mPhysics->mSpace.Add(physics_data.body);
+    m_physics->m_space.Add(physics_data.body);
     
     for(auto& shape : physics_data.shapes)
-        mPhysics->mSpace.Add(shape);
+        m_physics->m_space.Add(shape);
 }
 
 void PhysicsZone::RemovePhysicsData(const mono::PhysicsData& physics_data)
 {
-    mPhysics->mSpace.Remove(physics_data.body);
+    m_physics->m_space.Remove(physics_data.body);
     
     for(auto& shape : physics_data.shapes)
-        mPhysics->mSpace.Remove(shape);
+        m_physics->m_space.Remove(shape);
 }
 
 IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromBody(const mono::IBodyPtr& body) const
 {
-    for(auto& entity : mPhysicsEntities)
+    for(auto& entity : m_physics_entities)
     {
         if(entity->GetPhysics().body == body)
             return entity;
@@ -100,7 +100,7 @@ IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromBody(const mono::IBodyPtr& b
 
 IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromId(unsigned int id) const
 {
-    for(auto& entity : mPhysicsEntities)
+    for(auto& entity : m_physics_entities)
     {
         if(entity->Id() == id)
             return entity;

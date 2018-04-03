@@ -10,12 +10,12 @@ struct cpArbiter;
 
 namespace mono
 {
-    class Space
+    class PhysicsSpace
     {
     public:
         
-        Space(const math::Vector& gravity, float damping);
-        ~Space();
+        PhysicsSpace(const math::Vector& gravity, float damping);
+        ~PhysicsSpace();
         
         void Tick(unsigned int delta);
         
@@ -35,9 +35,9 @@ namespace mono
         bool OnCollision(cpArbiter* arb);        
         void DoForEachFuncOnBody(cpBody* body);
 
-        BodyFunc mForEachFunc;
+        BodyFunc m_for_each_func;
         
-        cpSpace* mSpace;
-        std::vector<IBodyPtr> mBodies;
+        cpSpace* m_space;
+        std::vector<IBodyPtr> m_bodies;
     };
 }
