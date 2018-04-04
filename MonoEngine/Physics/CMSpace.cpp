@@ -5,6 +5,7 @@
 #include "IShape.h"
 #include "IConstraint.h"
 #include "Math/Vector.h"
+#include "Utils.h"
 
 #include "chipmunk/chipmunk.h"
 #include <algorithm>
@@ -51,15 +52,9 @@ void PhysicsSpace::Remove(const IBodyPtr& body)
     if(!body->IsStatic())
         cpSpaceRemoveBody(m_space, body->Handle());
 
-    const auto it = std::find(m_bodies.begin(), m_bodies.end(), body);
-    if(it != m_bodies.end())
-    {
-        m_bodies.erase(it);
-    }
-    else
-    {
+    const bool removed = mono::remove(m_bodies, body);
+    if(!removed)
         std::printf("Unable to remove body from collection!\n");
-    }
 }
 
 void PhysicsSpace::Add(const IShapePtr& shape)

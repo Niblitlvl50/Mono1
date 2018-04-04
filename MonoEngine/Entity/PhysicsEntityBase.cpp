@@ -144,6 +144,6 @@ void PhysicsEntityBase::AddChild(const IEntityPtr& child)
 
 void PhysicsEntityBase::RemoveChild(const IEntityPtr& child)
 {
-    FindAndRemove(m_children, child);
+    mono::remove(m_children, child);
 }
 

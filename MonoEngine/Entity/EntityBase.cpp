@@ -136,6 +136,6 @@ void EntityBase::AddChild(const IEntityPtr& child)
 
 void EntityBase::RemoveChild(const IEntityPtr& child)
 {
-    FindAndRemove(m_children, child);
+    mono::remove(m_children, child);
 }
 
