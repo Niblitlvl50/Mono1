@@ -15,6 +15,7 @@ namespace math
 
     math::Vector VectorFromAngle(float radians);
     float AngleFromVector(const math::Vector& normal);
+    float NormalizeAngle(float radians);
 
     // Pass in at least 3 points, else you will get "nan nan" back.
     math::Vector CentroidOfPolygon(const std::vector<math::Vector>& points);

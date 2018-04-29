@@ -150,3 +150,10 @@ math::Vector math::ClosestPointOnLine(const math::Vector& start, const math::Vec
     return projection;
 }
 
+float math::NormalizeAngle(float radians)
+{
+    radians = fmod(radians, math::PI() * 2.0f);
+    if(radians < 0.0f)
+        radians += math::PI() * 2.0f;
+    return radians;
+}

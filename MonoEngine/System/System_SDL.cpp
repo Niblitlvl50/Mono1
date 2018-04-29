@@ -64,8 +64,10 @@ namespace
     {
     public:
 
-        SDLWindow(const char* title, int width, int height, bool fullscreen)
+        SDLWindow(const char* title, int x, int y, int width, int height, bool fullscreen)
         {
+            m_position.x = x;
+            m_position.y = y;
             m_size.width = width;
             m_size.height = height;
 
@@ -80,7 +82,7 @@ namespace
             const unsigned int flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE; // | SDL_WINDOW_BORDERLESS; //| SDL_WINDOW_ALLOW_HIGHDPI; // | screenflag;
 
             // Create our window centered and with the given resolution
-            m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
+            m_window = SDL_CreateWindow(title, x, y, width, height, flags);
             if(m_window == 0)
                 throw std::runtime_error("Unable to create SDL window");
 
@@ -128,11 +130,17 @@ namespace
         {
             glClearColor(red, green, blue, 1.0f);
         }
+        const System::Position& Position() const override
+        {
+            SDL_GetWindowPosition(m_window, &m_position.x, &m_position.y);
+            return m_position;
+        }
         const System::Size& Size() const override
         {
             return m_size;
         }
 
+        mutable System::Position m_position;
         System::Size m_size;
         SDL_Window* m_window = nullptr;
         void* m_context = nullptr;
@@ -379,9 +387,9 @@ System::Size System::GetCurrentWindowSize()
     return { mode.w, mode.h };
 }
 
-System::IWindow* System::CreateWindow(const char* title, int width, int height, bool fullscreen)
+System::IWindow* System::CreateWindow(const char* title, int x, int y, int width, int height, bool fullscreen)
 {
-    return new SDLWindow(title, width, height, fullscreen);
+    return new SDLWindow(title, x, y, width, height, fullscreen);
 }
 
 void System::SetCursorVisibility(System::CursorVisibility state)

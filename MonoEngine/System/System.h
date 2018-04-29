@@ -12,6 +12,12 @@ namespace System
         int height;
     };
 
+    struct Position
+    {
+        int x;
+        int y;
+    };
+
     struct ControllerState
     {
         int id = -1;
@@ -60,6 +66,7 @@ namespace System
         virtual void SwapBuffers() const = 0;
         virtual void MakeCurrent() = 0;
         virtual void SetBackgroundColor(float red, float green, float blue) = 0;
+        virtual const System::Position& Position() const = 0;
         virtual const System::Size& Size() const = 0;
     };
 
@@ -124,7 +131,7 @@ namespace System
 
     // Creates a opengl window
     // The caller is responsible for deleting the pointer
-    IWindow* CreateWindow(const char* title, int width, int height, bool fullscreen);
+    IWindow* CreateWindow(const char* title, int x, int y, int width, int height, bool fullscreen);
 
     enum class CursorVisibility
     {

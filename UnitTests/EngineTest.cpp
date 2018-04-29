@@ -28,34 +28,41 @@ namespace
         MocWindow(mono::EventHandler& handler)
             : mHandler(handler)
         {
+            m_position.x = 0;
+            m_position.y = 0;
             m_size.width = 640;
             m_size.height = 480;
         }
-        virtual void SurfaceChanged(int width, int height)
+        void SurfaceChanged(int width, int height) override
         { }
-        virtual void Maximize()
+        void Maximize() override
         { }
-        virtual void Minimize()
+        void Minimize() override
         { }
-        virtual void RestoreSize()
+        void RestoreSize() override
         { }
-        virtual void SwapBuffers() const
+        void SwapBuffers() const override
         {
             mSwapBuffersCalled = true;
             mHandler.DispatchEvent(event::QuitEvent());
         }
-        virtual void MakeCurrent()
+        void MakeCurrent() override
         {
             mMakeCurrentCalled = true;
         }
-        virtual void SetBackgroundColor(float red, float green, float blue)
+        void SetBackgroundColor(float red, float green, float blue) override
         { }
-        virtual const System::Size& Size() const
+        const System::Position& Position() const override
+        {
+            return m_position;
+        }
+        const System::Size& Size() const override
         {
             return m_size;
         }
 
         mono::EventHandler& mHandler;
+        System::Position m_position;
         System::Size m_size;
 
         bool mMakeCurrentCalled = false;
