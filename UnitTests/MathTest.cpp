@@ -159,3 +159,37 @@ TEST(MathTest, Bezier)
     EXPECT_FLOAT_EQ(3.14f, end_point.x);
     EXPECT_FLOAT_EQ(3.14f, end_point.y);
 }
+
+TEST(MathTest, VectorFromAngle)
+{
+    const math::Vector& north = math::VectorFromAngle(0.0f);
+    EXPECT_FLOAT_EQ(0.0f, north.x);
+    EXPECT_FLOAT_EQ(1.0f, north.y);
+
+    const math::Vector& east = math::VectorFromAngle(math::PI_2());
+    EXPECT_FLOAT_EQ(1.0f, east.x);
+    EXPECT_NEAR(0.0f, east.y, 0.0000001f);
+
+    const math::Vector& south = math::VectorFromAngle(math::PI());
+    EXPECT_NEAR(0.0f, south.x, 0.0000001f);
+    EXPECT_FLOAT_EQ(-1.0f, south.y);
+
+    const math::Vector& west = math::VectorFromAngle(-math::PI_2());
+    EXPECT_FLOAT_EQ(-1.0f, west.x);
+    EXPECT_NEAR(0.0f, west.y, 0.0000001f);
+}
+
+TEST(MathTest, AngleFromVector)
+{
+    const float north = math::AngleFromVector(math::Vector(0.0f, 1.0f));
+    EXPECT_FLOAT_EQ(0.0f, north);
+
+    const float east = math::AngleFromVector(math::Vector(1.0f, 0.0f));
+    EXPECT_FLOAT_EQ(math::PI_2(), east);
+
+    const float south = math::AngleFromVector(math::Vector(0.0f, -1.0f));
+    EXPECT_FLOAT_EQ(math::PI(), south);
+
+    const float west = math::AngleFromVector(math::Vector(-1.0f, 0.0f));
+    EXPECT_FLOAT_EQ(-math::PI_2(), west);
+}

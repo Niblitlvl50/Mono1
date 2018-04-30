@@ -28,7 +28,7 @@ namespace math
     math::Vector ClosestPointOnLine(const math::Vector& start, const math::Vector& end, const math::Vector& point);
 
     constexpr float PI() {
-        return 3.14159265359f;
+        return 3.14159265358979323846264338327950288f;
     }
 
     constexpr float PI_2() {

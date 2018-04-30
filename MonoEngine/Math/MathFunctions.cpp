@@ -51,7 +51,7 @@ float math::AngleBetweenPoints(const math::Vector& first, const math::Vector& se
 
 math::Vector math::VectorFromAngle(float radians)
 {
-    return math::Vector(-std::sin(radians), std::cos(radians));
+    return math::Vector(std::sin(radians), std::cos(radians));
 }
 
 float math::AngleFromVector(const math::Vector& normal)
