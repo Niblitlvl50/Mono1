@@ -30,11 +30,12 @@ ImGuiRenderer::ImGuiRenderer(const char* config_file,
 
 ImGuiRenderer::~ImGuiRenderer()
 {
-    ImGui::Shutdown();
+    ImGui::DestroyContext();
 }
 
 void ImGuiRenderer::Initialize(const char* config_file)
 {
+    ImGui::CreateContext();
     ImGui::GetIO().DisplaySize = ImVec2(m_windowSize.x, m_windowSize.y);
     ImGui::GetIO().IniFilename = config_file;
 
