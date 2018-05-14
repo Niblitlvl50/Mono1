@@ -38,6 +38,9 @@ namespace math
 
     bool operator == (const Quad& left, const Quad& right);
 
+    float Width(const Quad& quad);
+    float Height(const Quad& quad);
+
     //! Zero quad defined for convenience
     constexpr Quad ZeroQuad = Quad(ZeroVec, ZeroVec);
 

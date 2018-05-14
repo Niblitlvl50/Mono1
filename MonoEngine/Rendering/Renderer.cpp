@@ -17,14 +17,13 @@
 
 #include "Math/Vector.h"
 #include "Math/Quad.h"
-#include "Math/Matrix.h"
 #include "Math/MathFunctions.h"
 
 
 using namespace mono;
 
 Renderer::Renderer(ICameraPtr camera)
-    : mCamera(camera)
+    : m_camera(camera)
 {
     m_color_shader = GetShaderFactory()->CreateColorShader();
     m_texture_shader = GetShaderFactory()->CreateTextureShader();
@@ -37,17 +36,17 @@ Renderer::~Renderer()
 
 void Renderer::PrepareDraw()
 {
-    const math::Quad& viewport = mCamera->GetViewport();
-    mProjectionMatrix = math::Ortho(0.0f, viewport.mB.x, 0.0f, viewport.mB.y, -10.0f, 10.0f);
+    const math::Quad& viewport = m_camera->GetViewport();
+    m_projection = math::Ortho(0.0f, viewport.mB.x, 0.0f, viewport.mB.y, -10.0f, 10.0f);
 
-    math::Identity(mModelView);
-    math::Translate(mModelView, -viewport.mA);
+    math::Identity(m_modelview);
+    math::Translate(m_modelview, -viewport.mA);
 }
 
 void Renderer::EndDraw()
 {
     // Clear all the stuff once the frame has been drawn
-    mDrawables.clear();
+    m_drawables.clear();
 }
 
 void Renderer::DrawFrame()
@@ -56,13 +55,13 @@ void Renderer::DrawFrame()
 
     unsigned int draw_count = 0;
 
-    const math::Quad& viewport = mCamera->GetViewport();
+    const math::Quad& viewport = m_camera->GetViewport();
     const math::Quad camera_quad(viewport.mA, viewport.mA + viewport.mB);
 
-    for(const auto& drawable : mDrawables)
+    for(const auto& drawable : m_drawables)
     {
-        m_current_transform = mModelView;
-        m_current_projection = mProjectionMatrix;
+        m_current_transform = m_modelview;
+        m_current_projection = m_projection;
 
         const math::Quad& bounds = drawable->BoundingBox();
 
@@ -75,15 +74,18 @@ void Renderer::DrawFrame()
     }
 
     // Restore the matrices
-    m_current_transform = mModelView;
-    m_current_projection = mProjectionMatrix;
+    m_current_transform = m_modelview;
+    m_current_projection = m_projection;
+
+ //   for(const auto& drawable : m_drawables)
+ //       DrawQuad(drawable->BoundingBox(), mono::Color::RGBA(1, 0, 0), 1.0);
 
     EndDraw();
 }
 
 void Renderer::AddDrawable(const IDrawablePtr& drawable)
 {
-    mDrawables.push_back(drawable);
+    m_drawables.push_back(drawable);
 }
 
 void Renderer::DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const
@@ -227,7 +229,7 @@ void Renderer::ClearTexture()
 
 void Renderer::PushGlobalTransform()
 {
-    m_current_transform = mModelView;
+    m_current_transform = m_modelview;
 }
 
 void Renderer::PushNewTransform(const math::Matrix& transform)

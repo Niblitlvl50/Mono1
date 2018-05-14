@@ -67,10 +67,10 @@ namespace mono
 
         void doDrawTexts() const;
 
-        ICameraPtr mCamera;
+        ICameraPtr m_camera;
 
-        math::Matrix mProjectionMatrix;
-        math::Matrix mModelView;
+        math::Matrix m_projection;
+        math::Matrix m_modelview;
 
         math::Matrix m_current_projection;
         math::Matrix m_current_transform;
@@ -83,6 +83,6 @@ namespace mono
         std::unique_ptr<IMorphingShader> m_morph_shader;
         std::unique_ptr<IPointSpriteShader> m_point_sprite_shader;
 
-        std::vector<IDrawablePtr> mDrawables;
+        std::vector<IDrawablePtr> m_drawables;
     };
 }

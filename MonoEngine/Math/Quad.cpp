@@ -2,6 +2,7 @@
 #include "Quad.h"
 #include "MathFwd.h"
 #include <algorithm>
+#include <cmath>
 
 math::Quad math::operator * (const math::Quad& left, float value)
 {
@@ -33,6 +34,16 @@ void math::operator |= (math::Quad& left, const math::Vector& right)
 bool math::operator == (const math::Quad& left, const math::Quad& right)
 {
     return left.mA == right.mA && left.mB == right.mB;
+}
+
+float math::Width(const math::Quad& quad)
+{
+    return std::fabs(quad.mB.x - quad.mA.x);
+}
+
+float math::Height(const math::Quad& quad)
+{
+    return std::fabs(quad.mB.y - quad.mA.y);
 }
 
 const math::Quad math::InfQuad = Quad(-math::INF, -math::INF, math::INF, math::INF);

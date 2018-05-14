@@ -22,15 +22,17 @@ namespace mono
         virtual void SetBasePoint(const math::Vector& base_point) = 0;
         virtual void SetScale(const math::Vector& scale) = 0;
 
-        // Rotation in radians
+        // Rotation in radians.
         virtual float Rotation() const = 0;
         virtual void SetRotation(float rotation) = 0;
 
+        // Local to world.
         virtual math::Matrix Transformation() const = 0;
 
-        // Unique id
+        // Unique id.
         virtual unsigned int Id() const = 0;
 
+        // 32 bits bitset.
         virtual void SetProperty(unsigned int property) = 0;
         virtual bool HasProperty(unsigned int property) const = 0;
     };
