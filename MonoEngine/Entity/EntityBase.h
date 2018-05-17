@@ -46,7 +46,7 @@ namespace mono
         unsigned int m_properties;
 
         math::Vector m_position;
-        math::Vector m_base_point;
+        math::Vector m_pivot_point;
         math::Vector m_scale;
         float m_rotation;
 

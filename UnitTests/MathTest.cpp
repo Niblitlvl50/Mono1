@@ -166,17 +166,17 @@ TEST(MathTest, VectorFromAngle)
     EXPECT_FLOAT_EQ(0.0f, north.x);
     EXPECT_FLOAT_EQ(1.0f, north.y);
 
-    const math::Vector& east = math::VectorFromAngle(math::PI_2());
-    EXPECT_FLOAT_EQ(1.0f, east.x);
-    EXPECT_NEAR(0.0f, east.y, 0.0000001f);
+    const math::Vector& west = math::VectorFromAngle(math::PI_2());
+    EXPECT_FLOAT_EQ(-1.0f, west.x);
+    EXPECT_NEAR(0.0f, west.y, 0.0000001f);
 
     const math::Vector& south = math::VectorFromAngle(math::PI());
     EXPECT_NEAR(0.0f, south.x, 0.0000001f);
     EXPECT_FLOAT_EQ(-1.0f, south.y);
 
-    const math::Vector& west = math::VectorFromAngle(-math::PI_2());
-    EXPECT_FLOAT_EQ(-1.0f, west.x);
-    EXPECT_NEAR(0.0f, west.y, 0.0000001f);
+    const math::Vector& east = math::VectorFromAngle(-math::PI_2());
+    EXPECT_FLOAT_EQ(1.0f, east.x);
+    EXPECT_NEAR(0.0f, east.y, 0.0000001f);
 }
 
 TEST(MathTest, AngleFromVector)

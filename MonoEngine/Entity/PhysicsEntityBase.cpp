@@ -129,12 +129,7 @@ math::Matrix PhysicsEntityBase::Transformation() const
     math::Matrix scale;
     math::ScaleXY(scale, m_scale);
 
-    math::Matrix transform;
-    transform *= translation;
-    transform *= rotation;
-    transform *= scale;
-
-    return transform;
+    return translation * rotation * scale;
 }
 
 void PhysicsEntityBase::AddChild(const IEntityPtr& child)

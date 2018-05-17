@@ -45,7 +45,7 @@ const math::Vector& EntityBase::Position() const
 
 const math::Vector& EntityBase::BasePoint() const
 {
-    return m_base_point;
+    return m_pivot_point;
 }
 
 void EntityBase::SetScale(const math::Vector& scale)
@@ -68,9 +68,9 @@ void EntityBase::SetPosition(const math::Vector& position)
     m_position = position;
 }
 
-void EntityBase::SetBasePoint(const math::Vector& base_point)
+void EntityBase::SetBasePoint(const math::Vector& pivot_point)
 {
-    m_base_point = base_point;
+    m_pivot_point = pivot_point;
 }
 
 void EntityBase::SetRotation(float rotation)
@@ -80,15 +80,22 @@ void EntityBase::SetRotation(float rotation)
 
 math::Quad EntityBase::BoundingBox() const
 {
+//    math::Quad thisbb(math::INF, math::INF, -math::INF, -math::INF);
+//
+//    const math::Matrix& local_to_world = Transformation();
+//    thisbb |= math::Transform(local_to_world, math::Vector(-0.5f, -0.5f));
+//    thisbb |= math::Transform(local_to_world, math::Vector(-0.5f,  0.5f));
+//    thisbb |= math::Transform(local_to_world, math::Vector( 0.5f,  0.5f));
+//    thisbb |= math::Transform(local_to_world, math::Vector( 0.5f, -0.5f));
+
     const math::Vector& half_scale = m_scale / 2.0f;
     math::Quad thisbb = math::Quad(m_position - half_scale, m_position + half_scale);
-    
-    if(!m_children.empty())
+
+    if(!m_children.empty())    
     {
-        const math::Matrix& transform = Transformation();
-    
+        const math::Matrix& local_to_world = Transformation();
         for(const auto& child : m_children)
-            thisbb |= math::Transform(transform, child->BoundingBox());
+            thisbb |= math::Transform(local_to_world, child->BoundingBox());
     }
             
     return thisbb;
@@ -96,8 +103,8 @@ math::Quad EntityBase::BoundingBox() const
 
 math::Matrix EntityBase::Transformation() const
 {
-    const math::Vector& rotationPoint = m_base_point * m_scale;
-    const math::Vector& translate = m_position + rotationPoint;
+    const math::Vector& pivot_point = m_pivot_point * m_scale;
+    const math::Vector& translate = m_position + pivot_point;
 
     math::Matrix translation;
     math::Translate(translation, translate);
@@ -105,13 +112,13 @@ math::Matrix EntityBase::Transformation() const
     math::Matrix rotation;
     math::RotateZ(rotation, m_rotation);
 
-    math::Matrix translateRotation;
-    math::Translate(translateRotation, -rotationPoint);
+    math::Matrix pivot_offset;
+    math::Translate(pivot_offset, -pivot_point);
 
     math::Matrix scale;
     math::ScaleXY(scale, m_scale);
 
-    return translation * rotation * translateRotation * scale;
+    return translation * rotation * pivot_offset * scale;
 }
 
 unsigned int EntityBase::Id() const
