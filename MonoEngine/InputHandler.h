@@ -7,13 +7,13 @@
 
 namespace mono
 {
-    using CoordinateFunc = std::function<void (float&, float&)>;
+    using ScreenToWorldFunc = std::function<void (float&, float&)>;
 
     class InputHandler : public System::IInputHandler
     {
     public:
 
-        InputHandler(const CoordinateFunc& func, EventHandler& eventHandler);
+        InputHandler(const ScreenToWorldFunc& screen_to_world_func, EventHandler& event_handler);
 
     private:
 
@@ -40,7 +40,7 @@ namespace mono
         virtual void OnSurfaceChanged(int width, int height);
         virtual void OnActivated(bool gain);
 
-        const CoordinateFunc mScreenToWorldFunc;
-        EventHandler& mEventHandler;
+        const ScreenToWorldFunc m_screen_to_world_func;
+        EventHandler& m_event_handler;
     };
 }
