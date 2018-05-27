@@ -34,10 +34,17 @@ Renderer::Renderer(ICameraPtr camera)
 Renderer::~Renderer()
 { }
 
+void Renderer::SetWindowSize(const math::Vector& window_size)
+{
+    m_window_size = window_size;
+}
+
 void Renderer::PrepareDraw()
 {
     const math::Quad& viewport = m_camera->GetViewport();
-    m_projection = math::Ortho(0.0f, viewport.mB.x, 0.0f, viewport.mB.y, -10.0f, 10.0f);
+
+    const float ratio = m_window_size.x / m_window_size.y;
+    m_projection = math::Ortho(0.0f, viewport.mB.x, 0.0f, viewport.mB.x / ratio, -10.0f, 10.0f);
 
     math::Identity(m_modelview);
     math::Translate(m_modelview, -viewport.mA);
@@ -105,9 +112,14 @@ void Renderer::DrawText(int font_id, const char* text, const math::Vector& pos, 
 
 void Renderer::DrawSprite(const ISprite& sprite) const
 {
+    DrawSprite(sprite, math::ZeroVec);
+}
+
+void Renderer::DrawSprite(const ISprite& sprite, const math::Vector& offset) const
+{
     UseTexture(sprite.GetTexture());
     UseShader(m_texture_shader.get());
-    ::DrawSprite(sprite, m_texture_shader.get());
+    ::DrawSprite(sprite, offset, m_texture_shader.get());
 }
 
 void Renderer::DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const

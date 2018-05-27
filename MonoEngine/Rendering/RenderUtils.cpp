@@ -85,23 +85,30 @@ void mono::DrawCircle(const math::Vector& position,
     DrawClosedLine(vertices, color, lineWidth, shader);
 }
 
-void mono::DrawSprite(const mono::ISprite& sprite, ITextureShader* shader)
+void mono::DrawSprite(const mono::ISprite& sprite, const math::Vector& offset, ITextureShader* shader)
 {
     // The sprite can return zeroQuad as texture coordinates when the animation is finished
     const math::Quad& quad = sprite.GetTextureCoords();
     if(quad == math::ZeroQuad)
         return;
 
-    constexpr float vertices[] = { -0.5f, -0.5f,
-                                   -0.5f,  0.5f,
-                                    0.5f,  0.5f,
-                                    0.5f, -0.5f };
-    constexpr unsigned short indices[] = { 0, 1, 2, 0, 2, 3 };
+    const math::Vector vertices[] = {
+        math::Vector(-0.5f, -0.5f) + offset,
+        math::Vector(-0.5f,  0.5f) + offset,
+        math::Vector( 0.5f,  0.5f) + offset,
+        math::Vector( 0.5f, -0.5f) + offset
+    };
 
-    const float coords[] = { quad.mA.x, quad.mA.y,
-                             quad.mA.x, quad.mB.y,
-                             quad.mB.x, quad.mB.y,
-                             quad.mB.x, quad.mA.y };
+    constexpr unsigned short indices[] = {
+        0, 1, 2, 0, 2, 3
+    };
+
+    const float texture_coords[] = {
+        quad.mA.x, quad.mA.y,
+        quad.mA.x, quad.mB.y,
+        quad.mB.x, quad.mB.y,
+        quad.mB.x, quad.mA.y
+    };
     
     shader->SetShade(sprite.GetShade());
     shader->SetAlphaTexture(false);
@@ -110,7 +117,7 @@ void mono::DrawSprite(const mono::ISprite& sprite, ITextureShader* shader)
     glEnableVertexAttribArray(1);
 
     glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(shader->GetTextureAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, coords);
+    glVertexAttribPointer(shader->GetTextureAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, texture_coords);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
 

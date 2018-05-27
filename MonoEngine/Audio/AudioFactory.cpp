@@ -90,6 +90,32 @@ namespace
         float m_sample_length_s;
     };
 
+    class NullSound : public mono::ISound
+    {
+    public:
+
+        void Play() override
+        { }
+        void Pause() override
+        { }
+        void Stop() override
+        { }
+        bool IsPlaying() const override
+        {
+            return false;
+        }
+        float SampleLength() const override
+        {
+            return 0.0f;
+        }
+        void Pitch(float pitch) override
+        { }
+        void Gain(float gain) override
+        { }
+        void Position(float x, float y) override
+        { }
+    };
+
     class SoundImpl : public mono::ISound
     {
     public:
@@ -194,6 +220,11 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const char* fileName, bool loop,
     repository[fileName] = data;
 
     return std::make_shared<SoundImpl>(data, loop, relative);
+}
+
+mono::ISoundPtr mono::AudioFactory::CreateNullSound()
+{
+    return std::make_shared<NullSound>();
 }
 
 mono::SoundFile mono::AudioFactory::LoadFile(const char* fileName)

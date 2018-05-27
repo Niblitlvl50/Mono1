@@ -36,15 +36,18 @@ namespace
 {
     void ScreenToWorld(float& x, float& y, System::IWindow* window, ICameraPtr camera)
     {
-        const System::Size& window_size = window->Size();
-        const math::Vector size(window_size.width, window_size.height);
+        const System::Size& size = window->Size();
 
-        const math::Quad& viewport = camera->GetViewport();
+        const math::Vector window_size(size.width, size.height);
+        const float ratio = window_size.x / window_size.y;
+
+        math::Quad viewport = camera->GetViewport();
+        viewport.mB.y = viewport.mB.x / ratio;
         
-        const math::Vector& scale = viewport.mB / size;
+        const math::Vector& scale = viewport.mB / window_size;
         
         const float screen_x = x;
-        const float screen_y = size.y - y;
+        const float screen_y = window_size.y - y;
         
         const float temp_x = screen_x * scale.x;
         const float temp_y = screen_y * scale.y;
@@ -115,6 +118,10 @@ int Engine::Run(IZonePtr zone)
 
         // Handle input events
         System::ProcessSystemEvents(m_input_handler.get());
+        
+        const System::Size& window_size = m_window->Size();
+        renderer.SetWindowSize(math::Vector(window_size.width, window_size.height));
+
         if(!m_pause)
         {
             // Let the zone add stuff that will be rendered and updated
@@ -135,7 +142,7 @@ int Engine::Run(IZonePtr zone)
         last_time = before_time;
 
         // Sleep for a millisecond
-        //System::Sleep(1);
+        System::Sleep(1);
     }
 
     // Remove possible follow entity and unload the zone

@@ -2,6 +2,7 @@
 #pragma once
 
 #include "IRenderer.h"
+#include "Math/Vector.h"
 #include "Math/Matrix.h"
 #include "Shader/ShaderFwd.h"
 
@@ -14,11 +15,14 @@ namespace mono
         Renderer(ICameraPtr camera);
         ~Renderer();
 
+        void SetWindowSize(const math::Vector& window_size);
+
         virtual void DrawFrame();
         virtual void AddDrawable(const IDrawablePtr& drawable);
 
         virtual void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const;
         virtual void DrawSprite(const ISprite& sprite) const;
+        virtual void DrawSprite(const ISprite& sprite, const math::Vector& offset) const;
         virtual void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const;
         virtual void DrawLines(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const;
         virtual void DrawPolyline(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const;
@@ -68,6 +72,7 @@ namespace mono
         void doDrawTexts() const;
 
         ICameraPtr m_camera;
+        math::Vector m_window_size;
 
         math::Matrix m_projection;
         math::Matrix m_modelview;
