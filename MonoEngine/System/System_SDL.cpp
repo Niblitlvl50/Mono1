@@ -276,8 +276,7 @@ namespace
             return;
 
         // Function signature
-        using callback = void (*)(void*);
-        const callback func = reinterpret_cast<callback>(event.data1);
+        const System::timer_callback_t func = reinterpret_cast<System::timer_callback_t>(event.data1);
         func(event.data2);
     }
 
