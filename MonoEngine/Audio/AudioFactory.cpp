@@ -201,7 +201,7 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const char* fileName, bool loop,
         if(data)
             return std::make_shared<SoundImpl>(data, loop, relative);
 
-        std::printf("AudioFactory - Unable to create a shared from a weak pointer, will reload the data. Source: %s\n", fileName);
+        std::printf("AudioFactory - Recreating '%s'\n", fileName);
     }
 
     const mono::SoundFile& soundFile = LoadFile(fileName);
@@ -231,7 +231,7 @@ mono::SoundFile mono::AudioFactory::LoadFile(const char* fileName)
 {
     File::FilePtr soundFile = File::OpenBinaryFile(fileName);
     if(!soundFile)
-        throw std::runtime_error("Unable to open sound file");
+        throw std::runtime_error("AudioFactory - Unable to open sound file");
 
     std::vector<unsigned char> bytes;
     File::FileRead(soundFile, bytes);
