@@ -84,11 +84,11 @@ namespace
             // Create our window centered and with the given resolution
             m_window = SDL_CreateWindow(title, x, y, width, height, flags);
             if(m_window == 0)
-                throw std::runtime_error("Unable to create SDL window");
+                throw std::runtime_error("System - Unable to create SDL window");
 
             m_context = SDL_GL_CreateContext(m_window);
             if(!m_context)
-                throw std::runtime_error("Unable to create OpenGL context");
+                throw std::runtime_error("System - Unable to create OpenGL context");
                         
             SetupOpenGL();
             MakeCurrent();
@@ -349,7 +349,7 @@ void System::Initialize()
     // Init SDL video subsystem
     const int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
     if(result != 0)
-        throw std::runtime_error("Couldn't initialize libSDL" + std::string(SDL_GetError()));
+        throw std::runtime_error("System - Couldn't initialize libSDL" + std::string(SDL_GetError()));
 
     SDL_version version;
     SDL_GetVersion(&version);
@@ -476,7 +476,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 if(free_index == -1)
                 {
-                    std::printf("Unable to find free controller index\n");
+                    std::printf("System - Unable to find free controller index\n");
                     return;
                 }
 
@@ -488,7 +488,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 g_controller_states[free_index].id = SDL_JoystickInstanceID(joystick);
                 g_controller_states[free_index].name = SDL_GameControllerName(controller);
 
-                std::printf("Controller added: %d, %d, %s\n", free_index, g_controller_states[id].id, g_controller_states[id].name);
+                std::printf("System - Controller added: %d, %d, %s\n", free_index, g_controller_states[id].id, g_controller_states[id].name);
 
                 handler->OnControllerAdded(free_index);
                 break;
@@ -509,7 +509,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 if(id == -1)
                 {
-                    std::printf("Unable to find controller with instance_id: %d\n", instance_id);                    
+                    std::printf("System - Unable to find controller with instance_id: %d\n", instance_id);                    
                     return;
                 }
 
@@ -519,7 +519,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 g_controller_states[id].id = -1;
                 g_controller_states[id].name = nullptr;
 
-                std::printf("Controller removed: %d, %d\n", id, instance_id);
+                std::printf("System - Controller removed: %d, %d\n", id, instance_id);
 
                 break;
             }
@@ -711,4 +711,10 @@ const System::ControllerState& System::GetController(ControllerId controller_id)
 {
     const int id = static_cast<int>(controller_id);
     return g_controller_states[id];
+}
+
+bool System::IsControllerActive(ControllerId controller_id)
+{
+    const int id = static_cast<int>(controller_id);
+    return g_controller_states[id].id != -1;
 }
