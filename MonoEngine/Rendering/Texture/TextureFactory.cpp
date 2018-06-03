@@ -23,7 +23,7 @@ mono::ITexturePtr mono::CreateTexture(const char* source)
         if(texture)
             return texture;
 
-        std::printf("TextureFactory - Recreating '%s'", source);
+        std::printf("TextureFactory - Recreating '%s'\n", source);
     }
     
     const System::IImagePtr image = System::LoadImage(source);

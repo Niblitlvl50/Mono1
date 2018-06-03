@@ -227,11 +227,11 @@ mono::ISoundPtr mono::AudioFactory::CreateNullSound()
     return std::make_shared<NullSound>();
 }
 
-mono::SoundFile mono::AudioFactory::LoadFile(const char* fileName)
+mono::SoundFile mono::AudioFactory::LoadFile(const char* filename)
 {
-    File::FilePtr soundFile = File::OpenBinaryFile(fileName);
+    File::FilePtr soundFile = File::OpenBinaryFile(filename);
     if(!soundFile)
-        throw std::runtime_error("AudioFactory - Unable to open sound file");
+        throw std::runtime_error("AudioFactory - Unable to open sound file.");
 
     std::vector<unsigned char> bytes;
     File::FileRead(soundFile, bytes);
