@@ -84,7 +84,10 @@ math::Vector TraceCamera::GetPosition() const
 
 math::Vector TraceCamera::ScreenToWorld(const math::Vector& screen_pos, const math::Vector& window_size) const
 {
-    const math::Quad& viewport = GetViewport();
+    const float ratio = window_size.x / window_size.y;
+
+    math::Quad viewport = GetViewport();
+    viewport.mB.y = viewport.mB.x / ratio;
 
     const math::Vector& scale = viewport.mB / window_size;
     
