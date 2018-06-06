@@ -19,7 +19,7 @@ Sprite::Sprite(const mono::ITexturePtr& texture, const std::vector<math::Quad>& 
 void Sprite::Init(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates)
 {
     m_texture = texture;
-    m_textureCoordinates = coordinates;
+    m_texture_coordinates = coordinates;
 
     m_texture_quad = math::Quad(math::INF, -math::INF, -math::INF, math::INF);
     for(const math::Quad& quad : coordinates)
@@ -38,8 +38,8 @@ ITexturePtr Sprite::GetTexture() const
 
 math::Quad Sprite::GetTextureCoords() const
 {
-    const AnimationSequence& anim = m_animations[m_activeAnimation];
-    math::Quad coords = m_textureCoordinates.at(anim.Frame());
+    const AnimationSequence& anim = m_animations[m_active_animation];
+    math::Quad coords = m_texture_coordinates.at(anim.Frame());
 
     if(m_flip_horizontal)
         std::swap(coords.mA.x, coords.mB.x);
@@ -77,7 +77,7 @@ void Sprite::SetVerticalDirection(VerticalDirection direction)
 
 void Sprite::doUpdate(unsigned int delta)
 {
-    AnimationSequence& anim = m_animations[m_activeAnimation];
+    AnimationSequence& anim = m_animations[m_active_animation];
     anim.Update(delta);
 
     if(anim.Finished() && m_callback)
@@ -104,9 +104,10 @@ void Sprite::SetAnimation(const char* name, const std::function<void ()>& func)
 
 void Sprite::SetAnimation(int id, const std::function<void ()>& func)
 {
-    const bool same_id = (id == m_activeAnimation);
+    assert(id < static_cast<int>(m_animations.size()));
 
-    m_activeAnimation = id;
+    const bool same_id = (id == m_active_animation);
+    m_active_animation = id;
     m_callback = func;
 
     if(!same_id)
@@ -115,7 +116,7 @@ void Sprite::SetAnimation(int id, const std::function<void ()>& func)
 
 void Sprite::RestartAnimation()
 {
-    m_animations[m_activeAnimation].Restart();
+    m_animations[m_active_animation].Restart();
 }
 
 int Sprite::DefineAnimation(const std::string& name, const std::vector<int>& frames, bool loop)
@@ -146,12 +147,12 @@ int Sprite::GetDefinedAnimations() const
 
 int Sprite::GetUniqueFrames() const
 {
-    return static_cast<int>(m_textureCoordinates.size());
+    return static_cast<int>(m_texture_coordinates.size());
 }
 
 int Sprite::GetActiveAnimation() const
 {
-    return m_activeAnimation;
+    return m_active_animation;
 }
 
 const AnimationSequence& Sprite::GetSequence(int id) const

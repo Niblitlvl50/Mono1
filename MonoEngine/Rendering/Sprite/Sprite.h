@@ -84,13 +84,13 @@ namespace mono
 
         int FindAnimationByName(const char* name) const;
 
-        int m_activeAnimation = 0;
+        int m_active_animation = 0;
         std::function<void ()> m_callback;
         ITexturePtr m_texture;
 
         math::Quad m_texture_quad;
 
-        std::vector<math::Quad> m_textureCoordinates;
+        std::vector<math::Quad> m_texture_coordinates;
         std::vector<AnimationSequence> m_animations;
 
         Color::RGBA m_color;
