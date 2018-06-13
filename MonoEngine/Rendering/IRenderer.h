@@ -2,6 +2,7 @@
 #pragma once
 
 #include "RenderPtrFwd.h"
+#include "BlendMode.h"
 #include "Math/MathFwd.h"
 
 #include <vector>
@@ -47,6 +48,7 @@ namespace mono
                                         const IRenderBuffer* color,
                                         const IRenderBuffer* point_size,
                                         const ITexturePtr& texture,
+                                        BlendMode blend_mode,
                                         size_t count) = 0;
 
         virtual void DrawPolyline(

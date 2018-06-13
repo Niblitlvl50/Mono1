@@ -47,6 +47,7 @@ namespace mono
                                         const IRenderBuffer* color,
                                         const IRenderBuffer* point_size,
                                         const ITexturePtr& texture,
+                                        BlendMode blend_mode,
                                         size_t count);
 
         virtual void DrawPolyline(

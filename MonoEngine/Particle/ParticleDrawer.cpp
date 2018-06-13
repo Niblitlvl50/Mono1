@@ -10,8 +10,9 @@
 
 using namespace mono;
 
-ParticleDrawer::ParticleDrawer(const mono::ITexturePtr& texture, ParticlePool& pool)
+ParticleDrawer::ParticleDrawer(const mono::ITexturePtr& texture, mono::BlendMode blend_mode, ParticlePool& pool)
     : m_texture(texture)
+    , m_blend_mode(blend_mode)
     , m_pool(pool)
 {
     const size_t pool_size = m_pool.m_pool_size;
@@ -33,7 +34,7 @@ void ParticleDrawer::doDraw(mono::IRenderer& renderer) const
     m_point_size_buffer->UpdateData(m_pool.m_size.data(), 0, m_pool.m_count_alive);
 
     renderer.DrawParticlePoints(
-        m_positionBuffer.get(), m_colorBuffer.get(), m_point_size_buffer.get(), m_texture, m_pool.m_count_alive);
+        m_positionBuffer.get(), m_colorBuffer.get(), m_point_size_buffer.get(), m_texture, m_blend_mode, m_pool.m_count_alive);
 }
 
 math::Quad ParticleDrawer::BoundingBox() const

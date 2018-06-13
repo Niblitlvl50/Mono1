@@ -2,6 +2,7 @@
 #pragma once
 
 #include "RenderFwd.h"
+#include "BlendMode.h"
 #include "Math/MathFwd.h"
 #include "Shader/ShaderFwd.h"
 #include <vector>
@@ -73,6 +74,7 @@ namespace mono
                             const mono::IRenderBuffer* color,
                             const mono::IRenderBuffer* point_size,
                             size_t count,
+                            BlendMode blend_mode,
                             IPointSpriteShader* shader);
 
     void DrawPolyline(

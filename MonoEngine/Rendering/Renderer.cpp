@@ -196,11 +196,12 @@ void Renderer::DrawParticlePoints(const IRenderBuffer* position,
                                   const IRenderBuffer* color,
                                   const IRenderBuffer* point_size,
                                   const ITexturePtr& texture,
+                                  BlendMode blend_mode,
                                   size_t count)
 {
     UseTexture(texture);
     UseShader(m_point_sprite_shader.get());
-    ::DrawParticlePoints(position, color, point_size, count, m_point_sprite_shader.get());
+    ::DrawParticlePoints(position, color, point_size, count, blend_mode, m_point_sprite_shader.get());
 }
 
 void Renderer::DrawPolyline(
