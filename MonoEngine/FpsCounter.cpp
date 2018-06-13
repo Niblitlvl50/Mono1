@@ -1,11 +1,11 @@
 
-#include "Utils.h"
+#include "FpsCounter.h"
 #include "System/System.h"
 #include <cmath>
 
 using namespace mono;
 
-void FPSCounter::operator ++ (int)
+void FpsCounter::operator ++ (int)
 {
     ++mFrames;
     ++mTotalFrames;
@@ -20,12 +20,12 @@ void FPSCounter::operator ++ (int)
     }    
 }
 
-unsigned int FPSCounter::Fps() const
+unsigned int FpsCounter::Fps() const
 {
     return mFps;
 }
 
-unsigned int FPSCounter::Frames() const
+unsigned int FpsCounter::Frames() const
 {
     return mTotalFrames;
 }
