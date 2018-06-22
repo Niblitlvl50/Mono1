@@ -85,8 +85,7 @@ TEST(MatrixTest, VerifyPositionFunction)
 
 TEST(MatrixTest, VerifyRotationFunction)
 {
-    math::Matrix matrix;
-    math::RotateZ(matrix, math::PI());
+    const math::Matrix matrix = math::CreateMatrixFromZRotation(math::PI());
 
     EXPECT_EQ(-1, matrix.data[0]);
     EXPECT_FLOAT_EQ(-8.74228e-08, matrix.data[1]);
@@ -114,8 +113,7 @@ TEST(MatrixTest, VerifyInverse)
     math::Matrix translation_matrix;
     math::Translate(translation_matrix, math::Vector(10, 7));
 
-    math::Matrix rotation_matrix;
-    math::RotateZ(rotation_matrix, math::PI());
+    const math::Matrix rotation_matrix = math::CreateMatrixFromZRotation(math::PI());
 
     const math::Matrix& matrix = translation_matrix * rotation_matrix;
     const math::Matrix& inverse = math::Inverse(matrix);

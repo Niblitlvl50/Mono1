@@ -109,8 +109,7 @@ math::Matrix EntityBase::Transformation() const
     math::Matrix translation;
     math::Translate(translation, translate);
 
-    math::Matrix rotation;
-    math::RotateZ(rotation, m_rotation);
+    const math::Matrix rotation = math::CreateMatrixFromZRotation(m_rotation);
 
     math::Matrix pivot_offset;
     math::Translate(pivot_offset, -pivot_point);

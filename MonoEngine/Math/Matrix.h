@@ -11,12 +11,14 @@ namespace math
         { }
         
         //
-        // Stored column-major
+        // Stored column-major, index inside []
         //
-        // |  0  4  8 12 |
-        // |  1  5  9 13 |
-        // |  2  6 10 14 |
-        // |  3  7 11 15 |
+        // |  0[0]  4[1]   8[2]  12[3]  |
+        // |  1[4]  5[5]   9[6]  13[7]  |
+        // |  2[8]  6[9]  10[10] 14[11] |
+        // |  3[12] 7[13] 11[14] 15[15] |
+        //
+        // https://github.com/toji/gl-matrix is used as inspiration.
         //
         float data[16] = { 1, 0, 0, 0,
                            0, 1, 0, 0,
@@ -24,9 +26,12 @@ namespace math
                            0, 0, 0, 1 };
     };
 
+    Matrix CreateMatrixFromZRotation(float radians);
+
     void Identity(Matrix& matrix);
     void Translate(Matrix& matrix, const Vector& vector);
     void Position(Matrix& matrix, const Vector& position);
+    void RotateX(Matrix& matrix, float radians);
     void RotateZ(Matrix& matrix, float radians);
     void RotateZ(Matrix& matrix, float radians, const Vector& offset);
     void ScaleXY(Matrix& matrix, const Vector& scale);
@@ -44,4 +49,5 @@ namespace math
     math::Matrix operator * (const math::Matrix& left, const math::Matrix& right);
 
     Matrix Ortho(float left, float right, float bottom, float top, float near, float far);
+    Matrix Perspective(float fov, float aspect_ratio, float near, float far);
 }

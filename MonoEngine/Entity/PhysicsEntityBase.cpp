@@ -123,8 +123,7 @@ math::Matrix PhysicsEntityBase::Transformation() const
     math::Matrix translation;
     math::Translate(translation, m_position);
 
-    math::Matrix rotation;
-    math::RotateZ(rotation, m_rotation);
+    const math::Matrix rotation = math::CreateMatrixFromZRotation(m_rotation);
 
     math::Matrix scale;
     math::ScaleXY(scale, m_scale);
