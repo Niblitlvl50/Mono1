@@ -17,7 +17,7 @@ ShapeImpl::ShapeImpl(mono::IBodyPtr& body, float radius, const math::Vector& off
 
 ShapeImpl::ShapeImpl(mono::IBodyPtr& body, float width, float height)
 {
-    m_shape = cpBoxShapeNew(body->Handle(), width, height, 1.0f);
+    m_shape = cpBoxShapeNew(body->Handle(), width, height, 0.0f);
     m_inertia_value = cpMomentForBox(body->GetMass(), width, height);
 }
 
