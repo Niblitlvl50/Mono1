@@ -29,7 +29,7 @@ namespace mono
         virtual void AddPhysicsData(const mono::PhysicsData& physics_data);
         virtual void RemovePhysicsData(const mono::PhysicsData& physics_data);
 
-    private:
+    protected:
 
         struct PhysicsImpl;
         std::shared_ptr<PhysicsImpl> m_physics;

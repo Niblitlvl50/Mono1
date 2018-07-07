@@ -34,13 +34,11 @@ namespace mono
         virtual void Accept(IRenderer& renderer);
         virtual void Accept(mono::IUpdater& updater);
         virtual void DoPreAccept();
-
-    private:
         
-        std::vector<IEntityPtr> mEntities;
-        std::vector<IUpdatablePtr> mUpdatables;
-        std::vector<std::pair<int, IDrawablePtr>> mDrawables;
+        std::vector<IEntityPtr> m_entities;
+        std::vector<IUpdatablePtr> m_updatables;
+        std::vector<std::pair<int, IDrawablePtr>> m_drawables;
 
-        std::vector<std::function<void ()>> m_preFrameTasks;
+        std::vector<std::function<void ()>> m_preframe_tasks;
     };
 }

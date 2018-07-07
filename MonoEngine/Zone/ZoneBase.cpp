@@ -21,7 +21,7 @@ namespace
 
 void ZoneBase::Accept(IRenderer& renderer)
 {
-    for(auto& pair : mDrawables)
+    for(auto& pair : m_drawables)
         renderer.AddDrawable(pair.second);
 }
 
@@ -29,16 +29,16 @@ void ZoneBase::Accept(mono::IUpdater& updater)
 {
     DoPreAccept();
 
-    for(auto& updatable : mUpdatables)
+    for(auto& updatable : m_updatables)
         updater.AddUpdatable(updatable);
 }
 
 void ZoneBase::DoPreAccept()
 {
-    for(const auto& task : m_preFrameTasks)
+    for(const auto& task : m_preframe_tasks)
         task();
 
-    m_preFrameTasks.clear();
+    m_preframe_tasks.clear();
 }
 
 void ZoneBase::AddEntity(const IEntityPtr& entity, int layer)
@@ -46,7 +46,7 @@ void ZoneBase::AddEntity(const IEntityPtr& entity, int layer)
     AddDrawable(entity, layer);
     AddUpdatable(entity);
 
-    mEntities.push_back(entity);
+    m_entities.push_back(entity);
 }
 
 void ZoneBase::RemoveEntity(const IEntityPtr& entity)
@@ -54,30 +54,30 @@ void ZoneBase::RemoveEntity(const IEntityPtr& entity)
     RemoveDrawable(entity);
     RemoveUpdatable(entity);
 
-    const bool result = mono::remove(mEntities, entity);
+    const bool result = mono::remove(m_entities, entity);
     if(!result)
         std::printf("ZoneBase - Unable to remove entity with id %u\n", entity->Id());
 }
 
 void ZoneBase::AddUpdatable(const IUpdatablePtr& updatable)
 {
-    mUpdatables.push_back(updatable);
+    m_updatables.push_back(updatable);
 }
 
 void ZoneBase::RemoveUpdatable(const IUpdatablePtr& updatable)
 {
-    const bool result = mono::remove(mUpdatables, updatable);
+    const bool result = mono::remove(m_updatables, updatable);
     if(!result)
         std::printf("ZoneBase - Unable to remove updatable\n");
 }
 
 void ZoneBase::AddDrawable(const IDrawablePtr& drawable, int layer)
 {
-    mDrawables.push_back(std::make_pair(layer, drawable));
+    m_drawables.push_back(std::make_pair(layer, drawable));
 
     // Keep the drawable vector sorted so that we draw everything
     // in the correct order according to layers
-    std::sort(mDrawables.begin(), mDrawables.end(), DrawableSortFunc);
+    std::sort(m_drawables.begin(), m_drawables.end(), DrawableSortFunc);
 }
 
 void ZoneBase::RemoveDrawable(const IDrawablePtr& drawable)
@@ -86,7 +86,7 @@ void ZoneBase::RemoveDrawable(const IDrawablePtr& drawable)
         return pair.second == drawable;
     };
 
-    const bool removed = mono::remove_if(mDrawables, func);
+    const bool removed = mono::remove_if(m_drawables, func);
     if(!removed)
         std::printf("ZoneBase - Unable to remove drawable\n");
 }
@@ -97,11 +97,11 @@ void ZoneBase::SetDrawableLayer(const IDrawablePtr& drawable, int new_layer)
         return pair.second == drawable;
     };
 
-    auto it = std::find_if(mDrawables.begin(), mDrawables.end(), func);
-    if(it != mDrawables.end())
+    auto it = std::find_if(m_drawables.begin(), m_drawables.end(), func);
+    if(it != m_drawables.end())
     {
         it->first = new_layer;
-        std::sort(mDrawables.begin(), mDrawables.end(), DrawableSortFunc);        
+        std::sort(m_drawables.begin(), m_drawables.end(), DrawableSortFunc);        
     }    
 }
 
@@ -111,8 +111,8 @@ mono::IEntityPtr ZoneBase::FindEntityFromId(unsigned int id) const
         return id == entity->Id();
     };
 
-    const auto& it = std::find_if(mEntities.begin(), mEntities.end(), find_func);
-    if(it != mEntities.end())
+    const auto& it = std::find_if(m_entities.begin(), m_entities.end(), find_func);
+    if(it != m_entities.end())
         return *it;
 
     return nullptr;
@@ -125,8 +125,8 @@ mono::IEntityPtr ZoneBase::FindEntityFromPoint(const math::Vector& point) const
         return math::PointInsideQuad(point, bb);
     };
 
-    const auto& it = std::find_if(mEntities.begin(), mEntities.end(), find_func);
-    if(it != mEntities.end())
+    const auto& it = std::find_if(m_entities.begin(), m_entities.end(), find_func);
+    if(it != m_entities.end())
         return *it;
 
     return nullptr;
@@ -134,6 +134,6 @@ mono::IEntityPtr ZoneBase::FindEntityFromPoint(const math::Vector& point) const
 
 void ZoneBase::SchedulePreFrameTask(const std::function<void ()>& task)
 {
-    m_preFrameTasks.push_back(task);
+    m_preframe_tasks.push_back(task);
 }
 
