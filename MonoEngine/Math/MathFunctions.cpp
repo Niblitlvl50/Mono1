@@ -17,6 +17,19 @@ bool math::PointInsideQuad(const math::Vector& point, const math::Quad& quad)
     return false;
 }
 
+math::LinePointResult math::PointOnLine(const math::Vector& line_start, const math::Vector& line_end, const math::Vector& point)
+{
+    const int result =
+        (line_end.x - line_start.x) * (point.y - line_start.y) - (point.x - line_start.x) * (line_end.y - line_start.y);
+    
+    if(result > 0)
+        return LinePointResult::LEFT_OF;
+    else if(result < 0)
+        return LinePointResult::RIGHT_OF;
+    else
+        return LinePointResult::ON_LINE;
+}
+
 bool math::QuadOverlaps(const math::Quad& left, const math::Quad& right)
 {
     const Vector& left1 = left.mA;
@@ -105,6 +118,21 @@ bool math::PointInsidePolygon(const math::Vector& point, const std::vector<math:
     return inside;
 }
 
+bool math::LineIntersectsPolygon(const math::Vector& start, const math::Vector& end, const std::vector<math::Vector>& points)
+{
+    for(size_t point_index = 0; point_index < points.size(); ++point_index)
+    {
+        const math::Vector& v1 = points[point_index];
+        const math::Vector& v2 = points[(point_index + 1) % points.size()];
+
+        const bool intersects = LineIntersectsLine(start, end, v1, v2);
+        if(intersects)
+            return true;
+    }
+
+    return false;
+}
+
 bool math::IsPolygonClockwise(const std::vector<math::Vector>& points)
 {
     float sum = 0.0f;
@@ -156,4 +184,29 @@ float math::NormalizeAngle(float radians)
     if(radians < 0.0f)
         radians += math::PI() * 2.0f;
     return radians;
+}
+
+bool math::LineIntersectsLine(
+    const math::Vector& start_first, const math::Vector& end_first,
+    const math::Vector& start_second, const math::Vector& end_second)
+{
+//inline bool lines_intersect_2d(Vector2 const& p0, Vector2 const& p1, Vector2 const& p2, Vector2 const& p3, Vector2* i const = 0) {
+    const math::Vector& s1 = end_first - start_first;
+    const math::Vector& s2 = end_second - start_second;
+
+    const math::Vector& u = start_first - start_second;
+
+    const float ip = 1.0f / (-s2.x * s1.y + s1.x * s2.y);
+
+    const float s = (-s1.y * u.x + s1.x * u.y) * ip;
+    const float t = ( s2.x * u.y - s2.y * u.x) * ip;
+
+    if(s >= 0.0f && s <= 1.0f && t >= 0.0f && t <= 1.0f)
+    {
+//        if(i)
+//            *i = p0 + (s1 * t);
+        return true;
+    }
+
+    return false;
 }

@@ -7,6 +7,16 @@
 namespace math
 {    
     bool PointInsideQuad(const math::Vector& point, const math::Quad& quad);
+
+    enum class LinePointResult
+    {
+        LEFT_OF,
+        RIGHT_OF,
+        ON_LINE
+    };
+
+    LinePointResult PointOnLine(const math::Vector& line_start, const math::Vector& line_end, const math::Vector& point);
+
     bool QuadOverlaps(const math::Quad& left, const math::Quad& right);
     void ResizeQuad(math::Quad& quad, float value, float aspect = 1.0f);
 
@@ -20,12 +30,17 @@ namespace math
     // Pass in at least 3 points, else you will get "nan nan" back.
     math::Vector CentroidOfPolygon(const std::vector<math::Vector>& points);
     bool PointInsidePolygon(const math::Vector& point, const std::vector<math::Vector>& polygon);
+    bool LineIntersectsPolygon(const math::Vector& start, const math::Vector& end, const std::vector<math::Vector>& polygon);
 
     // Check if a polygon is clockwise oriented or not
     bool IsPolygonClockwise(const std::vector<math::Vector>& points);
 
     math::Vector MapVectorInQuad(const math::Vector& point, const math::Quad& quad);
     math::Vector ClosestPointOnLine(const math::Vector& start, const math::Vector& end, const math::Vector& point);
+
+    bool LineIntersectsLine(
+        const math::Vector& start_first, const math::Vector& end_first,
+        const math::Vector& start_second, const math::Vector& end_second);
 
     constexpr float PI() {
         return 3.14159265358979323846264338327950288f;
