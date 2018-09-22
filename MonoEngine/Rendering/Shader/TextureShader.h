@@ -22,20 +22,21 @@ namespace mono
 
         virtual void SetShade(const mono::Color::RGBA& color);
         virtual void SetAlphaTexture(bool isAlpha);
+        virtual void SetTextureOffset(float offset);
 
     private:
 
-        unsigned int mProgram;
+        unsigned int m_program;
 
-        int mMVMatrixLocation;
-        int mPMatrixLocation;
+        int m_MV_matrix_location;
+        int m_P_matrix_location;
 
-        unsigned int mPositionAttributeLocation;
-        unsigned int mTextureAttributeLocation;
+        unsigned int m_position_attribute_location;
+        unsigned int m_texture_attribute_location;
 
-        int mSamplerLocation;
-        int mColorShadeLocation;
-        int mIsAlphaTextureLocation;
+        int m_color_shade_location;
+        int m_is_alpha_texture_location;
+        int m_texture_offset_location;
     };
 }
 

@@ -54,11 +54,6 @@ namespace mono
                     float size,
                     IColorShader* shader);
 
-    void DrawShape(const std::vector<math::Vector>& shape1,
-                   const std::vector<math::Vector>& shape2,
-                   const mono::Color::RGBA& color,
-                   IMorphingShader* shader);
-
     void DrawTexturedGeometry(const std::vector<math::Vector>& vertices,
                               const std::vector<math::Vector>& texture_coordinates,
                               const std::vector<unsigned short>& indices,

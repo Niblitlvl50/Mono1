@@ -10,7 +10,6 @@
 #include "Shader/ShaderFunctions.h"
 #include "Shader/ITextureShader.h"
 #include "Shader/IColorShader.h"
-#include "Shader/IMorphingShader.h"
 #include "Shader/IPointSpriteShader.h"
 
 #include "Sprite/ISprite.h"
@@ -27,7 +26,6 @@ Renderer::Renderer(ICameraPtr camera)
 {
     m_color_shader = GetShaderFactory()->CreateColorShader();
     m_texture_shader = GetShaderFactory()->CreateTextureShader();
-    m_morph_shader = GetShaderFactory()->CreateMorphingShader();
     m_point_sprite_shader = GetShaderFactory()->CreatePointSpriteShader();
 }
 
@@ -162,14 +160,6 @@ void Renderer::DrawCircle(const math::Vector& pos, float radie, int segments, fl
 {
     UseShader(m_color_shader.get());
     ::DrawCircle(pos, radie, segments, lineWidth, color, m_color_shader.get());
-}
-
-void Renderer::DrawShape(const std::vector<math::Vector>& shape1, const std::vector<math::Vector>& shape2, float morphGrade, const mono::Color::RGBA& color)
-{
-    UseShader(m_morph_shader.get());
-
-    m_morph_shader->SetMorphGrade(morphGrade);
-    ::DrawShape(shape1, shape2, color, m_morph_shader.get());
 }
 
 void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std::vector<math::Vector>& texture_coordinates, const std::vector<unsigned short>& indices, const ITexturePtr& texture)

@@ -11,7 +11,6 @@ namespace mono
 
         virtual std::unique_ptr<ITextureShader> CreateTextureShader() const;
         virtual std::unique_ptr<IColorShader> CreateColorShader() const;
-        virtual std::unique_ptr<IMorphingShader> CreateMorphingShader() const;
         virtual std::unique_ptr<IPointSpriteShader> CreatePointSpriteShader() const;
     };
 }

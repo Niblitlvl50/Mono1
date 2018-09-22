@@ -9,45 +9,46 @@
 
 namespace
 {
-    constexpr const char* vertexSource =
+    constexpr const char* vertexSource = R"(
+    #ifdef __IPHONEOS__
+        precision mediump float;
+    #endif
 
-#ifdef __IPHONEOS__
-    "precision mediump float;"
-#endif
+        attribute vec2 vertex_position;
+        attribute vec2 texture_coord;
 
-    "attribute vec2 vertexPosition;"
-    "attribute vec2 textureCoord;"
+        uniform mat4 mv_matrix;
+        uniform mat4 p_matrix;
 
-    "uniform mat4 mv_matrix;"
-    "uniform mat4 p_matrix;"
+        varying vec2 v_texture_coord;
 
-    "varying vec2 vTextureCoord;"
+        void main()
+        {
+            gl_Position = p_matrix * mv_matrix * vec4(vertex_position, 0.0, 1.0);
+            v_texture_coord = texture_coord;
+        }
+    )";
 
-    "void main()"
-    "{"
-    "    gl_Position = p_matrix * mv_matrix * vec4(vertexPosition, 0.0, 1.0);"
-    "    vTextureCoord = textureCoord;"
-    "}";
+    constexpr const char* fragmentSource = R"(
+    #ifdef __IPHONEOS__
+        precision mediump float;
+    #endif
 
-    constexpr const char* fragmentSource =
+        varying vec2 v_texture_coord;
 
-#ifdef __IPHONEOS__
-    "precision mediump float;"
-#endif
+        uniform vec4 color_shade;
+        uniform sampler2D sampler;
+        uniform bool is_alpha_texture;
+        uniform float texture_offset;
 
-    "varying vec2 vTextureCoord;"
-
-    "uniform vec4 colorShade;"
-    "uniform sampler2D sampler;"
-    "uniform bool isAlphaTexture;"
-
-    "void main()"
-    "{"
-    "    if(isAlphaTexture)"
-    "        gl_FragColor = texture2D(sampler, vTextureCoord).aaaa * colorShade;"
-    "    else"
-    "        gl_FragColor = texture2D(sampler, vTextureCoord) * colorShade;"
-    "}";
+        void main()
+        {
+            if(is_alpha_texture)
+                gl_FragColor = texture2D(sampler, v_texture_coord).aaaa * color_shade;
+            else
+                gl_FragColor = texture2D(sampler, v_texture_coord) * color_shade;
+        }
+    )";
 }
 
 
@@ -58,60 +59,65 @@ TextureShader::TextureShader()
     const GLuint vertexShader = CompileShader(mono::ShaderType::VERTEX, vertexSource);
     const GLuint fragmentShader = CompileShader(mono::ShaderType::FRAGMENT, fragmentSource);
     
-    mProgram = LinkProgram(vertexShader, fragmentShader);
+    m_program = LinkProgram(vertexShader, fragmentShader);
 
-    mMVMatrixLocation = glGetUniformLocation(mProgram, "mv_matrix");
-    mPMatrixLocation = glGetUniformLocation(mProgram, "p_matrix");
+    m_MV_matrix_location = glGetUniformLocation(m_program, "mv_matrix");
+    m_P_matrix_location = glGetUniformLocation(m_program, "p_matrix");
 
-    mSamplerLocation = glGetUniformLocation(mProgram, "sampler");
-    mColorShadeLocation = glGetUniformLocation(mProgram, "colorShade");
-    mIsAlphaTextureLocation = glGetUniformLocation(mProgram, "isAlphaTexture");
+    m_color_shade_location = glGetUniformLocation(m_program, "color_shade");
+    m_is_alpha_texture_location = glGetUniformLocation(m_program, "is_alpha_texture");
+    m_texture_offset_location = glGetUniformLocation(m_program, "texture_offset");
 
-    mPositionAttributeLocation = (unsigned int)glGetAttribLocation(mProgram, "vertexPosition");
-    mTextureAttributeLocation = (unsigned int)glGetAttribLocation(mProgram, "textureCoord");
+    m_position_attribute_location = (unsigned int)glGetAttribLocation(m_program, "vertex_position");
+    m_texture_attribute_location = (unsigned int)glGetAttribLocation(m_program, "texture_coord");
 }
 
 TextureShader::~TextureShader()
 {
-    glDeleteProgram(mProgram);
+    glDeleteProgram(m_program);
 }
 
 void TextureShader::Use()
 {
-    glUseProgram(mProgram);
+    glUseProgram(m_program);
 }
 
 unsigned int TextureShader::GetShaderId() const
 {
-    return mProgram;
+    return m_program;
 }
 
 void TextureShader::LoadProjectionMatrix(const math::Matrix& projection)
 {
-    glUniformMatrix4fv(mPMatrixLocation, 1, GL_FALSE, projection.data);
+    glUniformMatrix4fv(m_P_matrix_location, 1, GL_FALSE, projection.data);
 }
 
 void TextureShader::LoadModelViewMatrix(const math::Matrix& modelView)
 {
-    glUniformMatrix4fv(mMVMatrixLocation, 1, GL_FALSE, modelView.data);
+    glUniformMatrix4fv(m_MV_matrix_location, 1, GL_FALSE, modelView.data);
 }
 
 unsigned int TextureShader::GetPositionAttributeLocation() const
 {
-    return mPositionAttributeLocation;
+    return m_position_attribute_location;
 }
 
 unsigned int TextureShader::GetTextureAttributeLocation() const
 {
-    return mTextureAttributeLocation;
+    return m_texture_attribute_location;
 }
 
 void TextureShader::SetShade(const mono::Color::RGBA& shade)
 {
-    glUniform4f(mColorShadeLocation, shade.red, shade.green, shade.blue, shade.alpha);
+    glUniform4f(m_color_shade_location, shade.red, shade.green, shade.blue, shade.alpha);
 }
 
 void TextureShader::SetAlphaTexture(bool isAlpha)
 {
-    glUniform1i(mIsAlphaTextureLocation, isAlpha);
+    glUniform1i(m_is_alpha_texture_location, isAlpha);
+}
+
+void TextureShader::SetTextureOffset(float offset)
+{
+    glUniform1f(m_texture_offset_location, offset);
 }

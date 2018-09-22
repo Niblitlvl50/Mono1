@@ -46,4 +46,24 @@ float math::Height(const math::Quad& quad)
     return std::fabs(quad.mB.y - quad.mA.y);
 }
 
+math::Vector math::BottomLeft(const math::Quad& quad)
+{
+    return quad.mA;
+}
+
+math::Vector math::BottomRight(const math::Quad& quad)
+{
+    return math::Vector(quad.mB.x, quad.mA.y);
+}
+
+math::Vector math::TopLeft(const math::Quad& quad)
+{
+    return math::Vector(quad.mA.x, quad.mB.y);
+}
+
+math::Vector math::TopRight(const math::Quad& quad)
+{
+    return quad.mB;
+}
+
 const math::Quad math::InfQuad = Quad(-math::INF, -math::INF, math::INF, math::INF);

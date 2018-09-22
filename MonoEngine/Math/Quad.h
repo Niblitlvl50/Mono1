@@ -41,6 +41,11 @@ namespace math
     float Width(const Quad& quad);
     float Height(const Quad& quad);
 
+    math::Vector BottomLeft(const math::Quad& quad);
+    math::Vector BottomRight(const math::Quad& quad);
+    math::Vector TopLeft(const math::Quad& quad);
+    math::Vector TopRight(const math::Quad& quad);
+
     //! Zero quad defined for convenience
     constexpr Quad ZeroQuad = Quad(ZeroVec, ZeroVec);
 

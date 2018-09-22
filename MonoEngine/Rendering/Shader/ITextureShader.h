@@ -22,5 +22,6 @@ namespace mono
         
         virtual void SetShade(const mono::Color::RGBA& color) = 0;
         virtual void SetAlphaTexture(bool isAlpha) = 0;
+        virtual void SetTextureOffset(float offset) = 0;
     };
 }

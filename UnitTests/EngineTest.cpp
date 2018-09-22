@@ -10,7 +10,6 @@
 #include "Rendering/Shader/IShaderFactory.h"
 #include "Rendering/Shader/IColorShader.h"
 #include "Rendering/Shader/ITextureShader.h"
-#include "Rendering/Shader/IMorphingShader.h"
 #include "Rendering/Shader/IPointSpriteShader.h"
 #include "Rendering/Shader/ShaderFunctions.h"
 
@@ -206,35 +205,8 @@ namespace
         { }
         virtual void SetAlphaTexture(bool isAlpha)
         { }
-    };
-
-    class NullMorphShader : public mono::IMorphingShader
-    {
-    public:
-        virtual void Use()
+        virtual void SetTextureOffset(float offset)
         { }
-        virtual unsigned int GetShaderId() const
-        {
-            return 0;
-        }
-        virtual void LoadProjectionMatrix(const math::Matrix& projection)
-        { }
-        virtual void LoadModelViewMatrix(const math::Matrix& modelView)
-        { }
-        virtual void SetMorphGrade(float grade)
-        { }
-        virtual unsigned int GetPositionLocation() const
-        {
-            return 0;
-        }
-        virtual unsigned int GetMorphPositionLocation() const
-        {
-            return 0;
-        }
-        virtual unsigned int GetColorLocation() const
-        {
-            return 0;
-        }
     };
 
     class NullPointSpriteShader : public mono::IPointSpriteShader
@@ -276,11 +248,6 @@ namespace
         virtual std::unique_ptr<mono::IColorShader> CreateColorShader() const
         {
             return std::make_unique<NullColorShader>();
-        }
-
-        virtual std::unique_ptr<mono::IMorphingShader> CreateMorphingShader() const
-        {
-            return std::make_unique<NullMorphShader>();
         }
 
         virtual std::unique_ptr<mono::IPointSpriteShader> CreatePointSpriteShader() const

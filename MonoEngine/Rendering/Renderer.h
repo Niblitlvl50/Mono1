@@ -30,7 +30,6 @@ namespace mono
         virtual void DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const;
         virtual void DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color) const;
         virtual void DrawCircle(const math::Vector& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const;
-        virtual void DrawShape(const std::vector<math::Vector>& shape1, const std::vector<math::Vector>& shape2, float morphGrade, const Color::RGBA& color);
 
         virtual void DrawGeometry(const std::vector<math::Vector>& vertices,
                                   const std::vector<math::Vector>& texture_coordinates,
@@ -86,7 +85,6 @@ namespace mono
 
         std::unique_ptr<IColorShader> m_color_shader;
         std::unique_ptr<ITextureShader> m_texture_shader;
-        std::unique_ptr<IMorphingShader> m_morph_shader;
         std::unique_ptr<IPointSpriteShader> m_point_sprite_shader;
 
         std::vector<IDrawablePtr> m_drawables;

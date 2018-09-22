@@ -3,7 +3,6 @@
 #include "IRenderBuffer.h"
 #include "Shader/IColorShader.h"
 #include "Shader/ITextureShader.h"
-#include "Shader/IMorphingShader.h"
 #include "Shader/IPointSpriteShader.h"
 #include "Sprite/ISprite.h"
 #include "Text/TextDefinition.h"
@@ -233,32 +232,6 @@ void mono::DrawPoints(const std::vector<math::Vector>& vertices,
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
-}
-
-void mono::DrawShape(const std::vector<math::Vector>& shape1,
-                     const std::vector<math::Vector>& shape2,
-                     const mono::Color::RGBA& color,
-                     IMorphingShader* shader)
-{
-    if(shape1.size() != shape2.size())
-        return;
-
-    std::vector<mono::Color::RGBA> colors(shape1.size());
-    std::fill(colors.begin(), colors.end(), color);
-
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glEnableVertexAttribArray(2);
-
-    glVertexAttribPointer(shader->GetPositionLocation(), 2, GL_FLOAT, GL_FALSE, 0, shape1.data());
-    glVertexAttribPointer(shader->GetMorphPositionLocation(), 2, GL_FLOAT, GL_FALSE, 0, shape2.data());
-    glVertexAttribPointer(shader->GetColorLocation(), 4, GL_FLOAT, GL_FALSE, 0, colors.data());
-
-    glDrawArrays(GL_LINE_STRIP, 0, static_cast<GLsizei>(shape1.size()));
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(2);
 }
 
 void mono::DrawTexturedGeometry(const std::vector<math::Vector>& vertices,

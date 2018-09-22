@@ -21,13 +21,13 @@ namespace mono
 
     private:
 
-        unsigned int mProgram;
+        unsigned int m_program;
         
-        int mMVMatrixLocation;
-        int mPMatrixLocation;
-        int m_pointSizeLocation;
+        int m_mv_matrix_location;
+        int m_p_matrix_location;
+        int m_point_size_location;
         
-        unsigned int mPositionAttributeLocation;
-        unsigned int mColorAttributeLocation;
+        unsigned int m_position_attribute_location;
+        unsigned int m_color_attribute_location;
     };
 }

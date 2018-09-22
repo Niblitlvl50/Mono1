@@ -7,40 +7,40 @@
 
 namespace
 {
-    constexpr const char* vertexSource =
+    constexpr const char* vertexSource = R"(
+    #ifdef __IPHONEOS__
+        precision mediump float;
+    #endif
 
-#ifdef __IPHONEOS__
-    "precision mediump float;"
-#endif
+        attribute vec2 vertex_position;
+        attribute vec4 vertex_color;
 
-    "attribute vec2 vertexPosition;"
-    "attribute vec4 vertexColor;"
+        uniform mat4 mv_matrix;
+        uniform mat4 p_matrix;
+        uniform float point_size;
 
-    "uniform mat4 mv_matrix;"
-    "uniform mat4 p_matrix;"
-    "uniform float pointSize;"
+        varying vec4 color;
 
-    "varying vec4 color;"
+        void main()
+        {
+            gl_Position = p_matrix * mv_matrix * vec4(vertex_position, 0.0, 1.0);
+            gl_PointSize = point_size;
+            color = vertex_color;
+        }
+    )";
 
-    "void main()"
-    "{"
-    "    gl_Position = p_matrix * mv_matrix * vec4(vertexPosition, 0.0, 1.0);"
-    "    gl_PointSize = pointSize;"
-    "    color = vertexColor;"
-    "}";
+    constexpr const char* fragmentSource = R"(
+    #ifdef __IPHONEOS__
+        precision mediump float;
+    #endif
 
-    constexpr const char* fragmentSource =
+        varying vec4 color;
 
-#ifdef __IPHONEOS__
-    "precision mediump float;"
-#endif
-
-    "varying vec4 color;"
-
-    "void main()"
-    "{"
-    "    gl_FragColor = color;"
-    "}";
+        void main()
+        {
+            gl_FragColor = color;
+        }
+    )";
 }
 
 
@@ -51,47 +51,47 @@ ColorShader::ColorShader()
     const GLuint vertexShader = CompileShader(mono::ShaderType::VERTEX, vertexSource);
     const GLuint fragmentShader = CompileShader(mono::ShaderType::FRAGMENT, fragmentSource);
 
-    mProgram = LinkProgram(vertexShader, fragmentShader);
+    m_program = LinkProgram(vertexShader, fragmentShader);
 
-    mMVMatrixLocation = glGetUniformLocation(mProgram, "mv_matrix");
-    mPMatrixLocation = glGetUniformLocation(mProgram, "p_matrix");
-    m_pointSizeLocation = glGetUniformLocation(mProgram, "pointSize");
+    m_mv_matrix_location = glGetUniformLocation(m_program, "mv_matrix");
+    m_p_matrix_location = glGetUniformLocation(m_program, "p_matrix");
+    m_point_size_location = glGetUniformLocation(m_program, "point_size");
 
-    mPositionAttributeLocation = (unsigned int)glGetAttribLocation(mProgram, "vertexPosition");
-    mColorAttributeLocation = (unsigned int)glGetAttribLocation(mProgram, "vertexColor");
+    m_position_attribute_location = (unsigned int)glGetAttribLocation(m_program, "vertex_position");
+    m_color_attribute_location = (unsigned int)glGetAttribLocation(m_program, "vertex_color");
 }
 
 void ColorShader::Use()
 {
-    glUseProgram(mProgram);
+    glUseProgram(m_program);
 }
 
 unsigned int ColorShader::GetShaderId() const
 {
-    return mProgram;
+    return m_program;
 }
 
 void ColorShader::LoadProjectionMatrix(const math::Matrix& projection)
 {
-    glUniformMatrix4fv(mPMatrixLocation, 1, GL_FALSE, projection.data);
+    glUniformMatrix4fv(m_p_matrix_location, 1, GL_FALSE, projection.data);
 }
 
 void ColorShader::LoadModelViewMatrix(const math::Matrix& modelView)
 {
-    glUniformMatrix4fv(mMVMatrixLocation, 1, GL_FALSE, modelView.data);
+    glUniformMatrix4fv(m_mv_matrix_location, 1, GL_FALSE, modelView.data);
 }
 
 void ColorShader::SetPointSize(float size)
 {
-    glUniform1f(m_pointSizeLocation, size);
+    glUniform1f(m_point_size_location, size);
 }
 
 unsigned int ColorShader::GetPositionAttributeLocation() const
 {
-    return mPositionAttributeLocation;
+    return m_position_attribute_location;
 }
 
 unsigned int ColorShader::GetColorAttributeLocation() const
 {
-    return mColorAttributeLocation;
+    return m_color_attribute_location;
 }
