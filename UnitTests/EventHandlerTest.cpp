@@ -64,7 +64,7 @@ TEST(EventHandlerTest, stress_test)
 {
     mono::EventHandler handler;
 
-    constexpr int n_objects = 50000;
+    constexpr int n_objects = 5000;
     TestClass receiving_objects[n_objects];
     mono::EventToken<TestEvent1> testevent_token_1[n_objects];
     mono::EventToken<TestEvent2> testevent_token_2[n_objects];
@@ -105,6 +105,6 @@ TEST(EventHandlerTest, stress_test)
     }
 
     std::printf("---------------------\n");
-    std::printf("add: %u, dispatch: %u, remove: %u\n", add_listener_diff, dispatch_diff, remove_diff);
+    std::printf("add: %u ms, dispatch: %u ms, remove: %u ms\n", add_listener_diff, dispatch_diff, remove_diff);
     std::printf("---------------------\n");
 }
