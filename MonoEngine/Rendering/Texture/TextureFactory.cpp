@@ -3,19 +3,19 @@
 #include "Texture.h"
 #include "IImage.h"
 #include "ImageFactory.h"
+#include "Hash.h"
 
 #include <cstdio>
 #include <unordered_map>
-#include <string>
 
 namespace
 {
     // This is where all the weak pointers goes, that points to the allocated textures!
-    std::unordered_map<std::string, std::weak_ptr<mono::ITexture>> g_texture_storage;
+    std::unordered_map<unsigned int, std::weak_ptr<mono::ITexture>> g_texture_storage;
 
-    mono::ITexturePtr GetTextureFromCache(const char* texture_name)
+    mono::ITexturePtr GetTextureFromCache(unsigned int texture_hash)
     {
-        auto it = g_texture_storage.find(texture_name);
+        auto it = g_texture_storage.find(texture_hash);
         if(it != g_texture_storage.end())
         {
             mono::ITexturePtr texture = it->second.lock();
@@ -23,44 +23,49 @@ namespace
                 return texture;
         }
 
-        std::printf("TextureFactory - Unable to find '%s' in cache.\n", texture_name);
         return nullptr;
     }
 
-    mono::ITexturePtr CreateAndCacheTexture(const System::IImagePtr& image, const char* texture_name)
+    mono::ITexturePtr CreateAndCacheTexture(const System::IImagePtr& image, unsigned int texture_hash)
     {
-        const auto deleter = [texture_name](mono::ITexture* ptr) {
-            g_texture_storage.erase(texture_name);
+        const auto deleter = [texture_hash](mono::ITexture* ptr) {
+            g_texture_storage.erase(texture_hash);
             delete ptr;
         };
 
         mono::ITexturePtr texture(new mono::Texture(image), deleter);
-        g_texture_storage[texture_name] = texture;
+        g_texture_storage[texture_hash] = texture;
 
         return texture;
     }
 }
 
-mono::ITexturePtr mono::CreateTexture(const char* source)
+mono::ITexturePtr mono::CreateTexture(const char* texture_name)
 {
-    mono::ITexturePtr texture = GetTextureFromCache(source);
+    const unsigned int texture_hash = mono::Hash(texture_name);
+
+    mono::ITexturePtr texture = GetTextureFromCache(texture_hash);
     if(texture)
         return texture;
-    
-    const System::IImagePtr image = System::LoadImage(source);
-    return CreateAndCacheTexture(image, source);
+    else
+        std::printf("TextureFactory - Unable to find '%s' in cache.\n", texture_name);
+
+    const System::IImagePtr image = System::LoadImage(texture_name);
+    return CreateAndCacheTexture(image, texture_hash);
 }
 
-mono::ITexturePtr mono::CreateTextureFromData(const unsigned char* data, int data_length, const char* cache_name)
+mono::ITexturePtr mono::CreateTextureFromData(const byte* data, int data_length, const char* cache_name)
 {
     if(cache_name)
     {
-        mono::ITexturePtr texture = GetTextureFromCache(cache_name);
+        const unsigned int texture_hash = mono::Hash(cache_name);
+
+        mono::ITexturePtr texture = GetTextureFromCache(texture_hash);
         if(texture)
             return texture;
 
         const System::IImagePtr image = System::LoadImageFromData(data, data_length);
-        return CreateAndCacheTexture(image, cache_name);
+        return CreateAndCacheTexture(image, texture_hash);
     }
     else
     {
@@ -69,7 +74,7 @@ mono::ITexturePtr mono::CreateTextureFromData(const unsigned char* data, int dat
     }
 }
 
-mono::ITexturePtr mono::CreateTexture(const unsigned char* data, int width, int height, int color_components)
+mono::ITexturePtr mono::CreateTexture(const byte* data, int width, int height, int color_components)
 {
     const System::IImagePtr image = System::CreateImage(data, width, height, color_components);
     return std::make_shared<Texture>(image);

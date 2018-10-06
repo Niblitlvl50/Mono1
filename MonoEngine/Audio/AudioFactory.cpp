@@ -1,5 +1,6 @@
 
 #include "AudioFactory.h"
+#include "Hash.h"
 #include "System/File.h"
 
 #include "open_al.h"
@@ -189,35 +190,36 @@ namespace
     }
 
     // The sound data repository, this is where all the sounds are stored!
-    std::unordered_map<std::string, std::weak_ptr<SoundData>> repository;
+    std::unordered_map<unsigned int, std::weak_ptr<SoundData>> repository;
 }
 
-mono::ISoundPtr mono::AudioFactory::CreateSound(const char* fileName, bool loop, bool relative)
+mono::ISoundPtr mono::AudioFactory::CreateSound(const char* file_name, bool loop, bool relative)
 {
-    auto it = repository.find(fileName);
+    const unsigned int sound_hash = mono::Hash(file_name);
+    auto it = repository.find(sound_hash);
     if(it != repository.end())
     {
         auto data = it->second.lock();
         if(data)
             return std::make_shared<SoundImpl>(data, loop, relative);
 
-        std::printf("AudioFactory - Recreating '%s'\n", fileName);
+        std::printf("AudioFactory - Recreating '%s'\n", file_name);
     }
 
-    const mono::SoundFile& soundFile = LoadFile(fileName);
-    const ALenum format = SoundFormatToALFormat(soundFile.format);
+    const mono::SoundFile& sound_file = LoadFile(file_name);
+    const ALenum format = SoundFormatToALFormat(sound_file.format);
 
     // Custom deleter to actualy erase the file from the repository
     // when the last reference goes out of scope.
-    const auto deleter = [fileName](SoundData* ptr) {
-        repository.erase(fileName);
+    const auto deleter = [sound_hash](SoundData* ptr) {
+        repository.erase(sound_hash);
         delete ptr;
     };
 
-    auto data = std::shared_ptr<SoundData>(new SoundData(soundFile.data, format, soundFile.frequency), deleter);
+    auto data = std::shared_ptr<SoundData>(new SoundData(sound_file.data, format, sound_file.frequency), deleter);
 
     // Store it in the repository for others to retreive
-    repository[fileName] = data;
+    repository[sound_hash] = data;
 
     return std::make_shared<SoundImpl>(data, loop, relative);
 }
