@@ -1,7 +1,7 @@
 
 #pragma once
 
-static unsigned int currentId = 0;
+static unsigned int next_token_id = 0;
 
 namespace mono
 {
@@ -10,15 +10,15 @@ namespace mono
     {
     public:
         EventToken()
-            : mId(++currentId)
+            : m_id(++next_token_id)
         { }
 
-        inline bool operator < (const EventToken<Event>& other) const
+        inline bool operator == (const EventToken<Event>& other) const
         {
-            return mId < other.mId;
+            return m_id == other.m_id;
         }
 
     private:
-        unsigned int mId;
+        unsigned int m_id;
     };
 }

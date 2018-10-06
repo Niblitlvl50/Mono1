@@ -2,43 +2,46 @@
 #pragma once
 
 #include <typeinfo>
-#include <map>
 #include <unordered_map>
-#include <string>
 #include <functional>
 #include <memory>
+#include <vector>
 #include "EventToken.h"
-
 
 namespace mono
 {
     template<typename Event>
     struct EventListeners
     {
-        using ListenerCallback = std::function<bool (const Event& event)>;
-        //std::unordered_map<EventToken<Event>, ListenerCallback> mListeners;
-        std::map<EventToken<Event>, ListenerCallback> mListeners;
+        using ListenerCallback = std::function<bool (const Event&)>;
 
+        std::vector<EventToken<Event>> m_tokens;
+        std::vector<ListenerCallback> m_callbacks;
 
-        inline EventToken<Event> AddListener(const ListenerCallback& listener)
+        inline EventToken<Event> AddListener(const ListenerCallback& callback)
         {
-            EventToken<Event> token;
-            mListeners.insert(std::make_pair(token, listener));
-            return token;
+            m_tokens.push_back(EventToken<Event>());
+            m_callbacks.push_back(callback);
+            return m_tokens.back();
         }
 
         inline void RemoveListener(const EventToken<Event>& token)
         {
-            auto it = mListeners.find(token);
-            if(it != mListeners.end())
-                mListeners.erase(it);
+            auto it = std::find(m_tokens.begin(), m_tokens.end(), token);
+            if(it != m_tokens.end())
+            {
+                const size_t offset = std::distance(m_tokens.begin(), it);
+
+                m_tokens.erase(it);
+                m_callbacks.erase(m_callbacks.begin() + offset);
+            }
         }
 
         inline void DispatchEvent(const Event& event)
         {
-            for(auto& listener : mListeners)
+            for(const ListenerCallback& callback : m_callbacks)
             {
-                const bool handled = listener.second(event);
+                const bool handled = callback(event);
                 if(handled)
                     break;
             }
@@ -47,20 +50,19 @@ namespace mono
     
     class EventHandler
     {
-        using VoidPtr = std::shared_ptr<void>;
-        std::unordered_map<std::string, VoidPtr> events;
+        std::unordered_map<size_t, std::shared_ptr<void>> m_events;
 
     public:
         
         template<typename Event>
         inline EventToken<Event> AddListener(const std::function<bool (const Event& event)>& listener)
         {
-            const char* eventName = typeid(Event).name();
-            auto it = events.find(eventName);
-            if(it == events.end())
+            const size_t event_hash = typeid(Event).hash_code();
+            auto it = m_events.find(event_hash);
+            if(it == m_events.end())
             {
                 auto listeners = std::make_shared<EventListeners<Event>>();
-                it = events.insert(std::make_pair(eventName, listeners)).first;
+                it = m_events.insert(std::make_pair(event_hash, listeners)).first;
             }
             
             return std::static_pointer_cast<EventListeners<Event>>(it->second)->AddListener(listener);
@@ -69,9 +71,9 @@ namespace mono
         template<typename Event>
         inline void RemoveListener(const EventToken<Event>& token)
         {
-            const char* eventName = typeid(Event).name();
-            const auto it = events.find(eventName);
-            if(it != events.end())
+            const size_t event_hash = typeid(Event).hash_code();
+            const auto it = m_events.find(event_hash);
+            if(it != m_events.end())
             {
                 auto listener = std::static_pointer_cast<EventListeners<Event>>(it->second);
                 listener->RemoveListener(token);
@@ -81,9 +83,9 @@ namespace mono
         template<typename Event>
         inline void DispatchEvent(const Event& event)
         {
-            const char* eventName = typeid(Event).name();
-            const auto it = events.find(eventName);
-            if(it != events.end())
+            const size_t event_hash = typeid(Event).hash_code();
+            const auto it = m_events.find(event_hash);
+            if(it != m_events.end())
             {
                 auto listener = std::static_pointer_cast<EventListeners<Event>>(it->second);
                 listener->DispatchEvent(event);
