@@ -1,12 +1,14 @@
 
 #pragma once
 
+#include "EventToken.h"
+
 #include <typeinfo>
 #include <unordered_map>
 #include <functional>
 #include <memory>
 #include <vector>
-#include "EventToken.h"
+#include <algorithm>
 
 namespace mono
 {
@@ -20,20 +22,23 @@ namespace mono
 
         inline EventToken<Event> AddListener(const ListenerCallback& callback)
         {
-            m_tokens.push_back(EventToken<Event>());
-            m_callbacks.push_back(callback);
+            m_tokens.emplace_back(EventToken<Event>());
+            m_callbacks.emplace_back(callback);
             return m_tokens.back();
         }
 
         inline void RemoveListener(const EventToken<Event>& token)
         {
-            auto it = std::find(m_tokens.begin(), m_tokens.end(), token);
+            const auto it = std::find(m_tokens.begin(), m_tokens.end(), token);
             if(it != m_tokens.end())
             {
                 const size_t offset = std::distance(m_tokens.begin(), it);
 
-                m_tokens.erase(it);
-                m_callbacks.erase(m_callbacks.begin() + offset);
+                std::swap(*it, m_tokens.back());
+                std::swap(*(m_callbacks.begin() + offset), m_callbacks.back());
+
+                m_tokens.pop_back();
+                m_callbacks.pop_back();
             }
         }
 
