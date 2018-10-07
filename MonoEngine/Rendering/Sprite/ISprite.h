@@ -35,9 +35,6 @@ namespace mono
         //! @return Math::Quad A reference to the texture coords.
         virtual math::Quad GetTextureCoords() const = 0;
 
-        //! Gets the full texture coordinates of the texture used in the sprite
-        virtual const math::Quad& GetFullTexureCoords() const = 0;
-
         //! Gets the color shade of the sprite
         //! @return Color A reference to the color shading.
         virtual const Color::RGBA& GetShade() const = 0;
