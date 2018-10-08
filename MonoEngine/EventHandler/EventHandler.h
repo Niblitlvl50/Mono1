@@ -34,8 +34,8 @@ namespace mono
             {
                 const size_t offset = std::distance(m_tokens.begin(), it);
 
-                std::swap(*it, m_tokens.back());
-                std::swap(*(m_callbacks.begin() + offset), m_callbacks.back());
+                *it = m_tokens.back();
+                *(m_callbacks.begin() + offset) = m_callbacks.back();
 
                 m_tokens.pop_back();
                 m_callbacks.pop_back();
