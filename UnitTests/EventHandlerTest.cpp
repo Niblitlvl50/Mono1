@@ -32,6 +32,22 @@ namespace
         bool receivedEvent = false;
         bool receivedAnotherEvent = false;
     };
+
+    struct ScopedTimer
+    {
+        ScopedTimer(unsigned int& out_diff_time)
+            : m_before_time(System::GetMilliseconds())
+            , m_out_diff_time(out_diff_time)
+        { }
+
+        ~ScopedTimer()
+        {
+            m_out_diff_time = System::GetMilliseconds() - m_before_time;
+        }
+
+        const unsigned int m_before_time;
+        unsigned int& m_out_diff_time;
+    };
 }
 
 TEST(EventHandlerTest, RegisterListener)
@@ -69,37 +85,43 @@ TEST(EventHandlerTest, stress_test)
     mono::EventToken<TestEvent1> testevent_token_1[n_objects];
     mono::EventToken<TestEvent2> testevent_token_2[n_objects];
 
-    const unsigned int before_add_listener = System::GetMilliseconds();
+    unsigned int add_listener_diff = 0;
+    {
+        ScopedTimer scope_timer(add_listener_diff);
+
+        for(int index = 0; index < n_objects; ++index)
+        {
+            TestClass& object = receiving_objects[index];
+
+            std::function<bool (const TestEvent1&)> func1 = std::bind(&TestClass::OnEventFunc, &object, _1);
+            std::function<bool (const TestEvent2&)> func2 = std::bind(&TestClass::OnAnohterEvent, &object, _1);
+
+            testevent_token_1[index] = handler.AddListener(func1);
+            testevent_token_2[index] = handler.AddListener(func2);
+        }
+    }
+
+    unsigned int dispatch_diff = 0;
+    {
+        ScopedTimer scope_timer(dispatch_diff);
+        handler.DispatchEvent(TestEvent1());
+        handler.DispatchEvent(TestEvent2());
+    }
+
+    unsigned int remove_diff = 0;
+    {
+        ScopedTimer scope_timer(remove_diff);
+
+        for(int index = n_objects; index > 0; --index)
+        {
+            handler.RemoveListener(testevent_token_1[index -1]);
+            handler.RemoveListener(testevent_token_2[index -1]);
+        }
+    }
+
     for(int index = 0; index < n_objects; ++index)
     {
         TestClass& object = receiving_objects[index];
-
-        std::function<bool (const TestEvent1&)> func1 = std::bind(&TestClass::OnEventFunc, &object, _1);
-        std::function<bool (const TestEvent2&)> func2 = std::bind(&TestClass::OnAnohterEvent, &object, _1);
-
-        testevent_token_1[index] = handler.AddListener(func1);
-        testevent_token_2[index] = handler.AddListener(func2);
-    }
-    const unsigned int add_listener_diff = System::GetMilliseconds() - before_add_listener;
-
-    const unsigned int before_dispatch = System::GetMilliseconds();
-    handler.DispatchEvent(TestEvent1());
-    handler.DispatchEvent(TestEvent2());
-    const unsigned int dispatch_diff = System::GetMilliseconds() - before_dispatch;
-
-    const unsigned int before_remove = System::GetMilliseconds();
-    for(int index = n_objects; index > 0; --index)
-    {
-        handler.RemoveListener(testevent_token_1[index -1]);
-        handler.RemoveListener(testevent_token_2[index -1]);
-    }
-    const unsigned int remove_diff = System::GetMilliseconds() - before_remove;
-
-
-    for(int index = 0; index < n_objects; ++index)
-    {
-        TestClass& object = receiving_objects[index];
-
         ASSERT_TRUE(object.receivedEvent);
         ASSERT_TRUE(object.receivedAnotherEvent);
     }

@@ -20,11 +20,15 @@ namespace mono
         std::vector<EventToken<Event>> m_tokens;
         std::vector<ListenerCallback> m_callbacks;
 
-        inline EventToken<Event> AddListener(const ListenerCallback& callback)
+        inline EventToken<Event> AddListener(const ListenerCallback& callback, unsigned int new_token_id)
         {
-            m_tokens.emplace_back(EventToken<Event>());
+            EventToken<Event> new_token;
+            new_token.m_id = new_token_id;
+
+            m_tokens.emplace_back(new_token);
             m_callbacks.emplace_back(callback);
-            return m_tokens.back();
+
+            return new_token;
         }
 
         inline void RemoveListener(const EventToken<Event>& token)
@@ -55,6 +59,7 @@ namespace mono
     
     class EventHandler
     {
+        unsigned int m_next_token_id = 0;
         std::unordered_map<size_t, std::shared_ptr<void>> m_events;
 
     public:
@@ -70,7 +75,7 @@ namespace mono
                 it = m_events.insert(std::make_pair(event_hash, listeners)).first;
             }
             
-            return std::static_pointer_cast<EventListeners<Event>>(it->second)->AddListener(listener);
+            return std::static_pointer_cast<EventListeners<Event>>(it->second)->AddListener(listener, m_next_token_id++);
         }
         
         template<typename Event>
