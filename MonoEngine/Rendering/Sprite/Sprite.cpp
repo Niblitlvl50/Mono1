@@ -30,15 +30,7 @@ ITexturePtr Sprite::GetTexture() const
 math::Quad Sprite::GetTextureCoords() const
 {
     const AnimationSequence& anim = m_animations[m_active_animation];
-    math::Quad coords = m_texture_coordinates.at(anim.Frame());
-
-    if(m_flip_horizontal)
-        std::swap(coords.mA.x, coords.mB.x);
-    
-    if(m_flip_vertical)
-        std::swap(coords.mA.y, coords.mB.y);
-
-    return coords;
+    return GetFrame(anim.Frame());
 }
 
 const Color::RGBA& Sprite::GetShade() const
@@ -136,9 +128,17 @@ int Sprite::GetUniqueFrames() const
     return static_cast<int>(m_texture_coordinates.size());
 }
 
-const math::Quad& Sprite::GetFrame(int frame_index) const
+math::Quad Sprite::GetFrame(int frame_index) const
 {
-    return m_texture_coordinates[frame_index];
+    math::Quad coords = m_texture_coordinates[frame_index];
+
+    if(m_flip_horizontal)
+        std::swap(coords.mA.x, coords.mB.x);
+    
+    if(m_flip_vertical)
+        std::swap(coords.mA.y, coords.mB.y);
+
+    return coords;
 }
 
 int Sprite::GetActiveAnimation() const

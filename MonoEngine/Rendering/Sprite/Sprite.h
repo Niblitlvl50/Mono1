@@ -69,7 +69,7 @@ namespace mono
         int GetDefinedAnimations() const;
 
         int GetUniqueFrames() const;
-        const math::Quad& GetFrame(int frame_index) const;
+        math::Quad GetFrame(int frame_index) const;
 
         const AnimationSequence& GetSequence(int id) const;
               AnimationSequence& GetSequence(int id);
@@ -86,8 +86,6 @@ namespace mono
         int m_active_animation = 0;
         std::function<void ()> m_callback;
         ITexturePtr m_texture;
-
-        math::Quad m_texture_quad;
 
         std::vector<math::Quad> m_texture_coordinates;
         std::vector<AnimationSequence> m_animations;

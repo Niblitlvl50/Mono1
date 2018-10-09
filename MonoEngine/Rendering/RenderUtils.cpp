@@ -86,9 +86,13 @@ void mono::DrawCircle(const math::Vector& position,
 
 void mono::DrawSprite(const mono::ISprite& sprite, const math::Vector& offset, ITextureShader* shader)
 {
+    DrawSprite(sprite.GetTextureCoords(), offset, shader);
+}
+
+void mono::DrawSprite(const math::Quad& sprite_coords, const math::Vector& offset, ITextureShader* shader)
+{
     // The sprite can return zeroQuad as texture coordinates when the animation is finished
-    const math::Quad& quad = sprite.GetTextureCoords();
-    if(quad == math::ZeroQuad)
+    if(sprite_coords == math::ZeroQuad)
         return;
 
     const math::Vector vertices[] = {
@@ -103,13 +107,14 @@ void mono::DrawSprite(const mono::ISprite& sprite, const math::Vector& offset, I
     };
 
     const float texture_coords[] = {
-        quad.mA.x, quad.mA.y,
-        quad.mA.x, quad.mB.y,
-        quad.mB.x, quad.mB.y,
-        quad.mB.x, quad.mA.y
+        sprite_coords.mA.x, sprite_coords.mA.y,
+        sprite_coords.mA.x, sprite_coords.mB.y,
+        sprite_coords.mB.x, sprite_coords.mB.y,
+        sprite_coords.mB.x, sprite_coords.mA.y
     };
     
-    shader->SetShade(sprite.GetShade());
+    //shader->SetShade(sprite.GetShade());
+    shader->SetShade(mono::Color::RGBA(1, 1, 1));
     shader->SetAlphaTexture(false);
 
     glEnableVertexAttribArray(0);

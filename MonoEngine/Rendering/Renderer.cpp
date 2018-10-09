@@ -120,6 +120,13 @@ void Renderer::DrawSprite(const ISprite& sprite, const math::Vector& offset) con
     ::DrawSprite(sprite, offset, m_texture_shader.get());
 }
 
+void Renderer::DrawSprite(const math::Quad& sprite_coords, const math::Vector& offset, const ITexturePtr& texture) const
+{
+    UseTexture(texture);
+    UseShader(m_texture_shader.get());
+    ::DrawSprite(sprite_coords, offset, m_texture_shader.get());
+}
+
 void Renderer::DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const
 {
     UseShader(m_color_shader.get());
