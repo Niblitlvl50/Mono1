@@ -17,9 +17,9 @@ ParticleDrawer::ParticleDrawer(const mono::ITexturePtr& texture, mono::BlendMode
 {
     const size_t pool_size = m_pool.m_pool_size;
 
-    m_positionBuffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 2);
-    m_colorBuffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 4); 
-    m_point_size_buffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, pool_size);
+    m_positionBuffer = mono::CreateRenderBuffer(BufferTarget::ARRAY_BUFFER, BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 2);
+    m_colorBuffer = mono::CreateRenderBuffer(BufferTarget::ARRAY_BUFFER, BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 4); 
+    m_point_size_buffer = mono::CreateRenderBuffer(BufferTarget::ARRAY_BUFFER, BufferType::DYNAMIC, BufferData::FLOAT, pool_size);
 
     ClearRenderBuffer();
 }

@@ -208,6 +208,13 @@ void Renderer::DrawPolyline(
     ::DrawPolyline(vertices, colors, offset, count, 2.0f, m_color_shader.get());
 }
 
+void Renderer::DrawTrianges(
+    const IRenderBuffer* vertices, const IRenderBuffer* colors, const IRenderBuffer* indices, size_t count) const
+{
+    UseShader(m_color_shader.get());
+    ::DrawTrianges(vertices, colors, indices, count, m_color_shader.get());
+}
+
 void Renderer::UseShader(IShader* shader) const
 {
     const unsigned int id = shader->GetShaderId();

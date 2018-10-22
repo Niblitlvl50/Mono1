@@ -66,6 +66,13 @@ namespace mono
                               size_t count,
                               ITextureShader* shader);
 
+    void DrawTrianges(
+        const mono::IRenderBuffer* vertices,
+        const mono::IRenderBuffer* colors,
+        const mono::IRenderBuffer* indices,
+        size_t count,
+        IColorShader* shader);
+
     void DrawParticlePoints(const mono::IRenderBuffer* position,
                             const mono::IRenderBuffer* color,
                             const mono::IRenderBuffer* point_size,

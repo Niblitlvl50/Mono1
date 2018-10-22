@@ -285,6 +285,36 @@ void mono::DrawTexturedGeometry(const mono::IRenderBuffer* vertices,
     ClearRenderBuffer();
 }
 
+void mono::DrawTrianges(
+    const mono::IRenderBuffer* vertices,
+    const mono::IRenderBuffer* colors,
+    const mono::IRenderBuffer* indices,
+    size_t count,
+    IColorShader* shader)
+{
+    shader->SetPointSize(5.0f);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+ 
+    vertices->Use();
+    glVertexAttribPointer(shader->GetPositionAttributeLocation(), 2, GL_FLOAT, GL_FALSE, 0, 0);
+ 
+    colors->Use();
+    glVertexAttribPointer(shader->GetColorAttributeLocation(), 4, GL_FLOAT, GL_FALSE, 0, 0);
+ 
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, count);
+    //glDrawArrays(GL_POINTS, 0, count);
+ 
+    //indices->Use();
+    //glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, 0);
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+
+    ClearRenderBuffer();
+}
+
 void mono::DrawParticlePoints(
     const IRenderBuffer* position,
     const IRenderBuffer* color,

@@ -4,16 +4,29 @@
 
 using namespace mono;
 
-RenderBuffer::RenderBuffer(BufferType type, BufferData data, size_t count)
-    : m_type(type),
-      m_data(data)
+constexpr GLenum buffer_target_lookup[] = {
+    GL_ARRAY_BUFFER,
+    GL_ELEMENT_ARRAY_BUFFER
+};
+
+constexpr GLenum usage_type_lookup[] = {
+    GL_STATIC_DRAW,
+    GL_DYNAMIC_DRAW
+};
+
+RenderBuffer::RenderBuffer(mono::BufferTarget target, mono::BufferType type, mono::BufferData data, size_t count)
+    : m_target(target)
+    , m_type(type)
+    , m_data(data)
 {
+    const GLenum buffer_target = buffer_target_lookup[static_cast<int>(m_target)];
+    const GLenum buffer_usage = usage_type_lookup[static_cast<int>(m_type)];
+
     const size_t size = (m_data == BufferData::FLOAT) ? sizeof(float) : sizeof(int);
-    const GLenum usage = (m_type == BufferType::STATIC) ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW;
 
     glGenBuffers(1, &m_buffer_id);
     Use();
-    glBufferData(GL_ARRAY_BUFFER, size * count, nullptr, usage);
+    glBufferData(buffer_target, size * count, nullptr, buffer_usage);
 }
 
 RenderBuffer::~RenderBuffer()
@@ -26,12 +39,15 @@ void RenderBuffer::UpdateData(const void* data, size_t offset, size_t count)
     const size_t size = (m_data == BufferData::FLOAT) ? sizeof(float) : sizeof(int);
 
     Use();
-    glBufferSubData(GL_ARRAY_BUFFER, offset * size, size * count, data);
+
+    const GLenum target = buffer_target_lookup[static_cast<int>(m_target)];
+    glBufferSubData(target, offset * size, size * count, data);
 }
 
 void RenderBuffer::Use() const
 {
-    glBindBuffer(GL_ARRAY_BUFFER, m_buffer_id);
+    const GLenum target = buffer_target_lookup[static_cast<int>(m_target)];
+    glBindBuffer(target, m_buffer_id);
 }
 
 size_t RenderBuffer::Id() const
@@ -42,4 +58,5 @@ size_t RenderBuffer::Id() const
 void mono::ClearRenderBuffer()
 {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

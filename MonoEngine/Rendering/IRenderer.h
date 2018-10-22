@@ -54,6 +54,9 @@ namespace mono
         virtual void DrawPolyline(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, size_t offset, size_t count) = 0;
 
+        virtual void DrawTrianges(
+            const IRenderBuffer* vertices, const IRenderBuffer* colors, const IRenderBuffer* indices, size_t count) const = 0;
+
         virtual void UseShader(IShader* shader) const = 0;
         virtual void UseTexture(const ITexturePtr& texture) const = 0;
         virtual void ClearTexture() = 0;
