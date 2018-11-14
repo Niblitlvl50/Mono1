@@ -11,11 +11,6 @@ BodyImpl::BodyImpl(cpBody* body)
         m_collision_handler(nullptr)
 { }
 
-BodyImpl::~BodyImpl()
-{
-    cpBodyFree(m_body_handle);
-}
-
 bool BodyImpl::IsStatic() const 
 {
     return cpBodyGetType(m_body_handle) == CP_BODY_TYPE_STATIC;

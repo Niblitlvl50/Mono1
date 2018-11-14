@@ -7,9 +7,25 @@
 
 namespace mono
 {
+    struct PhysicsInitParams
+    {
+        size_t n_bodies = 100;
+
+        size_t n_circle_shapes = 100;
+        size_t n_segment_shapes = 100;
+        size_t n_polygon_shapes = 100;
+
+        size_t n_pivot_joints = 100;
+        size_t n_gear_joints = 100;
+        size_t n_damped_springs = 100;
+    };
+
     class PhysicsFactory
     {
     public:
+
+        static void Init(const PhysicsInitParams& init_params);
+        static void Shutdown();
 
         static IBodyPtr CreateStaticBody();
         static IBodyPtr CreateKinematicBody();
@@ -33,6 +49,6 @@ namespace mono
         //! Constraints
         static mono::IConstraintPtr CreatePivot(const mono::IBodyPtr& a, const mono::IBodyPtr& b);
         static mono::IConstraintPtr CreateGear(const mono::IBodyPtr& a, const mono::IBodyPtr& b, float phase, float ratio);
-        static mono::IConstraintPtr CreateSpring(const mono::IBodyPtr& a, const mono::IBodyPtr& b, float restLength, float stiffness, float damping);
+        static mono::IConstraintPtr CreateSpring(const mono::IBodyPtr& a, const mono::IBodyPtr& b, float rest_length, float stiffness, float damping);
     };
 }

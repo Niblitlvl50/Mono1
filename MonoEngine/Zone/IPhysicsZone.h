@@ -7,6 +7,8 @@
 
 namespace mono
 {
+    using BodyFunc = std::function<void (const IBodyPtr&)>;
+
     class IPhysicsZone : public virtual mono::IZone
     {
     public:

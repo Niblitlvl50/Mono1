@@ -3,6 +3,7 @@
 
 #include "CMFwd.h"
 #include "Math/MathFwd.h"
+#include "Zone/IPhysicsZone.h"
 #include <vector>
 
 struct cpSpace;

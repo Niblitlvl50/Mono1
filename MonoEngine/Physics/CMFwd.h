@@ -2,7 +2,6 @@
 #pragma once
 
 #include <memory>
-#include <functional>
 
 struct cpBody;
 struct cpShape;
@@ -18,5 +17,4 @@ namespace mono
     using IBodyPtr = std::shared_ptr<IBody>;
     using IShapePtr = std::shared_ptr<IShape>;
     using IConstraintPtr = std::shared_ptr<IConstraint>;
-    using BodyFunc = std::function<void (const IBodyPtr&)>;
 }

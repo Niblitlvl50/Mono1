@@ -10,7 +10,6 @@ namespace cm
     public:
     
         BodyImpl(cpBody* body);
-        ~BodyImpl();
 
         bool IsStatic() const override;
         void SetMass(float mass) override;

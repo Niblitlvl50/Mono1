@@ -9,11 +9,6 @@ ConstraintImpl::ConstraintImpl(cpConstraint* constraint)
     : m_constraint(constraint)
 { }
 
-ConstraintImpl::~ConstraintImpl()
-{
-    cpConstraintFree(m_constraint);
-}
-
 void ConstraintImpl::SetMaxForce(float force) 
 {
     cpConstraintSetMaxForce(m_constraint, force);

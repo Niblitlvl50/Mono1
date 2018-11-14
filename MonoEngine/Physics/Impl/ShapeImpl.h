@@ -2,9 +2,6 @@
 #pragma once
 
 #include "Physics/IShape.h"
-#include "Math/MathFwd.h"
-
-#include <vector>
 
 namespace cm
 {
@@ -12,12 +9,8 @@ namespace cm
     {
     public:
      
-        ShapeImpl(mono::IBodyPtr& body, float radius, const math::Vector& offset);
-        ShapeImpl(mono::IBodyPtr& body, float width, float height);
-        ShapeImpl(mono::IBodyPtr& body, const math::Vector& first, const math::Vector& second, float radius);
-        ShapeImpl(mono::IBodyPtr& body, const std::vector<math::Vector>& vertices, const math::Vector& offset);
-        ~ShapeImpl();
-
+        ShapeImpl(cpShape* shape, float inertia_value);
+        
         void SetElasticity(float value) override;
         void SetFriction(float value) override;
         float GetInertiaValue() const override;

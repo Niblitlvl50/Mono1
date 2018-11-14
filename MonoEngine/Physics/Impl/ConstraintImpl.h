@@ -10,7 +10,6 @@ namespace cm
     public:
 
         ConstraintImpl(cpConstraint* constraint);
-        ~ConstraintImpl();
 
         void SetMaxForce(float force) override;
         float GetMaxForce() const override;
