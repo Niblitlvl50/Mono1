@@ -20,6 +20,18 @@ void Sprite::Init(const mono::ITexturePtr& texture, const std::vector<math::Quad
 {
     m_texture = texture;
     m_texture_coordinates = coordinates;
+
+    const float texture_width = texture->Width();
+    const float texture_height = texture->Height();
+
+    for(math::Quad& coords : m_texture_coordinates)
+    {
+        coords.mA.x /= texture_width;
+        coords.mA.y /= texture_height;
+
+        coords.mB.x /= texture_width;
+        coords.mB.y /= texture_height;
+    }
 }
 
 ITexturePtr Sprite::GetTexture() const

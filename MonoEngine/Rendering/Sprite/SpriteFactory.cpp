@@ -19,68 +19,77 @@
 
 #include "Math/Quad.h"
 #include "System/File.h"
+#include "Hash.h"
 
 #include "nlohmann_json/json.hpp"
+#include <unordered_map>
 
 namespace
 {
-    bool LoadSpriteData(mono::Sprite& sprite, const char* sprite_raw_data)
+    struct SpriteAnimation
     {
-//        File::FilePtr file = File::OpenAsciiFile(sprite_file);
-//        if(!file)
-//            return false;
-//
-//        std::vector<byte> file_data;
-//        File::FileRead(file, file_data);
+        std::string name;
+        bool loop;
+        std::vector<int> frames;
+    };
 
+    struct SpriteData
+    {
+        std::string texture_file;
+        std::vector<math::Quad> texture_coordinates;
+        std::vector<SpriteAnimation> animations;
+    };
+
+    std::unordered_map<unsigned int, SpriteData> g_sprite_data_cache;
+
+    SpriteData LoadSpriteData(const char* sprite_raw_data)
+    {
         const nlohmann::json& json = nlohmann::json::parse(sprite_raw_data);
         
-        const std::string& texture_file = json["texture"];
-        mono::ITexturePtr texture = mono::CreateTexture(texture_file.c_str());
-        const float texture_width = texture->Width();
-        const float texture_height = texture->Height();
+        SpriteData sprite_data;
+        sprite_data.texture_file = json["texture"];
 
         const nlohmann::json& frames = json["frames"];
-        std::vector<math::Quad> texture_coordinates;
-        texture_coordinates.reserve(frames.size());
+        sprite_data.texture_coordinates.reserve(frames.size());
 
         for(const nlohmann::json& frame : frames)
         {
-            const float x = float(frame["x"]) / texture_width;
-            const float y = float(frame["y"]) / texture_height;
-            const float w = float(frame["w"]) / texture_width;
-            const float h = float(frame["h"]) / texture_height;
+            const float x = frame["x"];
+            const float y = frame["y"];
+            const float w = frame["w"];
+            const float h = frame["h"];
 
-            texture_coordinates.emplace_back(x, y + h, x + w, y);
+            sprite_data.texture_coordinates.emplace_back(x, y + h, x + w, y);
         }
 
-        sprite.Init(texture, texture_coordinates);
+        const nlohmann::json& animations = json["animations"];
+        sprite_data.animations.reserve(animations.size());
 
-        for(const auto& animation : json["animations"])
+        for(const auto& animation : animations)
         {
-            const std::string& name = animation["name"];
-            const bool loop = animation["loop"];
-            const std::vector<int>& frames = animation["frames"];
-            sprite.DefineAnimation(name.c_str(), frames, loop);
+            SpriteAnimation sprite_animation;
+            sprite_animation.name = animation["name"];
+            sprite_animation.loop = animation["loop"];
+
+            std::vector<int> frames = animation["frames"];
+            sprite_animation.frames = std::move(frames);
+
+            sprite_data.animations.push_back(sprite_animation);
         }
 
-        return true;
+        return sprite_data;
     }
+}
+
+void mono::ClearSpriteCache()
+{
+    g_sprite_data_cache.clear();
 }
 
 mono::ISpritePtr mono::CreateSprite(const char* sprite_file)
 {
-    File::FilePtr file = File::OpenAsciiFile(sprite_file);
-    if(!file)
-        return nullptr;
-
-    std::vector<byte> file_data;
-    File::FileRead(file, file_data);
-
-    file_data.push_back('\0');
-
     std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>();
-    const bool result = LoadSpriteData(*sprite.get(), (const char*)file_data.data());
+    const bool result = CreateSprite(*sprite.get(), sprite_file);
     if(result)
         return sprite;
 
@@ -89,23 +98,44 @@ mono::ISpritePtr mono::CreateSprite(const char* sprite_file)
 
 mono::ISpritePtr mono::CreateSpriteFromRaw(const char* sprite_raw)
 {
-    std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>();
-    const bool result = LoadSpriteData(*sprite.get(), sprite_raw);
-    if(result)
-        return sprite;
+    const SpriteData& sprite_data = LoadSpriteData(sprite_raw);    
+    mono::ITexturePtr texture = mono::CreateTexture(sprite_data.texture_file.c_str());
 
-    return nullptr;    
+    std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>();
+    sprite->Init(texture, sprite_data.texture_coordinates);
+
+    for(const SpriteAnimation& animation : sprite_data.animations)
+        sprite->DefineAnimation(animation.name.c_str(), animation.frames, animation.loop);
+
+    return sprite;
 }
 
 bool mono::CreateSprite(mono::Sprite& sprite, const char* sprite_file)
 {
-    File::FilePtr file = File::OpenAsciiFile(sprite_file);
-    if(!file)
-        return false;
-
-    std::vector<byte> file_data;
-    File::FileRead(file, file_data);
-    file_data.push_back('\0');
+    const unsigned int sprite_file_hash = mono::Hash(sprite_file);
     
-    return LoadSpriteData(sprite, (const char*)file_data.data());
+    auto it = g_sprite_data_cache.find(sprite_file_hash);
+    if(it == g_sprite_data_cache.end())
+    {
+        File::FilePtr file = File::OpenAsciiFile(sprite_file);
+        if(!file)
+            return false;
+
+        std::vector<byte> file_data;
+        File::FileRead(file, file_data);
+        file_data.push_back('\0');
+
+        const SpriteData& sprite_data = LoadSpriteData((const char*)file_data.data());
+        it = g_sprite_data_cache.insert({sprite_file_hash, sprite_data}).first;
+    }
+
+    const SpriteData& sprite_data = it->second;
+
+    mono::ITexturePtr texture = mono::CreateTexture(sprite_data.texture_file.c_str());
+    sprite.Init(texture, sprite_data.texture_coordinates);
+    
+    for(const SpriteAnimation& animation : sprite_data.animations)
+        sprite.DefineAnimation(animation.name.c_str(), animation.frames, animation.loop);
+
+    return true;
 }

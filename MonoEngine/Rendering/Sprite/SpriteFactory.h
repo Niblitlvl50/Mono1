@@ -5,9 +5,9 @@
 
 namespace mono
 {
-    class Sprite;
+    void ClearSpriteCache();
 
     ISpritePtr CreateSprite(const char* sprite_file);
     ISpritePtr CreateSpriteFromRaw(const char* sprite_raw);
-    bool CreateSprite(Sprite& sprite, const char* sprite_file);
+    bool CreateSprite(class Sprite& sprite, const char* sprite_file);
 }
