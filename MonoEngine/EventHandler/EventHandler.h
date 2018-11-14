@@ -6,7 +6,6 @@
 #include <typeinfo>
 #include <unordered_map>
 #include <functional>
-#include <memory>
 #include <vector>
 #include <algorithm>
 
@@ -60,7 +59,7 @@ namespace mono
     class EventHandler
     {
         unsigned int m_next_token_id = 0;
-        std::unordered_map<size_t, std::shared_ptr<void>> m_events;
+        std::unordered_map<size_t, void*> m_events;
 
     public:
         
@@ -71,11 +70,11 @@ namespace mono
             auto it = m_events.find(event_hash);
             if(it == m_events.end())
             {
-                auto listeners = std::make_shared<EventListeners<Event>>();
-                it = m_events.insert(std::make_pair(event_hash, listeners)).first;
+                EventListeners<Event>* listeners = new EventListeners<Event>;
+                it = m_events.insert(std::make_pair(event_hash, (void*)listeners)).first;
             }
             
-            return std::static_pointer_cast<EventListeners<Event>>(it->second)->AddListener(listener, m_next_token_id++);
+            return static_cast<EventListeners<Event>*>(it->second)->AddListener(listener, m_next_token_id++);
         }
         
         template<typename Event>
@@ -85,7 +84,7 @@ namespace mono
             const auto it = m_events.find(event_hash);
             if(it != m_events.end())
             {
-                auto listener = std::static_pointer_cast<EventListeners<Event>>(it->second);
+                EventListeners<Event>* listener = static_cast<EventListeners<Event>*>(it->second);
                 listener->RemoveListener(token);
             }
         }
@@ -97,7 +96,7 @@ namespace mono
             const auto it = m_events.find(event_hash);
             if(it != m_events.end())
             {
-                auto listener = std::static_pointer_cast<EventListeners<Event>>(it->second);
+                EventListeners<Event>* listener = static_cast<EventListeners<Event>*>(it->second);
                 listener->DispatchEvent(event);
             }	
         }
