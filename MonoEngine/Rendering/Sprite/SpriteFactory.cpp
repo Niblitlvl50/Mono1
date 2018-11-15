@@ -88,7 +88,7 @@ void mono::ClearSpriteCache()
 
 mono::ISpritePtr mono::CreateSprite(const char* sprite_file)
 {
-    std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>();
+    std::unique_ptr<Sprite> sprite = std::make_unique<Sprite>();
     const bool result = CreateSprite(*sprite.get(), sprite_file);
     if(result)
         return sprite;
@@ -101,7 +101,7 @@ mono::ISpritePtr mono::CreateSpriteFromRaw(const char* sprite_raw)
     const SpriteData& sprite_data = LoadSpriteData(sprite_raw);    
     mono::ITexturePtr texture = mono::CreateTexture(sprite_data.texture_file.c_str());
 
-    std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>();
+    std::unique_ptr<Sprite> sprite = std::make_unique<Sprite>();
     sprite->Init(texture, sprite_data.texture_coordinates);
 
     for(const SpriteAnimation& animation : sprite_data.animations)
