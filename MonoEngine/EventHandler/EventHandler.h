@@ -8,6 +8,7 @@
 #include <functional>
 #include <vector>
 #include <algorithm>
+#include <any>
 
 namespace mono
 {
@@ -59,7 +60,7 @@ namespace mono
     class EventHandler
     {
         unsigned int m_next_token_id = 0;
-        std::unordered_map<size_t, void*> m_events;
+        std::unordered_map<size_t, std::any> m_events;
 
     public:
         
@@ -67,14 +68,12 @@ namespace mono
         inline EventToken<Event> AddListener(const std::function<bool (const Event& event)>& listener)
         {
             const size_t event_hash = typeid(Event).hash_code();
-            auto it = m_events.find(event_hash);
+            const auto it = m_events.find(event_hash);
             if(it == m_events.end())
-            {
-                EventListeners<Event>* listeners = new EventListeners<Event>;
-                it = m_events.insert(std::make_pair(event_hash, (void*)listeners)).first;
-            }
+                m_events[event_hash] = EventListeners<Event>();
             
-            return static_cast<EventListeners<Event>*>(it->second)->AddListener(listener, m_next_token_id++);
+            EventListeners<Event>& listeners = std::any_cast<EventListeners<Event>&>(m_events[event_hash]);
+            return listeners.AddListener(listener, m_next_token_id++);
         }
         
         template<typename Event>
@@ -84,8 +83,8 @@ namespace mono
             const auto it = m_events.find(event_hash);
             if(it != m_events.end())
             {
-                EventListeners<Event>* listener = static_cast<EventListeners<Event>*>(it->second);
-                listener->RemoveListener(token);
+                EventListeners<Event>& listeners = std::any_cast<EventListeners<Event>&>(it->second);
+                listeners.RemoveListener(token);
             }
         }
         
@@ -96,8 +95,8 @@ namespace mono
             const auto it = m_events.find(event_hash);
             if(it != m_events.end())
             {
-                EventListeners<Event>* listener = static_cast<EventListeners<Event>*>(it->second);
-                listener->DispatchEvent(event);
+                EventListeners<Event>& listeners = std::any_cast<EventListeners<Event>&>(it->second);
+                listeners.DispatchEvent(event);
             }	
         }
     };
