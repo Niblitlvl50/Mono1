@@ -11,5 +11,5 @@ namespace mono
     using IUpdatablePtr = std::shared_ptr<IUpdatable>;
     using IZonePtr = std::shared_ptr<IZone>;
     using ISoundPtr = std::shared_ptr<ISound>;
-    using IPathPtr = std::shared_ptr<IPath>;
+    using IPathPtr = std::unique_ptr<IPath>;
 }

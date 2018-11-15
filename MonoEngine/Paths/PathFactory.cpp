@@ -93,7 +93,7 @@ namespace
     };
 }
 
-std::shared_ptr<mono::IPath> mono::CreatePath(const char* path_file)
+mono::IPathPtr mono::CreatePath(const char* path_file)
 {
     File::FilePtr file = File::OpenAsciiFile(path_file);
     if(!file)
@@ -110,12 +110,12 @@ std::shared_ptr<mono::IPath> mono::CreatePath(const char* path_file)
     coords.resize(points.size() / 2);
     std::memcpy(coords.data(), points.data(), sizeof(float) * points.size());
     
-    return std::make_shared<PathImpl>(position, coords);
+    return std::make_unique<PathImpl>(position, coords);
 }
 
-std::shared_ptr<mono::IPath> mono::CreatePath(const math::Vector& position, const std::vector<math::Vector>& coords)
+mono::IPathPtr mono::CreatePath(const math::Vector& position, const std::vector<math::Vector>& coords)
 {
-    return std::make_shared<PathImpl>(position, coords);
+    return std::make_unique<PathImpl>(position, coords);
 }
 
 bool mono::SavePath(const char* path_file, const math::Vector& position, const std::vector<math::Vector>& local_points)
@@ -137,6 +137,3 @@ bool mono::SavePath(const char* path_file, const math::Vector& position, const s
     std::fwrite(serialized_path.data(), serialized_path.length(), sizeof(char), output_file.get());
     return true;
 }
-
-
-
