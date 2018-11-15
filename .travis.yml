@@ -14,14 +14,14 @@ matrix:
 
   - os: linux
     compiler: gcc
-    env: COMPILER=g++-6
+    env: COMPILER=g++-7
     addons:
       apt:
         sources: 
           - ubuntu-toolchain-r-test
           - llvm-toolchain-trusty-5.0
         packages:
-          - g++-6
+          - g++-7
           - clang-5.0
           - libopenal-dev
 
@@ -33,7 +33,7 @@ matrix:
           - ubuntu-toolchain-r-test
           - llvm-toolchain-trusty-5.0
         packages:
-          - g++-6
+          - g++-7
           - clang-5.0
           - libopenal-dev
 
