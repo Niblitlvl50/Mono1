@@ -4,14 +4,14 @@
 
 using namespace mono;
 
-void Updater::AddUpdatable(const IUpdatablePtr& updatable)
+void Updater::AddUpdatable(IUpdatable* updatable)
 {
     m_updatables.push_back(updatable);
 }
 
 void Updater::Update(unsigned int milliseconds)
 {
-    for(auto& updatable : m_updatables)
+    for(IUpdatable* updatable : m_updatables)
         updatable->doUpdate(milliseconds);
 
     m_updatables.clear();

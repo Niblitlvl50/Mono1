@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "MonoPtrFwd.h"
+#include "MonoFwd.h"
 
 namespace mono
 {
@@ -12,6 +12,6 @@ namespace mono
         virtual ~IUpdater()
         { }
 
-        virtual void AddUpdatable(const IUpdatablePtr& updatable) = 0;
+        virtual void AddUpdatable(IUpdatable* updatable) = 0;
     };
 }

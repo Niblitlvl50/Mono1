@@ -128,7 +128,7 @@ int Engine::Run(IZonePtr zone)
             zone->Accept(renderer);
             zone->Accept(updater);
 
-            updater.AddUpdatable(m_camera);
+            updater.AddUpdatable(m_camera.get());
 
             // Update all the stuff...
             updater.Update(delta);

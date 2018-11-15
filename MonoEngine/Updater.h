@@ -10,11 +10,11 @@ namespace mono
     {
     public:
 
-        void AddUpdatable(const IUpdatablePtr& updatable) override;
+        void AddUpdatable(IUpdatable* updatable) override;
         void Update(unsigned int milliseconds);
 
     private:
 
-        std::vector<IUpdatablePtr> m_updatables;
+        std::vector<IUpdatable*> m_updatables;
     };
 }

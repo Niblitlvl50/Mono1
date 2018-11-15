@@ -30,7 +30,7 @@ void ZoneBase::Accept(mono::IUpdater& updater)
     DoPreAccept();
 
     for(auto& updatable : m_updatables)
-        updater.AddUpdatable(updatable);
+        updater.AddUpdatable(updatable.get());
 }
 
 void ZoneBase::DoPreAccept()
