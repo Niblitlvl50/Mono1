@@ -3,7 +3,7 @@
 
 #include "Math/Quad.h"
 #include "Math/Vector.h"
-#include "nlohmann_json/json.hpp"
+#include "nlohmann/json.hpp"
 
 namespace math
 {

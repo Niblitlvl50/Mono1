@@ -4,7 +4,7 @@
 #include "Math/Vector.h"
 #include "System/File.h"
 
-#include "nlohmann_json/json.hpp"
+#include "nlohmann/json.hpp"
 #include <stdlib.h>
 
 namespace

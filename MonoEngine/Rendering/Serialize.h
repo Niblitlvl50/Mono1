@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Rendering/Color.h"
-#include "nlohmann_json/json.hpp"
+#include "nlohmann/json.hpp"
 
 namespace mono
 {
