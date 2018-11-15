@@ -21,8 +21,10 @@
 #include "System/File.h"
 #include "Hash.h"
 
-#include "nlohmann_json/json.hpp"
 #include <unordered_map>
+#include <string>
+
+#include "nlohmann_json/json.hpp"
 
 namespace
 {
