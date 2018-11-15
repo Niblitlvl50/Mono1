@@ -20,25 +20,24 @@ namespace mono
         
         void Tick(unsigned int delta);
         
-        void Add(const IBodyPtr& body);
-        void Add(const IShapePtr& shape);
-        void Add(const IConstraintPtr& constraint);
+        void Add(IBody* body);
+        void Add(IShape* shape);
+        void Add(IConstraint* constraint);
         
-        void Remove(const IBodyPtr& body);
-        void Remove(const IShapePtr& shape);
-        void Remove(const IConstraintPtr& constraint);
+        void Remove(IBody* body);
+        void Remove(IShape* shape);
+        void Remove(IConstraint* constraint);
         
         void ForEachBody(const BodyFunc& func);
-        IBodyPtr QueryFirst(const math::Vector& start, const math::Vector& end);
+        IBody* QueryFirst(const math::Vector& start, const math::Vector& end);
         
     private:
         
         bool OnCollision(cpArbiter* arb);        
         void DoForEachFuncOnBody(cpBody* body);
 
+        cpSpace* m_space;        
         BodyFunc m_for_each_func;
-        
-        cpSpace* m_space;
-        std::vector<IBodyPtr> m_bodies;
+        std::vector<IBody*> m_bodies;
     };
 }

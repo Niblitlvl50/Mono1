@@ -92,7 +92,7 @@ void BodyImpl::SetCollisionHandler(mono::ICollisionHandler* collision_handler)
     m_collision_handler = collision_handler;
 }
 
-void BodyImpl::OnCollideWith(const mono::IBodyPtr& body, unsigned int categories) 
+void BodyImpl::OnCollideWith(mono::IBody* body, unsigned int categories) 
 {
     if(m_collision_handler)
         m_collision_handler->OnCollideWith(body, categories);

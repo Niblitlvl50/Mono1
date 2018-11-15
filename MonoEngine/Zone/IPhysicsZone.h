@@ -7,14 +7,14 @@
 
 namespace mono
 {
-    using BodyFunc = std::function<void (const IBodyPtr&)>;
+    using BodyFunc = std::function<void (IBody*)>;
 
     class IPhysicsZone : public virtual mono::IZone
     {
     public:
 
         virtual void ForEachBody(const mono::BodyFunc& func) = 0;
-        virtual IPhysicsEntityPtr FindPhysicsEntityFromBody(const mono::IBodyPtr& body) const = 0;
+        virtual IPhysicsEntityPtr FindPhysicsEntityFromBody(const mono::IBody* body) const = 0;
         virtual mono::IPhysicsEntityPtr FindPhysicsEntityFromId(unsigned int id) const = 0;
 
         virtual void AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer) = 0;

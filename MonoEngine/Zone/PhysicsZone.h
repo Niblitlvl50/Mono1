@@ -17,7 +17,7 @@ namespace mono
         PhysicsZone(const math::Vector& gravity, float damping);
 
         virtual void ForEachBody(const mono::BodyFunc& func);
-        virtual IPhysicsEntityPtr FindPhysicsEntityFromBody(const mono::IBodyPtr& body) const;
+        virtual IPhysicsEntityPtr FindPhysicsEntityFromBody(const mono::IBody* body) const;
         virtual IPhysicsEntityPtr FindPhysicsEntityFromId(unsigned int id) const;
 
         virtual void AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer);

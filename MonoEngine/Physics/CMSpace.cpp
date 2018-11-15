@@ -14,8 +14,8 @@
 using namespace mono;
 
 PhysicsSpace::PhysicsSpace(const math::Vector& gravity, float damping)
+    : m_space(cpSpaceNew())
 {
-    m_space = cpSpaceNew();
     cpSpaceSetGravity(m_space, cpv(gravity.x, gravity.y));
     cpSpaceSetDamping(m_space, damping);
 
@@ -40,14 +40,14 @@ void PhysicsSpace::Tick(unsigned int delta)
     cpSpaceStep(m_space, float_delta / 1000.0f);
 }
 
-void PhysicsSpace::Add(const IBodyPtr& body)
+void PhysicsSpace::Add(IBody* body)
 {
     if(!body->IsStatic())
         cpSpaceAddBody(m_space, body->Handle());
     m_bodies.push_back(body);
 }
 
-void PhysicsSpace::Remove(const IBodyPtr& body)
+void PhysicsSpace::Remove(IBody* body)
 {
     if(!body->IsStatic())
         cpSpaceRemoveBody(m_space, body->Handle());
@@ -57,22 +57,22 @@ void PhysicsSpace::Remove(const IBodyPtr& body)
         std::printf("Unable to remove body from collection!\n");
 }
 
-void PhysicsSpace::Add(const IShapePtr& shape)
+void PhysicsSpace::Add(IShape* shape)
 {
     cpSpaceAddShape(m_space, shape->Handle());
 }
 
-void PhysicsSpace::Remove(const IShapePtr& shape)
+void PhysicsSpace::Remove(IShape* shape)
 {
     cpSpaceRemoveShape(m_space, shape->Handle());
 }
 
-void PhysicsSpace::Add(const IConstraintPtr& constraint)
+void PhysicsSpace::Add(IConstraint* constraint)
 {
     cpSpaceAddConstraint(m_space, constraint->Handle());
 }
 
-void PhysicsSpace::Remove(const IConstraintPtr& constraint)
+void PhysicsSpace::Remove(IConstraint* constraint)
 {
     cpSpaceRemoveConstraint(m_space, constraint->Handle());
 }
@@ -102,7 +102,7 @@ void PhysicsSpace::DoForEachFuncOnBody(cpBody* body)
     }
 }
 
-IBodyPtr PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vector& end)
+mono::IBody* PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vector& end)
 {
     const cpShape* shape = cpSpaceSegmentQueryFirst(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 1, CP_SHAPE_FILTER_ALL, nullptr);
     if(!shape)
@@ -110,7 +110,7 @@ IBodyPtr PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vector&
 
     const cpBody* body = cpShapeGetBody(shape);
 
-    const auto func = [body](const IBodyPtr& bodyPtr) {
+    const auto func = [body](IBody* bodyPtr) {
         return bodyPtr->Handle() == body;
     };
 
@@ -134,8 +134,8 @@ bool PhysicsSpace::OnCollision(cpArbiter* arb)
     const cpShapeFilter& filter1 = cpShapeGetFilter(shape1);
     const cpShapeFilter& filter2 = cpShapeGetFilter(shape2);
     
-    IBodyPtr first = nullptr;
-    IBodyPtr second = nullptr;
+    IBody* first = nullptr;
+    IBody* second = nullptr;
     
     for(auto& body : m_bodies)
     {

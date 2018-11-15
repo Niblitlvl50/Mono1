@@ -27,7 +27,7 @@ namespace cm
         void SetVelocity(const math::Vector& velocity) override;
         void ResetForces() override;
         void SetCollisionHandler(mono::ICollisionHandler* collision_handler) override;
-        void OnCollideWith(const mono::IBodyPtr& body, unsigned int categories) override;
+        void OnCollideWith(mono::IBody* body, unsigned int categories) override;
         void SetNoDamping() override;
         cpBody* Handle() override;
         

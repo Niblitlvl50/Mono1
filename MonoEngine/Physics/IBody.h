@@ -13,7 +13,7 @@ namespace mono
         virtual ~ICollisionHandler()
         { }
         
-        virtual void OnCollideWith(const mono::IBodyPtr& body, unsigned int categories) = 0;
+        virtual void OnCollideWith(mono::IBody* body, unsigned int categories) = 0;
     };
 
     class IBody
@@ -92,7 +92,7 @@ namespace mono
         
         //! Called by the framework when a collision occures
         //! @param body The other body of the collision
-        virtual void OnCollideWith(const IBodyPtr& body, unsigned int categories) = 0;
+        virtual void OnCollideWith(IBody* body, unsigned int categories) = 0;
 
         //! Disable damping on this body, will cause no slowdowns. 
         virtual void SetNoDamping() = 0;

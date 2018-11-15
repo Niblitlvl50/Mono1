@@ -60,37 +60,37 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
 
 void PhysicsZone::AddConstraint(const mono::IConstraintPtr& constraint)
 {
-    m_physics->m_space.Add(constraint);
+    m_physics->m_space.Add(constraint.get());
     m_constraints.push_back(constraint);
 }
 
 void PhysicsZone::RemoveConstraint(const mono::IConstraintPtr& constraint)
 {
-    m_physics->m_space.Remove(constraint);
+    m_physics->m_space.Remove(constraint.get());
     mono::remove(m_constraints, constraint);
 }
 
 void PhysicsZone::AddPhysicsData(const mono::PhysicsData& physics_data)
 {
-    m_physics->m_space.Add(physics_data.body);
+    m_physics->m_space.Add(physics_data.body.get());
     
     for(auto& shape : physics_data.shapes)
-        m_physics->m_space.Add(shape);
+        m_physics->m_space.Add(shape.get());
 }
 
 void PhysicsZone::RemovePhysicsData(const mono::PhysicsData& physics_data)
 {
-    m_physics->m_space.Remove(physics_data.body);
+    m_physics->m_space.Remove(physics_data.body.get());
     
     for(auto& shape : physics_data.shapes)
-        m_physics->m_space.Remove(shape);
+        m_physics->m_space.Remove(shape.get());
 }
 
-IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromBody(const mono::IBodyPtr& body) const
+IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromBody(const mono::IBody* body) const
 {
     for(auto& entity : m_physics_entities)
     {
-        if(entity->GetPhysics().body == body)
+        if(entity->GetPhysics().body.get() == body)
             return entity;
     }
 
