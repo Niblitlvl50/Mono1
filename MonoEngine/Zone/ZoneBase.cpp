@@ -22,7 +22,7 @@ namespace
 void ZoneBase::Accept(IRenderer& renderer)
 {
     for(auto& pair : m_drawables)
-        renderer.AddDrawable(pair.second);
+        renderer.AddDrawable(pair.second.get());
 }
 
 void ZoneBase::Accept(mono::IUpdater& updater)

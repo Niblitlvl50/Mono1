@@ -18,7 +18,7 @@ namespace mono
         void SetWindowSize(const math::Vector& window_size);
 
         virtual void DrawFrame();
-        virtual void AddDrawable(const IDrawablePtr& drawable);
+        virtual void AddDrawable(const IDrawable* drawable);
 
         virtual void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const;
         virtual void DrawSprite(const ISprite& sprite) const;
@@ -92,6 +92,6 @@ namespace mono
         std::unique_ptr<ITextureShader> m_texture_shader;
         std::unique_ptr<IPointSpriteShader> m_point_sprite_shader;
 
-        std::vector<IDrawablePtr> m_drawables;
+        std::vector<const IDrawable*> m_drawables;
     };
 }

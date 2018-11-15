@@ -88,7 +88,7 @@ void Renderer::DrawFrame()
     EndDraw();
 }
 
-void Renderer::AddDrawable(const IDrawablePtr& drawable)
+void Renderer::AddDrawable(const IDrawable* drawable)
 {
     m_drawables.push_back(drawable);
 }
