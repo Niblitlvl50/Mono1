@@ -19,45 +19,26 @@ namespace mono
         //! Constructs a sprite object
         //! @param[in] texture The texture to use for this sprite.
         //! @param[in] coordinates The texture coordinates
-        Sprite(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates);
+        Sprite(const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames);
+        void Init(const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames);
 
-        void Init(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates);
-
-        //! Gets the sprites texture
-        //! @return ITexturePtr A shared pointer to the texture.
-        virtual ITexturePtr GetTexture() const;
-        
-        //! Gets the quad representing the texture coordinates
-        //! @return Math::Quad A reference to the texture coords.
-        virtual math::Quad GetTextureCoords() const;
-        
-        //! Gets the color shade of the sprite
-        //! @return Color A reference to the color shading.
-        virtual const Color::RGBA& GetShade() const;
-        
-        //! Sets the color shade of the sprite
-        //! @param[in] color The color shading
-        virtual void SetShade(const mono::Color::RGBA& color);
-        
-        virtual void SetHorizontalDirection(HorizontalDirection direction);
-        virtual void SetVerticalDirection(VerticalDirection direction);
-
-        //! Tell the sprite to run a specific animation.
-        //! @param[in] id The animation to run.
-        virtual void SetAnimation(int id);
-        virtual void SetAnimation(const char* name);
-        
-        //! Tell the sprite to run a specific animation, and get a callback when finished
-        //! @param[in] id The animation to run.
-        //! @param[in] func A callback function.
-        virtual void SetAnimation(int id, const std::function<void ()>& func);
-        virtual void SetAnimation(const char* name, const std::function<void ()>& func);
+        ITexturePtr GetTexture() const override;
+        SpriteFrame GetCurrentFrame() const override;
+        const Color::RGBA& GetShade() const override;
+        void SetShade(const mono::Color::RGBA& color) override;
+        void SetHorizontalDirection(HorizontalDirection direction) override;
+        void SetVerticalDirection(VerticalDirection direction) override;
+        void SetAnimation(int id) override;
+        void SetAnimation(const char* name) override;
+        void SetAnimation(int id, const std::function<void ()>& func) override;
+        void SetAnimation(const char* name, const std::function<void ()>& func) override;
+        void doUpdate(unsigned int delta) override;
 
         //! Restarts the current set animation
-        virtual void RestartAnimation();
+        void RestartAnimation();
 
         //! Returns the current active animation
-        virtual int GetActiveAnimation() const;
+        int GetActiveAnimation() const;
 
         //! Define an animation sequence by giving pairs of frame and duration.
         //! @param[in] frames A collection of frame and duration pairs. 
@@ -69,15 +50,14 @@ namespace mono
         int GetDefinedAnimations() const;
 
         int GetUniqueFrames() const;
-        math::Quad GetFrame(int frame_index) const;
+        SpriteFrame GetFrame(int frame_index) const;
+        void SetFrameOffset(int frame_index, const math::Vector& offset);
 
         const AnimationSequence& GetSequence(int id) const;
               AnimationSequence& GetSequence(int id);
 
         const std::vector<AnimationSequence>& GetAnimations() const;
               std::vector<AnimationSequence>& GetAnimations();
-
-        virtual void doUpdate(unsigned int delta);
 
     private:
 
@@ -87,7 +67,7 @@ namespace mono
         std::function<void ()> m_callback;
         ITexturePtr m_texture;
 
-        std::vector<math::Quad> m_texture_coordinates;
+        std::vector<SpriteFrame> m_sprite_frames;
         std::vector<AnimationSequence> m_animations;
 
         Color::RGBA m_color;

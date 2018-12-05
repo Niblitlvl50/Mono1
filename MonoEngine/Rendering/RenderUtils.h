@@ -29,7 +29,7 @@ namespace mono
 
     //! Draws a sprite
     void DrawSprite(const ISprite& sprite, const math::Vector& offset, ITextureShader* shader);
-    void DrawSprite(const math::Quad& sprite_coords, const math::Vector& offset, ITextureShader* shader);
+    void DrawSprite(const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, ITextureShader* shader);
 
     //! Draws texts from the text definitions
     void DrawText(const TextDefinition& text, ITextureShader* shader);

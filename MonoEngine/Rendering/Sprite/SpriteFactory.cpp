@@ -38,7 +38,8 @@ namespace
     struct SpriteData
     {
         std::string texture_file;
-        std::vector<math::Quad> texture_coordinates;
+        math::Vector texture_size;
+        std::vector<mono::SpriteFrame> sprite_frames;
         std::vector<SpriteAnimation> animations;
     };
 
@@ -48,20 +49,33 @@ namespace
     {
         const nlohmann::json& json = nlohmann::json::parse(sprite_raw_data);
         
+        const nlohmann::json& texture_size = json["texture_size"];
+
         SpriteData sprite_data;
         sprite_data.texture_file = json["texture"];
+        sprite_data.texture_size = math::Vector(texture_size["w"], texture_size["h"]);
 
         const nlohmann::json& frames = json["frames"];
-        sprite_data.texture_coordinates.reserve(frames.size());
+        sprite_data.sprite_frames.reserve(frames.size());
 
         for(const nlohmann::json& frame : frames)
         {
-            const float x = frame["x"];
-            const float y = frame["y"];
-            const float w = frame["w"];
-            const float h = frame["h"];
+            const float x = float(frame["x"]) / sprite_data.texture_size.x;
+            const float y = float(frame["y"]) / sprite_data.texture_size.y;
+            const float w = float(frame["w"]) / sprite_data.texture_size.x;
+            const float h = float(frame["h"]) / sprite_data.texture_size.y;
 
-            sprite_data.texture_coordinates.emplace_back(x, y + h, x + w, y);
+            mono::SpriteFrame sprite_frame;
+            sprite_frame.center_offset = math::ZeroVec;
+            sprite_frame.texture_coordinates = math::Quad(x, y + h, x + w, y);
+
+            const float width =
+                (sprite_frame.texture_coordinates.mB.x - sprite_frame.texture_coordinates.mA.x) * sprite_data.texture_size.x;
+            const float height =
+                (sprite_frame.texture_coordinates.mA.y - sprite_frame.texture_coordinates.mB.y) * sprite_data.texture_size.y;
+
+            sprite_frame.size = math::Vector(width, height);
+            sprite_data.sprite_frames.push_back(sprite_frame);
         }
 
         const nlohmann::json& animations = json["animations"];
@@ -104,7 +118,7 @@ mono::ISpritePtr mono::CreateSpriteFromRaw(const char* sprite_raw)
     mono::ITexturePtr texture = mono::CreateTexture(sprite_data.texture_file.c_str());
 
     std::unique_ptr<Sprite> sprite = std::make_unique<Sprite>();
-    sprite->Init(texture, sprite_data.texture_coordinates);
+    sprite->Init(texture, sprite_data.sprite_frames);
 
     for(const SpriteAnimation& animation : sprite_data.animations)
         sprite->DefineAnimation(animation.name.c_str(), animation.frames, animation.loop);
@@ -134,7 +148,7 @@ bool mono::CreateSprite(mono::Sprite& sprite, const char* sprite_file)
     const SpriteData& sprite_data = it->second;
 
     mono::ITexturePtr texture = mono::CreateTexture(sprite_data.texture_file.c_str());
-    sprite.Init(texture, sprite_data.texture_coordinates);
+    sprite.Init(texture, sprite_data.sprite_frames);
     
     for(const SpriteAnimation& animation : sprite_data.animations)
         sprite.DefineAnimation(animation.name.c_str(), animation.frames, animation.loop);

@@ -115,16 +115,17 @@ void Renderer::DrawSprite(const ISprite& sprite) const
 
 void Renderer::DrawSprite(const ISprite& sprite, const math::Vector& offset) const
 {
-    UseTexture(sprite.GetTexture());
-    UseShader(m_texture_shader.get());
-    ::DrawSprite(sprite, offset, m_texture_shader.get());
+    const mono::ITexturePtr texture = sprite.GetTexture();
+    const SpriteFrame& current_frame = sprite.GetCurrentFrame();
+    this->DrawSprite(current_frame.texture_coordinates, current_frame.size, offset, texture);
 }
 
-void Renderer::DrawSprite(const math::Quad& sprite_coords, const math::Vector& offset, const ITexturePtr& texture) const
+void Renderer::DrawSprite(
+    const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, const ITexturePtr& texture) const
 {
     UseTexture(texture);
     UseShader(m_texture_shader.get());
-    ::DrawSprite(sprite_coords, offset, m_texture_shader.get());
+    ::DrawSprite(sprite_coords, size, offset, m_texture_shader.get());
 }
 
 void Renderer::DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const

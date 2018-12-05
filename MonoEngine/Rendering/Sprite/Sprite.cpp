@@ -11,27 +11,15 @@ using namespace mono;
 Sprite::Sprite()
 { }
 
-Sprite::Sprite(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates)
+Sprite::Sprite(const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames)
 {
-    Init(texture, coordinates);
+    Init(texture, sprite_frames);
 }
 
-void Sprite::Init(const mono::ITexturePtr& texture, const std::vector<math::Quad>& coordinates)
+void Sprite::Init(const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames)
 {
     m_texture = texture;
-    m_texture_coordinates = coordinates;
-
-    const float texture_width = texture->Width();
-    const float texture_height = texture->Height();
-
-    for(math::Quad& coords : m_texture_coordinates)
-    {
-        coords.mA.x /= texture_width;
-        coords.mA.y /= texture_height;
-
-        coords.mB.x /= texture_width;
-        coords.mB.y /= texture_height;
-    }
+    m_sprite_frames = sprite_frames;
 }
 
 ITexturePtr Sprite::GetTexture() const
@@ -39,7 +27,7 @@ ITexturePtr Sprite::GetTexture() const
     return m_texture;
 }
 
-math::Quad Sprite::GetTextureCoords() const
+mono::SpriteFrame Sprite::GetCurrentFrame() const
 {
     const AnimationSequence& anim = m_animations[m_active_animation];
     return GetFrame(anim.Frame());
@@ -137,20 +125,25 @@ int Sprite::GetDefinedAnimations() const
 
 int Sprite::GetUniqueFrames() const
 {
-    return static_cast<int>(m_texture_coordinates.size());
+    return static_cast<int>(m_sprite_frames.size());
 }
 
-math::Quad Sprite::GetFrame(int frame_index) const
+mono::SpriteFrame Sprite::GetFrame(int frame_index) const
 {
-    math::Quad coords = m_texture_coordinates[frame_index];
+    SpriteFrame frame = m_sprite_frames[frame_index];
 
     if(m_flip_horizontal)
-        std::swap(coords.mA.x, coords.mB.x);
+        std::swap(frame.texture_coordinates.mA.x, frame.texture_coordinates.mB.x);
     
     if(m_flip_vertical)
-        std::swap(coords.mA.y, coords.mB.y);
+        std::swap(frame.texture_coordinates.mA.y, frame.texture_coordinates.mB.y);
 
-    return coords;
+    return frame;
+}
+
+void Sprite::SetFrameOffset(int frame_index, const math::Vector& offset)
+{
+    m_sprite_frames[frame_index].center_offset = offset;
 }
 
 int Sprite::GetActiveAnimation() const

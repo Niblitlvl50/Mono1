@@ -86,20 +86,24 @@ void mono::DrawCircle(const math::Vector& position,
 
 void mono::DrawSprite(const mono::ISprite& sprite, const math::Vector& offset, ITextureShader* shader)
 {
-    DrawSprite(sprite.GetTextureCoords(), offset, shader);
+    const mono::SpriteFrame& sprite_frame = sprite.GetCurrentFrame();
+    DrawSprite(sprite_frame.texture_coordinates, sprite_frame.size, sprite_frame.center_offset + offset, shader);
 }
 
-void mono::DrawSprite(const math::Quad& sprite_coords, const math::Vector& offset, ITextureShader* shader)
+void mono::DrawSprite(const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, ITextureShader* shader)
 {
     // The sprite can return zeroQuad as texture coordinates when the animation is finished
     if(sprite_coords == math::ZeroQuad)
         return;
 
+    // 16 pixels per meter
+    const math::Vector& sprite_size = size / 16.0f / 2.0f;
+
     const math::Vector vertices[] = {
-        math::Vector(-0.5f, -0.5f) + offset,
-        math::Vector(-0.5f,  0.5f) + offset,
-        math::Vector( 0.5f,  0.5f) + offset,
-        math::Vector( 0.5f, -0.5f) + offset
+        math::Vector(-sprite_size.x, -sprite_size.y) + offset,
+        math::Vector(-sprite_size.x,  sprite_size.y) + offset,
+        math::Vector( sprite_size.x,  sprite_size.y) + offset,
+        math::Vector( sprite_size.x, -sprite_size.y) + offset
     };
 
     constexpr unsigned short indices[] = {
