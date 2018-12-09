@@ -6,8 +6,6 @@
 #include "Rendering/BufferFactory.h"
 #include "Math/Quad.h"
 
-#include <limits>
-
 using namespace mono;
 
 ParticleDrawer::ParticleDrawer(const mono::ITexturePtr& texture, mono::BlendMode blend_mode, ParticlePool& pool)
@@ -39,6 +37,5 @@ void ParticleDrawer::doDraw(mono::IRenderer& renderer) const
 
 math::Quad ParticleDrawer::BoundingBox() const
 {
-    constexpr float inf = std::numeric_limits<float>::infinity();
-    return math::Quad(-inf, -inf, inf, inf);    
+    return math::InfQuad;
 }

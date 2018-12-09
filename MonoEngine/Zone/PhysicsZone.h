@@ -16,24 +16,28 @@ namespace mono
         
         PhysicsZone(const math::Vector& gravity, float damping);
 
-        virtual void ForEachBody(const mono::BodyFunc& func);
-        virtual IPhysicsEntityPtr FindPhysicsEntityFromBody(const mono::IBody* body) const;
-        virtual IPhysicsEntityPtr FindPhysicsEntityFromId(unsigned int id) const;
+        void ForEachBody(const mono::BodyFunc& func) override;
+        IPhysicsEntityPtr FindPhysicsEntityFromBody(const mono::IBody* body) const override;
+        IPhysicsEntityPtr FindPhysicsEntityFromId(unsigned int id) const override;
 
-        virtual void AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer);
-        virtual void RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity);
+        void AddPhysicsEntity(const mono::IPhysicsEntityPtr& entity, int layer) override;
+        void RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity) override;
 
-        virtual void AddConstraint(const mono::IConstraintPtr& constraint);
-        virtual void RemoveConstraint(const mono::IConstraintPtr& constraint);
+        void AddConstraint(const mono::IConstraintPtr& constraint) override;
+        void RemoveConstraint(const mono::IConstraintPtr& constraint) override;
 
-        virtual void AddPhysicsData(const mono::PhysicsData& physics_data);
-        virtual void RemovePhysicsData(const mono::PhysicsData& physics_data);
+        void AddPhysicsData(const mono::PhysicsData& physics_data) override;
+        void RemovePhysicsData(const mono::PhysicsData& physics_data) override;
 
     protected:
+
+        void DoPreAccept() override;
 
         struct PhysicsImpl;
         std::shared_ptr<PhysicsImpl> m_physics;
         std::vector<IPhysicsEntityPtr> m_physics_entities;
         std::vector<IConstraintPtr> m_constraints;
+
+        std::vector<IPhysicsEntityPtr> m_physics_remove_list;
     };
 }

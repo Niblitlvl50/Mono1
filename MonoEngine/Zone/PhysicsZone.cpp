@@ -51,11 +51,7 @@ void PhysicsZone::RemovePhysicsEntity(const mono::IPhysicsEntityPtr& entity)
     RemoveDrawable(entity);
     RemoveUpdatable(entity);
 
-    const bool result = mono::remove(m_physics_entities, entity);
-    if(result)
-        RemovePhysicsData(entity->GetPhysics());
-    else
-        std::printf("PhysicsZone - Unable to remove physics entity\n");
+    m_physics_remove_list.push_back(entity);
 }
 
 void PhysicsZone::AddConstraint(const mono::IConstraintPtr& constraint)
@@ -108,5 +104,18 @@ IPhysicsEntityPtr PhysicsZone::FindPhysicsEntityFromId(unsigned int id) const
     return nullptr;
 }
 
+void PhysicsZone::DoPreAccept()
+{
+    for(auto& entity : m_physics_remove_list)
+    {
+        const bool result = mono::remove(m_physics_entities, entity);
+        if(result)
+            RemovePhysicsData(entity->GetPhysics());
+        else
+            std::printf("PhysicsZone - Unable to remove physics entity\n");
+    }
 
+    m_physics_remove_list.clear();
 
+    ZoneBase::DoPreAccept();
+}

@@ -58,38 +58,38 @@ namespace
 }
 
 Engine::Engine(System::IWindow* window, const ICameraPtr& camera, EventHandler& event_handler)
-    : m_window(window),
-      m_camera(camera),
-      m_event_handler(event_handler)
+    : m_window(window)
+    , m_camera(camera)
+    , m_event_handler(event_handler)
 {
     using namespace std::placeholders;
 
     const auto screen_to_world_func = std::bind(ScreenToWorld, _1, _2, m_window, m_camera);
     m_input_handler = std::make_unique<InputHandler>(screen_to_world_func, m_event_handler);
 
-    const event::PauseEventFunc pauseFunc = std::bind(&Engine::OnPause, this, _1);
-    const event::QuitEventFunc quitFunc = std::bind(&Engine::OnQuit, this, _1);
-    const event::ApplicationEventFunc appFunc = std::bind(&Engine::OnApplication, this, _1);
-    const event::SurfaceChangedEventFunc surfaceChangedFunc = std::bind(&Engine::OnSurfaceChanged, this, _1);
-    const event::ActivatedEventFunc activatedFunc = std::bind(&Engine::OnActivated, this, _1);
-    const event::TimeScaleEventFunc timeScaleFunc = std::bind(&Engine::OnTimeScale, this, _1);
+    const event::PauseEventFunc pause_func = std::bind(&Engine::OnPause, this, _1);
+    const event::QuitEventFunc quit_func = std::bind(&Engine::OnQuit, this, _1);
+    const event::ApplicationEventFunc app_func = std::bind(&Engine::OnApplication, this, _1);
+    const event::SurfaceChangedEventFunc surface_changed_func = std::bind(&Engine::OnSurfaceChanged, this, _1);
+    const event::ActivatedEventFunc activated_func = std::bind(&Engine::OnActivated, this, _1);
+    const event::TimeScaleEventFunc time_scale_func = std::bind(&Engine::OnTimeScale, this, _1);
 
-    mPauseToken = m_event_handler.AddListener(pauseFunc);
-    mQuitToken = m_event_handler.AddListener(quitFunc);
-    mApplicationToken = m_event_handler.AddListener(appFunc);
-    mSurfaceChangedToken = m_event_handler.AddListener(surfaceChangedFunc);
-    mActivatedToken = m_event_handler.AddListener(activatedFunc);
-    mTimeScaleToken = m_event_handler.AddListener(timeScaleFunc);
+    m_pause_token = m_event_handler.AddListener(pause_func);
+    m_quit_token = m_event_handler.AddListener(quit_func);
+    m_application_token = m_event_handler.AddListener(app_func);
+    m_surface_changed_token = m_event_handler.AddListener(surface_changed_func);
+    m_activated_token = m_event_handler.AddListener(activated_func);
+    m_time_scale_token = m_event_handler.AddListener(time_scale_func);
 }
 
 Engine::~Engine()
 {
-    m_event_handler.RemoveListener(mPauseToken);
-    m_event_handler.RemoveListener(mQuitToken);
-    m_event_handler.RemoveListener(mApplicationToken);
-    m_event_handler.RemoveListener(mSurfaceChangedToken);
-    m_event_handler.RemoveListener(mActivatedToken);
-    m_event_handler.RemoveListener(mTimeScaleToken);
+    m_event_handler.RemoveListener(m_pause_token);
+    m_event_handler.RemoveListener(m_quit_token);
+    m_event_handler.RemoveListener(m_application_token);
+    m_event_handler.RemoveListener(m_surface_changed_token);
+    m_event_handler.RemoveListener(m_activated_token);
+    m_event_handler.RemoveListener(m_time_scale_token);
 }
 
 int Engine::Run(IZonePtr zone)
@@ -124,17 +124,14 @@ int Engine::Run(IZonePtr zone)
 
         if(!m_pause)
         {
-            // Let the zone add stuff that will be rendered and updated
-            zone->Accept(renderer);
-            zone->Accept(updater);
-
-            updater.AddUpdatable(m_camera.get());
-
             // Update all the stuff...
+            zone->Accept(updater);
+            updater.AddUpdatable(m_camera.get());
             updater.Update(delta);
 
             // Draw...
             m_window->MakeCurrent();
+            zone->Accept(renderer);
             renderer.DrawFrame();
             m_window->SwapBuffers();
         }
@@ -149,11 +146,12 @@ int Engine::Run(IZonePtr zone)
     m_camera->Unfollow();
     const int exit_code = zone->OnUnload();
 
-    // Reset the quit, pause and updateLastTime flag for when you want
+    // Reset the quit, pause and m_update_last_time flag for when you want
     // to reuse the engine for another zone.
     m_quit = false;
     m_pause = false;
     m_update_last_time = false;
+    m_time_scale = 1.0f;
 
     return exit_code;
 }

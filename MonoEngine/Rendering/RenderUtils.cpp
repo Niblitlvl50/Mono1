@@ -310,7 +310,7 @@ void mono::DrawParticlePoints(
     IPointSpriteShader* shader)
 {
     glEnable(GL_POINT_SPRITE);
-    //glDepthMask(GL_FALSE);
+    glDepthMask(GL_FALSE);
 
     if(blend_mode == BlendMode::ONE)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE);
@@ -336,6 +336,7 @@ void mono::DrawParticlePoints(
 
     glDisable(GL_POINT_SPRITE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDepthMask(GL_TRUE);
 
     ClearRenderBuffer();
 }

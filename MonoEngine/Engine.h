@@ -49,12 +49,12 @@ namespace mono
         EventHandler& m_event_handler;
         std::unique_ptr<System::IInputHandler> m_input_handler;
 
-        EventToken<event::PauseEvent> mPauseToken;
-        EventToken<event::QuitEvent> mQuitToken;
-        EventToken<event::ApplicationEvent> mApplicationToken;
-        EventToken<event::SurfaceChangedEvent> mSurfaceChangedToken;
-        EventToken<event::ActivatedEvent> mActivatedToken;
-        EventToken<event::TimeScaleEvent> mTimeScaleToken;
+        EventToken<event::PauseEvent> m_pause_token;
+        EventToken<event::QuitEvent> m_quit_token;
+        EventToken<event::ApplicationEvent> m_application_token;
+        EventToken<event::SurfaceChangedEvent> m_surface_changed_token;
+        EventToken<event::ActivatedEvent> m_activated_token;
+        EventToken<event::TimeScaleEvent> m_time_scale_token;
     };
 }
 

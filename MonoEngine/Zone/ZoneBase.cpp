@@ -35,10 +35,34 @@ void ZoneBase::Accept(mono::IUpdater& updater)
 
 void ZoneBase::DoPreAccept()
 {
-    for(const auto& task : m_preframe_tasks)
-        task();
+    for(auto& entity : m_entities_remove)
+    {
+        const bool result = mono::remove(m_entities, entity);
+        if(!result)
+            std::printf("ZoneBase - Unable to remove entity with id %u\n", entity->Id());
+    }
 
-    m_preframe_tasks.clear();
+    for(auto& updatable : m_updatables_remove)
+    {
+        const bool result = mono::remove(m_updatables, updatable);
+        if(!result)
+            std::printf("ZoneBase - Unable to remove updatable\n");
+    }
+
+    for(auto& drawable : m_drawables_remove)
+    {
+        const auto func = [drawable](const std::pair<int, IDrawablePtr>& pair) {
+            return pair.second == drawable;
+        };
+
+        const bool removed = mono::remove_if(m_drawables, func);
+        if(!removed)
+            std::printf("ZoneBase - Unable to remove drawable\n");
+    }
+
+    m_entities_remove.clear();
+    m_updatables_remove.clear();
+    m_drawables_remove.clear();
 }
 
 void ZoneBase::AddEntity(const IEntityPtr& entity, int layer)
@@ -51,12 +75,9 @@ void ZoneBase::AddEntity(const IEntityPtr& entity, int layer)
 
 void ZoneBase::RemoveEntity(const IEntityPtr& entity)
 {
-    RemoveDrawable(entity);
-    RemoveUpdatable(entity);
-
-    const bool result = mono::remove(m_entities, entity);
-    if(!result)
-        std::printf("ZoneBase - Unable to remove entity with id %u\n", entity->Id());
+    m_entities_remove.push_back(entity);
+    m_updatables_remove.push_back(entity);
+    m_drawables_remove.push_back(entity);
 }
 
 void ZoneBase::AddUpdatable(const IUpdatablePtr& updatable)
@@ -66,9 +87,7 @@ void ZoneBase::AddUpdatable(const IUpdatablePtr& updatable)
 
 void ZoneBase::RemoveUpdatable(const IUpdatablePtr& updatable)
 {
-    const bool result = mono::remove(m_updatables, updatable);
-    if(!result)
-        std::printf("ZoneBase - Unable to remove updatable\n");
+    m_updatables_remove.push_back(updatable);
 }
 
 void ZoneBase::AddDrawable(const IDrawablePtr& drawable, int layer)
@@ -82,13 +101,7 @@ void ZoneBase::AddDrawable(const IDrawablePtr& drawable, int layer)
 
 void ZoneBase::RemoveDrawable(const IDrawablePtr& drawable)
 {
-    const auto func = [drawable](const std::pair<int, IDrawablePtr>& pair) {
-        return pair.second == drawable;
-    };
-
-    const bool removed = mono::remove_if(m_drawables, func);
-    if(!removed)
-        std::printf("ZoneBase - Unable to remove drawable\n");
+    m_drawables_remove.push_back(drawable);
 }
 
 void ZoneBase::SetDrawableLayer(const IDrawablePtr& drawable, int new_layer)
@@ -131,9 +144,3 @@ mono::IEntityPtr ZoneBase::FindEntityFromPoint(const math::Vector& point) const
 
     return nullptr;
 }
-
-void ZoneBase::SchedulePreFrameTask(const std::function<void ()>& task)
-{
-    m_preframe_tasks.push_back(task);
-}
-

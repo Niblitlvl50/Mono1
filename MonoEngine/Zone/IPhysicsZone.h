@@ -4,6 +4,7 @@
 #include "IZone.h"
 #include "MonoPtrFwd.h"
 #include "Physics/CMFwd.h"
+#include <functional>
 
 namespace mono
 {
