@@ -42,9 +42,9 @@ void mono::DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color
     };
 
     const float colors[] = {
-        color.red, color.green, color.blue, color.alpha,        
-        color.red, color.green, color.blue, color.alpha,        
-        color.red, color.green, color.blue, color.alpha,        
+        color.red, color.green, color.blue, color.alpha,
+        color.red, color.green, color.blue, color.alpha,
+        color.red, color.green, color.blue, color.alpha,
         color.red, color.green, color.blue, color.alpha
     };
 
@@ -84,20 +84,10 @@ void mono::DrawCircle(const math::Vector& position,
     DrawClosedLine(vertices, color, lineWidth, shader);
 }
 
-void mono::DrawSprite(const mono::ISprite& sprite, const math::Vector& offset, ITextureShader* shader)
+void mono::DrawSprite(
+    const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, float pixels_per_meter, ITextureShader* shader)
 {
-    const mono::SpriteFrame& sprite_frame = sprite.GetCurrentFrame();
-    DrawSprite(sprite_frame.texture_coordinates, sprite_frame.size, sprite_frame.center_offset + offset, shader);
-}
-
-void mono::DrawSprite(const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, ITextureShader* shader)
-{
-    // The sprite can return zeroQuad as texture coordinates when the animation is finished
-    if(sprite_coords == math::ZeroQuad)
-        return;
-
-    // 16 pixels per meter
-    const math::Vector& sprite_size = size / 16.0f / 2.0f;
+    const math::Vector& sprite_size = size / pixels_per_meter / 2.0f;
 
     const math::Vector vertices[] = {
         math::Vector(-sprite_size.x, -sprite_size.y) + offset,
@@ -155,10 +145,8 @@ void mono::DrawText(const TextDefinition& text, ITextureShader* shader)
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawLine(const std::vector<math::Vector>& vertices,
-                    const mono::Color::RGBA& color,
-                    float width,
-                    IColorShader* shader)
+void mono::DrawLine(
+    const std::vector<math::Vector>& vertices, const mono::Color::RGBA& color, float width, IColorShader* shader)
 {
     std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
@@ -177,10 +165,8 @@ void mono::DrawLine(const std::vector<math::Vector>& vertices,
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawClosedLine(const std::vector<math::Vector>& vertices,
-                          const mono::Color::RGBA& color,
-                          float width,
-                          IColorShader* shader)
+void mono::DrawClosedLine(
+    const std::vector<math::Vector>& vertices, const mono::Color::RGBA& color, float width, IColorShader* shader)
 {
     std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
@@ -199,10 +185,8 @@ void mono::DrawClosedLine(const std::vector<math::Vector>& vertices,
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawLines(const std::vector<math::Vector>& vertices,
-                     const mono::Color::RGBA& color,
-                     float width,
-                     IColorShader* shader)
+void mono::DrawLines(
+    const std::vector<math::Vector>& vertices, const mono::Color::RGBA& color, float width, IColorShader* shader)
 {
     std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
@@ -221,10 +205,8 @@ void mono::DrawLines(const std::vector<math::Vector>& vertices,
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawPoints(const std::vector<math::Vector>& vertices,
-                      const mono::Color::RGBA& color,
-                      float size,
-                      IColorShader* shader)
+void mono::DrawPoints(
+    const std::vector<math::Vector>& vertices, const mono::Color::RGBA& color, float size, IColorShader* shader)
 {
     std::vector<mono::Color::RGBA> colors(vertices.size());
     std::fill(colors.begin(), colors.end(), color);
@@ -357,7 +339,6 @@ void mono::DrawParticlePoints(
 
     ClearRenderBuffer();
 }
-
 
 void mono::DrawPolyline(
     const mono::IRenderBuffer* vertices,

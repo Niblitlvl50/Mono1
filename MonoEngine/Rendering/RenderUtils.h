@@ -10,12 +10,10 @@
 
 namespace mono
 {
-    struct TextDefinition;
     class IRenderBuffer;
 
     //! Draws a quad
-    void DrawQuad(
-        const math::Quad& quad, const mono::Color::RGBA& color, float width, IColorShader* shader);
+    void DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width, IColorShader* shader);
 
     void DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color, IColorShader* shader);
 
@@ -28,32 +26,26 @@ namespace mono
                     IColorShader* shader);
 
     //! Draws a sprite
-    void DrawSprite(const ISprite& sprite, const math::Vector& offset, ITextureShader* shader);
-    void DrawSprite(const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, ITextureShader* shader);
+    void DrawSprite(
+        const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, float pixels_per_meter, ITextureShader* shader);
 
     //! Draws texts from the text definitions
-    void DrawText(const TextDefinition& text, ITextureShader* shader);
+    void DrawText(const struct TextDefinition& text, ITextureShader* shader);
 
     //! Draws a single line
     void DrawLine(
         const std::vector<math::Vector>& vertices, const mono::Color::RGBA& color, float width, IColorShader* shader);
 
-    void DrawClosedLine(const std::vector<math::Vector>& vertices,
-                        const mono::Color::RGBA& color,
-                        float width,
-                        IColorShader* shader);
+    void DrawClosedLine(
+        const std::vector<math::Vector>& vertices, const mono::Color::RGBA& color, float width, IColorShader* shader);
 
     //! Draws lines, not connected to each other
-    void DrawLines(const std::vector<math::Vector>& vertices,
-                   const mono::Color::RGBA& color,
-                   float width,
-                   IColorShader* shader);
+    void DrawLines(
+        const std::vector<math::Vector>& vertices, const mono::Color::RGBA& color, float width, IColorShader* shader);
 
     // Draw a collection of points
-    void DrawPoints(const std::vector<math::Vector>& vertices,
-                    const mono::Color::RGBA& color,
-                    float size,
-                    IColorShader* shader);
+    void DrawPoints(
+        const std::vector<math::Vector>& vertices, const mono::Color::RGBA& color, float size, IColorShader* shader);
 
     void DrawTexturedGeometry(const std::vector<math::Vector>& vertices,
                               const std::vector<math::Vector>& texture_coordinates,

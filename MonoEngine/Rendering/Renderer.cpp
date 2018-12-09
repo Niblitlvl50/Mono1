@@ -21,8 +21,9 @@
 
 using namespace mono;
 
-Renderer::Renderer(ICameraPtr camera)
+Renderer::Renderer(ICameraPtr camera, float pixels_per_meter)
     : m_camera(camera)
+    , m_pixels_per_meter(pixels_per_meter)
 {
     m_color_shader = GetShaderFactory()->CreateColorShader();
     m_texture_shader = GetShaderFactory()->CreateTextureShader();
@@ -117,7 +118,7 @@ void Renderer::DrawSprite(const ISprite& sprite, const math::Vector& offset) con
 {
     const mono::ITexturePtr texture = sprite.GetTexture();
     const SpriteFrame& current_frame = sprite.GetCurrentFrame();
-    this->DrawSprite(current_frame.texture_coordinates, current_frame.size, offset, texture);
+    DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset + offset, texture);
 }
 
 void Renderer::DrawSprite(
@@ -125,7 +126,13 @@ void Renderer::DrawSprite(
 {
     UseTexture(texture);
     UseShader(m_texture_shader.get());
-    ::DrawSprite(sprite_coords, size, offset, m_texture_shader.get());
+    ::DrawSprite(sprite_coords, size, offset, m_pixels_per_meter, m_texture_shader.get());
+
+
+//    const math::Vector& sprite_size = size / m_pixels_per_meter / 2.0f;
+//    const math::Vector half_size = sprite_size;
+//    const math::Quad quad(-half_size.x + offset.x, -half_size.y + offset.y, half_size.x + offset.x, half_size.y + offset.y);
+//    DrawQuad(quad, mono::Color::RGBA(1.0f, 0.0f, 0.0f), 1.0f);
 }
 
 void Renderer::DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const
@@ -270,3 +277,7 @@ const math::Matrix& Renderer::GetCurrentProjection() const
     return m_current_projection;
 }
 
+float Renderer::PixelsPerMeter() const
+{
+    return m_pixels_per_meter;
+}

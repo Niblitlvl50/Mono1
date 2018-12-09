@@ -96,7 +96,7 @@ int Engine::Run(IZonePtr zone)
 {
     zone->OnLoad(m_camera);
 
-    Renderer renderer(m_camera);
+    Renderer renderer(m_camera, 16.0f);
     Updater updater;
 
     unsigned int last_time = System::GetMilliseconds();
