@@ -57,10 +57,9 @@ namespace
     }
 }
 
-Engine::Engine(System::IWindow* window, const ICameraPtr& camera, float pixels_per_meter, EventHandler& event_handler)
+Engine::Engine(System::IWindow* window, const ICameraPtr& camera, EventHandler& event_handler)
     : m_window(window)
     , m_camera(camera)
-    , m_pixels_per_meter(pixels_per_meter)
     , m_event_handler(event_handler)
 {
     using namespace std::placeholders;
@@ -97,7 +96,7 @@ int Engine::Run(IZonePtr zone)
 {
     zone->OnLoad(m_camera);
 
-    Renderer renderer(m_camera, m_pixels_per_meter);
+    Renderer renderer(m_camera);
     Updater updater;
 
     unsigned int last_time = System::GetMilliseconds();

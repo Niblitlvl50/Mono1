@@ -85,9 +85,9 @@ void mono::DrawCircle(const math::Vector& position,
 }
 
 void mono::DrawSprite(
-    const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, float pixels_per_meter, ITextureShader* shader)
+    const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, ITextureShader* shader)
 {
-    const math::Vector& sprite_size = size / pixels_per_meter / 2.0f;
+    const math::Vector& sprite_size = size / 2.0f;
 
     const math::Vector vertices[] = {
         math::Vector(-sprite_size.x, -sprite_size.y) + offset,

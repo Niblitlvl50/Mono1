@@ -21,9 +21,8 @@
 
 using namespace mono;
 
-Renderer::Renderer(ICameraPtr camera, float pixels_per_meter)
+Renderer::Renderer(ICameraPtr camera)
     : m_camera(camera)
-    , m_pixels_per_meter(pixels_per_meter)
 {
     m_color_shader = GetShaderFactory()->CreateColorShader();
     m_texture_shader = GetShaderFactory()->CreateTextureShader();
@@ -83,8 +82,8 @@ void Renderer::DrawFrame()
     m_current_transform = m_modelview;
     m_current_projection = m_projection;
 
- //   for(const auto& drawable : m_drawables)
- //       DrawQuad(drawable->BoundingBox(), mono::Color::RGBA(1, 0, 0), 1.0);
+//   for(const auto& drawable : m_drawables)
+//       DrawQuad(drawable->BoundingBox(), mono::Color::RGBA(1, 0, 0), 1.0);
 
     EndDraw();
 }
@@ -126,10 +125,10 @@ void Renderer::DrawSprite(
 {
     UseTexture(texture);
     UseShader(m_texture_shader.get());
-    ::DrawSprite(sprite_coords, size, offset, m_pixels_per_meter, m_texture_shader.get());
+    ::DrawSprite(sprite_coords, size, offset, m_texture_shader.get());
 
 
-//    const math::Vector& sprite_size = size / m_pixels_per_meter / 2.0f;
+//    const math::Vector& sprite_size = size / 2.0f;
 //    const math::Vector half_size = sprite_size;
 //    const math::Quad quad(-half_size.x + offset.x, -half_size.y + offset.y, half_size.x + offset.x, half_size.y + offset.y);
 //    DrawQuad(quad, mono::Color::RGBA(1.0f, 0.0f, 0.0f), 1.0f);
@@ -275,9 +274,4 @@ void Renderer::PushNewProjection(const math::Matrix& projection)
 const math::Matrix& Renderer::GetCurrentProjection() const
 {
     return m_current_projection;
-}
-
-float Renderer::PixelsPerMeter() const
-{
-    return m_pixels_per_meter;
 }

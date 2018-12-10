@@ -26,6 +26,9 @@
 
 #include "nlohmann/json.hpp"
 
+// Pixels per meter, initialized in RenderSystem.cpp
+extern float s_pixels_per_meter;
+
 namespace
 {
     struct SpriteAnimation
@@ -74,7 +77,7 @@ namespace
             const float height =
                 (sprite_frame.texture_coordinates.mA.y - sprite_frame.texture_coordinates.mB.y) * sprite_data.texture_size.y;
 
-            sprite_frame.size = math::Vector(width, height);
+            sprite_frame.size = math::Vector(width, height) / s_pixels_per_meter;
             sprite_data.sprite_frames.push_back(sprite_frame);
         }
 

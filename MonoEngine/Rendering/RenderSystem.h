@@ -3,6 +3,6 @@
 
 namespace mono
 {
-    void InitializeRender();
+    void InitializeRender(float pixels_per_meter);
     void ShutdownRender();
 }

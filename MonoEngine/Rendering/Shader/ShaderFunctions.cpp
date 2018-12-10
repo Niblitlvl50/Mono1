@@ -10,7 +10,7 @@
 
 namespace
 {
-    const mono::IShaderFactory* shaderFactory = nullptr;
+    const mono::IShaderFactory* s_shader_factory = nullptr;
 }
 
 size_t mono::CompileShader(mono::ShaderType type, const char* source)
@@ -91,25 +91,25 @@ size_t mono::LinkProgram(size_t vertexShader, size_t fragmentShader)
 void mono::LoadDefaultShaderFactory()
 {
     UnloadShaderFactory();
-    shaderFactory = new mono::ShaderFactory;
+    s_shader_factory = new mono::ShaderFactory;
 }
 
-void mono::LoadCustomShaderFactory(const mono::IShaderFactory* customFactory)
+void mono::LoadCustomShaderFactory(const mono::IShaderFactory* custom_factory)
 {
     UnloadShaderFactory();
-    shaderFactory = customFactory;
+    s_shader_factory = custom_factory;
 }
 
 const mono::IShaderFactory* mono::GetShaderFactory()
 {
-    return shaderFactory;
+    return s_shader_factory;
 }
 
 void mono::UnloadShaderFactory()
 {
-    if(shaderFactory)
-        delete shaderFactory;
+    if(s_shader_factory)
+        delete s_shader_factory;
 
-    shaderFactory = nullptr;
+    s_shader_factory = nullptr;
 }
 

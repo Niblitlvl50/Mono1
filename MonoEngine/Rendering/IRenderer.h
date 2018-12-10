@@ -69,7 +69,5 @@ namespace mono
 
         virtual void PushNewProjection(const math::Matrix& projection) = 0;
         virtual const math::Matrix& GetCurrentProjection() const = 0;
-
-        virtual float PixelsPerMeter() const = 0;
     };
 }

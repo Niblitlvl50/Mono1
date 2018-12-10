@@ -12,7 +12,7 @@ namespace mono
     {
     public:
 
-        Renderer(ICameraPtr camera, float pixels_per_meter);
+        Renderer(ICameraPtr camera);
         ~Renderer();
 
         void SetWindowSize(const math::Vector& window_size);
@@ -70,8 +70,6 @@ namespace mono
         virtual void PushNewProjection(const math::Matrix& projection);
         virtual const math::Matrix& GetCurrentProjection() const;
 
-        virtual float PixelsPerMeter() const;
-
     private:
 
         void PrepareDraw();
@@ -80,7 +78,6 @@ namespace mono
         void doDrawTexts() const;
 
         ICameraPtr m_camera;
-        const float m_pixels_per_meter;
         math::Vector m_window_size;
 
         math::Matrix m_projection;
