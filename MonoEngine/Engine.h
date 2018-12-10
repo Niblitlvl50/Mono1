@@ -25,7 +25,7 @@ namespace mono
     class Engine
     {
     public:
-        Engine(System::IWindow* window, const ICameraPtr& camera, EventHandler& event_handler);
+        Engine(System::IWindow* window, const ICameraPtr& camera, float pixels_per_meter, EventHandler& event_handler);
         ~Engine();
 
         int Run(IZonePtr zone);
@@ -46,6 +46,7 @@ namespace mono
 
         System::IWindow* m_window;
         ICameraPtr m_camera;
+        float m_pixels_per_meter;
         EventHandler& m_event_handler;
         std::unique_ptr<System::IInputHandler> m_input_handler;
 

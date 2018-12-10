@@ -267,7 +267,7 @@ TEST(EngineTest, Basic)
     std::shared_ptr<MocZone> zone = std::make_shared<MocZone>();
     
     {
-        mono::Engine engine(&window, camera, handler);
+        mono::Engine engine(&window, camera, 32.0f, handler);
         EXPECT_NO_THROW(engine.Run(zone));
     }
 
