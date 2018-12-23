@@ -227,6 +227,10 @@ namespace
         {
             return 0;
         }
+        virtual unsigned int GetRotationAttribute() const override
+        {
+            return 0;
+        }
         virtual unsigned int GetColorAttribute() const override
         {
             return 0;

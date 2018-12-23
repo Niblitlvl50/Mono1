@@ -15,11 +15,12 @@ ParticleDrawer::ParticleDrawer(const mono::ITexturePtr& texture, mono::BlendMode
 {
     const size_t pool_size = m_pool.m_pool_size;
 
-    m_positionBuffer = mono::CreateRenderBuffer(BufferTarget::ARRAY_BUFFER, BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 2);
-    m_colorBuffer = mono::CreateRenderBuffer(BufferTarget::ARRAY_BUFFER, BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 4); 
+    m_position_buffer = mono::CreateRenderBuffer(BufferTarget::ARRAY_BUFFER, BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 2);
+    m_rotation_buffer = mono::CreateRenderBuffer(BufferTarget::ARRAY_BUFFER, BufferType::DYNAMIC, BufferData::FLOAT, pool_size);
+    m_color_buffer = mono::CreateRenderBuffer(BufferTarget::ARRAY_BUFFER, BufferType::DYNAMIC, BufferData::FLOAT, pool_size * 4); 
     m_point_size_buffer = mono::CreateRenderBuffer(BufferTarget::ARRAY_BUFFER, BufferType::DYNAMIC, BufferData::FLOAT, pool_size);
 
-    ClearRenderBuffer();
+    mono::ClearRenderBuffer();
 }
 
 ParticleDrawer::~ParticleDrawer()
@@ -27,12 +28,19 @@ ParticleDrawer::~ParticleDrawer()
 
 void ParticleDrawer::doDraw(mono::IRenderer& renderer) const
 {
-    m_positionBuffer->UpdateData(m_pool.m_position.data(), 0, m_pool.m_count_alive * 2);
-    m_colorBuffer->UpdateData(m_pool.m_color.data(), 0, m_pool.m_count_alive * 4);
+    m_position_buffer->UpdateData(m_pool.m_position.data(), 0, m_pool.m_count_alive * 2);
+    m_rotation_buffer->UpdateData(m_pool.m_rotation.data(), 0, m_pool.m_count_alive);
+    m_color_buffer->UpdateData(m_pool.m_color.data(), 0, m_pool.m_count_alive * 4);
     m_point_size_buffer->UpdateData(m_pool.m_size.data(), 0, m_pool.m_count_alive);
 
     renderer.DrawParticlePoints(
-        m_positionBuffer.get(), m_colorBuffer.get(), m_point_size_buffer.get(), m_texture, m_blend_mode, m_pool.m_count_alive);
+        m_position_buffer.get(),
+        m_rotation_buffer.get(),
+        m_color_buffer.get(),
+        m_point_size_buffer.get(),
+        m_texture,
+        m_blend_mode,
+        m_pool.m_count_alive);
 }
 
 math::Quad ParticleDrawer::BoundingBox() const

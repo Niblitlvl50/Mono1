@@ -14,6 +14,7 @@ namespace
     #endif
 
         attribute vec2 vertex_position;
+        attribute float vertex_rotation;
         attribute vec4 vertex_color;
         attribute float point_size;
 
@@ -21,12 +22,14 @@ namespace
         uniform mat4 p_matrix;
 
         varying vec4 color;
+        varying float rotation;
 
         void main()
         {
             gl_Position = p_matrix * mv_matrix * vec4(vertex_position, 0.0, 1.0);
             gl_PointSize = point_size;
             color = vertex_color;
+            rotation = vertex_rotation;
         }
     )";
 
@@ -39,11 +42,18 @@ namespace
     #endif
 
         varying vec4 color;
+        varying float rotation;
         uniform sampler2D sampler;
 
         void main()
         {
-            gl_FragColor = texture2D(sampler, gl_PointCoord) * color;
+            vec2 coord = gl_PointCoord;
+            float sin_factor = sin(rotation);
+            float cos_factor = cos(rotation);
+            coord = (coord - 0.5) * mat2(cos_factor, sin_factor, -sin_factor, cos_factor);
+            coord += 0.5;
+
+            gl_FragColor = texture2D(sampler, coord) * color;
         }    
     )";
 }
@@ -62,6 +72,7 @@ PointSpriteShader::PointSpriteShader()
     m_p_matrix_location = glGetUniformLocation(m_program, "p_matrix");
 
     m_position_attribute = (unsigned int)glGetAttribLocation(m_program, "vertex_position");
+    m_rotation_attribute = (unsigned int)glGetAttribLocation(m_program, "vertex_rotation");
     m_color_attribute = (unsigned int)glGetAttribLocation(m_program, "vertex_color");
     m_point_size_attribute = (unsigned int)glGetAttribLocation(m_program, "point_size");
 }
@@ -89,6 +100,11 @@ void PointSpriteShader::LoadModelViewMatrix(const math::Matrix& modelView)
 unsigned int PointSpriteShader::GetPositionAttribute() const
 {
     return m_position_attribute;
+}
+
+unsigned int PointSpriteShader::GetRotationAttribute() const
+{
+    return m_rotation_attribute;
 }
 
 unsigned int PointSpriteShader::GetColorAttribute() const

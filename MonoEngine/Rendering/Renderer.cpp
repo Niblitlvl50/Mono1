@@ -18,6 +18,8 @@
 #include "Math/Quad.h"
 #include "Math/MathFunctions.h"
 
+#include "System/OpenGL.h"
+
 
 using namespace mono;
 
@@ -52,6 +54,7 @@ void Renderer::EndDraw()
 {
     // Clear all the stuff once the frame has been drawn
     m_drawables.clear();
+    PROCESS_GL_ERRORS();
 }
 
 void Renderer::DrawFrame()
@@ -127,11 +130,7 @@ void Renderer::DrawSprite(
     UseShader(m_texture_shader.get());
     ::DrawSprite(sprite_coords, size, offset, m_texture_shader.get());
 
-
-//    const math::Vector& sprite_size = size / 2.0f;
-//    const math::Vector half_size = sprite_size;
-//    const math::Quad quad(-half_size.x + offset.x, -half_size.y + offset.y, half_size.x + offset.x, half_size.y + offset.y);
-//    DrawQuad(quad, mono::Color::RGBA(1.0f, 0.0f, 0.0f), 1.0f);
+    PROCESS_GL_ERRORS();
 }
 
 void Renderer::DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const
@@ -196,16 +195,18 @@ void Renderer::DrawGeometry(const IRenderBuffer* vertices,
     ::DrawTexturedGeometry(vertices, texture_coordinates, offset, count, m_texture_shader.get());
 }
 
-void Renderer::DrawParticlePoints(const IRenderBuffer* position,
-                                  const IRenderBuffer* color,
-                                  const IRenderBuffer* point_size,
-                                  const ITexturePtr& texture,
-                                  BlendMode blend_mode,
-                                  size_t count)
+void Renderer::DrawParticlePoints(
+    const IRenderBuffer* position,
+    const IRenderBuffer* rotation,
+    const IRenderBuffer* color,
+    const IRenderBuffer* point_size,
+    const ITexturePtr& texture,
+    BlendMode blend_mode,
+    size_t count)
 {
     UseTexture(texture);
     UseShader(m_point_sprite_shader.get());
-    ::DrawParticlePoints(position, color, point_size, count, blend_mode, m_point_sprite_shader.get());
+    ::DrawParticlePoints(position, rotation, color, point_size, count, blend_mode, m_point_sprite_shader.get());
 }
 
 void Renderer::DrawPolyline(
@@ -218,8 +219,8 @@ void Renderer::DrawPolyline(
 void Renderer::DrawTrianges(
     const IRenderBuffer* vertices, const IRenderBuffer* colors, const IRenderBuffer* indices, size_t count) const
 {
-    UseShader(m_color_shader.get());
-    ::DrawTrianges(vertices, colors, indices, count, m_color_shader.get());
+//    UseShader(m_color_shader.get());
+//    ::DrawTrianges(vertices, colors, indices, count, m_color_shader.get());
 }
 
 void Renderer::UseShader(IShader* shader) const
@@ -233,6 +234,8 @@ void Renderer::UseShader(IShader* shader) const
 
     shader->LoadModelViewMatrix(m_current_transform);
     shader->LoadProjectionMatrix(m_current_projection);
+    
+    PROCESS_GL_ERRORS();
 }
 
 void Renderer::UseTexture(const ITexturePtr& texture) const
@@ -243,6 +246,8 @@ void Renderer::UseTexture(const ITexturePtr& texture) const
         texture->Use();
         m_currentTextureId = id;
     }
+
+    PROCESS_GL_ERRORS();
 }
 
 void Renderer::ClearTexture()

@@ -124,15 +124,17 @@ int Engine::Run(IZonePtr zone)
 
         if(!m_pause)
         {
+            m_window->MakeCurrent();
+
             // Update all the stuff...
             zone->Accept(updater);
             updater.AddUpdatable(m_camera.get());
             updater.Update(delta);
 
             // Draw...
-            m_window->MakeCurrent();
             zone->Accept(renderer);
             renderer.DrawFrame();
+
             m_window->SwapBuffers();
         }
 

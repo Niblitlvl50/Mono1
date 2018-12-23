@@ -11,11 +11,15 @@ void mono::DefaultGenerator(const math::Vector& position, ParticlePool& pool, si
 
     pool.m_position[index] = position;
     pool.m_velocity[index] = math::Vector(x, y);
+    pool.m_rotation[index] = 0.0f;
     //pool.m_color[index];
     pool.m_start_color[index] = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
     pool.m_end_color[index] = mono::Color::RGBA(0.0f, 1.0f, 0.0f, 0.1f);
+
+    pool.m_size[index] = 10.0f;
     pool.m_start_size[index] = 10.0f;
     pool.m_end_size[index] = 5.0f;
+
     pool.m_start_life[index] = 1000 + life;
     pool.m_life[index] = 1000 + life;
 }

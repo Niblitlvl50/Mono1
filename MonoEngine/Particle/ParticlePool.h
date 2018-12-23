@@ -12,7 +12,7 @@ namespace mono
     {
     public:
 
-        ParticlePool(int pool_size, ParticleUpdater update_function);
+        ParticlePool(size_t pool_size, ParticleUpdater update_function);
 
         void Kill(size_t index);
         void Wake(size_t index);
@@ -22,6 +22,9 @@ namespace mono
 
         std::vector<math::Vector> m_position;
         std::vector<math::Vector> m_velocity;
+
+        std::vector<float> m_rotation;
+        std::vector<float> m_angular_velocity;
 
         std::vector<Color::RGBA> m_color;
         std::vector<Color::RGBA> m_start_color;

@@ -303,6 +303,7 @@ void mono::DrawTrianges(
 
 void mono::DrawParticlePoints(
     const IRenderBuffer* position,
+    const IRenderBuffer* rotation,
     const IRenderBuffer* color,
     const IRenderBuffer* point_size,
     size_t count,
@@ -318,9 +319,13 @@ void mono::DrawParticlePoints(
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
-
+    glEnableVertexAttribArray(3);
+    
     position->Use();
     glVertexAttribPointer(shader->GetPositionAttribute(), 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    rotation->Use();
+    glVertexAttribPointer(shader->GetRotationAttribute(), 1, GL_FLOAT, GL_FALSE, 0, 0);
 
     color->Use();
     glVertexAttribPointer(shader->GetColorAttribute(), 4, GL_FLOAT, GL_FALSE, 0, 0);
@@ -333,6 +338,7 @@ void mono::DrawParticlePoints(
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
+    glDisableVertexAttribArray(3);
 
     glDisable(GL_POINT_SPRITE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

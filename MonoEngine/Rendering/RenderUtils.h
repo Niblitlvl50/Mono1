@@ -65,12 +65,14 @@ namespace mono
         size_t count,
         IColorShader* shader);
 
-    void DrawParticlePoints(const mono::IRenderBuffer* position,
-                            const mono::IRenderBuffer* color,
-                            const mono::IRenderBuffer* point_size,
-                            size_t count,
-                            BlendMode blend_mode,
-                            IPointSpriteShader* shader);
+    void DrawParticlePoints(
+        const mono::IRenderBuffer* position,
+        const mono::IRenderBuffer* rotation,
+        const mono::IRenderBuffer* color,
+        const mono::IRenderBuffer* point_size,
+        size_t count,
+        BlendMode blend_mode,
+        IPointSpriteShader* shader);
 
     void DrawPolyline(
         const mono::IRenderBuffer* vertices,

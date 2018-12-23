@@ -24,8 +24,9 @@ namespace mono
         const mono::BlendMode m_blend_mode;
         ParticlePool& m_pool;
 
-        std::unique_ptr<IRenderBuffer> m_positionBuffer;
-        std::unique_ptr<IRenderBuffer> m_colorBuffer;
+        std::unique_ptr<IRenderBuffer> m_position_buffer;
+        std::unique_ptr<IRenderBuffer> m_rotation_buffer;
+        std::unique_ptr<IRenderBuffer> m_color_buffer;
         std::unique_ptr<IRenderBuffer> m_point_size_buffer;
     };
 }

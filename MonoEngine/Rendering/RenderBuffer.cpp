@@ -27,6 +27,8 @@ RenderBuffer::RenderBuffer(mono::BufferTarget target, mono::BufferType type, mon
     glGenBuffers(1, &m_buffer_id);
     Use();
     glBufferData(buffer_target, size * count, nullptr, buffer_usage);
+    
+    PROCESS_GL_ERRORS();
 }
 
 RenderBuffer::~RenderBuffer()
@@ -42,12 +44,15 @@ void RenderBuffer::UpdateData(const void* data, size_t offset, size_t count)
 
     const GLenum target = buffer_target_lookup[static_cast<int>(m_target)];
     glBufferSubData(target, offset * size, size * count, data);
+
+    PROCESS_GL_ERRORS();
 }
 
 void RenderBuffer::Use() const
 {
     const GLenum target = buffer_target_lookup[static_cast<int>(m_target)];
     glBindBuffer(target, m_buffer_id);
+    PROCESS_GL_ERRORS();
 }
 
 size_t RenderBuffer::Id() const

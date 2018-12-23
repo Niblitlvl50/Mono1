@@ -44,12 +44,14 @@ namespace mono
                                   size_t count,
                                   const ITexturePtr& texture);
 
-        virtual void DrawParticlePoints(const IRenderBuffer* position,
-                                        const IRenderBuffer* color,
-                                        const IRenderBuffer* point_size,
-                                        const ITexturePtr& texture,
-                                        BlendMode blend_mode,
-                                        size_t count);
+        virtual void DrawParticlePoints(
+            const IRenderBuffer* position,
+            const IRenderBuffer* rotation,
+            const IRenderBuffer* color,
+            const IRenderBuffer* point_size,
+            const ITexturePtr& texture,
+            BlendMode blend_mode,
+            size_t count);
 
         virtual void DrawPolyline(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, size_t offset, size_t count);    
