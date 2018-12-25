@@ -5,7 +5,7 @@
 #include "IShape.h"
 #include "IConstraint.h"
 #include "Math/Vector.h"
-#include "Algorithm.h"
+#include "Util/Algorithm.h"
 
 #include "chipmunk/chipmunk.h"
 #include <algorithm>

@@ -1,6 +1,6 @@
 
 #include "Entity/EntityBase.h"
-#include "Algorithm.h"
+#include "Util/Algorithm.h"
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
 #include "Rendering/IRenderer.h"

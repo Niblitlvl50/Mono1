@@ -1,5 +1,5 @@
 
-#include "StringFunctions.h"
+#include "Util/StringFunctions.h"
 #include <gtest/gtest.h>
 
 TEST(StringFunctionsTest, SplitMultipleTokens)

@@ -3,7 +3,7 @@
 #include "IUpdater.h"
 #include "Rendering/IRenderer.h"
 #include "Entity/IEntity.h"
-#include "Algorithm.h"
+#include "Util/Algorithm.h"
 #include "Math/Quad.h"
 #include "Math/MathFunctions.h"
 
