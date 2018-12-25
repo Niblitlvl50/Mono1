@@ -4,6 +4,7 @@
 #include "RenderUtils.h"
 #include "Text/TextFunctions.h"
 #include "Texture/ITexture.h"
+#include "ErrorChecking.h"
 
 #include "Shader/IShaderFactory.h"
 #include "Shader/ShaderFunctions.h"
@@ -17,7 +18,6 @@
 #include "Math/Quad.h"
 #include "Math/MathFunctions.h"
 
-#include "System/OpenGL.h"
 
 
 using namespace mono;

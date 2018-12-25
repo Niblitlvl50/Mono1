@@ -1,6 +1,6 @@
 
 #include "Texture.h"
-#include "System/OpenGL.h"
+#include "System/open_gl.h"
 #include <cstdio>
 
 using namespace mono;

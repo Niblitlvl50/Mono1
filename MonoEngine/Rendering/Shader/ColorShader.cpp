@@ -1,9 +1,9 @@
 
 #include "ColorShader.h"
 #include "ShaderFunctions.h"
-#include "System/OpenGL.h"
 #include "Math/Matrix.h"
 
+#include "System/open_gl.h"
 
 namespace
 {

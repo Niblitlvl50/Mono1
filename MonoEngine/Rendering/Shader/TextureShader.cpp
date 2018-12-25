@@ -1,10 +1,10 @@
 
 #include "TextureShader.h"
-#include "System/OpenGL.h"
+#include "ShaderFunctions.h"
 #include "Math/Matrix.h"
 #include "Rendering/Color.h"
 
-#include "ShaderFunctions.h"
+#include "System/open_gl.h"
 
 
 namespace

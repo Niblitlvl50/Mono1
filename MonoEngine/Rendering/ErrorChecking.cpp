@@ -1,6 +1,6 @@
 
-#include "OpenGL.h"
-//#include "System/System.h"
+#include "ErrorChecking.h"
+#include "System/open_gl.h"
 #include <cstdio>
 
 void ProcessGLErrors(const char* error_context)

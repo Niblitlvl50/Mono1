@@ -1,7 +1,7 @@
 
 #include "System.h"
 #include "Keycodes.h"
-#include "OpenGL.h"
+#include "open_gl.h"
 
 #include "SDL.h"
 #include "SDL_gamecontroller.h"

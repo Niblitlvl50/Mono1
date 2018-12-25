@@ -7,11 +7,12 @@
 #include "Sprite/ISprite.h"
 #include "Text/TextDefinition.h"
 #include "Texture/ITexture.h"
+#include "ErrorChecking.h"
 
 #include "Math/MathFunctions.h"
 #include "Math/Quad.h"
 
-#include "System/OpenGL.h"
+#include "System/open_gl.h"
 
 #include <cmath>
 #include <cassert>

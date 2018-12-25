@@ -1,6 +1,7 @@
 
 #include "RenderBuffer.h"
-#include "System/OpenGL.h"
+#include "ErrorChecking.h"
+#include "System/open_gl.h"
 
 using namespace mono;
 

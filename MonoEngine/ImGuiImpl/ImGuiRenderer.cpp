@@ -1,12 +1,15 @@
 
 #include "ImGuiRenderer.h"
+#include "ImGuiShader.h"
+
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
-#include "System/OpenGL.h"
-#include "ImGuiShader.h"
+
 #include "Rendering/Texture/ITexture.h"
 #include "Rendering/Texture/TextureFactory.h"
 #include "Rendering/IRenderer.h"
+
+#include "System/open_gl.h"
 
 #include "imgui/imgui.h"
 
