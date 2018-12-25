@@ -2,7 +2,6 @@
 #pragma once
 
 #include "MonoFwd.h"
-#include "Rendering/RenderFwd.h"
 #include "Events/EventFwd.h"
 #include "EventHandler/EventToken.h"
 #include "Math/Vector.h"

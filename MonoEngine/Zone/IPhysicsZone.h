@@ -4,12 +4,9 @@
 #include "IZone.h"
 #include "MonoPtrFwd.h"
 #include "Physics/CMFwd.h"
-#include <functional>
 
 namespace mono
 {
-    using BodyFunc = std::function<void (IBody*)>;
-
     class IPhysicsZone : public virtual mono::IZone
     {
     public:
