@@ -3,6 +3,7 @@
 
 #include "IRenderer.h"
 #include "Math/Vector.h"
+#include "Math/Quad.h"
 #include "Math/Matrix.h"
 #include "Shader/ShaderFwd.h"
 
@@ -12,10 +13,11 @@ namespace mono
     {
     public:
 
-        Renderer(ICameraPtr camera);
+        Renderer();
         ~Renderer();
 
         void SetWindowSize(const math::Vector& window_size);
+        void SetViewport(const math::Quad& viewport);
 
         virtual void DrawFrame();
         virtual void AddDrawable(const IDrawable* drawable);
@@ -79,8 +81,8 @@ namespace mono
 
         void doDrawTexts() const;
 
-        ICameraPtr m_camera;
         math::Vector m_window_size;
+        math::Quad m_viewport;
 
         math::Matrix m_projection;
         math::Matrix m_modelview;

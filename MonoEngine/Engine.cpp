@@ -96,7 +96,7 @@ int Engine::Run(IZonePtr zone)
 {
     zone->OnLoad(m_camera);
 
-    Renderer renderer(m_camera);
+    Renderer renderer;
     Updater updater;
 
     unsigned int last_time = System::GetMilliseconds();
@@ -121,6 +121,10 @@ int Engine::Run(IZonePtr zone)
         
         const System::Size& window_size = m_window->Size();
         renderer.SetWindowSize(math::Vector(window_size.width, window_size.height));
+
+        const math::Quad& viewport = m_camera->GetViewport();
+        const math::Quad camera_quad(viewport.mA, viewport.mA + viewport.mB);
+        renderer.SetViewport(camera_quad);
 
         if(!m_pause)
         {

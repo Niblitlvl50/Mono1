@@ -123,7 +123,7 @@ void ImGuiRenderer::doDraw(mono::IRenderer& renderer) const
 
 math::Quad ImGuiRenderer::BoundingBox() const
 {
-    return math::Quad(-FLT_MAX, -FLT_MAX, FLT_MAX, FLT_MAX);
+    return math::InfQuad;
 }
 
 void ImGuiRenderer::SetWindowSize(const math::Vector& window_size)

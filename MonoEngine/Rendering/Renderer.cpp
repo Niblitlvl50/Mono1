@@ -1,7 +1,6 @@
 
 #include "Renderer.h"
 #include "IDrawable.h"
-#include "ICamera.h"
 #include "RenderUtils.h"
 #include "Text/TextFunctions.h"
 #include "Texture/ITexture.h"
@@ -23,8 +22,7 @@
 
 using namespace mono;
 
-Renderer::Renderer(ICameraPtr camera)
-    : m_camera(camera)
+Renderer::Renderer()
 {
     m_color_shader = GetShaderFactory()->CreateColorShader();
     m_texture_shader = GetShaderFactory()->CreateTextureShader();
@@ -39,15 +37,19 @@ void Renderer::SetWindowSize(const math::Vector& window_size)
     m_window_size = window_size;
 }
 
+void Renderer::SetViewport(const math::Quad& viewport)
+{
+    m_viewport = viewport;
+}
+
 void Renderer::PrepareDraw()
 {
-    const math::Quad& viewport = m_camera->GetViewport();
-
+    const float viewport_width = math::Width(m_viewport);
     const float ratio = m_window_size.x / m_window_size.y;
-    m_projection = math::Ortho(0.0f, viewport.mB.x, 0.0f, viewport.mB.x / ratio, -10.0f, 10.0f);
+    m_projection = math::Ortho(0.0f, viewport_width, 0.0f, viewport_width / ratio, -10.0f, 10.0f);
 
     math::Identity(m_modelview);
-    math::Translate(m_modelview, -viewport.mA);
+    math::Translate(m_modelview, -m_viewport.mA);
 }
 
 void Renderer::EndDraw()
@@ -62,9 +64,7 @@ void Renderer::DrawFrame()
     PrepareDraw();
 
     unsigned int draw_count = 0;
-
-    const math::Quad& viewport = m_camera->GetViewport();
-    const math::Quad camera_quad(viewport.mA, viewport.mA + viewport.mB);
+    const math::Quad camera_quad = m_viewport;
 
     for(const auto& drawable : m_drawables)
     {
