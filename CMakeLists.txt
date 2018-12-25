@@ -22,7 +22,7 @@ set(LIB_INSTALL_DIR ${LIBRARY_OUTPUT_PATH})
 add_subdirectory("third_party/Chipmunk2D")
 
 
-include_directories("MonoEngine")
+include_directories("src")
 include_directories(SYSTEM "third_party")
 include_directories(SYSTEM ${chipmunk_SOURCE_DIR}/include)
 
@@ -53,13 +53,13 @@ target_include_directories(gtest PRIVATE "third_party/gtest-1.7.0/include" "thir
 set_target_properties(gtest PROPERTIES COMPILE_FLAGS -Wno-missing-field-initializers)
 
 # Mono
-file(GLOB_RECURSE engine_source_files "MonoEngine/*.cpp")
+file(GLOB_RECURSE engine_source_files "src/*.cpp")
 add_library(mono STATIC ${engine_source_files})
 add_dependencies(mono imgui chipmunk_static)
 target_link_libraries(mono imgui chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENAL_LIBRARY})
 
 # Unit test
-file(GLOB_RECURSE unittest_source_files "UnitTests/*.cpp")
+file(GLOB_RECURSE unittest_source_files "tests/*.cpp")
 add_executable(unittest ${unittest_source_files})
 add_dependencies(unittest mono gtest)
 target_include_directories(unittest PRIVATE "third_party/gtest-1.7.0/include")
