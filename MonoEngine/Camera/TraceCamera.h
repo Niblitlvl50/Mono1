@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Rendering/ICamera.h"
+#include "ICamera.h"
 #include "MonoFwd.h"
 #include "Math/Quad.h"
 

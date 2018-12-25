@@ -6,6 +6,7 @@
 
 namespace mono
 {
+    using ICameraPtr = std::shared_ptr<ICamera>;
     using IEntityPtr = std::shared_ptr<IEntity>;
     using IPhysicsEntityPtr = std::shared_ptr<IPhysicsEntity>;
     using IUpdatablePtr = std::shared_ptr<IUpdatable>;

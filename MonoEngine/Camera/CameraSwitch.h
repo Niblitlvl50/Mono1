@@ -1,8 +1,7 @@
 
 #pragma once
 
-#include "Rendering/ICamera.h"
-#include "Rendering/RenderPtrFwd.h"
+#include "ICamera.h"
 #include <vector>
 
 namespace mono

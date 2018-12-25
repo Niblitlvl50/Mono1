@@ -11,7 +11,7 @@
 #include "InputHandler.h"
 #include "Updater.h"
 
-#include "Rendering/ICamera.h"
+#include "Camera/ICamera.h"
 #include "Zone/IZone.h"
 
 #include "System/System.h"

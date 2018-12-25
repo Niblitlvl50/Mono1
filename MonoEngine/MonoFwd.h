@@ -3,6 +3,7 @@
 
 namespace mono
 {
+    class ICamera;
     class IEntity;
     class IPhysicsEntity;
     class IUpdatable;

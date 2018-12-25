@@ -5,7 +5,6 @@ namespace mono
 {
     class AnimationSequence;
 
-    class ICamera;
     class IDrawable;
     class IRenderer;
     class ITexture;
