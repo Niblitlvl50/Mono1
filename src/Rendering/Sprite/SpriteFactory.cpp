@@ -136,12 +136,12 @@ bool mono::CreateSprite(mono::Sprite& sprite, const char* sprite_file)
     auto it = g_sprite_data_cache.find(sprite_file_hash);
     if(it == g_sprite_data_cache.end())
     {
-        File::FilePtr file = File::OpenAsciiFile(sprite_file);
+        file::FilePtr file = file::OpenAsciiFile(sprite_file);
         if(!file)
             return false;
 
         std::vector<byte> file_data;
-        File::FileRead(file, file_data);
+        file::FileRead(file, file_data);
         file_data.push_back('\0');
 
         const SpriteData& sprite_data = LoadSpriteData((const char*)file_data.data());

@@ -95,12 +95,12 @@ namespace
 
 mono::IPathPtr mono::CreatePath(const char* path_file)
 {
-    File::FilePtr file = File::OpenAsciiFile(path_file);
+    file::FilePtr file = file::OpenAsciiFile(path_file);
     if(!file)
         return nullptr;
 
     std::vector<byte> file_data;
-    File::FileRead(file, file_data);
+    file::FileRead(file, file_data);
 
     const nlohmann::json& json = nlohmann::json::parse(file_data);
     const std::vector<float>& points = json["path"];
@@ -130,7 +130,7 @@ bool mono::SavePath(const char* path_file, const math::Vector& position, const s
     json["path"] = float_points;
 
     const std::string& serialized_path = json.dump(4);
-    File::FilePtr output_file = File::CreateAsciiFile(path_file);
+    file::FilePtr output_file = file::CreateAsciiFile(path_file);
     if(!output_file)
         return false;
 

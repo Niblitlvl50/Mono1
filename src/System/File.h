@@ -6,7 +6,7 @@
 
 using byte = unsigned char;
 
-namespace File
+namespace file
 {
     //! A smart file handle
     using FilePtr = std::unique_ptr<FILE, int(*)(FILE*)>;

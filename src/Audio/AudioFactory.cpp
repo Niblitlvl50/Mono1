@@ -231,12 +231,12 @@ mono::ISoundPtr mono::AudioFactory::CreateNullSound()
 
 mono::SoundFile mono::AudioFactory::LoadFile(const char* filename)
 {
-    File::FilePtr soundFile = File::OpenBinaryFile(filename);
+    file::FilePtr soundFile = file::OpenBinaryFile(filename);
     if(!soundFile)
         throw std::runtime_error("AudioFactory - Unable to open sound file.");
 
     std::vector<unsigned char> bytes;
-    File::FileRead(soundFile, bytes);
+    file::FileRead(soundFile, bytes);
 
     RIFF_Header riffHeader;
     WAVE_Format waveFormat;
