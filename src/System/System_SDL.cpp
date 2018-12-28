@@ -213,6 +213,8 @@ namespace
                 return Keycode::W;
             case SDLK_e:
                 return Keycode::E;
+            case SDLK_r:
+                return Keycode::R;
 
             case SDLK_a:
                 return Keycode::A;
@@ -626,6 +628,8 @@ int System::KeycodeToNative(Keycode key)
             return SDLK_w;
         case Keycode::E:
             return SDLK_e;
+        case Keycode::R:
+            return SDLK_r;
 
         case Keycode::A:
             return SDLK_a;
