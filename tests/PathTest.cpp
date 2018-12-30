@@ -90,7 +90,7 @@ TEST(PathTest, CreatePathFromFileAndVerifyCoordinates)
                                                  math::Vector(95.78125, -71.83984375),
                                                  math::Vector(0, -71.83984375) };
 
-    const std::shared_ptr<mono::IPath> path = mono::CreatePath("UnitTests/TestFiles/rektangel.path");
+    const std::shared_ptr<mono::IPath> path = mono::CreatePath("tests/TestFiles/rektangel.path");
     EXPECT_EQ(coords, path->GetPathPoints());
 }
 
