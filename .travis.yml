@@ -37,9 +37,10 @@ matrix:
           - clang-5.0
           - libopenal-dev
 
-  - os: osx
-    compiler: clang
-    osx_image: xcode10.1
+# Disabled until Travis CI supports newer xcode images, im using std::any and it is not fully supported yet. 
+#  - os: osx
+#    compiler: clang
+#    osx_image: xcode10.1
 
 script:
 
