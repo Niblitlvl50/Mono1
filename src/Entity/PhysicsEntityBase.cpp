@@ -82,6 +82,11 @@ unsigned int PhysicsEntityBase::Id() const
     return m_uid;
 }
 
+void PhysicsEntityBase::SetId(unsigned int new_id)
+{
+    m_uid = new_id;
+}
+
 void PhysicsEntityBase::SetProperty(unsigned int property)
 {
     m_properties |= property;

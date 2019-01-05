@@ -125,6 +125,11 @@ unsigned int EntityBase::Id() const
     return m_uid;
 }
 
+void EntityBase::SetId(unsigned int new_id)
+{
+    m_uid = new_id;
+}
+
 void EntityBase::SetProperty(unsigned int property)
 {
     m_properties |= property;

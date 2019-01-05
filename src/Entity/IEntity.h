@@ -31,6 +31,7 @@ namespace mono
 
         // Unique id.
         virtual unsigned int Id() const = 0;
+        virtual void SetId(unsigned int new_id) = 0;
 
         // 32 bits bitset.
         virtual void SetProperty(unsigned int property) = 0;

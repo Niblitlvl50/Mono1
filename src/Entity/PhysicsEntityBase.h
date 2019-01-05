@@ -24,6 +24,7 @@ namespace mono
         virtual math::Matrix Transformation() const;
         virtual mono::PhysicsData& GetPhysics();
         virtual unsigned int Id() const;
+        virtual void SetId(unsigned int new_id);
         virtual void SetProperty(unsigned int property);
         virtual bool HasProperty(unsigned int property) const;
 
@@ -40,7 +41,7 @@ namespace mono
         virtual void Draw(mono::IRenderer& renderer) const = 0;
         virtual void Update(unsigned int delta) = 0;
 
-        const unsigned int m_uid;
+        unsigned int m_uid;
         unsigned int m_properties;
 
         math::Vector m_position;
