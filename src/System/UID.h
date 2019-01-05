@@ -1,8 +1,10 @@
 
 #pragma once
 
+#include <cstdint>
+
 namespace System
 {
     // Create a unique id 
-    unsigned int CreateUID();
+    uint32_t CreateUID();
 }

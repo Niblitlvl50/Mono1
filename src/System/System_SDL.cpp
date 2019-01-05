@@ -286,7 +286,7 @@ namespace
     {
     public:
 
-        Timer(unsigned int ms, bool repeatingTimer, System::timer_callback_t callback, void* data)
+        Timer(uint32_t ms, bool repeatingTimer, System::timer_callback_t callback, void* data)
             : m_ms(ms),
               m_repeatingTimer(repeatingTimer),
               m_callback(callback),
@@ -335,7 +335,7 @@ namespace
                 Stop();
         }
 
-        const unsigned int m_ms;
+        const uint32_t m_ms;
         const bool m_repeatingTimer;
         const System::timer_callback_t m_callback;
         void* m_data;
@@ -365,17 +365,22 @@ void System::Shutdown()
     SDL_Quit();
 }
 
-unsigned int System::GetMilliseconds()
+uint32_t System::GetMilliseconds()
 {
     return SDL_GetTicks();
 }
 
-void System::Sleep(unsigned int ms)
+uint64_t System::GetPerformanceCounter()
+{
+    return SDL_GetPerformanceCounter();
+}
+
+void System::Sleep(uint32_t ms)
 {
     SDL_Delay(ms);
 }
 
-System::ITimer* System::CreateTimer(unsigned int ms, bool one_shot, System::timer_callback_t callback, void* data)
+System::ITimer* System::CreateTimer(uint32_t ms, bool one_shot, System::timer_callback_t callback, void* data)
 {
     return new Timer(ms, !one_shot, callback, data);
 }

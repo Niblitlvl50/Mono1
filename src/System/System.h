@@ -120,11 +120,13 @@ namespace System
     void Initialize();
     void Shutdown();
 
-    unsigned int GetMilliseconds();
-    void Sleep(unsigned int ms);
+    uint32_t GetMilliseconds();
+    uint64_t GetPerformanceCounter();
+
+    void Sleep(uint32_t ms);
 
     // The caller is responsible for deleting the pointer
-    ITimer* CreateTimer(unsigned int ms, bool one_shot, timer_callback_t callback, void* data);
+    ITimer* CreateTimer(uint32_t ms, bool one_shot, timer_callback_t callback, void* data);
 
     // Gets the devices window size
     Size GetCurrentWindowSize();
