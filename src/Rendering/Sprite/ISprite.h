@@ -34,19 +34,19 @@ namespace mono
     public:
         
         //! Gets the sprites texture
-        virtual ITexturePtr GetTexture() const = 0;
+        virtual mono::ITexturePtr GetTexture() const = 0;
 
         //! Gets the quad representing the texture coordinates.
-        virtual SpriteFrame GetCurrentFrame() const = 0;
+        virtual mono::SpriteFrame GetCurrentFrame() const = 0;
 
         //! Gets the color shade of the sprite
-        virtual const Color::RGBA& GetShade() const = 0;
+        virtual const mono::Color::RGBA& GetShade() const = 0;
 
         //! Sets the color shade of the sprite
         virtual void SetShade(const mono::Color::RGBA& color) = 0;
 
-        virtual void SetHorizontalDirection(HorizontalDirection direction) = 0;
-        virtual void SetVerticalDirection(VerticalDirection direction) = 0;
+        virtual void SetHorizontalDirection(mono::HorizontalDirection direction) = 0;
+        virtual void SetVerticalDirection(mono::VerticalDirection direction) = 0;
 
         //! Tell the sprite to run a specific animation.
         virtual void SetAnimation(int id) = 0;
