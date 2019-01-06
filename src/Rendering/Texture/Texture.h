@@ -11,7 +11,7 @@ namespace mono
     {
     public:
 
-        Texture(const System::IImagePtr& image);
+        Texture(const mono::IImagePtr& image);
         ~Texture();
         
     private:

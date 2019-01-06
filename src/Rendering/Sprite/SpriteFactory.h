@@ -1,13 +1,23 @@
 
 #pragma once
 
-#include "Rendering/RenderPtrFwd.h"
+#include "ISpriteFactory.h"
+#include <unordered_map>
 
 namespace mono
 {
-    void ClearSpriteCache();
+    class SpriteFactoryImpl : public mono::ISpriteFactory
+    {
+    public:
 
-    ISpritePtr CreateSprite(const char* sprite_file);
-    ISpritePtr CreateSpriteFromRaw(const char* sprite_raw);
-    bool CreateSprite(class Sprite& sprite, const char* sprite_file);
+        SpriteFactoryImpl(class SpriteInstanceCollection* sprite_collection, float pixels_per_meter);
+
+        mono::ISpritePtr CreateSprite(const char* sprite_file) const override;
+        mono::ISpritePtr CreateSpriteFromRaw(const char* sprite_raw) const override;
+        bool CreateSprite(class Sprite& sprite, const char* sprite_file) const override;
+    
+        SpriteInstanceCollection* m_sprite_collection;
+        const float m_pixels_per_meter;
+        mutable std::unordered_map<uint32_t, struct SpriteData> m_sprite_data_cache;
+    };
 }

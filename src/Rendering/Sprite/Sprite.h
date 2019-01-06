@@ -63,17 +63,17 @@ namespace mono
 
         int FindAnimationByName(const char* name) const;
 
-        int m_active_animation = 0;
-        std::function<void ()> m_callback;
-        ITexturePtr m_texture;
-
-        std::vector<SpriteFrame> m_sprite_frames;
-        std::vector<AnimationSequence> m_animations;
-
+        // Instance data
+        int m_active_animation;
+        bool m_flip_horizontal;
+        bool m_flip_vertical;
         Color::RGBA m_color;
+        std::function<void ()> m_callback;
+        std::vector<AnimationSequence> m_animations; // Animations could be considered shared as well
 
-        bool m_flip_horizontal = false;
-        bool m_flip_vertical = false;
+        // Shared data
+        ITexturePtr m_texture;
+        std::vector<SpriteFrame> m_sprite_frames;
     };
 }
 

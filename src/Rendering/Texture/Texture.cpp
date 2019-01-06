@@ -17,7 +17,7 @@ namespace
     }
 }
 
-Texture::Texture(const System::IImagePtr& image)
+Texture::Texture(const mono::IImagePtr& image)
     : mTextureId(-1),
       mWidth(image->Width()),
       mHeight(image->Height())

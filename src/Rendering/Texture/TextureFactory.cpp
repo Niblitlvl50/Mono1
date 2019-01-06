@@ -26,7 +26,7 @@ namespace
         return nullptr;
     }
 
-    mono::ITexturePtr CreateAndCacheTexture(const System::IImagePtr& image, unsigned int texture_hash)
+    mono::ITexturePtr CreateAndCacheTexture(const mono::IImagePtr& image, unsigned int texture_hash)
     {
         const auto deleter = [texture_hash](mono::ITexture* ptr) {
             g_texture_storage.erase(texture_hash);
@@ -50,7 +50,7 @@ mono::ITexturePtr mono::CreateTexture(const char* texture_name)
     else
         std::printf("TextureFactory - Unable to find '%s' in cache.\n", texture_name);
 
-    const System::IImagePtr image = System::LoadImage(texture_name);
+    const mono::IImagePtr image = mono::LoadImage(texture_name);
     return CreateAndCacheTexture(image, texture_hash);
 }
 
@@ -64,18 +64,18 @@ mono::ITexturePtr mono::CreateTextureFromData(const byte* data, int data_length,
         if(texture)
             return texture;
 
-        const System::IImagePtr image = System::LoadImageFromData(data, data_length);
+        const mono::IImagePtr image = mono::LoadImageFromData(data, data_length);
         return CreateAndCacheTexture(image, texture_hash);
     }
     else
     {
-        const System::IImagePtr image = System::LoadImageFromData(data, data_length);
+        const mono::IImagePtr image = mono::LoadImageFromData(data, data_length);
         return std::make_shared<Texture>(image);    
     }
 }
 
 mono::ITexturePtr mono::CreateTexture(const byte* data, int width, int height, int color_components)
 {
-    const System::IImagePtr image = System::CreateImage(data, width, height, color_components);
+    const mono::IImagePtr image = mono::CreateImage(data, width, height, color_components);
     return std::make_shared<Texture>(image);
 }

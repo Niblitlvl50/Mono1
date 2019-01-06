@@ -1,17 +1,14 @@
 
 #include "ShaderFunctions.h"
 #include "IShaderFactory.h"
-#include "ShaderFactory.h"
 
 #include "System/open_gl.h"
 
 #include <vector>
 #include <string>
 
-namespace
-{
-    const mono::IShaderFactory* s_shader_factory = nullptr;
-}
+// Initialized in RenderSystem.cpp
+extern mono::IShaderFactory* g_shader_factory;
 
 size_t mono::CompileShader(mono::ShaderType type, const char* source)
 {
@@ -88,28 +85,7 @@ size_t mono::LinkProgram(size_t vertexShader, size_t fragmentShader)
     return program;
 }
 
-void mono::LoadDefaultShaderFactory()
-{
-    UnloadShaderFactory();
-    s_shader_factory = new mono::ShaderFactory;
-}
-
-void mono::LoadCustomShaderFactory(const mono::IShaderFactory* custom_factory)
-{
-    UnloadShaderFactory();
-    s_shader_factory = custom_factory;
-}
-
 const mono::IShaderFactory* mono::GetShaderFactory()
 {
-    return s_shader_factory;
+    return g_shader_factory;
 }
-
-void mono::UnloadShaderFactory()
-{
-    if(s_shader_factory)
-        delete s_shader_factory;
-
-    s_shader_factory = nullptr;
-}
-

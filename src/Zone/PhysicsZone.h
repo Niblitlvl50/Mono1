@@ -12,6 +12,10 @@ namespace mono
 {
     class PhysicsZone : public ZoneBase, public IPhysicsZone
     {
+    public:
+
+        const std::vector<IPhysicsEntityPtr>& GetPhysicsEntities() const;
+
     protected:
         
         PhysicsZone(const math::Vector& gravity, float damping);
@@ -28,8 +32,6 @@ namespace mono
 
         void AddPhysicsData(const mono::PhysicsData& physics_data) override;
         void RemovePhysicsData(const mono::PhysicsData& physics_data) override;
-
-    protected:
 
         void DoPreAccept() override;
 

@@ -9,6 +9,7 @@
 #include "stb_truetype/stb_truetype.h"
 
 #include <cstring>
+#include <cstdio>
 #include <unordered_map>
 
 
@@ -119,10 +120,16 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
     while(*text != '\0')
     {
         // Look up char in map.
-        const auto foundChar = font_data.chars.find(*text);
-        assert(foundChar != font_data.chars.end());
+        auto found_char = font_data.chars.find(*text);
+        if(found_char == font_data.chars.end())
+        {
+            std::printf("Unable to find char: %c\n", *text);
+            found_char = font_data.chars.find(char(64));
+        }
 
-        const CharData& data = foundChar->second;
+        //assert(foundChar != font_data.chars.end());
+
+        const CharData& data = found_char->second;
         
         const float x0 = xposition + data.xoffset;
         const float y0 = yposition - data.yoffset;

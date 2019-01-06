@@ -119,3 +119,8 @@ void PhysicsZone::DoPreAccept()
 
     ZoneBase::DoPreAccept();
 }
+
+const std::vector<mono::IPhysicsEntityPtr>& PhysicsZone::GetPhysicsEntities() const
+{
+    return m_physics_entities;
+}

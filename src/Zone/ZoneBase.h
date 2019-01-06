@@ -10,7 +10,6 @@ namespace mono
 {
     class ZoneBase : public virtual IZone
     {
-
     public:
 
         virtual void AddEntity(const IEntityPtr& entity, int layer);
@@ -26,6 +25,8 @@ namespace mono
 
         virtual mono::IEntityPtr FindEntityFromId(unsigned int id) const;
         virtual mono::IEntityPtr FindEntityFromPoint(const math::Vector& point) const;
+
+        const std::vector<IEntityPtr>& GetEntities() const;
 
     protected:
 

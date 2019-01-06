@@ -5,8 +5,6 @@
 
 namespace mono
 {
-    class IShaderFactory;
-
     enum class ShaderType
     {
         VERTEX,
@@ -31,17 +29,7 @@ namespace mono
     //! @return A program id
     size_t LinkProgram(size_t vertexShader, size_t fragmentShader);
 
-    //! Load a default implementation of the shader factory
-    void LoadDefaultShaderFactory();
-
-    //! Load a custom impementation of the shader factory, used for unit tests
-    //! @param factory Cusom implementation to a shader factory
-    void LoadCustomShaderFactory(const mono::IShaderFactory* factory);
-
     //! Get the shader factory
     //! @return The loaded shader factory
-    const mono::IShaderFactory* GetShaderFactory();
-
-    //! Clean up the shader factory
-    void UnloadShaderFactory();
+    const class IShaderFactory* GetShaderFactory();
 }

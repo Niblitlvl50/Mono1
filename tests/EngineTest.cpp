@@ -12,6 +12,7 @@
 #include "Rendering/Shader/ITextureShader.h"
 #include "Rendering/Shader/IPointSpriteShader.h"
 #include "Rendering/Shader/ShaderFunctions.h"
+#include "Rendering/RenderSystem.h"
 
 #include "Math/Vector.h"
 #include "Math/Quad.h"
@@ -284,7 +285,5 @@ TEST(EngineTest, Basic)
     EXPECT_TRUE(zone->mAcceptCalled);
     EXPECT_TRUE(zone->mOnLoadCalled);
     EXPECT_TRUE(zone->mOnUnloadCalled);
-
-    mono::UnloadShaderFactory();
 }
 

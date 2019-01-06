@@ -3,7 +3,7 @@
 
 #include "IImage.h"
 
-namespace System
+namespace mono
 {
     //! Load an image from disk, right now only PNG is supported
     //! \param source Where the image is located

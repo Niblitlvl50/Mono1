@@ -144,3 +144,8 @@ mono::IEntityPtr ZoneBase::FindEntityFromPoint(const math::Vector& point) const
 
     return nullptr;
 }
+
+const std::vector<mono::IEntityPtr>& ZoneBase::GetEntities() const
+{
+    return m_entities;
+}

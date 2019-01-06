@@ -18,6 +18,13 @@ Sprite::Sprite(const mono::ITexturePtr& texture, const std::vector<SpriteFrame>&
 
 void Sprite::Init(const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames)
 {
+    m_active_animation = 0;
+    m_flip_horizontal = false;
+    m_flip_vertical = false;
+    m_color = mono::Color::RGBA();
+    m_callback = nullptr;
+    m_animations.clear();
+
     m_texture = texture;
     m_sprite_frames = sprite_frames;
 }
@@ -55,6 +62,9 @@ void Sprite::SetVerticalDirection(VerticalDirection direction)
 
 void Sprite::doUpdate(unsigned int delta)
 {
+    if(m_animations.empty())
+        return;
+        
     AnimationSequence& anim = m_animations[m_active_animation];
     anim.Update(delta);
 

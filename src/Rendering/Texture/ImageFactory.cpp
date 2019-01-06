@@ -8,7 +8,7 @@
 
 namespace
 {
-    struct Bitmap : public System::IImage
+    struct Bitmap : public mono::IImage
     {
         Bitmap(const byte* data, unsigned int width, unsigned int height, int colorComponents)
             : mData(data),
@@ -41,7 +41,7 @@ namespace
     };
 }
 
-System::IImagePtr System::LoadImage(const char* source)
+mono::IImagePtr mono::LoadImage(const char* source)
 {
     int width;
     int height;
@@ -56,7 +56,7 @@ System::IImagePtr System::LoadImage(const char* source)
     return std::make_shared<Bitmap>(image_data, width, height, components);
 }
 
-System::IImagePtr System::LoadImageFromData(const unsigned char* data, int data_length)
+mono::IImagePtr mono::LoadImageFromData(const unsigned char* data, int data_length)
 {
     int width;
     int height;
@@ -71,7 +71,7 @@ System::IImagePtr System::LoadImageFromData(const unsigned char* data, int data_
     return std::make_shared<Bitmap>(image_data, width, height, components);
 }
 
-System::IImagePtr System::CreateImage(const byte* data, int width, int height, int colorComponents)
+mono::IImagePtr mono::CreateImage(const byte* data, int width, int height, int colorComponents)
 {
     return std::make_shared<Bitmap>(data, width, height, colorComponents);
 }

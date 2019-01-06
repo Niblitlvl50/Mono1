@@ -5,7 +5,7 @@
 
 using byte = unsigned char;
 
-namespace System
+namespace mono
 {
     struct IImage
     {
