@@ -13,6 +13,7 @@
 #include <vector>
 #include <algorithm>
 #include <numeric>
+#include <cstdio>
 
 namespace
 {
@@ -137,6 +138,19 @@ void mono::PhysicsFactory::Init(const PhysicsInitParams& init_params)
     s_pivot_joint_pool = MakePool<cpPivotJoint>(init_params.n_pivot_joints);
     s_gear_joint_pool = MakePool<cpGearJoint>(init_params.n_gear_joints);
     s_damped_spring_pool = MakePool<cpDampedSpring>(init_params.n_damped_springs);
+
+    std::printf(
+        "Physics\n"
+        "\tchipmunk version: %s\n"
+        "\tbodies: %zu\n"
+        "\tshapes: circle %zu, segment %zu, polygon %zu\n"
+        "\tjoints: pivot %zu, gear %zu\n"
+        "\tsprings: damped %zu\n",
+        cpVersionString,
+        init_params.n_bodies,
+        init_params.n_circle_shapes, init_params.n_segment_shapes, init_params.n_polygon_shapes,
+        init_params.n_pivot_joints, init_params.n_gear_joints,
+        init_params.n_damped_springs);
 }
 
 void mono::PhysicsFactory::Shutdown()
