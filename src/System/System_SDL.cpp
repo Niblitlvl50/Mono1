@@ -356,8 +356,8 @@ void System::Initialize()
     SDL_version version;
     SDL_GetVersion(&version);
 
-    std::printf("SDL\n");
-    std::printf("\tversion: %u.%u.%u\n", version.major, version.minor, version.patch);
+    std::printf("System\n");
+    std::printf("\tSDL version: %u.%u.%u\n", version.major, version.minor, version.patch);
 }
 
 void System::Shutdown()
