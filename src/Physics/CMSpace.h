@@ -14,10 +14,14 @@ namespace mono
     {
     public:
         
+        PhysicsSpace();
         PhysicsSpace(const math::Vector& gravity, float damping);
         ~PhysicsSpace();
-        
-        void Tick(unsigned int delta);
+
+        void Tick(uint32_t delta);
+
+        void SetGravity(const math::Vector& gravity);
+        void SetDamping(float damping);
         
         void Add(IBody* body);
         void Add(IShape* shape);
@@ -31,11 +35,11 @@ namespace mono
         IBody* QueryFirst(const math::Vector& start, const math::Vector& end);
         
     private:
-        
-        bool OnCollision(cpArbiter* arb);        
+
+        bool OnCollision(cpArbiter* arb);
         void DoForEachFuncOnBody(cpBody* body);
 
-        cpSpace* m_space;        
+        cpSpace* m_space;
         BodyFunc m_for_each_func;
         std::vector<IBody*> m_bodies;
     };

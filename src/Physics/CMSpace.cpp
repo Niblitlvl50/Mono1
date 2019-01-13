@@ -13,6 +13,10 @@
 
 using namespace mono;
 
+PhysicsSpace::PhysicsSpace()
+    : PhysicsSpace(math::Vector(0.0f, 0.0f), 1.0f)
+{ }
+
 PhysicsSpace::PhysicsSpace(const math::Vector& gravity, float damping)
     : m_space(cpSpaceNew())
 {
@@ -34,10 +38,19 @@ PhysicsSpace::~PhysicsSpace()
     cpSpaceDestroy(m_space);
 }
 
-void PhysicsSpace::Tick(unsigned int delta)
+void PhysicsSpace::Tick(uint32_t delta_ms)
 {
-    const float float_delta = delta;
-    cpSpaceStep(m_space, float_delta / 1000.0f);
+    cpSpaceStep(m_space, float(delta_ms) / 1000.0f);
+}
+
+void PhysicsSpace::SetGravity(const math::Vector& gravity)
+{
+    cpSpaceSetGravity(m_space, cpv(gravity.x, gravity.y));
+}
+
+void PhysicsSpace::SetDamping(float damping)
+{
+    cpSpaceSetDamping(m_space, damping);
 }
 
 void PhysicsSpace::Add(IBody* body)

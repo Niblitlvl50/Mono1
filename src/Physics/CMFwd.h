@@ -11,6 +11,7 @@ struct cpConstraint;
 namespace mono
 {
     struct PhysicsData;
+    class PhysicsSpace;
     class IBody;
     class IShape;
     class IConstraint;
