@@ -9,10 +9,14 @@ namespace cm
     {
     public:
      
+        ShapeImpl();
         ShapeImpl(cpShape* shape, float inertia_value);
+
+        void SetShapeHandle(cpShape* shape);
         
         void SetElasticity(float value) override;
         void SetFriction(float value) override;
+        void SetInertia(float inertia);
         float GetInertiaValue() const override;
         void SetCollisionFilter(unsigned int category, unsigned int mask) override;
         cpShape* Handle() override;

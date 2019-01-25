@@ -5,9 +5,18 @@
 
 using namespace cm;
 
+ConstraintImpl::ConstraintImpl()
+    : m_constraint(nullptr)
+{ }
+
 ConstraintImpl::ConstraintImpl(cpConstraint* constraint)
     : m_constraint(constraint)
 { }
+
+void ConstraintImpl::SetHandle(cpConstraint* constraint)
+{
+    m_constraint = constraint;
+}
 
 void ConstraintImpl::SetMaxForce(float force) 
 {

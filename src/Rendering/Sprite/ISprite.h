@@ -55,5 +55,8 @@ namespace mono
         //! Tell the sprite to run a specific animation, and get a callback when finished
         virtual void SetAnimation(int id, const std::function<void ()>& func) = 0;
         virtual void SetAnimation(const char* name, const std::function<void ()>& func) = 0;
+
+        //! Returns the current active animation
+        virtual int GetActiveAnimation() const = 0;
     };
 }

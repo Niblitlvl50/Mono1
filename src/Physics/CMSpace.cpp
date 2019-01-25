@@ -140,13 +140,6 @@ bool PhysicsSpace::OnCollision(cpArbiter* arb)
     cpBody* b2 = nullptr;
     cpArbiterGetBodies(arb, &b1, &b2);
 
-    cpShape* shape1 = nullptr;
-    cpShape* shape2 = nullptr;
-    cpArbiterGetShapes(arb, &shape1, &shape2);
-
-    const cpShapeFilter& filter1 = cpShapeGetFilter(shape1);
-    const cpShapeFilter& filter2 = cpShapeGetFilter(shape2);
-    
     IBody* first = nullptr;
     IBody* second = nullptr;
     
@@ -163,9 +156,24 @@ bool PhysicsSpace::OnCollision(cpArbiter* arb)
     
     if(first && second)
     {
-        first->OnCollideWith(second, filter2.categories);
-        second->OnCollideWith(first, filter1.categories);
+        cpShape* shape1 = nullptr;
+        cpShape* shape2 = nullptr;
+        cpArbiterGetShapes(arb, &shape1, &shape2);
+
+        const cpShapeFilter& filter1 = cpShapeGetFilter(shape1);
+        const cpShapeFilter& filter2 = cpShapeGetFilter(shape2);
+
+        const cpVect point_a = cpArbiterGetPointA(arb, 0);
+        const math::Vector collision_point(point_a.x, point_a.y);
+
+        first->OnCollideWith(second, collision_point, filter2.categories);
+        second->OnCollideWith(first, collision_point, filter1.categories);
     }
     
     return true;
+}
+
+cpSpace* PhysicsSpace::Handle()
+{
+    return m_space;
 }

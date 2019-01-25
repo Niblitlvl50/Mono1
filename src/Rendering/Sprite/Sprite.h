@@ -32,13 +32,11 @@ namespace mono
         void SetAnimation(const char* name) override;
         void SetAnimation(int id, const std::function<void ()>& func) override;
         void SetAnimation(const char* name, const std::function<void ()>& func) override;
+        int GetActiveAnimation() const override;
         void doUpdate(unsigned int delta) override;
 
         //! Restarts the current set animation
         void RestartAnimation();
-
-        //! Returns the current active animation
-        int GetActiveAnimation() const;
 
         //! Define an animation sequence by giving pairs of frame and duration.
         //! @param[in] frames A collection of frame and duration pairs. 

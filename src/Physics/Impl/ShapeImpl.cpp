@@ -4,10 +4,20 @@
 
 using namespace cm;
 
+ShapeImpl::ShapeImpl()
+    : m_shape(nullptr)
+    , m_inertia_value(0.0f)
+{ }
+
 ShapeImpl::ShapeImpl(cpShape* shape, float inertia_value)
     : m_shape(shape)
     , m_inertia_value(inertia_value)
 { }
+
+void ShapeImpl::SetShapeHandle(cpShape* shape)
+{
+    m_shape = shape;
+}
 
 void ShapeImpl::SetElasticity(float value) 
 {
@@ -17,6 +27,11 @@ void ShapeImpl::SetElasticity(float value)
 void ShapeImpl::SetFriction(float value) 
 {
     cpShapeSetFriction(m_shape, value);
+}
+
+void ShapeImpl::SetInertia(float inertia)
+{
+    m_inertia_value = inertia;
 }
 
 float ShapeImpl::GetInertiaValue() const 

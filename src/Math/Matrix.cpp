@@ -28,6 +28,13 @@ void math::Identity(Matrix& matrix)
     matrix.data[15] = 1;
 }
 
+math::Matrix math::CreateMatrixWithPosition(const math::Vector& position)
+{
+    math::Matrix matrix;
+    math::Translate(matrix, position);
+    return matrix;
+}
+
 math::Matrix math::CreateMatrixFromZRotation(float radians)
 {
     math::Matrix matrix;
@@ -55,6 +62,11 @@ void math::Position(Matrix& matrix, const Vector& position)
     matrix.data[12] = position.x;
     matrix.data[13] = position.y;
     //matrix.data[14] += position.z;
+}
+
+math::Vector math::GetPosition(const math::Matrix& matrix)
+{
+    return math::Vector(matrix.data[12], matrix.data[13]);
 }
 
 void math::RotateX(math::Matrix& matrix, float radians)
@@ -336,8 +348,25 @@ void math::Transform(const Matrix& matrix, math::Vector& vector)
 
 void math::Transform(const Matrix& matrix, math::Quad& quad)
 {
-    math::Transform(matrix, quad.mA);
-    math::Transform(matrix, quad.mB);
+    const float width = math::Width(quad);
+    const float height = math::Height(quad);
+
+    math::Vector bottom_left = quad.mA;
+    math::Vector bottom_right = quad.mA + math::Vector(width, 0.0f);
+    math::Vector top_left = quad.mA + math::Vector(0.0f, height);
+    math::Vector top_right = quad.mB;
+
+    math::Transform(matrix, bottom_left);
+    math::Transform(matrix, bottom_right);
+    math::Transform(matrix, top_left);
+    math::Transform(matrix, top_right);
+
+    quad = math::Quad(math::INF, math::INF, -math::INF, -math::INF);
+
+    quad |= bottom_left;
+    quad |= bottom_right;
+    quad |= top_left;
+    quad |= top_right;
 }
 
 math::Vector math::Transform(const Matrix& matrix, const math::Vector& vector)

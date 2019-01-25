@@ -15,6 +15,7 @@ namespace mono
     class IBody;
     class IShape;
     class IConstraint;
+    class ICollisionHandler;
 
     using IBodyPtr = std::shared_ptr<IBody>;
     using IShapePtr = std::shared_ptr<IShape>;

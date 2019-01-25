@@ -92,10 +92,10 @@ void BodyImpl::SetCollisionHandler(mono::ICollisionHandler* collision_handler)
     m_collision_handler = collision_handler;
 }
 
-void BodyImpl::OnCollideWith(mono::IBody* body, unsigned int categories) 
+void BodyImpl::OnCollideWith(mono::IBody* body, const math::Vector& collision_point, uint32_t categories) 
 {
     if(m_collision_handler)
-        m_collision_handler->OnCollideWith(body, categories);
+        m_collision_handler->OnCollideWith(body, collision_point, categories);
 }
 
 void BodyImpl::SetNoDamping() 

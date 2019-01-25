@@ -9,7 +9,10 @@ namespace cm
     {
     public:
 
+        ConstraintImpl();
         ConstraintImpl(cpConstraint* constraint);
+
+        void SetHandle(cpConstraint* constraint);
 
         void SetMaxForce(float force) override;
         float GetMaxForce() const override;

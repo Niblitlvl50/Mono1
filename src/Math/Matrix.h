@@ -26,11 +26,13 @@ namespace math
                            0, 0, 0, 1 };
     };
 
+    Matrix CreateMatrixWithPosition(const math::Vector& position);
     Matrix CreateMatrixFromZRotation(float radians);
 
     void Identity(Matrix& matrix);
     void Translate(Matrix& matrix, const Vector& vector);
     void Position(Matrix& matrix, const Vector& position);
+    math::Vector GetPosition(const Matrix& matrix);
     void RotateX(Matrix& matrix, float radians);
     void RotateZ(Matrix& matrix, float radians);
     void RotateZ(Matrix& matrix, float radians, const Vector& offset);
