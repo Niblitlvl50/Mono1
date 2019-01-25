@@ -2,19 +2,22 @@
 #pragma once
 
 #include <cstring>
+#include <cstdint>
 
 namespace mono
 {
+    //
     // This is the "FNV-1a alternate algorithm", taken from here: http://isthe.com/chongo/tech/comp/fnv/
-    inline unsigned int Hash(const char* text)
+    //
+    inline uint32_t Hash(const char* text)
     {
-        constexpr unsigned int offset_bias = 2166136261u;
-        constexpr unsigned int FNV_prime = 16777619u;
+        constexpr uint32_t offset_bias = 2166136261u;
+        constexpr uint32_t FNV_prime = 16777619u;
 
-        unsigned int hash = offset_bias;
         const std::size_t length = std::strlen(text);
-        
-        for(unsigned int index = 0; index < length; ++index)
+        uint32_t hash = offset_bias;
+
+        for(uint32_t index = 0; index < length; ++index)
             hash = (hash ^ text[index]) * FNV_prime;
 
         return hash;
