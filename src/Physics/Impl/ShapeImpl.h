@@ -18,7 +18,7 @@ namespace cm
         void SetFriction(float value) override;
         void SetInertia(float inertia);
         float GetInertiaValue() const override;
-        void SetCollisionFilter(unsigned int category, unsigned int mask) override;
+        void SetCollisionFilter(uint32_t category, uint32_t mask) override;
         cpShape* Handle() override;
 
     private:

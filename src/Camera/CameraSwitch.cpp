@@ -19,9 +19,9 @@ void CameraSwitch::doUpdate(unsigned int delta)
     m_active_camera->doUpdate(delta);
 }
 
-void CameraSwitch::Follow(const mono::IEntityPtr& entity, const math::Vector& offset)
+void CameraSwitch::Follow(uint32_t entity_id, const math::Vector& offset)
 {
-    m_active_camera->Follow(entity, offset);
+    m_active_camera->Follow(entity_id, offset);
 }
 
 void CameraSwitch::Unfollow()

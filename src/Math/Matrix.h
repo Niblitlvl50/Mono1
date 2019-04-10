@@ -39,6 +39,8 @@ namespace math
     void ScaleXY(Matrix& matrix, const Vector& scale);
     void Transpose(Matrix& matrix);
 
+    float GetZRotation(const Matrix& matrix);
+
     void Inverse(Matrix& matrix);
     math::Matrix Inverse(const Matrix& matrix);
 

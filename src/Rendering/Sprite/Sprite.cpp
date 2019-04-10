@@ -36,6 +36,9 @@ ITexturePtr Sprite::GetTexture() const
 
 mono::SpriteFrame Sprite::GetCurrentFrame() const
 {
+    if(m_animations.empty())
+        return mono::SpriteFrame();
+
     const AnimationSequence& anim = m_animations[m_active_animation];
     return GetFrame(anim.Frame());
 }
@@ -60,13 +63,13 @@ void Sprite::SetVerticalDirection(VerticalDirection direction)
     m_flip_vertical = (direction == VerticalDirection::DOWN);
 }
 
-void Sprite::doUpdate(unsigned int delta)
+void Sprite::doUpdate(uint32_t delta_ms)
 {
     if(m_animations.empty())
         return;
         
     AnimationSequence& anim = m_animations[m_active_animation];
-    anim.Update(delta);
+    anim.Update(delta_ms);
 
     if(anim.Finished() && m_callback)
         m_callback();

@@ -8,6 +8,7 @@
  */
 
 #include "Engine.h"
+#include "SystemContext.h"
 #include "InputHandler.h"
 #include "Updater.h"
 
@@ -57,9 +58,10 @@ namespace
     }
 }
 
-Engine::Engine(System::IWindow* window, const ICameraPtr& camera, EventHandler& event_handler)
+Engine::Engine(System::IWindow* window, const ICameraPtr& camera, SystemContext* system_context, EventHandler& event_handler)
     : m_window(window)
     , m_camera(camera)
+    , m_system_context(system_context)
     , m_event_handler(event_handler)
 {
     using namespace std::placeholders;
@@ -99,7 +101,7 @@ int Engine::Run(IZonePtr zone)
     Renderer renderer;
     Updater updater;
 
-    unsigned int last_time = System::GetMilliseconds();
+    uint32_t last_time = System::GetMilliseconds();
 
     while(!m_quit)
     {
@@ -113,8 +115,8 @@ int Engine::Run(IZonePtr zone)
             m_update_last_time = false;
         }
 
-        const unsigned int before_time = System::GetMilliseconds();
-        const unsigned int delta = (before_time - last_time) * m_time_scale;
+        const uint32_t before_time = System::GetMilliseconds();
+        const uint32_t delta = (before_time - last_time) * m_time_scale;
 
         // Handle input events
         System::ProcessSystemEvents(m_input_handler.get());
@@ -130,6 +132,8 @@ int Engine::Run(IZonePtr zone)
         {
             m_window->MakeCurrent();
 
+            m_system_context->Update(delta);
+
             // Update all the stuff...
             zone->Accept(updater);
             updater.AddUpdatable(m_camera.get());
@@ -140,6 +144,7 @@ int Engine::Run(IZonePtr zone)
             renderer.DrawFrame();
 
             m_window->SwapBuffers();
+            m_system_context->Sync();
         }
 
         last_time = before_time;

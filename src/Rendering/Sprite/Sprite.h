@@ -33,7 +33,7 @@ namespace mono
         void SetAnimation(int id, const std::function<void ()>& func) override;
         void SetAnimation(const char* name, const std::function<void ()>& func) override;
         int GetActiveAnimation() const override;
-        void doUpdate(unsigned int delta) override;
+        void doUpdate(uint32_t delta_ms) override;
 
         //! Restarts the current set animation
         void RestartAnimation();

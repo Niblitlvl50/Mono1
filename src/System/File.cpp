@@ -54,3 +54,11 @@ void file::FileRead(const FilePtr& file, std::vector<byte>& bytes)
     std::fread(bytes.data(), 1, filesize, file.get());
 }
 
+#include <sys/stat.h>
+
+bool file::Exists(const char* file_name)
+{
+    struct stat sb;
+    const int result = stat(file_name, &sb);
+    return (result == 0 && S_ISREG(sb.st_mode));
+}

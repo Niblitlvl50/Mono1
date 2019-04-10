@@ -157,4 +157,5 @@ namespace System
 
     const ControllerState& GetController(ControllerId controller_id);
     bool IsControllerActive(ControllerId controller_id);
+    int GetControllerId(ControllerId controller_id);
 }

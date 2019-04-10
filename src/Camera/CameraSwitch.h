@@ -17,7 +17,7 @@ namespace mono
 
         void doUpdate(unsigned int delta) override;
         
-        void Follow(const mono::IEntityPtr& entity, const math::Vector& offset) override;
+        void Follow(uint32_t entity_id, const math::Vector& offset) override;
         void Unfollow() override;
         math::Quad GetViewport() const override;
         math::Vector GetPosition() const override;

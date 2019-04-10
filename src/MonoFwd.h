@@ -14,4 +14,5 @@ namespace mono
     class ISound;
 
     class EventHandler;
+    class SystemContext;
 }

@@ -462,3 +462,32 @@ math::Matrix math::Perspective(float fov, float aspect_ratio, float near, float 
 
     return matrix;
 }
+
+float math::GetZRotation(const math::Matrix& matrix)
+{
+    const float m21 = matrix.data[9];
+    const float m22 = matrix.data[10];
+    const float m00 = matrix.data[0];
+    const float m10 = matrix.data[4];
+    const float m20 = matrix.data[8];
+    const float m02 = matrix.data[2];
+    const float m01 = matrix.data[1];
+    const float m11 = matrix.data[5];
+    const float m12 = matrix.data[6];
+
+    const float T1 = std::atan2(m21, m22);
+    const float C2 = std::sqrt(m00 * m00 + m10 * m10);
+    const float T2 = std::atan2(-m20, C2);
+    const float S1 = std::sin(T1);
+    const float C1 = std::cos(T1);
+    const float T3 = std::atan2(S1 * m02 - C1 * m01, C1 * m11 - S1 * m12);
+
+    const float x = -T1;
+    const float y = -T2;
+    const float z = -T3;
+
+    (void)x;
+    (void)y;
+
+    return z;
+}

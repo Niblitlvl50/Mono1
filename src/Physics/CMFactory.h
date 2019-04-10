@@ -49,6 +49,8 @@ namespace mono
         //! Constraints
         static mono::IConstraintPtr CreatePivot(const mono::IBodyPtr& a, const mono::IBodyPtr& b);
         static mono::IConstraintPtr CreateGear(const mono::IBodyPtr& a, const mono::IBodyPtr& b, float phase, float ratio);
+
         static mono::IConstraintPtr CreateSpring(const mono::IBodyPtr& a, const mono::IBodyPtr& b, float rest_length, float stiffness, float damping);
+        static mono::IConstraintPtr CreateSpring(const mono::IBody* a, const mono::IBody* b, float rest_length, float stiffness, float damping);
     };
 }

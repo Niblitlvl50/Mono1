@@ -274,3 +274,10 @@ mono::IConstraintPtr mono::PhysicsFactory::CreateSpring(const mono::IBodyPtr& a,
     cpDampedSpringInit(damped_spring_data, a->Handle(), b->Handle(), cpvzero, cpvzero, rest_length, stiffness, damping);
     return std::shared_ptr<cm::ConstraintImpl>(new cm::ConstraintImpl((cpConstraint*)damped_spring_data), FreeDampedSpring);
 }
+
+mono::IConstraintPtr mono::PhysicsFactory::CreateSpring(const mono::IBody* a, const mono::IBody* b, float rest_length, float stiffness, float damping)
+{
+    cpDampedSpring* damped_spring_data = GetPoolData(s_damped_spring_pool);
+    cpDampedSpringInit(damped_spring_data, a->Handle(), b->Handle(), cpvzero, cpvzero, rest_length, stiffness, damping);
+    return std::shared_ptr<cm::ConstraintImpl>(new cm::ConstraintImpl((cpConstraint*)damped_spring_data), FreeDampedSpring);
+}

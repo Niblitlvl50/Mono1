@@ -1,21 +1,14 @@
 
 #pragma once
 
+#include "PhysicsFwd.h"
+
 #include <memory>
 #include <functional>
-
-struct cpBody;
-struct cpShape;
-struct cpConstraint;
 
 namespace mono
 {
     struct PhysicsData;
-    class PhysicsSpace;
-    class IBody;
-    class IShape;
-    class IConstraint;
-    class ICollisionHandler;
 
     using IBodyPtr = std::shared_ptr<IBody>;
     using IShapePtr = std::shared_ptr<IShape>;

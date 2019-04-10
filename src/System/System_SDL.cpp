@@ -215,6 +215,10 @@ namespace
                 return Keycode::E;
             case SDLK_r:
                 return Keycode::R;
+            case SDLK_i:
+                return Keycode::I;
+            case SDLK_o:
+                return Keycode::O;
 
             case SDLK_a:
                 return Keycode::A;
@@ -635,6 +639,10 @@ int System::KeycodeToNative(Keycode key)
             return SDLK_e;
         case Keycode::R:
             return SDLK_r;
+        case Keycode::I:
+            return SDLK_i;
+        case Keycode::O:
+            return SDLK_o;
 
         case Keycode::A:
             return SDLK_a;
@@ -726,4 +734,10 @@ bool System::IsControllerActive(ControllerId controller_id)
 {
     const int id = static_cast<int>(controller_id);
     return g_controller_states[id].id != -1;
+}
+
+int System::GetControllerId(ControllerId controller_id)
+{
+    const int id = static_cast<int>(controller_id);
+    return g_controller_states[id].id;
 }

@@ -21,7 +21,7 @@ namespace mono
         void AddFrame(int frame_number, int duration);
         void RemoveFrame(int frame_number);
 
-        void Update(unsigned int delta);
+        void Update(uint32_t delta_ms);
 
         int Frame() const;
         bool Finished() const;
@@ -42,7 +42,7 @@ namespace mono
         std::string m_name;
         std::vector<mono::Frame> m_frames;
 
-        unsigned int m_currentFrame = 0;
+        uint32_t m_current_frame = 0;
         int m_elapsedTime = 0;
         bool m_done = false;
     };

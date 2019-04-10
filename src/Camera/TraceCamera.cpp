@@ -40,10 +40,9 @@ void TraceCamera::doUpdate(unsigned int delta)
     }
 }
 
-void TraceCamera::Follow(const mono::IEntityPtr& entity, const math::Vector& offset)
+void TraceCamera::Follow(uint32_t entity_id, const math::Vector& offset)
 {
-    mEntity = entity;
-    m_offset = offset;
+
 }
 
 void TraceCamera::Unfollow()

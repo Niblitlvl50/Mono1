@@ -32,4 +32,6 @@ namespace file
     //! \param file The file to read from
     //! \param bytes Buffer that will hold the data
     void FileRead(const FilePtr& file, std::vector<byte>& bytes);
+
+    bool Exists(const char* file_name);
 }

@@ -26,22 +26,22 @@ void AnimationSequence::RemoveFrame(int frame_number)
     Restart();
 }
 
-void AnimationSequence::Update(unsigned int delta)
+void AnimationSequence::Update(uint32_t delta_ms)
 {
-    if(m_done)
+    if(m_done || m_frames.empty())
         return;
     
-    m_elapsedTime += delta;
+    m_elapsedTime += delta_ms;
 
-    const mono::Frame& frame = m_frames.at(m_currentFrame);
+    const mono::Frame& frame = m_frames.at(m_current_frame);
     if(m_elapsedTime > frame.duration)
     {
         m_elapsedTime = 0;
-        m_currentFrame++;
+        m_current_frame++;
 
-        if(m_currentFrame >= m_frames.size())
+        if(m_current_frame >= m_frames.size())
         {
-            m_currentFrame = 0;
+            m_current_frame = 0;
             if(!m_loop)
                 m_done = true;
         }
@@ -50,10 +50,13 @@ void AnimationSequence::Update(unsigned int delta)
 
 int AnimationSequence::Frame() const
 {
+    if(m_frames.empty())
+        return 0;
+
     if(m_done)
         return m_frames.back().frame;
 
-    return m_frames.at(m_currentFrame).frame;
+    return m_frames.at(m_current_frame).frame;
 }
 
 bool AnimationSequence::Finished() const
@@ -63,7 +66,7 @@ bool AnimationSequence::Finished() const
 
 void AnimationSequence::Restart()
 {
-    m_currentFrame = 0;
+    m_current_frame = 0;
     m_elapsedTime = 0;
     m_done = false;
 }

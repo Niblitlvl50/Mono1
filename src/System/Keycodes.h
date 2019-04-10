@@ -39,6 +39,8 @@ enum class Keycode
     W,
     E,
     R,
+    I,
+    O,
 
     A,
     S,

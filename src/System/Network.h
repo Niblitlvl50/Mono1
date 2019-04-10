@@ -7,16 +7,23 @@
 
 using byte = unsigned char;
 
-namespace Network
+namespace network
 {
-    //! Initialize the network module
-    void Init();
+    // Initialize the network module
+    void Initialize();
 
-    //! Exit the network module
-    void Exit();
+    // Exit the network module
+    void Shutdown();
 
-    // Get the host name of the computer
     std::string GetLocalHostName();
+    std::string GetBroadcastAddress();
+    std::string GetLoopbackAddress();
+
+    struct Address
+    {
+        std::string host;
+        unsigned short port;
+    };
 
     class ISocket
     {
@@ -25,16 +32,16 @@ namespace Network
         virtual ~ISocket()
         { }
 
-        //! Send data on the socket
-        virtual int Send(const std::vector<byte>& data) = 0;
+        // Send data on the socket
+        virtual bool Send(const std::vector<byte>& data) = 0;
 
-        //! Send to a specific address and port
-        virtual int SendTo(const std::vector<byte>& data, const char* address, int port) = 0;
+        // Send to a specific address and port
+        virtual bool SendTo(const std::vector<byte>& data, const char* address, int port) = 0;
+        virtual bool SendTo(const std::vector<byte>& data, const Address& destination) = 0;
 
-        //! Receives data from the socket into the buffer,
-        //! make sure to reserve the amount of data you want to
-        //! be able to receive.
-        virtual bool Receive(std::vector<byte>& buffer) = 0;
+        // Receives data from the socket into the buffer, make sure to reserve
+        // the amount of data you want to be able to receive.
+        virtual bool Receive(std::vector<byte>& buffer, Address* out_sender = nullptr) = 0;
     };
 
     using ISocketPtr = std::unique_ptr<ISocket>;

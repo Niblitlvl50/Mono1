@@ -7,13 +7,18 @@
 using namespace cm;
 
 BodyImpl::BodyImpl(cpBody* body)
-    : m_body_handle(body),
-        m_collision_handler(nullptr)
+    : m_body_handle(body)
+    , m_collision_handler(nullptr)
 { }
 
-bool BodyImpl::IsStatic() const 
+void BodyImpl::SetType(mono::BodyType type)
 {
-    return cpBodyGetType(m_body_handle) == CP_BODY_TYPE_STATIC;
+    cpBodySetType(m_body_handle, static_cast<cpBodyType>(type));
+}
+
+mono::BodyType BodyImpl::GetType() const
+{
+    return mono::BodyType(cpBodyGetType(m_body_handle));
 }
 
 void BodyImpl::SetMass(float mass) 
@@ -106,7 +111,7 @@ void BodyImpl::SetNoDamping()
     cpBodySetVelocityUpdateFunc(m_body_handle, null_func);
 }
 
-cpBody* BodyImpl::Handle() 
+cpBody* BodyImpl::Handle() const
 {
     return m_body_handle;
 }

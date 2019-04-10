@@ -39,7 +39,7 @@ float ShapeImpl::GetInertiaValue() const
     return m_inertia_value;
 }
 
-void ShapeImpl::SetCollisionFilter(unsigned int category, unsigned int mask) 
+void ShapeImpl::SetCollisionFilter(uint32_t category, uint32_t mask) 
 {
     cpShapeFilter filter = cpShapeGetFilter(m_shape);
     filter.categories = category;

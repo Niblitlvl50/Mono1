@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "CMFwd.h"
+struct cpConstraint;
 
 namespace mono
 {

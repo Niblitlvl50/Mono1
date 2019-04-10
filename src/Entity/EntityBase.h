@@ -26,11 +26,11 @@ namespace mono
         virtual math::Quad BoundingBox() const;
         virtual math::Matrix Transformation() const;
         
-        virtual unsigned int Id() const;
-        virtual void SetId(unsigned int new_id);
+        virtual uint32_t Id() const;
+        virtual void SetId(uint32_t new_id);
 
-        virtual void SetProperty(unsigned int property);
-        virtual bool HasProperty(unsigned int property) const;
+        virtual void SetProperty(uint32_t property);
+        virtual bool HasProperty(uint32_t property) const;
 
         void AddChild(const IEntityPtr& child);
         void RemoveChild(const IEntityPtr& child);
@@ -40,13 +40,13 @@ namespace mono
         EntityBase();
 
         virtual void Draw(mono::IRenderer& renderer) const = 0;
-        virtual void Update(unsigned int delta) = 0;
+        virtual void Update(uint32_t delta_ms) = 0;
 
         virtual void doDraw(IRenderer& renderer) const;
-        virtual void doUpdate(unsigned int delta);
+        virtual void doUpdate(uint32_t delta_ms);
 
-        unsigned int m_uid;
-        unsigned int m_properties;
+        uint32_t m_uid;
+        uint32_t m_properties;
 
         math::Vector m_position;
         math::Vector m_pivot_point;

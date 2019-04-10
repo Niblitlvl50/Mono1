@@ -15,7 +15,7 @@ namespace mono
         
         virtual void doUpdate(unsigned int delta);
         
-        virtual void Follow(const mono::IEntityPtr& entity, const math::Vector& offset);
+        virtual void Follow(uint32_t entity_id, const math::Vector& offset);
         virtual void Unfollow();
         
         virtual math::Quad GetViewport() const;

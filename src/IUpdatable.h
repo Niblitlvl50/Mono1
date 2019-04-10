@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include <cstdint>
+
 namespace mono
 {
     class IUpdatable
@@ -12,6 +14,6 @@ namespace mono
 
         //! Update function
         //! @param[in] delta Delta value of how many milliseconds since last update.
-        virtual void doUpdate(unsigned int delta) = 0;
+        virtual void doUpdate(uint32_t delta_ms) = 0;
     };
 }

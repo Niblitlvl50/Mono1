@@ -12,7 +12,6 @@
 //
 
 #include "SpriteFactory.h"
-#include "SpriteInstanceCollection.h"
 #include "Sprite.h"
 
 #include "Rendering/Texture/ITexture.h"
@@ -101,18 +100,13 @@ namespace
 
 using namespace mono;
  
-SpriteFactoryImpl::SpriteFactoryImpl(SpriteInstanceCollection* sprite_collection, float pixels_per_meter)
-    : m_sprite_collection(sprite_collection)
-    , m_pixels_per_meter(pixels_per_meter)
+SpriteFactoryImpl::SpriteFactoryImpl(float pixels_per_meter)
+    : m_pixels_per_meter(pixels_per_meter)
 { }
 
 mono::ISpritePtr SpriteFactoryImpl::CreateSprite(const char* sprite_file) const
 {
-    const auto free_sprite = [this](mono::Sprite* sprite) {
-        m_sprite_collection->ReleaseSprite(sprite);
-    };
-
-    std::shared_ptr<Sprite> sprite(m_sprite_collection->AllocateSprite(), free_sprite);
+    auto sprite = std::make_shared<mono::Sprite>();
     const bool result = this->CreateSprite(*sprite.get(), sprite_file);
     if(result)
         return sprite;
@@ -125,11 +119,7 @@ mono::ISpritePtr SpriteFactoryImpl::CreateSpriteFromRaw(const char* sprite_raw) 
     const mono::SpriteData& sprite_data = LoadSpriteData(sprite_raw, m_pixels_per_meter);
     mono::ITexturePtr texture = mono::CreateTexture(sprite_data.texture_file.c_str());
 
-    const auto free_sprite = [this](mono::Sprite* sprite) {
-        m_sprite_collection->ReleaseSprite(sprite);
-    };
-
-    std::shared_ptr<Sprite> sprite(m_sprite_collection->AllocateSprite(), free_sprite);
+    auto sprite = std::make_shared<mono::Sprite>();
     sprite->Init(texture, sprite_data.sprite_frames);
 
     for(const SpriteAnimation& animation : sprite_data.animations)
@@ -145,6 +135,10 @@ bool SpriteFactoryImpl::CreateSprite(mono::Sprite& sprite, const char* sprite_fi
     auto it = m_sprite_data_cache.find(sprite_file_hash);
     if(it == m_sprite_data_cache.end())
     {
+        const bool file_exists = file::Exists(sprite_file);
+        if(!file_exists)
+            return false;
+
         file::FilePtr file = file::OpenAsciiFile(sprite_file);
         if(!file)
             return false;

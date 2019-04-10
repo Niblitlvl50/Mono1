@@ -109,7 +109,7 @@ void mono::DrawSprite(
     };
     
     //shader->SetShade(sprite.GetShade());
-    shader->SetShade(mono::Color::RGBA(1, 1, 1));
+    //shader->SetShade(mono::Color::RGBA(1, 1, 1));
     shader->SetAlphaTexture(false);
 
     glEnableVertexAttribArray(0);

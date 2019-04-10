@@ -1,0 +1,58 @@
+
+#pragma once
+
+#include "IGameSystem.h"
+#include <vector>
+
+namespace mono
+{
+    class SystemContext
+    {
+    public:
+
+        SystemContext()
+        { }
+
+        ~SystemContext()
+        {
+            for(IGameSystem* system : m_systems)
+                delete system;
+        }
+
+        template <typename T, typename ... A>
+        inline T* CreateSystem(A&&... args)
+        {
+            T* new_system = new T(args...);
+            m_systems.push_back(new_system);
+            return new_system;
+        }
+
+        template <typename T>
+        inline T* GetSystem()
+        {
+            for(IGameSystem* game_system : m_systems)
+            {
+                T* system = dynamic_cast<T*>(game_system);
+                if(system)
+                    return system;
+            }
+
+            return nullptr;
+        }
+
+        inline void Update(uint32_t delta_ms)
+        {
+            for(IGameSystem* game_system : m_systems)
+                game_system->Update(delta_ms);
+        }
+
+        inline void Sync()
+        {
+            for(IGameSystem* game_system : m_systems)
+                game_system->Sync();
+        }
+
+    private:
+        std::vector<IGameSystem*> m_systems;
+    };
+}

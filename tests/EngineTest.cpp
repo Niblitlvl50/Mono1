@@ -4,6 +4,7 @@
 #include "System/System.h"
 
 #include "Engine.h"
+#include "SystemContext.h"
 #include "MonoFwd.h"
 #include "Camera/ICamera.h"
 #include "Zone/IZone.h"
@@ -78,7 +79,7 @@ namespace
         {
             mUpdateCalled = true;
         }
-        virtual void Follow(const mono::IEntityPtr& entity, const math::Vector& offset)
+        virtual void Follow(uint32_t entity_id, const math::Vector& offset)
         { }
         virtual void Unfollow()
         {
@@ -265,6 +266,7 @@ namespace
 TEST(EngineTest, Basic)
 {
     mono::EventHandler handler;
+    mono::SystemContext system_context;
     mono::LoadCustomShaderFactory(new NullFactory);
 
     MocWindow window(handler);
@@ -272,7 +274,7 @@ TEST(EngineTest, Basic)
     std::shared_ptr<MocZone> zone = std::make_shared<MocZone>();
     
     {
-        mono::Engine engine(&window, camera, handler);
+        mono::Engine engine(&window, camera, &system_context, handler);
         EXPECT_NO_THROW(engine.Run(zone));
     }
 

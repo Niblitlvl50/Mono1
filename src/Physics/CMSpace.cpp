@@ -55,14 +55,14 @@ void PhysicsSpace::SetDamping(float damping)
 
 void PhysicsSpace::Add(IBody* body)
 {
-    if(!body->IsStatic())
+    if(body->GetType() != mono::BodyType::STATIC)
         cpSpaceAddBody(m_space, body->Handle());
     m_bodies.push_back(body);
 }
 
 void PhysicsSpace::Remove(IBody* body)
 {
-    if(!body->IsStatic())
+    if(body->GetType() != mono::BodyType::STATIC)
         cpSpaceRemoveBody(m_space, body->Handle());
 
     const bool removed = mono::remove(m_bodies, body);

@@ -1,11 +1,22 @@
 
 #pragma once
 
-#include "CMFwd.h"
 #include "Math/MathFwd.h"
+#include <cstdint>
+
+struct cpBody;
 
 namespace mono
 {
+    class IBody;
+
+    enum class BodyType : int
+    {
+        DYNAMIC,
+        KINEMATIC,
+        STATIC
+    };
+
     class ICollisionHandler
     {
     public:
@@ -21,9 +32,8 @@ namespace mono
         virtual ~IBody()
         { }
         
-        //! Checks if this is a static body or not
-        //! @return bool
-        virtual bool IsStatic() const = 0;
+        virtual void SetType(BodyType type) = 0;
+        virtual BodyType GetType() const = 0;
         
         //! Sets the bodys mass
         //! @param mass The new mass
@@ -97,6 +107,6 @@ namespace mono
         
         //! Gets the underlying cpBody object, dont use this one
         //! @return cpBody* A pointer to a cpBody struct
-        virtual cpBody* Handle() = 0;
+        virtual cpBody* Handle() const = 0;
     };
 }

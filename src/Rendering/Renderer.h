@@ -18,6 +18,8 @@ namespace mono
 
         void SetWindowSize(const math::Vector& window_size);
         void SetViewport(const math::Quad& viewport);
+        virtual const math::Quad& GetViewport() const;
+        virtual bool Cull(const math::Quad& world_bb) const;
 
         virtual void DrawFrame();
         virtual void AddDrawable(const IDrawable* drawable);

@@ -30,12 +30,12 @@ void EntityBase::doDraw(IRenderer& renderer) const
     Draw(renderer);
 }
 
-void EntityBase::doUpdate(unsigned int delta)
+void EntityBase::doUpdate(uint32_t delta_ms)
 {
     for(auto& child : m_children)
-        child->doUpdate(delta);
+        child->doUpdate(delta_ms);
 
-    Update(delta);
+    Update(delta_ms);
 }
 
 const math::Vector& EntityBase::Position() const
@@ -120,22 +120,22 @@ math::Matrix EntityBase::Transformation() const
     return translation * rotation * pivot_offset * scale;
 }
 
-unsigned int EntityBase::Id() const
+uint32_t EntityBase::Id() const
 {
     return m_uid;
 }
 
-void EntityBase::SetId(unsigned int new_id)
+void EntityBase::SetId(uint32_t new_id)
 {
     m_uid = new_id;
 }
 
-void EntityBase::SetProperty(unsigned int property)
+void EntityBase::SetProperty(uint32_t property)
 {
     m_properties |= property;
 }
 
-bool EntityBase::HasProperty(unsigned int property) const
+bool EntityBase::HasProperty(uint32_t property) const
 {
     return m_properties & property;
 }

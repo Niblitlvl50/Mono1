@@ -11,7 +11,8 @@ namespace cm
     
         BodyImpl(cpBody* body);
 
-        bool IsStatic() const override;
+        void SetType(mono::BodyType type) override;
+        mono::BodyType GetType() const override;
         void SetMass(float mass) override;
         float GetMass() const override;
         void SetAngle(float angle) override;
@@ -29,7 +30,7 @@ namespace cm
         void SetCollisionHandler(mono::ICollisionHandler* collision_handler) override;
         void OnCollideWith(mono::IBody* body, const math::Vector& collision_point, uint32_t categories) override;
         void SetNoDamping() override;
-        cpBody* Handle() override;
+        cpBody* Handle() const override;
         
     private:
         cpBody* m_body_handle;

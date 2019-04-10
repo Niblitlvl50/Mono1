@@ -42,6 +42,16 @@ void Renderer::SetViewport(const math::Quad& viewport)
     m_viewport = viewport;
 }
 
+const math::Quad& Renderer::GetViewport() const
+{
+    return m_viewport;
+}
+
+bool Renderer::Cull(const math::Quad& world_bb) const
+{
+    return math::QuadOverlaps(m_viewport, world_bb);
+}
+
 void Renderer::PrepareDraw()
 {
     const float viewport_width = math::Width(m_viewport);
@@ -56,7 +66,7 @@ void Renderer::EndDraw()
 {
     // Clear all the stuff once the frame has been drawn
     m_drawables.clear();
-    PROCESS_GL_ERRORS();
+    //PROCESS_GL_ERRORS();
 }
 
 void Renderer::DrawFrame()
@@ -120,6 +130,8 @@ void Renderer::DrawSprite(const ISprite& sprite, const math::Vector& offset) con
 {
     const mono::ITexturePtr texture = sprite.GetTexture();
     const SpriteFrame& current_frame = sprite.GetCurrentFrame();
+    UseShader(m_texture_shader.get());
+    m_texture_shader->SetShade(sprite.GetShade());
     DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset + offset, texture);
 }
 
