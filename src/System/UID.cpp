@@ -10,3 +10,8 @@ uint32_t System::CreateUID()
 {
     return uid++;
 }
+
+void System::SetUIDOffset(uint32_t offset)
+{
+    uid = offset;
+}
