@@ -99,6 +99,11 @@ const char* TransformSystem::Name() const
     return "transformsystem";
 }
 
+uint32_t TransformSystem::Capacity() const
+{
+    return m_transforms.size();
+}
+
 void TransformSystem::Update(uint32_t delta_ms)
 {
 

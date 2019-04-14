@@ -77,5 +77,10 @@ const char* EntitySystem::Name() const
     return "entitysystem";
 }
 
+uint32_t EntitySystem::Capacity() const
+{
+    return m_entities.size();
+}
+
 void EntitySystem::Update(uint32_t delta_ms)
 { }

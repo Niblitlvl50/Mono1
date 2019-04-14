@@ -68,6 +68,11 @@ const char* SpriteSystem::Name() const
     return "spritesystem";
 }
 
+uint32_t SpriteSystem::Capacity() const
+{
+    return m_sprites.size();
+}
+
 void SpriteSystem::Update(uint32_t delta)
 {
     for(size_t index = 0; index < m_sprites.size(); ++index)

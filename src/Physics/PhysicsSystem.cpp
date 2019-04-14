@@ -298,6 +298,11 @@ const char* PhysicsSystem::Name() const
     return "physicssystem";
 }
 
+uint32_t PhysicsSystem::Capacity() const
+{
+    return m_impl->bodies.size();
+}
+
 void PhysicsSystem::Update(uint32_t delta_ms)
 {
     m_impl->space.Tick(delta_ms);

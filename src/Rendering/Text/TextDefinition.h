@@ -11,6 +11,6 @@ namespace mono
         std::vector<float> vertices;
         std::vector<float> texcoords;
         mono::Color::RGBA color;
-        unsigned int chars;
+        uint32_t chars;
     };
 }

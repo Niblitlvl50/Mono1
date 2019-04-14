@@ -36,6 +36,6 @@ namespace mono
         bool CreateSprite(class Sprite& sprite, const char* sprite_file) const override;
     
         const float m_pixels_per_meter;
-        mutable std::unordered_map<uint32_t, struct SpriteData> m_sprite_data_cache;
+        mutable std::unordered_map<uint32_t, SpriteData> m_sprite_data_cache;
     };
 }
