@@ -4,6 +4,7 @@
 #include "Hash.h"
 #include <numeric>
 #include <algorithm>
+#include <cassert>
 
 using namespace mono;
 
