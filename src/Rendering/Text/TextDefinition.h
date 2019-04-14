@@ -2,6 +2,7 @@
 #pragma once
 
 #include <vector>
+#include <cstdint>
 #include "Rendering/Color.h"
 
 namespace mono
