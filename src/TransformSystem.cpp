@@ -2,6 +2,7 @@
 #include "TransformSystem.h"
 #include "Hash.h"
 #include <numeric>
+#include <cstdint>
 
 using namespace mono;
 
