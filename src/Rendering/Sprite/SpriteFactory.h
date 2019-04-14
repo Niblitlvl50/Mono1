@@ -1,11 +1,30 @@
 
 #pragma once
 
+#include "ISprite.h"
 #include "ISpriteFactory.h"
+#include "Math/Vector.h"
 #include <unordered_map>
+#include <string>
+#include <vector>
 
 namespace mono
 {
+    struct SpriteAnimation
+    {
+        std::string name;
+        bool loop;
+        std::vector<int> frames;
+    };
+
+    struct SpriteData
+    {
+        std::string texture_file;
+        math::Vector texture_size;
+        std::vector<SpriteFrame> sprite_frames;
+        std::vector<SpriteAnimation> animations;
+    };
+
     class SpriteFactoryImpl : public mono::ISpriteFactory
     {
     public:

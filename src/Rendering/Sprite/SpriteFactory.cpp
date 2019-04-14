@@ -26,24 +26,6 @@
 
 #include "nlohmann/json.hpp"
 
-namespace mono
-{
-    struct SpriteAnimation
-    {
-        std::string name;
-        bool loop;
-        std::vector<int> frames;
-    };
-
-    struct SpriteData
-    {
-        std::string texture_file;
-        math::Vector texture_size;
-        std::vector<mono::SpriteFrame> sprite_frames;
-        std::vector<mono::SpriteAnimation> animations;
-    };
-}
-
 namespace
 {
     mono::SpriteData LoadSpriteData(const char* sprite_raw_data, float pixels_per_meter)
