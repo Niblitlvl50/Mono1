@@ -5,6 +5,8 @@
 #include "TransformSystem.h"
 #include "Hash.h"
 
+#include <cassert>
+
 using namespace mono;
 
 SpriteSystem::SpriteSystem(size_t n_sprites, mono::TransformSystem* transform_system)

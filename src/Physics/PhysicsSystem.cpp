@@ -19,6 +19,7 @@
 #include <numeric>
 #include <cstdio>
 #include <unordered_map>
+#include <cassert>
 
 using namespace mono;
 

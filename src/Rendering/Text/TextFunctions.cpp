@@ -11,6 +11,7 @@
 #include <cstring>
 #include <cstdio>
 #include <unordered_map>
+#include <cassert>
 
 
 namespace
