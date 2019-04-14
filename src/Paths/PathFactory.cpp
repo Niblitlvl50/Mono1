@@ -6,6 +6,7 @@
 
 #include "nlohmann/json.hpp"
 #include <stdlib.h>
+#include <cstring>
 
 namespace
 {
