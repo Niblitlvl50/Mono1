@@ -40,10 +40,10 @@ namespace mono
             return nullptr;
         }
 
-        inline void Update(uint32_t delta_ms)
+        inline void Update(const UpdateContext& update_context)
         {
             for(IGameSystem* game_system : m_systems)
-                game_system->Update(delta_ms);
+                game_system->Update(update_context);
         }
 
         inline void Sync()

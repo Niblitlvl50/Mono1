@@ -36,10 +36,10 @@ namespace mono
         PhysicsEntityBase();
 
         virtual void doDraw(mono::IRenderer& renderer) const;
-        virtual void doUpdate(unsigned int delta);
+        virtual void doUpdate(const UpdateContext& update_context);
 
         virtual void Draw(mono::IRenderer& renderer) const = 0;
-        virtual void Update(unsigned int delta) = 0;
+        virtual void Update(const UpdateContext& update_context) = 0;
 
         unsigned int m_uid;
         unsigned int m_properties;

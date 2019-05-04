@@ -26,7 +26,7 @@ namespace mono
         void Stop();
         bool IsDone() const;
 
-        void doUpdate(unsigned int delta) override;
+        void doUpdate(const UpdateContext& update_context) override;
 
     private:
     

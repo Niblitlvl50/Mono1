@@ -19,21 +19,24 @@ namespace mono
         //! Constructs a sprite object
         //! @param[in] texture The texture to use for this sprite.
         //! @param[in] coordinates The texture coordinates
-        Sprite(const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames);
-        void Init(const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames);
+        Sprite(uint32_t sprite_hash, const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames);
+        void Init(uint32_t sprite_hash, const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames);
 
+        uint32_t GetSpriteHash() const override;
         ITexturePtr GetTexture() const override;
         SpriteFrame GetCurrentFrame() const override;
         const Color::RGBA& GetShade() const override;
         void SetShade(const mono::Color::RGBA& color) override;
         void SetHorizontalDirection(HorizontalDirection direction) override;
+        mono::HorizontalDirection GetHorizontalDirection() const override;
         void SetVerticalDirection(VerticalDirection direction) override;
+        mono::VerticalDirection GetVerticalDirection() const override;
         void SetAnimation(int id) override;
         void SetAnimation(const char* name) override;
         void SetAnimation(int id, const std::function<void ()>& func) override;
         void SetAnimation(const char* name, const std::function<void ()>& func) override;
         int GetActiveAnimation() const override;
-        void doUpdate(uint32_t delta_ms) override;
+        void doUpdate(const UpdateContext& update_context) override;
 
         //! Restarts the current set animation
         void RestartAnimation();
@@ -70,6 +73,7 @@ namespace mono
         std::vector<AnimationSequence> m_animations; // Animations could be considered shared as well
 
         // Shared data
+        uint32_t m_sprite_hash;
         ITexturePtr m_texture;
         std::vector<SpriteFrame> m_sprite_frames;
     };

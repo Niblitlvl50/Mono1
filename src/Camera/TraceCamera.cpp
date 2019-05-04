@@ -19,7 +19,7 @@ TraceCamera::TraceCamera(int width, int height)
       mTargetViewport(mViewport)
 { }
 
-void TraceCamera::doUpdate(unsigned int delta)
+void TraceCamera::doUpdate(const UpdateContext& update_context)
 {
     const float change = (mTargetViewport.mB.x - mViewport.mB.x);
     const float xzero = std::abs(change);
@@ -35,7 +35,7 @@ void TraceCamera::doUpdate(unsigned int delta)
         const math::Vector& targetPosition = mEntity->Position() - (mViewport.mB * 0.5f);
         const math::Vector& diff = targetPosition - mViewport.mA;
     
-        const math::Vector& move = diff * (delta * constants::SPEED);
+        const math::Vector& move = diff * (update_context.delta_ms * constants::SPEED);
         mViewport.mA += move;
     }
 }

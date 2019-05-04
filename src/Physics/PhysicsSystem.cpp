@@ -303,9 +303,9 @@ uint32_t PhysicsSystem::Capacity() const
     return m_impl->bodies.size();
 }
 
-void PhysicsSystem::Update(uint32_t delta_ms)
+void PhysicsSystem::Update(const UpdateContext& update_context)
 {
-    m_impl->space.Tick(delta_ms);
+    m_impl->space.Tick(update_context.delta_ms);
 
     for(size_t index = 0; index < m_impl->bodies.size(); ++index)
     {

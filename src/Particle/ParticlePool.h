@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Particle/ParticleFwd.h"
+#include "IUpdatable.h"
 #include "Math/Vector.h"
 #include "Rendering/Color.h"
 #include <vector>
@@ -18,7 +19,7 @@ namespace mono
         void Wake(size_t index);
         void Swap(size_t first, size_t second);
 
-        void doUpdate(unsigned int delta);
+        void doUpdate(const UpdateContext& update_context);
 
         std::vector<math::Vector> m_position;
         std::vector<math::Vector> m_velocity;

@@ -6,6 +6,7 @@
 #include "Engine.h"
 #include "SystemContext.h"
 #include "MonoFwd.h"
+#include "IUpdatable.h"
 #include "Camera/ICamera.h"
 #include "Zone/IZone.h"
 #include "Rendering/Shader/IShaderFactory.h"
@@ -75,31 +76,31 @@ namespace
         MocCamera()
             : mViewport(0.0f, 0.0f, 100.0f, 50.0f)
         { }
-        virtual void doUpdate(unsigned int delta)
+        virtual void doUpdate(const mono::UpdateContext& update_context) override
         {
             mUpdateCalled = true;
         }
-        virtual void Follow(uint32_t entity_id, const math::Vector& offset)
+        virtual void Follow(uint32_t entity_id, const math::Vector& offset) override
         { }
-        virtual void Unfollow()
+        virtual void Unfollow() override
         {
             mUnfollowCalled = true;
         }
-        virtual math::Quad GetViewport() const
+        virtual math::Quad GetViewport() const override
         {
             return mViewport;
         }
-        virtual math::Vector GetPosition() const
+        virtual math::Vector GetPosition() const override
         {
             return mViewport.mA + (mViewport.mB * 0.5f);
         }
-        virtual void SetViewport(const math::Quad& viewport)
+        virtual void SetViewport(const math::Quad& viewport) override
         { }
-        virtual void SetTargetViewport(const math::Quad& target)
+        virtual void SetTargetViewport(const math::Quad& target) override
         { }
-        virtual void SetPosition(const math::Vector& position)
+        virtual void SetPosition(const math::Vector& position) override
         { }
-        math::Vector ScreenToWorld(const math::Vector& screen_pos, const math::Vector& window_size) const
+        math::Vector ScreenToWorld(const math::Vector& screen_pos, const math::Vector& window_size) const override
         {
             return screen_pos;
         }
@@ -113,43 +114,39 @@ namespace
     {
         MocZone()
         { }
-        virtual void Accept(mono::IRenderer& renderer)
+        virtual void Accept(mono::IRenderer& renderer) override
         {
             mAcceptCalled = true;
         }
-        virtual void Accept(mono::IUpdater& updater)
+        virtual void Accept(mono::IUpdater& updater) override
         { }
-        virtual void OnLoad(mono::ICameraPtr& camera)
+        virtual void OnLoad(mono::ICameraPtr& camera) override
         {
             mOnLoadCalled = true;
         }
-        virtual int OnUnload()
+        virtual int OnUnload() override
         {
             mOnUnloadCalled = true;
             return 0;
         }
-        virtual void CreateLayer(int layer)
+        virtual void AddEntity(const mono::IEntityPtr& entity, int layer) override
         { }
-        virtual void AddEntity(const mono::IEntityPtr& entity, int layer)
+        virtual void RemoveEntity(const mono::IEntityPtr& entity) override
         { }
-        virtual void RemoveEntity(const mono::IEntityPtr& entity)
+        virtual void AddDrawable(const mono::IDrawablePtr& drawable, int layer) override
         { }
-        virtual void AddDrawable(const mono::IDrawablePtr& drawable, int layer)
+        virtual void RemoveDrawable(const mono::IDrawablePtr& drawable) override
         { }
-        virtual void RemoveDrawable(const mono::IDrawablePtr& drawable)
+        virtual void AddUpdatable(const mono::IUpdatablePtr& updatable) override
         { }
-        virtual void AddUpdatable(const mono::IUpdatablePtr& updatable)
+        virtual void RemoveUpdatable(const mono::IUpdatablePtr& updatable) override
         { }
-        virtual void RemoveUpdatable(const mono::IUpdatablePtr& updatable)
+        virtual void SetDrawableLayer(const mono::IDrawablePtr& drawable, int new_layer) override
         { }
-        virtual void SetDrawableLayer(const mono::IDrawablePtr& drawable, int new_layer)
-        { }
-        virtual mono::IEntityPtr FindEntityFromId(unsigned int id) const
+        virtual mono::IEntityPtr FindEntityFromId(unsigned int id) const override
         {
             return nullptr;
         }
-        virtual void SchedulePreFrameTask(const std::function<void ()>& task)
-        { }
 
         bool mAcceptCalled = false;
         bool mOnLoadCalled = false;
@@ -160,54 +157,54 @@ namespace
     {
     public:
         
-        virtual void Use()
+        virtual void Use() override
         { }
-        virtual unsigned int GetShaderId() const
+        virtual unsigned int GetShaderId() const override
         {
             return 0;
         }
-        virtual void LoadProjectionMatrix(const math::Matrix& projection)
+        virtual void LoadProjectionMatrix(const math::Matrix& projection) override
         { }
-        virtual void LoadModelViewMatrix(const math::Matrix& modelView)
+        virtual void LoadModelViewMatrix(const math::Matrix& modelView) override
         { }
-        virtual unsigned int GetPositionAttributeLocation() const
+        virtual unsigned int GetPositionAttributeLocation() const override
         {
             return 0;
         }
-        virtual unsigned int GetColorAttributeLocation() const
+        virtual unsigned int GetColorAttributeLocation() const override
         {
             return 0;
         }
-        virtual void SetPointSize(float size)
+        virtual void SetPointSize(float size) override
         { }
     };
 
     class NullTextureShader : public mono::ITextureShader
     {
     public:
-        virtual void Use()
+        virtual void Use() override
         { }
-        virtual unsigned int GetShaderId() const
+        virtual unsigned int GetShaderId() const override
         {
             return 0;
         }
-        virtual void LoadProjectionMatrix(const math::Matrix& projection)
+        virtual void LoadProjectionMatrix(const math::Matrix& projection) override
         { }
-        virtual void LoadModelViewMatrix(const math::Matrix& modelView)
+        virtual void LoadModelViewMatrix(const math::Matrix& modelView) override
         { }
-        virtual unsigned int GetPositionAttributeLocation() const
+        virtual unsigned int GetPositionAttributeLocation() const override
         {
             return 0;
         }
-        virtual unsigned int GetTextureAttributeLocation() const
+        virtual unsigned int GetTextureAttributeLocation() const override
         {
             return 0;
         }
-        virtual void SetShade(const mono::Color::RGBA& color)
+        virtual void SetShade(const mono::Color::RGBA& color) override
         { }
-        virtual void SetAlphaTexture(bool isAlpha)
+        virtual void SetAlphaTexture(bool isAlpha) override
         { }
-        virtual void SetTextureOffset(float offset)
+        virtual void SetTextureOffset(float offset) override
         { }
     };
 
@@ -246,17 +243,17 @@ namespace
     class NullFactory : public mono::IShaderFactory
     {
     public:
-        virtual std::unique_ptr<mono::ITextureShader> CreateTextureShader() const
+        virtual std::unique_ptr<mono::ITextureShader> CreateTextureShader() const override
         {
             return std::make_unique<NullTextureShader>();
         }
 
-        virtual std::unique_ptr<mono::IColorShader> CreateColorShader() const
+        virtual std::unique_ptr<mono::IColorShader> CreateColorShader() const override
         {
             return std::make_unique<NullColorShader>();
         }
 
-        virtual std::unique_ptr<mono::IPointSpriteShader> CreatePointSpriteShader() const
+        virtual std::unique_ptr<mono::IPointSpriteShader> CreatePointSpriteShader() const override
         {
             return std::make_unique<NullPointSpriteShader>();
         }

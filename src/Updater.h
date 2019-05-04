@@ -2,6 +2,7 @@
 #pragma once
 
 #include "IUpdater.h"
+#include "IUpdatable.h"
 #include <vector>
 
 namespace mono
@@ -11,7 +12,7 @@ namespace mono
     public:
 
         void AddUpdatable(IUpdatable* updatable) override;
-        void Update(unsigned int milliseconds);
+        void Update(const UpdateContext& update_context);
 
     private:
 

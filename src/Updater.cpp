@@ -9,10 +9,10 @@ void Updater::AddUpdatable(IUpdatable* updatable)
     m_updatables.push_back(updatable);
 }
 
-void Updater::Update(unsigned int milliseconds)
+void Updater::Update(const UpdateContext& update_context)
 {
     for(IUpdatable* updatable : m_updatables)
-        updatable->doUpdate(milliseconds);
+        updatable->doUpdate(update_context);
 
     m_updatables.clear();
 }

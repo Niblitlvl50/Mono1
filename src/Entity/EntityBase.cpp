@@ -30,12 +30,12 @@ void EntityBase::doDraw(IRenderer& renderer) const
     Draw(renderer);
 }
 
-void EntityBase::doUpdate(uint32_t delta_ms)
+void EntityBase::doUpdate(const UpdateContext& update_context)
 {
     for(auto& child : m_children)
-        child->doUpdate(delta_ms);
+        child->doUpdate(update_context);
 
-    Update(delta_ms);
+    Update(update_context);
 }
 
 const math::Vector& EntityBase::Position() const

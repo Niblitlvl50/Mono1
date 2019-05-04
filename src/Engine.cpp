@@ -99,6 +99,8 @@ int Engine::Run(IZonePtr zone)
     zone->OnLoad(m_camera);
 
     Renderer renderer;
+
+    UpdateContext update_context;
     Updater updater;
 
     uint32_t last_time = System::GetMilliseconds();
@@ -116,7 +118,7 @@ int Engine::Run(IZonePtr zone)
         }
 
         const uint32_t before_time = System::GetMilliseconds();
-        const uint32_t delta = (before_time - last_time) * m_time_scale;
+        const uint32_t delta_ms = (before_time - last_time) * m_time_scale;
 
         // Handle input events
         System::ProcessSystemEvents(m_input_handler.get());
@@ -130,14 +132,16 @@ int Engine::Run(IZonePtr zone)
 
         if(!m_pause)
         {
-            m_window->MakeCurrent();
+            update_context.frame_count++;
+            update_context.delta_ms = delta_ms;
 
-            m_system_context->Update(delta);
+            m_window->MakeCurrent();
+            m_system_context->Update(update_context);
 
             // Update all the stuff...
             zone->Accept(updater);
             updater.AddUpdatable(m_camera.get());
-            updater.Update(delta);
+            updater.Update(update_context);
 
             // Draw...
             zone->Accept(renderer);

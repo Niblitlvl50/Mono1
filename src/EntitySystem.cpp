@@ -82,5 +82,5 @@ uint32_t EntitySystem::Capacity() const
     return m_entities.size();
 }
 
-void EntitySystem::Update(uint32_t delta_ms)
+void EntitySystem::Update(const UpdateContext& update_context)
 { }

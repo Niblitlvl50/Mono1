@@ -33,6 +33,11 @@ mono::ISprite* SpriteSystem::AllocateSprite(uint32_t sprite_id, const SpriteComp
     return new_sprite;
 }
 
+bool SpriteSystem::IsAllocated(uint32_t sprite_id)
+{
+    return m_alive[sprite_id];
+}
+
 void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& sprite_args)
 {
     assert(m_alive[sprite_id]);
@@ -73,13 +78,13 @@ uint32_t SpriteSystem::Capacity() const
     return m_sprites.size();
 }
 
-void SpriteSystem::Update(uint32_t delta)
+void SpriteSystem::Update(const UpdateContext& update_context)
 {
     for(size_t index = 0; index < m_sprites.size(); ++index)
     {
         if(m_alive[index])
         {
-            m_sprites[index].doUpdate(delta);
+            m_sprites[index].doUpdate(update_context);
 
             const mono::SpriteFrame sprite_frame = m_sprites[index].GetCurrentFrame();
             if(sprite_frame.size.x != 0.0f && sprite_frame.size.y != 0.0f)

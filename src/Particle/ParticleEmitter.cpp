@@ -33,12 +33,12 @@ bool ParticleEmitter::IsDone() const
     return (m_config.duration > 0.0f && m_duration > m_config.duration);
 }
 
-void ParticleEmitter::doUpdate(unsigned int delta)
+void ParticleEmitter::doUpdate(const UpdateContext& update_context)
 {
     if(IsDone())
         return;
 
-    m_duration += float(delta) / 1000.0f;
+    m_duration += float(update_context.delta_ms) / 1000.0f;
 
     size_t new_particles = 0;
     
@@ -48,7 +48,7 @@ void ParticleEmitter::doUpdate(unsigned int delta)
     }
     else
     {
-        const float delta_second = float(delta) / 1000.0f;
+        const float delta_second = float(update_context.delta_ms) / 1000.0f;
         new_particles = static_cast<size_t>(delta_second * (m_config.emit_rate + m_carry_over));
         if(new_particles == 0)
             m_carry_over += m_config.emit_rate;

@@ -31,6 +31,7 @@ namespace mono
 
         mono::Sprite* AllocateSprite(uint32_t sprite_id);
         mono::ISprite* AllocateSprite(uint32_t sprite_id, const SpriteComponents& sprite_args);
+        bool IsAllocated(uint32_t sprite_id);
         void SetSpriteData(uint32_t sprite_id, const SpriteComponents& component_data);
         void ReleaseSprite(uint32_t sprite_id);
 
@@ -40,7 +41,7 @@ namespace mono
         uint32_t Id() const override;
         const char* Name() const override;
         uint32_t Capacity() const override;
-        void Update(uint32_t delta_ms) override;
+        void Update(const UpdateContext& update_context) override;
 
     private:
 

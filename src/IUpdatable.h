@@ -5,6 +5,12 @@
 
 namespace mono
 {
+    struct UpdateContext
+    {
+        uint32_t frame_count;
+        uint32_t delta_ms;
+    };
+
     class IUpdatable
     {
     public:
@@ -12,8 +18,6 @@ namespace mono
         virtual ~IUpdatable()
         { }
 
-        //! Update function
-        //! @param[in] delta Delta value of how many milliseconds since last update.
-        virtual void doUpdate(uint32_t delta_ms) = 0;
+        virtual void doUpdate(const UpdateContext& update_context) = 0;
     };
 }

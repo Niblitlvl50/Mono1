@@ -13,7 +13,7 @@ namespace mono
         
         TraceCamera(int width, int height);
         
-        virtual void doUpdate(unsigned int delta);
+        virtual void doUpdate(const UpdateContext& update_context);
         
         virtual void Follow(uint32_t entity_id, const math::Vector& offset);
         virtual void Unfollow();

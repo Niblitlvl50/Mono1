@@ -29,7 +29,17 @@ namespace mono
         uint32_t Id() const override;
         const char* Name() const override;
         uint32_t Capacity() const override;
-        void Update(uint32_t delta_ms) override;
+        void Update(const UpdateContext& update_context) override;
+
+        template <typename T>
+        inline void ForEachTransform(T&& func)
+        {
+            for(uint32_t index = 0; index < m_transforms.size(); ++index)
+            {
+                Component& component = m_transforms[index];
+                func(component.transform, index);
+            }
+        }
 
     private:
 

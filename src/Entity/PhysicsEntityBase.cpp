@@ -112,15 +112,15 @@ void PhysicsEntityBase::doDraw(IRenderer& renderer) const
     Draw(renderer);
 }
 
-void PhysicsEntityBase::doUpdate(unsigned int delta)
+void PhysicsEntityBase::doUpdate(const UpdateContext& update_context)
 {
     m_position = m_physics.body->GetPosition();
     m_rotation = m_physics.body->GetAngle();
 
     for(auto& child : m_children)
-        child->doUpdate(delta);
+        child->doUpdate(update_context);
 
-    Update(delta);
+    Update(update_context);
 }
 
 math::Matrix PhysicsEntityBase::Transformation() const

@@ -1,6 +1,5 @@
 
 #include "CMSpace.h"
-#include "CMFactory.h"
 #include "IBody.h"
 #include "IShape.h"
 #include "IConstraint.h"

@@ -52,14 +52,14 @@ void ParticlePool::Swap(size_t first, size_t second)
     std::swap(m_life[first], m_life[second]);
 }
 
-void ParticlePool::doUpdate(unsigned int delta)
+void ParticlePool::doUpdate(const UpdateContext& update_context)
 {
-    m_update_function(*this, m_count_alive, delta);
+    m_update_function(*this, m_count_alive, update_context.delta_ms);
 
     for(size_t index = 0; index < m_count_alive; ++index)
     {
         int& life = m_life[index];
-        life -= delta;
+        life -= update_context.delta_ms;
         if(life <= 0)
             Kill(index);
     }

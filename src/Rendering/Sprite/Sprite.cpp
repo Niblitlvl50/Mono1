@@ -11,13 +11,14 @@ using namespace mono;
 Sprite::Sprite()
 { }
 
-Sprite::Sprite(const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames)
+Sprite::Sprite(uint32_t sprite_hash, const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames)
 {
-    Init(texture, sprite_frames);
+    Init(sprite_hash, texture, sprite_frames);
 }
 
-void Sprite::Init(const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames)
+void Sprite::Init(uint32_t sprite_hash, const mono::ITexturePtr& texture, const std::vector<SpriteFrame>& sprite_frames)
 {
+    m_sprite_hash = sprite_hash;
     m_active_animation = 0;
     m_flip_horizontal = false;
     m_flip_vertical = false;
@@ -27,6 +28,11 @@ void Sprite::Init(const mono::ITexturePtr& texture, const std::vector<SpriteFram
 
     m_texture = texture;
     m_sprite_frames = sprite_frames;
+}
+
+uint32_t Sprite::GetSpriteHash() const
+{
+    return m_sprite_hash;
 }
 
 ITexturePtr Sprite::GetTexture() const
@@ -58,18 +64,28 @@ void Sprite::SetHorizontalDirection(HorizontalDirection direction)
     m_flip_horizontal = (direction == HorizontalDirection::LEFT);
 }
 
+mono::HorizontalDirection Sprite::GetHorizontalDirection() const
+{
+    return m_flip_horizontal ? mono::HorizontalDirection::LEFT : mono::HorizontalDirection::RIGHT;
+}
+
 void Sprite::SetVerticalDirection(VerticalDirection direction)
 {
     m_flip_vertical = (direction == VerticalDirection::DOWN);
 }
 
-void Sprite::doUpdate(uint32_t delta_ms)
+mono::VerticalDirection Sprite::GetVerticalDirection() const
+{
+    return m_flip_vertical ? mono::VerticalDirection::DOWN : mono::VerticalDirection::UP;
+}
+
+void Sprite::doUpdate(const UpdateContext& update_context)
 {
     if(m_animations.empty())
         return;
         
     AnimationSequence& anim = m_animations[m_active_animation];
-    anim.Update(delta_ms);
+    anim.Update(update_context.delta_ms);
 
     if(anim.Finished() && m_callback)
         m_callback();

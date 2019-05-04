@@ -18,9 +18,9 @@ struct PhysicsZone::PhysicsImpl : IUpdatable
     PhysicsImpl(const math::Vector& gravity, float damping)
         : m_space(gravity, damping)
     { }
-    void doUpdate(unsigned int delta)
+    void doUpdate(const UpdateContext& update_context)
     {
-        m_space.Tick(delta);
+        m_space.Tick(update_context.delta_ms);
     }
     mono::PhysicsSpace m_space;
 };

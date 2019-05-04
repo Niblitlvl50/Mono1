@@ -14,9 +14,9 @@ void CameraSwitch::SetActiveCamera(int index)
     m_active_camera = m_cameras[index];
 }
 
-void CameraSwitch::doUpdate(unsigned int delta)
+void CameraSwitch::doUpdate(const UpdateContext& update_context)
 {
-    m_active_camera->doUpdate(delta);
+    m_active_camera->doUpdate(update_context);
 }
 
 void CameraSwitch::Follow(uint32_t entity_id, const math::Vector& offset)

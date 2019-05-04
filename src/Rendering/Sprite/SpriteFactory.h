@@ -19,6 +19,7 @@ namespace mono
 
     struct SpriteData
     {
+        uint32_t hash;
         std::string texture_file;
         math::Vector texture_size;
         std::vector<SpriteFrame> sprite_frames;

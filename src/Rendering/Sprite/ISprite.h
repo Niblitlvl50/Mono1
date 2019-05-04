@@ -33,6 +33,9 @@ namespace mono
     {
     public:
         
+        // Hash of the filename used to initialize this sprite
+        virtual uint32_t GetSpriteHash() const = 0;
+
         //! Gets the sprites texture
         virtual mono::ITexturePtr GetTexture() const = 0;
 
@@ -46,7 +49,10 @@ namespace mono
         virtual void SetShade(const mono::Color::RGBA& color) = 0;
 
         virtual void SetHorizontalDirection(mono::HorizontalDirection direction) = 0;
+        virtual mono::HorizontalDirection GetHorizontalDirection() const = 0;
+
         virtual void SetVerticalDirection(mono::VerticalDirection direction) = 0;
+        virtual mono::VerticalDirection GetVerticalDirection() const = 0;
 
         //! Tell the sprite to run a specific animation.
         virtual void SetAnimation(int id) = 0;
