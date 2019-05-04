@@ -379,6 +379,11 @@ uint64_t System::GetPerformanceCounter()
     return SDL_GetPerformanceCounter();
 }
 
+uint64_t System::GetPerformanceFrequency()
+{
+    return SDL_GetPerformanceFrequency();
+}
+
 void System::Sleep(uint32_t ms)
 {
     SDL_Delay(ms);

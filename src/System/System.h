@@ -122,6 +122,7 @@ namespace System
 
     uint32_t GetMilliseconds();
     uint64_t GetPerformanceCounter();
+    uint64_t GetPerformanceFrequency();
 
     void Sleep(uint32_t ms);
 

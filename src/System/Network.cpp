@@ -16,13 +16,12 @@ namespace
     {
     public:
 
-        UDPSocket(const char* address, int port, bool blocking)
+        UDPSocket(const network::Address& address, bool blocking)
         {
-            const int address_result = zed_net_get_address(&m_address, address, port);
-            if(address_result != 0)
-                throw std::runtime_error("network|Unable to resolve host address");
+            m_address.host = address.host;
+            m_address.port = address.port;
 
-            m_handle = zed_net_udp_socket_open(port, !blocking);
+            m_handle = zed_net_udp_socket_open(address.port, !blocking);
             if(!m_handle)
                 throw std::runtime_error("network|Failed to create socket");
 
@@ -51,28 +50,19 @@ namespace
             return send_result == 0;
         }
 
-        bool SendTo(const std::vector<byte>& data, const char* address, int port) override
+        bool SendTo(const std::vector<byte>& data, const network::Address& destination) override
         {
             const int size = static_cast<int>(data.size());
 
             zed_net_address_t socket_address;
-            const int address_result = zed_net_get_address(&socket_address, address, port);
-            if(address_result != 0)
-            {
-                std::printf("network|%s\n", zed_net_get_error());
-                return -1;
-            }
+            socket_address.host = destination.host;
+            socket_address.port = destination.port;
 
             const int send_result = zed_net_udp_socket_send(m_handle, socket_address, data.data(), size);
             if(send_result != 0)
                 std::printf("network|%s\n", zed_net_get_error());
 
             return send_result == 0;
-        }
-
-        bool SendTo(const std::vector<byte>& data, const network::Address& destination) override
-        {
-            return SendTo(data, destination.host.c_str(), destination.port);
         }
 
         bool Receive(std::vector<byte>& data, network::Address* out_sender) override
@@ -83,7 +73,7 @@ namespace
 
             if(out_sender)
             {
-                out_sender->host = zed_net_host_to_str(sender.host);
+                out_sender->host = sender.host;
                 out_sender->port = sender.port;
             }
 
@@ -123,14 +113,24 @@ std::string network::GetLocalHostName()
     return buffer;
 }
 
-std::string network::GetBroadcastAddress()
+network::Address network::MakeAddress(const char* host, unsigned short port)
+{
+    zed_net_address_t zed_address;
+    const int address_result = zed_net_get_address(&zed_address, host, port);
+    if(address_result != 0)
+        throw std::runtime_error("network|Unable to resolve host address");
+
+    return { zed_address.host, zed_address.port };
+}
+
+network::Address network::GetBroadcastAddress(unsigned short port)
 {
     std::string broadcast_string;
 
     ifaddrs* devices = nullptr;
     const int result = getifaddrs(&devices);
     if(result != 0)
-        return broadcast_string;
+        return MakeAddress(nullptr, port);
 
     for(ifaddrs* it = devices; it != nullptr; it = it->ifa_next)
     {
@@ -148,17 +148,17 @@ std::string network::GetBroadcastAddress()
 
     freeifaddrs(devices);
 
-    return broadcast_string;
+    return MakeAddress(broadcast_string.c_str(), port);
 }
 
-std::string network::GetLoopbackAddress()
+network::Address network::GetLoopbackAddress(unsigned short port)
 {
     std::string loopback_address;
 
     ifaddrs* devices = nullptr;
     const int result = getifaddrs(&devices);
     if(result != 0)
-        return loopback_address;
+        return MakeAddress(nullptr, port);
 
     for(ifaddrs* it = devices; it != nullptr; it = it->ifa_next)
     {
@@ -176,19 +176,23 @@ std::string network::GetLoopbackAddress()
 
     freeifaddrs(devices);
 
-    return loopback_address;        
+    return MakeAddress(loopback_address.c_str(), port);
 }
 
 network::ISocketPtr network::CreateUDPSocket(int port, bool blocking)
 {
-    return OpenUDPSocket(nullptr, port, blocking);
+    network::Address address;
+    address.host = 0;
+    address.port = port;
+
+    return OpenUDPSocket(address, blocking);
 }
 
-network::ISocketPtr network::OpenUDPSocket(const char* address, int port, bool blocking)
+network::ISocketPtr network::OpenUDPSocket(const network::Address& address, bool blocking)
 {
     try
     {
-       return std::make_unique<UDPSocket>(address, port, blocking);
+       return std::make_unique<UDPSocket>(address, blocking);
     }
     catch(const std::runtime_error& error)
     {
@@ -201,12 +205,12 @@ network::ISocketPtr network::OpenUDPSocket(const char* address, int port, bool b
 
 network::ISocketPtr network::OpenBroadcastSocket(int port, bool blocking)
 {
-    const std::string& broadcast_string = GetBroadcastAddress();
-    return OpenUDPSocket(broadcast_string.c_str(), port, blocking);
+    const network::Address& address = GetBroadcastAddress(port);
+    return OpenUDPSocket(address, blocking);
 }
 
 network::ISocketPtr network::OpenLoopbackSocket(int port, bool blocking)
 {
-    const std::string& loopback_address = GetLoopbackAddress();
-    return OpenUDPSocket(loopback_address.c_str(), port, blocking);    
+    const network::Address& address = GetLoopbackAddress(port);
+    return OpenUDPSocket(address, blocking);
 }
