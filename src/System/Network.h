@@ -9,23 +9,29 @@ using byte = unsigned char;
 
 namespace network
 {
-    // Initialize the network module
-    void Initialize();
-
-    // Exit the network module
-    void Shutdown();
-
-    std::string GetLocalHostName();
-
     struct Address
     {
         unsigned int host;
         unsigned short port;
     };
 
+    enum class SocketType
+    {
+        BLOCKING,
+        NON_BLOCKING
+    };
+
+    // Initialize the network module
+    void Initialize(int socket_port_start, int socket_port_end);
+
+    // Exit the network module
+    void Shutdown();
+
+    std::string GetLocalhostName();
     Address MakeAddress(const char* host, unsigned short port);
     Address GetBroadcastAddress(unsigned short port);
     Address GetLoopbackAddress(unsigned short port);
+    std::string AddressToString(const Address& address);
 
     class ISocket
     {
@@ -34,11 +40,11 @@ namespace network
         virtual ~ISocket()
         { }
 
-        // Send data on the socket
-        virtual bool Send(const std::vector<byte>& data) = 0;
+        // Get the port that this socket is bound to.
+        virtual unsigned short Port() const = 0;
 
         // Send to a specific address and port
-        virtual bool SendTo(const std::vector<byte>& data, const Address& destination) = 0;
+        virtual bool Send(const std::vector<byte>& data, const Address& destination) = 0;
 
         // Receives data from the socket into the buffer, make sure to reserve
         // the amount of data you want to be able to receive.
@@ -47,8 +53,7 @@ namespace network
 
     using ISocketPtr = std::unique_ptr<ISocket>;
 
-    ISocketPtr CreateUDPSocket(int port, bool blocking);
-    ISocketPtr OpenUDPSocket(const network::Address& address, bool blocking);
-    ISocketPtr OpenBroadcastSocket(int port, bool blocking);
-    ISocketPtr OpenLoopbackSocket(int port, bool blocking);
+    // Will return nullptr on failure.
+    ISocketPtr CreateUDPSocket(SocketType socket_type);
+    ISocketPtr CreateUDPSocket(SocketType socket_type, int port);
 }
