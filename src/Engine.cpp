@@ -101,6 +101,10 @@ int Engine::Run(IZonePtr zone)
     Renderer renderer;
 
     UpdateContext update_context;
+    update_context.frame_count = 0;
+    update_context.delta_ms = 0;
+    update_context.total_time = 0;
+
     Updater updater;
 
     uint32_t last_time = System::GetMilliseconds();
@@ -119,6 +123,7 @@ int Engine::Run(IZonePtr zone)
 
         const uint32_t before_time = System::GetMilliseconds();
         const uint32_t delta_ms = (before_time - last_time) * m_time_scale;
+        update_context.total_time += delta_ms;
 
         // Handle input events
         System::ProcessSystemEvents(m_input_handler.get());
