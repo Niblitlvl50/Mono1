@@ -47,8 +47,9 @@ namespace network
         virtual bool Send(const std::vector<byte>& data, const Address& destination) = 0;
 
         // Receives data from the socket into the buffer, make sure to reserve
-        // the amount of data you want to be able to receive.
-        virtual bool Receive(std::vector<byte>& buffer, Address* out_sender = nullptr) = 0;
+        // the amount of data you want to be able to receive and returns the number
+        // of bytes received, less than zero on error.
+        virtual int Receive(std::vector<byte>& buffer, Address* out_sender = nullptr) = 0;
     };
 
     using ISocketPtr = std::unique_ptr<ISocket>;

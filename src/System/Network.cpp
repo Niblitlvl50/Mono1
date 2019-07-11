@@ -64,18 +64,15 @@ namespace
 
             const int send_result = zed_net_udp_socket_send(m_handle, socket_address, data.data(), size);
             if(send_result != 0)
-            {
-                std::printf("network|%s\n", zed_net_get_error());
-                std::printf("network|%u\n", errno);
-            }
+                std::printf("network|%s(%u)\n", zed_net_get_error(), errno);
 
             return send_result == 0;
         }
 
-        bool Receive(std::vector<byte>& data, network::Address* out_sender) override
+        int Receive(std::vector<byte>& data, network::Address* out_sender) override
         {
             zed_net_address_t sender;
-            const int size = static_cast<int>(data.capacity());
+            const int size = static_cast<int>(data.size()) -1;
             const int receive_result = zed_net_udp_socket_receive(m_handle, &sender, data.data(), size);
             if(receive_result < 0)
                 std::printf("network|%s\n", zed_net_get_error());
@@ -86,7 +83,7 @@ namespace
                 out_sender->port = sender.port;
             }
 
-            return receive_result > 0;
+            return receive_result;
         }
 
         const unsigned short m_port;

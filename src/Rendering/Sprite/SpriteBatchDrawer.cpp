@@ -43,20 +43,6 @@ SpriteBatchDrawer::SpriteBatchDrawer(SystemContext* system_context)
 
 void SpriteBatchDrawer::doDraw(mono::IRenderer& renderer) const
 {
-    const auto collect_sprites = [](mono::ISprite* sprite, uint32_t id, void* context) {
-        const CollectContext* collect_context = static_cast<const CollectContext*>(context);
-        
-        if(!sprite->GetTexture())
-            return;
-
-        const math::Quad world_bounds = collect_context->transform_system->GetWorldBoundingBox(id);
-        if(collect_context->renderer->Cull(world_bounds))
-        {
-            const math::Matrix& transform = collect_context->transform_system->GetWorld(id);
-            collect_context->sprites->push_back({ transform, sprite });
-        }
-    };
-
     std::vector<SpriteTransformPair> sprites_to_draw;
 
     CollectContext collect_context = {
@@ -64,6 +50,19 @@ void SpriteBatchDrawer::doDraw(mono::IRenderer& renderer) const
         m_transform_system,
         &sprites_to_draw
     };
+
+    const auto collect_sprites = [&collect_context](mono::ISprite* sprite, uint32_t id) { //, void* context) {
+        if(!sprite->GetTexture())
+            return;
+
+        const math::Quad world_bounds = collect_context.transform_system->GetWorldBoundingBox(id);
+        if(collect_context.renderer->Cull(world_bounds))
+        {
+            const math::Matrix& transform = collect_context.transform_system->GetWorld(id);
+            collect_context.sprites->push_back({ transform, sprite });
+        }
+    };
+
 
     m_sprite_system->RunForEachSprite(collect_sprites, &collect_context);
 

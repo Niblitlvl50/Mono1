@@ -104,6 +104,6 @@ void SpriteSystem::RunForEachSprite(ForEachSpriteFunc func, void* context)
     for(size_t index = 0; index < m_sprites.size(); ++index)
     {
         if(m_alive[index])
-            func(&m_sprites[index], index, context);
+            func(&m_sprites[index], index);
     }
 }

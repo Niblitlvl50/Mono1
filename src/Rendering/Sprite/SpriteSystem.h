@@ -5,6 +5,8 @@
 #include "Rendering/Color.h"
 #include <vector>
 
+#include <functional>
+
 namespace mono
 {
     class ISprite;
@@ -20,7 +22,7 @@ namespace mono
         int animation_id = 0;
     };
 
-    using ForEachSpriteFunc = void(*)(mono::ISprite* sprite, uint32_t sprite_id, void* context);
+    using ForEachSpriteFunc = std::function<void (mono::ISprite*, uint32_t)>;
 
     class SpriteSystem : public mono::IGameSystem
     {
