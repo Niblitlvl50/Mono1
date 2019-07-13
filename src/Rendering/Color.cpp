@@ -116,3 +116,23 @@ mono::Color::RGBA mono::Color::LerpRGB(const mono::Color::RGBA& first, const mon
     return mono::Color::RGBA(red, green, blue, first.alpha);
 }
 
+uint32_t mono::Color::ToHex(const mono::Color::RGBA& color)
+{
+    const uint8_t red   = color.red * 255.0f;
+    const uint8_t green = color.green * 255.0f;
+    const uint8_t blue  = color.blue * 255.0f;
+    const uint8_t alpha = color.alpha * 255.0f;
+
+    return (red | (green << 8) | (blue << 16) | (alpha << 24));
+}
+
+mono::Color::RGBA mono::Color::ToRGBA(uint32_t hex_color)
+{
+    const uint8_t red   = (hex_color >>  0) & 0xFF;
+    const uint8_t green = (hex_color >>  8) & 0xFF;
+    const uint8_t blue  = (hex_color >> 16) & 0xFF;
+    const uint8_t alpha = (hex_color >> 24) & 0xFF;
+
+    return mono::Color::RGBA(
+        float(red) / float(255), float(green) / float(255), float(blue) / float(255), float(alpha) / float(255));
+}
