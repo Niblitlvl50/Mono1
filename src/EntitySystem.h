@@ -30,7 +30,7 @@ namespace mono
         {
             for(size_t index = 0; index < m_entities.size(); ++index)
             {
-                const Entity& entity = m_entities[index];
+                Entity& entity = m_entities[index];
                 if(entity.id != INVALID_ID)
                     functor(entity);
             }
