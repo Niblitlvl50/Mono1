@@ -99,7 +99,7 @@ void SpriteSystem::Update(const UpdateContext& update_context)
     }
 }
 
-void SpriteSystem::RunForEachSprite(ForEachSpriteFunc func, void* context)
+void SpriteSystem::ForEachSprite(ForEachSpriteFunc func)
 {
     for(size_t index = 0; index < m_sprites.size(); ++index)
     {

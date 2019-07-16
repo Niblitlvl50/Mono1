@@ -3,8 +3,8 @@
 
 #include "IGameSystem.h"
 #include "Rendering/Color.h"
-#include <vector>
 
+#include <vector>
 #include <functional>
 
 namespace mono
@@ -38,7 +38,7 @@ namespace mono
         void ReleaseSprite(uint32_t sprite_id);
 
         mono::Sprite* GetSprite(uint32_t sprite_id);
-        void RunForEachSprite(ForEachSpriteFunc func, void* context);
+        void ForEachSprite(ForEachSpriteFunc func);
 
         uint32_t Id() const override;
         const char* Name() const override;

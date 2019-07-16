@@ -2,10 +2,8 @@
 #include "SpriteBatchDrawer.h"
 #include "ISprite.h"
 #include "Rendering/IRenderer.h"
-#include "Rendering/Color.h"
 
 #include "Math/Quad.h"
-#include "Math/MathFunctions.h"
 #include "SystemContext.h"
 
 #include "TransformSystem.h"
@@ -15,23 +13,10 @@ using namespace mono;
 
 namespace
 {
-    struct DrawContext
-    {
-        mono::IRenderer* renderer;
-        mono::TransformSystem* transform_system;
-    };
-
     struct SpriteTransformPair
     {
         math::Matrix transform;
         mono::ISprite* sprite;
-    };
-
-    struct CollectContext
-    {
-        mono::IRenderer* renderer;
-        mono::TransformSystem* transform_system;
-        std::vector<SpriteTransformPair>* sprites;
     };
 }
 
@@ -45,26 +30,19 @@ void SpriteBatchDrawer::doDraw(mono::IRenderer& renderer) const
 {
     std::vector<SpriteTransformPair> sprites_to_draw;
 
-    CollectContext collect_context = {
-        &renderer,
-        m_transform_system,
-        &sprites_to_draw
-    };
-
-    const auto collect_sprites = [&collect_context](mono::ISprite* sprite, uint32_t id) { //, void* context) {
+    const auto collect_sprites = [this, &renderer, &sprites_to_draw](mono::ISprite* sprite, uint32_t id) {
         if(!sprite->GetTexture())
             return;
 
-        const math::Quad world_bounds = collect_context.transform_system->GetWorldBoundingBox(id);
-        if(collect_context.renderer->Cull(world_bounds))
+        const math::Quad& world_bounds = m_transform_system->GetWorldBoundingBox(id);
+        if(renderer.Cull(world_bounds))
         {
-            const math::Matrix& transform = collect_context.transform_system->GetWorld(id);
-            collect_context.sprites->push_back({ transform, sprite });
+            const math::Matrix& transform = m_transform_system->GetWorld(id);
+            sprites_to_draw.push_back({ transform, sprite });
         }
     };
 
-
-    m_sprite_system->RunForEachSprite(collect_sprites, &collect_context);
+    m_sprite_system->ForEachSprite(collect_sprites);
 
     const auto sort_on_y = [](const SpriteTransformPair& first, const SpriteTransformPair& second) {
         const math::Vector& first_position = math::GetPosition(first.transform);
@@ -76,7 +54,7 @@ void SpriteBatchDrawer::doDraw(mono::IRenderer& renderer) const
 
     for(const SpriteTransformPair& sprite_transform : sprites_to_draw)
     {
-        const math::Matrix world_transform = renderer.GetCurrentTransform() * sprite_transform.transform;
+        const math::Matrix& world_transform = renderer.GetCurrentTransform() * sprite_transform.transform;
 
         renderer.PushNewTransform(world_transform);
         renderer.DrawSprite(*sprite_transform.sprite);
