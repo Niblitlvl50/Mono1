@@ -210,3 +210,8 @@ bool math::LineIntersectsLine(
 
     return false;
 }
+
+bool math::IsPrettyMuchEquals(float left, float right, float tolerance)
+{
+    return fabs(left - right) <= tolerance;
+}

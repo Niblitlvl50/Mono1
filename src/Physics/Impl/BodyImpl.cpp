@@ -87,6 +87,12 @@ void BodyImpl::SetVelocity(const math::Vector& velocity)
     cpBodySetVelocity(m_body_handle, cpv(velocity.x, velocity.y));
 }
 
+math::Vector BodyImpl::GetVelocity() const
+{
+    const cpVect& velocity = cpBodyGetVelocity(m_body_handle);
+    return math::Vector(velocity.x, velocity.y);
+}
+
 void BodyImpl::ResetForces() 
 {
     cpBodySetForce(m_body_handle, cpvzero);

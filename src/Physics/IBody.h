@@ -66,7 +66,7 @@ namespace mono
         //! Gets the bodys position
         //! @return math::Vector The position
         virtual math::Vector GetPosition() const = 0;
-        
+
         //! Apply a force to the body
         //! @param force The force
         //! @param offset From where to apply it
@@ -90,6 +90,7 @@ namespace mono
         //! Sets a velocity to the body
         //! @param velocity A velocity vector
         virtual void SetVelocity(const math::Vector& velocity) = 0;
+        virtual math::Vector GetVelocity() const = 0;
 
         //! Resets all the forces that are working on the body
         virtual void ResetForces() = 0;

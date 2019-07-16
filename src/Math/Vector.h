@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include <cfloat>
+
 namespace math
 {
     struct Vector
@@ -39,6 +41,8 @@ namespace math
     float Length(const Vector& vector);
     float LengthSquared(const Vector& vector);
     float Dot(const Vector& first, const Vector& second);
+
+    bool IsPrettyMuchEquals(const Vector& left, const Vector& right, float tolerance = FLT_EPSILON);
 
     // Just a convineince vector declared to zero.
     constexpr Vector ZeroVec = Vector();

@@ -26,6 +26,7 @@ namespace cm
         void ApplyImpulse(const math::Vector& impulse, const math::Vector& offset) override;
         void ApplyLocalImpulse(const math::Vector& impulse, const math::Vector& offset) override;
         void SetVelocity(const math::Vector& velocity) override;
+        math::Vector GetVelocity() const override;
         void ResetForces() override;
         void SetCollisionHandler(mono::ICollisionHandler* collision_handler) override;
         void OnCollideWith(mono::IBody* body, const math::Vector& collision_point, uint32_t categories) override;

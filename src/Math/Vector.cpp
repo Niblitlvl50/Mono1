@@ -1,5 +1,6 @@
 
 #include "Vector.h"
+#include "MathFunctions.h"
 #include <cmath>
 
 math::Vector math::operator + (const math::Vector& left, const math::Vector& right)
@@ -90,4 +91,11 @@ float math::LengthSquared(const math::Vector& vector)
 float math::Dot(const math::Vector& first, const math::Vector& second)
 {
    return (first.x * second.x) + (first.y * second.y);
+}
+
+bool math::IsPrettyMuchEquals(const math::Vector& left, const math::Vector& right, float tolerance)
+{
+    return
+        IsPrettyMuchEquals(left.x, right.x, tolerance) &&
+        IsPrettyMuchEquals(left.y, right.y, tolerance);
 }

@@ -3,6 +3,7 @@
 
 #include "MathFwd.h"
 #include <vector>
+#include <cfloat>
 
 namespace math
 {    
@@ -41,6 +42,8 @@ namespace math
     bool LineIntersectsLine(
         const math::Vector& start_first, const math::Vector& end_first,
         const math::Vector& start_second, const math::Vector& end_second);
+
+    bool IsPrettyMuchEquals(float left, float right, float tolerance = FLT_EPSILON);
 
     constexpr float PI() {
         return 3.14159265358979323846264338327950288f;
