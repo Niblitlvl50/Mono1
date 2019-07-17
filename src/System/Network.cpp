@@ -56,13 +56,16 @@ namespace
 
         bool Send(const std::vector<byte>& data, const network::Address& destination) override
         {
-            const int size = static_cast<int>(data.size());
+            return Send(data.data(), data.size(), destination);
+        }
 
+        bool Send(const byte* data, uint32_t size, const network::Address& destination) override
+        {
             zed_net_address_t socket_address;
             socket_address.host = destination.host;
             socket_address.port = destination.port;
 
-            const int send_result = zed_net_udp_socket_send(m_handle, socket_address, data.data(), size);
+            const int send_result = zed_net_udp_socket_send(m_handle, socket_address, data, size);
             if(send_result != 0)
                 std::printf("network|%s(%u)\n", zed_net_get_error(), errno);
 

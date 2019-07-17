@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <cstdint>
 
 using byte = unsigned char;
 
@@ -27,10 +28,11 @@ namespace network
     // Exit the network module
     void Shutdown();
 
-    std::string GetLocalhostName();
     Address MakeAddress(const char* host, unsigned short port);
     Address GetBroadcastAddress(unsigned short port);
     Address GetLoopbackAddress(unsigned short port);
+
+    std::string GetLocalhostName();
     std::string AddressToString(const Address& address);
 
     class ISocket
@@ -45,6 +47,7 @@ namespace network
 
         // Send to a specific address and port
         virtual bool Send(const std::vector<byte>& data, const Address& destination) = 0;
+        virtual bool Send(const byte* data, uint32_t size, const Address& destination) = 0;
 
         // Receives data from the socket into the buffer, make sure to reserve
         // the amount of data you want to be able to receive and returns the number

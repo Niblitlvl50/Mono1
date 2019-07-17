@@ -41,6 +41,10 @@ if(SDL2_FOUND)
     include_directories(SYSTEM ${SDL2_INCLUDE_DIR})
 endif(SDL2_FOUND)
 
+# huffandpuff
+file(GLOB_RECURSE huffandpuff_source_files "third_party/huffandpuff/*.c")
+add_library(huffandpuff STATIC ${huffandpuff_source_files})
+
 # imgui
 file(GLOB_RECURSE imgui_source_files "third_party/imgui/*.cpp")
 add_library(imgui STATIC ${imgui_source_files})
@@ -55,8 +59,8 @@ set_target_properties(gtest PROPERTIES COMPILE_FLAGS -Wno-missing-field-initiali
 # Mono
 file(GLOB_RECURSE engine_source_files "src/*.cpp")
 add_library(mono STATIC ${engine_source_files})
-add_dependencies(mono imgui chipmunk_static)
-target_link_libraries(mono imgui chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENAL_LIBRARY})
+add_dependencies(mono huffandpuff imgui chipmunk_static)
+target_link_libraries(mono huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENAL_LIBRARY})
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "tests/*.cpp")
