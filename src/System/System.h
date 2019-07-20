@@ -21,7 +21,14 @@ namespace System
     struct ControllerState
     {
         int id = -1;
-        const char* name = nullptr;
+
+        float left_x    = 0.0f;
+        float left_y    = 0.0f;
+        float right_x   = 0.0f;
+        float right_y   = 0.0f;
+
+        float left_trigger  = 0.0f;
+        float right_trigger = 0.0f;
 
         bool a = false;
         bool b = false;
@@ -42,14 +49,6 @@ namespace System
         bool down  = false;
         bool left  = false;
         bool right = false;
-
-        float left_x    = 0.0f;
-        float left_y    = 0.0f;
-        float right_x   = 0.0f;
-        float right_y   = 0.0f;
-
-        float left_trigger  = 0.0f;
-        float right_trigger = 0.0f;
     };
 
     class IWindow

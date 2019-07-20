@@ -12,8 +12,8 @@ namespace network
 {
     struct Address
     {
-        unsigned int host;
-        unsigned short port;
+        uint32_t host;
+        uint16_t port;
     };
 
     enum class SocketType
@@ -23,14 +23,14 @@ namespace network
     };
 
     // Initialize the network module
-    void Initialize(int socket_port_start, int socket_port_end);
+    void Initialize(uint16_t socket_port_start, uint16_t socket_port_end);
 
     // Exit the network module
     void Shutdown();
 
-    Address MakeAddress(const char* host, unsigned short port);
-    Address GetBroadcastAddress(unsigned short port);
-    Address GetLoopbackAddress(unsigned short port);
+    Address MakeAddress(const char* host, uint16_t port);
+    Address GetBroadcastAddress(uint16_t port);
+    Address GetLoopbackAddress(uint16_t port);
 
     std::string GetLocalhostName();
     std::string AddressToString(const Address& address);
@@ -43,7 +43,7 @@ namespace network
         { }
 
         // Get the port that this socket is bound to.
-        virtual unsigned short Port() const = 0;
+        virtual uint16_t Port() const = 0;
 
         // Send to a specific address and port
         virtual bool Send(const std::vector<byte>& data, const Address& destination) = 0;
@@ -59,5 +59,5 @@ namespace network
 
     // Will return nullptr on failure.
     ISocketPtr CreateUDPSocket(SocketType socket_type);
-    ISocketPtr CreateUDPSocket(SocketType socket_type, int port);
+    ISocketPtr CreateUDPSocket(SocketType socket_type, uint16_t port);
 }

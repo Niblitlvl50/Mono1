@@ -502,9 +502,8 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 SDL_Joystick* joystick = SDL_GameControllerGetJoystick(controller);
 
                 g_controller_states[free_index].id = SDL_JoystickInstanceID(joystick);
-                g_controller_states[free_index].name = SDL_GameControllerName(controller);
 
-                std::printf("System - Controller added: %d, %d, %s\n", free_index, g_controller_states[id].id, g_controller_states[id].name);
+                std::printf("System|Controller added: %d, %d, %s\n", free_index, g_controller_states[id].id, SDL_GameControllerName(controller));
 
                 handler->OnControllerAdded(free_index);
                 break;
@@ -533,7 +532,6 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 SDL_GameControllerClose(SDL_GameControllerFromInstanceID(instance_id));
 
                 g_controller_states[id].id = -1;
-                g_controller_states[id].name = nullptr;
 
                 std::printf("System - Controller removed: %d, %d\n", id, instance_id);
 

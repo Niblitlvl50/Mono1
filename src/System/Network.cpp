@@ -14,14 +14,14 @@
 
 namespace
 {
-    static int s_socket_range_start;
-    static int s_socket_range_end;
+    static uint16_t s_socket_range_start;
+    static uint16_t s_socket_range_end;
 
     class UDPSocket : public network::ISocket
     {
     public:
 
-        UDPSocket(network::SocketType socket_type, unsigned int port)
+        UDPSocket(network::SocketType socket_type, uint16_t port)
             : m_port(port)
         {
             const bool non_blocking = (socket_type == network::SocketType::NON_BLOCKING);
@@ -49,7 +49,7 @@ namespace
             zed_net_udp_socket_close(m_handle);
         }
 
-        unsigned short Port() const override
+        uint16_t Port() const override
         {
             return m_port;
         }
@@ -89,19 +89,19 @@ namespace
             return receive_result;
         }
 
-        const unsigned short m_port;
+        const uint16_t m_port;
         zed_net_udp_socket_t* m_handle;
     };
 }
 
 
-void network::Initialize(int socket_port_start, int socket_port_end)
+void network::Initialize(uint16_t socket_port_start, uint16_t socket_port_end)
 {
     const int result = zed_net_init();
     if(result != 0)
         throw std::runtime_error("network|Unable to initialize network");
 
-    const int port_diff = socket_port_end - socket_port_start;
+    const uint16_t port_diff = socket_port_end - socket_port_start;
     if(port_diff <= 0)
         throw std::runtime_error("network|Invalid port range");
 
@@ -134,7 +134,7 @@ std::string network::GetLocalhostName()
     return buffer;
 }
 
-network::Address network::MakeAddress(const char* host, unsigned short port)
+network::Address network::MakeAddress(const char* host, uint16_t port)
 {
     zed_net_address_t zed_address;
     const int address_result = zed_net_get_address(&zed_address, host, port);
@@ -144,7 +144,7 @@ network::Address network::MakeAddress(const char* host, unsigned short port)
     return { zed_address.host, zed_address.port };
 }
 
-static network::Address FindSystemAddress(uint32_t address_type, unsigned short port)
+static network::Address FindSystemAddress(uint32_t address_type, uint16_t port)
 {
     std::string address_string;
 
@@ -172,12 +172,12 @@ static network::Address FindSystemAddress(uint32_t address_type, unsigned short 
     return network::MakeAddress(address_string.c_str(), port);
 }
 
-network::Address network::GetBroadcastAddress(unsigned short port)
+network::Address network::GetBroadcastAddress(uint16_t port)
 {
     return FindSystemAddress(IFF_BROADCAST, port);
 }
 
-network::Address network::GetLoopbackAddress(unsigned short port)
+network::Address network::GetLoopbackAddress(uint16_t port)
 {
     return FindSystemAddress(IFF_LOOPBACK, port);
 }
@@ -206,7 +206,7 @@ network::ISocketPtr network::CreateUDPSocket(SocketType socket_type)
     return nullptr;
 }
 
-network::ISocketPtr network::CreateUDPSocket(SocketType socket_type, int port)
+network::ISocketPtr network::CreateUDPSocket(SocketType socket_type, uint16_t port)
 {
     try
     {
