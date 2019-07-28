@@ -25,8 +25,8 @@ namespace
             : m_port(port)
         {
             const bool non_blocking = (socket_type == network::SocketType::NON_BLOCKING);
-            m_handle = zed_net_udp_socket_open(port, non_blocking);
-            if(!m_handle)
+            const int open_result = zed_net_udp_socket_open(&m_handle, port, non_blocking);
+            if(open_result != 0)
             {
                 char buffer[128];
                 std::sprintf(
@@ -39,14 +39,14 @@ namespace
             //if(result1 == -1)
             //    throw std::runtime_error("network|Unable to set reuse address option");
 
-            const int result2 = setsockopt(m_handle->handle, SOL_SOCKET, SO_BROADCAST, &yes, sizeof(yes));
+            const int result2 = setsockopt(m_handle.handle, SOL_SOCKET, SO_BROADCAST, &yes, sizeof(yes));
             if(result2 == -1)
                 throw std::runtime_error("network|Unable to set broadcast option\n");
         }
 
         ~UDPSocket()
         {
-            zed_net_udp_socket_close(m_handle);
+            zed_net_socket_close(&m_handle);
         }
 
         uint16_t Port() const override
@@ -65,7 +65,7 @@ namespace
             socket_address.host = destination.host;
             socket_address.port = destination.port;
 
-            const int send_result = zed_net_udp_socket_send(m_handle, socket_address, data, size);
+            const int send_result = zed_net_udp_socket_send(&m_handle, socket_address, data, size);
             if(send_result != 0)
                 std::printf("network|%s(%u)\n", zed_net_get_error(), errno);
 
@@ -76,7 +76,7 @@ namespace
         {
             zed_net_address_t sender;
             const int size = static_cast<int>(data.size()) -1;
-            const int receive_result = zed_net_udp_socket_receive(m_handle, &sender, data.data(), size);
+            const int receive_result = zed_net_udp_socket_receive(&m_handle, &sender, data.data(), size);
             if(receive_result < 0)
                 std::printf("network|%s\n", zed_net_get_error());
 
@@ -90,7 +90,7 @@ namespace
         }
 
         const uint16_t m_port;
-        zed_net_udp_socket_t* m_handle;
+        zed_net_socket_t m_handle;
     };
 }
 
@@ -171,6 +171,7 @@ static network::Address FindSystemAddress(uint32_t address_type, uint16_t port)
 
     return network::MakeAddress(address_string.c_str(), port);
 }
+
 
 network::Address network::GetBroadcastAddress(uint16_t port)
 {
