@@ -9,9 +9,7 @@ namespace mono
     {
     public:
 
-        virtual ~IUpdater()
-        { }
-
+        virtual ~IUpdater() = default;
         virtual void AddUpdatable(IUpdatable* updatable) = 0;
     };
 }

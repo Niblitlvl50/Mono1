@@ -55,9 +55,7 @@ namespace System
     {
     public:
 
-        virtual ~IWindow()
-        { }
-
+        virtual ~IWindow() = default;
         virtual void SurfaceChanged(int width, int height) = 0;
         virtual void Maximize() = 0;
         virtual void Minimize() = 0;
@@ -73,8 +71,7 @@ namespace System
     {
     public:
 
-        virtual ~IInputHandler()
-        { }
+        virtual ~IInputHandler() = default;
 
         virtual void OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt) = 0;
         virtual void OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt) = 0;
@@ -107,9 +104,7 @@ namespace System
     {
     public:
 
-        virtual ~ITimer()
-        { }
-
+        virtual ~ITimer() = default;
         virtual void Start() = 0;
         virtual void Stop() = 0;
     };

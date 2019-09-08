@@ -10,8 +10,7 @@ namespace mono
     {
     public:
     
-        virtual ~IPath()
-        { }
+        virtual ~IPath() = default;
 
         // Get total length of the path
         virtual float Length() const = 0;

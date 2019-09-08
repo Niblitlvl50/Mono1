@@ -11,9 +11,6 @@ namespace mono
     {
     public:
 
-        virtual ~IEntity()
-        { }
-
         virtual const math::Vector& Position() const = 0;
         virtual const math::Vector& BasePoint() const = 0;
         virtual const math::Vector& Scale() const = 0;

@@ -9,9 +9,6 @@ namespace mono
     {
     public:
 
-        virtual ~IColorShader()
-        { }
-
         virtual unsigned int GetPositionAttributeLocation() const = 0;
         virtual unsigned int GetColorAttributeLocation() const = 0;
         virtual void SetPointSize(float size) = 0;

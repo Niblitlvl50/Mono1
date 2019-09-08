@@ -29,8 +29,7 @@ namespace mono
     {
     public:
 
-        virtual ~IBody()
-        { }
+        virtual ~IBody() = default;
         
         virtual void SetType(BodyType type) = 0;
         virtual BodyType GetType() const = 0;

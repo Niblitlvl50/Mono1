@@ -11,8 +11,7 @@ namespace mono
     {
     public:
 
-        virtual ~IShape()
-        { }
+        virtual ~IShape() = default;
 
         //! How bouncy this shape is.
         //! 0.0 means no bounce, 1.0 means perfect bounce

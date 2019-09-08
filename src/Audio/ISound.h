@@ -7,8 +7,7 @@ namespace mono
     {
     public:
 
-        virtual ~ISound()
-        { }
+        virtual ~ISound() = default;
 
         virtual void Play() = 0;
         virtual void Pause() = 0;

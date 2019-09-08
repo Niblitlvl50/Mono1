@@ -9,9 +9,7 @@ namespace mono
     {
     public:
 
-        virtual ~IShader()
-        { }
-
+        virtual ~IShader() = default;
         virtual void Use() = 0;
         virtual unsigned int GetShaderId() const = 0;
         virtual void LoadProjectionMatrix(const math::Matrix& projection) = 0;

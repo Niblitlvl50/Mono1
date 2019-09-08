@@ -7,8 +7,7 @@ namespace mono
     {
     public:
 
-        virtual ~ITexture()
-        { }
+        virtual ~ITexture() = default;
 
         //! Use the texture
         virtual void Use() const = 0;

@@ -10,9 +10,7 @@ namespace mono
     {
     public:
 
-        virtual ~IShaderFactory()
-        { }
-
+        virtual ~IShaderFactory() = default;
         virtual std::unique_ptr<ITextureShader> CreateTextureShader() const = 0;
         virtual std::unique_ptr<IColorShader> CreateColorShader() const = 0;
         virtual std::unique_ptr<IPointSpriteShader> CreatePointSpriteShader() const = 0;

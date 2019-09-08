@@ -16,9 +16,7 @@ namespace mono
     {
     public:
     
-        virtual ~IUpdatable()
-        { }
-
+        virtual ~IUpdatable() = default;
         virtual void doUpdate(const UpdateContext& update_context) = 0;
     };
 }

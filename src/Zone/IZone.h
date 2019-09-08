@@ -10,8 +10,7 @@ namespace mono
     {
     public:
 
-        virtual ~IZone()
-        { }
+        virtual ~IZone() = default;
 
         virtual void Accept(mono::IRenderer& renderer) = 0;
         virtual void Accept(mono::IUpdater& updater) = 0;

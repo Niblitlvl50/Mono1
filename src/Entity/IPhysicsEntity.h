@@ -10,9 +10,6 @@ namespace mono
     {
     public:
 
-        virtual ~IPhysicsEntity()
-        { }
-
         virtual mono::PhysicsData& GetPhysics() = 0;
     };
 }

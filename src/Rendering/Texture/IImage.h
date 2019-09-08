@@ -9,8 +9,7 @@ namespace mono
 {
     struct IImage
     {
-        virtual ~IImage()
-        { }
+        virtual ~IImage() = default;
 
         //! Get the raw image data
         //! \return byte* Pointer to the data

@@ -9,8 +9,7 @@ namespace mono
     {
     public:
 
-        virtual ~IConstraint()
-        { }
+        virtual ~IConstraint() = default;
 
         virtual void SetMaxForce(float force) = 0;
         virtual float GetMaxForce() const = 0;

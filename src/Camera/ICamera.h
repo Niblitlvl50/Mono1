@@ -12,9 +12,6 @@ namespace mono
     {
     public:
 
-        virtual ~ICamera()
-        { }
-
         virtual void Follow(uint32_t entity_id, const math::Vector& offset) = 0;
         virtual void Unfollow() = 0;
 
