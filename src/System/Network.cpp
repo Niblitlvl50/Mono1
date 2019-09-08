@@ -75,7 +75,7 @@ namespace
         int Receive(std::vector<byte>& data, network::Address* out_sender) override
         {
             zed_net_address_t sender;
-            const int size = static_cast<int>(data.size()) -1;
+            const int size = static_cast<int>(data.size());
             const int receive_result = zed_net_udp_socket_receive(&m_handle, &sender, data.data(), size);
             if(receive_result < 0)
                 std::printf("network|%s\n", zed_net_get_error());
