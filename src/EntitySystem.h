@@ -26,7 +26,7 @@ namespace mono
         const std::string& GetName(uint32_t entity_id) const;
 
         template <typename T>
-        inline void ForEach(T&& functor)
+        inline void ForEachEntity(T&& functor)
         {
             for(size_t index = 0; index < m_entities.size(); ++index)
             {

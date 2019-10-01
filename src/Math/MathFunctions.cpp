@@ -57,6 +57,13 @@ void math::ResizeQuad(math::Quad& quad, float value, float aspect)
     quad.mB.y += resizeY;
 }
 
+math::Quad math::ResizeQuad(const math::Quad& quad, float value, float aspect)
+{
+    math::Quad out_quad = quad;
+    ResizeQuad(out_quad, value, aspect);
+    return out_quad;
+}
+
 float math::AngleBetweenPoints(const math::Vector& first, const math::Vector& second)
 {
     return std::atan2(second.y - first.y, second.x - first.x);
