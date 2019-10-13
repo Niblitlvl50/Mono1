@@ -12,7 +12,6 @@
 #include "MonoPtrFwd.h"
 #include "Events/EventFwd.h"
 #include "EventHandler/EventToken.h"
-#include "Rendering/RenderPtrFwd.h"
 
 namespace System
 {
@@ -25,10 +24,10 @@ namespace mono
     class Engine
     {
     public:
-        Engine(System::IWindow* window, const ICameraPtr& camera, SystemContext* system_context, EventHandler& event_handler);
+        Engine(System::IWindow* window, const ICameraPtr& camera, SystemContext* system_context, EventHandler* event_handler);
         ~Engine();
 
-        int Run(IZonePtr zone);
+        int Run(IZone* zone);
 
     private:
 
@@ -47,7 +46,7 @@ namespace mono
         System::IWindow* m_window;
         ICameraPtr m_camera;
         SystemContext* m_system_context;
-        EventHandler& m_event_handler;
+        EventHandler* m_event_handler;
         std::unique_ptr<System::IInputHandler> m_input_handler;
 
         EventToken<event::PauseEvent> m_pause_token;

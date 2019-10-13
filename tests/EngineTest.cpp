@@ -271,8 +271,8 @@ TEST(EngineTest, Basic)
     std::shared_ptr<MocZone> zone = std::make_shared<MocZone>();
     
     {
-        mono::Engine engine(&window, camera, &system_context, handler);
-        EXPECT_NO_THROW(engine.Run(zone));
+        mono::Engine engine(&window, camera, &system_context, &handler);
+        EXPECT_NO_THROW(engine.Run(zone.get()));
     }
 
     EXPECT_TRUE(window.mMakeCurrentCalled);

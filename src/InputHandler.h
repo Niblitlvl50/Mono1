@@ -13,7 +13,7 @@ namespace mono
     {
     public:
 
-        InputHandler(const ScreenToWorldFunc& screen_to_world_func, EventHandler& event_handler);
+        InputHandler(const ScreenToWorldFunc& screen_to_world_func, EventHandler* event_handler);
 
     private:
 
@@ -41,6 +41,6 @@ namespace mono
         virtual void OnActivated(bool gain);
 
         const ScreenToWorldFunc m_screen_to_world_func;
-        EventHandler& m_event_handler;
+        EventHandler* m_event_handler;
     };
 }

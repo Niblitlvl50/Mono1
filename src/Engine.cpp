@@ -58,7 +58,7 @@ namespace
     }
 }
 
-Engine::Engine(System::IWindow* window, const ICameraPtr& camera, SystemContext* system_context, EventHandler& event_handler)
+Engine::Engine(System::IWindow* window, const ICameraPtr& camera, SystemContext* system_context, EventHandler* event_handler)
     : m_window(window)
     , m_camera(camera)
     , m_system_context(system_context)
@@ -76,25 +76,25 @@ Engine::Engine(System::IWindow* window, const ICameraPtr& camera, SystemContext*
     const event::ActivatedEventFunc activated_func = std::bind(&Engine::OnActivated, this, _1);
     const event::TimeScaleEventFunc time_scale_func = std::bind(&Engine::OnTimeScale, this, _1);
 
-    m_pause_token = m_event_handler.AddListener(pause_func);
-    m_quit_token = m_event_handler.AddListener(quit_func);
-    m_application_token = m_event_handler.AddListener(app_func);
-    m_surface_changed_token = m_event_handler.AddListener(surface_changed_func);
-    m_activated_token = m_event_handler.AddListener(activated_func);
-    m_time_scale_token = m_event_handler.AddListener(time_scale_func);
+    m_pause_token = m_event_handler->AddListener(pause_func);
+    m_quit_token = m_event_handler->AddListener(quit_func);
+    m_application_token = m_event_handler->AddListener(app_func);
+    m_surface_changed_token = m_event_handler->AddListener(surface_changed_func);
+    m_activated_token = m_event_handler->AddListener(activated_func);
+    m_time_scale_token = m_event_handler->AddListener(time_scale_func);
 }
 
 Engine::~Engine()
 {
-    m_event_handler.RemoveListener(m_pause_token);
-    m_event_handler.RemoveListener(m_quit_token);
-    m_event_handler.RemoveListener(m_application_token);
-    m_event_handler.RemoveListener(m_surface_changed_token);
-    m_event_handler.RemoveListener(m_activated_token);
-    m_event_handler.RemoveListener(m_time_scale_token);
+    m_event_handler->RemoveListener(m_pause_token);
+    m_event_handler->RemoveListener(m_quit_token);
+    m_event_handler->RemoveListener(m_application_token);
+    m_event_handler->RemoveListener(m_surface_changed_token);
+    m_event_handler->RemoveListener(m_activated_token);
+    m_event_handler->RemoveListener(m_time_scale_token);
 }
 
-int Engine::Run(IZonePtr zone)
+int Engine::Run(IZone* zone)
 {
     zone->OnLoad(m_camera);
 
@@ -158,7 +158,7 @@ int Engine::Run(IZonePtr zone)
 
         last_time = before_time;
 
-        // Sleep for a millisecond
+        // Sleep for a millisecond, this highly reduces fps
         System::Sleep(1);
     }
 
