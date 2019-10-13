@@ -33,6 +33,7 @@ namespace mono
         
         virtual void SetType(BodyType type) = 0;
         virtual BodyType GetType() const = 0;
+        virtual bool IsSleeping() const = 0;
         
         //! Sets the bodys mass
         //! @param mass The new mass

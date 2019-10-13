@@ -13,6 +13,7 @@ namespace cm
 
         void SetType(mono::BodyType type) override;
         mono::BodyType GetType() const override;
+        bool IsSleeping() const override;
         void SetMass(float mass) override;
         float GetMass() const override;
         void SetAngle(float angle) override;

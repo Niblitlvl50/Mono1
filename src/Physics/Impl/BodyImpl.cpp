@@ -21,6 +21,11 @@ mono::BodyType BodyImpl::GetType() const
     return mono::BodyType(cpBodyGetType(m_body_handle));
 }
 
+bool BodyImpl::IsSleeping() const
+{
+    return cpBodyIsSleeping(m_body_handle);
+}
+
 void BodyImpl::SetMass(float mass) 
 {
     cpBodySetMass(m_body_handle, mass);
