@@ -6,6 +6,7 @@
 #include "SDL.h"
 #include "SDL_gamecontroller.h"
 #include "SDL_keycode.h"
+#include "SDL_log.h"
 
 #include <stdexcept>
 #include <cstdio>
@@ -367,6 +368,14 @@ void System::Initialize()
 void System::Shutdown()
 {
     SDL_Quit();
+}
+
+void System::Log(const char* fmt, ...)
+{
+    va_list va;
+    va_start(va, fmt);
+    SDL_LogMessageV(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, fmt, va);
+    va_end(va);
 }
 
 uint32_t System::GetMilliseconds()

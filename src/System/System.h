@@ -114,6 +114,8 @@ namespace System
     void Initialize();
     void Shutdown();
 
+    void Log(const char* fmt, ...);
+
     uint32_t GetMilliseconds();
     uint64_t GetPerformanceCounter();
     uint64_t GetPerformanceFrequency();
