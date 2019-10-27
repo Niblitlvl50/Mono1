@@ -36,9 +36,15 @@ namespace
 
             timeval tv;
             tv.tv_sec = 2;
+            tv.tv_usec = 0;
             const int set_timeout_result = setsockopt(m_handle.handle, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(timeval));
             if(set_timeout_result == -1)
-                throw std::runtime_error("network|Unable to set socket timeout.\n");
+            {
+                char buffer[128];
+                std::sprintf(buffer, "network|Unable to set socket timeout. Error: %d\n", set_timeout_result);
+                throw std::runtime_error(buffer);
+
+            }
 
             constexpr int yes = 1;
             //const int result1 = setsockopt(m_handle->handle, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
