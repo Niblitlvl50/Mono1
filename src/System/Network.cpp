@@ -34,6 +34,12 @@ namespace
                 throw std::runtime_error(buffer);
             }
 
+            timeval tv;
+            tv.tv_sec = 2;
+            const int set_timeout_result = setsockopt(m_handle.handle, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(timeval));
+            if(set_timeout_result == -1)
+                throw std::runtime_error("network|Unable to set socket timeout.\n");
+
             constexpr int yes = 1;
             //const int result1 = setsockopt(m_handle->handle, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
             //if(result1 == -1)
