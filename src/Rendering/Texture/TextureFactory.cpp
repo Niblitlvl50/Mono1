@@ -4,7 +4,7 @@
 #include "IImage.h"
 #include "ImageFactory.h"
 #include "Hash.h"
-
+#include "System/System.h"
 #include <cstdio>
 #include <unordered_map>
 
@@ -48,7 +48,7 @@ mono::ITexturePtr mono::CreateTexture(const char* texture_name)
     if(texture)
         return texture;
     else
-        std::printf("TextureFactory|Unable to find '%s' in cache\n", texture_name);
+        System::Log("TextureFactory|Unable to find '%s' in cache\n", texture_name);
 
     const mono::IImagePtr image = mono::LoadImage(texture_name);
     return CreateAndCacheTexture(image, texture_hash);

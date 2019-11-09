@@ -1,5 +1,6 @@
 
 #include "AudioSystem.h"
+#include "System/System.h"
 
 #include "open_al.h"
 
@@ -30,7 +31,7 @@ void mono::InitializeAudio()
     const ALchar* version = alGetString(AL_VERSION);
     const ALchar* renderer = alGetString(AL_RENDERER);
 
-    std::printf("OpenAL\n"
+    System::Log("OpenAL\n"
                 "\tvendor: %s\n"
                 "\tdevice: %s\n"
                 "\trenderer: %s\n"

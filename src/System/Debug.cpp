@@ -1,6 +1,8 @@
 
 #include "Debug.h"
 
+#include "System/System.h"
+
 #include <cstdlib>
 #include <cstdio>
 
@@ -15,7 +17,7 @@ void debug::PrintStacktrace()
     const int frames = backtrace(callstack, 128);
     char** strs = backtrace_symbols(callstack, frames);
     for (int i = 0; i < frames; ++i)
-        std::printf("%s\n", strs[i]);
+        System::Log("%s\n", strs[i]);
     
     free(strs);
 #endif

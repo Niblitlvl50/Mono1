@@ -10,6 +10,7 @@
 
 #include "Math/MathFunctions.h"
 #include "Util/ObjectPool.h"
+#include "System/System.h"
 
 #include "chipmunk/chipmunk.h"
 #include "chipmunk/chipmunk_private.h"
@@ -103,7 +104,7 @@ PhysicsSystem::PhysicsSystem(const PhysicsSystemInitParams& init_params, mono::T
     m_impl->bodies_shapes.resize(init_params.n_bodies);
     m_impl->active_bodies.resize(init_params.n_bodies, false);
 
-    std::printf(
+    System::Log(
         "Physics\n"
         "\tchipmunk version: %s\n"
         "\tbodies: %zu\n"

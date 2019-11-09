@@ -5,7 +5,7 @@
 #include "IConstraint.h"
 #include "Math/Vector.h"
 #include "Util/Algorithm.h"
-
+#include "System/System.h"
 #include "chipmunk/chipmunk.h"
 #include <algorithm>
 #include <cstdio>
@@ -66,7 +66,7 @@ void PhysicsSpace::Remove(IBody* body)
 
     const bool removed = mono::remove(m_bodies, body);
     if(!removed)
-        std::printf("Unable to remove body from collection!\n");
+        System::Log("PhysicsSpace|Unable to remove body from collection!\n");
 }
 
 void PhysicsSpace::Add(IShape* shape)

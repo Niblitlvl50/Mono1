@@ -1,5 +1,7 @@
 
 #include "ImageFactory.h"
+#include "System/System.h"
+
 #include <stdexcept>
 #include <cstdio>
 
@@ -49,7 +51,7 @@ mono::IImagePtr mono::LoadImage(const char* source)
     const unsigned char* image_data = stbi_load(source, &width, &height, &components, 0);
     if(!image_data)
     {
-        std::printf("Unable to load '%s'\n", source);
+        System::Log("ImageFactory|Unable to load '%s'\n", source);
         throw std::runtime_error("Unable to load image!");
     }
 
@@ -64,7 +66,7 @@ mono::IImagePtr mono::LoadImageFromData(const unsigned char* data, int data_leng
     const unsigned char* image_data = stbi_load_from_memory(data, data_length, &width, &height, &components, 0);
     if(!image_data)
     {
-        std::printf("Unable to load from data chunk\n");
+        System::Log("ImageFactory|Unable to load from data chunk\n");
         throw std::runtime_error("Unable to load image!");
     }
 

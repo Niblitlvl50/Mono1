@@ -21,6 +21,8 @@ namespace
     constexpr int num_states = 2;
     System::ControllerState g_controller_states[num_states];
 
+    FILE* g_log_file = nullptr;
+
     enum PredefinedUserEventCode
     {
         TIMER_CALLBACK = 1
@@ -34,7 +36,7 @@ namespace
         const GLubyte* glslversion = glGetString(GL_SHADING_LANGUAGE_VERSION);
         //const GLubyte* extensions = glGetString(GL_EXTENSIONS);
 
-        std::printf("OpenGL\n"
+        System::Log("OpenGL\n"
                     "\tvendor: %s\n"
                     "\trenderer: %s\n"
                     "\tversion: %s\n"
@@ -352,8 +354,11 @@ namespace
 }
 
 
-void System::Initialize()
+void System::Initialize(const InitializeContext& context)
 {
+    if(context.log_file)
+        g_log_file = std::fopen(context.log_file, "w");
+
     // Init SDL video subsystem
     const int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
     if(result != 0)
@@ -362,20 +367,23 @@ void System::Initialize()
     SDL_version version;
     SDL_GetVersion(&version);
 
-    std::printf("System\n");
-    std::printf("\tSDL version: %u.%u.%u\n", version.major, version.minor, version.patch);
+    Log("System\n");
+    Log("\tSDL version: %u.%u.%u\n", version.major, version.minor, version.patch);
 
     char* resources_dir = SDL_GetBasePath();
     const int chdir_result = chdir(resources_dir);
     if(chdir_result != 0)
         throw std::runtime_error("System|Unable to set resource directory");
 
-    std::printf("\tresouce directory: %s\n", resources_dir);
+    Log("\tresouce directory: %s\n", resources_dir);
     SDL_free(resources_dir);
 }
 
 void System::Shutdown()
 {
+    if(g_log_file)
+        std::fclose(g_log_file);
+
     SDL_Quit();
 }
 
@@ -383,7 +391,17 @@ void System::Log(const char* fmt, ...)
 {
     va_list va;
     va_start(va, fmt);
-    SDL_LogMessageV(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, fmt, va);
+
+    if(g_log_file)
+    {
+        va_list file_log_args;
+        va_copy(file_log_args, va);
+        std::vfprintf(g_log_file, fmt, file_log_args);
+        va_end(file_log_args);
+    }
+
+    //SDL_LogMessageV(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, fmt, va);
+    std::vprintf(fmt, va);
     va_end(va);
 }
 
@@ -510,7 +528,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 if(free_index == -1)
                 {
-                    std::printf("System|Unable to find free controller index\n");
+                    Log("System|Unable to find free controller index\n");
                     return;
                 }
 
@@ -521,7 +539,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 g_controller_states[free_index].id = SDL_JoystickInstanceID(joystick);
 
-                std::printf("System|Controller added: %d, %d, %s\n", free_index, g_controller_states[id].id, SDL_GameControllerName(controller));
+                Log("System|Controller added: %d, %d, %s\n", free_index, g_controller_states[id].id, SDL_GameControllerName(controller));
 
                 handler->OnControllerAdded(free_index);
                 break;
@@ -542,7 +560,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 if(id == -1)
                 {
-                    std::printf("System|Unable to find controller with instance_id: %d\n", instance_id);                    
+                    Log("System|Unable to find controller with instance_id: %d\n", instance_id);                    
                     return;
                 }
 
@@ -551,7 +569,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 g_controller_states[id].id = -1;
 
-                std::printf("System|Controller removed: %d, %d\n", id, instance_id);
+                Log("System|Controller removed: %d, %d\n", id, instance_id);
 
                 break;
             }

@@ -7,6 +7,7 @@
 #include "Physics/CMPhysicsData.h"
 #include "Physics/IShape.h"
 #include "Entity/IPhysicsEntity.h"
+#include "System/System.h"
 
 #include "Util/Algorithm.h"
 #include <cstdio>
@@ -112,7 +113,7 @@ void PhysicsZone::DoPreAccept()
         if(result)
             RemovePhysicsData(entity->GetPhysics());
         else
-            std::printf("PhysicsZone - Unable to remove physics entity\n");
+            System::Log("PhysicsZone|Unable to remove physics entity\n");
     }
 
     m_physics_remove_list.clear();

@@ -1,6 +1,7 @@
 
 #include "ErrorChecking.h"
 #include "System/open_gl.h"
+#include "System/System.h"
 #include <cstdio>
 
 void ProcessGLErrors(const char* error_context)
@@ -9,7 +10,7 @@ void ProcessGLErrors(const char* error_context)
     GLenum error;
     while((error = glGetError()) != GL_NO_ERROR)
     {
-        std::printf("OpenGL Error: 0x%X - context: %s\n", error, error_context);
+        System::Log("OpenGL Error: 0x%X - context: %s\n", error, error_context);
         print_backtrace = true;
     }
 

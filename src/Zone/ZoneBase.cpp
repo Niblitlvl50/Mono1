@@ -6,6 +6,7 @@
 #include "Util/Algorithm.h"
 #include "Math/Quad.h"
 #include "Math/MathFunctions.h"
+#include "System/System.h"
 
 #include <cstdio>
 
@@ -39,14 +40,14 @@ void ZoneBase::DoPreAccept()
     {
         const bool result = mono::remove(m_entities, entity);
         if(!result)
-            std::printf("ZoneBase - Unable to remove entity with id %u\n", entity->Id());
+            System::Log("ZoneBase|Unable to remove entity with id %u\n", entity->Id());
     }
 
     for(auto& updatable : m_updatables_remove)
     {
         const bool result = mono::remove(m_updatables, updatable);
         if(!result)
-            std::printf("ZoneBase - Unable to remove updatable\n");
+            System::Log("ZoneBase|Unable to remove updatable\n");
     }
 
     for(auto& drawable : m_drawables_remove)
@@ -57,7 +58,7 @@ void ZoneBase::DoPreAccept()
 
         const bool removed = mono::remove_if(m_drawables, func);
         if(!removed)
-            std::printf("ZoneBase - Unable to remove drawable\n");
+            System::Log("ZoneBase|Unable to remove drawable\n");
     }
 
     m_entities_remove.clear();

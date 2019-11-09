@@ -109,13 +109,18 @@ namespace System
         virtual void Stop() = 0;
     };
 
-    using timer_callback_t = void (*)(void*);
+    using timer_callback_t = void (*)(void* context);
 
-    void Initialize();
+    struct InitializeContext
+    {
+        const char* log_file = nullptr;
+    };
+
+    void Initialize(const InitializeContext& context);
     void Shutdown();
 
     void Log(const char* fmt, ...);
-
+    
     uint32_t GetMilliseconds();
     uint64_t GetPerformanceCounter();
     uint64_t GetPerformanceFrequency();
@@ -123,7 +128,7 @@ namespace System
     void Sleep(uint32_t ms);
 
     // The caller is responsible for deleting the pointer
-    ITimer* CreateTimer(uint32_t ms, bool one_shot, timer_callback_t callback, void* data);
+    ITimer* CreateTimer(uint32_t ms, bool one_shot, timer_callback_t callback, void* context);
 
     // Gets the devices window size
     Size GetCurrentWindowSize();

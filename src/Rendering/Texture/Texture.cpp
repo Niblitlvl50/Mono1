@@ -1,6 +1,7 @@
 
 #include "Texture.h"
 #include "System/open_gl.h"
+#include "System/System.h"
 #include <cstdio>
 
 using namespace mono;
@@ -44,7 +45,7 @@ Texture::Texture(const mono::IImagePtr& image)
 
     const GLenum error = glGetError();
     if(error != GL_NO_ERROR)
-        std::printf("OpenGL error in Texture. Error no: 0x%X\n", error);
+        System::Log("Texture|OpenGL error in Texture. Error no: 0x%X\n", error);
 }
 
 Texture::~Texture()

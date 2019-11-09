@@ -1,6 +1,7 @@
 
 #include "AudioFactory.h"
 #include "Hash.h"
+#include "System/System.h"
 #include "System/File.h"
 
 #include "open_al.h"
@@ -203,7 +204,7 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const char* file_name, bool loop
         if(data)
             return std::make_shared<SoundImpl>(data, loop, relative);
 
-        std::printf("AudioFactory - Recreating '%s'\n", file_name);
+        System::Log("AudioFactory|Recreating '%s'\n", file_name);
     }
 
     const mono::SoundFile& sound_file = LoadFile(file_name);

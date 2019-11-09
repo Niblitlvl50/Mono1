@@ -1,5 +1,6 @@
 
 #include "Network.h"
+#include "System.h"
 #include <stdexcept>
 #include <cstdio>
 
@@ -43,7 +44,6 @@ namespace
                 char buffer[128];
                 std::sprintf(buffer, "network|Unable to set socket timeout. Error: %d\n", set_timeout_result);
                 throw std::runtime_error(buffer);
-
             }
 
             constexpr int yes = 1;
@@ -79,7 +79,7 @@ namespace
 
             const int send_result = zed_net_udp_socket_send(&m_handle, socket_address, data, size);
             if(send_result != 0)
-                std::printf("network|%s(%u)\n", zed_net_get_error(), errno);
+                System::Log("network|%s(%u)\n", zed_net_get_error(), errno);
 
             return send_result == 0;
         }
@@ -90,7 +90,7 @@ namespace
             const int size = static_cast<int>(data.size());
             const int receive_result = zed_net_udp_socket_receive(&m_handle, &sender, data.data(), size);
             if(receive_result < 0)
-                std::printf("network|%s\n", zed_net_get_error());
+                System::Log("network|%s\n", zed_net_get_error());
 
             if(out_sender)
             {
@@ -124,12 +124,11 @@ void network::Initialize(uint16_t socket_port_start, uint16_t socket_port_end)
     const std::string& broadcast_address = AddressToString(GetBroadcastAddress(0));
     const std::string& loopback_address = AddressToString(GetLoopbackAddress(0));
 
-    std::printf("Network\n");
-
-    std::printf("\tport range: %d - %d\n", s_socket_range_start, s_socket_range_end);
-    std::printf("\tlocalhost: %s\n", localhost_name.c_str());
-    std::printf("\tbroadcast: %s\n", broadcast_address.c_str());
-    std::printf("\tloopback: %s\n", loopback_address.c_str());
+    System::Log("Network\n");
+    System::Log("\tport range: %d - %d\n", s_socket_range_start, s_socket_range_end);
+    System::Log("\tlocalhost: %s\n", localhost_name.c_str());
+    System::Log("\tbroadcast: %s\n", broadcast_address.c_str());
+    System::Log("\tloopback: %s\n", loopback_address.c_str());
 }
 
 void network::Shutdown()
@@ -212,7 +211,7 @@ network::ISocketPtr network::CreateUDPSocket(SocketType socket_type)
             return new_socket;
     }
 
-    std::printf(
+    System::Log(
         "network|Unable to create a socket within the given port range [%d - %d]\n",
         s_socket_range_start,
         s_socket_range_end);
@@ -224,12 +223,12 @@ network::ISocketPtr network::CreateUDPSocket(SocketType socket_type, uint16_t po
     try
     {
         auto new_socket = std::make_unique<UDPSocket>(socket_type, port);
-        std::printf("network|Created socket on port %u\n", port);
+        System::Log("network|Created socket on port %u\n", port);
         return new_socket;
     }
     catch(const std::runtime_error& error)
     {
-        std::printf("%s", error.what());
+        System::Log("%s", error.what());
     }
 
     return nullptr;
