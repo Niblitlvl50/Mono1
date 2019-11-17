@@ -370,13 +370,15 @@ void System::Initialize(const InitializeContext& context)
     Log("System\n");
     Log("\tSDL version: %u.%u.%u\n", version.major, version.minor, version.patch);
 
-    char* resources_dir = SDL_GetBasePath();
-    const int chdir_result = chdir(resources_dir);
+    char* base_path = SDL_GetBasePath();
+
+    const char* working_directory = context.working_directory != nullptr ? context.working_directory : base_path;
+    const int chdir_result = chdir(working_directory);
     if(chdir_result != 0)
         throw std::runtime_error("System|Unable to set resource directory");
 
-    Log("\tresouce directory: %s\n", resources_dir);
-    SDL_free(resources_dir);
+    Log("\tresouce directory: %s\n", working_directory);
+    SDL_free(base_path);
 }
 
 void System::Shutdown()

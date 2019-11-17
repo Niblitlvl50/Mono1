@@ -113,6 +113,7 @@ namespace System
 
     struct InitializeContext
     {
+        const char* working_directory = nullptr;
         const char* log_file = nullptr;
     };
 
