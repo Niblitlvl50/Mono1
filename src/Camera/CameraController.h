@@ -24,6 +24,7 @@ namespace mono
         bool OnMouseUp(const event::MouseUpEvent& event);
         bool OnMouseMove(const event::MouseMotionEvent& event);
         bool OnMultiGesture(const event::MultiGestureEvent& event);
+        bool OnMouseWheel(const event::MouseWheelEvent& event);
         
         int m_window_width;
         int m_window_height;
@@ -38,5 +39,6 @@ namespace mono
         mono::EventToken<event::MouseUpEvent> m_mouse_up_token;
         mono::EventToken<event::MouseMotionEvent> m_mouse_move_token;
         mono::EventToken<event::MultiGestureEvent> m_multi_gesture_token;
+        mono::EventToken<event::MouseWheelEvent> m_mouse_wheel_token;
     };
 }

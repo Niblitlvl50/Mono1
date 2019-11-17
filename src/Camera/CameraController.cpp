@@ -29,11 +29,13 @@ MouseCameraController::MouseCameraController(int window_width, int window_height
     const event::MouseUpEventFunc mouse_up_func = std::bind(&MouseCameraController::OnMouseUp, this, _1);
     const event::MouseMotionEventFunc mouse_move_func = std::bind(&MouseCameraController::OnMouseMove, this, _1);
     const event::MultiGestureEventFunc multi_gesture_func = std::bind(&MouseCameraController::OnMultiGesture, this, _1);
+    const event::MouseWheelEventFunc mouse_wheel_func = std::bind(&MouseCameraController::OnMouseWheel, this, _1);
 
     m_mouse_down_token = m_event_handler.AddListener(mouse_down_func);
     m_mouse_up_token = m_event_handler.AddListener(mouse_up_func);
     m_mouse_move_token = m_event_handler.AddListener(mouse_move_func);
     m_multi_gesture_token = m_event_handler.AddListener(multi_gesture_func);
+    m_mouse_wheel_token = m_event_handler.AddListener(mouse_wheel_func);
 }
 
 MouseCameraController::~MouseCameraController()
@@ -42,6 +44,7 @@ MouseCameraController::~MouseCameraController()
     m_event_handler.RemoveListener(m_mouse_up_token);
     m_event_handler.RemoveListener(m_mouse_move_token);
     m_event_handler.RemoveListener(m_multi_gesture_token);
+    m_event_handler.RemoveListener(m_mouse_wheel_token);
 }
 
 void MouseCameraController::Enable()
@@ -113,6 +116,20 @@ bool MouseCameraController::OnMultiGesture(const event::MultiGestureEvent& event
     const float resize_value = quad.mB.x * 0.15f * multiplier;
     const float aspect = quad.mB.x / quad.mB.y;
     math::ResizeQuad(quad, resize_value, aspect);
+
+    m_camera->SetTargetViewport(quad);
+
+    return true;
+}
+
+bool MouseCameraController::OnMouseWheel(const event::MouseWheelEvent& event)
+{
+    math::Quad quad = m_camera->GetViewport();
+
+    const float multiplier = (event.y < 0.0f) ? 1.0f : -1.0f;
+    const float resizeValue = quad.mB.x * 0.15f * multiplier;
+    const float aspect = quad.mB.x / quad.mB.y;
+    math::ResizeQuad(quad, resizeValue, aspect);
 
     m_camera->SetTargetViewport(quad);
 
