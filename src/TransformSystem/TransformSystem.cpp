@@ -23,15 +23,13 @@ TransformSystem::TransformSystem(size_t n_components)
 
 math::Matrix TransformSystem::GetWorld(uint32_t id) const
 {
-    uint32_t current_id = id;
     math::Matrix transform;
 
-    while(current_id != no_parent)
+    while(id != no_parent)
     {
-        const Component& transform_component = m_transforms[current_id];
-
+        const Component& transform_component = m_transforms[id];
         transform = transform * transform_component.transform;
-        current_id = transform_component.parent;
+        id = transform_component.parent;
     }
 
     return transform;
@@ -49,20 +47,7 @@ math::Matrix& TransformSystem::GetTransform(uint32_t id)
 
 math::Quad TransformSystem::GetWorldBoundingBox(uint32_t id) const
 {
-    math::Quad bounding_box;
-    bounding_box.mA = math::Vector(100000, 100000);
-    bounding_box.mB = math::Vector(-100000, -100000);
-
-    while(id != no_parent)
-    {
-        const Component& transform_component = m_transforms[id];
-        bounding_box |= math::Transform(transform_component.transform, transform_component.bounding_box);
-
-        //transform = transform * transform_component.transform;
-        id = transform_component.parent;
-    }
-
-    return bounding_box;
+    return math::Transform(GetWorld(id), GetBoundingBox(id));
 }
 
 const math::Quad& TransformSystem::GetBoundingBox(uint32_t id) const
@@ -80,9 +65,9 @@ uint32_t TransformSystem::GetParent(uint32_t id) const
     return m_transforms[id].parent;
 }
 
-void TransformSystem::ChildTransform(uint32_t id, uint32_t parent)
+void TransformSystem::ChildTransform(uint32_t id, uint32_t parent_id)
 {
-    m_transforms[id].parent = parent;
+    m_transforms[id].parent = parent_id;
 }
 
 void TransformSystem::UnchildTransform(uint32_t id)

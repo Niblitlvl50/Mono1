@@ -12,6 +12,13 @@ namespace mono
     {
     public:
 
+        struct Component
+        {
+            math::Matrix transform;
+            math::Quad bounding_box;
+            uint32_t parent;
+        };
+
         TransformSystem(size_t n_components);
 
         math::Matrix GetWorld(uint32_t id) const;
@@ -41,14 +48,15 @@ namespace mono
             }
         }
 
+        template <typename T>
+        inline void ForEachComponent(T&& func) const
+        {
+            for(uint32_t index = 0; index < m_transforms.size(); ++index)
+                func(m_transforms[index], index);
+        }
+
     private:
 
-        struct Component
-        {
-            math::Matrix transform;
-            math::Quad bounding_box;
-            uint32_t parent;
-        };
 
         std::vector<Component> m_transforms;
     };

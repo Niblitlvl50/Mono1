@@ -2,7 +2,7 @@
 #include "SpriteSystem.h"
 #include "Sprite.h"
 #include "SpriteFactory.h"
-#include "TransformSystem.h"
+#include "TransformSystem/TransformSystem.h"
 #include "Hash.h"
 
 #include <cassert>

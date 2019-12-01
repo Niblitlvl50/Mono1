@@ -60,4 +60,21 @@ namespace network
     // Will return nullptr on failure.
     ISocketPtr CreateUDPSocket(SocketType socket_type);
     ISocketPtr CreateUDPSocket(SocketType socket_type, uint16_t port);
+
+    inline bool operator == (const network::Address& left, const network::Address& right)
+    {
+        return left.host == right.host && left.port == right.port;
+    }
+}
+
+namespace std
+{
+    template <>
+    struct hash<network::Address>
+    {
+        size_t operator()(const network::Address& key) const
+        {
+            return key.host ^ key.port;
+        }
+    };
 }

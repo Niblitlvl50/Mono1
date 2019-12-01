@@ -6,7 +6,7 @@
 #include "Math/Quad.h"
 #include "SystemContext.h"
 
-#include "TransformSystem.h"
+#include "TransformSystem/TransformSystem.h"
 #include "SpriteSystem.h"
 
 using namespace mono;
