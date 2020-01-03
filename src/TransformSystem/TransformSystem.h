@@ -57,7 +57,6 @@ namespace mono
 
     private:
 
-
         std::vector<Component> m_transforms;
     };
 }

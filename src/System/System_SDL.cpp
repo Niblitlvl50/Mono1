@@ -399,6 +399,7 @@ void System::Log(const char* fmt, ...)
         va_list file_log_args;
         va_copy(file_log_args, va);
         std::vfprintf(g_log_file, fmt, file_log_args);
+        std::fflush(g_log_file);
         va_end(file_log_args);
     }
 
