@@ -1,28 +1,25 @@
 
 language: cpp
 sudo: required
-dist: trusty
+dist: bionic
 
 install:
   # Steps copied from the rust-sdl2 project.
-  - wget https://www.libsdl.org/release/SDL2-2.0.4.tar.gz -O sdl2.tar.gz
+  - wget https://www.libsdl.org/release/SDL2-2.0.10.tar.gz -O sdl2.tar.gz
   - tar xzf sdl2.tar.gz
-  - pushd SDL2-2.0.4 && ./configure && make && sudo make install && popd
+  - pushd SDL2-2.0.10 && ./configure && make && sudo make install && popd
 
 matrix:
   include:
 
   - os: linux
     compiler: gcc
-    env: COMPILER=g++-7
     addons:
       apt:
         sources: 
           - ubuntu-toolchain-r-test
-          - llvm-toolchain-trusty-5.0
         packages:
-          - g++-7
-          - clang-5.0
+          - libgl1-mesa-dev
           - libopenal-dev
 
   - os: linux
@@ -31,11 +28,10 @@ matrix:
       apt:
         sources:
           - ubuntu-toolchain-r-test
-          - llvm-toolchain-trusty-5.0
         packages:
-          - g++-7
-          - clang-5.0
+          - libgl1-mesa-dev
           - libopenal-dev
+
 
 # Disabled until Travis CI supports newer xcode images, im using std::any and it is not fully supported yet. 
 #  - os: osx
