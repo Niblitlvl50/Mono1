@@ -32,11 +32,9 @@ matrix:
           - libgl1-mesa-dev
           - libopenal-dev
 
-
-# Disabled until Travis CI supports newer xcode images, im using std::any and it is not fully supported yet. 
-#  - os: osx
-#    compiler: clang
-#    osx_image: xcode10.1
+  - os: osx
+    compiler: clang
+    osx_image: xcode11.3
 
 script:
 
