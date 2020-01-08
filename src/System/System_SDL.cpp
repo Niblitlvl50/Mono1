@@ -151,87 +151,87 @@ namespace
     };
 
 
-    Keycode KeycodeFromSDL(SDL_Keycode sdl_key)
+    Keycode KeycodeFromSDL(SDL_Scancode sdl_scancode)
     {
-        switch(sdl_key)
+        switch(sdl_scancode)
         {
-            case SDLK_0:
+            case SDL_SCANCODE_0:
                 return Keycode::ZERO;
-            case SDLK_1:
+            case SDL_SCANCODE_1:
                 return Keycode::ONE;
-            case SDLK_2:
+            case SDL_SCANCODE_2:
                 return Keycode::TWO;
-            case SDLK_3:
+            case SDL_SCANCODE_3:
                 return Keycode::THREE;
-            case SDLK_4:
+            case SDL_SCANCODE_4:
                 return Keycode::FOUR;
-            case SDLK_5:
+            case SDL_SCANCODE_5:
                 return Keycode::FIVE;
-            case SDLK_6:
+            case SDL_SCANCODE_6:
                 return Keycode::SIX;
-            case SDLK_7:
+            case SDL_SCANCODE_7:
                 return Keycode::SEVEN;
-            case SDLK_8:
+            case SDL_SCANCODE_8:
                 return Keycode::EIGHT;
-            case SDLK_9:
+            case SDL_SCANCODE_9:
                 return Keycode::NINE;
 
-            case SDLK_LEFT:
+            case SDL_SCANCODE_LEFT:
                 return Keycode::LEFT;
-            case SDLK_RIGHT:
+            case SDL_SCANCODE_RIGHT:
                 return Keycode::RIGHT;
-            case SDLK_UP:
+            case SDL_SCANCODE_UP:
                 return Keycode::UP;
-            case SDLK_DOWN:
+            case SDL_SCANCODE_DOWN:
                 return Keycode::DOWN;
 
-            case SDLK_ESCAPE:
+            case SDL_SCANCODE_ESCAPE:
                 return Keycode::ESCAPE;
-            case SDLK_TAB:
+            case SDL_SCANCODE_TAB:
                 return Keycode::TAB;
-            case SDLK_RETURN:
+            case SDL_SCANCODE_RETURN:
                 return Keycode::ENTER;
-            case SDLK_SPACE:
+            case SDL_SCANCODE_SPACE:
                 return Keycode::SPACE;
-            case SDLK_BACKSPACE:
+            case SDL_SCANCODE_BACKSPACE:
                 return Keycode::BACKSPACE;
-            case SDLK_DELETE:
+            case SDL_SCANCODE_DELETE:
                 return Keycode::DELETE;
 
-            case KMOD_LCTRL:
+            case SDL_SCANCODE_LCTRL:
                 return Keycode::L_CTRL;
-            case KMOD_RCTRL:
+            case SDL_SCANCODE_RCTRL:
                 return Keycode::R_CTRL;
-            case KMOD_LSHIFT:
+            case SDL_SCANCODE_LSHIFT:
                 return Keycode::L_SHIFT;
-            case KMOD_RSHIFT:
+            case SDL_SCANCODE_RSHIFT:
                 return Keycode::R_SHIFT;
-            case KMOD_LALT:
+            case SDL_SCANCODE_LALT:
                 return Keycode::L_ALT;
-            case KMOD_RALT:
+            case SDL_SCANCODE_RALT:
                 return Keycode::R_ALT;
 
-            case SDLK_q:
+            case SDL_SCANCODE_Q:
                 return Keycode::Q;
-            case SDLK_w:
+            case SDL_SCANCODE_W:
                 return Keycode::W;
-            case SDLK_e:
+            case SDL_SCANCODE_E:
                 return Keycode::E;
-            case SDLK_r:
+            case SDL_SCANCODE_R:
                 return Keycode::R;
-            case SDLK_i:
+            case SDL_SCANCODE_I:
                 return Keycode::I;
-            case SDLK_o:
+            case SDL_SCANCODE_O:
                 return Keycode::O;
 
-            case SDLK_a:
+            case SDL_SCANCODE_A:
                 return Keycode::A;
-            case SDLK_s:
+            case SDL_SCANCODE_S:
                 return Keycode::S;
-            case SDLK_d:
+            case SDL_SCANCODE_D:
                 return Keycode::D;
 
-            case SDLK_n:
+            case SDL_SCANCODE_N:
                 return Keycode::N;
         }
 
@@ -466,7 +466,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
             case SDL_KEYDOWN:
             case SDL_KEYUP:
             {
-                const Keycode keycode = KeycodeFromSDL(event.key.keysym.sym);
+                const Keycode keycode = KeycodeFromSDL(event.key.keysym.scancode);
 
                 const int modifier = SDL_GetModState();
                 const bool ctrl  = (modifier & KMOD_CTRL);
@@ -619,89 +619,89 @@ int System::KeycodeToNative(Keycode key)
     switch(key)
     {
         case Keycode::ZERO:
-            return SDLK_0;
+            return SDL_SCANCODE_0;
         case Keycode::ONE:
-            return SDLK_1;
+            return SDL_SCANCODE_1;
         case Keycode::TWO:
-            return SDLK_2;
+            return SDL_SCANCODE_2;
         case Keycode::THREE:
-            return SDLK_3;
+            return SDL_SCANCODE_3;
         case Keycode::FOUR:
-            return SDLK_4;
+            return SDL_SCANCODE_4;
         case Keycode::FIVE:
-            return SDLK_5;
+            return SDL_SCANCODE_5;
         case Keycode::SIX:
-            return SDLK_6;
+            return SDL_SCANCODE_6;
         case Keycode::SEVEN:
-            return SDLK_7;
+            return SDL_SCANCODE_7;
         case Keycode::EIGHT:
-            return SDLK_8;
+            return SDL_SCANCODE_8;
         case Keycode::NINE:
-            return SDLK_9;
+            return SDL_SCANCODE_9;
 
         case Keycode::LEFT:
-            return SDLK_LEFT;
+            return SDL_SCANCODE_LEFT;
         case Keycode::RIGHT:
-            return SDLK_RIGHT;
+            return SDL_SCANCODE_RIGHT;
         case Keycode::UP:
-            return SDLK_UP;
+            return SDL_SCANCODE_UP;
         case Keycode::DOWN:
-            return SDLK_DOWN;
+            return SDL_SCANCODE_DOWN;
 
         case Keycode::ESCAPE:
-            return SDLK_ESCAPE;
+            return SDL_SCANCODE_ESCAPE;
         case Keycode::TAB:
-            return SDLK_TAB;
+            return SDL_SCANCODE_TAB;
         case Keycode::ENTER:
-            return SDLK_RETURN;
+            return SDL_SCANCODE_RETURN;
         case Keycode::SPACE:
-            return SDLK_SPACE;
+            return SDL_SCANCODE_SPACE;
         case Keycode::BACKSPACE:
-            return SDLK_BACKSPACE;
+            return SDL_SCANCODE_BACKSPACE;
         case Keycode::DELETE:
-            return SDLK_DELETE;
+            return SDL_SCANCODE_DELETE;
 
         case Keycode::L_CTRL:
-            return KMOD_LCTRL;
+            return SDL_SCANCODE_LCTRL;
         case Keycode::R_CTRL:
-            return KMOD_RCTRL;
+            return SDL_SCANCODE_RCTRL;
         case Keycode::L_SHIFT:
-            return KMOD_LSHIFT;
+            return SDL_SCANCODE_LSHIFT;
         case Keycode::R_SHIFT:
-            return KMOD_RSHIFT;
+            return SDL_SCANCODE_RSHIFT;
         case Keycode::L_ALT:
-            return KMOD_LALT;
+            return SDL_SCANCODE_LALT;
         case Keycode::R_ALT:
-            return KMOD_RALT;
+            return SDL_SCANCODE_RALT;
 
         case Keycode::Q:
-            return SDLK_q;
+            return SDL_SCANCODE_Q;
         case Keycode::W:
-            return SDLK_w;
+            return SDL_SCANCODE_W;
         case Keycode::E:
-            return SDLK_e;
+            return SDL_SCANCODE_E;
         case Keycode::R:
-            return SDLK_r;
+            return SDL_SCANCODE_R;
         case Keycode::I:
-            return SDLK_i;
+            return SDL_SCANCODE_I;
         case Keycode::O:
-            return SDLK_o;
+            return SDL_SCANCODE_O;
 
         case Keycode::A:
-            return SDLK_a;
+            return SDL_SCANCODE_A;
         case Keycode::S:
-            return SDLK_s;
+            return SDL_SCANCODE_S;
         case Keycode::D:
-            return SDLK_d;
+            return SDL_SCANCODE_D;
 
         case Keycode::N:
-            return SDLK_n;
+            return SDL_SCANCODE_N;
 
         default:
             break;
     }
 
-    return SDLK_q;
+    return SDL_SCANCODE_Q;
 }
 
 void System::ProcessControllerState()
