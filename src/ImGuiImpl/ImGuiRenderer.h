@@ -8,19 +8,13 @@
 #include <memory>
 #include <unordered_map>
 
-class ImGuiShader;
-
 class ImGuiRenderer : public mono::IDrawable
 {
 public:
 
-    ImGuiRenderer(const char* config_file,
-                  const math::Vector& window_size);
-
-    ImGuiRenderer(const char* config_file,
-                  const math::Vector& window_size,
-                  const std::unordered_map<unsigned int, mono::ITexturePtr>& textures);
-
+    ImGuiRenderer(const char* config_file, const math::Vector& window_size);
+    ImGuiRenderer(
+        const char* config_file, const math::Vector& window_size, const std::unordered_map<uint32_t, mono::ITexturePtr>& textures);
     virtual ~ImGuiRenderer();
 
     void SetWindowSize(const math::Vector& window_size);
@@ -28,12 +22,10 @@ public:
 private:
 
     void Initialize(const char* config_file);
+    void doDraw(mono::IRenderer& renderer) const override;
+    math::Quad BoundingBox() const override;
 
-    virtual void doDraw(mono::IRenderer& renderer) const;
-    virtual math::Quad BoundingBox() const;
-
-    math::Vector m_windowSize;
-
-    std::unique_ptr<ImGuiShader> m_shader;
-    std::unordered_map<unsigned int, mono::ITexturePtr> m_textures;
+    math::Vector m_window_size;
+    std::unique_ptr<class ImGuiShader> m_shader;
+    std::unordered_map<uint32_t, mono::ITexturePtr> m_textures;
 };

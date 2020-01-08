@@ -73,8 +73,8 @@ namespace System
 
         virtual ~IInputHandler() = default;
 
-        virtual void OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt) = 0;
-        virtual void OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt) = 0;
+        virtual void OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt, bool super) = 0;
+        virtual void OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool super) = 0;
 
         virtual void OnMouseDown(MouseButton button, int x, int y) = 0;
         virtual void OnMouseUp(MouseButton button, int x, int y) = 0;

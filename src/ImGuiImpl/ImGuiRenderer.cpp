@@ -15,17 +15,15 @@
 
 #define OFFSETOF(TYPE, ELEMENT) ((size_t)&(((TYPE *)0)->ELEMENT))
 
-ImGuiRenderer::ImGuiRenderer(const char* config_file,
-                             const math::Vector& window_size)
-    : m_windowSize(window_size)
+ImGuiRenderer::ImGuiRenderer(const char* config_file, const math::Vector& window_size)
+    : m_window_size(window_size)
 {
     Initialize(config_file);
 }
 
-ImGuiRenderer::ImGuiRenderer(const char* config_file,
-                             const math::Vector& window_size,
-                             const std::unordered_map<unsigned int, mono::ITexturePtr>& textures)
-    : m_windowSize(window_size),
+ImGuiRenderer::ImGuiRenderer(
+    const char* config_file, const math::Vector& window_size, const std::unordered_map<uint32_t, mono::ITexturePtr>& textures)
+    : m_window_size(window_size),
       m_textures(textures)
 {
     Initialize(config_file);
@@ -39,7 +37,7 @@ ImGuiRenderer::~ImGuiRenderer()
 void ImGuiRenderer::Initialize(const char* config_file)
 {
     ImGui::CreateContext();
-    ImGui::GetIO().DisplaySize = ImVec2(m_windowSize.x, m_windowSize.y);
+    ImGui::GetIO().DisplaySize = ImVec2(m_window_size.x, m_window_size.y);
     ImGui::GetIO().IniFilename = config_file;
 
     m_shader = std::make_unique<ImGuiShader>();
@@ -57,9 +55,9 @@ void ImGuiRenderer::Initialize(const char* config_file)
 
 void ImGuiRenderer::doDraw(mono::IRenderer& renderer) const
 {
-    ImGui::GetIO().DisplaySize = ImVec2(m_windowSize.x, m_windowSize.y);
+    ImGui::GetIO().DisplaySize = ImVec2(m_window_size.x, m_window_size.y);
     
-    const math::Matrix& projection = math::Ortho(0.0f, m_windowSize.x, m_windowSize.y, 0.0f, -10.0f, 10.0f);
+    const math::Matrix& projection = math::Ortho(0.0f, m_window_size.x, m_window_size.y, 0.0f, -10.0f, 10.0f);
     constexpr math::Matrix model_view;
 
     renderer.UseShader(m_shader.get());
@@ -105,7 +103,7 @@ void ImGuiRenderer::doDraw(mono::IRenderer& renderer) const
                     renderer.ClearTexture();
 
                 glScissor((int)pcmd->ClipRect.x,
-                          (int)(m_windowSize.y - pcmd->ClipRect.w),
+                          (int)(m_window_size.y - pcmd->ClipRect.w),
                           (int)(pcmd->ClipRect.z - pcmd->ClipRect.x),
                           (int)(pcmd->ClipRect.w - pcmd->ClipRect.y));
                 
@@ -131,6 +129,6 @@ math::Quad ImGuiRenderer::BoundingBox() const
 
 void ImGuiRenderer::SetWindowSize(const math::Vector& window_size)
 {
-    m_windowSize = window_size;
+    m_window_size = window_size;
 }
 

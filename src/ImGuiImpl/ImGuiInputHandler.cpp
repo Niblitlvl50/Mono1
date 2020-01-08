@@ -38,10 +38,10 @@ ImGuiInputHandler::ImGuiInputHandler(mono::EventHandler& event_handler)
 
     ImGuiIO& io = ImGui::GetIO();
     io.KeyMap[ImGuiKey_Tab] = System::KeycodeToNative(Keycode::TAB);
-    //io.KeyMap[ImGuiKey_LeftArrow] = LEFT;
-    //io.KeyMap[ImGuiKey_RightArrow] = RIGHT;
-    //io.KeyMap[ImGuiKey_UpArrow] = UP;
-    //io.KeyMap[ImGuiKey_DownArrow] = DOWN;
+    //io.KeyMap[ImGuiKey_LeftArrow] = Keycode::LEFT;
+    //io.KeyMap[ImGuiKey_RightArrow] = Keycode::RIGHT;
+    //io.KeyMap[ImGuiKey_UpArrow] = Keycode::UP;
+    //io.KeyMap[ImGuiKey_DownArrow] = Keycode::DOWN;
     //io.KeyMap[ImGuiKey_PageUp] = SDL_SCANCODE_PAGEUP;
     //io.KeyMap[ImGuiKey_PageDown] = SDL_SCANCODE_PAGEDOWN;
     //io.KeyMap[ImGuiKey_Home] = SDL_SCANCODE_HOME;
@@ -74,6 +74,7 @@ bool ImGuiInputHandler::OnKeyDown(const event::KeyDownEvent& event)
     ImGui::GetIO().KeyCtrl = event.ctrl;
     ImGui::GetIO().KeyShift = event.shift;
     ImGui::GetIO().KeyAlt = event.alt;
+    ImGui::GetIO().KeySuper = event.super;
     return ImGui::GetIO().WantCaptureKeyboard;
 }
 
@@ -87,6 +88,7 @@ bool ImGuiInputHandler::OnKeyUp(const event::KeyUpEvent& event)
     ImGui::GetIO().KeyCtrl = event.ctrl;
     ImGui::GetIO().KeyShift = event.shift;
     ImGui::GetIO().KeyAlt = event.alt;
+    ImGui::GetIO().KeySuper = event.super;
     return ImGui::GetIO().WantCaptureKeyboard;
 }
 

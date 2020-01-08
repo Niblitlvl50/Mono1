@@ -469,14 +469,15 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 const Keycode keycode = KeycodeFromSDL(event.key.keysym.sym);
 
                 const int modifier = SDL_GetModState();
-                const bool ctrl  = (modifier & KMOD_LCTRL)  || (modifier & KMOD_RCTRL);
-                const bool shift = (modifier & KMOD_LSHIFT) || (modifier & KMOD_RSHIFT);
-                const bool alt   = (modifier & KMOD_LALT)   || (modifier & KMOD_RALT);
+                const bool ctrl  = (modifier & KMOD_CTRL);
+                const bool shift = (modifier & KMOD_SHIFT);
+                const bool alt   = (modifier & KMOD_ALT);
+                const bool super = (modifier & KMOD_GUI);
 
                 if(event.type == SDL_KEYDOWN)
-                    handler->OnKeyDown(keycode, ctrl, shift, alt);
+                    handler->OnKeyDown(keycode, ctrl, shift, alt, super);
                 else
-                    handler->OnKeyUp(keycode, ctrl, shift, alt);
+                    handler->OnKeyUp(keycode, ctrl, shift, alt, super);
 
                 break;
             }

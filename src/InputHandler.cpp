@@ -23,13 +23,13 @@ InputHandler::InputHandler(const ScreenToWorldFunc& screen_to_world_func, EventH
     , m_event_handler(event_handler)
 { }
 
-void InputHandler::OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt)
+void InputHandler::OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt, bool super)
 {
-    const event::KeyDownEvent event(key, ctrl, shift, alt);
+    const event::KeyDownEvent event(key, ctrl, shift, alt, super);
     m_event_handler->DispatchEvent(event);
 }
 
-void InputHandler::OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt)
+void InputHandler::OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool super)
 {
     if(key == Keycode::ESCAPE)
     {
@@ -37,7 +37,7 @@ void InputHandler::OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt)
         return;
     }
 
-    const event::KeyUpEvent event(key, ctrl, shift, alt);
+    const event::KeyUpEvent event(key, ctrl, shift, alt, super);
     m_event_handler->DispatchEvent(event);
 }
 
