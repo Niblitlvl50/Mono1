@@ -38,10 +38,10 @@ ImGuiInputHandler::ImGuiInputHandler(mono::EventHandler& event_handler)
 
     ImGuiIO& io = ImGui::GetIO();
     io.KeyMap[ImGuiKey_Tab] = System::KeycodeToNative(Keycode::TAB);
-    //io.KeyMap[ImGuiKey_LeftArrow] = Keycode::LEFT;
-    //io.KeyMap[ImGuiKey_RightArrow] = Keycode::RIGHT;
-    //io.KeyMap[ImGuiKey_UpArrow] = Keycode::UP;
-    //io.KeyMap[ImGuiKey_DownArrow] = Keycode::DOWN;
+    io.KeyMap[ImGuiKey_LeftArrow] = System::KeycodeToNative(Keycode::LEFT);
+    io.KeyMap[ImGuiKey_RightArrow] = System::KeycodeToNative(Keycode::RIGHT);
+    io.KeyMap[ImGuiKey_UpArrow] = System::KeycodeToNative(Keycode::UP);
+    io.KeyMap[ImGuiKey_DownArrow] = System::KeycodeToNative(Keycode::DOWN);
     //io.KeyMap[ImGuiKey_PageUp] = SDL_SCANCODE_PAGEUP;
     //io.KeyMap[ImGuiKey_PageDown] = SDL_SCANCODE_PAGEDOWN;
     //io.KeyMap[ImGuiKey_Home] = SDL_SCANCODE_HOME;
