@@ -9,9 +9,10 @@ namespace mono
     {
     public:
 
-        virtual std::unique_ptr<ITextureShader> CreateTextureShader() const;
-        virtual std::unique_ptr<IColorShader> CreateColorShader() const;
-        virtual std::unique_ptr<IPointSpriteShader> CreatePointSpriteShader() const;
+        std::unique_ptr<ITextureShader> CreateTextureShader() const override;
+        std::unique_ptr<IColorShader> CreateColorShader() const override;
+        std::unique_ptr<IPointSpriteShader> CreatePointSpriteShader() const override;
+        std::unique_ptr<IImGuiShader> CreateImGuiShader() const override;
     };
 }
 

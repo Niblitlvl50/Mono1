@@ -6,6 +6,7 @@
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
 #include "Shader/ShaderFwd.h"
+#include "ImGui.h"
 
 namespace mono
 {
@@ -92,13 +93,14 @@ namespace mono
         math::Matrix m_current_projection;
         math::Matrix m_current_transform;
 
-        mutable unsigned int m_currentShaderId = -1;
-        mutable unsigned int m_currentTextureId = -1;
+        mutable uint32_t m_currentShaderId = -1;
+        mutable uint32_t m_currentTextureId = -1;
 
         std::unique_ptr<IColorShader> m_color_shader;
         std::unique_ptr<ITextureShader> m_texture_shader;
         std::unique_ptr<IPointSpriteShader> m_point_sprite_shader;
 
         std::vector<const IDrawable*> m_drawables;
+        ImGuiContext m_imgui_context;
     };
 }

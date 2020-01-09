@@ -96,9 +96,9 @@ Engine::~Engine()
 
 int Engine::Run(IZone* zone)
 {
-    zone->OnLoad(m_camera);
-
     Renderer renderer;
+
+    zone->OnLoad(m_camera);
 
     UpdateContext update_context;
     update_context.frame_count = 0;

@@ -13,6 +13,7 @@
 #include "Rendering/Shader/IColorShader.h"
 #include "Rendering/Shader/ITextureShader.h"
 #include "Rendering/Shader/IPointSpriteShader.h"
+#include "Rendering/Shader/IImGuiShader.h"
 #include "Rendering/Shader/ShaderFunctions.h"
 #include "Rendering/RenderSystem.h"
 
@@ -240,22 +241,60 @@ namespace
         }
     };
 
+    class NullImGuiShader : public mono::IImGuiShader
+    {
+    public:
+        void Use() override
+        { }
+        unsigned int GetShaderId() const override
+        {
+            return 0;
+        }
+        void LoadProjectionMatrix(const math::Matrix& projection) override
+        { }
+        void LoadModelViewMatrix(const math::Matrix& modelView) override
+        { }
+        void SetTextureValue(int value) override
+        { }
+        unsigned int PositionAttribute() const override
+        {
+            return 0;
+        }
+        unsigned int TextureAttribute() const override
+        {
+            return 0;
+        }
+        unsigned int ColorAttribute() const override
+        {
+            return 0;
+        }
+        int TextureLocation() const override
+        {
+            return 0;
+        }
+    };
+
     class NullFactory : public mono::IShaderFactory
     {
     public:
-        virtual std::unique_ptr<mono::ITextureShader> CreateTextureShader() const override
+        std::unique_ptr<mono::ITextureShader> CreateTextureShader() const override
         {
             return std::make_unique<NullTextureShader>();
         }
 
-        virtual std::unique_ptr<mono::IColorShader> CreateColorShader() const override
+        std::unique_ptr<mono::IColorShader> CreateColorShader() const override
         {
             return std::make_unique<NullColorShader>();
         }
 
-        virtual std::unique_ptr<mono::IPointSpriteShader> CreatePointSpriteShader() const override
+        std::unique_ptr<mono::IPointSpriteShader> CreatePointSpriteShader() const override
         {
             return std::make_unique<NullPointSpriteShader>();
+        }
+
+        std::unique_ptr<mono::IImGuiShader> CreateImGuiShader() const override
+        {
+            return std::make_unique<NullImGuiShader>();
         }
     };
 }

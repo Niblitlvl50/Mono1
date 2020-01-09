@@ -1,9 +1,11 @@
 
 #include "ImGuiShader.h"
-#include "Rendering/Shader/ShaderFunctions.h"
+#include "ShaderFunctions.h"
 #include "Math/Matrix.h"
 
 #include "System/open_gl.h"
+
+using namespace mono;
 
 namespace
 {

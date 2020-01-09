@@ -11,12 +11,15 @@
 #include "Shader/ITextureShader.h"
 #include "Shader/IColorShader.h"
 #include "Shader/IPointSpriteShader.h"
+#include "Shader/IImGuiShader.h"
 
 #include "Sprite/ISprite.h"
 
 #include "Math/Vector.h"
 #include "Math/Quad.h"
 #include "Math/MathFunctions.h"
+
+#include "ImGui.h"
 
 
 
@@ -27,10 +30,15 @@ Renderer::Renderer()
     m_color_shader = GetShaderFactory()->CreateColorShader();
     m_texture_shader = GetShaderFactory()->CreateTextureShader();
     m_point_sprite_shader = GetShaderFactory()->CreatePointSpriteShader();
+
+    m_imgui_context.shader = GetShaderFactory()->CreateImGuiShader();
+    mono::InitializeImGui(m_imgui_context);
 }
 
 Renderer::~Renderer()
-{ }
+{
+    mono::DestroyImGui();
+}
 
 void Renderer::SetWindowSize(const math::Vector& window_size)
 {
@@ -67,6 +75,9 @@ void Renderer::EndDraw()
     // Clear all the stuff once the frame has been drawn
     m_drawables.clear();
     //PROCESS_GL_ERRORS();
+
+    m_imgui_context.window_size = m_window_size;
+    mono::DrawImGui(m_imgui_context, *this);
 }
 
 void Renderer::DrawFrame()

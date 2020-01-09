@@ -1,6 +1,5 @@
 
-#include "ImGuiRenderer.h"
-#include "ImGuiShader.h"
+#include "ImGui.h"
 
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
@@ -8,39 +7,22 @@
 #include "Rendering/Texture/ITexture.h"
 #include "Rendering/Texture/TextureFactory.h"
 #include "Rendering/IRenderer.h"
+#include "Rendering/Shader/IImGuiShader.h"
 
 #include "System/open_gl.h"
-
 #include "imgui/imgui.h"
 
 #define OFFSETOF(TYPE, ELEMENT) ((size_t)&(((TYPE *)0)->ELEMENT))
 
-ImGuiRenderer::ImGuiRenderer(const char* config_file, const math::Vector& window_size)
-    : m_window_size(window_size)
+namespace
 {
-    Initialize(config_file);
+    std::unordered_map<uint32_t, mono::ITexturePtr> g_imgui_textures;
 }
 
-ImGuiRenderer::ImGuiRenderer(
-    const char* config_file, const math::Vector& window_size, const std::unordered_map<uint32_t, mono::ITexturePtr>& textures)
-    : m_window_size(window_size),
-      m_textures(textures)
-{
-    Initialize(config_file);
-}
-
-ImGuiRenderer::~ImGuiRenderer()
-{
-    ImGui::DestroyContext();
-}
-
-void ImGuiRenderer::Initialize(const char* config_file)
+void mono::InitializeImGui(mono::ImGuiContext& imgui_context)
 {
     ImGui::CreateContext();
-    ImGui::GetIO().DisplaySize = ImVec2(m_window_size.x, m_window_size.y);
-    ImGui::GetIO().IniFilename = config_file;
-
-    m_shader = std::make_unique<ImGuiShader>();
+    ImGui::GetIO().DisplaySize = ImVec2(imgui_context.window_size.x, imgui_context.window_size.y);
 
     int width;
     int height;
@@ -48,29 +30,38 @@ void ImGuiRenderer::Initialize(const char* config_file)
     ImGui::GetIO().Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
     mono::ITexturePtr font_texture = mono::CreateTexture(pixels, width, height, 4);
-    m_textures.insert(std::make_pair(font_texture->Id(), font_texture));
+    g_imgui_textures.insert(std::make_pair(font_texture->Id(), font_texture));
 
     ImGui::GetIO().Fonts->TexID = (void *)(intptr_t)font_texture->Id();
 }
 
-void ImGuiRenderer::doDraw(mono::IRenderer& renderer) const
+void mono::DestroyImGui()
 {
-    ImGui::GetIO().DisplaySize = ImVec2(m_window_size.x, m_window_size.y);
-    
-    const math::Matrix& projection = math::Ortho(0.0f, m_window_size.x, m_window_size.y, 0.0f, -10.0f, 10.0f);
+    g_imgui_textures.clear();
+    ImGui::DestroyContext();
+}
+
+void mono::DrawImGui(mono::ImGuiContext& imgui_context, mono::IRenderer& renderer)
+{
+    const ImDrawData* draw_data = ImGui::GetDrawData();
+    if(!draw_data)
+        return;
+
+    ImGui::GetIO().DisplaySize = ImVec2(imgui_context.window_size.x, imgui_context.window_size.y);
+
+    const math::Matrix& projection =
+        math::Ortho(0.0f, imgui_context.window_size.x, imgui_context.window_size.y, 0.0f, -10.0f, 10.0f);
     constexpr math::Matrix model_view;
 
-    renderer.UseShader(m_shader.get());
-    m_shader->LoadProjectionMatrix(projection);
-    m_shader->LoadModelViewMatrix(model_view);
+    renderer.UseShader(imgui_context.shader.get());
+    imgui_context.shader->LoadProjectionMatrix(projection);
+    imgui_context.shader->LoadModelViewMatrix(model_view);
 
     glEnable(GL_SCISSOR_TEST);
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
-
-    const ImDrawData* draw_data = ImGui::GetDrawData();
 
     for (int n = 0; n < draw_data->CmdListsCount; n++)
     {
@@ -82,9 +73,9 @@ void ImGuiRenderer::doDraw(mono::IRenderer& renderer) const
         const void* coords = (void*)(vtx_buffer + OFFSETOF(ImDrawVert, uv));
         const void* colors = (void*)(vtx_buffer + OFFSETOF(ImDrawVert, col));
 
-        glVertexAttribPointer(m_shader->PositionAttribute(), 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert), vertices);
-        glVertexAttribPointer(m_shader->TextureAttribute(), 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert), coords);
-        glVertexAttribPointer(m_shader->ColorAttribute(), 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ImDrawVert), colors);
+        glVertexAttribPointer(imgui_context.shader->PositionAttribute(), 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert), vertices);
+        glVertexAttribPointer(imgui_context.shader->TextureAttribute(), 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert), coords);
+        glVertexAttribPointer(imgui_context.shader->ColorAttribute(), 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ImDrawVert), colors);
 
         for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.size(); cmd_i++)
         {
@@ -96,16 +87,15 @@ void ImGuiRenderer::doDraw(mono::IRenderer& renderer) const
             else
             {
                 const void* id = pcmd->TextureId;
-                const auto it = m_textures.find((unsigned int)(intptr_t)id);
-                if(it != m_textures.end())
+                const auto it = g_imgui_textures.find((unsigned int)(intptr_t)id);
+                if(it != g_imgui_textures.end())
                     renderer.UseTexture(it->second);
                 else
                     renderer.ClearTexture();
 
-                glScissor((int)pcmd->ClipRect.x,
-                          (int)(m_window_size.y - pcmd->ClipRect.w),
-                          (int)(pcmd->ClipRect.z - pcmd->ClipRect.x),
-                          (int)(pcmd->ClipRect.w - pcmd->ClipRect.y));
+                glScissor(
+                    (int)pcmd->ClipRect.x, (int)(imgui_context.window_size.y - pcmd->ClipRect.w),
+                    (int)(pcmd->ClipRect.z - pcmd->ClipRect.x), (int)(pcmd->ClipRect.w - pcmd->ClipRect.y));
                 
                 constexpr GLenum data_type = sizeof(ImDrawIdx) == 2 ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
                 glDrawElements(GL_TRIANGLES, (GLsizei)pcmd->ElemCount, data_type, idx_buffer);
@@ -122,13 +112,14 @@ void ImGuiRenderer::doDraw(mono::IRenderer& renderer) const
     glDisable(GL_SCISSOR_TEST);
 }
 
-math::Quad ImGuiRenderer::BoundingBox() const
+void mono::SetImGuiConfig(const char* config_file)
 {
-    return math::InfQuad;
+    ImGui::GetIO().IniFilename = config_file;
 }
 
-void ImGuiRenderer::SetWindowSize(const math::Vector& window_size)
+uint32_t mono::LoadImGuiTexture(const char* texture_file)
 {
-    m_window_size = window_size;
+    mono::ITexturePtr texture = mono::CreateTexture("res/textures/placeholder.png");
+    g_imgui_textures.insert(std::make_pair(texture->Id(), texture));
+    return texture->Id();
 }
-
