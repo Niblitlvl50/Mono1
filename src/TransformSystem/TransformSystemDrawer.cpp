@@ -9,12 +9,16 @@
 
 using namespace mono;
 
-TransformSystemDrawer::TransformSystemDrawer(const TransformSystem* transform_system)
-    : m_transform_system(transform_system)
+TransformSystemDrawer::TransformSystemDrawer(const bool& enabled, const TransformSystem* transform_system)
+    : m_enabled(enabled)
+    , m_transform_system(transform_system)
 { }
 
 void TransformSystemDrawer::doDraw(mono::IRenderer& renderer) const
 {
+    if(!m_enabled)
+        return;
+
     const auto draw_bounding_boxes = [this, &renderer](const TransformSystem::Component& component, uint32_t index) {
         const math::Quad& bb = m_transform_system->GetWorldBoundingBox(index);
         if(!renderer.Cull(bb))

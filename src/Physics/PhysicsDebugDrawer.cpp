@@ -109,8 +109,9 @@ namespace
     }
 }
 
-PhysicsDebugDrawer::PhysicsDebugDrawer(mono::PhysicsSystem* physics_system)
-    : m_physics_system(physics_system)
+PhysicsDebugDrawer::PhysicsDebugDrawer(const bool& enabled, mono::PhysicsSystem* physics_system)
+    : m_enabled(enabled)
+    , m_physics_system(physics_system)
     , m_draw_shapes(true)
     , m_draw_constraints(false)
     , m_draw_collisions(false)
@@ -118,6 +119,9 @@ PhysicsDebugDrawer::PhysicsDebugDrawer(mono::PhysicsSystem* physics_system)
 
 void PhysicsDebugDrawer::doDraw(mono::IRenderer& renderer) const
 {
+    if(!m_enabled)
+        return;
+
     DebugDrawCollection debug_collection;
 
     mono::PhysicsSpace* physics_space = m_physics_system->GetSpace();

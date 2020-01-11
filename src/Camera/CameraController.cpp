@@ -79,7 +79,7 @@ bool MouseCameraController::OnMouseUp(const event::MouseUpEvent& event)
 bool MouseCameraController::OnMouseMove(const event::MouseMotionEvent& event)
 {
     if(!m_enabled || !m_translate)
-        return true;
+        return false;
 
     const math::Vector screen_position(event.screenX, event.screenY);
 
@@ -124,6 +124,9 @@ bool MouseCameraController::OnMultiGesture(const event::MultiGestureEvent& event
 
 bool MouseCameraController::OnMouseWheel(const event::MouseWheelEvent& event)
 {
+    if(!m_enabled)
+        return false;
+
     math::Quad quad = m_camera->GetViewport();
 
     const float multiplier = (event.y < 0.0f) ? 1.0f : -1.0f;
