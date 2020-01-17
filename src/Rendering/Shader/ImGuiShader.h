@@ -1,39 +1,22 @@
 
 #pragma once
 
-#include "IImGuiShader.h"
+#include <memory>
+#include <cstdint>
 
 namespace mono
 {
-    class ImGuiShader : public mono::IImGuiShader
+    class IShader;
+
+    class ImGuiShader
     {
     public:
 
-        ImGuiShader();
-        virtual ~ImGuiShader();
-
-        void Use() override;
-        unsigned int GetShaderId() const override;
-        void LoadProjectionMatrix(const math::Matrix& projection) override;
-        void LoadModelViewMatrix(const math::Matrix& modelview) override;
-
-        void SetTextureValue(int value) override;
-        unsigned int PositionAttribute() const override;
-        unsigned int TextureAttribute() const override;
-        unsigned int ColorAttribute() const override;
-        int TextureLocation() const override;
-
-    private:
-
-        unsigned int m_program;
-
-        int m_MVMatrixLocation;
-        int m_PMatrixLocation;
-
-        unsigned int m_positionAttributeLocation;
-        unsigned int m_textureAttributeLocation;
-        unsigned int m_colorAttributeLocation;
-
-        int m_textureLocation;
+        static std::unique_ptr<IShader> MakeShader();
+        static void SetTextureValue(IShader* shader, int value);
+        static uint32_t GetPositionAttribute(IShader* shader);
+        static uint32_t GetTextureAttribute(IShader* shader);
+        static uint32_t GetColorAttribute(IShader* shader);
+        static uint32_t GetTextureLocation(IShader* shader);
     };
 }

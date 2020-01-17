@@ -18,7 +18,7 @@ namespace mono
     //! @param source The shader source
     //!
     //! @return A shader id
-    size_t CompileShader(ShaderType type, const char* source);
+    uint32_t CompileShader(ShaderType type, const char* source);
 
     //! Link a shader program, will throw std::runtime_error
     //! if linking failed
@@ -27,7 +27,7 @@ namespace mono
     //! @param fragmentShader A compiled fragment shader
     //!
     //! @return A program id
-    size_t LinkProgram(size_t vertexShader, size_t fragmentShader);
+    uint32_t LinkProgram(uint32_t vertex_shader, uint32_t fragment_shader);
 
     //! Get the shader factory
     //! @return The loaded shader factory

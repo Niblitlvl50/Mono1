@@ -6,12 +6,10 @@
 #include "Texture/ITexture.h"
 #include "ErrorChecking.h"
 
+#include "Shader/IShader.h"
 #include "Shader/IShaderFactory.h"
 #include "Shader/ShaderFunctions.h"
-#include "Shader/ITextureShader.h"
-#include "Shader/IColorShader.h"
-#include "Shader/IPointSpriteShader.h"
-#include "Shader/IImGuiShader.h"
+#include "Shader/TextureShader.h"
 
 #include "Sprite/ISprite.h"
 
@@ -142,7 +140,7 @@ void Renderer::DrawSprite(const ISprite& sprite, const math::Vector& offset) con
     const mono::ITexturePtr texture = sprite.GetTexture();
     const SpriteFrame& current_frame = sprite.GetCurrentFrame();
     UseShader(m_texture_shader.get());
-    m_texture_shader->SetShade(sprite.GetShade());
+    TextureShader::SetShade(m_texture_shader.get(), sprite.GetShade());
     DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset + offset, texture);
 }
 
@@ -248,26 +246,25 @@ void Renderer::DrawTrianges(
 
 void Renderer::UseShader(IShader* shader) const
 {
-    const unsigned int id = shader->GetShaderId();
-    if(id != m_currentShaderId)
+    const uint32_t id = shader->GetShaderId();
+    if(id != m_current_shader_id)
     {
         shader->Use();
-        m_currentShaderId = id;
+        m_current_shader_id = id;
     }
 
-    shader->LoadModelViewMatrix(m_current_transform);
-    shader->LoadProjectionMatrix(m_current_projection);
-    
+    shader->SetProjectionAndModelView(m_current_projection, m_current_transform);
+
     PROCESS_GL_ERRORS();
 }
 
 void Renderer::UseTexture(const ITexturePtr& texture) const
 {
-    const unsigned int id = texture->Id();
-    if(id != m_currentTextureId)
+    const uint32_t id = texture->Id();
+    if(id != m_current_texture_id)
     {
         texture->Use();
-        m_currentTextureId = id;
+        m_current_texture_id = id;
     }
 
     PROCESS_GL_ERRORS();
@@ -275,7 +272,7 @@ void Renderer::UseTexture(const ITexturePtr& texture) const
 
 void Renderer::ClearTexture()
 {
-    m_currentTextureId = -1;
+    m_current_texture_id = -1;
     mono::ClearTexture();
 }
 

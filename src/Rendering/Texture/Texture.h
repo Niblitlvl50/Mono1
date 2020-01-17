@@ -15,14 +15,14 @@ namespace mono
         ~Texture();
         
     private:
-        virtual void Use() const;
-        virtual unsigned int Id() const;
-        virtual unsigned int Width() const;
-        virtual unsigned int Height() const;
+        void Use() const override;
+        uint32_t Id() const override;
+        uint32_t Width() const override;
+        uint32_t Height() const override;
         
-        unsigned int mTextureId;
-        unsigned int mWidth;
-        unsigned int mHeight;
+        uint32_t m_texture_id;
+        uint32_t m_width;
+        uint32_t m_height;
     };
 }
 

@@ -2,6 +2,8 @@
 #pragma once
 
 #include "Math/MathFwd.h"
+#include "Rendering/RenderFwd.h"
+#include <cstdint>
 
 namespace mono
 {
@@ -11,8 +13,13 @@ namespace mono
 
         virtual ~IShader() = default;
         virtual void Use() = 0;
-        virtual unsigned int GetShaderId() const = 0;
-        virtual void LoadProjectionMatrix(const math::Matrix& projection) = 0;
-        virtual void LoadModelViewMatrix(const math::Matrix& modelView) = 0;
+        virtual uint32_t GetShaderId() const = 0;
+        virtual int GetAttributeLocation(const char* attribute_name) = 0;
+        virtual void SetValue(const char* property_name, int value) = 0;
+        virtual void SetValue(const char* property_name, float value) = 0;
+        virtual void SetValue(const char* property_name, const math::Vector& vector) = 0;
+        virtual void SetValue(const char* property_name, const math::Matrix& transform) = 0;
+        virtual void SetValue(const char* property_name, const mono::Color::RGBA& color) = 0;
+        virtual void SetProjectionAndModelView(const math::Matrix& projection, const math::Matrix& model_view)  = 0;
     };
 }

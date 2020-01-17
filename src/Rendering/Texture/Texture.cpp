@@ -8,9 +8,9 @@ using namespace mono;
 
 namespace
 {
-    unsigned int NextPowerOfTwo(unsigned int x)
+    uint32_t NextPowerOfTwo(uint32_t x)
     {
-        unsigned int val = 1;
+        uint32_t val = 1;
         while(val < x)
             val *= 2;
 
@@ -19,13 +19,13 @@ namespace
 }
 
 Texture::Texture(const mono::IImagePtr& image)
-    : mTextureId(-1),
-      mWidth(image->Width()),
-      mHeight(image->Height())
+    : m_texture_id(-1),
+      m_width(image->Width()),
+      m_height(image->Height())
 {
     const int components = image->ColorComponents();
-    const unsigned int width = NextPowerOfTwo(image->Width());
-    const unsigned int height = NextPowerOfTwo(image->Height());
+    const uint32_t width = NextPowerOfTwo(image->Width());
+    const uint32_t height = NextPowerOfTwo(image->Height());
     const byte* data = image->Data();
 
     GLenum format = GL_ALPHA;
@@ -34,8 +34,8 @@ Texture::Texture(const mono::IImagePtr& image)
     else if(components == 4)
         format = GL_RGBA;
 
-    glGenTextures(1, &mTextureId);
-    glBindTexture(GL_TEXTURE_2D, mTextureId);
+    glGenTextures(1, &m_texture_id);
+    glBindTexture(GL_TEXTURE_2D, m_texture_id);
 
     glTexImage2D(GL_TEXTURE_2D, 0, format, (int)width, (int)height, 0, format, GL_UNSIGNED_BYTE, data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -50,27 +50,27 @@ Texture::Texture(const mono::IImagePtr& image)
 
 Texture::~Texture()
 {
-    glDeleteTextures(1, &mTextureId);
+    glDeleteTextures(1, &m_texture_id);
 }
 
 void Texture::Use() const
 {
-    glBindTexture(GL_TEXTURE_2D, mTextureId);
+    glBindTexture(GL_TEXTURE_2D, m_texture_id);
 }
 
-unsigned int Texture::Id() const
+uint32_t Texture::Id() const
 {
-    return mTextureId;
+    return m_texture_id;
 }
 
-unsigned int Texture::Width() const
+uint32_t Texture::Width() const
 {
-    return mWidth;
+    return m_width;
 }
 
-unsigned int Texture::Height() const
+uint32_t Texture::Height() const
 {
-    return mHeight;
+    return m_height;
 }
 
 void mono::ClearTexture()

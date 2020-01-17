@@ -9,11 +9,8 @@
 #include "IUpdatable.h"
 #include "Camera/ICamera.h"
 #include "Zone/IZone.h"
+#include "Rendering/Shader/IShader.h"
 #include "Rendering/Shader/IShaderFactory.h"
-#include "Rendering/Shader/IColorShader.h"
-#include "Rendering/Shader/ITextureShader.h"
-#include "Rendering/Shader/IPointSpriteShader.h"
-#include "Rendering/Shader/IImGuiShader.h"
 #include "Rendering/Shader/ShaderFunctions.h"
 #include "Rendering/RenderSystem.h"
 
@@ -154,147 +151,52 @@ namespace
         bool mOnUnloadCalled = false;
     };
 
-    class NullColorShader : public mono::IColorShader
+    class NullShader : public mono::IShader
     {
     public:
         
-        virtual void Use() override
-        { }
-        virtual unsigned int GetShaderId() const override
-        {
-            return 0;
-        }
-        virtual void LoadProjectionMatrix(const math::Matrix& projection) override
-        { }
-        virtual void LoadModelViewMatrix(const math::Matrix& modelView) override
-        { }
-        virtual unsigned int GetPositionAttributeLocation() const override
-        {
-            return 0;
-        }
-        virtual unsigned int GetColorAttributeLocation() const override
-        {
-            return 0;
-        }
-        virtual void SetPointSize(float size) override
-        { }
-    };
-
-    class NullTextureShader : public mono::ITextureShader
-    {
-    public:
-        virtual void Use() override
-        { }
-        virtual unsigned int GetShaderId() const override
-        {
-            return 0;
-        }
-        virtual void LoadProjectionMatrix(const math::Matrix& projection) override
-        { }
-        virtual void LoadModelViewMatrix(const math::Matrix& modelView) override
-        { }
-        virtual unsigned int GetPositionAttributeLocation() const override
-        {
-            return 0;
-        }
-        virtual unsigned int GetTextureAttributeLocation() const override
-        {
-            return 0;
-        }
-        virtual void SetShade(const mono::Color::RGBA& color) override
-        { }
-        virtual void SetAlphaTexture(bool isAlpha) override
-        { }
-        virtual void SetTextureOffset(float offset) override
-        { }
-    };
-
-    class NullPointSpriteShader : public mono::IPointSpriteShader
-    {
-    public:
-
-        virtual void Use() override
-        { }
-        virtual unsigned int GetShaderId() const override
-        {
-            return 0;
-        }
-        virtual void LoadProjectionMatrix(const math::Matrix& projection) override
-        { }
-        virtual void LoadModelViewMatrix(const math::Matrix& modelView) override
-        { }
-        virtual unsigned int GetPositionAttribute() const override
-        {
-            return 0;
-        }
-        virtual unsigned int GetRotationAttribute() const override
-        {
-            return 0;
-        }
-        virtual unsigned int GetColorAttribute() const override
-        {
-            return 0;
-        }
-        virtual unsigned int GetPointSizeAttribute() const override
-        {
-            return 0;
-        }
-    };
-
-    class NullImGuiShader : public mono::IImGuiShader
-    {
-    public:
         void Use() override
         { }
-        unsigned int GetShaderId() const override
+        uint32_t GetShaderId() const override
         {
             return 0;
         }
-        void LoadProjectionMatrix(const math::Matrix& projection) override
-        { }
-        void LoadModelViewMatrix(const math::Matrix& modelView) override
-        { }
-        void SetTextureValue(int value) override
-        { }
-        unsigned int PositionAttribute() const override
+        int GetAttributeLocation(const char* attribute_name) override
         {
             return 0;
         }
-        unsigned int TextureAttribute() const override
-        {
-            return 0;
-        }
-        unsigned int ColorAttribute() const override
-        {
-            return 0;
-        }
-        int TextureLocation() const override
-        {
-            return 0;
-        }
+        void SetValue(const char* property_name, int value) override
+        {}
+        void SetValue(const char* property_name, float value) override
+        {}
+        void SetValue(const char* property_name, const math::Vector& vector) override
+        {}
+        void SetValue(const char* property_name, const math::Matrix& transform) override
+        {}
+        void SetValue(const char* property_name, const mono::Color::RGBA& color) override
+        {}
+        void SetProjectionAndModelView(const math::Matrix& projection, const math::Matrix& model_view) override
+        {}
     };
 
     class NullFactory : public mono::IShaderFactory
     {
     public:
-        std::unique_ptr<mono::ITextureShader> CreateTextureShader() const override
+        std::unique_ptr<mono::IShader> CreateTextureShader() const override
         {
-            return std::make_unique<NullTextureShader>();
+            return std::make_unique<NullShader>();
         }
-
-        std::unique_ptr<mono::IColorShader> CreateColorShader() const override
+        std::unique_ptr<mono::IShader> CreateColorShader() const override
         {
-            return std::make_unique<NullColorShader>();
+            return std::make_unique<NullShader>();
         }
-
-        std::unique_ptr<mono::IPointSpriteShader> CreatePointSpriteShader() const override
+        std::unique_ptr<mono::IShader> CreatePointSpriteShader() const override
         {
-            return std::make_unique<NullPointSpriteShader>();
+            return std::make_unique<NullShader>();
         }
-
-        std::unique_ptr<mono::IImGuiShader> CreateImGuiShader() const override
+        std::unique_ptr<mono::IShader> CreateImGuiShader() const override
         {
-            return std::make_unique<NullImGuiShader>();
+            return std::make_unique<NullShader>();
         }
     };
 }

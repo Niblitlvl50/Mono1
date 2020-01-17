@@ -10,77 +10,66 @@
 // Initialized in RenderSystem.cpp
 extern mono::IShaderFactory* g_shader_factory;
 
-size_t mono::CompileShader(mono::ShaderType type, const char* source)
+uint32_t mono::CompileShader(mono::ShaderType type, const char* source)
 {
-    const GLenum shaderType = (type == mono::ShaderType::VERTEX) ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER;
-    const GLuint shader = glCreateShader(shaderType);
+    const GLenum shader_type = (type == mono::ShaderType::VERTEX) ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER;
+    const GLuint shader = glCreateShader(shader_type);
     if(shader == 0)
         throw std::runtime_error("Unable to create shader: " + std::string(source));
 
     glShaderSource(shader, 1, &source, 0);
     glCompileShader(shader);
 
-    GLint compiledSuccessfully = 0;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &compiledSuccessfully);
-    if(compiledSuccessfully != GL_TRUE)
+    GLint compiled_successfully = 0;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled_successfully);
+    if(compiled_successfully != GL_TRUE)
     {
-        GLint maxLength = 0;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+        GLint max_length = 0;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &max_length);
 
-        // The maxLength includes the NULL character
-        GLint outLength = 0;
-        std::vector<GLchar> infoLog(maxLength);
-        glGetShaderInfoLog(shader, maxLength, &outLength, infoLog.data());
+        GLint out_length = 0;
+        std::vector<GLchar> info_log(max_length);
+        glGetShaderInfoLog(shader, max_length, &out_length, info_log.data());
 
-        // We don't need the shader anymore.
         glDeleteShader(shader);
 
-        // Store the compile log
-        const std::string log(infoLog.begin(), infoLog.end());
-
-        // Throw here since we could not compile the shader
+        const std::string log(info_log.begin(), info_log.end());
         throw std::runtime_error("Unable to compile shader: " + std::string(source) + "\nLog: " + log);
     }
 
     return shader;
 }
 
-size_t mono::LinkProgram(size_t vertexShader, size_t fragmentShader)
+uint32_t mono::LinkProgram(uint32_t vertex_shader, uint32_t fragment_shader)
 {
     const GLuint program = glCreateProgram();
-    glAttachShader(program, vertexShader);
-    glAttachShader(program, fragmentShader);
+    glAttachShader(program, vertex_shader);
+    glAttachShader(program, fragment_shader);
     glLinkProgram(program);
 
-    GLint linkedSuccessfully = 0;
-    glGetProgramiv(program, GL_LINK_STATUS, &linkedSuccessfully);
-    if(linkedSuccessfully != GL_TRUE)
+    GLint linked_successfully = 0;
+    glGetProgramiv(program, GL_LINK_STATUS, &linked_successfully);
+    if(linked_successfully != GL_TRUE)
     {
-        GLint maxLength = 0;
-        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+        GLint max_length = 0;
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &max_length);
 
-        // The maxLength includes the NULL character
-        GLint outLength = 0;
-        std::vector<GLchar> infoLog(maxLength);
-        glGetProgramInfoLog(program, maxLength, &outLength, infoLog.data());
+        GLint out_length = 0;
+        std::vector<GLchar> info_log(max_length);
+        glGetProgramInfoLog(program, max_length, &out_length, info_log.data());
 
-        // We don't need the program anymore.
         glDeleteProgram(program);
 
-        // Don't leak shaders either.
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
+        glDeleteShader(vertex_shader);
+        glDeleteShader(fragment_shader);
 
-        // Store the link log
-        const std::string log(infoLog.begin(), infoLog.end());
-
-        // Throw here since we could not link the shader
+        const std::string log(info_log.begin(), info_log.end());
         throw std::runtime_error("Unable to link program. - " + log);
     }
 
     // Always detach shaders after a successful link.
-    glDetachShader(program, vertexShader);
-    glDetachShader(program, fragmentShader);
+    glDetachShader(program, vertex_shader);
+    glDetachShader(program, fragment_shader);
 
     return program;
 }

@@ -1,8 +1,6 @@
 
 #include "PointSpriteShader.h"
-#include "ShaderFunctions.h"
-#include "Math/Matrix.h"
-
+#include "Shader.h"
 #include "System/open_gl.h"
 
 namespace
@@ -61,58 +59,27 @@ namespace
 
 using namespace mono;
 
-PointSpriteShader::PointSpriteShader()
+std::unique_ptr<IShader> PointSpriteShader::MakeShader()
 {
-    const GLuint vertex_shader = CompileShader(mono::ShaderType::VERTEX, vertex_source);
-    const GLuint fragment_shader = CompileShader(mono::ShaderType::FRAGMENT, fragment_source);
-
-    m_program = LinkProgram(vertex_shader, fragment_shader);
-
-    m_mv_matrix_location = glGetUniformLocation(m_program, "mv_matrix");
-    m_p_matrix_location = glGetUniformLocation(m_program, "p_matrix");
-
-    m_position_attribute = (unsigned int)glGetAttribLocation(m_program, "vertex_position");
-    m_rotation_attribute = (unsigned int)glGetAttribLocation(m_program, "vertex_rotation");
-    m_color_attribute = (unsigned int)glGetAttribLocation(m_program, "vertex_color");
-    m_point_size_attribute = (unsigned int)glGetAttribLocation(m_program, "point_size");
+    return std::make_unique<Shader>(vertex_source, fragment_source);
 }
 
-void PointSpriteShader::Use()
+uint32_t PointSpriteShader::GetPositionAttribute(IShader* shader)
 {
-    glUseProgram(m_program);
+    return shader->GetAttributeLocation("vertex_position");
 }
 
-unsigned int PointSpriteShader::GetShaderId() const
+uint32_t PointSpriteShader::GetRotationAttribute(IShader* shader)
 {
-    return m_program;
+    return shader->GetAttributeLocation("vertex_rotation");
 }
 
-void PointSpriteShader::LoadProjectionMatrix(const math::Matrix& projection)
+uint32_t PointSpriteShader::GetColorAttribute(IShader* shader)
 {
-    glUniformMatrix4fv(m_p_matrix_location, 1, GL_FALSE, projection.data);
+    return shader->GetAttributeLocation("vertex_color");
 }
 
-void PointSpriteShader::LoadModelViewMatrix(const math::Matrix& modelView)
+uint32_t PointSpriteShader::GetPointSizeAttribute(IShader* shader)
 {
-    glUniformMatrix4fv(m_mv_matrix_location, 1, GL_FALSE, modelView.data);
-}
-
-unsigned int PointSpriteShader::GetPositionAttribute() const
-{
-    return m_position_attribute;
-}
-
-unsigned int PointSpriteShader::GetRotationAttribute() const
-{
-    return m_rotation_attribute;
-}
-
-unsigned int PointSpriteShader::GetColorAttribute() const
-{
-    return m_color_attribute;
-}
-
-unsigned int PointSpriteShader::GetPointSizeAttribute() const
-{
-    return m_point_size_attribute;
+    return shader->GetAttributeLocation("point_size");
 }

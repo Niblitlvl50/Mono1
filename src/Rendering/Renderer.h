@@ -5,11 +5,12 @@
 #include "Math/Vector.h"
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
-#include "Shader/ShaderFwd.h"
 #include "ImGui.h"
 
 namespace mono
 {
+    class IShader;
+
     class Renderer : public IRenderer
     {
     public:
@@ -93,12 +94,12 @@ namespace mono
         math::Matrix m_current_projection;
         math::Matrix m_current_transform;
 
-        mutable uint32_t m_currentShaderId = -1;
-        mutable uint32_t m_currentTextureId = -1;
+        mutable uint32_t m_current_shader_id = -1;
+        mutable uint32_t m_current_texture_id = -1;
 
-        std::unique_ptr<IColorShader> m_color_shader;
-        std::unique_ptr<ITextureShader> m_texture_shader;
-        std::unique_ptr<IPointSpriteShader> m_point_sprite_shader;
+        std::unique_ptr<IShader> m_color_shader;
+        std::unique_ptr<IShader> m_texture_shader;
+        std::unique_ptr<IShader> m_point_sprite_shader;
 
         std::vector<const IDrawable*> m_drawables;
         ImGuiContext m_imgui_context;

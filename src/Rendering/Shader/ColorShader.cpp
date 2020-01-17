@@ -1,13 +1,11 @@
 
 #include "ColorShader.h"
-#include "ShaderFunctions.h"
-#include "Math/Matrix.h"
-
+#include "Shader.h"
 #include "System/open_gl.h"
 
 namespace
 {
-    constexpr const char* vertexSource = R"(
+    constexpr const char* vertex_source = R"(
     #ifdef __IPHONEOS__
         precision mediump float;
     #endif
@@ -29,7 +27,7 @@ namespace
         }
     )";
 
-    constexpr const char* fragmentSource = R"(
+    constexpr const char* fragment_source = R"(
     #ifdef __IPHONEOS__
         precision mediump float;
     #endif
@@ -43,55 +41,24 @@ namespace
     )";
 }
 
-
 using namespace mono;
 
-ColorShader::ColorShader()
+std::unique_ptr<IShader> ColorShader::MakeShader()
 {
-    const GLuint vertexShader = CompileShader(mono::ShaderType::VERTEX, vertexSource);
-    const GLuint fragmentShader = CompileShader(mono::ShaderType::FRAGMENT, fragmentSource);
-
-    m_program = LinkProgram(vertexShader, fragmentShader);
-
-    m_mv_matrix_location = glGetUniformLocation(m_program, "mv_matrix");
-    m_p_matrix_location = glGetUniformLocation(m_program, "p_matrix");
-    m_point_size_location = glGetUniformLocation(m_program, "point_size");
-
-    m_position_attribute_location = (unsigned int)glGetAttribLocation(m_program, "vertex_position");
-    m_color_attribute_location = (unsigned int)glGetAttribLocation(m_program, "vertex_color");
+    return std::make_unique<Shader>(vertex_source, fragment_source);
 }
 
-void ColorShader::Use()
+void ColorShader::SetPointSize(IShader* shader, float size)
 {
-    glUseProgram(m_program);
+    shader->SetValue("point_size", size);
 }
 
-unsigned int ColorShader::GetShaderId() const
+uint32_t ColorShader::GetPositionAttribute(IShader* shader)
 {
-    return m_program;
+    return shader->GetAttributeLocation("vertex_position");
 }
 
-void ColorShader::LoadProjectionMatrix(const math::Matrix& projection)
+uint32_t ColorShader::GetColorAttribute(IShader* shader)
 {
-    glUniformMatrix4fv(m_p_matrix_location, 1, GL_FALSE, projection.data);
-}
-
-void ColorShader::LoadModelViewMatrix(const math::Matrix& modelView)
-{
-    glUniformMatrix4fv(m_mv_matrix_location, 1, GL_FALSE, modelView.data);
-}
-
-void ColorShader::SetPointSize(float size)
-{
-    glUniform1f(m_point_size_location, size);
-}
-
-unsigned int ColorShader::GetPositionAttributeLocation() const
-{
-    return m_position_attribute_location;
-}
-
-unsigned int ColorShader::GetColorAttributeLocation() const
-{
-    return m_color_attribute_location;
+    return shader->GetAttributeLocation("vertex_color");
 }

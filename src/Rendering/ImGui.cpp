@@ -7,7 +7,8 @@
 #include "Rendering/Texture/ITexture.h"
 #include "Rendering/Texture/TextureFactory.h"
 #include "Rendering/IRenderer.h"
-#include "Rendering/Shader/IImGuiShader.h"
+#include "Rendering/Shader/IShader.h"
+#include "Rendering/Shader/ImGuiShader.h"
 
 #include "System/open_gl.h"
 #include "imgui/imgui.h"
@@ -54,8 +55,7 @@ void mono::DrawImGui(mono::ImGuiContext& imgui_context, mono::IRenderer& rendere
     constexpr math::Matrix model_view;
 
     renderer.UseShader(imgui_context.shader.get());
-    imgui_context.shader->LoadProjectionMatrix(projection);
-    imgui_context.shader->LoadModelViewMatrix(model_view);
+    imgui_context.shader->SetProjectionAndModelView(projection, model_view);
 
     glEnable(GL_SCISSOR_TEST);
 
@@ -73,9 +73,9 @@ void mono::DrawImGui(mono::ImGuiContext& imgui_context, mono::IRenderer& rendere
         const void* coords = (void*)(vtx_buffer + OFFSETOF(ImDrawVert, uv));
         const void* colors = (void*)(vtx_buffer + OFFSETOF(ImDrawVert, col));
 
-        glVertexAttribPointer(imgui_context.shader->PositionAttribute(), 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert), vertices);
-        glVertexAttribPointer(imgui_context.shader->TextureAttribute(), 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert), coords);
-        glVertexAttribPointer(imgui_context.shader->ColorAttribute(), 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ImDrawVert), colors);
+        glVertexAttribPointer(ImGuiShader::GetPositionAttribute(imgui_context.shader.get()), 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert), vertices);
+        glVertexAttribPointer(ImGuiShader::GetTextureAttribute(imgui_context.shader.get()), 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert), coords);
+        glVertexAttribPointer(ImGuiShader::GetColorAttribute(imgui_context.shader.get()), 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ImDrawVert), colors);
 
         for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.size(); cmd_i++)
         {

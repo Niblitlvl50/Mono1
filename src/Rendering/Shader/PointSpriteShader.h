@@ -1,36 +1,21 @@
 
 #pragma once
 
-#include "IPointSpriteShader.h"
+#include <memory>
+#include <cstdint>
 
 namespace mono
 {
-    class PointSpriteShader : public IPointSpriteShader
+    class IShader;
+
+    class PointSpriteShader
     {
     public:
 
-        PointSpriteShader();
-
-        void Use() override;
-        unsigned int GetShaderId() const override;
-        void LoadProjectionMatrix(const math::Matrix& projection) override;
-        void LoadModelViewMatrix(const math::Matrix& modelView) override;
-
-        unsigned int GetPositionAttribute() const override;
-        unsigned int GetRotationAttribute() const override;
-        unsigned int GetColorAttribute() const override;
-        unsigned int GetPointSizeAttribute() const override;
-
-    private:
-
-        unsigned int m_program;
-        
-        int m_mv_matrix_location;
-        int m_p_matrix_location;
-        
-        unsigned int m_position_attribute;
-        unsigned int m_rotation_attribute;
-        unsigned int m_color_attribute;
-        unsigned int m_point_size_attribute;
+        static std::unique_ptr<IShader> MakeShader();
+        static uint32_t GetPositionAttribute(IShader* shader);
+        static uint32_t GetRotationAttribute(IShader* shader);
+        static uint32_t GetColorAttribute(IShader* shader);
+        static uint32_t GetPointSizeAttribute(IShader* shader);
     };
 }

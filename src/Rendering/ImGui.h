@@ -1,19 +1,18 @@
 
 #pragma once
 
-#include "Rendering/RenderPtrFwd.h"
 #include "Math/Vector.h"
 #include <unordered_map>
 
 namespace mono
 {
     class IRenderer;
-    class IImGuiShader;
+    class IShader;
 
     struct ImGuiContext
     {
         math::Vector window_size;
-        std::unique_ptr<mono::IImGuiShader> shader;
+        std::unique_ptr<mono::IShader> shader;
     };
 
     void InitializeImGui(ImGuiContext& imgui_context);

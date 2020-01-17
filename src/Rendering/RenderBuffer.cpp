@@ -56,7 +56,7 @@ void RenderBuffer::Use() const
     PROCESS_GL_ERRORS();
 }
 
-size_t RenderBuffer::Id() const
+uint32_t RenderBuffer::Id() const
 {
     return m_buffer_id;
 }

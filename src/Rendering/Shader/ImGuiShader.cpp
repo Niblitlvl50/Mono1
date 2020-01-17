@@ -1,8 +1,6 @@
 
 #include "ImGuiShader.h"
-#include "ShaderFunctions.h"
-#include "Math/Matrix.h"
-
+#include "Shader.h"
 #include "System/open_gl.h"
 
 using namespace mono;
@@ -49,70 +47,32 @@ namespace
     "}";
 }
 
-ImGuiShader::ImGuiShader()
+std::unique_ptr<IShader> ImGuiShader::MakeShader()
 {
-    const GLuint vertex_shader = CompileShader(mono::ShaderType::VERTEX, vertex_source);
-    const GLuint fragment_shader = CompileShader(mono::ShaderType::FRAGMENT, fragment_source);
-
-    m_program = mono::LinkProgram(vertex_shader, fragment_shader);
-
-    m_MVMatrixLocation = glGetUniformLocation(m_program, "mv_matrix");
-    m_PMatrixLocation = glGetUniformLocation(m_program, "p_matrix");
-
-    m_textureLocation = glGetUniformLocation(m_program, "Texture");
-
-    m_positionAttributeLocation = (unsigned int)glGetAttribLocation(m_program, "Position");
-    m_colorAttributeLocation = (unsigned int)glGetAttribLocation(m_program, "Color");
-    m_textureAttributeLocation = (unsigned int)glGetAttribLocation(m_program, "UV");
+    return std::make_unique<Shader>(vertex_source, fragment_source);
 }
 
-ImGuiShader::~ImGuiShader()
+void ImGuiShader::SetTextureValue(IShader* shader, int value)
 {
-    glDeleteProgram(m_program);
+    shader->SetValue("Texture", value);
 }
 
-void ImGuiShader::Use()
+uint32_t ImGuiShader::GetPositionAttribute(IShader* shader)
 {
-    glUseProgram(m_program);
+    return shader->GetAttributeLocation("Position");
 }
 
-unsigned int ImGuiShader::GetShaderId() const
+uint32_t ImGuiShader::GetColorAttribute(IShader* shader)
 {
-    return m_program;
+    return shader->GetAttributeLocation("Color");
 }
 
-void ImGuiShader::LoadProjectionMatrix(const math::Matrix& projection)
+uint32_t ImGuiShader::GetTextureAttribute(IShader* shader)
 {
-    glUniformMatrix4fv(m_PMatrixLocation, 1, GL_FALSE, projection.data);
+    return shader->GetAttributeLocation("UV");
 }
 
-void ImGuiShader::LoadModelViewMatrix(const math::Matrix& modelView)
+uint32_t ImGuiShader::GetTextureLocation(IShader* shader)
 {
-    glUniformMatrix4fv(m_MVMatrixLocation, 1, GL_FALSE, modelView.data);
+    return shader->GetAttributeLocation("Texture");
 }
-
-void ImGuiShader::SetTextureValue(int value)
-{
-    glUniform1i(m_textureLocation, value);
-}
-
-unsigned int ImGuiShader::PositionAttribute() const
-{
-    return m_positionAttributeLocation;
-}
-
-unsigned int ImGuiShader::TextureAttribute() const
-{
-    return m_textureAttributeLocation;
-}
-
-unsigned int ImGuiShader::ColorAttribute() const
-{
-    return m_colorAttributeLocation;
-}
-
-int ImGuiShader::TextureLocation() const
-{
-    return m_textureLocation;
-}
-

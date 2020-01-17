@@ -12,34 +12,34 @@ namespace
 {
     struct Bitmap : public mono::IImage
     {
-        Bitmap(const byte* data, unsigned int width, unsigned int height, int colorComponents)
-            : mData(data),
-              mWidth(width),
-              mHeight(height),
-              mColorComponents(colorComponents)
+        Bitmap(const byte* data, uint32_t width, uint32_t height, int color_components)
+            : m_data(data),
+              m_width(width),
+              m_height(height),
+              m_color_components(color_components)
         { }
         
-        virtual const byte* Data() const
+        const byte* Data() const override
         {
-            return mData;
+            return m_data;
         }
-        virtual unsigned int Width() const
+        uint32_t Width() const override
         {
-            return mWidth;
+            return m_width;
         }
-        virtual unsigned int Height() const
+        uint32_t Height() const override
         {
-            return mHeight;
+            return m_height;
         }
-        virtual int ColorComponents() const
+        int ColorComponents() const override
         {
-            return mColorComponents;
+            return m_color_components;
         }
 
-        const byte* mData;
-        const unsigned int mWidth;
-        const unsigned int mHeight;
-        const int mColorComponents;
+        const byte* m_data;
+        const uint32_t m_width;
+        const uint32_t m_height;
+        const int m_color_components;
     };
 }
 

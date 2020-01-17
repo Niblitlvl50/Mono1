@@ -2,6 +2,7 @@
 #pragma once
 
 #include <memory>
+#include <cstdint>
 
 using byte = unsigned char;
 
@@ -12,14 +13,9 @@ namespace mono
         virtual ~IImage() = default;
 
         //! Get the raw image data
-        //! \return byte* Pointer to the data
         virtual const byte* Data() const = 0;
-
-        //! Return the width
-        virtual unsigned int Width() const = 0;
-
-        //! Return the height
-        virtual unsigned int Height() const = 0;
+        virtual uint32_t Width() const = 0;
+        virtual uint32_t Height() const = 0;
 
         //! Number of color components in the data. 1 = alpha, 3 = rgb, 4 = rgba
         virtual int ColorComponents() const = 0;

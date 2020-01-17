@@ -1,15 +1,12 @@
 
 #include "TextureShader.h"
-#include "ShaderFunctions.h"
-#include "Math/Matrix.h"
+#include "Shader.h"
 #include "Rendering/Color.h"
-
 #include "System/open_gl.h"
-
 
 namespace
 {
-    constexpr const char* vertexSource = R"(
+    constexpr const char* vertex_source = R"(
     #ifdef __IPHONEOS__
         precision mediump float;
     #endif
@@ -29,7 +26,7 @@ namespace
         }
     )";
 
-    constexpr const char* fragmentSource = R"(
+    constexpr const char* fragment_source = R"(
     #ifdef __IPHONEOS__
         precision mediump float;
     #endif
@@ -51,73 +48,34 @@ namespace
     )";
 }
 
-
 using namespace mono;
 
-TextureShader::TextureShader()
+std::unique_ptr<mono::IShader> TextureShader::MakeShader()
 {
-    const GLuint vertexShader = CompileShader(mono::ShaderType::VERTEX, vertexSource);
-    const GLuint fragmentShader = CompileShader(mono::ShaderType::FRAGMENT, fragmentSource);
-    
-    m_program = LinkProgram(vertexShader, fragmentShader);
-
-    m_MV_matrix_location = glGetUniformLocation(m_program, "mv_matrix");
-    m_P_matrix_location = glGetUniformLocation(m_program, "p_matrix");
-
-    m_color_shade_location = glGetUniformLocation(m_program, "color_shade");
-    m_is_alpha_texture_location = glGetUniformLocation(m_program, "is_alpha_texture");
-    m_texture_offset_location = glGetUniformLocation(m_program, "texture_offset");
-
-    m_position_attribute_location = (unsigned int)glGetAttribLocation(m_program, "vertex_position");
-    m_texture_attribute_location = (unsigned int)glGetAttribLocation(m_program, "texture_coord");
+    return std::make_unique<Shader>(vertex_source, fragment_source);
 }
 
-TextureShader::~TextureShader()
+void TextureShader::SetShade(IShader* shader, const mono::Color::RGBA& color)
 {
-    glDeleteProgram(m_program);
+    shader->SetValue("color_shade", color);
 }
 
-void TextureShader::Use()
+void TextureShader::SetAlphaTexture(IShader* shader, bool is_alpha)
 {
-    glUseProgram(m_program);
+    shader->SetValue("is_alpha_texture", is_alpha);
 }
 
-unsigned int TextureShader::GetShaderId() const
+void TextureShader::SetTextureOffset(IShader* shader, float offset)
 {
-    return m_program;
+    shader->SetValue("texture_offset", offset);
 }
 
-void TextureShader::LoadProjectionMatrix(const math::Matrix& projection)
+uint32_t TextureShader::GetPositionAttribute(IShader* shader)
 {
-    glUniformMatrix4fv(m_P_matrix_location, 1, GL_FALSE, projection.data);
+    return shader->GetAttributeLocation("vertex_position");
 }
 
-void TextureShader::LoadModelViewMatrix(const math::Matrix& modelView)
+uint32_t TextureShader::GetTextureAttribute(IShader* shader)
 {
-    glUniformMatrix4fv(m_MV_matrix_location, 1, GL_FALSE, modelView.data);
-}
-
-unsigned int TextureShader::GetPositionAttributeLocation() const
-{
-    return m_position_attribute_location;
-}
-
-unsigned int TextureShader::GetTextureAttributeLocation() const
-{
-    return m_texture_attribute_location;
-}
-
-void TextureShader::SetShade(const mono::Color::RGBA& shade)
-{
-    glUniform4f(m_color_shade_location, shade.red, shade.green, shade.blue, shade.alpha);
-}
-
-void TextureShader::SetAlphaTexture(bool isAlpha)
-{
-    glUniform1i(m_is_alpha_texture_location, isAlpha);
-}
-
-void TextureShader::SetTextureOffset(float offset)
-{
-    glUniform1f(m_texture_offset_location, offset);
+    return shader->GetAttributeLocation("texture_coord");
 }
