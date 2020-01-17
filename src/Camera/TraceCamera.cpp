@@ -1,6 +1,6 @@
 
 #include "TraceCamera.h"
-#include "Entity/IEntity.h"
+#include "Zone/IEntity.h"
 #include "Math/Vector.h"
 #include "Math/MathFunctions.h"
 

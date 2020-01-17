@@ -37,7 +37,7 @@ RenderBuffer::~RenderBuffer()
     glDeleteBuffers(1, &m_buffer_id);
 }
 
-void RenderBuffer::UpdateData(const void* data, size_t offset, size_t count)
+void RenderBuffer::UpdateData(const void* data, uint32_t offset, uint32_t count)
 {
     const size_t size = (m_data == BufferData::FLOAT) ? sizeof(float) : sizeof(int);
 

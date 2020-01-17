@@ -2,7 +2,7 @@
 #include "ZoneBase.h"
 #include "IUpdater.h"
 #include "Rendering/IRenderer.h"
-#include "Entity/IEntity.h"
+#include "Zone/IEntity.h"
 #include "Util/Algorithm.h"
 #include "Math/Quad.h"
 #include "Math/MathFunctions.h"
