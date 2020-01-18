@@ -3,7 +3,7 @@
 #include "Texture.h"
 #include "IImage.h"
 #include "ImageFactory.h"
-#include "Hash.h"
+#include "Util/Hash.h"
 #include "System/System.h"
 #include <cstdio>
 #include <unordered_map>
@@ -11,9 +11,9 @@
 namespace
 {
     // This is where all the weak pointers goes, that points to the allocated textures!
-    std::unordered_map<unsigned int, std::weak_ptr<mono::ITexture>> g_texture_storage;
+    std::unordered_map<uint32_t, std::weak_ptr<mono::ITexture>> g_texture_storage;
 
-    mono::ITexturePtr GetTextureFromCache(unsigned int texture_hash)
+    mono::ITexturePtr GetTextureFromCache(uint32_t texture_hash)
     {
         auto it = g_texture_storage.find(texture_hash);
         if(it != g_texture_storage.end())
@@ -26,7 +26,7 @@ namespace
         return nullptr;
     }
 
-    mono::ITexturePtr CreateAndCacheTexture(const mono::IImagePtr& image, unsigned int texture_hash)
+    mono::ITexturePtr CreateAndCacheTexture(const mono::IImagePtr& image, uint32_t texture_hash)
     {
         const auto deleter = [texture_hash](mono::ITexture* ptr) {
             g_texture_storage.erase(texture_hash);
@@ -42,7 +42,7 @@ namespace
 
 mono::ITexturePtr mono::CreateTexture(const char* texture_name)
 {
-    const unsigned int texture_hash = mono::Hash(texture_name);
+    const uint32_t texture_hash = mono::Hash(texture_name);
 
     mono::ITexturePtr texture = GetTextureFromCache(texture_hash);
     if(texture)
@@ -58,7 +58,7 @@ mono::ITexturePtr mono::CreateTextureFromData(const byte* data, int data_length,
 {
     if(cache_name)
     {
-        const unsigned int texture_hash = mono::Hash(cache_name);
+        const uint32_t texture_hash = mono::Hash(cache_name);
 
         mono::ITexturePtr texture = GetTextureFromCache(texture_hash);
         if(texture)

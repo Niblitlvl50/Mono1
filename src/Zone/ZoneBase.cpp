@@ -115,11 +115,11 @@ void ZoneBase::SetDrawableLayer(const IDrawablePtr& drawable, int new_layer)
     if(it != m_drawables.end())
     {
         it->first = new_layer;
-        std::sort(m_drawables.begin(), m_drawables.end(), DrawableSortFunc);        
-    }    
+        std::sort(m_drawables.begin(), m_drawables.end(), DrawableSortFunc);
+    }
 }
 
-mono::IEntityPtr ZoneBase::FindEntityFromId(unsigned int id) const
+mono::IEntityPtr ZoneBase::FindEntityFromId(uint32_t id) const
 {
     const auto find_func = [id](const mono::IEntityPtr& entity) {
         return id == entity->Id();

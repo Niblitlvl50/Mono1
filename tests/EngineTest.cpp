@@ -141,7 +141,7 @@ namespace
         { }
         virtual void SetDrawableLayer(const mono::IDrawablePtr& drawable, int new_layer) override
         { }
-        virtual mono::IEntityPtr FindEntityFromId(unsigned int id) const override
+        virtual mono::IEntityPtr FindEntityFromId(uint32_t id) const override
         {
             return nullptr;
         }

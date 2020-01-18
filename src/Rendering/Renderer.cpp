@@ -82,7 +82,7 @@ void Renderer::DrawFrame()
 {
     PrepareDraw();
 
-    unsigned int draw_count = 0;
+    uint32_t draw_count = 0;
     const math::Quad camera_quad = m_viewport;
 
     for(const auto& drawable : m_drawables)

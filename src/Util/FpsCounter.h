@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include <cstdint>
+
 namespace mono
 {
     class FpsCounter
@@ -8,14 +10,14 @@ namespace mono
     public:
 
         void operator ++ (int i);
-        unsigned int Fps() const;
-        unsigned int Frames() const;
+        uint32_t Fps() const;
+        uint32_t Frames() const;
 
     private:
 
-        unsigned int mTime = 0;
-        unsigned int mFrames = 0;
-        unsigned int mTotalFrames = 0;
-        unsigned int mFps = 0;
+        uint32_t m_time = 0;
+        uint32_t m_frames = 0;
+        uint32_t m_total_frames = 0;
+        uint32_t m_fps = 0;
     };
 }

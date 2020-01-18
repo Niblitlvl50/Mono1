@@ -4,6 +4,7 @@
 #include "System/System.h"
 
 #include <functional>
+#include <cstdint>
 
 using namespace std::placeholders;
 
@@ -35,7 +36,7 @@ namespace
 
     struct ScopedTimer
     {
-        ScopedTimer(unsigned int& out_diff_time)
+        ScopedTimer(uint32_t& out_diff_time)
             : m_before_time(System::GetMilliseconds())
             , m_out_diff_time(out_diff_time)
         { }
@@ -45,8 +46,8 @@ namespace
             m_out_diff_time = System::GetMilliseconds() - m_before_time;
         }
 
-        const unsigned int m_before_time;
-        unsigned int& m_out_diff_time;
+        const uint32_t m_before_time;
+        uint32_t& m_out_diff_time;
     };
 }
 
@@ -85,7 +86,7 @@ TEST(EventHandlerTest, stress_test)
     mono::EventToken<TestEvent1> testevent_token_1[n_objects];
     mono::EventToken<TestEvent2> testevent_token_2[n_objects];
 
-    unsigned int add_listener_diff = 0;
+    uint32_t add_listener_diff = 0;
     {
         ScopedTimer scope_timer(add_listener_diff);
 
@@ -101,14 +102,14 @@ TEST(EventHandlerTest, stress_test)
         }
     }
 
-    unsigned int dispatch_diff = 0;
+    uint32_t dispatch_diff = 0;
     {
         ScopedTimer scope_timer(dispatch_diff);
         handler.DispatchEvent(TestEvent1());
         handler.DispatchEvent(TestEvent2());
     }
 
-    unsigned int remove_diff = 0;
+    uint32_t remove_diff = 0;
     {
         ScopedTimer scope_timer(remove_diff);
 

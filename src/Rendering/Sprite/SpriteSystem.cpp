@@ -3,7 +3,7 @@
 #include "Sprite.h"
 #include "SpriteFactory.h"
 #include "TransformSystem/TransformSystem.h"
-#include "Hash.h"
+#include "Util/Hash.h"
 
 #include <cassert>
 

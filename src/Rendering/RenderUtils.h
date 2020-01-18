@@ -6,6 +6,7 @@
 #include "Math/MathFwd.h"
 #include <vector>
 #include <stdlib.h>
+#include <cstdint>
 
 namespace mono
 {
@@ -20,7 +21,7 @@ namespace mono
     //! Draws a circle
     void DrawCircle(const math::Vector& position,
                     float radie,
-                    unsigned int segments,
+                    uint32_t segments,
                     float lineWidth,
                     const mono::Color::RGBA& color,
                     IShader* shader);

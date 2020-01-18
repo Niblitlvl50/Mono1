@@ -1,7 +1,7 @@
 
 
 #include "EntitySystem.h"
-#include "Hash.h"
+#include "Util/Hash.h"
 #include <numeric>
 #include <algorithm>
 #include <cassert>

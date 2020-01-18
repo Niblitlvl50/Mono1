@@ -2,7 +2,7 @@
 #include "PhysicsSystem.h"
 #include "TransformSystem/TransformSystem.h"
 #include "CMSpace.h"
-#include "Hash.h"
+#include "Util/Hash.h"
 
 #include "Impl/BodyImpl.h"
 #include "Impl/ShapeImpl.h"

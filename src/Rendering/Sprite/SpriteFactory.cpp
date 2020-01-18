@@ -19,7 +19,7 @@
 
 #include "Math/Quad.h"
 #include "System/File.h"
-#include "Hash.h"
+#include "Util/Hash.h"
 
 #include <unordered_map>
 #include <string>

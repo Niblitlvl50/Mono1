@@ -3,7 +3,7 @@
 #include "ShaderFunctions.h"
 #include "Math/Matrix.h"
 #include "Math/Vector.h"
-#include "Hash.h"
+#include "Util/Hash.h"
 #include "Rendering/Color.h"
 
 #include "System/open_gl.h"

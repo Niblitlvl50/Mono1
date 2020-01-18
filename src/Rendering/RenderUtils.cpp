@@ -65,7 +65,7 @@ void mono::DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color
 
 void mono::DrawCircle(const math::Vector& position,
                       float radie,
-                      unsigned int segments,
+                      uint32_t segments,
                       float lineWidth,
                       const mono::Color::RGBA& color,
                       IShader* shader)
@@ -75,7 +75,7 @@ void mono::DrawCircle(const math::Vector& position,
 
     const float coef = 2.0f * math::PI() / float(segments);
     
-    for(unsigned int index = 0; index < segments; ++index)
+    for(uint32_t index = 0; index < segments; ++index)
     {
         const float radians = index * coef;
         const float x = radie * std::cos(radians) + position.x;

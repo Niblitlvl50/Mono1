@@ -23,7 +23,7 @@ namespace mono
 
         virtual void SetDrawableLayer(const IDrawablePtr& drawable, int new_layer);
 
-        virtual mono::IEntityPtr FindEntityFromId(unsigned int id) const;
+        virtual mono::IEntityPtr FindEntityFromId(uint32_t id) const;
         virtual mono::IEntityPtr FindEntityFromPoint(const math::Vector& point) const;
 
         const std::vector<IEntityPtr>& GetEntities() const;

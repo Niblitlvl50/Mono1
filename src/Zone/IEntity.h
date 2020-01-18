@@ -4,6 +4,7 @@
 #include "Rendering/IDrawable.h"
 #include "IUpdatable.h"
 #include "Math/MathFwd.h"
+#include <cstdint>
 
 namespace mono
 {
@@ -27,11 +28,11 @@ namespace mono
         virtual math::Matrix Transformation() const = 0;
 
         // Unique id.
-        virtual unsigned int Id() const = 0;
-        virtual void SetId(unsigned int new_id) = 0;
+        virtual uint32_t Id() const = 0;
+        virtual void SetId(uint32_t new_id) = 0;
 
         // 32 bits bitset.
-        virtual void SetProperty(unsigned int property) = 0;
-        virtual bool HasProperty(unsigned int property) const = 0;
+        virtual void SetProperty(uint32_t property) = 0;
+        virtual bool HasProperty(uint32_t property) const = 0;
     };
 }

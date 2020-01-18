@@ -1,6 +1,6 @@
 
 #include "AudioFactory.h"
-#include "Hash.h"
+#include "Util/Hash.h"
 #include "System/System.h"
 #include "System/File.h"
 
@@ -191,12 +191,12 @@ namespace
     }
 
     // The sound data repository, this is where all the sounds are stored!
-    std::unordered_map<unsigned int, std::weak_ptr<SoundData>> repository;
+    std::unordered_map<uint32_t, std::weak_ptr<SoundData>> repository;
 }
 
 mono::ISoundPtr mono::AudioFactory::CreateSound(const char* file_name, bool loop, bool relative)
 {
-    const unsigned int sound_hash = mono::Hash(file_name);
+    const uint32_t sound_hash = mono::Hash(file_name);
     auto it = repository.find(sound_hash);
     if(it != repository.end())
     {

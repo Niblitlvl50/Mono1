@@ -7,27 +7,27 @@ using namespace mono;
 
 void FpsCounter::operator ++ (int)
 {
-    ++mFrames;
-    ++mTotalFrames;
+    ++m_frames;
+    ++m_total_frames;
     
-    const unsigned int currentTime = System::GetMilliseconds();
-    const unsigned int delta = currentTime - mTime;
+    const uint32_t current_time = System::GetMilliseconds();
+    const uint32_t delta = current_time - m_time;
     if(delta >= 1000)
     {
-        mTime = currentTime;
-        mFps = (unsigned int)std::floor(float(mFrames) / 1.0f);
-        mFrames = 0;
-    }    
+        m_time = current_time;
+        m_fps = (uint32_t)std::floor(float(m_frames) / 1.0f);
+        m_frames = 0;
+    }
 }
 
-unsigned int FpsCounter::Fps() const
+uint32_t FpsCounter::Fps() const
 {
-    return mFps;
+    return m_fps;
 }
 
-unsigned int FpsCounter::Frames() const
+uint32_t FpsCounter::Frames() const
 {
-    return mTotalFrames;
+    return m_total_frames;
 }
 
 
