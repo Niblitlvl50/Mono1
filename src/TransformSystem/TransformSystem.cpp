@@ -28,7 +28,7 @@ math::Matrix TransformSystem::GetWorld(uint32_t id) const
     while(id != no_parent)
     {
         const Component& transform_component = m_transforms[id];
-        transform = transform * transform_component.transform;
+        transform = transform_component.transform * transform;
         id = transform_component.parent;
     }
 
