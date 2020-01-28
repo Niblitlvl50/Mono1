@@ -8,6 +8,7 @@
 
 namespace mono
 {
+    class ParticleSystem;
     struct ParticlePoolComponent;
 
     using ParticleGenerator = std::function<void (const math::Vector& position, ParticlePoolComponent& pool, size_t index)>;

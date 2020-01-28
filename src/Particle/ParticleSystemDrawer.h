@@ -5,6 +5,7 @@
 #include "Rendering/RenderFwd.h"
 #include <unordered_map>
 #include <cstdint>
+#include <memory>
 
 namespace mono
 {
