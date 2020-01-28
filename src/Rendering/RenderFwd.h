@@ -10,6 +10,7 @@ namespace mono
     class ITexture;
     class IShader;
     class ISprite;
+    class IRenderBuffer;
 
     namespace Color
     {

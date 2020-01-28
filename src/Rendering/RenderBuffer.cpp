@@ -19,6 +19,7 @@ RenderBuffer::RenderBuffer(mono::BufferTarget target, mono::BufferType type, mon
     : m_target(target)
     , m_type(type)
     , m_data(data)
+    , m_size(count)
 {
     const GLenum buffer_target = buffer_target_lookup[static_cast<int>(m_target)];
     const GLenum buffer_usage = usage_type_lookup[static_cast<int>(m_type)];
@@ -54,6 +55,11 @@ void RenderBuffer::Use() const
     const GLenum target = buffer_target_lookup[static_cast<int>(m_target)];
     glBindBuffer(target, m_buffer_id);
     PROCESS_GL_ERRORS();
+}
+
+uint32_t RenderBuffer::Size() const
+{
+    return m_size;
 }
 
 uint32_t RenderBuffer::Id() const

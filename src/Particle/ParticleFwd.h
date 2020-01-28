@@ -3,14 +3,16 @@
 
 #include "Math/MathFwd.h"
 #include <stdlib.h>
+#include <cstdint>
 #include <functional>
 
 namespace mono
 {
-    class ParticlePool;
-    class ParticleEmitter;
-    class ParticleDrawer;
+    struct ParticlePoolComponent;
 
-    using ParticleGenerator = std::function<void (const math::Vector& position, ParticlePool& pool, size_t index)>;
-    using ParticleUpdater   = std::function<void (ParticlePool& pool, size_t count, unsigned int delta)>;
+    using ParticleGenerator = std::function<void (const math::Vector& position, ParticlePoolComponent& pool, size_t index)>;
+    using ParticleUpdater   = std::function<void (ParticlePoolComponent& pool, size_t count, uint32_t delta_ms)>;
+
+    void DefaultGenerator(const math::Vector& position, ParticlePoolComponent& pool, size_t index);
+    void DefaultUpdater(ParticlePoolComponent& pool, size_t count, uint32_t delta_ms);
 }

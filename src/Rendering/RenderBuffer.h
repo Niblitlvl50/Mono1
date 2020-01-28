@@ -15,6 +15,7 @@ namespace mono
 
         void UpdateData(const void* data, uint32_t offset, uint32_t count) override;
         void Use() const override;
+        uint32_t Size() const override;
         uint32_t Id() const override;
 
     private:
@@ -22,6 +23,7 @@ namespace mono
         mono::BufferTarget m_target;
         mono::BufferType m_type;
         mono::BufferData m_data;
+        uint32_t m_size;
         uint32_t m_buffer_id;
     };
 }
