@@ -35,7 +35,7 @@ namespace
 
     bool IsDone(const ParticleEmitterComponent& emitter_component)
     {
-        if(emitter_component.burst)
+        if(emitter_component.type == mono::EmitterType::BURST || emitter_component.type == mono::EmitterType::BURST_REMOVE_ON_FINISH)
             return emitter_component.burst_emitted;
 
         return (emitter_component.duration > 0.0f && emitter_component.elapsed_time > emitter_component.duration);
@@ -147,7 +147,7 @@ void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePo
 {
     if(IsDone(*emitter))
     {
-        if(emitter->release_once_finished)
+        if(emitter->type == EmitterType::BURST_REMOVE_ON_FINISH)
             m_deferred_release_emitter.push_back({pool_id, emitter});
         return;
     }
@@ -156,7 +156,7 @@ void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePo
     emitter->elapsed_time += delta_in_seconds;
 
     size_t new_particles = 0;
-    if(emitter->burst)
+    if(emitter->type == EmitterType::BURST || emitter->type == EmitterType::BURST_REMOVE_ON_FINISH)
     {
         new_particles = emitter->emit_rate * emitter->duration;
     }
@@ -218,6 +218,10 @@ void ParticleSystem::ReleasePool(uint32_t id)
         m_particle_emitters.ReleasePoolData(emitter);
 
     attached_emitters.clear();
+
+    ParticleDrawerComponent& draw_component = m_particle_drawers[id];
+    draw_component.texture = nullptr;
+
     m_active_pools[id] = false;
 }
 
@@ -237,13 +241,7 @@ void ParticleSystem::SetPoolDrawData(uint32_t pool_id, mono::ITexturePtr texture
 }
 
 ParticleEmitterComponent* ParticleSystem::AttachEmitter(
-    uint32_t pool_id,
-    const math::Vector& position,
-    float duration,
-    float emit_rate,
-    bool burst,
-    bool release_once_finished,
-    ParticleGenerator generator)
+    uint32_t pool_id, const math::Vector& position, float duration, float emit_rate, EmitterType emitter_type, ParticleGenerator generator)
 {
     ParticleEmitterComponent* emitter = m_particle_emitters.GetPoolData();
 
@@ -252,9 +250,8 @@ ParticleEmitterComponent* ParticleSystem::AttachEmitter(
     emitter->elapsed_time = 0.0f;
     emitter->carry_over = 0.0f;
     emitter->emit_rate = emit_rate;
-    emitter->burst = burst;
     emitter->burst_emitted = false;
-    emitter->release_once_finished = release_once_finished;
+    emitter->type = emitter_type;
     emitter->generator = generator;
 
     m_particle_pools_emitters[pool_id].push_back(emitter);

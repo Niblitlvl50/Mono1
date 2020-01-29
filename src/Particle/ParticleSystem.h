@@ -20,6 +20,13 @@ namespace mono
         mono::BlendMode blend_mode;
     };
 
+    enum class EmitterType
+    {
+        CONTINOUS,
+        BURST,
+        BURST_REMOVE_ON_FINISH
+    };
+
     struct ParticleEmitterComponent
     {
         math::Vector position;
@@ -28,12 +35,9 @@ namespace mono
         float carry_over;
 
         float emit_rate;
-
-        bool burst;
         bool burst_emitted;
 
-        bool release_once_finished;
-
+        EmitterType type;
         ParticleGenerator generator;
     };
 
@@ -89,14 +93,13 @@ namespace mono
 
         // duration in seconds, negative value means infinite
         // emit_rate is n particles per second
-        // burst if true, one burst only and will emit duration * emit_rate particles
+        // if emitter type is burst, one burst only and will emit duration * emit_rate particles
         ParticleEmitterComponent* AttachEmitter(
             uint32_t pool_id,
             const math::Vector& position,
             float duration,
             float emit_rate,
-            bool burst,
-            bool release_once_finished,
+            EmitterType emitter_type,
             ParticleGenerator generator);
         
         void ReleaseEmitter(uint32_t pool_id, ParticleEmitterComponent* emitter);
