@@ -13,6 +13,8 @@
 #include "Rendering/Shader/IShaderFactory.h"
 #include "Rendering/Shader/ShaderFunctions.h"
 #include "Rendering/RenderSystem.h"
+
+#include "Rendering/Texture/ITexture.h"
 #include "Rendering/Texture/ITextureFactory.h"
 
 #include "Math/Vector.h"
@@ -201,23 +203,44 @@ namespace
         }
     };
 
+
+    class NullTexture : public mono::ITexture
+    {
+    public:
+
+        void Use() const override
+        { }
+        uint32_t Id() const override
+        {
+            return 0;
+        }
+        uint32_t Width() const override
+        {
+            return 16;
+        }
+        uint32_t Height() const override
+        {
+            return 9;
+        }
+    };
+
     class NullTextureFactory : public mono::ITextureFactory
     {
     public:
 
         mono::ITexturePtr CreateTexture(const char* texture_name) const
         {
-            return nullptr;
+            return std::make_shared<NullTexture>();
         }
 
         mono::ITexturePtr CreateTextureFromData(const byte* data, int data_length, const char* cache_name) const
         {
-            return nullptr;
+            return std::make_shared<NullTexture>();
         }
 
         mono::ITexturePtr CreateTexture(const byte* data, int width, int height, int color_components) const
         {
-            return nullptr;
+            return std::make_shared<NullTexture>();
         }
     };
 }
