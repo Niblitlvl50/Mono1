@@ -2,7 +2,7 @@
 #include "TextFunctions.h"
 #include "System/File.h"
 #include "Rendering/Texture/ITexture.h"
-#include "Rendering/Texture/TextureFactory.h"
+#include "Rendering/Texture/ITextureFactory.h"
 #include "Math/Vector.h"
 
 #define STB_TRUETYPE_IMPLEMENTATION
@@ -66,7 +66,7 @@ void mono::LoadFontRaw(int font_id, const unsigned char* data_bytes, int data_si
     stbtt_BakeFontBitmap(data_bytes, 0, size, bitmap_data, width, height, g_base, g_n_chars, char_data);
 
     FontData font_data;
-    font_data.texture = mono::CreateTexture(bitmap_data, width, height, 1);
+    font_data.texture = mono::GetTextureFactory()->CreateTexture(bitmap_data, width, height, 1);
 
     for(int index = 0; index < g_n_chars; ++index)
     {

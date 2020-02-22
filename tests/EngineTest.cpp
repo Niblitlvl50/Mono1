@@ -13,6 +13,7 @@
 #include "Rendering/Shader/IShaderFactory.h"
 #include "Rendering/Shader/ShaderFunctions.h"
 #include "Rendering/RenderSystem.h"
+#include "Rendering/Texture/ITextureFactory.h"
 
 #include "Math/Vector.h"
 #include "Math/Quad.h"
@@ -179,7 +180,7 @@ namespace
         {}
     };
 
-    class NullFactory : public mono::IShaderFactory
+    class NullShaderFactory : public mono::IShaderFactory
     {
     public:
         std::unique_ptr<mono::IShader> CreateTextureShader() const override
@@ -199,13 +200,34 @@ namespace
             return std::make_unique<NullShader>();
         }
     };
+
+    class NullTextureFactory : public mono::ITextureFactory
+    {
+    public:
+
+        mono::ITexturePtr CreateTexture(const char* texture_name) const
+        {
+            return nullptr;
+        }
+
+        mono::ITexturePtr CreateTextureFromData(const byte* data, int data_length, const char* cache_name) const
+        {
+            return nullptr;
+        }
+
+        mono::ITexturePtr CreateTexture(const byte* data, int width, int height, int color_components) const
+        {
+            return nullptr;
+        }
+    };
 }
 
 TEST(EngineTest, Basic)
 {
     mono::EventHandler handler;
     mono::SystemContext system_context;
-    mono::LoadCustomShaderFactory(new NullFactory);
+    mono::LoadCustomShaderFactory(new NullShaderFactory);
+    mono::LoadCustomTextureFactory(new NullTextureFactory);
 
     MocWindow window(handler);
     std::shared_ptr<MocCamera> camera = std::make_shared<MocCamera>();

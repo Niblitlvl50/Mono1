@@ -5,7 +5,7 @@
 #include "Math/Matrix.h"
 
 #include "Rendering/Texture/ITexture.h"
-#include "Rendering/Texture/TextureFactory.h"
+#include "Rendering/Texture/ITextureFactory.h"
 #include "Rendering/IRenderer.h"
 #include "Rendering/Shader/IShader.h"
 #include "Rendering/Shader/ImGuiShader.h"
@@ -30,7 +30,7 @@ void mono::InitializeImGui(mono::ImGuiContext& imgui_context)
     unsigned char* pixels;
     ImGui::GetIO().Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
-    mono::ITexturePtr font_texture = mono::CreateTexture(pixels, width, height, 4);
+    mono::ITexturePtr font_texture = mono::GetTextureFactory()->CreateTexture(pixels, width, height, 4);
     g_imgui_textures.insert(std::make_pair(font_texture->Id(), font_texture));
 
     ImGui::GetIO().Fonts->TexID = (void *)(intptr_t)font_texture->Id();
@@ -119,7 +119,7 @@ void mono::SetImGuiConfig(const char* config_file)
 
 uint32_t mono::LoadImGuiTexture(const char* texture_file)
 {
-    mono::ITexturePtr texture = mono::CreateTexture("res/textures/placeholder.png");
+    mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture("res/textures/placeholder.png");
     g_imgui_textures.insert(std::make_pair(texture->Id(), texture));
     return texture->Id();
 }

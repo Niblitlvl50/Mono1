@@ -14,4 +14,5 @@ namespace mono
     void ShutdownRender();
 
     void LoadCustomShaderFactory(const class IShaderFactory* custom_factory);
+    void LoadCustomTextureFactory(const class ITextureFactory* texture_factory);
 }

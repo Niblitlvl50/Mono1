@@ -15,7 +15,7 @@
 #include "Sprite.h"
 
 #include "Rendering/Texture/ITexture.h"
-#include "Rendering/Texture/TextureFactory.h"
+#include "Rendering/Texture/ITextureFactory.h"
 
 #include "Math/Quad.h"
 #include "System/File.h"
@@ -100,7 +100,7 @@ mono::ISpritePtr SpriteFactoryImpl::CreateSpriteFromRaw(const char* sprite_raw) 
     mono::SpriteData sprite_data = LoadSpriteData(sprite_raw, m_pixels_per_meter);
     sprite_data.hash = 0; // unable to set a valid hash since we dont have a filename
 
-    mono::ITexturePtr texture = mono::CreateTexture(sprite_data.texture_file.c_str());
+    mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture(sprite_data.texture_file.c_str());
 
     auto sprite = std::make_shared<mono::Sprite>();
     sprite->Init(sprite_data.hash, texture, sprite_data.sprite_frames);
@@ -138,7 +138,7 @@ bool SpriteFactoryImpl::CreateSprite(mono::Sprite& sprite, const char* sprite_fi
 
     const mono::SpriteData& sprite_data = it->second;
 
-    mono::ITexturePtr texture = mono::CreateTexture(sprite_data.texture_file.c_str());
+    mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture(sprite_data.texture_file.c_str());
     sprite.Init(sprite_data.hash, texture, sprite_data.sprite_frames);
     
     for(const mono::SpriteAnimation& animation : sprite_data.animations)

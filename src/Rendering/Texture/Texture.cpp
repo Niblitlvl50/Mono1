@@ -18,20 +18,18 @@ namespace
     }
 }
 
-Texture::Texture(const mono::IImagePtr& image)
-    : m_texture_id(-1),
-      m_width(image->Width()),
-      m_height(image->Height())
+Texture::Texture(uint32_t width, uint32_t height, uint32_t color_components, const unsigned char* data)
+    : m_texture_id(-1)
+    , m_width(width)
+    , m_height(height)
 {
-    const int components = image->ColorComponents();
-    const uint32_t width = NextPowerOfTwo(image->Width());
-    const uint32_t height = NextPowerOfTwo(image->Height());
-    const byte* data = image->Data();
+    width = NextPowerOfTwo(width);
+    height = NextPowerOfTwo(height);
 
     GLenum format = GL_ALPHA;
-    if(components == 3)
+    if(color_components == 3)
         format = GL_RGB;
-    else if(components == 4)
+    else if(color_components == 4)
         format = GL_RGBA;
 
     glGenTextures(1, &m_texture_id);
