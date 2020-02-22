@@ -6,16 +6,16 @@
 
 namespace mono
 {
-    enum class BufferType : int
-    {
-        STATIC,
-        DYNAMIC
-    };
-
     enum class BufferTarget : int
     {
         ARRAY_BUFFER,
         ELEMENT_BUFFER
+    };
+
+    enum class BufferType : int
+    {
+        STATIC,
+        DYNAMIC
     };
 
     enum class BufferData

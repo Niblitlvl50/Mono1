@@ -240,8 +240,8 @@ void Renderer::DrawPolyline(
 void Renderer::DrawTrianges(
     const IRenderBuffer* vertices, const IRenderBuffer* colors, const IRenderBuffer* indices, size_t count) const
 {
-//    UseShader(m_color_shader.get());
-//    ::DrawTrianges(vertices, colors, indices, count, m_color_shader.get());
+    UseShader(m_color_shader.get());
+    ::DrawTrianges(vertices, colors, indices, count, m_color_shader.get());
 }
 
 void Renderer::UseShader(IShader* shader) const

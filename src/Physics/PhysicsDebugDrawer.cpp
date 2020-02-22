@@ -109,12 +109,15 @@ namespace
     }
 }
 
-PhysicsDebugDrawer::PhysicsDebugDrawer(const bool& enabled, mono::PhysicsSystem* physics_system)
+static_assert(uint32_t(CP_SPACE_DEBUG_DRAW_SHAPES) == mono::PhysicsDebugComponents::DRAW_SHAPES);
+static_assert(uint32_t(CP_SPACE_DEBUG_DRAW_CONSTRAINTS) == mono::PhysicsDebugComponents::DRAW_CONSTRAINTS);
+static_assert(uint32_t(CP_SPACE_DEBUG_DRAW_COLLISION_POINTS) == mono::PhysicsDebugComponents::DRAW_COLLISION_POINTS);
+
+PhysicsDebugDrawer::PhysicsDebugDrawer(
+    const bool& enabled, const uint32_t& debug_components, mono::PhysicsSystem* physics_system)
     : m_enabled(enabled)
+    , m_debug_components(debug_components)
     , m_physics_system(physics_system)
-    , m_draw_shapes(true)
-    , m_draw_constraints(false)
-    , m_draw_collisions(false)
 { }
 
 void PhysicsDebugDrawer::doDraw(mono::IRenderer& renderer) const
@@ -127,16 +130,8 @@ void PhysicsDebugDrawer::doDraw(mono::IRenderer& renderer) const
     mono::PhysicsSpace* physics_space = m_physics_system->GetSpace();
     cpSpace* cm_space = physics_space->Handle();
 
-    int draw_flags = 0;
-    if(m_draw_shapes)
-        draw_flags |= CP_SPACE_DEBUG_DRAW_SHAPES;
-    if(m_draw_constraints)
-        draw_flags |= CP_SPACE_DEBUG_DRAW_CONSTRAINTS;
-    if(m_draw_collisions)
-        draw_flags |= CP_SPACE_DEBUG_DRAW_COLLISION_POINTS;
-
     cpSpaceDebugDrawOptions options;
-    options.flags = cpSpaceDebugDrawFlags(draw_flags);
+    options.flags = cpSpaceDebugDrawFlags(m_debug_components);
     options.shapeOutlineColor = ConvertColor(mono::Color::RED);
     options.constraintColor = ConvertColor(mono::Color::GREEN);
     options.collisionPointColor = ConvertColor(mono::Color::BLUE);

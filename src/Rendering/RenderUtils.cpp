@@ -290,12 +290,9 @@ void mono::DrawTrianges(
  
     colors->Use();
     glVertexAttribPointer(ColorShader::GetColorAttribute(shader), 4, GL_FLOAT, GL_FALSE, 0, 0);
- 
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, count);
-    //glDrawArrays(GL_POINTS, 0, count);
- 
-    //indices->Use();
-    //glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, 0);
+
+    indices->Use();
+    glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, 0);
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);

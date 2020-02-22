@@ -24,6 +24,7 @@ namespace mono
         math::Matrix GetWorld(uint32_t id) const;
         const math::Matrix& GetTransform(uint32_t id) const;
         math::Matrix& GetTransform(uint32_t id);
+        void SetTransform(uint32_t id, const math::Matrix& new_transform);
 
         math::Quad GetWorldBoundingBox(uint32_t id) const;
         const math::Quad& GetBoundingBox(uint32_t id) const;
