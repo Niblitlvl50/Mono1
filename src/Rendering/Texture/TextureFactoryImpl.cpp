@@ -5,7 +5,6 @@
 #include "System/System.h"
 
 #include <cstdio>
-#include <unordered_map>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image/stb_image.h"
@@ -14,22 +13,6 @@ using namespace mono;
 
 namespace
 {
-    // This is where all the weak pointers goes, that points to the allocated textures!
-    std::unordered_map<uint32_t, std::weak_ptr<mono::ITexture>> g_texture_storage;
-
-    mono::ITexturePtr GetTextureFromCache(uint32_t texture_hash)
-    {
-        auto it = g_texture_storage.find(texture_hash);
-        if(it != g_texture_storage.end())
-        {
-            mono::ITexturePtr texture = it->second.lock();
-            if(texture)
-                return texture;
-        }
-
-        return nullptr;
-    }
-
     mono::ITexturePtr CreateTextureFromData(const unsigned char* data, int data_length)
     {
         int width;
@@ -43,52 +26,6 @@ namespace
         }
 
         return std::make_shared<mono::Texture>(width, height, components, image_data.get());
-    }
-
-    mono::ITexturePtr CreateAndCacheTexture(const char* source_file, uint32_t texture_hash)
-    {
-        int width;
-        int height;
-        int components;
-        std::unique_ptr<unsigned char> image_data(stbi_load(source_file, &width, &height, &components, 0));
-        if(!image_data)
-        {
-            System::Log("TextureFactory|Unable to load '%s'\n", source_file);
-            throw std::runtime_error("Unable to load image!");
-        }
-
-        const auto deleter = [texture_hash](mono::ITexture* ptr) {
-            g_texture_storage.erase(texture_hash);
-            delete ptr;
-        };
-
-        mono::ITexturePtr texture(new mono::Texture(width, height, components, image_data.get()), deleter);
-        g_texture_storage[texture_hash] = texture;
-
-        return texture;
-    }
-
-    mono::ITexturePtr CreateAndCacheTexture(const unsigned char* data, int data_length, uint32_t texture_hash)
-    {
-        int width;
-        int height;
-        int components;
-        std::unique_ptr<unsigned char> image_data(stbi_load_from_memory(data, data_length, &width, &height, &components, 0));
-        if(!image_data)
-        {
-            System::Log("TextureFactory|Unable to load from data chunk\n");
-            throw std::runtime_error("Unable to load image!");
-        }
-
-        const auto deleter = [texture_hash](mono::ITexture* ptr) {
-            g_texture_storage.erase(texture_hash);
-            delete ptr;
-        };
-
-        mono::ITexturePtr texture(new mono::Texture(width, height, components, image_data.get()), deleter);
-        g_texture_storage[texture_hash] = texture;
-
-        return texture;
     }
 }
 
@@ -124,6 +61,65 @@ mono::ITexturePtr TextureFactoryImpl::CreateTextureFromData(const byte* data, in
 mono::ITexturePtr TextureFactoryImpl::CreateTexture(const byte* data, int width, int height, int color_components) const
 {
     return std::make_shared<Texture>(width, height, color_components, data);
+}
+
+mono::ITexturePtr TextureFactoryImpl::GetTextureFromCache(uint32_t texture_hash) const
+{
+    auto it = m_texture_storage.find(texture_hash);
+    if(it != m_texture_storage.end())
+    {
+        mono::ITexturePtr texture = it->second.lock();
+        if(texture)
+            return texture;
+    }
+
+    return nullptr;
+}
+
+mono::ITexturePtr TextureFactoryImpl::CreateAndCacheTexture(const char* source_file, uint32_t texture_hash) const
+{
+    int width;
+    int height;
+    int components;
+    std::unique_ptr<unsigned char> image_data(stbi_load(source_file, &width, &height, &components, 0));
+    if(!image_data)
+    {
+        System::Log("TextureFactory|Unable to load '%s'\n", source_file);
+        throw std::runtime_error("Unable to load image!");
+    }
+
+    const auto deleter = [this, texture_hash](mono::ITexture* ptr) {
+        m_texture_storage.erase(texture_hash);
+        delete ptr;
+    };
+
+    mono::ITexturePtr texture(new mono::Texture(width, height, components, image_data.get()), deleter);
+    m_texture_storage[texture_hash] = texture;
+
+    return texture;
+}
+
+mono::ITexturePtr TextureFactoryImpl::CreateAndCacheTexture(const unsigned char* data, int data_length, uint32_t texture_hash) const
+{
+    int width;
+    int height;
+    int components;
+    std::unique_ptr<unsigned char> image_data(stbi_load_from_memory(data, data_length, &width, &height, &components, 0));
+    if(!image_data)
+    {
+        System::Log("TextureFactory|Unable to load from data chunk\n");
+        throw std::runtime_error("Unable to load image!");
+    }
+
+    const auto deleter = [this, texture_hash](mono::ITexture* ptr) {
+        m_texture_storage.erase(texture_hash);
+        delete ptr;
+    };
+
+    mono::ITexturePtr texture(new mono::Texture(width, height, components, image_data.get()), deleter);
+    m_texture_storage[texture_hash] = texture;
+
+    return texture;
 }
 
 extern mono::ITextureFactory* g_texture_factory;
