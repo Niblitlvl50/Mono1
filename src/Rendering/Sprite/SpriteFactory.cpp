@@ -19,6 +19,7 @@
 
 #include "Math/Quad.h"
 #include "System/File.h"
+#include "System/System.h"
 #include "Util/Hash.h"
 
 #include <unordered_map>
@@ -120,7 +121,10 @@ bool SpriteFactoryImpl::CreateSprite(mono::Sprite& sprite, const char* sprite_fi
     {
         const bool file_exists = file::Exists(sprite_file);
         if(!file_exists)
+        {
+            System::Log("spritefactory|Sprite file does not exist. [%s]\n", sprite_file);
             return false;
+        }
 
         file::FilePtr file = file::OpenAsciiFile(sprite_file);
         if(!file)

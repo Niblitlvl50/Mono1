@@ -123,3 +123,8 @@ uint32_t mono::LoadImGuiTexture(const char* texture_file)
     g_imgui_textures.insert(std::make_pair(texture->Id(), texture));
     return texture->Id();
 }
+
+void mono::LoadImGuiTexture(mono::ITexturePtr texture)
+{
+    g_imgui_textures.insert(std::make_pair(texture->Id(), texture));
+}

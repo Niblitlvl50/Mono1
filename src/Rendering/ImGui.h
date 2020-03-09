@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Math/Vector.h"
+#include "Rendering/RenderPtrFwd.h"
 #include <unordered_map>
 #include <memory>
 
@@ -19,4 +20,5 @@ namespace mono
 
     void SetImGuiConfig(const char* config_file);
     uint32_t LoadImGuiTexture(const char* texture_file);
+    void LoadImGuiTexture(mono::ITexturePtr texture);
 }
