@@ -99,7 +99,7 @@ void mono::DrawSprite(
         math::Vector( sprite_size.x, -sprite_size.y) + offset
     };
 
-    constexpr unsigned short indices[] = {
+    constexpr uint16_t indices[] = {
         0, 1, 2, 0, 2, 3
     };
 
@@ -229,7 +229,7 @@ void mono::DrawPoints(
 
 void mono::DrawTexturedGeometry(const std::vector<math::Vector>& vertices,
                                 const std::vector<math::Vector>& texture_coordinates,
-                                const std::vector<unsigned short>& indices,
+                                const std::vector<uint16_t>& indices,
                                 IShader* shader)
 {
     TextureShader::SetShade(shader, mono::Color::RGBA());

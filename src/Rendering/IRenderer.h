@@ -34,7 +34,7 @@ namespace mono
 
         virtual void DrawGeometry(const std::vector<math::Vector>& vertices,
                                   const std::vector<math::Vector>& texture_coordinates,
-                                  const std::vector<unsigned short>& indices,
+                                  const std::vector<uint16_t>& indices,
                                   const ITexturePtr& texture) = 0;
 
         virtual void DrawGeometry(const IRenderBuffer* vertices,

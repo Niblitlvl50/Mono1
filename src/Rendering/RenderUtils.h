@@ -50,7 +50,7 @@ namespace mono
 
     void DrawTexturedGeometry(const std::vector<math::Vector>& vertices,
                               const std::vector<math::Vector>& texture_coordinates,
-                              const std::vector<unsigned short>& indices,
+                              const std::vector<uint16_t>& indices,
                               IShader* shader);
 
     void DrawTexturedGeometry(const mono::IRenderBuffer* vertices,

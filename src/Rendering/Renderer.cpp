@@ -196,7 +196,7 @@ void Renderer::DrawCircle(const math::Vector& pos, float radie, int segments, fl
     ::DrawCircle(pos, radie, segments, lineWidth, color, m_color_shader.get());
 }
 
-void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std::vector<math::Vector>& texture_coordinates, const std::vector<unsigned short>& indices, const ITexturePtr& texture)
+void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std::vector<math::Vector>& texture_coordinates, const std::vector<uint16_t>& indices, const ITexturePtr& texture)
 {
     UseTexture(texture);
     UseShader(m_texture_shader.get());
