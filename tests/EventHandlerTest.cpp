@@ -18,16 +18,16 @@ namespace
     
     struct TestClass
     {
-        bool OnEventFunc(const TestEvent1& event)
+        mono::EventResult OnEventFunc(const TestEvent1& event)
         {
             receivedEvent = true;
-            return false;
+            return mono::EventResult::PASS_ON;
         }
         
-        bool OnAnohterEvent(const TestEvent2& event)
+        mono::EventResult OnAnohterEvent(const TestEvent2& event)
         {
             receivedAnotherEvent = true;
-            return false;
+            return mono::EventResult::PASS_ON;
         }
         
         bool receivedEvent = false;
@@ -55,8 +55,8 @@ TEST(EventHandlerTest, RegisterListener)
 {
     TestClass object;
     
-    std::function<bool (const TestEvent1&)> func1 = std::bind(&TestClass::OnEventFunc, &object, _1);
-    std::function<bool (const TestEvent2&)> func2 = std::bind(&TestClass::OnAnohterEvent, &object, _1);
+    std::function<mono::EventResult (const TestEvent1&)> func1 = std::bind(&TestClass::OnEventFunc, &object, _1);
+    std::function<mono::EventResult (const TestEvent2&)> func2 = std::bind(&TestClass::OnAnohterEvent, &object, _1);
 
     mono::EventHandler handler;
     handler.AddListener(func1);
@@ -94,8 +94,8 @@ TEST(EventHandlerTest, stress_test)
         {
             TestClass& object = receiving_objects[index];
 
-            std::function<bool (const TestEvent1&)> func1 = std::bind(&TestClass::OnEventFunc, &object, _1);
-            std::function<bool (const TestEvent2&)> func2 = std::bind(&TestClass::OnAnohterEvent, &object, _1);
+            std::function<mono::EventResult (const TestEvent1&)> func1 = std::bind(&TestClass::OnEventFunc, &object, _1);
+            std::function<mono::EventResult (const TestEvent2&)> func2 = std::bind(&TestClass::OnAnohterEvent, &object, _1);
 
             testevent_token_1[index] = handler.AddListener(func1);
             testevent_token_2[index] = handler.AddListener(func2);

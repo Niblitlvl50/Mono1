@@ -3,6 +3,12 @@
 
 namespace mono
 {
+    enum class EventResult
+    {
+        HANDLED,
+        PASS_ON,
+    };
+
     template <typename Event>
     struct EventToken
     {

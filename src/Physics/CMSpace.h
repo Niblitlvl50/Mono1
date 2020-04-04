@@ -33,6 +33,7 @@ namespace mono
         
         void ForEachBody(const BodyFunc& func);
         IBody* QueryFirst(const math::Vector& start, const math::Vector& end);
+        IBody* QueryNearest(const math::Vector& point, float max_distance);
 
         cpSpace* Handle();
         

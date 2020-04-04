@@ -2,24 +2,25 @@
 #pragma once
 
 #include "EventFwd.h"
+#include "EventHandler/EventToken.h"
 #include <functional>
 
 namespace event
 {
-    using PauseEventFunc = std::function<bool (const PauseEvent&)>;
-    using QuitEventFunc = std::function<bool (const QuitEvent&)>;
-    using ApplicationEventFunc = std::function<bool (const ApplicationEvent&)>;
-    using SurfaceChangedEventFunc = std::function<bool (const SurfaceChangedEvent&)>;
-    using ActivatedEventFunc = std::function<bool (const ActivatedEvent&)>;
-    using KeyDownEventFunc = std::function<bool (const KeyDownEvent&)>;
-    using KeyUpEventFunc = std::function<bool (const KeyUpEvent&)>;
-    using TextInputEventFunc = std::function<bool (const TextInputEvent&)>;
-    using MouseDownEventFunc = std::function<bool (const MouseDownEvent&)>;
-    using MouseUpEventFunc = std::function<bool (const MouseUpEvent&)>;
-    using MouseMotionEventFunc = std::function<bool (const MouseMotionEvent&)>;
-    using MouseWheelEventFunc = std::function<bool (const MouseWheelEvent&)>;
-    using MultiGestureEventFunc = std::function<bool (const MultiGestureEvent&)>;
-    using TimeScaleEventFunc = std::function<bool (const TimeScaleEvent&)>;
-    using ControllerAddedFunc = std::function<bool (const ControllerAddedEvent&)>;
-    using ControllerRemovedFunc = std::function<bool (const ControllerRemovedEvent&)>;
+    using PauseEventFunc = std::function<mono::EventResult (const PauseEvent&)>;
+    using QuitEventFunc = std::function<mono::EventResult (const QuitEvent&)>;
+    using ApplicationEventFunc = std::function<mono::EventResult (const ApplicationEvent&)>;
+    using SurfaceChangedEventFunc = std::function<mono::EventResult (const SurfaceChangedEvent&)>;
+    using ActivatedEventFunc = std::function<mono::EventResult (const ActivatedEvent&)>;
+    using KeyDownEventFunc = std::function<mono::EventResult (const KeyDownEvent&)>;
+    using KeyUpEventFunc = std::function<mono::EventResult (const KeyUpEvent&)>;
+    using TextInputEventFunc = std::function<mono::EventResult (const TextInputEvent&)>;
+    using MouseDownEventFunc = std::function<mono::EventResult (const MouseDownEvent&)>;
+    using MouseUpEventFunc = std::function<mono::EventResult (const MouseUpEvent&)>;
+    using MouseMotionEventFunc = std::function<mono::EventResult (const MouseMotionEvent&)>;
+    using MouseWheelEventFunc = std::function<mono::EventResult (const MouseWheelEvent&)>;
+    using MultiGestureEventFunc = std::function<mono::EventResult (const MultiGestureEvent&)>;
+    using TimeScaleEventFunc = std::function<mono::EventResult (const TimeScaleEvent&)>;
+    using ControllerAddedFunc = std::function<mono::EventResult (const ControllerAddedEvent&)>;
+    using ControllerRemovedFunc = std::function<mono::EventResult (const ControllerRemovedEvent&)>;
 }

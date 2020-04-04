@@ -122,14 +122,17 @@ namespace
     {
     public:
 
-        SoundImpl(const std::shared_ptr<SoundData>& data, bool loop, bool relative)
+        SoundImpl(const std::shared_ptr<SoundData>& data, mono::SoundPlayback playback, mono::SoundPosition position)
             : m_data(data),
               m_source(0)
         {
+            const int looping_value = (playback == mono::SoundPlayback::LOOPING) ? AL_TRUE : AL_FALSE;
+            const int realtive_position = (position == mono::SoundPosition::RELATIVE) ? AL_TRUE : AL_FALSE;
+
             alGenSources(1, &m_source);
             alSourcei(m_source, AL_BUFFER, static_cast<ALint>(m_data->BufferId()));
-            alSourcei(m_source, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
-            alSourcei(m_source, AL_SOURCE_RELATIVE, relative ? AL_TRUE : AL_FALSE);
+            alSourcei(m_source, AL_LOOPING, looping_value);
+            alSourcei(m_source, AL_SOURCE_RELATIVE, realtive_position);
 
             Pitch(1.0f);
             Gain(1.0f);
@@ -194,7 +197,7 @@ namespace
     std::unordered_map<uint32_t, std::weak_ptr<SoundData>> repository;
 }
 
-mono::ISoundPtr mono::AudioFactory::CreateSound(const char* file_name, bool loop, bool relative)
+mono::ISoundPtr mono::AudioFactory::CreateSound(const char* file_name, mono::SoundPlayback playback, mono::SoundPosition position)
 {
     const uint32_t sound_hash = mono::Hash(file_name);
     auto it = repository.find(sound_hash);
@@ -202,7 +205,7 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const char* file_name, bool loop
     {
         auto data = it->second.lock();
         if(data)
-            return std::make_shared<SoundImpl>(data, loop, relative);
+            return std::make_shared<SoundImpl>(data, playback, position);
 
         System::Log("AudioFactory|Recreating '%s'\n", file_name);
     }
@@ -222,7 +225,7 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const char* file_name, bool loop
     // Store it in the repository for others to retreive
     repository[sound_hash] = data;
 
-    return std::make_shared<SoundImpl>(data, loop, relative);
+    return std::make_shared<SoundImpl>(data, playback, position);
 }
 
 mono::ISoundPtr mono::AudioFactory::CreateNullSound()

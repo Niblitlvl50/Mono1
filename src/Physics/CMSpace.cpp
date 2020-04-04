@@ -133,6 +133,26 @@ mono::IBody* PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vec
     return *it;
 }
 
+IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance)
+{
+    cpPointQueryInfo info;
+    const cpShape* shape = cpSpacePointQueryNearest(m_space, cpv(point.x, point.y), max_distance, CP_SHAPE_FILTER_ALL, &info);
+    if(!shape)
+        return nullptr;
+
+    const cpBody* body = cpShapeGetBody(shape);
+
+    const auto func = [body](IBody* bodyPtr) {
+        return bodyPtr->Handle() == body;
+    };
+
+    const auto& it = std::find_if(m_bodies.begin(), m_bodies.end(), func);
+    if(it == m_bodies.end())
+        return nullptr;
+
+    return *it;
+}
+
 bool PhysicsSpace::OnCollision(cpArbiter* arb)
 {
     cpBody* b1 = nullptr;
@@ -152,7 +172,7 @@ bool PhysicsSpace::OnCollision(cpArbiter* arb)
         if(first && second)
             break;
     }
-    
+
     if(first && second)
     {
         cpShape* shape1 = nullptr;
@@ -165,8 +185,11 @@ bool PhysicsSpace::OnCollision(cpArbiter* arb)
         const cpVect point_a = cpArbiterGetPointA(arb, 0);
         const math::Vector collision_point(point_a.x, point_a.y);
 
-        first->OnCollideWith(second, collision_point, filter2.categories);
-        second->OnCollideWith(first, collision_point, filter1.categories);
+        const mono::CollisionResolve resolve1 = first->OnCollideWith(second, collision_point, filter2.categories);
+        const mono::CollisionResolve resolve2 = second->OnCollideWith(first, collision_point, filter1.categories);
+
+        if(resolve1 == mono::CollisionResolve::IGNORE || resolve2 == mono::CollisionResolve::IGNORE)
+            return false;
     }
     
     return true;

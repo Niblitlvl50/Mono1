@@ -64,81 +64,82 @@ ImGuiInputHandler::~ImGuiInputHandler()
     m_eventHandler.RemoveListener(m_multiGestureToken);
 }
 
-bool ImGuiInputHandler::OnKeyDown(const event::KeyDownEvent& event)
+mono::EventResult ImGuiInputHandler::OnKeyDown(const event::KeyDownEvent& event)
 {
     const int key = System::KeycodeToNative(event.key);
     if(key >= 512)
-        return false;
+        return mono::EventResult::PASS_ON;
 
     ImGui::GetIO().KeysDown[key] = true;
     ImGui::GetIO().KeyCtrl = event.ctrl;
     ImGui::GetIO().KeyShift = event.shift;
     ImGui::GetIO().KeyAlt = event.alt;
     ImGui::GetIO().KeySuper = event.super;
-    return ImGui::GetIO().WantCaptureKeyboard;
+    return ImGui::GetIO().WantCaptureKeyboard ? mono::EventResult::HANDLED : mono::EventResult::PASS_ON;
 }
 
-bool ImGuiInputHandler::OnKeyUp(const event::KeyUpEvent& event)
+mono::EventResult ImGuiInputHandler::OnKeyUp(const event::KeyUpEvent& event)
 {
     const int key = System::KeycodeToNative(event.key);
     if(key >= 512)
-        return false;
+        return mono::EventResult::PASS_ON;
 
     ImGui::GetIO().KeysDown[key] = false;
     ImGui::GetIO().KeyCtrl = event.ctrl;
     ImGui::GetIO().KeyShift = event.shift;
     ImGui::GetIO().KeyAlt = event.alt;
     ImGui::GetIO().KeySuper = event.super;
-    return ImGui::GetIO().WantCaptureKeyboard;
+    return ImGui::GetIO().WantCaptureKeyboard ? mono::EventResult::HANDLED : mono::EventResult::PASS_ON;
 }
 
-bool ImGuiInputHandler::OnTextInput(const event::TextInputEvent& event)
+mono::EventResult ImGuiInputHandler::OnTextInput(const event::TextInputEvent& event)
 {
     ImGui::GetIO().AddInputCharactersUTF8(event.text);
-    return ImGui::GetIO().WantTextInput;
+    return ImGui::GetIO().WantTextInput ? mono::EventResult::HANDLED : mono::EventResult::PASS_ON;
 }
 
-bool ImGuiInputHandler::OnMouseDown(const event::MouseDownEvent& event)
+mono::EventResult ImGuiInputHandler::OnMouseDown(const event::MouseDownEvent& event)
 {
     if(event.key != MouseButton::LEFT && event.key != MouseButton::RIGHT)
-        return false;
+        return mono::EventResult::PASS_ON;
 
     if(event.key == MouseButton::LEFT)
         ImGui::GetIO().MouseDown[0] = true;
     else if(event.key == MouseButton::RIGHT)
         ImGui::GetIO().MouseDown[1] = true;
 
-    return ImGui::GetIO().WantCaptureMouse;
+    return ImGui::GetIO().WantCaptureMouse ? mono::EventResult::HANDLED : mono::EventResult::PASS_ON;
 }
 
-bool ImGuiInputHandler::OnMouseUp(const event::MouseUpEvent& event)
+mono::EventResult ImGuiInputHandler::OnMouseUp(const event::MouseUpEvent& event)
 {
     if(event.key != MouseButton::LEFT && event.key != MouseButton::RIGHT)
-        return false;
+        return mono::EventResult::PASS_ON;
 
     if(event.key == MouseButton::LEFT)
         ImGui::GetIO().MouseDown[0] = false;
     else if(event.key == MouseButton::RIGHT)
         ImGui::GetIO().MouseDown[1] = false;
 
-    return ImGui::GetIO().WantCaptureMouse;
+    return ImGui::GetIO().WantCaptureMouse ? mono::EventResult::HANDLED : mono::EventResult::PASS_ON;
 }
 
-bool ImGuiInputHandler::OnMouseMove(const event::MouseMotionEvent& event)
+mono::EventResult ImGuiInputHandler::OnMouseMove(const event::MouseMotionEvent& event)
 {
     ImGui::GetIO().MousePos = ImVec2(event.screenX, event.screenY);
-    return false;
+    return mono::EventResult::PASS_ON;
 }
 
-bool ImGuiInputHandler::OnMouseWheel(const event::MouseWheelEvent& event)
+mono::EventResult ImGuiInputHandler::OnMouseWheel(const event::MouseWheelEvent& event)
 {
     ImGui::GetIO().MouseWheel = event.y;
-    return ImGui::GetIO().WantCaptureMouse;
+    return ImGui::GetIO().WantCaptureMouse ? mono::EventResult::HANDLED : mono::EventResult::PASS_ON;
 }
 
-bool ImGuiInputHandler::OnMultiGesture(const event::MultiGestureEvent& event)
+mono::EventResult ImGuiInputHandler::OnMultiGesture(const event::MultiGestureEvent& event)
 {
-    return ImGui::GetIO().WantCaptureMouse;
+    return mono::EventResult::PASS_ON;
+    //return ImGui::GetIO().WantCaptureMouse;
 }
 
 

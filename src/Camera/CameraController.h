@@ -20,11 +20,11 @@ namespace mono
         
     private:
         
-        bool OnMouseDown(const event::MouseDownEvent& event);
-        bool OnMouseUp(const event::MouseUpEvent& event);
-        bool OnMouseMove(const event::MouseMotionEvent& event);
-        bool OnMultiGesture(const event::MultiGestureEvent& event);
-        bool OnMouseWheel(const event::MouseWheelEvent& event);
+        mono::EventResult OnMouseDown(const event::MouseDownEvent& event);
+        mono::EventResult OnMouseUp(const event::MouseUpEvent& event);
+        mono::EventResult OnMouseMove(const event::MouseMotionEvent& event);
+        mono::EventResult OnMultiGesture(const event::MultiGestureEvent& event);
+        mono::EventResult OnMouseWheel(const event::MouseWheelEvent& event);
         
         int m_window_width;
         int m_window_height;

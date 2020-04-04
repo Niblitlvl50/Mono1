@@ -57,29 +57,29 @@ void MouseCameraController::Disable()
     m_enabled = false;
 }
 
-bool MouseCameraController::OnMouseDown(const event::MouseDownEvent& event)
+mono::EventResult MouseCameraController::OnMouseDown(const event::MouseDownEvent& event)
 {
     if(!m_enabled)
-        return false;
+        return mono::EventResult::PASS_ON;
 
     m_translate = true;
     m_translate_delta = math::Vector(event.screenX, event.screenY);
-    return true;
+    return mono::EventResult::HANDLED;
 }
 
-bool MouseCameraController::OnMouseUp(const event::MouseUpEvent& event)
+mono::EventResult MouseCameraController::OnMouseUp(const event::MouseUpEvent& event)
 {
     if(!m_enabled)
-        return false;
+        return mono::EventResult::PASS_ON;
 
     m_translate = false;
-    return true;
+    return mono::EventResult::HANDLED;
 }
 
-bool MouseCameraController::OnMouseMove(const event::MouseMotionEvent& event)
+mono::EventResult MouseCameraController::OnMouseMove(const event::MouseMotionEvent& event)
 {
     if(!m_enabled || !m_translate)
-        return false;
+        return mono::EventResult::PASS_ON;
 
     const math::Vector screen_position(event.screenX, event.screenY);
 
@@ -99,16 +99,16 @@ bool MouseCameraController::OnMouseMove(const event::MouseMotionEvent& event)
 
     m_translate_delta = screen_position;
 
-    return true;
+    return mono::EventResult::HANDLED;
 }
 
-bool MouseCameraController::OnMultiGesture(const event::MultiGestureEvent& event)
+mono::EventResult MouseCameraController::OnMultiGesture(const event::MultiGestureEvent& event)
 {
     if(!m_enabled)
-        return false;
+        return mono::EventResult::PASS_ON;
 
     if(std::fabs(event.distance) < 1e-3)
-        return false;
+        return mono::EventResult::PASS_ON;
 
     math::Quad quad = m_camera->GetViewport();
 
@@ -119,13 +119,13 @@ bool MouseCameraController::OnMultiGesture(const event::MultiGestureEvent& event
 
     m_camera->SetTargetViewport(quad);
 
-    return true;
+    return mono::EventResult::HANDLED;
 }
 
-bool MouseCameraController::OnMouseWheel(const event::MouseWheelEvent& event)
+mono::EventResult MouseCameraController::OnMouseWheel(const event::MouseWheelEvent& event)
 {
     if(!m_enabled)
-        return false;
+        return mono::EventResult::PASS_ON;
 
     math::Quad quad = m_camera->GetViewport();
 
@@ -136,5 +136,5 @@ bool MouseCameraController::OnMouseWheel(const event::MouseWheelEvent& event)
 
     m_camera->SetTargetViewport(quad);
 
-    return true;
+    return mono::EventResult::HANDLED;
 }

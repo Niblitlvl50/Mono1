@@ -15,7 +15,7 @@ namespace mono
     template<typename Event>
     struct EventListeners
     {
-        using ListenerCallback = std::function<bool (const Event&)>;
+        using ListenerCallback = std::function<EventResult (const Event&)>;
 
         std::vector<EventToken<Event>> m_tokens;
         std::vector<ListenerCallback> m_callbacks;
@@ -50,8 +50,8 @@ namespace mono
         {
             for(const ListenerCallback& callback : m_callbacks)
             {
-                const bool handled = callback(event);
-                if(handled)
+                const EventResult result = callback(event);
+                if(result == EventResult::HANDLED)
                     break;
             }
         }
@@ -65,7 +65,7 @@ namespace mono
     public:
         
         template<typename Event>
-        inline EventToken<Event> AddListener(const std::function<bool (const Event& event)>& listener)
+        inline EventToken<Event> AddListener(const std::function<mono::EventResult (const Event& event)>& listener)
         {
             const size_t event_hash = typeid(Event).hash_code();
             const auto it = m_events.find(event_hash);

@@ -38,6 +38,7 @@ namespace math
     bool operator == (const Vector& left, const Vector& right);
 
     void Normalize(Vector& vector);
+    math::Vector Normalize(const math::Vector& vector);
     float Length(const Vector& vector);
     float LengthSquared(const Vector& vector);
     float Dot(const Vector& first, const Vector& second);

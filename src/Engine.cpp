@@ -176,19 +176,19 @@ int Engine::Run(IZone* zone)
     return exit_code;
 }
 
-bool Engine::OnPause(const event::PauseEvent& event)
+mono::EventResult Engine::OnPause(const event::PauseEvent& event)
 {
     m_pause = event.pause;
-    return true;
+    return mono::EventResult::HANDLED;
 }
 
-bool Engine::OnQuit(const event::QuitEvent&)
+mono::EventResult Engine::OnQuit(const event::QuitEvent&)
 {
     m_quit = true;
-    return false;
+    return mono::EventResult::PASS_ON;
 }
 
-bool Engine::OnApplication(const event::ApplicationEvent& event)
+mono::EventResult Engine::OnApplication(const event::ApplicationEvent& event)
 {
     if(event.state == event::ApplicationState::ENTER_BACKGROUND)
     {
@@ -200,23 +200,23 @@ bool Engine::OnApplication(const event::ApplicationEvent& event)
         m_update_last_time = true;
     }
 
-    return false;
+    return mono::EventResult::PASS_ON;
 }
 
-bool Engine::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
+mono::EventResult Engine::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
 {
     m_window->SurfaceChanged(event.width, event.height);
-    return false;
+    return mono::EventResult::PASS_ON;
 }
 
-bool Engine::OnActivated(const event::ActivatedEvent& event)
+mono::EventResult Engine::OnActivated(const event::ActivatedEvent& event)
 {
     //m_window->Activated(event.gain);
-    return false;
+    return mono::EventResult::PASS_ON;
 }
 
-bool Engine::OnTimeScale(const event::TimeScaleEvent& event)
+mono::EventResult Engine::OnTimeScale(const event::TimeScaleEvent& event)
 {
     m_time_scale = event.time_scale;
-    return false;
+    return mono::EventResult::PASS_ON;
 }

@@ -17,12 +17,18 @@ namespace mono
         STATIC
     };
 
+    enum class CollisionResolve
+    {
+        NORMAL,
+        IGNORE
+    };
+
     class ICollisionHandler
     {
     public:
 
         virtual ~ICollisionHandler() = default;
-        virtual void OnCollideWith(mono::IBody* body, const math::Vector& collision_point, uint32_t categories) = 0;
+        virtual CollisionResolve OnCollideWith(mono::IBody* body, const math::Vector& collision_point, uint32_t categories) = 0;
     };
 
     class IBody
@@ -101,7 +107,7 @@ namespace mono
         
         //! Called by the framework when a collision occures
         //! @param body The other body of the collision
-        virtual void OnCollideWith(IBody* body, const math::Vector& collision_point, uint32_t categories) = 0;
+        virtual mono::CollisionResolve OnCollideWith(IBody* body, const math::Vector& collision_point, uint32_t categories) = 0;
 
         //! Disable damping on this body, will cause no slowdowns. 
         virtual void SetNoDamping() = 0;

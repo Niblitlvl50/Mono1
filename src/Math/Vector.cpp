@@ -78,6 +78,13 @@ void math::Normalize(math::Vector& vector)
     vector.y /= length;
 }
 
+math::Vector math::Normalize(const math::Vector& vector)
+{
+    math::Vector temp_vector = vector;
+    Normalize(temp_vector);
+    return temp_vector;
+}
+
 float math::Length(const math::Vector& vector)
 {
     return std::sqrt(vector.x * vector.x + vector.y * vector.y);
