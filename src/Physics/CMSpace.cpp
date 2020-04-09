@@ -114,9 +114,10 @@ void PhysicsSpace::DoForEachFuncOnBody(cpBody* body)
     }
 }
 
-mono::IBody* PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vector& end)
+mono::IBody* PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vector& end, uint32_t category)
 {
-    const cpShape* shape = cpSpaceSegmentQueryFirst(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 1, CP_SHAPE_FILTER_ALL, nullptr);
+    const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, category, CP_ALL_CATEGORIES);
+    const cpShape* shape = cpSpaceSegmentQueryFirst(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 1, shape_filter, nullptr);
     if(!shape)
         return nullptr;
 
@@ -133,10 +134,41 @@ mono::IBody* PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vec
     return *it;
 }
 
-IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance)
+std::vector<IBody*> PhysicsSpace::QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category)
 {
+    std::vector<cpBody*> found_bodies;
+
+    const cpSpaceSegmentQueryFunc query_func = [](cpShape* shape, cpVect point, cpVect normal, cpFloat alpha, void* data) {
+        std::vector<cpBody*>* found_bodies = (std::vector<cpBody*>*)data;
+        found_bodies->push_back(cpShapeGetBody(shape));
+    };
+
+    const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, category, CP_ALL_CATEGORIES);
+    cpSpaceSegmentQuery(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 0.1f, shape_filter, query_func, &found_bodies);
+
+    std::vector<IBody*> bodies;
+    bodies.reserve(found_bodies.size());
+
+    for(const cpBody* cpbody : found_bodies)
+    {
+        const auto find_body_func = [cpbody](IBody* bodyPtr) {
+            return bodyPtr->Handle() == cpbody;
+        };
+
+        const auto& it = std::find_if(m_bodies.begin(), m_bodies.end(), find_body_func);
+        if(it != m_bodies.end())
+            bodies.push_back(*it);
+    }
+
+    return bodies;
+}
+
+IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category)
+{
+    const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, category, CP_ALL_CATEGORIES);
+
     cpPointQueryInfo info;
-    const cpShape* shape = cpSpacePointQueryNearest(m_space, cpv(point.x, point.y), max_distance, CP_SHAPE_FILTER_ALL, &info);
+    const cpShape* shape = cpSpacePointQueryNearest(m_space, cpv(point.x, point.y), max_distance, shape_filter, &info);
     if(!shape)
         return nullptr;
 
@@ -144,6 +176,43 @@ IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance)
 
     const auto func = [body](IBody* bodyPtr) {
         return bodyPtr->Handle() == body;
+    };
+
+    const auto& it = std::find_if(m_bodies.begin(), m_bodies.end(), func);
+    if(it == m_bodies.end())
+        return nullptr;
+
+    return *it;
+}
+
+IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func)
+{
+    struct UserData
+    {
+        QueryFilter filter_func;
+        const cpBody* cp_body;
+    };
+
+    UserData user_data = { filter_func, nullptr };
+
+    const auto callback = [](cpShape* shape, cpVect point, cpFloat distance, cpVect gradient, void* data) {
+        UserData* user_data = (UserData*)data;
+
+        const cpBody* body = cpShapeGetBody(shape);
+        const uint32_t entity_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(body));
+
+        const bool passed_user_filter = user_data->filter_func(entity_id);
+        if(!passed_user_filter)
+            return;
+
+        user_data->cp_body = body;
+    };
+
+    const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, category, CP_ALL_CATEGORIES);
+    cpSpacePointQuery(m_space, cpv(point.x, point.y), max_distance, shape_filter, callback, &user_data);
+
+    const auto func = [&user_data](IBody* bodyPtr) {
+        return bodyPtr->Handle() == user_data.cp_body;
     };
 
     const auto& it = std::find_if(m_bodies.begin(), m_bodies.end(), func);

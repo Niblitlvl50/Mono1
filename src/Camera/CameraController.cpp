@@ -63,7 +63,7 @@ mono::EventResult MouseCameraController::OnMouseDown(const event::MouseDownEvent
         return mono::EventResult::PASS_ON;
 
     m_translate = true;
-    m_translate_delta = math::Vector(event.screenX, event.screenY);
+    m_translate_delta = math::Vector(event.screen_x, event.screen_y);
     return mono::EventResult::HANDLED;
 }
 
@@ -81,7 +81,7 @@ mono::EventResult MouseCameraController::OnMouseMove(const event::MouseMotionEve
     if(!m_enabled || !m_translate)
         return mono::EventResult::PASS_ON;
 
-    const math::Vector screen_position(event.screenX, event.screenY);
+    const math::Vector screen_position(event.screen_x, event.screen_y);
 
     const math::Quad& viewport = m_camera->GetViewport();
     const math::Vector window_size(m_window_width, m_window_height);

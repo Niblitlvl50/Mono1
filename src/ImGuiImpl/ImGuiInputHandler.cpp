@@ -126,7 +126,7 @@ mono::EventResult ImGuiInputHandler::OnMouseUp(const event::MouseUpEvent& event)
 
 mono::EventResult ImGuiInputHandler::OnMouseMove(const event::MouseMotionEvent& event)
 {
-    ImGui::GetIO().MousePos = ImVec2(event.screenX, event.screenY);
+    ImGui::GetIO().MousePos = ImVec2(event.screen_x, event.screen_y);
     return mono::EventResult::PASS_ON;
 }
 

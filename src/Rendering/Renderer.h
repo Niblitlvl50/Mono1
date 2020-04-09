@@ -23,6 +23,9 @@ namespace mono
         virtual const math::Quad& GetViewport() const;
         virtual bool Cull(const math::Quad& world_bb) const;
 
+        void SetDeltaTimeMS(uint32_t delta_ms);
+        virtual uint32_t GetDeltaTimeMS() const;
+
         virtual void DrawFrame();
         virtual void AddDrawable(const IDrawable* drawable);
 
@@ -93,6 +96,8 @@ namespace mono
 
         math::Matrix m_current_projection;
         math::Matrix m_current_transform;
+
+        uint32_t m_delta_time_ms = 0;
 
         mutable uint32_t m_current_shader_id = -1;
         mutable uint32_t m_current_texture_id = -1;

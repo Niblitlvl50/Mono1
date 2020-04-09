@@ -58,6 +58,16 @@ bool Renderer::Cull(const math::Quad& world_bb) const
     return math::QuadOverlaps(m_viewport, world_bb);
 }
 
+void Renderer::SetDeltaTimeMS(uint32_t delta_ms)
+{
+    m_delta_time_ms = delta_ms;
+}
+
+uint32_t Renderer::GetDeltaTimeMS() const
+{
+    return m_delta_time_ms;
+}
+
 void Renderer::PrepareDraw()
 {
     const float viewport_width = math::Width(m_viewport);

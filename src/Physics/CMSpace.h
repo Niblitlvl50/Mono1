@@ -4,12 +4,15 @@
 #include "CMFwd.h"
 #include "Math/MathFwd.h"
 #include <vector>
+#include <functional>
 
 struct cpSpace;
 struct cpArbiter;
 
 namespace mono
 {
+    using QueryFilter = const std::function<bool (uint32_t)>;
+
     class PhysicsSpace
     {
     public:
@@ -32,8 +35,11 @@ namespace mono
         void Remove(IConstraint* constraint);
         
         void ForEachBody(const BodyFunc& func);
-        IBody* QueryFirst(const math::Vector& start, const math::Vector& end);
-        IBody* QueryNearest(const math::Vector& point, float max_distance);
+        IBody* QueryFirst(const math::Vector& start, const math::Vector& end, uint32_t category);
+        std::vector<IBody*> QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category);
+        IBody* QueryNearest(const math::Vector& point, float max_distance, uint32_t category);
+        IBody* QueryNearest(
+            const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func);
 
         cpSpace* Handle();
         

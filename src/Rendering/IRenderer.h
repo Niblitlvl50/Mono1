@@ -72,5 +72,7 @@ namespace mono
 
         virtual const math::Quad& GetViewport() const = 0;
         virtual bool Cull(const math::Quad& world_bb) const = 0;
+
+        virtual uint32_t GetDeltaTimeMS() const = 0;
     };
 }

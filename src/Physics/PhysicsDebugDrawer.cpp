@@ -6,6 +6,11 @@
 #include "Rendering/Color.h"
 #include "Rendering/IRenderer.h"
 
+#include "System/System.h"
+#include "EventHandler/EventHandler.h"
+#include "Events/EventFuncFwd.h"
+#include "Events/MouseEvent.h"
+
 #include "chipmunk/chipmunk.h"
 
 using namespace mono;
@@ -114,11 +119,30 @@ static_assert(uint32_t(CP_SPACE_DEBUG_DRAW_CONSTRAINTS) == mono::PhysicsDebugCom
 static_assert(uint32_t(CP_SPACE_DEBUG_DRAW_COLLISION_POINTS) == mono::PhysicsDebugComponents::DRAW_COLLISION_POINTS);
 
 PhysicsDebugDrawer::PhysicsDebugDrawer(
-    const bool& enabled, const uint32_t& debug_components, mono::PhysicsSystem* physics_system)
+    const bool& enabled,
+    const uint32_t& debug_components,
+    mono::PhysicsSystem* physics_system, mono::EventHandler* event_handler)
     : m_enabled(enabled)
     , m_debug_components(debug_components)
     , m_physics_system(physics_system)
-{ }
+    , m_event_handler(event_handler)
+{
+    using namespace std::placeholders;
+
+    event::MouseDownEventFunc mouse_down = std::bind(&PhysicsDebugDrawer::OnMouseDown, this, _1);
+    event::MouseUpEventFunc mouse_up = std::bind(&PhysicsDebugDrawer::OnMouseUp, this, _1);
+
+    m_mouse_down_token = m_event_handler->AddListener(mouse_down);
+    m_mouse_up_token = m_event_handler->AddListener(mouse_up);
+
+    m_click_timestamp = std::numeric_limits<uint32_t>::max();
+}
+
+PhysicsDebugDrawer::~PhysicsDebugDrawer()
+{
+    m_event_handler->RemoveListener(m_mouse_down_token);
+    m_event_handler->RemoveListener(m_mouse_up_token);
+}
 
 void PhysicsDebugDrawer::doDraw(mono::IRenderer& renderer) const
 {
@@ -159,9 +183,59 @@ void PhysicsDebugDrawer::doDraw(mono::IRenderer& renderer) const
 
     for(const PolygonData& polygon_data : debug_collection.polygons)
         renderer.DrawClosedPolyline(polygon_data.vertices, mono::Color::MAGENTA, 2.0f);
+
+    if(m_click_timestamp != std::numeric_limits<uint32_t>::max())
+    {
+        renderer.DrawCircle(m_mouse_down_position, 0.25f, 6, 2.0f, mono::Color::RED);
+        renderer.DrawCircle(m_mouse_up_position, 0.5f, 6, 2.0f, mono::Color::RED);
+        renderer.DrawPoints(m_found_positions, mono::Color::BLUE, 16.0f);
+
+        const uint32_t diff = System::GetMilliseconds() - m_click_timestamp;
+        if(diff > 5000)
+            m_click_timestamp = std::numeric_limits<uint32_t>::max();
+    }
 }
 
 math::Quad PhysicsDebugDrawer::BoundingBox() const
 {
     return math::InfQuad;
+}
+
+mono::EventResult PhysicsDebugDrawer::OnMouseDown(const event::MouseDownEvent& event)
+{
+    if(!m_enabled)
+        return mono::EventResult::PASS_ON;
+
+    m_mouse_down_position = math::Vector(event.world_x, event.world_y);
+
+    return mono::EventResult::HANDLED;
+}
+
+mono::EventResult PhysicsDebugDrawer::OnMouseUp(const event::MouseUpEvent& event)
+{
+    if(!m_enabled)
+        return mono::EventResult::PASS_ON;
+
+    m_found_positions.clear();
+
+    m_mouse_up_position = math::Vector(event.world_x, event.world_y);
+    m_click_timestamp = System::GetMilliseconds();
+
+    mono::PhysicsSpace* physics_space = m_physics_system->GetSpace();
+    const bool same_point = math::IsPrettyMuchEquals(m_mouse_up_position, m_mouse_down_position);
+    if(same_point)
+    {
+        mono::IBody* found_body = physics_space->QueryNearest(m_mouse_up_position, 10.0f, -1);
+        if(found_body)
+            m_found_positions.push_back(found_body->GetPosition());
+    }
+    else
+    {
+        std::vector<mono::IBody*> found_bodies
+            = physics_space->QueryAllInLIne(m_mouse_down_position, m_mouse_up_position, 1.0f, -1);
+        for(mono::IBody* body : found_bodies)
+            m_found_positions.push_back(body->GetPosition());
+    }
+
+    return mono::EventResult::HANDLED;
 }

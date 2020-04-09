@@ -7,51 +7,51 @@ namespace event
 {
     struct MouseDownEvent
     {
-        constexpr MouseDownEvent(MouseButton key, int screenX, int screenY, float worldX, float worldY)
+        constexpr MouseDownEvent(MouseButton key, int screen_x, int screen_y, float world_x, float world_y)
             : key(key),
-              screenX(screenX),
-              screenY(screenY),
-              worldX(worldX),
-              worldY(worldY)
+              screen_x(screen_x),
+              screen_y(screen_y),
+              world_x(world_x),
+              world_y(world_y)
         { }
         
         const MouseButton key;
-        const int screenX;
-        const int screenY;
-        const float worldX;
-        const float worldY;
+        const int screen_x;
+        const int screen_y;
+        const float world_x;
+        const float world_y;
     };
 
     struct MouseUpEvent
     {
-        constexpr MouseUpEvent(MouseButton key, int screenX, int screenY, float worldX, float worldY)
+        constexpr MouseUpEvent(MouseButton key, int screen_x, int screen_y, float world_x, float world_y)
             : key(key),
-              screenX(screenX),
-              screenY(screenY),
-              worldX(worldX),
-              worldY(worldY)
+              screen_x(screen_x),
+              screen_y(screen_y),
+              world_x(world_x),
+              world_y(world_y)
         { }
         
         const MouseButton key;
-        const int screenX;
-        const int screenY;
-        const float worldX;
-        const float worldY;
+        const int screen_x;
+        const int screen_y;
+        const float world_x;
+        const float world_y;
     };
 
     struct MouseMotionEvent
     {
-        constexpr MouseMotionEvent(int x, int y, float worldX, float worldY)
-            : screenX(x),
-              screenY(y),
-              worldX(worldX),
-              worldY(worldY)
+        constexpr MouseMotionEvent(int screen_x, int screen_y, float world_x, float world_y)
+            : screen_x(screen_x),
+              screen_y(screen_y),
+              world_x(world_x),
+              world_y(world_y)
         { }
         
-        const int screenX;
-        const int screenY;
-        const float worldX;
-        const float worldY;
+        const int screen_x;
+        const int screen_y;
+        const float world_x;
+        const float world_y;
     };
 
     struct MouseWheelEvent
