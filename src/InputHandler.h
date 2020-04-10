@@ -7,7 +7,7 @@
 
 namespace mono
 {
-    using ScreenToWorldFunc = std::function<void (float&, float&)>;
+    using ScreenToWorldFunc = std::function<void (float& x, float& y)>;
 
     class InputHandler : public System::IInputHandler
     {

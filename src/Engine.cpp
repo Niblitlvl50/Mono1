@@ -13,6 +13,7 @@
 #include "Updater.h"
 
 #include "Camera/ICamera.h"
+#include "Camera/TraceCamera.h"
 #include "Zone/IZone.h"
 
 #include "System/System.h"
@@ -35,7 +36,7 @@ using namespace mono;
 
 namespace
 {
-    void ScreenToWorld(float& x, float& y, System::IWindow* window, ICameraPtr camera)
+    void ScreenToWorld(float& x, float& y, System::IWindow* window, const mono::ICamera* camera)
     {
         const System::Size& size = window->Size();
 
@@ -58,16 +59,12 @@ namespace
     }
 }
 
-Engine::Engine(System::IWindow* window, const ICameraPtr& camera, SystemContext* system_context, EventHandler* event_handler)
+Engine::Engine(System::IWindow* window, SystemContext* system_context, EventHandler* event_handler)
     : m_window(window)
-    , m_camera(camera)
     , m_system_context(system_context)
     , m_event_handler(event_handler)
 {
     using namespace std::placeholders;
-
-    const auto screen_to_world_func = std::bind(ScreenToWorld, _1, _2, m_window, m_camera);
-    m_input_handler = std::make_unique<InputHandler>(screen_to_world_func, m_event_handler);
 
     const event::PauseEventFunc pause_func = std::bind(&Engine::OnPause, this, _1);
     const event::QuitEventFunc quit_func = std::bind(&Engine::OnQuit, this, _1);
@@ -97,8 +94,14 @@ Engine::~Engine()
 int Engine::Run(IZone* zone)
 {
     Renderer renderer;
+    Camera camera;
 
-    zone->OnLoad(m_camera);
+    using namespace std::placeholders;
+    const auto screen_to_world_func = std::bind(ScreenToWorld, _1, _2, m_window, &camera);
+    std::unique_ptr<System::IInputHandler> m_input_handler
+        = std::make_unique<InputHandler>(screen_to_world_func, m_event_handler);
+
+    zone->OnLoad(&camera);
 
     UpdateContext update_context;
     update_context.frame_count = 0;
@@ -131,7 +134,7 @@ int Engine::Run(IZone* zone)
         const System::Size& window_size = m_window->Size();
         renderer.SetWindowSize(math::Vector(window_size.width, window_size.height));
 
-        const math::Quad& viewport = m_camera->GetViewport();
+        const math::Quad& viewport = camera.GetViewport();
         const math::Quad camera_quad(viewport.mA, viewport.mA + viewport.mB);
         renderer.SetViewport(camera_quad);
 
@@ -147,7 +150,7 @@ int Engine::Run(IZone* zone)
 
             // Update all the stuff...
             zone->Accept(updater);
-            updater.AddUpdatable(m_camera.get());
+            updater.AddUpdatable(&camera);
             updater.Update(update_context);
 
             // Draw...
@@ -165,7 +168,6 @@ int Engine::Run(IZone* zone)
     }
 
     // Remove possible follow entity and unload the zone
-    m_camera->Unfollow();
     const int exit_code = zone->OnUnload();
 
     // Reset the quit, pause and m_update_last_time flag for when you want

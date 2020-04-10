@@ -1,6 +1,5 @@
 
 #include "TraceCamera.h"
-#include "Zone/IEntity.h"
 #include "Math/Vector.h"
 #include "Math/MathFunctions.h"
 
@@ -8,80 +7,52 @@
 
 using namespace mono;
 
-namespace constants
-{
-    constexpr float SPEED = 0.01f;
-}
-
-TraceCamera::TraceCamera(int width, int height)
-    : m_offset(math::ZeroVec),
-      mViewport(0.0f, 0.0f, width, height),
-      mTargetViewport(mViewport)
+Camera::Camera()
+    : m_viewport(0.0f, 0.0f, 640, 480),
+      m_target_viewport(m_viewport)
 { }
 
-void TraceCamera::doUpdate(const UpdateContext& update_context)
+void Camera::doUpdate(const UpdateContext& update_context)
 {
-    const float change = (mTargetViewport.mB.x - mViewport.mB.x);
+    const float change = (m_target_viewport.mB.x - m_viewport.mB.x);
     const float xzero = std::abs(change);
 
     if(xzero != 0.0f)
     {
-        const float aspect = mViewport.mB.x / mViewport.mB.y;
-        math::ResizeQuad(mViewport, change * 0.1f, aspect);
-    }
-    
-    if(mEntity)
-    {
-        const math::Vector& targetPosition = mEntity->Position() - (mViewport.mB * 0.5f);
-        const math::Vector& diff = targetPosition - mViewport.mA;
-    
-        const math::Vector& move = diff * (update_context.delta_ms * constants::SPEED);
-        mViewport.mA += move;
+        const float aspect = m_viewport.mB.x / m_viewport.mB.y;
+        math::ResizeQuad(m_viewport, change * 0.1f, aspect);
     }
 }
 
-void TraceCamera::Follow(uint32_t entity_id, const math::Vector& offset)
+void Camera::SetViewport(const math::Quad& viewport)
 {
-
+    m_viewport = viewport;
+    m_target_viewport = viewport;
 }
 
-void TraceCamera::Unfollow()
+void Camera::SetTargetViewport(const math::Quad& target)
 {
-    mEntity = nullptr;
+    m_target_viewport = target;
 }
 
-math::Quad TraceCamera::GetViewport() const
+math::Quad Camera::GetViewport() const
 {
-    math::Quad result = mViewport;
-    result.mA -= m_offset;
-
-    return result;
+    return m_viewport;
 }
 
-void TraceCamera::SetViewport(const math::Quad& viewport)
-{
-    mViewport = viewport;
-    mTargetViewport = viewport;
-}
-
-void TraceCamera::SetTargetViewport(const math::Quad& target)
-{
-    mTargetViewport = target;
-}
-
-void TraceCamera::SetPosition(const math::Vector& position)
+void Camera::SetPosition(const math::Vector& position)
 {
     // The position is the middle of the quad, not the lower left corner.
-    const math::Vector& xy = position - (mViewport.mB * 0.5f);
-    mViewport.mA = xy;
+    const math::Vector& xy = position - (m_viewport.mB * 0.5f);
+    m_viewport.mA = xy;
 }
 
-math::Vector TraceCamera::GetPosition() const
+math::Vector Camera::GetPosition() const
 {
-    return mViewport.mA + (mViewport.mB * 0.5f);
+    return m_viewport.mA + (m_viewport.mB * 0.5f);
 }
 
-math::Vector TraceCamera::ScreenToWorld(const math::Vector& screen_pos, const math::Vector& window_size) const
+math::Vector Camera::ScreenToWorld(const math::Vector& screen_pos, const math::Vector& window_size) const
 {
     const float ratio = window_size.x / window_size.y;
 

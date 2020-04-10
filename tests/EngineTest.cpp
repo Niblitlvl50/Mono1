@@ -72,45 +72,6 @@ namespace
         mutable bool mSwapBuffersCalled = false;
     };
 
-    struct MocCamera : mono::ICamera
-    {
-        MocCamera()
-            : mViewport(0.0f, 0.0f, 100.0f, 50.0f)
-        { }
-        virtual void doUpdate(const mono::UpdateContext& update_context) override
-        {
-            mUpdateCalled = true;
-        }
-        virtual void Follow(uint32_t entity_id, const math::Vector& offset) override
-        { }
-        virtual void Unfollow() override
-        {
-            mUnfollowCalled = true;
-        }
-        virtual math::Quad GetViewport() const override
-        {
-            return mViewport;
-        }
-        virtual math::Vector GetPosition() const override
-        {
-            return mViewport.mA + (mViewport.mB * 0.5f);
-        }
-        virtual void SetViewport(const math::Quad& viewport) override
-        { }
-        virtual void SetTargetViewport(const math::Quad& target) override
-        { }
-        virtual void SetPosition(const math::Vector& position) override
-        { }
-        math::Vector ScreenToWorld(const math::Vector& screen_pos, const math::Vector& window_size) const override
-        {
-            return screen_pos;
-        }
-
-        math::Quad mViewport;
-        bool mUpdateCalled = false;
-        bool mUnfollowCalled = false;
-    };
-    
     struct MocZone : mono::IZone
     {
         MocZone()
@@ -121,7 +82,7 @@ namespace
         }
         virtual void Accept(mono::IUpdater& updater) override
         { }
-        virtual void OnLoad(mono::ICameraPtr& camera) override
+        virtual void OnLoad(mono::ICamera* camera) override
         {
             mOnLoadCalled = true;
         }
@@ -253,20 +214,16 @@ TEST(EngineTest, Basic)
     mono::LoadCustomTextureFactory(new NullTextureFactory);
 
     MocWindow window(handler);
-    std::shared_ptr<MocCamera> camera = std::make_shared<MocCamera>();
     MocZone zone;
 
     {
-        mono::Engine engine(&window, camera, &system_context, &handler);
+        mono::Engine engine(&window, &system_context, &handler);
         EXPECT_NO_THROW(engine.Run(&zone));
     }
 
     EXPECT_TRUE(window.mMakeCurrentCalled);
     EXPECT_TRUE(window.mSwapBuffersCalled);
 
-    EXPECT_TRUE(camera->mUpdateCalled);
-    EXPECT_TRUE(camera->mUnfollowCalled);
-    
     EXPECT_TRUE(zone.mAcceptCalled);
     EXPECT_TRUE(zone.mOnLoadCalled);
     EXPECT_TRUE(zone.mOnUnloadCalled);
