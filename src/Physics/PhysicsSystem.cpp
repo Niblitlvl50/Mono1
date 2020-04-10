@@ -92,8 +92,6 @@ PhysicsSystem::PhysicsSystem(const PhysicsSystemInitParams& init_params, mono::T
     : m_impl(std::make_unique<Impl>(init_params))
     , m_transform_system(transform_system)
 {
-    m_impl->space.SetGravity(math::Vector(0.0f, -0.1f));
-
     m_impl->bodies.reserve(init_params.n_bodies);
     for(size_t index = 0; index < init_params.n_bodies; ++index)
     {
