@@ -7,7 +7,7 @@
 
 namespace mono
 {
-    using ISoundPtr = std::shared_ptr<ISound>;
+    using ISoundPtr = std::unique_ptr<ISound>;
 
     enum class SoundFormat
     {

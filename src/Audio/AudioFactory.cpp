@@ -118,11 +118,11 @@ namespace
         { }
     };
 
-    class SoundImpl : public mono::ISound
+    class SoundInstanceImpl : public mono::ISound
     {
     public:
 
-        SoundImpl(const std::shared_ptr<SoundData>& data, mono::SoundPlayback playback, mono::SoundPosition position)
+        SoundInstanceImpl(const std::shared_ptr<SoundData>& data, mono::SoundPlayback playback, mono::SoundPosition position)
             : m_data(data),
               m_source(0)
         {
@@ -137,7 +137,7 @@ namespace
             Pitch(1.0f);
             Gain(1.0f);
         }
-        ~SoundImpl()
+        ~SoundInstanceImpl()
         {
             Stop();
             alDeleteSources(1, &m_source);
@@ -205,7 +205,7 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const char* file_name, mono::Sou
     {
         auto data = it->second.lock();
         if(data)
-            return std::make_shared<SoundImpl>(data, playback, position);
+            return std::make_unique<SoundInstanceImpl>(data, playback, position);
 
         System::Log("AudioFactory|Recreating '%s'\n", file_name);
     }
@@ -225,12 +225,12 @@ mono::ISoundPtr mono::AudioFactory::CreateSound(const char* file_name, mono::Sou
     // Store it in the repository for others to retreive
     repository[sound_hash] = data;
 
-    return std::make_shared<SoundImpl>(data, playback, position);
+    return std::make_unique<SoundInstanceImpl>(data, playback, position);
 }
 
 mono::ISoundPtr mono::AudioFactory::CreateNullSound()
 {
-    return std::make_shared<NullSound>();
+    return std::make_unique<NullSound>();
 }
 
 mono::SoundFile mono::AudioFactory::LoadFile(const char* filename)
