@@ -254,11 +254,11 @@ TEST(EngineTest, Basic)
 
     MocWindow window(handler);
     std::shared_ptr<MocCamera> camera = std::make_shared<MocCamera>();
-    std::shared_ptr<MocZone> zone = std::make_shared<MocZone>();
-    
+    MocZone zone;
+
     {
         mono::Engine engine(&window, camera, &system_context, &handler);
-        EXPECT_NO_THROW(engine.Run(zone.get()));
+        EXPECT_NO_THROW(engine.Run(&zone));
     }
 
     EXPECT_TRUE(window.mMakeCurrentCalled);
@@ -267,8 +267,8 @@ TEST(EngineTest, Basic)
     EXPECT_TRUE(camera->mUpdateCalled);
     EXPECT_TRUE(camera->mUnfollowCalled);
     
-    EXPECT_TRUE(zone->mAcceptCalled);
-    EXPECT_TRUE(zone->mOnLoadCalled);
-    EXPECT_TRUE(zone->mOnUnloadCalled);
+    EXPECT_TRUE(zone.mAcceptCalled);
+    EXPECT_TRUE(zone.mOnLoadCalled);
+    EXPECT_TRUE(zone.mOnUnloadCalled);
 }
 
