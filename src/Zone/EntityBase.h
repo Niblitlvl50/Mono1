@@ -2,7 +2,7 @@
 #pragma once
 
 #include "IEntity.h"
-#include "MonoPtrFwd.h"
+#include "MonoFwd.h"
 #include "Math/Vector.h"
 #include "Rendering/RenderFwd.h"
 #include <vector>
@@ -32,12 +32,13 @@ namespace mono
         virtual void SetProperty(uint32_t property);
         virtual bool HasProperty(uint32_t property) const;
 
-        void AddChild(const IEntityPtr& child);
-        void RemoveChild(const IEntityPtr& child);
+        void AddChild(IEntity* child);
+        void RemoveChild(IEntity* child);
 
     protected:
 
         EntityBase();
+        ~EntityBase();
 
         virtual void Draw(mono::IRenderer& renderer) const = 0;
         virtual void Update(const UpdateContext& update_context) = 0;
@@ -53,6 +54,6 @@ namespace mono
         math::Vector m_scale;
         float m_rotation;
 
-        std::vector<IEntityPtr> m_children;
+        std::vector<mono::IEntity*> m_children;
     };
 }

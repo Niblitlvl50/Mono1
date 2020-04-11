@@ -3,7 +3,7 @@
 
 #include "TextDefinition.h"
 #include "Math/MathFwd.h"
-#include "Rendering/RenderPtrFwd.h"
+#include "Rendering/Texture/ITextureFactory.h"
 
 namespace mono
 {

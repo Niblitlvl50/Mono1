@@ -6,7 +6,5 @@
 
 namespace mono
 {
-    using IDrawablePtr = std::shared_ptr<IDrawable>;
-    using ISpritePtr = std::shared_ptr<ISprite>;
-    using ITexturePtr = std::shared_ptr<ITexture>;
+    using ISpritePtr = std::unique_ptr<ISprite>;
 }

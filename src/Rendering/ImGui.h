@@ -2,7 +2,8 @@
 #pragma once
 
 #include "Math/Vector.h"
-#include "Rendering/RenderPtrFwd.h"
+#include "Rendering/RenderFwd.h"
+#include "Rendering/Texture/ITextureFactory.h"
 #include <unordered_map>
 #include <memory>
 

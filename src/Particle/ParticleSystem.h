@@ -5,7 +5,8 @@
 #include "IGameSystem.h"
 #include "Rendering/BlendMode.h"
 #include "Rendering/Color.h"
-#include "Rendering/RenderPtrFwd.h"
+#include "Rendering/RenderFwd.h"
+#include "Rendering/Texture/ITextureFactory.h"
 #include "Math/Vector.h"
 #include "Util/ObjectPool.h"
 

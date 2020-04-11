@@ -16,11 +16,17 @@ EntityBase::EntityBase()
       m_rotation(0.0f)
 { }
 
+EntityBase::~EntityBase()
+{
+    for(IEntity* child : m_children)
+        delete child;
+}
+
 void EntityBase::doDraw(IRenderer& renderer) const
 {
     const math::Matrix& matrix = renderer.GetCurrentTransform() * Transformation();
 
-    for(const auto& child : m_children)
+    for(const mono::IEntity* child : m_children)
     {
         renderer.PushNewTransform(matrix);
         child->doDraw(renderer);
@@ -32,7 +38,7 @@ void EntityBase::doDraw(IRenderer& renderer) const
 
 void EntityBase::doUpdate(const UpdateContext& update_context)
 {
-    for(auto& child : m_children)
+    for(mono::IEntity* child : m_children)
         child->doUpdate(update_context);
 
     Update(update_context);
@@ -91,13 +97,13 @@ math::Quad EntityBase::BoundingBox() const
     const math::Vector& half_scale = m_scale / 2.0f;
     math::Quad thisbb = math::Quad(m_position - half_scale, m_position + half_scale);
 
-    if(!m_children.empty())    
+    if(!m_children.empty())
     {
         const math::Matrix& local_to_world = Transformation();
         for(const auto& child : m_children)
             thisbb |= math::Transform(local_to_world, child->BoundingBox());
     }
-            
+
     return thisbb;
 }
 
@@ -140,12 +146,12 @@ bool EntityBase::HasProperty(uint32_t property) const
     return m_properties & property;
 }
 
-void EntityBase::AddChild(const IEntityPtr& child)
+void EntityBase::AddChild(IEntity* child)
 {
     m_children.push_back(child);
 }
 
-void EntityBase::RemoveChild(const IEntityPtr& child)
+void EntityBase::RemoveChild(IEntity* child)
 {
     mono::remove(m_children, child);
 }

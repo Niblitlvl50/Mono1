@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Rendering/RenderPtrFwd.h"
+#include "Rendering/Texture/ITextureFactory.h"
 
 namespace mono
 {

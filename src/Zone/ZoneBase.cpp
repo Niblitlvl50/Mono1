@@ -14,45 +14,54 @@ using namespace mono;
 
 namespace
 {
-    bool DrawableSortFunc(const std::pair<int, IDrawablePtr>& first, const std::pair<int, IDrawablePtr>& second)
+    bool DrawableSortFunc(
+        const std::pair<int, const mono::IDrawable*>& first, const std::pair<int, const mono::IDrawable*>& second)
     {
         return first.first < second.first;
     }
 }
 
+ZoneBase::~ZoneBase()
+{
+    std::vector<mono::IEntity*> entities = m_entities;
+
+
+    // TODO, delete everything that's left here. 
+}
+
 void ZoneBase::Accept(IRenderer& renderer)
 {
     for(auto& pair : m_drawables)
-        renderer.AddDrawable(pair.second.get());
+        renderer.AddDrawable(pair.second);
 }
 
 void ZoneBase::Accept(mono::IUpdater& updater)
 {
     DoPreAccept();
 
-    for(auto& updatable : m_updatables)
-        updater.AddUpdatable(updatable.get());
+    for(mono::IUpdatable* updatable : m_updatables)
+        updater.AddUpdatable(updatable);
 }
 
 void ZoneBase::DoPreAccept()
 {
-    for(auto& entity : m_entities_remove)
+    for(mono::IEntity* entity : m_entities_remove)
     {
         const bool result = mono::remove(m_entities, entity);
         if(!result)
             System::Log("ZoneBase|Unable to remove entity with id %u\n", entity->Id());
     }
 
-    for(auto& updatable : m_updatables_remove)
+    for(mono::IUpdatable* updatable : m_updatables_remove)
     {
         const bool result = mono::remove(m_updatables, updatable);
         if(!result)
             System::Log("ZoneBase|Unable to remove updatable\n");
     }
 
-    for(auto& drawable : m_drawables_remove)
+    for(mono::IDrawable* drawable : m_drawables_remove)
     {
-        const auto func = [drawable](const std::pair<int, IDrawablePtr>& pair) {
+        const auto func = [drawable](const std::pair<int, const mono::IDrawable*>& pair) {
             return pair.second == drawable;
         };
 
@@ -66,7 +75,7 @@ void ZoneBase::DoPreAccept()
     m_drawables_remove.clear();
 }
 
-void ZoneBase::AddEntity(const IEntityPtr& entity, int layer)
+void ZoneBase::AddEntity(IEntity* entity, int layer)
 {
     AddDrawable(entity, layer);
     AddUpdatable(entity);
@@ -74,24 +83,24 @@ void ZoneBase::AddEntity(const IEntityPtr& entity, int layer)
     m_entities.push_back(entity);
 }
 
-void ZoneBase::RemoveEntity(const IEntityPtr& entity)
+void ZoneBase::RemoveEntity(IEntity* entity)
 {
     m_entities_remove.push_back(entity);
     m_updatables_remove.push_back(entity);
     m_drawables_remove.push_back(entity);
 }
 
-void ZoneBase::AddUpdatable(const IUpdatablePtr& updatable)
+void ZoneBase::AddUpdatable(IUpdatable* updatable)
 {
     m_updatables.push_back(updatable);
 }
 
-void ZoneBase::RemoveUpdatable(const IUpdatablePtr& updatable)
+void ZoneBase::RemoveUpdatable(IUpdatable* updatable)
 {
     m_updatables_remove.push_back(updatable);
 }
 
-void ZoneBase::AddDrawable(const IDrawablePtr& drawable, int layer)
+void ZoneBase::AddDrawable(mono::IDrawable* drawable, int layer)
 {
     m_drawables.push_back(std::make_pair(layer, drawable));
 
@@ -100,14 +109,14 @@ void ZoneBase::AddDrawable(const IDrawablePtr& drawable, int layer)
     std::sort(m_drawables.begin(), m_drawables.end(), DrawableSortFunc);
 }
 
-void ZoneBase::RemoveDrawable(const IDrawablePtr& drawable)
+void ZoneBase::RemoveDrawable(mono::IDrawable* drawable)
 {
     m_drawables_remove.push_back(drawable);
 }
 
-void ZoneBase::SetDrawableLayer(const IDrawablePtr& drawable, int new_layer)
+void ZoneBase::SetDrawableLayer(const mono::IDrawable* drawable, int new_layer)
 {
-    const auto func = [drawable](const std::pair<int, IDrawablePtr>& pair) {
+    const auto func = [drawable](const std::pair<int, const mono::IDrawable*>& pair) {
         return pair.second == drawable;
     };
 
@@ -119,9 +128,9 @@ void ZoneBase::SetDrawableLayer(const IDrawablePtr& drawable, int new_layer)
     }
 }
 
-mono::IEntityPtr ZoneBase::FindEntityFromId(uint32_t id) const
+mono::IEntity* ZoneBase::FindEntityFromId(uint32_t id) const
 {
-    const auto find_func = [id](const mono::IEntityPtr& entity) {
+    const auto find_func = [id](const mono::IEntity* entity) {
         return id == entity->Id();
     };
 
@@ -132,9 +141,9 @@ mono::IEntityPtr ZoneBase::FindEntityFromId(uint32_t id) const
     return nullptr;
 }
 
-mono::IEntityPtr ZoneBase::FindEntityFromPoint(const math::Vector& point) const
+mono::IEntity* ZoneBase::FindEntityFromPoint(const math::Vector& point) const
 {
-    const auto find_func = [&point](const mono::IEntityPtr& entity) {
+    const auto find_func = [&point](const mono::IEntity* entity) {
         const math::Quad& bb = entity->BoundingBox();
         return math::PointInsideQuad(point, bb);
     };
@@ -146,7 +155,7 @@ mono::IEntityPtr ZoneBase::FindEntityFromPoint(const math::Vector& point) const
     return nullptr;
 }
 
-const std::vector<mono::IEntityPtr>& ZoneBase::GetEntities() const
+const std::vector<mono::IEntity*>& ZoneBase::GetEntities() const
 {
     return m_entities;
 }

@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include "MonoPtrFwd.h"
-#include "Rendering/RenderPtrFwd.h"
+#include "MonoFwd.h"
+#include "Rendering/RenderFwd.h"
 #include <cstdint>
 
 namespace mono
@@ -18,16 +18,16 @@ namespace mono
         virtual void OnLoad(mono::ICamera* camera) = 0;
         virtual int OnUnload() = 0;
 
-        virtual void AddEntity(const mono::IEntityPtr& entity, int layer) = 0;
-        virtual void RemoveEntity(const mono::IEntityPtr& entity) = 0;
+        virtual void AddEntity(mono::IEntity* entity, int layer) = 0;
+        virtual void RemoveEntity(mono::IEntity* entity) = 0;
 
-        virtual void AddDrawable(const mono::IDrawablePtr& drawable, int layer) = 0;
-        virtual void RemoveDrawable(const mono::IDrawablePtr& drawable) = 0;
+        virtual void AddDrawable(mono::IDrawable* drawable, int layer) = 0;
+        virtual void RemoveDrawable(mono::IDrawable* drawable) = 0;
 
-        virtual void AddUpdatable(const mono::IUpdatablePtr& updatable) = 0;
-        virtual void RemoveUpdatable(const mono::IUpdatablePtr& updatable) = 0;
+        virtual void AddUpdatable(mono::IUpdatable* updatable) = 0;
+        virtual void RemoveUpdatable(mono::IUpdatable* updatable) = 0;
 
-        virtual void SetDrawableLayer(const IDrawablePtr& drawable, int new_layer) = 0;
-        virtual mono::IEntityPtr FindEntityFromId(uint32_t id) const = 0;
+        virtual void SetDrawableLayer(const IDrawable* drawable, int new_layer) = 0;
+        virtual mono::IEntity* FindEntityFromId(uint32_t id) const = 0;
     };
 }

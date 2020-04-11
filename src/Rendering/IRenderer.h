@@ -2,6 +2,7 @@
 #pragma once
 
 #include "RenderPtrFwd.h"
+#include "Rendering/Texture/ITextureFactory.h"
 #include "BlendMode.h"
 #include "Math/MathFwd.h"
 

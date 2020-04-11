@@ -3,6 +3,7 @@
 
 #include "IUpdatable.h"
 #include "Rendering/RenderPtrFwd.h"
+#include "Rendering/Texture/ITextureFactory.h"
 #include "Math/Quad.h"
 #include "Math/Vector.h"
 

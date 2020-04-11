@@ -88,7 +88,7 @@ SpriteFactoryImpl::SpriteFactoryImpl(float pixels_per_meter)
 
 mono::ISpritePtr SpriteFactoryImpl::CreateSprite(const char* sprite_file) const
 {
-    auto sprite = std::make_shared<mono::Sprite>();
+    auto sprite = std::make_unique<mono::Sprite>();
     const bool result = this->CreateSprite(*sprite.get(), sprite_file);
     if(result)
         return sprite;
@@ -103,7 +103,7 @@ mono::ISpritePtr SpriteFactoryImpl::CreateSpriteFromRaw(const char* sprite_raw) 
 
     mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture(sprite_data.texture_file.c_str());
 
-    auto sprite = std::make_shared<mono::Sprite>();
+    auto sprite = std::make_unique<mono::Sprite>();
     sprite->Init(sprite_data.hash, texture, sprite_data.sprite_frames);
 
     for(const SpriteAnimation& animation : sprite_data.animations)

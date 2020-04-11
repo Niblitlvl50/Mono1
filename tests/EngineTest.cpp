@@ -74,36 +74,36 @@ namespace
     {
         MocZone()
         { }
-        virtual void Accept(mono::IRenderer& renderer) override
+        void Accept(mono::IRenderer& renderer) override
         {
             mAcceptCalled = true;
         }
-        virtual void Accept(mono::IUpdater& updater) override
+        void Accept(mono::IUpdater& updater) override
         { }
-        virtual void OnLoad(mono::ICamera* camera) override
+        void OnLoad(mono::ICamera* camera) override
         {
             mOnLoadCalled = true;
         }
-        virtual int OnUnload() override
+        int OnUnload() override
         {
             mOnUnloadCalled = true;
             return 0;
         }
-        virtual void AddEntity(const mono::IEntityPtr& entity, int layer) override
+        void AddEntity(mono::IEntity* entity, int layer) override
         { }
-        virtual void RemoveEntity(const mono::IEntityPtr& entity) override
+        void RemoveEntity(mono::IEntity* entity) override
         { }
-        virtual void AddDrawable(const mono::IDrawablePtr& drawable, int layer) override
+        void AddDrawable(mono::IDrawable* drawable, int layer) override
         { }
-        virtual void RemoveDrawable(const mono::IDrawablePtr& drawable) override
+        void RemoveDrawable(mono::IDrawable* drawable) override
         { }
-        virtual void AddUpdatable(const mono::IUpdatablePtr& updatable) override
+        void AddUpdatable(mono::IUpdatable* updatable) override
         { }
-        virtual void RemoveUpdatable(const mono::IUpdatablePtr& updatable) override
+        void RemoveUpdatable(mono::IUpdatable* updatable) override
         { }
-        virtual void SetDrawableLayer(const mono::IDrawablePtr& drawable, int new_layer) override
+        void SetDrawableLayer(const mono::IDrawable* drawable, int new_layer) override
         { }
-        virtual mono::IEntityPtr FindEntityFromId(uint32_t id) const override
+        mono::IEntity* FindEntityFromId(uint32_t id) const override
         {
             return nullptr;
         }

@@ -8,38 +8,40 @@
 
 namespace mono
 {
-    class ZoneBase : public virtual IZone
+    class ZoneBase : public IZone
     {
     public:
 
-        virtual void AddEntity(const IEntityPtr& entity, int layer);
-        virtual void RemoveEntity(const IEntityPtr& entity);
+        ~ZoneBase();
+
+        void AddEntity(IEntity* entity, int layer) override;
+        void RemoveEntity(IEntity* entity) override;
         
-        virtual void AddUpdatable(const IUpdatablePtr& updatable);
-        virtual void RemoveUpdatable(const IUpdatablePtr& updatable);
+        void AddUpdatable(IUpdatable* updatable) override;
+        void RemoveUpdatable(IUpdatable* updatable) override;
+
+        void AddDrawable(IDrawable* drawable, int layer) override;
+        void RemoveDrawable(IDrawable* drawable) override;
+
+        void SetDrawableLayer(const IDrawable* drawable, int new_layer) override;
+
+        mono::IEntity* FindEntityFromId(uint32_t id) const override;
         
-        virtual void AddDrawable(const IDrawablePtr& drawable, int layer);
-        virtual void RemoveDrawable(const IDrawablePtr& drawable);
-
-        virtual void SetDrawableLayer(const IDrawablePtr& drawable, int new_layer);
-
-        virtual mono::IEntityPtr FindEntityFromId(uint32_t id) const;
-        virtual mono::IEntityPtr FindEntityFromPoint(const math::Vector& point) const;
-
-        const std::vector<IEntityPtr>& GetEntities() const;
+        virtual mono::IEntity* FindEntityFromPoint(const math::Vector& point) const;
+        const std::vector<IEntity*>& GetEntities() const;
 
     protected:
 
-        virtual void Accept(IRenderer& renderer);
-        virtual void Accept(mono::IUpdater& updater);
-        virtual void DoPreAccept();
-        
-        std::vector<IEntityPtr> m_entities;
-        std::vector<IUpdatablePtr> m_updatables;
-        std::vector<std::pair<int, IDrawablePtr>> m_drawables;
+        void Accept(IRenderer& renderer) override;
+        void Accept(mono::IUpdater& updater) override;
+        void DoPreAccept();
 
-        std::vector<IEntityPtr> m_entities_remove;
-        std::vector<IUpdatablePtr> m_updatables_remove;
-        std::vector<IDrawablePtr> m_drawables_remove;
+        std::vector<mono::IEntity*> m_entities;
+        std::vector<mono::IUpdatable*> m_updatables;
+        std::vector<std::pair<int, const mono::IDrawable*>> m_drawables;
+
+        std::vector<mono::IEntity*> m_entities_remove;
+        std::vector<mono::IUpdatable*> m_updatables_remove;
+        std::vector<mono::IDrawable*> m_drawables_remove;
     };
 }

@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "CMFwd.h"
+#include "PhysicsFwd.h"
 #include "Math/MathFwd.h"
 #include <vector>
 #include <functional>
@@ -12,6 +12,7 @@ struct cpArbiter;
 namespace mono
 {
     using QueryFilter = const std::function<bool (uint32_t)>;
+    using BodyFunc = std::function<void (IBody*)>;
 
     class PhysicsSpace
     {
