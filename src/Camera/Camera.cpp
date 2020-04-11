@@ -1,5 +1,5 @@
 
-#include "TraceCamera.h"
+#include "Camera.h"
 #include "Math/Vector.h"
 #include "Math/MathFunctions.h"
 
