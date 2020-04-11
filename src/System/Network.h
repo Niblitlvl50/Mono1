@@ -39,8 +39,7 @@ namespace network
     {
     public:
 
-        virtual ~ISocket()
-        { }
+        virtual ~ISocket() = default;
 
         // Get the port that this socket is bound to.
         virtual uint16_t Port() const = 0;

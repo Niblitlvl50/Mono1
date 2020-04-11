@@ -13,24 +13,24 @@ namespace mono
     {
     public:
     
-        virtual const math::Vector& Position() const;
-        virtual const math::Vector& BasePoint() const;
-        virtual float Rotation() const;
-        virtual const math::Vector& Scale() const;
+        const math::Vector& Position() const override;
+        const math::Vector& BasePoint() const override;
+        float Rotation() const override;
+        const math::Vector& Scale() const override;
 
-        virtual void SetPosition(const math::Vector& position);
-        virtual void SetBasePoint(const math::Vector& base_point);
-        virtual void SetRotation(float rotation);
-        virtual void SetScale(const math::Vector& scale);
+        void SetPosition(const math::Vector& position) override;
+        void SetBasePoint(const math::Vector& base_point) override;
+        void SetRotation(float rotation) override;
+        void SetScale(const math::Vector& scale) override;
 
-        virtual math::Quad BoundingBox() const;
-        virtual math::Matrix Transformation() const;
+        math::Quad BoundingBox() const override;
+        math::Matrix Transformation() const override;
         
-        virtual uint32_t Id() const;
-        virtual void SetId(uint32_t new_id);
+        uint32_t Id() const override;
+        void SetId(uint32_t new_id) override;
 
-        virtual void SetProperty(uint32_t property);
-        virtual bool HasProperty(uint32_t property) const;
+        void SetProperty(uint32_t property) override;
+        bool HasProperty(uint32_t property) const override;
 
         void AddChild(IEntity* child);
         void RemoveChild(IEntity* child);
@@ -43,8 +43,8 @@ namespace mono
         virtual void Draw(mono::IRenderer& renderer) const = 0;
         virtual void Update(const UpdateContext& update_context) = 0;
 
-        virtual void doDraw(IRenderer& renderer) const;
-        virtual void doUpdate(const UpdateContext& update_context);
+        void doDraw(IRenderer& renderer) const override;
+        void doUpdate(const UpdateContext& update_context) override;
 
         uint32_t m_uid;
         uint32_t m_properties;
