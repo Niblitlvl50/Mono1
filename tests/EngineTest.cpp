@@ -36,8 +36,6 @@ namespace
             m_size.width = 640;
             m_size.height = 480;
         }
-        void SurfaceChanged(int width, int height) override
-        { }
         void Maximize() override
         { }
         void Minimize() override

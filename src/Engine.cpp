@@ -69,14 +69,12 @@ Engine::Engine(System::IWindow* window, SystemContext* system_context, EventHand
     const event::PauseEventFunc pause_func = std::bind(&Engine::OnPause, this, _1);
     const event::QuitEventFunc quit_func = std::bind(&Engine::OnQuit, this, _1);
     const event::ApplicationEventFunc app_func = std::bind(&Engine::OnApplication, this, _1);
-    const event::SurfaceChangedEventFunc surface_changed_func = std::bind(&Engine::OnSurfaceChanged, this, _1);
     const event::ActivatedEventFunc activated_func = std::bind(&Engine::OnActivated, this, _1);
     const event::TimeScaleEventFunc time_scale_func = std::bind(&Engine::OnTimeScale, this, _1);
 
     m_pause_token = m_event_handler->AddListener(pause_func);
     m_quit_token = m_event_handler->AddListener(quit_func);
     m_application_token = m_event_handler->AddListener(app_func);
-    m_surface_changed_token = m_event_handler->AddListener(surface_changed_func);
     m_activated_token = m_event_handler->AddListener(activated_func);
     m_time_scale_token = m_event_handler->AddListener(time_scale_func);
 }
@@ -86,7 +84,6 @@ Engine::~Engine()
     m_event_handler->RemoveListener(m_pause_token);
     m_event_handler->RemoveListener(m_quit_token);
     m_event_handler->RemoveListener(m_application_token);
-    m_event_handler->RemoveListener(m_surface_changed_token);
     m_event_handler->RemoveListener(m_activated_token);
     m_event_handler->RemoveListener(m_time_scale_token);
 }
@@ -204,12 +201,6 @@ mono::EventResult Engine::OnApplication(const event::ApplicationEvent& event)
         m_update_last_time = true;
     }
 
-    return mono::EventResult::PASS_ON;
-}
-
-mono::EventResult Engine::OnSurfaceChanged(const event::SurfaceChangedEvent& event)
-{
-    m_window->SurfaceChanged(event.width, event.height);
     return mono::EventResult::PASS_ON;
 }
 

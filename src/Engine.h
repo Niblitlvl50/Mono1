@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "MonoPtrFwd.h"
+#include "MonoFwd.h"
 #include "Events/EventFwd.h"
 #include "EventHandler/EventToken.h"
 
@@ -33,7 +33,6 @@ namespace mono
         mono::EventResult OnPause(const event::PauseEvent& event);
         mono::EventResult OnQuit(const event::QuitEvent& event);
         mono::EventResult OnApplication(const event::ApplicationEvent& event);
-        mono::EventResult OnSurfaceChanged(const event::SurfaceChangedEvent& event);
         mono::EventResult OnActivated(const event::ActivatedEvent& event);
         mono::EventResult OnTimeScale(const event::TimeScaleEvent& event);
 
@@ -49,9 +48,7 @@ namespace mono
         EventToken<event::PauseEvent> m_pause_token;
         EventToken<event::QuitEvent> m_quit_token;
         EventToken<event::ApplicationEvent> m_application_token;
-        EventToken<event::SurfaceChangedEvent> m_surface_changed_token;
         EventToken<event::ActivatedEvent> m_activated_token;
         EventToken<event::TimeScaleEvent> m_time_scale_token;
     };
 }
-

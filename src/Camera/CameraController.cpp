@@ -15,10 +15,8 @@
 
 using namespace mono;
 
-MouseCameraController::MouseCameraController(int window_width, int window_height, ICamera* camera, EventHandler& event_handler)
-    : m_window_width(window_width),
-      m_window_height(window_height),
-      m_camera(camera),
+MouseCameraController::MouseCameraController(ICamera* camera, EventHandler& event_handler)
+    : m_camera(camera),
       m_event_handler(event_handler),
       m_enabled(false),
       m_translate(false)
@@ -84,9 +82,9 @@ mono::EventResult MouseCameraController::OnMouseMove(const event::MouseMotionEve
     const math::Vector screen_position(event.screen_x, event.screen_y);
 
     const math::Quad& viewport = m_camera->GetViewport();
-    const math::Vector window_size(m_window_width, m_window_height);
+    //const math::Vector window_size(m_window_width, m_window_height);
     
-    const math::Vector& scale = viewport.mB / window_size;
+    const math::Vector& scale = viewport.mB; // / window_size;
 
     math::Vector delta = (screen_position - m_translate_delta);
     delta.y = -delta.y;

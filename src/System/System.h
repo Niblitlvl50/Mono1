@@ -56,7 +56,6 @@ namespace System
     public:
 
         virtual ~IWindow() = default;
-        virtual void SurfaceChanged(int width, int height) = 0;
         virtual void Maximize() = 0;
         virtual void Minimize() = 0;
         virtual void RestoreSize() = 0;

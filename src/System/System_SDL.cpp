@@ -103,11 +103,6 @@ namespace
             SDL_GL_DeleteContext(m_context);
             SDL_DestroyWindow(m_window);
         }
-        void SurfaceChanged(int width, int height) override
-        {
-            m_size.width = width;
-            m_size.height = height;
-        }
         void Maximize() override
         {
             SDL_MaximizeWindow(m_window);
@@ -122,6 +117,8 @@ namespace
         }
         void MakeCurrent() override
         {
+            SDL_GetWindowSize(m_window, &m_size.width, &m_size.height);
+
             SDL_GL_MakeCurrent(m_window, m_context);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             glViewport(0, 0, m_size.width, m_size.height);
