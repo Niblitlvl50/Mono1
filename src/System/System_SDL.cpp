@@ -230,6 +230,9 @@ namespace
 
             case SDL_SCANCODE_N:
                 return Keycode::N;
+            
+            default:
+                break;
         }
 
         return Keycode::NONE;
@@ -369,12 +372,18 @@ void System::Initialize(const InitializeContext& context)
 
     char* base_path = SDL_GetBasePath();
 
-    const char* working_directory = context.working_directory != nullptr ? context.working_directory : base_path;
+    const char* working_directory = context.working_directory;
+    if(working_directory == nullptr)
+        working_directory = base_path;
+
     const int chdir_result = chdir(working_directory);
     if(chdir_result != 0)
         throw std::runtime_error("System|Unable to set resource directory");
 
-    Log("\tresouce directory: %s\n", working_directory);
+    char cwd_buffer[1024] = { 0 };
+    getcwd(cwd_buffer, std::size(cwd_buffer));
+
+    Log("\tresouce directory: %s\n", cwd_buffer);
     SDL_free(base_path);
 }
 

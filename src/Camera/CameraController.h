@@ -27,8 +27,8 @@ namespace mono
         mono::EventResult OnMultiGesture(const event::MultiGestureEvent& event);
         mono::EventResult OnMouseWheel(const event::MouseWheelEvent& event);
         
-        int m_window_width;
-        int m_window_height;
+        // int m_window_width;
+        // int m_window_height;
         ICamera* m_camera;
         EventHandler& m_event_handler;
         bool m_enabled;

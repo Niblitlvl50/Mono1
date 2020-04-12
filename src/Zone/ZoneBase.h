@@ -34,11 +34,11 @@ namespace mono
 
         void Accept(IRenderer& renderer) override;
         void Accept(mono::IUpdater& updater) override;
-        void DoPreAccept();
+        void DoDeferredDelete();
 
         std::vector<mono::IEntity*> m_entities;
         std::vector<mono::IUpdatable*> m_updatables;
-        std::vector<std::pair<int, const mono::IDrawable*>> m_drawables;
+        std::vector<std::pair<int, mono::IDrawable*>> m_drawables;
 
         std::vector<mono::IEntity*> m_entities_remove;
         std::vector<mono::IUpdatable*> m_updatables_remove;

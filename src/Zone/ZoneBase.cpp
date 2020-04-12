@@ -8,6 +8,7 @@
 #include "Math/MathFunctions.h"
 #include "System/System.h"
 
+#include <set>
 #include <cstdio>
 
 using namespace mono;
@@ -23,52 +24,69 @@ namespace
 
 ZoneBase::~ZoneBase()
 {
-    std::vector<mono::IEntity*> entities = m_entities;
+    DoDeferredDelete();
 
+    std::set<mono::IDrawable*> deleted_drawables;
+    std::set<mono::IUpdatable*> deleted_updatables;
 
-    // TODO, delete everything that's left here. 
+    for(mono::IEntity* entity : m_entities)
+    {
+        delete entity;
+        deleted_drawables.insert(entity);
+        deleted_updatables.insert(entity);
+    }
+
+    for(std::pair<int, mono::IDrawable*>& drawable_pair : m_drawables)
+    {
+        const bool not_deleted = (deleted_drawables.find(drawable_pair.second) == deleted_drawables.end());
+        if(not_deleted)
+        {
+            delete drawable_pair.second;
+            deleted_drawables.insert(drawable_pair.second);
+        }
+    }
+
+    for(mono::IUpdatable* updatable : m_updatables)
+    {
+        const bool not_deleted = (deleted_updatables.find(updatable) == deleted_updatables.end());
+        if(not_deleted)
+        {
+            delete updatable;
+            deleted_updatables.insert(updatable);
+        }
+    }
 }
 
 void ZoneBase::Accept(IRenderer& renderer)
 {
-    for(auto& pair : m_drawables)
+    for(const auto& pair : m_drawables)
         renderer.AddDrawable(pair.second);
 }
 
 void ZoneBase::Accept(mono::IUpdater& updater)
 {
-    DoPreAccept();
+    DoDeferredDelete();
 
     for(mono::IUpdatable* updatable : m_updatables)
         updater.AddUpdatable(updatable);
 }
 
-void ZoneBase::DoPreAccept()
+void ZoneBase::DoDeferredDelete()
 {
-    for(mono::IEntity* entity : m_entities_remove)
-    {
-        const bool result = mono::remove(m_entities, entity);
-        if(!result)
-            System::Log("ZoneBase|Unable to remove entity with id %u\n", entity->Id());
-    }
+    const auto remove_entity_func = [this](const mono::IEntity* entity) {
+        return std::find(m_entities_remove.begin(), m_entities_remove.end(), entity) != m_entities_remove.end();
+    };
+    mono::remove_if(m_entities, remove_entity_func);
 
-    for(mono::IUpdatable* updatable : m_updatables_remove)
-    {
-        const bool result = mono::remove(m_updatables, updatable);
-        if(!result)
-            System::Log("ZoneBase|Unable to remove updatable\n");
-    }
+    const auto remove_updatable_func = [this](const mono::IUpdatable* updatable) {
+        return std::find(m_updatables_remove.begin(), m_updatables_remove.end(), updatable) != m_updatables_remove.end();
+    };
+    mono::remove_if(m_updatables, remove_updatable_func);
 
-    for(mono::IDrawable* drawable : m_drawables_remove)
-    {
-        const auto func = [drawable](const std::pair<int, const mono::IDrawable*>& pair) {
-            return pair.second == drawable;
-        };
-
-        const bool removed = mono::remove_if(m_drawables, func);
-        if(!removed)
-            System::Log("ZoneBase|Unable to remove drawable\n");
-    }
+    const auto remove_drawable_func = [this](const std::pair<int, mono::IDrawable*>& drawable_pair) {
+        return std::find(m_drawables_remove.begin(), m_drawables_remove.end(), drawable_pair.second) != m_drawables_remove.end();
+    };
+    mono::remove_if(m_drawables, remove_drawable_func);
 
     m_entities_remove.clear();
     m_updatables_remove.clear();
