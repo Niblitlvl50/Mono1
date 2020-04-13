@@ -3,6 +3,7 @@
 #include "IBody.h"
 #include "IShape.h"
 #include "IConstraint.h"
+#include "Math/MathFwd.h"
 #include "Math/Vector.h"
 #include "Util/Algorithm.h"
 #include "System/System.h"
@@ -190,13 +191,17 @@ IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance,
     struct UserData
     {
         QueryFilter filter_func;
+        float distance;
         const cpBody* cp_body;
     };
 
-    UserData user_data = { filter_func, nullptr };
+    UserData user_data = { filter_func, math::INF, nullptr };
 
     const auto callback = [](cpShape* shape, cpVect point, cpFloat distance, cpVect gradient, void* data) {
         UserData* user_data = (UserData*)data;
+
+        if(distance > user_data->distance)
+            return;
 
         const cpBody* body = cpShapeGetBody(shape);
         const uint32_t entity_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(body));
@@ -205,10 +210,11 @@ IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance,
         if(!passed_user_filter)
             return;
 
+        user_data->distance = distance;
         user_data->cp_body = body;
     };
 
-    const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, category, CP_ALL_CATEGORIES);
+    const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
     cpSpacePointQuery(m_space, cpv(point.x, point.y), max_distance, shape_filter, callback, &user_data);
 
     const auto func = [&user_data](IBody* bodyPtr) {
