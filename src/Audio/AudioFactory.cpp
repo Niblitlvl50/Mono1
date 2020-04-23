@@ -12,7 +12,6 @@
 #include <cstdio>
 #include <cstring>
 
-
 namespace
 {
     /*
@@ -275,4 +274,3 @@ mono::SoundFile mono::AudioFactory::LoadFile(const char* filename)
 
     return output;
 }
-

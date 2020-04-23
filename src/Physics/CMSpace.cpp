@@ -144,7 +144,7 @@ std::vector<IBody*> PhysicsSpace::QueryAllInLIne(const math::Vector& start, cons
         found_bodies->push_back(cpShapeGetBody(shape));
     };
 
-    const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, category, CP_ALL_CATEGORIES);
+    const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
     cpSpaceSegmentQuery(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 0.1f, shape_filter, query_func, &found_bodies);
 
     std::vector<IBody*> bodies;
@@ -166,7 +166,7 @@ std::vector<IBody*> PhysicsSpace::QueryAllInLIne(const math::Vector& start, cons
 
 IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category)
 {
-    const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, category, CP_ALL_CATEGORIES);
+    const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
 
     cpPointQueryInfo info;
     const cpShape* shape = cpSpacePointQueryNearest(m_space, cpv(point.x, point.y), max_distance, shape_filter, &info);
@@ -206,7 +206,7 @@ IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance,
         const cpBody* body = cpShapeGetBody(shape);
         const uint32_t entity_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(body));
 
-        const bool passed_user_filter = user_data->filter_func(entity_id);
+        const bool passed_user_filter = user_data->filter_func(entity_id, math::Vector(point.x, point.y));
         if(!passed_user_filter)
             return;
 

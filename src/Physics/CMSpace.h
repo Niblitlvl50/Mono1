@@ -11,7 +11,7 @@ struct cpArbiter;
 
 namespace mono
 {
-    using QueryFilter = const std::function<bool (uint32_t)>;
+    using QueryFilter = const std::function<bool (uint32_t entity_id, const math::Vector& point)>;
     using BodyFunc = std::function<void (IBody*)>;
 
     class PhysicsSpace

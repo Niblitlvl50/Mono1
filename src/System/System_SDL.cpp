@@ -230,6 +230,8 @@ namespace
 
             case SDL_SCANCODE_N:
                 return Keycode::N;
+            case SDL_SCANCODE_M:
+                return Keycode::M;
             
             default:
                 break;
@@ -702,6 +704,8 @@ int System::KeycodeToNative(Keycode key)
 
         case Keycode::N:
             return SDL_SCANCODE_N;
+        case Keycode::M:
+            return SDL_SCANCODE_M;
 
         default:
             break;
