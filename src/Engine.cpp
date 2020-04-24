@@ -31,6 +31,8 @@
 #include "Math/Vector.h"
 #include "Math/Quad.h"
 
+#include <memory>
+
 using namespace mono;
 
 namespace

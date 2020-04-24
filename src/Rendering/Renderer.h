@@ -7,6 +7,8 @@
 #include "Math/Matrix.h"
 #include "ImGui.h"
 
+#include <memory>
+
 namespace mono
 {
     class IShader;
