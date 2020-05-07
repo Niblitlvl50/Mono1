@@ -46,6 +46,8 @@ enum class Keycode
     S,
     D,
 
+    C,
+    V,
     N,
     M,
 };

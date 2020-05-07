@@ -49,6 +49,8 @@ ImGuiInputHandler::ImGuiInputHandler(mono::EventHandler& event_handler)
     io.KeyMap[ImGuiKey_Delete] = System::KeycodeToNative(Keycode::DELETE);
     io.KeyMap[ImGuiKey_Backspace] = System::KeycodeToNative(Keycode::BACKSPACE);
     io.KeyMap[ImGuiKey_Enter] = System::KeycodeToNative(Keycode::ENTER);
+    io.KeyMap[ImGuiKey_C] = System::KeycodeToNative(Keycode::C);
+    io.KeyMap[ImGuiKey_V] = System::KeycodeToNative(Keycode::V);
     //io.KeyMap[ImGuiKey_Escape] = SDLK_ESCAPE;
 }
 
