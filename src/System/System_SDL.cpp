@@ -216,6 +216,8 @@ namespace
                 return Keycode::E;
             case SDL_SCANCODE_R:
                 return Keycode::R;
+            case SDL_SCANCODE_T:
+                return Keycode::T;
             case SDL_SCANCODE_I:
                 return Keycode::I;
             case SDL_SCANCODE_O:
@@ -694,6 +696,8 @@ int System::KeycodeToNative(Keycode key)
             return SDL_SCANCODE_E;
         case Keycode::R:
             return SDL_SCANCODE_R;
+        case Keycode::T:
+            return SDL_SCANCODE_T;
         case Keycode::I:
             return SDL_SCANCODE_I;
         case Keycode::O:

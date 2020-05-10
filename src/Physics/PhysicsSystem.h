@@ -49,6 +49,7 @@ namespace mono
         uint32_t mask;
         float radius;
         math::Vector offset;
+        bool is_sensor;
     };
 
     struct BoxComponent
@@ -58,6 +59,7 @@ namespace mono
         float width;
         float height;
         math::Vector offset;
+        bool is_sensor;
     };
 
     struct SegmentComponent
@@ -67,6 +69,7 @@ namespace mono
         math::Vector start;
         math::Vector end;
         float radius;
+        bool is_sensor;
     };
 
     struct PolyComponent
@@ -75,6 +78,7 @@ namespace mono
         uint32_t mask;
         std::vector<math::Vector> vertices;
         math::Vector offset;
+        bool is_sensor;
     };
 
     struct PivotComponent

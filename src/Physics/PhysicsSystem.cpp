@@ -191,6 +191,7 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const CircleComponent& p
     cm::ShapeImpl* shape_impl = m_impl->shapes.GetPoolData();
     shape_impl->SetShapeHandle((cpShape*)shape_data);
     shape_impl->SetInertia(inertia_value);
+    shape_impl->SetSensor(params.is_sensor);
     shape_impl->SetCollisionFilter(params.category, params.mask);
 
     m_impl->m_shape_release_funcs[shape_impl] = &PhysicsSystem::Impl::ReleaseCircleShape;
@@ -218,6 +219,7 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const BoxComponent& box_
     cm::ShapeImpl* shape_impl = m_impl->shapes.GetPoolData();
     shape_impl->SetShapeHandle((cpShape*)shape_data);
     shape_impl->SetInertia(inertia_value);
+    shape_impl->SetSensor(box_params.is_sensor);
     shape_impl->SetCollisionFilter(box_params.category, box_params.mask);
 
     m_impl->m_shape_release_funcs[shape_impl] = &PhysicsSystem::Impl::ReleasePolyShape;
@@ -244,6 +246,7 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const SegmentComponent& 
     cm::ShapeImpl* shape_impl = m_impl->shapes.GetPoolData();
     shape_impl->SetShapeHandle((cpShape*)shape_data);
     shape_impl->SetInertia(inertia_value);
+    shape_impl->SetSensor(segment_params.is_sensor);
     shape_impl->SetCollisionFilter(segment_params.category, segment_params.mask);
 
     m_impl->m_shape_release_funcs[shape_impl] = &PhysicsSystem::Impl::ReleaseSegmentShape;
@@ -278,6 +281,7 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const PolyComponent& pol
     cm::ShapeImpl* shape_impl = m_impl->shapes.GetPoolData();
     shape_impl->SetShapeHandle((cpShape*)shape_data);
     shape_impl->SetInertia(inertia_value);
+    shape_impl->SetSensor(poly_params.is_sensor);
     shape_impl->SetCollisionFilter(poly_params.category, poly_params.mask);
 
     m_impl->m_shape_release_funcs[shape_impl] = &PhysicsSystem::Impl::ReleasePolyShape;
