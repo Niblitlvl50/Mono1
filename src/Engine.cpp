@@ -31,34 +31,7 @@
 #include "Math/Vector.h"
 #include "Math/Quad.h"
 
-#include <memory>
-
 using namespace mono;
-
-namespace
-{
-    void ScreenToWorld(float& x, float& y, System::IWindow* window, const mono::ICamera* camera)
-    {
-        const System::Size& size = window->Size();
-
-        const math::Vector window_size(size.width, size.height);
-        const float ratio = window_size.x / window_size.y;
-
-        math::Quad viewport = camera->GetViewport();
-        viewport.mB.y = viewport.mB.x / ratio;
-        
-        const math::Vector& scale = viewport.mB / window_size;
-        
-        const float screen_x = x;
-        const float screen_y = window_size.y - y;
-        
-        const float temp_x = screen_x * scale.x;
-        const float temp_y = screen_y * scale.y;
-        
-        x = temp_x + viewport.mA.x;
-        y = temp_y + viewport.mA.y;
-    }
-}
 
 Engine::Engine(System::IWindow* window, SystemContext* system_context, EventHandler* event_handler)
     : m_window(window)
@@ -94,10 +67,13 @@ int Engine::Run(IZone* zone)
     Renderer renderer;
     Camera camera;
 
-    using namespace std::placeholders;
-    const auto screen_to_world_func = std::bind(ScreenToWorld, _1, _2, m_window, &camera);
-    std::unique_ptr<System::IInputHandler> m_input_handler
-        = std::make_unique<InputHandler>(screen_to_world_func, m_event_handler);
+    const ScreenToWorldFunc screen_to_world_func = [&camera](float& x, float& y) {
+        const math::Vector world = camera.ScreenToWorld(math::Vector(x, y));
+        x = world.x;
+        y = world.y;
+    };
+
+    InputHandler input_handler(screen_to_world_func, m_event_handler);
 
     zone->OnLoad(&camera);
 
@@ -127,10 +103,12 @@ int Engine::Run(IZone* zone)
         update_context.total_time += delta_ms;
 
         // Handle input events
-        System::ProcessSystemEvents(m_input_handler.get());
+        System::ProcessSystemEvents(&input_handler);
         
-        const System::Size& window_size = m_window->Size();
-        renderer.SetWindowSize(math::Vector(window_size.width, window_size.height));
+        const System::Size& size = m_window->Size();
+        const math::Vector window_size(size.width, size.height);
+        renderer.SetWindowSize(window_size);
+        camera.SetWindowSize(window_size);
 
         const math::Quad& viewport = camera.GetViewport();
         const math::Quad camera_quad(viewport.mA, viewport.mA + viewport.mB);

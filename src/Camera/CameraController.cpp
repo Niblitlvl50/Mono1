@@ -82,9 +82,9 @@ mono::EventResult MouseCameraController::OnMouseMove(const event::MouseMotionEve
     const math::Vector screen_position(event.screen_x, event.screen_y);
 
     const math::Quad& viewport = m_camera->GetViewport();
-    //const math::Vector window_size(m_window_width, m_window_height);
+    const math::Vector& window_size = m_camera->GetWindowSize();
     
-    const math::Vector& scale = viewport.mB; // / window_size;
+    const math::Vector& scale = viewport.mB / window_size;
 
     math::Vector delta = (screen_position - m_translate_delta);
     delta.y = -delta.y;

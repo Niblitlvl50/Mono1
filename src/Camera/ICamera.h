@@ -17,6 +17,7 @@ namespace mono
         virtual void SetPosition(const math::Vector& position) = 0;
         virtual math::Vector GetPosition() const = 0;
 
-        virtual math::Vector ScreenToWorld(const math::Vector& screen_pos, const math::Vector& window_size) const = 0;
+        virtual const math::Vector& GetWindowSize() const = 0;
+        virtual math::Vector ScreenToWorld(const math::Vector& screen_pos) const = 0;
     };
 }

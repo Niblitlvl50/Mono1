@@ -52,17 +52,27 @@ math::Vector Camera::GetPosition() const
     return m_viewport.mA + (m_viewport.mB * 0.5f);
 }
 
-math::Vector Camera::ScreenToWorld(const math::Vector& screen_pos, const math::Vector& window_size) const
+void Camera::SetWindowSize(const math::Vector& window_size)
 {
-    const float ratio = window_size.x / window_size.y;
+    m_window_size = window_size;
+}
+
+const math::Vector& Camera::GetWindowSize() const
+{
+    return m_window_size;
+}
+
+math::Vector Camera::ScreenToWorld(const math::Vector& screen_pos) const
+{
+    const float ratio = m_window_size.x / m_window_size.y;
 
     math::Quad viewport = GetViewport();
     viewport.mB.y = viewport.mB.x / ratio;
 
-    const math::Vector& scale = viewport.mB / window_size;
+    const math::Vector& scale = viewport.mB / m_window_size;
     
     const float screenX = screen_pos.x;
-    const float screenY = window_size.y - screen_pos.y;
+    const float screenY = m_window_size.y - screen_pos.y;
     
     const float tempx = screenX * scale.x;
     const float tempy = screenY * scale.y;
