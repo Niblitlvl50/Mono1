@@ -19,25 +19,32 @@ namespace
 {
     struct CircleData
     {
+        mono::Color::RGBA fill_color;
+        mono::Color::RGBA outline_color;
         math::Vector position;
         float radius;
     };
 
     struct SegmentData
     {
+        mono::Color::RGBA fill_color;
+        mono::Color::RGBA outline_color;
         math::Vector start;
         math::Vector end;
     };
 
     struct PolygonData
     {
+        mono::Color::RGBA fill_color;
+        mono::Color::RGBA outline_color;
         std::vector<math::Vector> vertices;
     };
 
-//    struct DotData
-//    {
-//        math::Vector position;
-//    };
+    struct DotData
+    {
+        mono::Color::RGBA color;
+        math::Vector position;
+    };
 
     struct DebugDrawCollection
     {
@@ -58,6 +65,8 @@ namespace
         CircleData circle_data;
         circle_data.position = math::Vector(pos.x, pos.y);
         circle_data.radius = radius;
+        circle_data.outline_color = mono::Color::RGBA(outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a);
+        circle_data.fill_color = mono::Color::RGBA(fillColor.r, fillColor.g, fillColor.b, fillColor.a);
 
         DebugDrawCollection* debug_collection = static_cast<DebugDrawCollection*>(data);
         debug_collection->circles.push_back(circle_data);
@@ -95,6 +104,9 @@ namespace
             polygon_data.vertices.push_back(math::Vector(vertex.x, vertex.y));
         }
 
+        polygon_data.outline_color = mono::Color::RGBA(outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a);
+        polygon_data.fill_color = mono::Color::RGBA(fillColor.r, fillColor.g, fillColor.b, fillColor.a);
+
         DebugDrawCollection* debug_collection = static_cast<DebugDrawCollection*>(data);
         debug_collection->polygons.push_back(polygon_data);
     }
@@ -103,6 +115,7 @@ namespace
     {
         //DotData dot_data;
         //dot_data.position = math::Vector(pos.x, pos.y);
+        //dot_data.color = mono::Color::RGBA(color.r, color.g, color.b, color.a)
 
         DebugDrawCollection* debug_collection = static_cast<DebugDrawCollection*>(data);
         debug_collection->dots.push_back(math::Vector(pos.x, pos.y));
@@ -110,7 +123,8 @@ namespace
     
     cpSpaceDebugColor DebugDrawColorForShape(cpShape *shape, cpDataPointer data)
     {
-        return ConvertColor(mono::Color::RED);
+        const cpBodyType body_type = cpBodyGetType(cpShapeGetBody(shape));
+        return (body_type == CP_BODY_TYPE_STATIC) ? ConvertColor(mono::Color::BLUE) : ConvertColor(mono::Color::RED);
     }
 }
 
@@ -173,7 +187,7 @@ void PhysicsDebugDrawer::doDraw(mono::IRenderer& renderer) const
         renderer.DrawPoints(debug_collection.dots, mono::Color::GREEN, 2.0f);
 
     for(const CircleData& circle_data : debug_collection.circles)
-        renderer.DrawCircle(circle_data.position, circle_data.radius, 16, 1.0f, mono::Color::MAGENTA);
+        renderer.DrawCircle(circle_data.position, circle_data.radius, 16, 1.0f, circle_data.fill_color);
 
     if(!debug_collection.segments.empty())
         renderer.DrawLines(debug_collection.segments, mono::Color::MAGENTA, 1.0f);
@@ -182,7 +196,7 @@ void PhysicsDebugDrawer::doDraw(mono::IRenderer& renderer) const
         renderer.DrawLines(debug_collection.fat_segments, mono::Color::MAGENTA, 4.0f);
 
     for(const PolygonData& polygon_data : debug_collection.polygons)
-        renderer.DrawClosedPolyline(polygon_data.vertices, mono::Color::MAGENTA, 2.0f);
+        renderer.DrawClosedPolyline(polygon_data.vertices, polygon_data.fill_color, 2.0f);
 
     if(m_click_timestamp != std::numeric_limits<uint32_t>::max())
     {
