@@ -26,7 +26,7 @@ SpriteBatchDrawer::SpriteBatchDrawer(SystemContext* system_context)
     m_sprite_system = system_context->GetSystem<mono::SpriteSystem>();
 }
 
-void SpriteBatchDrawer::doDraw(mono::IRenderer& renderer) const
+void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 {
     std::vector<SpriteTransformPair> sprites_to_draw;
 

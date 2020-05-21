@@ -9,7 +9,7 @@ namespace mono
     {
     public:
         TransformSystemDrawer(const bool& enabled, const class TransformSystem* transform_system);
-        void doDraw(mono::IRenderer& renderer) const override;
+        void Draw(mono::IRenderer& renderer) const override;
         math::Quad BoundingBox() const override;
 
     private:

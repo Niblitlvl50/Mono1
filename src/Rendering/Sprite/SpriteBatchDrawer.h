@@ -14,7 +14,7 @@ namespace mono
 
         SpriteBatchDrawer(class SystemContext* system_context);
 
-        void doDraw(mono::IRenderer& renderer) const override;
+        void Draw(mono::IRenderer& renderer) const override;
         math::Quad BoundingBox() const override;
 
     private:

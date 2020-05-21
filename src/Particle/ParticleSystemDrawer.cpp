@@ -15,7 +15,7 @@ ParticleSystemDrawer::ParticleSystemDrawer(const mono::ParticleSystem* particle_
 ParticleSystemDrawer::~ParticleSystemDrawer()
 { }
 
-void ParticleSystemDrawer::doDraw(mono::IRenderer& renderer) const
+void ParticleSystemDrawer::Draw(mono::IRenderer& renderer) const
 {
     const auto callback = [this, &renderer](uint32_t pool_index, const ParticlePoolComponent& pool, const ParticleDrawerComponent& drawer) {
 

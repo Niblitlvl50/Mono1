@@ -105,7 +105,7 @@ void Renderer::DrawFrame()
         // Make sure the entity is visible
         const bool visible = math::QuadOverlaps(camera_quad, bounds);
         if(visible)
-            drawable->doDraw(*this);
+            drawable->Draw(*this);
 
         draw_count += visible;
     }

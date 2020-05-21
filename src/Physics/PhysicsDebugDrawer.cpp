@@ -158,7 +158,7 @@ PhysicsDebugDrawer::~PhysicsDebugDrawer()
     m_event_handler->RemoveListener(m_mouse_up_token);
 }
 
-void PhysicsDebugDrawer::doDraw(mono::IRenderer& renderer) const
+void PhysicsDebugDrawer::Draw(mono::IRenderer& renderer) const
 {
     if(!m_enabled)
         return;

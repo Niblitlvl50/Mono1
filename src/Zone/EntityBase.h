@@ -40,11 +40,11 @@ namespace mono
         EntityBase();
         ~EntityBase();
 
-        virtual void Draw(mono::IRenderer& renderer) const = 0;
-        virtual void Update(const UpdateContext& update_context) = 0;
+        virtual void EntityDraw(mono::IRenderer& renderer) const = 0;
+        virtual void EntityUpdate(const UpdateContext& update_context) = 0;
 
-        void doDraw(IRenderer& renderer) const override;
-        void doUpdate(const UpdateContext& update_context) override;
+        void Draw(IRenderer& renderer) const override;
+        void Update(const UpdateContext& update_context) override;
 
         uint32_t m_uid;
         uint32_t m_properties;

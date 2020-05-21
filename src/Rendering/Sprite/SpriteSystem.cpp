@@ -84,7 +84,7 @@ void SpriteSystem::Update(const UpdateContext& update_context)
     {
         if(m_alive[index])
         {
-            m_sprites[index].doUpdate(update_context);
+            m_sprites[index].Update(update_context);
 
             const mono::SpriteFrame sprite_frame = m_sprites[index].GetCurrentFrame();
             if(sprite_frame.size.x != 0.0f && sprite_frame.size.y != 0.0f)

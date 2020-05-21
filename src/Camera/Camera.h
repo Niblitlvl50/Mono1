@@ -12,7 +12,7 @@ namespace mono
 
         Camera();
 
-        void doUpdate(const UpdateContext& update_context) override;
+        void Update(const UpdateContext& update_context) override;
 
         void SetViewport(const math::Quad& viewport) override;
         void SetTargetViewport(const math::Quad& target) override;

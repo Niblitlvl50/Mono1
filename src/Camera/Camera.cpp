@@ -12,7 +12,7 @@ Camera::Camera()
       m_target_viewport(m_viewport)
 { }
 
-void Camera::doUpdate(const UpdateContext& update_context)
+void Camera::Update(const UpdateContext& update_context)
 {
     const float change = (m_target_viewport.mB.x - m_viewport.mB.x);
     const float xzero = std::abs(change);

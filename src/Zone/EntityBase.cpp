@@ -22,26 +22,26 @@ EntityBase::~EntityBase()
         delete child;
 }
 
-void EntityBase::doDraw(IRenderer& renderer) const
+void EntityBase::Draw(IRenderer& renderer) const
 {
     const math::Matrix& matrix = renderer.GetCurrentTransform() * Transformation();
 
     for(const mono::IEntity* child : m_children)
     {
         renderer.PushNewTransform(matrix);
-        child->doDraw(renderer);
+        child->Draw(renderer);
     }
 
     renderer.PushNewTransform(matrix);
-    Draw(renderer);
+    EntityDraw(renderer);
 }
 
-void EntityBase::doUpdate(const UpdateContext& update_context)
+void EntityBase::Update(const UpdateContext& update_context)
 {
     for(mono::IEntity* child : m_children)
-        child->doUpdate(update_context);
+        child->Update(update_context);
 
-    Update(update_context);
+    EntityUpdate(update_context);
 }
 
 const math::Vector& EntityBase::Position() const

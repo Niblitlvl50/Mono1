@@ -18,7 +18,7 @@ namespace mono
         ParticleSystemDrawer(const mono::ParticleSystem* particle_system);
         ~ParticleSystemDrawer();
 
-        void doDraw(mono::IRenderer& renderer) const override;
+        void Draw(mono::IRenderer& renderer) const override;
         math::Quad BoundingBox() const override;
 
     private:

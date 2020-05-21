@@ -12,7 +12,7 @@ void Updater::AddUpdatable(IUpdatable* updatable)
 void Updater::Update(const UpdateContext& update_context)
 {
     for(IUpdatable* updatable : m_updatables)
-        updatable->doUpdate(update_context);
+        updatable->Update(update_context);
 
     m_updatables.clear();
 }

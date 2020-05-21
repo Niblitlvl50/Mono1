@@ -63,7 +63,7 @@ namespace mono
             mono::EventHandler* event_handler);
         ~PhysicsDebugDrawer();
 
-        void doDraw(mono::IRenderer& renderer) const override;
+        void Draw(mono::IRenderer& renderer) const override;
         math::Quad BoundingBox() const override;
 
         mono::EventResult OnMouseDown(const event::MouseDownEvent& event);

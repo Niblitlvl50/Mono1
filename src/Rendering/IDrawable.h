@@ -12,7 +12,7 @@ namespace mono
     public:
     
         virtual ~IDrawable() = default;
-        virtual void doDraw(mono::IRenderer& renderer) const = 0;
+        virtual void Draw(mono::IRenderer& renderer) const = 0;
 
         // Bounding box in world coordiantes, axis aligned.
         virtual math::Quad BoundingBox() const = 0;

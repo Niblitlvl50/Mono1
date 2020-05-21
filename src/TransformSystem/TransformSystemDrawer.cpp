@@ -14,7 +14,7 @@ TransformSystemDrawer::TransformSystemDrawer(const bool& enabled, const Transfor
     , m_transform_system(transform_system)
 { }
 
-void TransformSystemDrawer::doDraw(mono::IRenderer& renderer) const
+void TransformSystemDrawer::Draw(mono::IRenderer& renderer) const
 {
     if(!m_enabled)
         return;

@@ -79,7 +79,7 @@ mono::VerticalDirection Sprite::GetVerticalDirection() const
     return m_flip_vertical ? mono::VerticalDirection::DOWN : mono::VerticalDirection::UP;
 }
 
-void Sprite::doUpdate(const UpdateContext& update_context)
+void Sprite::Update(const UpdateContext& update_context)
 {
     if(m_animations.empty())
         return;
