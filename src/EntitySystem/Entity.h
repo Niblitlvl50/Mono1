@@ -11,6 +11,7 @@ namespace mono
     struct Entity
     {
         uint32_t id = INVALID_ID;
+        const char* name = nullptr;
         uint32_t properties = 0;        // Bitset of properties
         std::vector<uint32_t> components;
     };

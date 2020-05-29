@@ -14,10 +14,7 @@ namespace mono
         { }
 
         ~SystemContext()
-        {
-            for(IGameSystem* system : m_systems)
-                delete system;
-        }
+        { }
 
         template <typename T, typename ... A>
         inline T* CreateSystem(A&&... args)
@@ -25,6 +22,16 @@ namespace mono
             T* new_system = new T(args...);
             m_systems.push_back(new_system);
             return new_system;
+        }
+
+        inline void DestroySystems()
+        {
+            std::reverse(m_systems.begin(), m_systems.end());
+
+            for(IGameSystem* system : m_systems)
+                delete system;
+
+            m_systems.clear();
         }
 
         template <typename T>

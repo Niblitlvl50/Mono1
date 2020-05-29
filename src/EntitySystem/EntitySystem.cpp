@@ -29,6 +29,7 @@ Entity& EntitySystem::AllocateEntity()
 
     Entity& entity = m_entities[entity_id];
     entity.id = entity_id;
+    entity.name = m_debug_names[entity_id].c_str();
 
     return entity;
 }
