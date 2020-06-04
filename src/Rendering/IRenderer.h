@@ -63,17 +63,17 @@ namespace mono
         virtual void UseTexture(const ITexturePtr& texture) const = 0;
         virtual void ClearTexture() = 0;
 
-        virtual void PushGlobalTransform() = 0;
-
+        virtual const math::Matrix& GetTransform() const = 0;
         virtual void PushNewTransform(const math::Matrix& transform) = 0;
-        virtual const math::Matrix& GetCurrentTransform() const = 0;
+        virtual void PopTransform() = 0;
 
         virtual void PushNewProjection(const math::Matrix& projection) = 0;
-        virtual const math::Matrix& GetCurrentProjection() const = 0;
+        virtual void PopProjection() = 0;
 
         virtual const math::Quad& GetViewport() const = 0;
         virtual bool Cull(const math::Quad& world_bb) const = 0;
 
         virtual uint32_t GetDeltaTimeMS() const = 0;
+        virtual uint32_t GetTimestamp() const = 0;
     };
 }

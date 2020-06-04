@@ -119,7 +119,7 @@ int Engine::Run(IZone* zone)
             update_context.frame_count++;
             update_context.delta_ms = delta_ms;
 
-            renderer.SetDeltaTimeMS(update_context.delta_ms);
+            renderer.SetDeltaAndTimestamp(update_context.delta_ms, update_context.total_time);
 
             m_window->MakeCurrent();
             m_system_context->Update(update_context);

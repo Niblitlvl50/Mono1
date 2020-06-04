@@ -19,8 +19,6 @@
 
 #include "ImGui.h"
 
-
-
 using namespace mono;
 
 Renderer::Renderer()
@@ -58,9 +56,10 @@ bool Renderer::Cull(const math::Quad& world_bb) const
     return math::QuadOverlaps(m_viewport, world_bb);
 }
 
-void Renderer::SetDeltaTimeMS(uint32_t delta_ms)
+void Renderer::SetDeltaAndTimestamp(uint32_t delta_ms, uint32_t timestamp)
 {
     m_delta_time_ms = delta_ms;
+    m_timestamp = timestamp;
 }
 
 uint32_t Renderer::GetDeltaTimeMS() const
@@ -68,14 +67,27 @@ uint32_t Renderer::GetDeltaTimeMS() const
     return m_delta_time_ms;
 }
 
+uint32_t Renderer::GetTimestamp() const
+{
+    return m_timestamp;
+}
+
 void Renderer::PrepareDraw()
 {
+    while(!m_projection_stack.empty())
+        m_projection_stack.pop();
+
+    while(!m_modelview_stack.empty())
+        m_modelview_stack.pop();
+
     const float viewport_width = math::Width(m_viewport);
     const float ratio = m_window_size.x / m_window_size.y;
-    m_projection = math::Ortho(0.0f, viewport_width, 0.0f, viewport_width / ratio, -10.0f, 10.0f);
+    m_projection_stack.push(math::Ortho(0.0f, viewport_width, 0.0f, viewport_width / ratio, -10.0f, 10.0f));
 
-    math::Identity(m_modelview);
-    math::Translate(m_modelview, -m_viewport.mA);
+    math::Matrix modelview;
+    math::Translate(modelview, -m_viewport.mA);
+
+    m_modelview_stack.push(modelview);
 }
 
 void Renderer::EndDraw()
@@ -93,29 +105,15 @@ void Renderer::DrawFrame()
     PrepareDraw();
 
     uint32_t draw_count = 0;
-    const math::Quad camera_quad = m_viewport;
 
-    for(const auto& drawable : m_drawables)
+    for(const IDrawable* drawable : m_drawables)
     {
-        m_current_transform = m_modelview;
-        m_current_projection = m_projection;
-
-        const math::Quad& bounds = drawable->BoundingBox();
-
-        // Make sure the entity is visible
-        const bool visible = math::QuadOverlaps(camera_quad, bounds);
+        // Make sure the drawable is visible
+        const bool visible = Cull(drawable->BoundingBox());
         if(visible)
             drawable->Draw(*this);
-
         draw_count += visible;
     }
-
-    // Restore the matrices
-    m_current_transform = m_modelview;
-    m_current_projection = m_projection;
-
-//   for(const auto& drawable : m_drawables)
-//       DrawQuad(drawable->BoundingBox(), mono::Color::RGBA(1, 0, 0), 1.0);
 
     EndDraw();
 }
@@ -263,7 +261,10 @@ void Renderer::UseShader(IShader* shader) const
         m_current_shader_id = id;
     }
 
-    shader->SetProjectionAndModelView(m_current_projection, m_current_transform);
+    const math::Matrix& projection = m_projection_stack.top();
+    const math::Matrix& modelview = m_modelview_stack.top();
+
+    shader->SetProjectionAndModelView(projection, modelview);
 
     PROCESS_GL_ERRORS();
 }
@@ -286,27 +287,27 @@ void Renderer::ClearTexture()
     mono::ClearTexture();
 }
 
-void Renderer::PushGlobalTransform()
+const math::Matrix& Renderer::GetTransform() const
 {
-    m_current_transform = m_modelview;
+    return m_modelview_stack.top();
 }
 
 void Renderer::PushNewTransform(const math::Matrix& transform)
 {
-    m_current_transform = transform;
+    m_modelview_stack.push(transform);
 }
 
-const math::Matrix& Renderer::GetCurrentTransform() const
+void Renderer::PopTransform()
 {
-    return m_current_transform;
+    m_modelview_stack.pop();
 }
 
 void Renderer::PushNewProjection(const math::Matrix& projection)
 {
-    m_current_projection = projection;
+    m_projection_stack.push(projection);
 }
 
-const math::Matrix& Renderer::GetCurrentProjection() const
+void Renderer::PopProjection()
 {
-    return m_current_projection;
+    m_projection_stack.pop();
 }

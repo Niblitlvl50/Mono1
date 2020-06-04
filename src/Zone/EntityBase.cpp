@@ -24,16 +24,18 @@ EntityBase::~EntityBase()
 
 void EntityBase::Draw(IRenderer& renderer) const
 {
-    const math::Matrix& matrix = renderer.GetCurrentTransform() * Transformation();
+    const math::Matrix& matrix = renderer.GetTransform() * Transformation();
 
     for(const mono::IEntity* child : m_children)
     {
         renderer.PushNewTransform(matrix);
         child->Draw(renderer);
+        renderer.PopTransform();
     }
 
     renderer.PushNewTransform(matrix);
     EntityDraw(renderer);
+    renderer.PopTransform();
 }
 
 void EntityBase::Update(const UpdateContext& update_context)

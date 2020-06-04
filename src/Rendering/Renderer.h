@@ -8,6 +8,7 @@
 #include "ImGui.h"
 
 #include <memory>
+#include <stack>
 
 namespace mono
 {
@@ -25,8 +26,9 @@ namespace mono
         virtual const math::Quad& GetViewport() const;
         virtual bool Cull(const math::Quad& world_bb) const;
 
-        void SetDeltaTimeMS(uint32_t delta_ms);
+        void SetDeltaAndTimestamp(uint32_t delta_ms, uint32_t timestamp);
         virtual uint32_t GetDeltaTimeMS() const;
+        virtual uint32_t GetTimestamp() const;
 
         virtual void DrawFrame();
         virtual void AddDrawable(const IDrawable* drawable);
@@ -70,18 +72,16 @@ namespace mono
         void DrawTrianges(
             const mono::IRenderBuffer* vertices, const mono::IRenderBuffer* colors, const mono::IRenderBuffer* indices, size_t count) const;
 
-
         virtual void UseShader(IShader* shader) const;
         virtual void UseTexture(const ITexturePtr& texture) const;
         virtual void ClearTexture();
 
-        virtual void PushGlobalTransform();
-
+        virtual const math::Matrix& GetTransform() const;
         virtual void PushNewTransform(const math::Matrix& transform);
-        virtual const math::Matrix& GetCurrentTransform() const;
+        virtual void PopTransform();
 
         virtual void PushNewProjection(const math::Matrix& projection);
-        virtual const math::Matrix& GetCurrentProjection() const;
+        virtual void PopProjection();
 
     private:
 
@@ -93,13 +93,11 @@ namespace mono
         math::Vector m_window_size;
         math::Quad m_viewport;
 
-        math::Matrix m_projection;
-        math::Matrix m_modelview;
-
-        math::Matrix m_current_projection;
-        math::Matrix m_current_transform;
+        std::stack<math::Matrix> m_projection_stack;
+        std::stack<math::Matrix> m_modelview_stack;
 
         uint32_t m_delta_time_ms = 0;
+        uint32_t m_timestamp = 0;
 
         mutable uint32_t m_current_shader_id = -1;
         mutable uint32_t m_current_texture_id = -1;

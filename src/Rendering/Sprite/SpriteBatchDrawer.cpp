@@ -29,6 +29,7 @@ SpriteBatchDrawer::SpriteBatchDrawer(SystemContext* system_context)
 void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 {
     std::vector<SpriteTransformPair> sprites_to_draw;
+    sprites_to_draw.reserve(64);
 
     const auto collect_sprites = [this, &renderer, &sprites_to_draw](mono::ISprite* sprite, uint32_t id) {
         if(!sprite->GetTexture())
@@ -54,11 +55,11 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 
     for(const SpriteTransformPair& sprite_transform : sprites_to_draw)
     {
-        const math::Matrix& world_transform = renderer.GetCurrentTransform() * sprite_transform.transform;
+        const math::Matrix& world_transform = renderer.GetTransform() * sprite_transform.transform;
 
         renderer.PushNewTransform(world_transform);
         renderer.DrawSprite(*sprite_transform.sprite);
-        renderer.PushGlobalTransform();
+        renderer.PopTransform();
     }
 }
 
