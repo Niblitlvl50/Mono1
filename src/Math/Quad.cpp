@@ -61,6 +61,12 @@ math::Vector math::TopLeft(const math::Quad& quad)
     return math::Vector(quad.mA.x, quad.mB.y);
 }
 
+math::Vector math::TopCenter(const math::Quad& quad)
+{
+    const float half_width = (quad.mB.x - quad.mA.x) / 2.0f;
+    return math::Vector(quad.mA.x + half_width, quad.mB.y);
+}
+
 math::Vector math::TopRight(const math::Quad& quad)
 {
     return quad.mB;

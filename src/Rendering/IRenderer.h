@@ -76,4 +76,40 @@ namespace mono
         virtual uint32_t GetDeltaTimeMS() const = 0;
         virtual uint32_t GetTimestamp() const = 0;
     };
+
+    using PushTransformFunc = void (mono::IRenderer::*)(const math::Matrix& transform);
+    using PopTransformFunc = void (mono::IRenderer::*)();
+
+    class ScopedTransform
+    {
+    public:
+
+        ScopedTransform(const math::Matrix& transform, IRenderer* renderer, PushTransformFunc push, PopTransformFunc pop)
+            : m_renderer(renderer)
+            , m_pop_func(pop)
+        {
+            (m_renderer->*push)(transform);
+        }
+
+        ~ScopedTransform()
+        {
+            (m_renderer->*m_pop_func)();
+        }
+
+        ScopedTransform(ScopedTransform const&) = delete;
+        ScopedTransform& operator=(ScopedTransform const&) = delete;
+
+        IRenderer* m_renderer;
+        PopTransformFunc m_pop_func;
+    };
+
+    inline ScopedTransform MakeTransformScope(const math::Matrix& transform, IRenderer* renderer)
+    {
+        return ScopedTransform(transform, renderer, &mono::IRenderer::PushNewTransform, &mono::IRenderer::PopTransform);
+    }
+
+    inline ScopedTransform MakeProjectionScope(const math::Matrix& transform, IRenderer* renderer)
+    {
+        return ScopedTransform(transform, renderer, &mono::IRenderer::PushNewProjection, &mono::IRenderer::PopProjection);
+    }
 }
