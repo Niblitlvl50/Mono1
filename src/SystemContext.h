@@ -3,6 +3,7 @@
 
 #include "IGameSystem.h"
 #include <vector>
+#include <algorithm>
 
 namespace mono
 {
