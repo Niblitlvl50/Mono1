@@ -3,11 +3,15 @@
 #include "IBody.h"
 #include "IShape.h"
 #include "IConstraint.h"
+#include "Impl/BodyImpl.h"
+
 #include "Math/MathFwd.h"
 #include "Math/Vector.h"
 #include "Util/Algorithm.h"
 #include "System/System.h"
+
 #include "chipmunk/chipmunk.h"
+
 #include <algorithm>
 #include <cstdio>
 
@@ -30,6 +34,8 @@ PhysicsSpace::PhysicsSpace(const math::Vector& gravity, float damping)
     cpCollisionHandler* ch = cpSpaceAddDefaultCollisionHandler(m_space);
     ch->beginFunc = beginFunc;
     ch->userData = this;
+
+    m_static_body = std::make_unique<cm::BodyImpl>(cpSpaceGetStaticBody(m_space));
 }
 
 PhysicsSpace::~PhysicsSpace()
@@ -268,6 +274,11 @@ bool PhysicsSpace::OnCollision(cpArbiter* arb)
     }
     
     return true;
+}
+
+IBody* PhysicsSpace::GetStaticBody()
+{
+    return m_static_body.get();
 }
 
 cpSpace* PhysicsSpace::Handle()

@@ -5,9 +5,15 @@
 #include "Math/MathFwd.h"
 #include <vector>
 #include <functional>
+#include <memory>
 
 struct cpSpace;
 struct cpArbiter;
+
+namespace cm
+{
+    class BodyImpl;
+}
 
 namespace mono
 {
@@ -42,6 +48,8 @@ namespace mono
         IBody* QueryNearest(
             const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func);
 
+        IBody* GetStaticBody();
+
         cpSpace* Handle();
         
     private:
@@ -52,5 +60,6 @@ namespace mono
         cpSpace* m_space;
         BodyFunc m_for_each_func;
         std::vector<IBody*> m_bodies;
+        std::unique_ptr<cm::BodyImpl> m_static_body;
     };
 }
