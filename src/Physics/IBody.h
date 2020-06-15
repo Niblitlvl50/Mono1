@@ -103,7 +103,8 @@ namespace mono
         
         //! Sets a collision handler to the body
         //! @param handler A pointer to a collision handler
-        virtual void SetCollisionHandler(mono::ICollisionHandler* handler) = 0;
+        virtual void AddCollisionHandler(mono::ICollisionHandler* handler) = 0;
+        virtual void RemoveCollisionHandler(mono::ICollisionHandler* handler) = 0;
         
         //! Called by the framework when a collision occures
         //! @param body The other body of the collision

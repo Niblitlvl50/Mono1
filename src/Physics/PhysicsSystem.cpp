@@ -170,7 +170,7 @@ void PhysicsSystem::ReleaseBody(uint32_t body_id)
     body_shapes.clear();
 
     cm::BodyImpl& body = m_impl->bodies[body_id];
-    body.SetCollisionHandler(nullptr);
+    body.ClearCollisionHandlers();
 
     m_impl->space.Remove(&body);
     m_impl->active_bodies[body_id] = false;

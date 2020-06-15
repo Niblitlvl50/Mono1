@@ -1,6 +1,7 @@
 
 #include "BodyImpl.h"
 #include "Math/Vector.h"
+#include "Util/Algorithm.h"
 
 #include "chipmunk/chipmunk.h"
 
@@ -8,7 +9,6 @@ using namespace cm;
 
 BodyImpl::BodyImpl(cpBody* body)
     : m_body_handle(body)
-    , m_collision_handler(nullptr)
 { }
 
 void BodyImpl::SetType(mono::BodyType type)
@@ -103,17 +103,27 @@ void BodyImpl::ResetForces()
     cpBodySetForce(m_body_handle, cpvzero);
 }
 
-void BodyImpl::SetCollisionHandler(mono::ICollisionHandler* collision_handler) 
+void BodyImpl::AddCollisionHandler(mono::ICollisionHandler* collision_handler) 
 {
-    m_collision_handler = collision_handler;
+    m_collision_handlers.push_back(collision_handler);
+}
+
+void BodyImpl::RemoveCollisionHandler(mono::ICollisionHandler* handler)
+{
+    mono::remove(m_collision_handlers, handler);
 }
 
 mono::CollisionResolve BodyImpl::OnCollideWith(mono::IBody* body, const math::Vector& collision_point, uint32_t categories) 
 {
-    if(m_collision_handler)
-        return m_collision_handler->OnCollideWith(body, collision_point, categories);
+    mono::CollisionResolve resolve_result = mono::CollisionResolve::NORMAL;
 
-    return mono::CollisionResolve::NORMAL;
+    for(mono::ICollisionHandler* handler : m_collision_handlers)
+    {
+        const mono::CollisionResolve resolve = handler->OnCollideWith(body, collision_point, categories);
+        resolve_result = std::max(resolve_result, resolve);
+    }
+
+    return resolve_result;
 }
 
 void BodyImpl::SetNoDamping() 
@@ -127,4 +137,9 @@ void BodyImpl::SetNoDamping()
 cpBody* BodyImpl::Handle() const
 {
     return m_body_handle;
+}
+
+void BodyImpl::ClearCollisionHandlers()
+{
+    m_collision_handlers.clear();
 }

@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Physics/IBody.h"
+#include <vector>
 
 namespace cm
 {
@@ -29,13 +30,16 @@ namespace cm
         void SetVelocity(const math::Vector& velocity) override;
         math::Vector GetVelocity() const override;
         void ResetForces() override;
-        void SetCollisionHandler(mono::ICollisionHandler* collision_handler) override;
+        void AddCollisionHandler(mono::ICollisionHandler* collision_handler) override;
+        void RemoveCollisionHandler(mono::ICollisionHandler* handler) override;
         mono::CollisionResolve OnCollideWith(mono::IBody* body, const math::Vector& collision_point, uint32_t categories) override;
         void SetNoDamping() override;
         cpBody* Handle() const override;
+
+        void ClearCollisionHandlers();
         
     private:
         cpBody* m_body_handle;
-        mono::ICollisionHandler* m_collision_handler;
+        std::vector<mono::ICollisionHandler*> m_collision_handlers;
     };
 }
