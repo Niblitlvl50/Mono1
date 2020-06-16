@@ -30,7 +30,7 @@ static_assert(static_cast<int>(BodyType::STATIC) == cpBodyType::CP_BODY_TYPE_STA
 
 struct PhysicsSystem::Impl
 {
-    Impl(const PhysicsSystemInitParams& init_params)
+    Impl(const PhysicsSystemInitParams& init_params, PhysicsSystem* physics_system)
         : body_pool(init_params.n_bodies)
         , circle_shape_pool(init_params.n_circle_shapes)
         , segment_shape_pool(init_params.n_segment_shapes)
@@ -40,6 +40,7 @@ struct PhysicsSystem::Impl
         , damped_spring_pool(init_params.n_damped_springs)
         , shapes(init_params.n_circle_shapes + init_params.n_segment_shapes + init_params.n_polygon_shapes)
         , constraints(init_params.n_pivot_joints + init_params.n_gear_joints + init_params.n_damped_springs)
+        , space(physics_system)
     { }
 
     void ReleaseCircleShape(cpShape* shape)
@@ -89,7 +90,7 @@ struct PhysicsSystem::Impl
 };
 
 PhysicsSystem::PhysicsSystem(const PhysicsSystemInitParams& init_params, mono::TransformSystem* transform_system)
-    : m_impl(std::make_unique<Impl>(init_params))
+    : m_impl(std::make_unique<Impl>(init_params, this))
     , m_transform_system(transform_system)
 {
     m_impl->bodies.reserve(init_params.n_bodies);

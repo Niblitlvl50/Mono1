@@ -4,25 +4,22 @@
 #include "IShape.h"
 #include "IConstraint.h"
 #include "Impl/BodyImpl.h"
-
-#include "Math/MathFwd.h"
+#include "Physics/PhysicsSystem.h"
 #include "Math/Vector.h"
-#include "Util/Algorithm.h"
-#include "System/System.h"
 
 #include "chipmunk/chipmunk.h"
 
-#include <algorithm>
 #include <cstdio>
 
 using namespace mono;
 
-PhysicsSpace::PhysicsSpace()
-    : PhysicsSpace(math::Vector(0.0f, 0.0f), 1.0f)
+PhysicsSpace::PhysicsSpace(PhysicsSystem* physics_system)
+    : PhysicsSpace(physics_system, math::Vector(0.0f, 0.0f), 1.0f)
 { }
 
-PhysicsSpace::PhysicsSpace(const math::Vector& gravity, float damping)
-    : m_space(cpSpaceNew())
+PhysicsSpace::PhysicsSpace(PhysicsSystem* physics_system, const math::Vector& gravity, float damping)
+    : m_physics_system(physics_system)
+    , m_space(cpSpaceNew())
 {
     cpSpaceSetGravity(m_space, cpv(gravity.x, gravity.y));
     cpSpaceSetDamping(m_space, damping);
@@ -40,7 +37,6 @@ PhysicsSpace::PhysicsSpace(const math::Vector& gravity, float damping)
 
 PhysicsSpace::~PhysicsSpace()
 {
-    m_bodies.clear();
     cpSpaceDestroy(m_space);
 }
 
@@ -63,17 +59,12 @@ void PhysicsSpace::Add(IBody* body)
 {
     if(body->GetType() != mono::BodyType::STATIC)
         cpSpaceAddBody(m_space, body->Handle());
-    m_bodies.push_back(body);
 }
 
 void PhysicsSpace::Remove(IBody* body)
 {
     if(body->GetType() != mono::BodyType::STATIC)
         cpSpaceRemoveBody(m_space, body->Handle());
-
-    const bool removed = mono::remove(m_bodies, body);
-    if(!removed)
-        System::Log("PhysicsSpace|Unable to remove body from collection!\n");
 }
 
 void PhysicsSpace::Add(IShape* shape)
@@ -96,31 +87,6 @@ void PhysicsSpace::Remove(IConstraint* constraint)
     cpSpaceRemoveConstraint(m_space, constraint->Handle());
 }
 
-void PhysicsSpace::ForEachBody(const BodyFunc& func)
-{
-    const auto forEachBody = [](cpBody* body, void* data) {
-        static_cast<PhysicsSpace*>(data)->DoForEachFuncOnBody(body);
-    };
-    
-    m_for_each_func = func;
-    cpSpaceEachBody(m_space, forEachBody, this);
-    
-    // Null the function, so it wont be used by misstake after this point
-    m_for_each_func = nullptr;
-}
-
-void PhysicsSpace::DoForEachFuncOnBody(cpBody* body)
-{
-    for(auto& bodyPtr : m_bodies)
-    {
-        if(body == bodyPtr->Handle())
-        {
-            m_for_each_func(bodyPtr);
-            break;
-        }
-    }
-}
-
 mono::IBody* PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vector& end, uint32_t category)
 {
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, category, CP_ALL_CATEGORIES);
@@ -129,16 +95,8 @@ mono::IBody* PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vec
         return nullptr;
 
     const cpBody* body = cpShapeGetBody(shape);
-
-    const auto func = [body](IBody* bodyPtr) {
-        return bodyPtr->Handle() == body;
-    };
-
-    const auto& it = std::find_if(m_bodies.begin(), m_bodies.end(), func);
-    if(it == m_bodies.end())
-        return nullptr;
-
-    return *it;
+    const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(body));
+    return m_physics_system->GetBody(body_id);
 }
 
 std::vector<IBody*> PhysicsSpace::QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category)
@@ -158,13 +116,8 @@ std::vector<IBody*> PhysicsSpace::QueryAllInLIne(const math::Vector& start, cons
 
     for(const cpBody* cpbody : found_bodies)
     {
-        const auto find_body_func = [cpbody](IBody* bodyPtr) {
-            return bodyPtr->Handle() == cpbody;
-        };
-
-        const auto& it = std::find_if(m_bodies.begin(), m_bodies.end(), find_body_func);
-        if(it != m_bodies.end())
-            bodies.push_back(*it);
+        const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(cpbody));
+        bodies.push_back(m_physics_system->GetBody(body_id));
     }
 
     return bodies;
@@ -179,17 +132,9 @@ IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance,
     if(!shape)
         return nullptr;
 
-    const cpBody* body = cpShapeGetBody(shape);
-
-    const auto func = [body](IBody* bodyPtr) {
-        return bodyPtr->Handle() == body;
-    };
-
-    const auto& it = std::find_if(m_bodies.begin(), m_bodies.end(), func);
-    if(it == m_bodies.end())
-        return nullptr;
-
-    return *it;
+    const cpBody* cpbody = cpShapeGetBody(shape);
+    const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(cpbody));
+    return m_physics_system->GetBody(body_id);
 }
 
 IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func)
@@ -223,15 +168,11 @@ IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance,
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
     cpSpacePointQuery(m_space, cpv(point.x, point.y), max_distance, shape_filter, callback, &user_data);
 
-    const auto func = [&user_data](IBody* bodyPtr) {
-        return bodyPtr->Handle() == user_data.cp_body;
-    };
-
-    const auto& it = std::find_if(m_bodies.begin(), m_bodies.end(), func);
-    if(it == m_bodies.end())
+    if(!user_data.cp_body)
         return nullptr;
 
-    return *it;
+    const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(user_data.cp_body));
+    return m_physics_system->GetBody(body_id);
 }
 
 bool PhysicsSpace::OnCollision(cpArbiter* arb)
@@ -240,25 +181,20 @@ bool PhysicsSpace::OnCollision(cpArbiter* arb)
     cpBody* b2 = nullptr;
     cpArbiterGetBodies(arb, &b1, &b2);
 
-    IBody* first = nullptr;
-    IBody* second = nullptr;
-    
-    for(auto& body : m_bodies)
-    {
-        if(body->Handle() == b1)
-            first = body;
-        else if(body->Handle() == b2)
-            second = body;
-        
-        if(first && second)
-            break;
-    }
+    const uint32_t body_id_1 = reinterpret_cast<uint64_t>(cpBodyGetUserData(b1));
+    const uint32_t body_id_2 = reinterpret_cast<uint64_t>(cpBodyGetUserData(b2));
 
+    IBody* first = m_physics_system->GetBody(body_id_1);
+    IBody* second = m_physics_system->GetBody(body_id_2);
+    
     if(first && second)
     {
         cpShape* shape1 = nullptr;
         cpShape* shape2 = nullptr;
         cpArbiterGetShapes(arb, &shape1, &shape2);
+
+        const bool is_shape_1_sensor = cpShapeGetSensor(shape1);
+        const bool is_shape_2_sensor = cpShapeGetSensor(shape2);
 
         const cpShapeFilter& filter1 = cpShapeGetFilter(shape1);
         const cpShapeFilter& filter2 = cpShapeGetFilter(shape2);
@@ -266,9 +202,13 @@ bool PhysicsSpace::OnCollision(cpArbiter* arb)
         const cpVect point_a = cpArbiterGetPointA(arb, 0);
         const math::Vector collision_point(point_a.x, point_a.y);
 
+        if(is_shape_1_sensor)
+            return (first->OnCollideWith(second, collision_point, filter2.categories) != mono::CollisionResolve::IGNORE);
+        else if(is_shape_2_sensor)
+            return (second->OnCollideWith(first, collision_point, filter1.categories) != mono::CollisionResolve::IGNORE);
+
         const mono::CollisionResolve resolve1 = first->OnCollideWith(second, collision_point, filter2.categories);
         const mono::CollisionResolve resolve2 = second->OnCollideWith(first, collision_point, filter1.categories);
-
         if(resolve1 == mono::CollisionResolve::IGNORE || resolve2 == mono::CollisionResolve::IGNORE)
             return false;
     }
