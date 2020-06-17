@@ -3,7 +3,6 @@
 
 #include "IGameSystem.h"
 #include <vector>
-#include <algorithm>
 
 namespace mono
 {
@@ -15,7 +14,12 @@ namespace mono
         { }
 
         ~SystemContext()
-        { }
+        {
+            for(IGameSystem* system : m_systems)
+                delete system;
+
+            m_systems.clear();
+        }
 
         template <typename T, typename ... A>
         inline T* CreateSystem(A&&... args)
@@ -27,12 +31,8 @@ namespace mono
 
         inline void DestroySystems()
         {
-            std::reverse(m_systems.begin(), m_systems.end());
-
             for(IGameSystem* system : m_systems)
-                delete system;
-
-            m_systems.clear();
+                system->Destroy();
         }
 
         template <typename T>
