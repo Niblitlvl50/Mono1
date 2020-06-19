@@ -119,7 +119,7 @@ void mono::SetImGuiConfig(const char* config_file)
 
 uint32_t mono::LoadImGuiTexture(const char* texture_file)
 {
-    mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture("res/textures/placeholder.png");
+    mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture(texture_file);
     g_imgui_textures.insert(std::make_pair(texture->Id(), texture));
     return texture->Id();
 }

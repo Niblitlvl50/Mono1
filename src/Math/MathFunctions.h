@@ -4,6 +4,7 @@
 #include "MathFwd.h"
 #include <vector>
 #include <cfloat>
+#include <cmath>
 
 namespace math
 {    
@@ -45,6 +46,11 @@ namespace math
         const math::Vector& start_second, const math::Vector& end_second);
 
     bool IsPrettyMuchEquals(float left, float right, float tolerance = FLT_EPSILON);
+
+    inline float Align(float value, float size)
+    {
+        return std::floor(value / size) * size;
+    }
 
     constexpr float PI() {
         return 3.14159265358979323846264338327950288f;
