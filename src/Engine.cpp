@@ -102,9 +102,6 @@ int Engine::Run(IZone* zone)
         const uint32_t delta_ms = (before_time - last_time) * m_time_scale;
         update_context.total_time += delta_ms;
 
-        // Handle input events
-        System::ProcessSystemEvents(&input_handler);
-        
         const System::Size& size = m_window->Size();
         const math::Vector window_size(size.width, size.height);
         renderer.SetWindowSize(window_size);
@@ -113,6 +110,9 @@ int Engine::Run(IZone* zone)
         const math::Quad& viewport = camera.GetViewport();
         const math::Quad camera_quad(viewport.mA, viewport.mA + viewport.mB);
         renderer.SetViewport(camera_quad);
+
+        // Handle input events
+        System::ProcessSystemEvents(&input_handler);
 
         if(!m_pause)
         {
