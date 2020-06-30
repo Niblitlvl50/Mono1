@@ -133,9 +133,15 @@ namespace System
     // Gets the devices window size
     Size GetCurrentWindowSize();
 
+    enum WindowOptions
+    {
+        NONE = 0,
+        FULLSCREEN = 1,
+    };
+
     // Creates a opengl window
     // The caller is responsible for deleting the pointer
-    IWindow* CreateWindow(const char* title, int x, int y, int width, int height, bool fullscreen);
+    IWindow* CreateWindow(const char* title, int x, int y, int width, int height, WindowOptions options);
 
     enum class CursorVisibility
     {

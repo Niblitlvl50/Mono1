@@ -68,7 +68,7 @@ namespace
     {
     public:
 
-        SDLWindow(const char* title, int x, int y, int width, int height, bool fullscreen)
+        SDLWindow(const char* title, int x, int y, int width, int height, System::WindowOptions options)
         {
             m_position.x = x;
             m_position.y = y;
@@ -457,9 +457,9 @@ System::Size System::GetCurrentWindowSize()
     return { mode.w, mode.h };
 }
 
-System::IWindow* System::CreateWindow(const char* title, int x, int y, int width, int height, bool fullscreen)
+System::IWindow* System::CreateWindow(const char* title, int x, int y, int width, int height, WindowOptions options)
 {
-    return new SDLWindow(title, x, y, width, height, fullscreen);
+    return new SDLWindow(title, x, y, width, height, options);
 }
 
 void System::SetCursorVisibility(System::CursorVisibility state)
