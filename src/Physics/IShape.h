@@ -28,6 +28,7 @@ namespace mono
         //! Category that the shape belongs to, and a bitmask with which other
         //! categories the shape should collide with
         virtual void SetCollisionFilter(uint32_t category, uint32_t mask) = 0;
+        virtual void SetCollisionMask(uint32_t mask) = 0;
 
         //! Native chipmunk handle
         virtual cpShape* Handle() = 0;

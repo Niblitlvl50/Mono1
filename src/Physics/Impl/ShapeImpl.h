@@ -20,6 +20,8 @@ namespace cm
         float GetInertiaValue() const override;
         void SetSensor(bool is_sensor) override;
         void SetCollisionFilter(uint32_t category, uint32_t mask) override;
+        void SetCollisionMask(uint32_t mask) override;
+
         cpShape* Handle() override;
 
     private:

@@ -31,10 +31,4 @@ namespace mono
         
         return false;
     }
-
-    template <typename T, unsigned S>
-    constexpr unsigned arraysize(const T (&v)[S])
-    {
-        return S;
-    }
 }
