@@ -126,6 +126,12 @@ mono::CollisionResolve BodyImpl::OnCollideWith(mono::IBody* body, const math::Ve
     return resolve_result;
 }
 
+void BodyImpl::OnSeparateFrom(IBody* body)
+{
+    for(mono::ICollisionHandler* handler : m_collision_handlers)
+        handler->OnSeparateFrom(body);
+}
+
 void BodyImpl::SetNoDamping() 
 {
     const cpBodyVelocityFunc null_func = [](cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)

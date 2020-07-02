@@ -53,6 +53,7 @@ namespace mono
     private:
 
         bool OnCollision(cpArbiter* arb);
+        void OnSeparation(cpArbiter* arb);
 
         PhysicsSystem* m_physics_system;
         cpSpace* m_space;

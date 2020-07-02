@@ -24,12 +24,19 @@ PhysicsSpace::PhysicsSpace(PhysicsSystem* physics_system, const math::Vector& gr
     cpSpaceSetGravity(m_space, cpv(gravity.x, gravity.y));
     cpSpaceSetDamping(m_space, damping);
 
-    const auto beginFunc = [](cpArbiter* arb, cpSpace*, cpDataPointer data) -> cpBool {
-        return static_cast<PhysicsSpace*>(data)->OnCollision(arb);
+    const auto begin_func = [](cpArbiter* arb, cpSpace* space, cpDataPointer user_data) -> cpBool {
+        PhysicsSpace* physics_space = static_cast<PhysicsSpace*>(user_data);
+        return physics_space->OnCollision(arb);
+    };
+
+    const auto separate_func = [](cpArbiter* arb, cpSpace* space, cpDataPointer user_data) {
+        PhysicsSpace* physics_space = static_cast<PhysicsSpace*>(user_data);
+        physics_space->OnSeparation(arb);
     };
 
     cpCollisionHandler* ch = cpSpaceAddDefaultCollisionHandler(m_space);
-    ch->beginFunc = beginFunc;
+    ch->beginFunc = begin_func;
+    ch->separateFunc = separate_func;
     ch->userData = this;
 
     m_static_body = std::make_unique<cm::BodyImpl>(cpSpaceGetStaticBody(m_space));
@@ -214,6 +221,25 @@ bool PhysicsSpace::OnCollision(cpArbiter* arb)
     }
     
     return true;
+}
+
+void PhysicsSpace::OnSeparation(cpArbiter* arb)
+{
+    cpBody* b1 = nullptr;
+    cpBody* b2 = nullptr;
+    cpArbiterGetBodies(arb, &b1, &b2);
+
+    const uint32_t body_id_1 = reinterpret_cast<uint64_t>(cpBodyGetUserData(b1));
+    const uint32_t body_id_2 = reinterpret_cast<uint64_t>(cpBodyGetUserData(b2));
+
+    IBody* first = m_physics_system->GetBody(body_id_1);
+    IBody* second = m_physics_system->GetBody(body_id_2);
+
+    if(first && second)
+    {
+        first->OnSeparateFrom(second);
+        second->OnSeparateFrom(first);
+    }
 }
 
 IBody* PhysicsSpace::GetStaticBody()

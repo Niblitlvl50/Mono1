@@ -33,6 +33,7 @@ namespace cm
         void AddCollisionHandler(mono::ICollisionHandler* collision_handler) override;
         void RemoveCollisionHandler(mono::ICollisionHandler* handler) override;
         mono::CollisionResolve OnCollideWith(mono::IBody* body, const math::Vector& collision_point, uint32_t categories) override;
+        void OnSeparateFrom(mono::IBody* body) override;
         void SetNoDamping() override;
         cpBody* Handle() const override;
 
