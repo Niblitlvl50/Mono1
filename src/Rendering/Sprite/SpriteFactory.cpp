@@ -39,7 +39,7 @@ namespace
         sprite_data.texture_size = math::Vector(texture_size["w"], texture_size["h"]);
 
         const nlohmann::json& frames = json["frames"];
-        sprite_data.sprite_frames.reserve(frames.size());
+        sprite_data.frames.reserve(frames.size());
 
         for(const nlohmann::json& frame : frames)
         {
@@ -58,7 +58,7 @@ namespace
                 (sprite_frame.texture_coordinates.mA.y - sprite_frame.texture_coordinates.mB.y) * sprite_data.texture_size.y;
 
             sprite_frame.size = math::Vector(width, height) / pixels_per_meter;
-            sprite_data.sprite_frames.push_back(sprite_frame);
+            sprite_data.frames.push_back(sprite_frame);
         }
 
         const nlohmann::json& animations = json["animations"];
@@ -68,10 +68,19 @@ namespace
         {
             mono::SpriteAnimation sprite_animation;
             sprite_animation.name = animation["name"];
-            sprite_animation.loop = animation["loop"];
+            sprite_animation.looping = animation["loop"];
 
-            std::vector<int> frames = animation["frames"];
-            sprite_animation.frames = std::move(frames);
+            const std::vector<int> frames = animation["frames"];
+            const bool even_size = (frames.size() % 2 == 0);
+
+            if(even_size)
+            {
+                const int n_frames = frames.size() / 2;
+                sprite_animation.frames.reserve(n_frames);
+
+                for(int index = 0; index < n_frames; index += 2)
+                    sprite_animation.frames.push_back({frames[index], frames[index +1]});
+            }
 
             sprite_data.animations.push_back(sprite_animation);
         }
@@ -89,7 +98,7 @@ SpriteFactoryImpl::SpriteFactoryImpl(float pixels_per_meter)
 mono::ISpritePtr SpriteFactoryImpl::CreateSprite(const char* sprite_file) const
 {
     auto sprite = std::make_unique<mono::Sprite>();
-    const bool result = this->CreateSprite(*sprite.get(), sprite_file);
+    const bool result = CreateSprite(*sprite.get(), sprite_file);
     if(result)
         return sprite;
 
@@ -98,18 +107,20 @@ mono::ISpritePtr SpriteFactoryImpl::CreateSprite(const char* sprite_file) const
 
 mono::ISpritePtr SpriteFactoryImpl::CreateSpriteFromRaw(const char* sprite_raw) const
 {
-    mono::SpriteData sprite_data = LoadSpriteData(sprite_raw, m_pixels_per_meter);
-    sprite_data.hash = 0; // unable to set a valid hash since we dont have a filename
+    const uint32_t sprite_raw_hash = mono::Hash(sprite_raw);
 
+    auto it = m_sprite_data_cache.find(sprite_raw_hash);
+    if(it == m_sprite_data_cache.end())
+    {
+        mono::SpriteData sprite_data = LoadSpriteData(sprite_raw, m_pixels_per_meter);
+        sprite_data.hash = sprite_raw_hash;
+
+        it = m_sprite_data_cache.insert({sprite_raw_hash, sprite_data}).first;
+    }
+
+    const mono::SpriteData& sprite_data = it->second;
     mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture(sprite_data.texture_file.c_str());
-
-    auto sprite = std::make_unique<mono::Sprite>();
-    sprite->Init(sprite_data.hash, texture, sprite_data.sprite_frames);
-
-    for(const SpriteAnimation& animation : sprite_data.animations)
-        sprite->DefineAnimation(animation.name.c_str(), animation.frames, animation.loop);
-
-    return sprite;
+    return std::make_unique<mono::Sprite>(&sprite_data, texture);
 }
 
 bool SpriteFactoryImpl::CreateSprite(mono::Sprite& sprite, const char* sprite_file) const
@@ -141,12 +152,8 @@ bool SpriteFactoryImpl::CreateSprite(mono::Sprite& sprite, const char* sprite_fi
     }
 
     const mono::SpriteData& sprite_data = it->second;
-
     mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture(sprite_data.texture_file.c_str());
-    sprite.Init(sprite_data.hash, texture, sprite_data.sprite_frames);
-    
-    for(const mono::SpriteAnimation& animation : sprite_data.animations)
-        sprite.DefineAnimation(animation.name.c_str(), animation.frames, animation.loop);
+    sprite.Init(&sprite_data, texture);
 
     return true;
 }

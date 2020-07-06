@@ -3,8 +3,6 @@
 
 namespace mono
 {
-    class AnimationSequence;
-
     class IDrawable;
     class IRenderer;
     class ITexture;

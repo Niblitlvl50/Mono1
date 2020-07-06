@@ -10,22 +10,6 @@
 
 namespace mono
 {
-    struct SpriteAnimation
-    {
-        std::string name;
-        bool loop;
-        std::vector<int> frames;
-    };
-
-    struct SpriteData
-    {
-        uint32_t hash;
-        std::string texture_file;
-        math::Vector texture_size;
-        std::vector<SpriteFrame> sprite_frames;
-        std::vector<SpriteAnimation> animations;
-    };
-
     class SpriteFactoryImpl : public mono::ISpriteFactory
     {
     public:

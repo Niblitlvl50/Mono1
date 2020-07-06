@@ -2,10 +2,12 @@
 #pragma once
 
 #include "IUpdatable.h"
-#include "Rendering/RenderPtrFwd.h"
+#include "Rendering/RenderFwd.h"
 #include "Rendering/Texture/ITextureFactory.h"
 #include "Math/Quad.h"
 #include "Math/Vector.h"
+
+#include "SpriteData.h"
 
 #include <functional>
 
@@ -23,12 +25,7 @@ namespace mono
         DOWN
     };
 
-    struct SpriteFrame
-    {
-        math::Quad texture_coordinates;
-        math::Vector center_offset;
-        math::Vector size;
-    };
+    using SpriteAnimationCallback = std::function<void()>;
 
     class ISprite : public IUpdatable
     {
@@ -60,8 +57,8 @@ namespace mono
         virtual void SetAnimation(const char* name) = 0;
 
         //! Tell the sprite to run a specific animation, and get a callback when finished
-        virtual void SetAnimation(int id, const std::function<void ()>& func) = 0;
-        virtual void SetAnimation(const char* name, const std::function<void ()>& func) = 0;
+        virtual void SetAnimation(int id, const SpriteAnimationCallback& callback) = 0;
+        virtual void SetAnimation(const char* name, const SpriteAnimationCallback& callback) = 0;
 
         //! Returns the current active animation
         virtual int GetActiveAnimation() const = 0;
