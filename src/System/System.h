@@ -137,6 +137,7 @@ namespace System
     {
         NONE = 0,
         FULLSCREEN = 1,
+        DISABLE_VSYNC = 2,
     };
 
     // Creates a opengl window

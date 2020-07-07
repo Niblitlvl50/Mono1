@@ -59,9 +59,6 @@ namespace
 #endif
         glEnable(GL_POINT_SMOOTH);
         glEnable(GL_LINE_SMOOTH);
-
-        // vsync on/off
-        SDL_GL_SetSwapInterval(1);
     }
 
     class SDLWindow : public System::IWindow
@@ -93,7 +90,10 @@ namespace
             m_context = SDL_GL_CreateContext(m_window);
             if(!m_context)
                 throw std::runtime_error("System|Unable to create OpenGL context");
-                        
+
+            const int vsync_value = (options & System::WindowOptions::DISABLE_VSYNC) ? 0 : 1;
+            SDL_GL_SetSwapInterval(vsync_value);
+
             SetupOpenGL();
             MakeCurrent();
             PrintOpenGLInfo();
