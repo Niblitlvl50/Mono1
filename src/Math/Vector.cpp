@@ -68,6 +68,11 @@ bool math::operator == (const math::Vector& left, const math::Vector& right)
            left.y == right.y;
 }
 
+bool math::operator != (const math::Vector& left, const math::Vector& right)
+{
+    return !(left == right);
+}
+
 void math::Normalize(math::Vector& vector)
 {
     const float length = Length(vector);

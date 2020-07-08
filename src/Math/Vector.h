@@ -36,6 +36,7 @@ namespace math
     void operator -= (Vector& left, const Vector& right);
 
     bool operator == (const Vector& left, const Vector& right);
+    bool operator != (const Vector& left, const Vector& right);
 
     void Normalize(Vector& vector);
     math::Vector Normalize(const math::Vector& vector);
