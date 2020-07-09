@@ -6,7 +6,7 @@
 #include "Math/MathFwd.h"
 
 #include <vector>
-#include <stdlib.h>
+#include <cstdint>
 
 namespace mono
 {
