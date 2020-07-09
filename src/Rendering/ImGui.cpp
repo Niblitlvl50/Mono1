@@ -89,7 +89,7 @@ void mono::DrawImGui(mono::ImGuiContext& imgui_context, mono::IRenderer& rendere
                 const void* id = pcmd->TextureId;
                 const auto it = g_imgui_textures.find((uint32_t)(intptr_t)id);
                 if(it != g_imgui_textures.end())
-                    renderer.UseTexture(it->second);
+                    renderer.UseTexture(it->second.get());
                 else
                     renderer.ClearTexture();
 

@@ -30,6 +30,8 @@ namespace mono
     void DrawSprite(
         const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, IShader* shader);
 
+    void DrawScreen(const math::Quad& sprite_coords, const math::Vector& size, IShader* shader);
+
     //! Draws texts from the text definitions
     void DrawText(const struct TextDefinition& text, IShader* shader);
 

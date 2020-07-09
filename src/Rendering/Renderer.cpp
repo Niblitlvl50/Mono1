@@ -18,14 +18,42 @@
 #include "Math/MathFunctions.h"
 
 #include "ImGui.h"
+#include "FrameBufferCD.h"
+
+#include "System/open_gl.h"
 
 using namespace mono;
 
-Renderer::Renderer()
+namespace
 {
+    void SetupOpenGL()
+    {
+        glFrontFace(GL_CCW);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        
+        glDisable(GL_DEPTH_TEST);
+        glEnable(GL_BLEND);
+
+#ifndef __IPHONEOS__
+        // To be able to use gl_PointSize in a vertex shader on regular
+        // GLSL, we need to enable this thing, and its not avalible on
+        // GLSL ES, that's why ifndef.
+        glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+#endif
+        glEnable(GL_POINT_SMOOTH);
+        glEnable(GL_LINE_SMOOTH);
+    }
+}
+
+Renderer::Renderer()
+    : m_clear_color(0.7f, 0.7f, 0.7f)
+{
+    SetupOpenGL();
+
     m_color_shader = GetShaderFactory()->CreateColorShader();
     m_texture_shader = GetShaderFactory()->CreateTextureShader();
     m_point_sprite_shader = GetShaderFactory()->CreatePointSpriteShader();
+    m_screen_shader = GetShaderFactory()->CreateScreenShader();
 
     m_imgui_context.shader = GetShaderFactory()->CreateImGuiShader();
     mono::InitializeImGui(m_imgui_context);
@@ -88,6 +116,17 @@ void Renderer::PrepareDraw()
     math::Translate(modelview, -m_viewport.mA);
 
     m_modelview_stack.push(modelview);
+
+    if(!m_frame_buffer || m_frame_buffer->Size() != m_window_size)
+    {
+        m_frame_buffer = std::make_unique<FrameBuffer>(m_window_size.x, m_window_size.y);
+    }
+
+    m_frame_buffer->Use();
+
+    glClearColor(m_clear_color.red, m_clear_color.green, m_clear_color.blue, m_clear_color.alpha);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glViewport(0, 0, m_window_size.x, m_window_size.y);
 }
 
 void Renderer::EndDraw()
@@ -98,6 +137,18 @@ void Renderer::EndDraw()
 
     m_imgui_context.window_size = m_window_size;
     mono::DrawImGui(m_imgui_context, *this);
+
+    mono::ClearFrameBuffer();
+
+    glClearColor(m_clear_color.red, m_clear_color.green, m_clear_color.blue, m_clear_color.alpha);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Draw frame buffer to screen
+
+    mono::ITexturePtr frame_buffer_texture = m_frame_buffer->Texture();
+    UseTexture(frame_buffer_texture.get());
+    UseShader(m_screen_shader.get());
+    ::DrawScreen(math::Quad(0.0f, 0.0f, 1.0f, 1.0f), math::Vector(1.0f, 1.0f), m_texture_shader.get());
 }
 
 void Renderer::DrawFrame()
@@ -132,7 +183,7 @@ void Renderer::DrawText(int font_id, const char* text, const math::Vector& pos, 
     TextDefinition def = mono::GenerateVertexDataFromString(font_id, text, pos, center);
     def.color = color;
 
-    UseTexture(texture);
+    UseTexture(texture.get());
     UseShader(m_texture_shader.get());
 
     ::DrawText(def, m_texture_shader.get());
@@ -149,11 +200,11 @@ void Renderer::DrawSprite(const ISprite& sprite, const math::Vector& offset) con
     const SpriteFrame& current_frame = sprite.GetCurrentFrame();
     UseShader(m_texture_shader.get());
     TextureShader::SetShade(m_texture_shader.get(), sprite.GetShade());
-    DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset + offset, texture);
+    DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset + offset, texture.get());
 }
 
 void Renderer::DrawSprite(
-    const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, const ITexturePtr& texture) const
+    const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, const ITexture* texture) const
 {
     UseTexture(texture);
     UseShader(m_texture_shader.get());
@@ -204,11 +255,10 @@ void Renderer::DrawCircle(const math::Vector& pos, float radie, int segments, fl
     ::DrawCircle(pos, radie, segments, lineWidth, color, m_color_shader.get());
 }
 
-void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std::vector<math::Vector>& texture_coordinates, const std::vector<uint16_t>& indices, const ITexturePtr& texture)
+void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std::vector<math::Vector>& texture_coordinates, const std::vector<uint16_t>& indices, const ITexture* texture)
 {
     UseTexture(texture);
     UseShader(m_texture_shader.get());
-
     ::DrawTexturedGeometry(vertices, texture_coordinates, indices, m_texture_shader.get());
 }
 
@@ -216,11 +266,10 @@ void Renderer::DrawGeometry(const IRenderBuffer* vertices,
                             const IRenderBuffer* texture_coordinates,
                             size_t offset,
                             size_t count,
-                            const ITexturePtr& texture)
+                            const ITexture* texture)
 {
     UseTexture(texture);
     UseShader(m_texture_shader.get());
-
     ::DrawTexturedGeometry(vertices, texture_coordinates, offset, count, m_texture_shader.get());
 }
 
@@ -229,7 +278,7 @@ void Renderer::DrawParticlePoints(
     const IRenderBuffer* rotation,
     const IRenderBuffer* color,
     const IRenderBuffer* point_size,
-    const ITexturePtr& texture,
+    const ITexture* texture,
     BlendMode blend_mode,
     size_t count)
 {
@@ -238,8 +287,7 @@ void Renderer::DrawParticlePoints(
     ::DrawParticlePoints(position, rotation, color, point_size, count, blend_mode, m_point_sprite_shader.get());
 }
 
-void Renderer::DrawPolyline(
-    const IRenderBuffer* vertices, const IRenderBuffer* colors, size_t offset, size_t count)
+void Renderer::DrawPolyline(const IRenderBuffer* vertices, const IRenderBuffer* colors, size_t offset, size_t count)
 {
     UseShader(m_color_shader.get());
     ::DrawPolyline(vertices, colors, offset, count, 2.0f, m_color_shader.get());
@@ -250,6 +298,11 @@ void Renderer::DrawTrianges(
 {
     UseShader(m_color_shader.get());
     ::DrawTrianges(vertices, colors, indices, count, m_color_shader.get());
+}
+
+void Renderer::SetClearColor(const mono::Color::RGBA& color)
+{
+    m_clear_color = color;
 }
 
 void Renderer::UseShader(IShader* shader) const
@@ -263,13 +316,12 @@ void Renderer::UseShader(IShader* shader) const
 
     const math::Matrix& projection = m_projection_stack.top();
     const math::Matrix& modelview = m_modelview_stack.top();
-
     shader->SetProjectionAndModelView(projection, modelview);
 
     PROCESS_GL_ERRORS();
 }
 
-void Renderer::UseTexture(const ITexturePtr& texture) const
+void Renderer::UseTexture(const ITexture* texture) const
 {
     const uint32_t id = texture->Id();
     if(id != m_current_texture_id)

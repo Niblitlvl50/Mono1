@@ -61,7 +61,6 @@ namespace System
         virtual void RestoreSize() = 0;
         virtual void SwapBuffers() const = 0;
         virtual void MakeCurrent() = 0;
-        virtual void SetBackgroundColor(float red, float green, float blue) = 0;
         virtual const System::Position& Position() const = 0;
         virtual const System::Size& Size() const = 0;
     };

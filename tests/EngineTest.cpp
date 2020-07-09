@@ -51,8 +51,6 @@ namespace
         {
             mMakeCurrentCalled = true;
         }
-        void SetBackgroundColor(float red, float green, float blue) override
-        { }
         const System::Position& Position() const override
         {
             return m_position;
@@ -156,12 +154,15 @@ namespace
         {
             return std::make_unique<NullShader>();
         }
+        std::unique_ptr<mono::IShader> CreateScreenShader() const override
+        {
+            return std::make_unique<NullShader>();
+        }
         std::unique_ptr<mono::IShader> CreateImGuiShader() const override
         {
             return std::make_unique<NullShader>();
         }
     };
-
 
     class NullTexture : public mono::ITexture
     {

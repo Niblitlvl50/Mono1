@@ -4,6 +4,7 @@
 #include "Shader/ColorShader.h"
 #include "Shader/TextureShader.h"
 #include "Shader/PointSpriteShader.h"
+#include "Shader/ScreenShader.h"
 #include "Sprite/ISprite.h"
 #include "Text/TextDefinition.h"
 #include "Texture/ITexture.h"
@@ -119,6 +120,38 @@ void mono::DrawSprite(
 
     glVertexAttribPointer(TextureShader::GetPositionAttribute(shader), 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glVertexAttribPointer(TextureShader::GetTextureAttribute(shader), 2, GL_FLOAT, GL_FALSE, 0, texture_coords);
+
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+}
+
+void mono::DrawScreen(const math::Quad& sprite_coords, const math::Vector& size, IShader* shader)
+{
+    const math::Vector vertices[] = {
+        math::Vector(-size.x, -size.y),
+        math::Vector(-size.x,  size.y),
+        math::Vector( size.x,  size.y),
+        math::Vector( size.x, -size.y),
+    };
+
+    constexpr uint16_t indices[] = {
+        0, 1, 2, 0, 2, 3
+    };
+
+    const float texture_coords[] = {
+        sprite_coords.mA.x, sprite_coords.mA.y,
+        sprite_coords.mA.x, sprite_coords.mB.y,
+        sprite_coords.mB.x, sprite_coords.mB.y,
+        sprite_coords.mB.x, sprite_coords.mA.y
+    };
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(ScreenShader::GetPositionAttribute(shader), 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(ScreenShader::GetTextureAttribute(shader), 2, GL_FLOAT, GL_FALSE, 0, texture_coords);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
 

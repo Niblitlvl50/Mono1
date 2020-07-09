@@ -4,6 +4,7 @@
 #include "TextureShader.h"
 #include "ColorShader.h"
 #include "PointSpriteShader.h"
+#include "ScreenShader.h"
 #include "ImGuiShader.h"
 
 using namespace mono;
@@ -21,6 +22,11 @@ std::unique_ptr<mono::IShader> ShaderFactory::CreateColorShader() const
 std::unique_ptr<mono::IShader> ShaderFactory::CreatePointSpriteShader() const
 {
     return PointSpriteShader::MakeShader();
+}
+
+std::unique_ptr<mono::IShader> ShaderFactory::CreateScreenShader() const
+{
+    return ScreenShader::MakeShader();
 }
 
 std::unique_ptr<mono::IShader> ShaderFactory::CreateImGuiShader() const

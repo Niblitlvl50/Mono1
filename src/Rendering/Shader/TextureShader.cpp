@@ -2,7 +2,6 @@
 #include "TextureShader.h"
 #include "Shader.h"
 #include "Rendering/Color.h"
-#include "System/open_gl.h"
 
 namespace
 {

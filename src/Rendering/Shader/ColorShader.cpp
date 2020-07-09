@@ -1,7 +1,6 @@
 
 #include "ColorShader.h"
 #include "Shader.h"
-#include "System/open_gl.h"
 
 namespace
 {

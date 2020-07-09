@@ -43,24 +43,6 @@ namespace
                     "\tglsl: %s\n", vendor, renderer, version, glslversion);
     }
 
-    void SetupOpenGL()
-    {
-        glFrontFace(GL_CCW);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        
-        glDisable(GL_DEPTH_TEST);
-        glEnable(GL_BLEND);
-
-#ifndef __IPHONEOS__
-        // To be able to use gl_PointSize in a vertex shader on regular
-        // GLSL, we need to enable this thing, and its not avalible on
-        // GLSL ES, that's why ifndef.
-        glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
-#endif
-        glEnable(GL_POINT_SMOOTH);
-        glEnable(GL_LINE_SMOOTH);
-    }
-
     class SDLWindow : public System::IWindow
     {
     public:
@@ -94,7 +76,6 @@ namespace
             const int vsync_value = (options & System::WindowOptions::DISABLE_VSYNC) ? 0 : 1;
             SDL_GL_SetSwapInterval(vsync_value);
 
-            SetupOpenGL();
             MakeCurrent();
             PrintOpenGLInfo();
         }
@@ -118,18 +99,11 @@ namespace
         void MakeCurrent() override
         {
             SDL_GetWindowSize(m_window, &m_size.width, &m_size.height);
-
             SDL_GL_MakeCurrent(m_window, m_context);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            glViewport(0, 0, m_size.width, m_size.height);
         }
         void SwapBuffers() const override
         {
             SDL_GL_SwapWindow(m_window);
-        }
-        void SetBackgroundColor(float red, float green, float blue) override
-        {
-            glClearColor(red, green, blue, 1.0f);
         }
         const System::Position& Position() const override
         {
@@ -146,7 +120,6 @@ namespace
         SDL_Window* m_window = nullptr;
         void* m_context = nullptr;
     };
-
 
     Keycode KeycodeFromSDL(SDL_Scancode sdl_scancode)
     {

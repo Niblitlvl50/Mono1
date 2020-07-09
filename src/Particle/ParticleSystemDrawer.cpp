@@ -41,7 +41,7 @@ void ParticleSystemDrawer::Draw(mono::IRenderer& renderer) const
             it->second.rotation_buffer.get(),
             it->second.color_buffer.get(),
             it->second.point_size_buffer.get(),
-            drawer.texture,
+            drawer.texture.get(),
             drawer.blend_mode,
             pool.count_alive);
     };
