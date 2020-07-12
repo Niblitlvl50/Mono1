@@ -111,7 +111,7 @@ mono::EventResult MouseCameraController::OnMultiGesture(const event::MultiGestur
     math::Quad quad = m_camera->GetViewport();
 
     const float multiplier = (event.distance < 0.0f) ? 1.0f : -1.0f;
-    const float resize_value = quad.mB.x * 0.15f * multiplier;
+    const float resize_value = quad.mB.x * multiplier;
     const float aspect = quad.mB.x / quad.mB.y;
     math::ResizeQuad(quad, resize_value, aspect);
 
@@ -128,7 +128,7 @@ mono::EventResult MouseCameraController::OnMouseWheel(const event::MouseWheelEve
     math::Quad quad = m_camera->GetViewport();
 
     const float multiplier = (event.y < 0.0f) ? 1.0f : -1.0f;
-    const float resizeValue = quad.mB.x * 0.15f * multiplier;
+    const float resizeValue = quad.mB.x * multiplier;
     const float aspect = quad.mB.x / quad.mB.y;
     math::ResizeQuad(quad, resizeValue, aspect);
 
