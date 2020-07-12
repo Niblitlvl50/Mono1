@@ -34,8 +34,8 @@ namespace
 
         void main()
         {
-            //gl_FragColor = vec4(texture2D(sampler, v_texture_coord).rgb, 1.0);
-            gl_FragColor = vec4(vec3(1.0 - texture2D(sampler, v_texture_coord)), 1.0);
+            gl_FragColor = vec4(texture2D(sampler, v_texture_coord).rgb, 1.0);
+            //gl_FragColor = vec4(vec3(1.0 - texture2D(sampler, v_texture_coord)), 1.0);
         }
     )";
 }
