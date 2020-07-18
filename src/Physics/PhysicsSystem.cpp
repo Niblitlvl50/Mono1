@@ -333,14 +333,11 @@ mono::IBody* PhysicsSystem::GetBody(uint32_t body_id)
     return &m_impl->bodies[body_id];
 }
 
-uint32_t PhysicsSystem::GetIdFromBody(const mono::IBody* body) const
+uint32_t PhysicsSystem::GetIdFromBody(const mono::IBody* body)
 {
-    for(size_t index = 0; index < m_impl->bodies.size(); ++index)
-    {
-        const bool is_active = m_impl->active_bodies[index];
-        if(is_active && &m_impl->bodies[index] == body)
-            return index;
-    }
+    void* user_data = cpBodyGetUserData(body->Handle());
+    if(user_data != nullptr)
+        return reinterpret_cast<uint64_t>(user_data);
 
     return -1;
 }

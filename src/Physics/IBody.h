@@ -28,7 +28,7 @@ namespace mono
     public:
 
         virtual ~ICollisionHandler() = default;
-        virtual CollisionResolve OnCollideWith(mono::IBody* body, const math::Vector& collision_point, uint32_t categories) = 0;
+        virtual mono::CollisionResolve OnCollideWith(mono::IBody* body, const math::Vector& collision_point, uint32_t categories) = 0;
         virtual void OnSeparateFrom(mono::IBody* body) = 0;
     };
 
