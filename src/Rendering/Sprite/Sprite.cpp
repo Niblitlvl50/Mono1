@@ -34,7 +34,7 @@ void Sprite::Init(const SpriteData* sprite_data, mono::ITexturePtr texture)
 
 uint32_t Sprite::GetSpriteHash() const
 {
-    return m_sprite_data->hash;
+    return m_sprite_data != nullptr ? m_sprite_data->hash : 0;
 }
 
 ITexturePtr Sprite::GetTexture() const
@@ -44,7 +44,7 @@ ITexturePtr Sprite::GetTexture() const
 
 mono::SpriteFrame Sprite::GetCurrentFrame() const
 {
-    if(m_sprite_data->animations.empty())
+    if(!m_sprite_data || m_sprite_data->animations.empty())
         return mono::SpriteFrame();
 
     const SpriteAnimation& animation = m_sprite_data->animations[m_active_animation];
@@ -85,6 +85,9 @@ mono::VerticalDirection Sprite::GetVerticalDirection() const
 
 void Sprite::Update(const UpdateContext& update_context)
 {
+    if(!m_sprite_data)
+        return;
+
     const std::vector<SpriteAnimation>& animations = m_sprite_data->animations;
     if(animations.empty())
         return;
