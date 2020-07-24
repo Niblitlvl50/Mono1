@@ -143,6 +143,7 @@ namespace mono
         mono::IShape* AddShape(uint32_t body_id, const PolyComponent& poly_params);
 
         std::vector<mono::IShape*> GetShapesAttachedToBody(uint32_t body_id) const;
+        void PositionBody(uint32_t body_id, const math::Vector& position);
 
         mono::IBody* CreateKinematicBody();
         void ReleaseKinematicBody(mono::IBody* body);

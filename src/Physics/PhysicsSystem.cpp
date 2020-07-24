@@ -335,9 +335,12 @@ mono::IBody* PhysicsSystem::GetBody(uint32_t body_id)
 
 uint32_t PhysicsSystem::GetIdFromBody(const mono::IBody* body)
 {
-    void* user_data = cpBodyGetUserData(body->Handle());
-    if(user_data != nullptr)
-        return reinterpret_cast<uint64_t>(user_data);
+    if(body)
+    {
+        void* user_data = cpBodyGetUserData(body->Handle());
+        if(user_data != nullptr)
+            return reinterpret_cast<uint64_t>(user_data);
+    }
 
     return -1;
 }
@@ -350,6 +353,15 @@ std::vector<mono::IShape*> PhysicsSystem::GetShapesAttachedToBody(uint32_t body_
         body_shapes.push_back(shape_impl);
 
     return body_shapes;
+}
+
+void PhysicsSystem::PositionBody(uint32_t body_id, const math::Vector& position)
+{
+    mono::IBody* body = GetBody(body_id);
+    body->SetPosition(position);
+
+    math::Matrix& transform = m_transform_system->GetTransform(body_id);
+    math::Position(transform, position);
 }
 
 mono::IBody* PhysicsSystem::CreateKinematicBody()
