@@ -2,6 +2,9 @@
 #include "AudioSystem.h"
 #include "System/System.h"
 
+#include "Math/Vector.h"
+#include "Math/MathFunctions.h"
+
 #include "open_al.h"
 
 #include <stdexcept>
@@ -47,6 +50,28 @@ void mono::ShutdownAudio()
 void mono::ListenerPosition(float x, float y)
 {
     alListener3f(AL_POSITION, x, y, 0.0f);
+}
+
+void mono::ListenerVelocity(float x, float y)
+{
+    alListener3f(AL_VELOCITY, x, y, 0.0f);
+    const ALenum error_enum = alGetError();
+    if(error_enum != AL_NO_ERROR)
+    {
+        System::Log("OPEN AL ERROR: %d\n", error_enum);
+    }
+}
+
+void mono::ListenerDirection(float direction)
+{
+    const math::Vector at_vector = math::VectorFromAngle(direction);
+
+    const float values[] = {
+        at_vector.x, at_vector.y, 0.0f,  // At vector
+        0.0f, 0.0f, 1.0f    // Up vector
+    };
+
+    alListenerfv(AL_ORIENTATION, values);
 }
 
 void mono::ListenerGain(float gain)
