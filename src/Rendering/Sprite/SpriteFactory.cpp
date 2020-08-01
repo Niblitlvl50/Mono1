@@ -125,8 +125,19 @@ mono::ISpritePtr SpriteFactoryImpl::CreateSpriteFromRaw(const char* sprite_raw) 
 
 bool SpriteFactoryImpl::CreateSprite(mono::Sprite& sprite, const char* sprite_file) const
 {
+    const mono::SpriteData* sprite_data = GetSpriteDataForFile(sprite_file);
+    if(!sprite_data)
+        return false;
+
+    mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture(sprite_data->texture_file.c_str());
+    sprite.Init(sprite_data, texture);
+    return true;
+}
+
+const mono::SpriteData* SpriteFactoryImpl::GetSpriteDataForFile(const char* sprite_file) const
+{
     const uint32_t sprite_filename_hash = mono::Hash(sprite_file);
-    
+
     auto it = m_sprite_data_cache.find(sprite_filename_hash);
     if(it == m_sprite_data_cache.end())
     {
@@ -134,12 +145,12 @@ bool SpriteFactoryImpl::CreateSprite(mono::Sprite& sprite, const char* sprite_fi
         if(!file_exists)
         {
             System::Log("spritefactory|Sprite file does not exist. [%s]\n", sprite_file);
-            return false;
+            return nullptr;
         }
 
         file::FilePtr file = file::OpenAsciiFile(sprite_file);
         if(!file)
-            return false;
+            return nullptr;
 
         std::vector<byte> file_data;
         file::FileRead(file, file_data);
@@ -151,11 +162,7 @@ bool SpriteFactoryImpl::CreateSprite(mono::Sprite& sprite, const char* sprite_fi
         it = m_sprite_data_cache.insert({sprite_filename_hash, sprite_data}).first;
     }
 
-    const mono::SpriteData& sprite_data = it->second;
-    mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture(sprite_data.texture_file.c_str());
-    sprite.Init(&sprite_data, texture);
-
-    return true;
+    return &it->second;
 }
 
 extern mono::ISpriteFactory* g_sprite_factory;
