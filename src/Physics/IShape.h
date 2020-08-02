@@ -24,6 +24,7 @@ namespace mono
         virtual float GetInertiaValue() const = 0;
 
         virtual void SetSensor(bool is_sensor) = 0;
+        virtual bool IsSensor() const = 0;
 
         //! Category that the shape belongs to, and a bitmask with which other
         //! categories the shape should collide with

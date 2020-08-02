@@ -44,6 +44,11 @@ void ShapeImpl::SetSensor(bool is_sensor)
     cpShapeSetSensor(m_shape, is_sensor);
 }
 
+bool ShapeImpl::IsSensor() const
+{
+    return cpShapeGetSensor(m_shape);
+}
+
 void ShapeImpl::SetCollisionFilter(uint32_t category, uint32_t mask) 
 {
     cpShapeFilter filter = cpShapeGetFilter(m_shape);

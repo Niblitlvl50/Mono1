@@ -34,7 +34,7 @@ namespace mono
             return GetPoolDataByIndex(free_index);
         }
 
-        void ReleasePoolData(T* data)
+        void ReleasePoolData(const T* data)
         {
             for(size_t index = 0; index < m_data.size(); ++index)
             {

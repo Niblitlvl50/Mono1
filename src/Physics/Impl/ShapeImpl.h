@@ -19,6 +19,7 @@ namespace cm
         void SetInertia(float inertia);
         float GetInertiaValue() const override;
         void SetSensor(bool is_sensor) override;
+        bool IsSensor() const override;
         void SetCollisionFilter(uint32_t category, uint32_t mask) override;
         void SetCollisionMask(uint32_t mask) override;
 
