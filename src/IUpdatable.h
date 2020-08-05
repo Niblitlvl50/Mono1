@@ -9,7 +9,7 @@ namespace mono
     {
         uint32_t frame_count;
         uint32_t delta_ms;
-        uint32_t total_time;
+        uint32_t timestamp;
     };
 
     class IUpdatable

@@ -80,7 +80,7 @@ int Engine::Run(IZone* zone)
     UpdateContext update_context;
     update_context.frame_count = 0;
     update_context.delta_ms = 0;
-    update_context.total_time = 0;
+    update_context.timestamp = 0;
 
     Updater updater;
 
@@ -100,7 +100,7 @@ int Engine::Run(IZone* zone)
 
         const uint32_t before_time = System::GetMilliseconds();
         const uint32_t delta_ms = (before_time - last_time) * m_time_scale;
-        update_context.total_time += delta_ms;
+        update_context.timestamp += delta_ms;
 
         const System::Size& size = m_window->Size();
         const math::Vector window_size(size.width, size.height);
@@ -119,7 +119,7 @@ int Engine::Run(IZone* zone)
             update_context.frame_count++;
             update_context.delta_ms = delta_ms;
 
-            renderer.SetDeltaAndTimestamp(update_context.delta_ms, update_context.total_time);
+            renderer.SetDeltaAndTimestamp(update_context.delta_ms, update_context.timestamp);
 
             m_window->MakeCurrent();
             m_system_context->Update(update_context);
