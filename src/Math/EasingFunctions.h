@@ -40,4 +40,31 @@ namespace math
     };
 
     using EaseFunction = float (*)(float time, float duration, float start_value, float delta_value);
+
+    constexpr EaseFunction ease_functions[] = {
+        LinearTween,
+        EaseInCubic,
+        EaseOutCubic,
+        EaseInOutCubic,
+    };
+
+    enum class EasingFuncType
+    {
+        LINEAR_TWEEN,
+        EASE_IN_CUBIC,
+        EASE_OUT_CUBIC,
+        EASE_IN_OUT_CUBIC,
+    };
+
+    constexpr const char* easing_function_strings[] = {
+        "Linear Tween",
+        "Ease In Cubic",
+        "Ease Out Cubic",
+        "Ease In/Out Cubic",
+    };
+
+    inline const char* EasingFuncTypeToString(EasingFuncType logic_type)
+    {
+        return easing_function_strings[static_cast<int>(logic_type)];
+    }
 }

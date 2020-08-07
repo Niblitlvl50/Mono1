@@ -318,12 +318,24 @@ void PhysicsSystem::Update(const UpdateContext& update_context)
         if(is_active)
         {
             mono::IBody& body = m_impl->bodies[index];
-            const math::Vector position = body.GetPosition();
-            const float rotation = body.GetAngle();
-
             math::Matrix& transform = m_transform_system->GetTransform(index);
-            transform = math::CreateMatrixFromZRotation(rotation);
-            math::Position(transform, position);
+
+            const mono::TransformState state = m_transform_system->GetTransformState(index);
+            if(state == TransformState::CLIENT)
+            {
+                body.SetPosition(math::GetPosition(transform));
+                body.SetAngle(math::GetZRotation(transform));
+            }
+            else
+            {
+                const math::Vector position = body.GetPosition();
+                const float rotation = body.GetAngle();
+
+                transform = math::CreateMatrixFromZRotation(rotation);
+                math::Position(transform, position);
+            }
+
+            m_transform_system->SetTransformState(index, TransformState::PHYSICS);
         }
     }
 }

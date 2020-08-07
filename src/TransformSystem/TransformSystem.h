@@ -8,6 +8,13 @@
 
 namespace mono
 {
+    enum class TransformState : uint8_t
+    {
+        NONE = 0,
+        CLIENT,
+        PHYSICS
+    };
+
     class TransformSystem : public mono::IGameSystem
     {
     public:
@@ -17,6 +24,7 @@ namespace mono
             math::Matrix transform;
             math::Quad bounding_box;
             uint32_t parent;
+            TransformState state;
         };
 
         TransformSystem(size_t n_components);
@@ -33,6 +41,9 @@ namespace mono
         uint32_t GetParent(uint32_t id) const;
         void ChildTransform(uint32_t id, uint32_t parent);
         void UnchildTransform(uint32_t id);
+
+        TransformState GetTransformState(uint32_t id) const;
+        void SetTransformState(uint32_t id, TransformState new_state);
 
         uint32_t Id() const override;
         const char* Name() const override;

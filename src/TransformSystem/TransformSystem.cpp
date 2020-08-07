@@ -80,6 +80,16 @@ void TransformSystem::UnchildTransform(uint32_t id)
     m_transforms[id].parent = no_parent;
 }
 
+TransformState TransformSystem::GetTransformState(uint32_t id) const
+{
+    return m_transforms[id].state;
+}
+
+void TransformSystem::SetTransformState(uint32_t id, TransformState new_state)
+{
+    m_transforms[id].state = new_state;
+}
+
 uint32_t TransformSystem::Id() const
 {
     return mono::Hash(Name());
