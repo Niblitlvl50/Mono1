@@ -143,7 +143,12 @@ std::vector<IBody*> PhysicsSpace::QueryBox(const math::Quad& world_bb, uint32_t 
         found_bodies->push_back(cpShapeGetBody(shape));
     };
 
-    const cpBB bounding_box = cpBBNew(world_bb.mA.x, world_bb.mA.y, world_bb.mB.x, world_bb.mB.y);
+    const float left = std::min(world_bb.mA.x, world_bb.mB.x);
+    const float bottom = std::min(world_bb.mA.y, world_bb.mB.y);
+    const float right = std::max(world_bb.mA.x, world_bb.mB.x);
+    const float top = std::max(world_bb.mA.y, world_bb.mB.y);
+
+    const cpBB bounding_box = cpBBNew(left, bottom, right, top);
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
     cpSpaceBBQuery(m_space, bounding_box, shape_filter, query_func, &found_bodies);
 
