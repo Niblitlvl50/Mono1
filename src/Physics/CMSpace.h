@@ -41,10 +41,11 @@ namespace mono
         void Remove(IConstraint* constraint);
         
         IBody* QueryFirst(const math::Vector& start, const math::Vector& end, uint32_t category);
-        std::vector<IBody*> QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category);
         IBody* QueryNearest(const math::Vector& point, float max_distance, uint32_t category);
-        IBody* QueryNearest(
-            const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func);
+        IBody* QueryNearest(const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func);
+
+        std::vector<IBody*> QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category);
+        std::vector<IBody*> QueryBox(const math::Quad& world_bb, uint32_t category);
 
         IBody* GetStaticBody();
 

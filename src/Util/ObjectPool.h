@@ -21,12 +21,12 @@ namespace mono
             std::reverse(m_free_indices.begin(), m_free_indices.end());
         }
 
-        T* GetPoolData(size_t* out_index = nullptr)
+        T* GetPoolData(uint32_t* out_index = nullptr)
         {
             if(m_free_indices.empty())
                 return nullptr;
 
-            const size_t free_index = m_free_indices.back();
+            const uint32_t free_index = m_free_indices.back();
             m_free_indices.pop_back();
             if(out_index)
                 *out_index = free_index;
@@ -47,12 +47,12 @@ namespace mono
             }
         }
 
-        void ReleasePoolData(size_t index)
+        void ReleasePoolData(uint32_t index)
         {
             m_free_indices.push_back(index);
         }
 
-        T* GetPoolDataByIndex(size_t index)
+        T* GetPoolDataByIndex(uint32_t index)
         {
             return &m_data[index];
         }
@@ -75,6 +75,6 @@ namespace mono
     private:
 
         std::vector<T> m_data;
-        std::vector<size_t> m_free_indices;
+        std::vector<uint32_t> m_free_indices;
     };
 }

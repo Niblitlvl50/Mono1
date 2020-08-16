@@ -6,6 +6,7 @@
 #include "Impl/BodyImpl.h"
 #include "Physics/PhysicsSystem.h"
 #include "Math/Vector.h"
+#include "Math/Quad.h"
 
 #include "chipmunk/chipmunk.h"
 
@@ -128,6 +129,39 @@ std::vector<IBody*> PhysicsSpace::QueryAllInLIne(const math::Vector& start, cons
     }
 
     return bodies;
+}
+
+std::vector<IBody*> PhysicsSpace::QueryBox(const math::Quad& world_bb, uint32_t category)
+{
+    std::vector<cpBody*> found_bodies;
+
+    std::vector<IBody*> bodies;
+    bodies.reserve(found_bodies.size());
+
+    const cpSpaceBBQueryFunc query_func = [](cpShape* shape, void* data) {
+        std::vector<cpBody*>* found_bodies = (std::vector<cpBody*>*)data;
+        found_bodies->push_back(cpShapeGetBody(shape));
+    };
+
+    const cpBB bounding_box = cpBBNew(world_bb.mA.x, world_bb.mA.y, world_bb.mB.x, world_bb.mB.y);
+    const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
+    cpSpaceBBQuery(m_space, bounding_box, shape_filter, query_func, &found_bodies);
+
+    for(const cpBody* cpbody : found_bodies)
+    {
+        const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(cpbody));
+        bodies.push_back(m_physics_system->GetBody(body_id));
+    }
+
+    return bodies;
+
+/*
+/// Rectangle Query callback function type.
+typedef void (*cpSpaceBBQueryFunc)(cpShape *shape, void *data);
+/// Perform a fast rectangle query on the space calling @c func for each shape found.
+/// Only the shape's bounding boxes are checked for overlap, not their full shape.
+CP_EXPORT void cpSpaceBBQuery(cpSpace *space, cpBB bb, cpShapeFilter filter, cpSpaceBBQueryFunc func, void *data);
+*/
 }
 
 IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category)

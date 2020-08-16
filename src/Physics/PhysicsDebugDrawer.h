@@ -68,7 +68,10 @@ namespace mono
 
         mono::EventResult OnMouseDown(const event::MouseDownEvent& event);
         mono::EventResult OnMouseUp(const event::MouseUpEvent& event);
+        mono::EventResult OnMouseMove(const event::MouseMotionEvent& event);
 
+        mono::EventResult OnKeyDown(const event::KeyDownEvent& event);
+        mono::EventResult OnKeyUp(const event::KeyUpEvent& event);
 
     private:
         const bool& m_enabled;
@@ -79,11 +82,18 @@ namespace mono
 
         mono::EventToken<event::MouseDownEvent> m_mouse_down_token;
         mono::EventToken<event::MouseUpEvent> m_mouse_up_token;
+        mono::EventToken<event::MouseMotionEvent> m_mouse_move_token;
+        mono::EventToken<event::KeyDownEvent> m_key_down_token;
+        mono::EventToken<event::KeyUpEvent> m_key_up_token;
 
         math::Vector m_mouse_down_position;
         math::Vector m_mouse_up_position;
+        math::Vector m_mouse_position;
 
         std::vector<math::Vector> m_found_positions;
         mutable uint32_t m_click_timestamp;
+
+        bool m_mouse_down;
+        bool m_shift_down;
     };
 }

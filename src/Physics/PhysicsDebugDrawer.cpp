@@ -10,6 +10,7 @@
 #include "EventHandler/EventHandler.h"
 #include "Events/EventFuncFwd.h"
 #include "Events/MouseEvent.h"
+#include "Events/KeyEvent.h"
 
 #include "chipmunk/chipmunk.h"
 
@@ -140,14 +141,24 @@ PhysicsDebugDrawer::PhysicsDebugDrawer(
     , m_debug_components(debug_components)
     , m_physics_system(physics_system)
     , m_event_handler(event_handler)
+    , m_mouse_down(false)
+    , m_shift_down(false)
 {
     using namespace std::placeholders;
 
     event::MouseDownEventFunc mouse_down = std::bind(&PhysicsDebugDrawer::OnMouseDown, this, _1);
     event::MouseUpEventFunc mouse_up = std::bind(&PhysicsDebugDrawer::OnMouseUp, this, _1);
+    event::MouseMotionEventFunc mouse_move = std::bind(&PhysicsDebugDrawer::OnMouseMove, this, _1);
+
+    event::KeyDownEventFunc key_down = std::bind(&PhysicsDebugDrawer::OnKeyDown, this, _1);
+    event::KeyUpEventFunc key_up = std::bind(&PhysicsDebugDrawer::OnKeyUp, this, _1);
 
     m_mouse_down_token = m_event_handler->AddListener(mouse_down);
     m_mouse_up_token = m_event_handler->AddListener(mouse_up);
+    m_mouse_move_token = m_event_handler->AddListener(mouse_move);
+
+    m_key_down_token = m_event_handler->AddListener(key_down);
+    m_key_up_token = m_event_handler->AddListener(key_up);
 
     m_click_timestamp = std::numeric_limits<uint32_t>::max();
 }
@@ -156,6 +167,10 @@ PhysicsDebugDrawer::~PhysicsDebugDrawer()
 {
     m_event_handler->RemoveListener(m_mouse_down_token);
     m_event_handler->RemoveListener(m_mouse_up_token);
+    m_event_handler->RemoveListener(m_mouse_move_token);
+
+    m_event_handler->RemoveListener(m_key_down_token);
+    m_event_handler->RemoveListener(m_key_up_token);
 }
 
 void PhysicsDebugDrawer::Draw(mono::IRenderer& renderer) const
@@ -208,6 +223,19 @@ void PhysicsDebugDrawer::Draw(mono::IRenderer& renderer) const
         if(diff > 5000)
             m_click_timestamp = std::numeric_limits<uint32_t>::max();
     }
+
+    if(m_mouse_down)
+    {
+        if(m_shift_down)
+        {
+            const math::Quad world_bb(m_mouse_down_position, m_mouse_position);
+            renderer.DrawQuad(world_bb, mono::Color::GREEN, 2.0f);
+        }
+        else
+        {
+            renderer.DrawLines({ m_mouse_down_position, m_mouse_position }, mono::Color::GREEN, 2.0f);
+        }
+    }
 }
 
 math::Quad PhysicsDebugDrawer::BoundingBox() const
@@ -217,16 +245,19 @@ math::Quad PhysicsDebugDrawer::BoundingBox() const
 
 mono::EventResult PhysicsDebugDrawer::OnMouseDown(const event::MouseDownEvent& event)
 {
+    m_mouse_down = true;
+
     if(!m_enabled)
         return mono::EventResult::PASS_ON;
 
     m_mouse_down_position = math::Vector(event.world_x, event.world_y);
-
     return mono::EventResult::HANDLED;
 }
 
 mono::EventResult PhysicsDebugDrawer::OnMouseUp(const event::MouseUpEvent& event)
 {
+    m_mouse_down = false;
+
     if(!m_enabled)
         return mono::EventResult::PASS_ON;
 
@@ -239,17 +270,42 @@ mono::EventResult PhysicsDebugDrawer::OnMouseUp(const event::MouseUpEvent& event
     const bool same_point = math::IsPrettyMuchEquals(m_mouse_up_position, m_mouse_down_position);
     if(same_point)
     {
-        mono::IBody* found_body = physics_space->QueryNearest(m_mouse_up_position, 10.0f, -1);
+        const mono::IBody* found_body = physics_space->QueryNearest(m_mouse_up_position, 10.0f, -1);
         if(found_body)
             m_found_positions.push_back(found_body->GetPosition());
     }
+    else if(m_shift_down)
+    {
+        const math::Quad world_bb(m_mouse_down_position, m_mouse_up_position);
+        const std::vector<mono::IBody*> found_bodies = physics_space->QueryBox(world_bb, -1);
+        for(mono::IBody* body : found_bodies)
+            m_found_positions.push_back(body->GetPosition());
+    }
     else
     {
-        std::vector<mono::IBody*> found_bodies
+        const std::vector<mono::IBody*> found_bodies
             = physics_space->QueryAllInLIne(m_mouse_down_position, m_mouse_up_position, 1.0f, -1);
         for(mono::IBody* body : found_bodies)
             m_found_positions.push_back(body->GetPosition());
     }
 
     return mono::EventResult::HANDLED;
+}
+
+mono::EventResult PhysicsDebugDrawer::OnMouseMove(const event::MouseMotionEvent& event)
+{
+    m_mouse_position = math::Vector(event.world_x, event.world_y);
+    return mono::EventResult::PASS_ON;
+}
+
+mono::EventResult PhysicsDebugDrawer::OnKeyDown(const event::KeyDownEvent& event)
+{
+    m_shift_down = event.shift;
+    return mono::EventResult::PASS_ON;
+}
+
+mono::EventResult PhysicsDebugDrawer::OnKeyUp(const event::KeyUpEvent& event)
+{
+    m_shift_down = event.shift;
+    return mono::EventResult::PASS_ON;
 }
