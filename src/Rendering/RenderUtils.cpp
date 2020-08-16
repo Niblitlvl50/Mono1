@@ -91,13 +91,11 @@ void mono::DrawCircle(const math::Vector& position,
 void mono::DrawSprite(
     const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, IShader* shader)
 {
-    const math::Vector& sprite_size = size / 2.0f;
-
     const math::Vector vertices[] = {
-        math::Vector(-sprite_size.x, -sprite_size.y) + offset,
-        math::Vector(-sprite_size.x,  sprite_size.y) + offset,
-        math::Vector( sprite_size.x,  sprite_size.y) + offset,
-        math::Vector( sprite_size.x, -sprite_size.y) + offset
+        math::Vector(0.0f, 0.0f) + offset,
+        math::Vector(0.0f, size.y) + offset,
+        math::Vector(size.x, size.y) + offset,
+        math::Vector(size.x, 0.0f) + offset
     };
 
     constexpr uint16_t indices[] = {
@@ -110,9 +108,7 @@ void mono::DrawSprite(
         sprite_coords.mB.x, sprite_coords.mB.y,
         sprite_coords.mB.x, sprite_coords.mA.y
     };
-    
-    //shader->SetShade(sprite.GetShade());
-    //shader->SetShade(mono::Color::RGBA(1, 1, 1));
+
     TextureShader::SetAlphaTexture(shader, false);
 
     glEnableVertexAttribArray(0);

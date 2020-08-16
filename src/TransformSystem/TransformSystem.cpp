@@ -17,7 +17,7 @@ TransformSystem::TransformSystem(size_t n_components)
     for(Component& component : m_transforms)
     {
         component.parent = no_parent;
-        component.bounding_box = math::Quad(-0.5f, -0.5f, 0.5f, 0.5f);
+        component.bounding_box = math::Quad(0.0f, 0.0f, 1.0f, 1.0f);
     }
 }
 
