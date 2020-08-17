@@ -20,9 +20,10 @@ namespace mono
         bool flip_vertical = false;
         bool flip_horizontal = false;
         int animation_id = 0;
+        int layer = 0;
     };
 
-    using ForEachSpriteFunc = std::function<void (mono::ISprite*, uint32_t)>;
+    using ForEachSpriteFunc = std::function<void (mono::ISprite* sprite, int layer, uint32_t sprite_id)>;
 
     class SpriteSystem : public mono::IGameSystem
     {
@@ -49,6 +50,7 @@ namespace mono
 
         mono::TransformSystem* m_transform_system;
         std::vector<mono::Sprite> m_sprites;
+        std::vector<int> m_sprite_layers;
         std::vector<bool> m_alive;
     };
 }

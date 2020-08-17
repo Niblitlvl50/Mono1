@@ -13,6 +13,7 @@ SpriteSystem::SpriteSystem(size_t n_sprites, mono::TransformSystem* transform_sy
     : m_transform_system(transform_system)
 {
     m_sprites.resize(n_sprites);
+    m_sprite_layers.resize(n_sprites, 0);
     m_alive.resize(n_sprites, false);
 }
 
@@ -51,6 +52,8 @@ void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& spr
 
     if(sprite_args.animation_id >= 0 && sprite_args.animation_id < sprite.GetDefinedAnimations())
         sprite.SetAnimation(sprite_args.animation_id);
+
+    m_sprite_layers[sprite_id] = sprite_args.layer;
 }
 
 void SpriteSystem::ReleaseSprite(uint32_t sprite_id)
@@ -84,9 +87,10 @@ void SpriteSystem::Update(const UpdateContext& update_context)
     {
         if(m_alive[index])
         {
-            m_sprites[index].Update(update_context);
+            mono::Sprite& sprite = m_sprites[index];
+            sprite.Update(update_context);
 
-            const mono::SpriteFrame sprite_frame = m_sprites[index].GetCurrentFrame();
+            const mono::SpriteFrame sprite_frame = sprite.GetCurrentFrame();
             if(sprite_frame.size.x != 0.0f && sprite_frame.size.y != 0.0f)
             {
                 math::Quad& bounding_box = m_transform_system->GetBoundingBox(index);
@@ -102,6 +106,6 @@ void SpriteSystem::ForEachSprite(ForEachSpriteFunc func)
     for(size_t index = 0; index < m_sprites.size(); ++index)
     {
         if(m_alive[index])
-            func(&m_sprites[index], index);
+            func(&m_sprites[index], m_sprite_layers[index], index);
     }
 }

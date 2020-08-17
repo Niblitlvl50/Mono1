@@ -17,6 +17,7 @@ namespace
     {
         math::Matrix transform;
         mono::ISprite* sprite;
+        int layer;
     };
 }
 
@@ -31,7 +32,8 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
     std::vector<SpriteTransformPair> sprites_to_draw;
     sprites_to_draw.reserve(64);
 
-    const auto collect_sprites = [this, &renderer, &sprites_to_draw](mono::ISprite* sprite, uint32_t id) {
+    const auto collect_sprites = [this, &renderer, &sprites_to_draw](mono::ISprite* sprite, int layer, uint32_t id)
+    {
         if(!sprite->GetTexture())
             return;
 
@@ -39,19 +41,25 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
         if(renderer.Cull(world_bounds))
         {
             const math::Matrix& transform = m_transform_system->GetWorld(id);
-            sprites_to_draw.push_back({ transform, sprite });
+            sprites_to_draw.push_back({ transform, sprite, layer });
         }
     };
 
     m_sprite_system->ForEachSprite(collect_sprites);
 
-    const auto sort_on_y = [](const SpriteTransformPair& first, const SpriteTransformPair& second) {
-        const math::Vector& first_position = math::GetPosition(first.transform);
-        const math::Vector& second_position = math::GetPosition(second.transform);
-        return first_position.y > second_position.y;
+    const auto sort_on_y_and_layer = [](const SpriteTransformPair& first, const SpriteTransformPair& second)
+    {
+        if(first.layer == second.layer)
+        {
+            const math::Vector& first_position = math::GetPosition(first.transform);
+            const math::Vector& second_position = math::GetPosition(second.transform);
+            return first_position.y > second_position.y;
+        }
+
+        return first.layer < second.layer;
     };
 
-    std::sort(sprites_to_draw.begin(), sprites_to_draw.end(), sort_on_y);
+    std::sort(sprites_to_draw.begin(), sprites_to_draw.end(), sort_on_y_and_layer);
 
     for(const SpriteTransformPair& sprite_transform : sprites_to_draw)
     {
