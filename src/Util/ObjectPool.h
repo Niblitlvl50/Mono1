@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <numeric>
+#include <cstdint>
 
 namespace mono
 {
