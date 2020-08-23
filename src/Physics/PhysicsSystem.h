@@ -56,8 +56,7 @@ namespace mono
     {
         uint32_t category;
         uint32_t mask;
-        float width;
-        float height;
+        math::Vector size;
         math::Vector offset;
         bool is_sensor;
     };

@@ -209,11 +209,11 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const BoxComponent& box_
     cpPolyShape* shape_data = m_impl->poly_shape_pool.GetPoolData();
     assert(shape_data != nullptr);
 
-    const cpBB box = cpBBOffset(cpBBNew(0.0f, 0.0f, box_params.width, box_params.height), cpv(box_params.offset.x, box_params.offset.y));
+    const cpBB box = cpBBOffset(cpBBNew(0.0f, 0.0f, box_params.size.x, box_params.size.y), cpv(box_params.offset.x, box_params.offset.y));
 
     cpBoxShapeInit2(shape_data, body.Handle(), box, 0.0f);
 
-    const float inertia_value = cpMomentForBox(body.GetMass(), box_params.width, box_params.height);
+    const float inertia_value = cpMomentForBox(body.GetMass(), box_params.size.x, box_params.size.y);
 
     cm::ShapeImpl* shape_impl = m_impl->shapes.GetPoolData();
     shape_impl->SetShapeHandle((cpShape*)shape_data);
