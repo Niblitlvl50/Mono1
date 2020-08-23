@@ -66,6 +66,11 @@ mono::Sprite* SpriteSystem::GetSprite(uint32_t sprite_id)
     return &m_sprites[sprite_id];
 }
 
+int SpriteSystem::GetSpriteLayer(uint32_t sprite_id) const
+{
+    return m_sprite_layers[sprite_id];
+}
+
 uint32_t SpriteSystem::Id() const
 {
     return mono::Hash(Name());

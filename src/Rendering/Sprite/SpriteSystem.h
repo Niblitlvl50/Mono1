@@ -39,6 +39,7 @@ namespace mono
         void ReleaseSprite(uint32_t sprite_id);
 
         mono::Sprite* GetSprite(uint32_t sprite_id);
+        int GetSpriteLayer(uint32_t sprite_id) const;
         void ForEachSprite(ForEachSpriteFunc func);
 
         uint32_t Id() const override;

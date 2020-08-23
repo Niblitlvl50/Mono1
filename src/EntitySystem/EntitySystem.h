@@ -14,13 +14,14 @@ namespace mono
 
         EntitySystem(size_t n_entities);
 
-        Entity& AllocateEntity();
+        Entity* AllocateEntity();
         void ReleaseEntity(uint32_t entity_id);
+        Entity* GetEntity(uint32_t entity_id);
 
-        Entity& GetEntity(uint32_t entity_id);
+        void SetProperty(Entity entity, uint32_t property);
+        bool HasProperty(Entity entity, uint32_t property) const;
 
-        void SetProperty(Entity id, uint32_t property);
-        bool HasProperty(Entity id, uint32_t property) const;
+        bool HasComponent(const mono::Entity* entity, uint32_t component_hash) const;
 
         void SetName(uint32_t entity_id, const std::string& name);
         const std::string& GetName(uint32_t entity_id) const;

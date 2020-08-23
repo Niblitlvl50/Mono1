@@ -19,7 +19,7 @@ EntitySystem::EntitySystem(size_t n_entities)
     std::reverse(m_free_indices.begin(), m_free_indices.end());
 }
 
-Entity& EntitySystem::AllocateEntity()
+Entity* EntitySystem::AllocateEntity()
 {
     const uint32_t entity_id = m_free_indices.back();
     m_free_indices.pop_back();
@@ -31,7 +31,7 @@ Entity& EntitySystem::AllocateEntity()
     entity.id = entity_id;
     entity.name = m_debug_names[entity_id].c_str();
 
-    return entity;
+    return &entity;
 }
 
 void EntitySystem::ReleaseEntity(uint32_t entity_id)
@@ -43,9 +43,9 @@ void EntitySystem::ReleaseEntity(uint32_t entity_id)
     m_free_indices.push_back(entity_id);
 }
 
-Entity& EntitySystem::GetEntity(uint32_t entity_id)
+Entity* EntitySystem::GetEntity(uint32_t entity_id)
 {
-    return m_entities[entity_id];
+    return &m_entities[entity_id];
 }
 
 void EntitySystem::SetProperty(Entity entity, uint32_t property)
@@ -56,6 +56,12 @@ void EntitySystem::SetProperty(Entity entity, uint32_t property)
 bool EntitySystem::HasProperty(Entity entity, uint32_t property) const
 {
     return m_entities[entity.id].properties & property;
+}
+
+bool EntitySystem::HasComponent(const mono::Entity* entity, uint32_t component_hash) const
+{
+    const std::vector<uint32_t>& entity_components = entity->components;
+    return (std::find(entity_components.begin(), entity_components.end(), component_hash) != entity_components.end());
 }
 
 void EntitySystem::SetName(uint32_t entity_id, const std::string& name)
