@@ -19,4 +19,5 @@ namespace mono
     class PhysicsSystem;
     class SpriteSystem;
     class TransformSystem;
+    class TextSystem;
 }

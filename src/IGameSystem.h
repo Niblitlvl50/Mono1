@@ -4,8 +4,6 @@
 #include "IUpdatable.h"
 #include <cstdint>
 
-struct ObjectAttribute;
-
 namespace mono
 {
     class IGameSystem
