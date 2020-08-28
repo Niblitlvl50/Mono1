@@ -16,6 +16,7 @@ namespace mono
         std::string text;
         bool centered;
         mono::Color::RGBA tint;
+        bool draw_shadow;
     };
 
     class TextSystem : public mono::IGameSystem

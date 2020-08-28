@@ -23,7 +23,17 @@ void TextBatchDrawer::Draw(mono::IRenderer& renderer) const
         if(renderer.Cull(world_bb))
         {
             const math::Matrix& world_transform = m_transform_system->GetWorld(index);
-            renderer.DrawText(text.font_id, text.text.c_str(), math::GetPosition(world_transform), text.centered, text.tint);
+            const math::Vector text_position = math::GetPosition(world_transform);
+            if(text.draw_shadow)
+            {
+                const math::Vector shadow_position = text_position + math::Vector(0.1f, -0.05f);
+                mono::Color::HSL hsl_color = mono::Color::ToHSL(text.tint);
+                hsl_color.lightness -= 0.3f;
+
+                renderer.DrawText(text.font_id, text.text.c_str(), shadow_position, text.centered, mono::Color::ToRGBA(hsl_color, text.tint.alpha));
+            }
+
+            renderer.DrawText(text.font_id, text.text.c_str(), text_position, text.centered, text.tint);
         }
     };
 
