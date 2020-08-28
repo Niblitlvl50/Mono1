@@ -18,10 +18,15 @@ TextBatchDrawer::TextBatchDrawer(mono::TextSystem* text_system, mono::TransformS
 void TextBatchDrawer::Draw(mono::IRenderer& renderer) const
 {
     const auto draw_texts_func = [this, &renderer](mono::TextComponent& text, uint32_t index) {
-        const math::Matrix& world_transform = m_transform_system->GetWorld(index);
-        //renderer.Cull()
-        renderer.DrawText(text.font_id, text.text.c_str(), math::GetPosition(world_transform), text.centered, text.tint);
+        
+        const math::Quad world_bb = m_transform_system->GetWorldBoundingBox(index);
+        if(renderer.Cull(world_bb))
+        {
+            const math::Matrix& world_transform = m_transform_system->GetWorld(index);
+            renderer.DrawText(text.font_id, text.text.c_str(), math::GetPosition(world_transform), text.centered, text.tint);
+        }
     };
+
     m_text_system->ForEach(draw_texts_func);
 }
 

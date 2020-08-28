@@ -2,6 +2,7 @@
 #pragma once
 
 #include "IGameSystem.h"
+#include "MonoFwd.h"
 #include "Rendering/Color.h"
 
 #include <vector>
@@ -21,7 +22,7 @@ namespace mono
     {
     public:
 
-        TextSystem(uint32_t n);
+        TextSystem(uint32_t n, mono::TransformSystem* transform_system);
 
         TextComponent* AllocateText(uint32_t id);
         void ReleaseText(uint32_t id);
@@ -45,7 +46,10 @@ namespace mono
 
     private:
 
+        mono::TransformSystem* m_transform_system;
+
         std::vector<TextComponent> m_texts;
         std::vector<bool> m_alive;
+        std::vector<bool> m_text_dirty;
     };
 }
