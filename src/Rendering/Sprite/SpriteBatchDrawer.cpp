@@ -64,10 +64,8 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
     for(const SpriteTransformPair& sprite_transform : sprites_to_draw)
     {
         const math::Matrix& world_transform = renderer.GetTransform() * sprite_transform.transform;
-
-        renderer.PushNewTransform(world_transform);
+        auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
         renderer.DrawSprite(*sprite_transform.sprite);
-        renderer.PopTransform();
     }
 }
 
