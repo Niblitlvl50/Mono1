@@ -16,6 +16,7 @@ namespace
     struct SpriteTransformPair
     {
         math::Matrix transform;
+        math::Quad world_bb;
         mono::ISprite* sprite;
         int layer;
     };
@@ -41,7 +42,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
         if(renderer.Cull(world_bounds))
         {
             const math::Matrix& transform = m_transform_system->GetWorld(id);
-            sprites_to_draw.push_back({ transform, sprite, layer });
+            sprites_to_draw.push_back({ transform, world_bounds, sprite, layer });
         }
     };
 
