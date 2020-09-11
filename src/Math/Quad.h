@@ -41,6 +41,11 @@ namespace math
     float Width(const Quad& quad);
     float Height(const Quad& quad);
 
+    float Left(const math::Quad& quad);
+    float Right(const math::Quad& quad);
+    float Top(const math::Quad& quad);
+    float Bottom(const math::Quad& quad);
+
     math::Vector BottomLeft(const math::Quad& quad);
     math::Vector BottomRight(const math::Quad& quad);
     math::Vector TopLeft(const math::Quad& quad);
