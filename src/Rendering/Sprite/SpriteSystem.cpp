@@ -98,9 +98,11 @@ void SpriteSystem::Update(const UpdateContext& update_context)
             const mono::SpriteFrame sprite_frame = sprite.GetCurrentFrame();
             if(sprite_frame.size.x != 0.0f && sprite_frame.size.y != 0.0f)
             {
+                const math::Vector& half_sprite_size = sprite_frame.size / 2.0f;
+
                 math::Quad& bounding_box = m_transform_system->GetBoundingBox(index);
-                bounding_box.mA = math::ZeroVec;
-                bounding_box.mB = sprite_frame.size;
+                bounding_box.mA = -half_sprite_size;
+                bounding_box.mB = half_sprite_size;
             }
         }
     }

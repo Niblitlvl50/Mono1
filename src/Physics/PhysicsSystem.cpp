@@ -209,7 +209,9 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const BoxComponent& box_
     cpPolyShape* shape_data = m_impl->poly_shape_pool.GetPoolData();
     assert(shape_data != nullptr);
 
-    const cpBB box = cpBBOffset(cpBBNew(0.0f, 0.0f, box_params.size.x, box_params.size.y), cpv(box_params.offset.x, box_params.offset.y));
+    const float hw = box_params.size.x / 2.0f;
+    const float hh = box_params.size.y / 2.0f;
+    const cpBB box = cpBBOffset(cpBBNew(-hw, -hh, hw, hh), cpv(box_params.offset.x, box_params.offset.y));
 
     cpBoxShapeInit2(shape_data, body.Handle(), box, 0.0f);
 

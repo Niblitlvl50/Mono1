@@ -51,11 +51,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
     const auto sort_on_y_and_layer = [](const SpriteTransformPair& first, const SpriteTransformPair& second)
     {
         if(first.layer == second.layer)
-        {
-            const math::Vector& first_position = math::GetPosition(first.transform);
-            const math::Vector& second_position = math::GetPosition(second.transform);
-            return first_position.y > second_position.y;
-        }
+            return math::Bottom(first.world_bb) > math::Bottom(second.world_bb);
 
         return first.layer < second.layer;
     };
