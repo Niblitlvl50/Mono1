@@ -10,8 +10,6 @@
 
 namespace mono
 {
-    class IRenderBuffer;
-
     class IRenderer
     {
     public:
@@ -32,16 +30,18 @@ namespace mono
         virtual void DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color) const = 0;
         virtual void DrawCircle(const math::Vector& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const = 0;
 
-        virtual void DrawGeometry(const std::vector<math::Vector>& vertices,
-                                  const std::vector<math::Vector>& texture_coordinates,
-                                  const std::vector<uint16_t>& indices,
-                                  const ITexture* texture) = 0;
+        virtual void DrawGeometry(
+            const std::vector<math::Vector>& vertices,
+            const std::vector<math::Vector>& texture_coordinates,
+            const std::vector<uint16_t>& indices,
+            const ITexture* texture) = 0;
 
-        virtual void DrawGeometry(const IRenderBuffer* vertices,
-                                  const IRenderBuffer* texture_coordinates,
-                                  size_t offset,
-                                  size_t count,
-                                  const ITexture* texture) = 0;
+        virtual void DrawGeometry(
+            const IRenderBuffer* vertices,
+            const IRenderBuffer* texture_coordinates,
+            size_t offset,
+            size_t count,
+            const ITexture* texture) = 0;
 
         virtual void DrawParticlePoints(
             const IRenderBuffer* position,
