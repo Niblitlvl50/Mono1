@@ -44,7 +44,6 @@ namespace mono
 
     private:
         std::vector<Entity> m_entities;
-        std::vector<bool> m_alive;
         std::vector<uint32_t> m_free_indices;
         std::vector<std::string> m_debug_names;
     };

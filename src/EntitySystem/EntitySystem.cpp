@@ -11,7 +11,6 @@ using namespace mono;
 EntitySystem::EntitySystem(size_t n_entities)
 {
     m_entities.resize(n_entities);
-    m_alive.resize(n_entities, false);
     m_free_indices.resize(n_entities);
     m_debug_names.resize(n_entities);
 
@@ -24,10 +23,9 @@ Entity* EntitySystem::AllocateEntity()
     const uint32_t entity_id = m_free_indices.back();
     m_free_indices.pop_back();
 
-    assert(!m_alive[entity_id]);
-    m_alive[entity_id] = true;
-
     Entity& entity = m_entities[entity_id];
+    assert(entity.id == INVALID_ID);
+
     entity.id = entity_id;
     entity.name = m_debug_names[entity_id].c_str();
 
@@ -36,9 +34,6 @@ Entity* EntitySystem::AllocateEntity()
 
 void EntitySystem::ReleaseEntity(uint32_t entity_id)
 {
-    assert(m_alive[entity_id]);
-    m_alive[entity_id] = false;
-
     m_entities[entity_id] = Entity();
     m_free_indices.push_back(entity_id);
 }

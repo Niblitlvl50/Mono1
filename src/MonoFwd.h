@@ -14,6 +14,7 @@ namespace mono
     class EventHandler;
     class SystemContext;
 
+    class IEntityManager;
     class EntitySystem;
     class ParticleSystem;
     class PhysicsSystem;
