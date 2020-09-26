@@ -36,6 +36,7 @@ namespace
 
         mono::SpriteData sprite_data;
         sprite_data.texture_file = json["texture"];
+        sprite_data.category = json.value("category", "");
         sprite_data.texture_size = math::Vector(texture_size["w"], texture_size["h"]);
 
         const nlohmann::json& frames = json["frames"];

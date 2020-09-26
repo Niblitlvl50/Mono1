@@ -34,6 +34,7 @@ namespace mono
     {
         uint32_t hash;
         std::string texture_file;
+        std::string category;
         math::Vector texture_size;
         std::vector<SpriteFrame> frames;
         std::vector<SpriteAnimation> animations;
