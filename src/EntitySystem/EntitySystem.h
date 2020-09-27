@@ -25,6 +25,7 @@ namespace mono
 
         void SetName(uint32_t entity_id, const std::string& name);
         const std::string& GetName(uint32_t entity_id) const;
+        uint32_t FindEntityByName(const char* name) const;
 
         template <typename T>
         inline void ForEachEntity(T&& functor)

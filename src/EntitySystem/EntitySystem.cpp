@@ -69,6 +69,15 @@ const std::string& EntitySystem::GetName(uint32_t entity_id) const
     return m_debug_names[entity_id];
 }
 
+uint32_t EntitySystem::FindEntityByName(const char* name) const
+{
+    const auto it = std::find(m_debug_names.begin(), m_debug_names.end(), name);
+    if(it != m_debug_names.end())
+        return std::distance(m_debug_names.begin(), it);
+
+    return INVALID_ID;
+}
+
 uint32_t EntitySystem::Id() const
 {
     return mono::Hash(Name());
