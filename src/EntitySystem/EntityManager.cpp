@@ -13,7 +13,9 @@ using namespace mono;
 
 EntityManager::EntityManager(mono::SystemContext* system_context)
     : m_system_context(system_context)
-{ }
+{
+    m_entity_system = m_system_context->GetSystem<mono::EntitySystem>();
+}
 
 EntityManager::~EntityManager()
 {
@@ -22,9 +24,8 @@ EntityManager::~EntityManager()
 
 mono::Entity EntityManager::CreateEntity(const char* name, const std::vector<uint32_t>& components)
 {
-    mono::EntitySystem* entity_system = m_system_context->GetSystem<mono::EntitySystem>();
-    mono::Entity* new_entity = entity_system->AllocateEntity();
-    entity_system->SetName(new_entity->id, name);
+    mono::Entity* new_entity = m_entity_system->AllocateEntity();
+    m_entity_system->SetName(new_entity->id, name);
     for(uint32_t component : components)
         AddComponent(new_entity->id, component);
 
@@ -35,16 +36,14 @@ mono::Entity EntityManager::CreateEntity(const char* name, const std::vector<uin
 mono::Entity EntityManager::CreateEntity(const char* entity_file)
 {
     const uint32_t entity_hash = mono::Hash(entity_file);
-
     const auto it = m_cached_entities.find(entity_hash);
     if(it == m_cached_entities.end())
         m_cached_entities[entity_hash] = LoadEntityFile(entity_file);
 
-    mono::EntitySystem* entity_system = m_system_context->GetSystem<mono::EntitySystem>();
-    mono::Entity* new_entity = entity_system->AllocateEntity();
-
     const EntityData& entity_data = m_cached_entities[entity_hash];
-    entity_system->SetName(new_entity->id, entity_data.entity_name);
+
+    mono::Entity* new_entity = m_entity_system->AllocateEntity();
+    m_entity_system->SetName(new_entity->id, entity_data.entity_name);
     new_entity->properties = entity_data.entity_properties;
 
     for(const ComponentData& component : entity_data.entity_components)
@@ -60,8 +59,7 @@ mono::Entity EntityManager::CreateEntity(const char* entity_file)
 
 bool EntityManager::AddComponent(uint32_t entity_id, uint32_t component_hash)
 {
-    mono::EntitySystem* entity_system = m_system_context->GetSystem<mono::EntitySystem>();
-    mono::Entity* entity = entity_system->GetEntity(entity_id);
+    mono::Entity* entity = m_entity_system->GetEntity(entity_id);
 
     const auto factory_it = m_component_factories.find(component_hash);
     if(factory_it != m_component_factories.end())
@@ -78,8 +76,7 @@ bool EntityManager::AddComponent(uint32_t entity_id, uint32_t component_hash)
 
 bool EntityManager::RemoveComponent(uint32_t entity_id, uint32_t component_hash)
 {
-    mono::EntitySystem* entity_system = m_system_context->GetSystem<mono::EntitySystem>();
-    mono::Entity* entity = entity_system->GetEntity(entity_id);
+    mono::Entity* entity = m_entity_system->GetEntity(entity_id);
 
     const auto factory_it = m_component_factories.find(component_hash);
     if(factory_it != m_component_factories.end())
@@ -96,8 +93,7 @@ bool EntityManager::RemoveComponent(uint32_t entity_id, uint32_t component_hash)
 
 bool EntityManager::SetComponentData(uint32_t entity_id, uint32_t component_hash, const std::vector<Attribute>& properties)
 {
-    mono::EntitySystem* entity_system = m_system_context->GetSystem<mono::EntitySystem>();
-    mono::Entity* entity = entity_system->GetEntity(entity_id);
+    mono::Entity* entity = m_entity_system->GetEntity(entity_id);
 
     const auto factory_it = m_component_factories.find(component_hash);
     if(factory_it != m_component_factories.end())
@@ -109,8 +105,7 @@ bool EntityManager::SetComponentData(uint32_t entity_id, uint32_t component_hash
 
 std::vector<Attribute> EntityManager::GetComponentData(uint32_t entity_id, uint32_t component_hash) const
 {
-    mono::EntitySystem* entity_system = m_system_context->GetSystem<mono::EntitySystem>();
-    mono::Entity* entity = entity_system->GetEntity(entity_id);
+    mono::Entity* entity = m_entity_system->GetEntity(entity_id);
 
     const auto factory_it = m_component_factories.find(component_hash);
     if(factory_it != m_component_factories.end())
@@ -126,16 +121,13 @@ std::vector<Attribute> EntityManager::GetComponentData(uint32_t entity_id, uint3
 
 void EntityManager::SetEntityProperties(uint32_t entity_id, uint32_t properties)
 {
-    mono::EntitySystem* entity_system = m_system_context->GetSystem<mono::EntitySystem>();
-    mono::Entity* entity = entity_system->GetEntity(entity_id);
+    mono::Entity* entity = m_entity_system->GetEntity(entity_id);
     entity->properties = properties;
 }
 
 uint32_t EntityManager::GetEntityProperties(uint32_t entity_id) const
 {
-    mono::EntitySystem* entity_system = m_system_context->GetSystem<mono::EntitySystem>();
-    mono::Entity* entity = entity_system->GetEntity(entity_id);
-
+    mono::Entity* entity = m_entity_system->GetEntity(entity_id);
     return entity->properties;
 }
 
@@ -176,11 +168,9 @@ void EntityManager::DeferredRelease()
     std::unordered_set<uint32_t> local_entities_to_release = m_entities_to_release;
     m_entities_to_release.clear();
 
-    mono::EntitySystem* entity_system = m_system_context->GetSystem<mono::EntitySystem>();
-
     for(uint32_t entity_id : local_entities_to_release)
     {
-        mono::Entity* entity = entity_system->GetEntity(entity_id);
+        mono::Entity* entity = m_entity_system->GetEntity(entity_id);
         for(uint32_t component_hash : entity->components)
         {
             const auto factory_it = m_component_factories.find(component_hash);
@@ -188,6 +178,6 @@ void EntityManager::DeferredRelease()
                 factory_it->second.release(entity, m_system_context);
         }
 
-        entity_system->ReleaseEntity(entity_id);
+        m_entity_system->ReleaseEntity(entity_id);
     }
 }
