@@ -11,11 +11,10 @@
 
 using namespace mono;
 
-EntityManager::EntityManager(mono::SystemContext* system_context)
-    : m_system_context(system_context)
-{
-    m_entity_system = m_system_context->GetSystem<mono::EntitySystem>();
-}
+EntityManager::EntityManager(mono::EntitySystem* entity_system, mono::SystemContext* system_context)
+    : m_entity_system(entity_system)
+    , m_system_context(system_context)
+{ }
 
 EntityManager::~EntityManager()
 {
