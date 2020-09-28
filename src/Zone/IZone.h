@@ -3,7 +3,6 @@
 
 #include "MonoFwd.h"
 #include "Rendering/RenderFwd.h"
-#include <cstdint>
 
 namespace mono
 {
@@ -28,6 +27,5 @@ namespace mono
         virtual void RemoveUpdatable(mono::IUpdatable* updatable) = 0;
 
         virtual void SetDrawableLayer(const IDrawable* drawable, int new_layer) = 0;
-        virtual mono::IEntity* FindEntityFromId(uint32_t id) const = 0;
     };
 }

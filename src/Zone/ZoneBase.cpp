@@ -145,35 +145,3 @@ void ZoneBase::SetDrawableLayer(const mono::IDrawable* drawable, int new_layer)
         std::sort(m_drawables.begin(), m_drawables.end(), DrawableSortFunc);
     }
 }
-
-mono::IEntity* ZoneBase::FindEntityFromId(uint32_t id) const
-{
-    const auto find_func = [id](const mono::IEntity* entity) {
-        return id == entity->Id();
-    };
-
-    const auto& it = std::find_if(m_entities.begin(), m_entities.end(), find_func);
-    if(it != m_entities.end())
-        return *it;
-
-    return nullptr;
-}
-
-mono::IEntity* ZoneBase::FindEntityFromPoint(const math::Vector& point) const
-{
-    const auto find_func = [&point](const mono::IEntity* entity) {
-        const math::Quad& bb = entity->BoundingBox();
-        return math::PointInsideQuad(point, bb);
-    };
-
-    const auto& it = std::find_if(m_entities.begin(), m_entities.end(), find_func);
-    if(it != m_entities.end())
-        return *it;
-
-    return nullptr;
-}
-
-const std::vector<mono::IEntity*>& ZoneBase::GetEntities() const
-{
-    return m_entities;
-}

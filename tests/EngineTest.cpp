@@ -101,10 +101,6 @@ namespace
         { }
         void SetDrawableLayer(const mono::IDrawable* drawable, int new_layer) override
         { }
-        mono::IEntity* FindEntityFromId(uint32_t id) const override
-        {
-            return nullptr;
-        }
 
         bool mAcceptCalled = false;
         bool mOnLoadCalled = false;

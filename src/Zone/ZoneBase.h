@@ -25,11 +25,6 @@ namespace mono
 
         void SetDrawableLayer(const IDrawable* drawable, int new_layer) override;
 
-        mono::IEntity* FindEntityFromId(uint32_t id) const override;
-        
-        virtual mono::IEntity* FindEntityFromPoint(const math::Vector& point) const;
-        const std::vector<IEntity*>& GetEntities() const;
-
     protected:
 
         void Accept(IRenderer& renderer) override;
