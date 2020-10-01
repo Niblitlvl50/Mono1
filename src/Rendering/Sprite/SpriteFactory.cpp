@@ -76,10 +76,9 @@ namespace
 
             if(even_size)
             {
-                const int n_frames = frames.size() / 2;
-                sprite_animation.frames.reserve(n_frames);
+                sprite_animation.frames.reserve(frames.size() / 2);
 
-                for(int index = 0; index < n_frames; index += 2)
+                for(size_t index = 0; index < frames.size(); index += 2)
                     sprite_animation.frames.push_back({frames[index], frames[index +1]});
             }
 
