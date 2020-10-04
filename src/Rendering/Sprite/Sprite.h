@@ -29,21 +29,14 @@ namespace mono
         void SetAnimation(int id, const SpriteAnimationCallback& callback) override;
         void SetAnimation(const char* name, const SpriteAnimationCallback& callback) override;
         int GetActiveAnimation() const override;
+        void RestartAnimation() override;
         void Update(const UpdateContext& update_context) override;
 
-        void RestartAnimation();
         int GetDefinedAnimations() const;
-        int GetUniqueFrames() const;
         SpriteFrame GetFrame(int frame_index) const;
 
         /*
         void SetFrameOffset(int frame_index, const math::Vector& offset);
-
-        const SpriteAnimation& GetSequence(int id) const;
-              SpriteAnimation& GetSequence(int id);
-
-        const std::vector<SpriteAnimation>& GetAnimations() const;
-              std::vector<SpriteAnimation>& GetAnimations();
         */
 
     private:
@@ -52,6 +45,7 @@ namespace mono
         mono::ITexturePtr m_texture;
 
         int m_active_animation;
+        bool m_active_animation_done;
         int m_active_frame;
         int m_active_frame_time;
 

@@ -23,6 +23,7 @@ void Sprite::Init(const SpriteData* sprite_data, mono::ITexturePtr texture)
     m_texture = texture;
 
     m_active_animation = 0;
+    m_active_animation_done = false;
     m_active_frame = 0;
     m_active_frame_time = 0;
 
@@ -85,6 +86,9 @@ mono::VerticalDirection Sprite::GetVerticalDirection() const
 
 void Sprite::Update(const UpdateContext& update_context)
 {
+    if(m_active_animation_done)
+        return;
+
     if(!m_sprite_data)
         return;
 
@@ -109,6 +113,8 @@ void Sprite::Update(const UpdateContext& update_context)
             m_active_frame = 0;
             if(m_callback)
                 m_callback();
+
+            m_active_animation_done = !active_animation.looping;
         }
     }
 }
@@ -144,26 +150,19 @@ void Sprite::SetAnimation(int id, const SpriteAnimationCallback& callback)
     m_callback = callback;
 
     if(!same_id)
-    {
-        m_active_frame = 0;
-        m_active_frame_time = 0;
-    }
+        RestartAnimation();
 }
 
 void Sprite::RestartAnimation()
 {
     m_active_frame = 0;
     m_active_frame_time = 0;
+    m_active_animation_done = false;
 }
 
 int Sprite::GetDefinedAnimations() const
 {
     return static_cast<int>(m_sprite_data->animations.size());
-}
-
-int Sprite::GetUniqueFrames() const
-{
-    return static_cast<int>(m_sprite_data->frames.size());
 }
 
 mono::SpriteFrame Sprite::GetFrame(int frame_index) const
@@ -188,25 +187,5 @@ int Sprite::GetActiveAnimation() const
 void Sprite::SetFrameOffset(int frame_index, const math::Vector& offset)
 {
     m_sprite_data->frames[frame_index].center_offset = offset;
-}
-
-const SpriteAnimation& Sprite::GetSequence(int id) const
-{
-    return m_sprite_data->animations[id];
-}
-
-SpriteAnimation& Sprite::GetSequence(int id)
-{
-    return m_sprite_data->animations[id];
-}
-
-const std::vector<SpriteAnimation>& Sprite::GetAnimations() const
-{
-    return m_sprite_data->animations;
-}
-
-std::vector<SpriteAnimation>& Sprite::GetAnimations()
-{
-    return m_sprite_data->animations;
 }
 */

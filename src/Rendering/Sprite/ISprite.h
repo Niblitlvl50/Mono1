@@ -62,5 +62,6 @@ namespace mono
 
         //! Returns the current active animation
         virtual int GetActiveAnimation() const = 0;
+        virtual void RestartAnimation() = 0;
     };
 }

@@ -1,13 +1,12 @@
 
 #include "SpriteBatchDrawer.h"
+
 #include "ISprite.h"
+#include "SpriteSystem.h"
 #include "Rendering/IRenderer.h"
+#include "TransformSystem/TransformSystem.h"
 
 #include "Math/Quad.h"
-#include "SystemContext.h"
-
-#include "TransformSystem/TransformSystem.h"
-#include "SpriteSystem.h"
 
 using namespace mono;
 
@@ -22,11 +21,10 @@ namespace
     };
 }
 
-SpriteBatchDrawer::SpriteBatchDrawer(SystemContext* system_context)
-{
-    m_transform_system = system_context->GetSystem<mono::TransformSystem>();
-    m_sprite_system = system_context->GetSystem<mono::SpriteSystem>();
-}
+SpriteBatchDrawer::SpriteBatchDrawer(const mono::TransformSystem* transform_system, mono::SpriteSystem* sprite_system)
+    : m_transform_system(transform_system)
+    , m_sprite_system(sprite_system)
+{ }
 
 void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 {
