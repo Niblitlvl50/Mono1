@@ -49,11 +49,6 @@ namespace
 
         SDLWindow(const char* title, int x, int y, int width, int height, System::WindowOptions options)
         {
-            m_position.x = x;
-            m_position.y = y;
-            m_size.width = width;
-            m_size.height = height;
-
             // Request opengl 2.1 context.
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
@@ -98,25 +93,32 @@ namespace
         }
         void MakeCurrent() override
         {
-            SDL_GetWindowSize(m_window, &m_size.width, &m_size.height);
             SDL_GL_MakeCurrent(m_window, m_context);
         }
         void SwapBuffers() const override
         {
             SDL_GL_SwapWindow(m_window);
         }
-        const System::Position& Position() const override
+        System::Position Position() const override
         {
-            SDL_GetWindowPosition(m_window, &m_position.x, &m_position.y);
-            return m_position;
+            System::Position position;
+            SDL_GetWindowPosition(m_window, &position.x, &position.y);
+            return position;
         }
-        const System::Size& Size() const override
+        System::Size Size() const override
         {
-            return m_size;
+            System::Size size;
+            SDL_GetWindowSize(m_window, &size.width, &size.height);
+            return size;
         }
 
-        mutable System::Position m_position;
-        System::Size m_size;
+        System::Size DrawableSize() const override
+        {
+            System::Size size;
+            SDL_GL_GetDrawableSize(m_window, &size.width, &size.height);
+            return size;
+        }
+
         SDL_Window* m_window = nullptr;
         void* m_context = nullptr;
     };

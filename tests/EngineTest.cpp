@@ -51,11 +51,15 @@ namespace
         {
             mMakeCurrentCalled = true;
         }
-        const System::Position& Position() const override
+        System::Position Position() const override
         {
             return m_position;
         }
-        const System::Size& Size() const override
+        System::Size Size() const override
+        {
+            return m_size;
+        }
+        System::Size DrawableSize() const override
         {
             return m_size;
         }

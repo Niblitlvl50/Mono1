@@ -61,8 +61,9 @@ namespace System
         virtual void RestoreSize() = 0;
         virtual void SwapBuffers() const = 0;
         virtual void MakeCurrent() = 0;
-        virtual const System::Position& Position() const = 0;
-        virtual const System::Size& Size() const = 0;
+        virtual System::Position Position() const = 0;
+        virtual System::Size Size() const = 0;
+        virtual System::Size DrawableSize() const = 0;
     };
 
     class IInputHandler
