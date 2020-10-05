@@ -104,8 +104,11 @@ int Engine::Run(IZone* zone)
 
         const System::Size& size = m_window->Size();
         const math::Vector window_size(size.width, size.height);
-        renderer.SetWindowSize(window_size);
         camera.SetWindowSize(window_size);
+
+        const System::Size drawable_size = m_window->DrawableSize();
+        const math::Vector drawable_size_vec(drawable_size.width, drawable_size.height);
+        renderer.SetWindowSize(drawable_size_vec);
 
         const math::Quad& viewport = camera.GetViewport();
         const math::Quad camera_quad(viewport.mA, viewport.mA + viewport.mB);

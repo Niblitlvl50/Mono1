@@ -102,7 +102,7 @@ namespace
         for(int index = 0; index < count; ++index)
         {
             const cpVect& vertex = verts[index];
-            polygon_data.vertices.push_back(math::Vector(vertex.x, vertex.y));
+            polygon_data.vertices.emplace_back(vertex.x, vertex.y);
         }
 
         polygon_data.outline_color = mono::Color::RGBA(outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a);
