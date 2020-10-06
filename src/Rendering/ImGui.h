@@ -12,6 +12,7 @@ namespace mono
     struct ImGuiContext
     {
         math::Vector window_size;
+        math::Vector drawable_size;
         std::unique_ptr<class IShader> shader;
     };
 

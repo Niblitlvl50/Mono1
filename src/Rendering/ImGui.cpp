@@ -48,7 +48,20 @@ void mono::DrawImGui(mono::ImGuiContext& imgui_context, mono::IRenderer& rendere
     if(!draw_data)
         return;
 
-    ImGui::GetIO().DisplaySize = ImVec2(imgui_context.window_size.x, imgui_context.window_size.y);
+    ImGuiIO& imgui_io = ImGui::GetIO();
+    imgui_io.DisplaySize = ImVec2(imgui_context.window_size.x, imgui_context.window_size.y);
+    imgui_io.DisplayFramebufferScale =
+        (imgui_context.window_size != imgui_context.drawable_size) ? ImVec2(2.0f, 2.0f) : ImVec2(1.0f, 1.0f);
+
+    // Avoid rendering when minimized, scale coordinates for retina displays (screen coordinates != framebuffer coordinates)
+    const int fb_width = (int)(draw_data->DisplaySize.x * draw_data->FramebufferScale.x);
+    const int fb_height = (int)(draw_data->DisplaySize.y * draw_data->FramebufferScale.y);
+    if (fb_width == 0 || fb_height == 0)
+        return;
+
+    // Will project scissor/clipping rectangles into framebuffer space
+    const ImVec2 clip_off = draw_data->DisplayPos;         // (0,0) unless using multi-viewports
+    const ImVec2 clip_scale = draw_data->FramebufferScale; // (1,1) unless using retina display which are often (2,2)
 
     const math::Matrix& projection =
         math::Ortho(0.0f, imgui_context.window_size.x, imgui_context.window_size.y, 0.0f, -10.0f, 10.0f);
@@ -93,9 +106,18 @@ void mono::DrawImGui(mono::ImGuiContext& imgui_context, mono::IRenderer& rendere
                 else
                     renderer.ClearTexture();
 
+                // Project scissor/clipping rectangles into framebuffer space
+                ImVec4 clip_rect;
+                clip_rect.x = (pcmd->ClipRect.x - clip_off.x) * clip_scale.x;
+                clip_rect.y = (pcmd->ClipRect.y - clip_off.y) * clip_scale.y;
+                clip_rect.z = (pcmd->ClipRect.z - clip_off.x) * clip_scale.x;
+                clip_rect.w = (pcmd->ClipRect.w - clip_off.y) * clip_scale.y;
+
                 glScissor(
-                    (int)pcmd->ClipRect.x, (int)(imgui_context.window_size.y - pcmd->ClipRect.w),
-                    (int)(pcmd->ClipRect.z - pcmd->ClipRect.x), (int)(pcmd->ClipRect.w - pcmd->ClipRect.y));
+                    (int)clip_rect.x,
+                    (int)(fb_height - clip_rect.w),
+                    (int)(clip_rect.z - clip_rect.x),
+                    (int)(clip_rect.w - clip_rect.y));
                 
                 constexpr GLenum data_type = sizeof(ImDrawIdx) == 2 ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
                 glDrawElements(GL_TRIANGLES, (GLsizei)pcmd->ElemCount, data_type, idx_buffer);

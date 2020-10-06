@@ -24,6 +24,7 @@ namespace mono
         ~Renderer();
 
         void SetWindowSize(const math::Vector& window_size);
+        void SetDrawableSize(const math::Vector& drawable_size);
         void SetViewport(const math::Quad& viewport);
         void SetDeltaAndTimestamp(uint32_t delta_ms, uint32_t timestamp);
 
@@ -97,6 +98,7 @@ namespace mono
         void EndDraw();
 
         math::Vector m_window_size;
+        math::Vector m_drawable_size;
         math::Quad m_viewport;
 
         std::stack<math::Matrix> m_projection_stack;

@@ -69,6 +69,11 @@ void Renderer::SetWindowSize(const math::Vector& window_size)
     m_window_size = window_size;
 }
 
+void Renderer::SetDrawableSize(const math::Vector& drawable_size)
+{
+    m_drawable_size = drawable_size;
+}
+
 void Renderer::SetViewport(const math::Quad& viewport)
 {
     m_viewport = viewport;
@@ -102,11 +107,8 @@ uint32_t Renderer::GetTimestamp() const
 
 void Renderer::PrepareDraw()
 {
-    while(!m_projection_stack.empty())
-        m_projection_stack.pop();
-
-    while(!m_modelview_stack.empty())
-        m_modelview_stack.pop();
+    m_projection_stack = { };
+    m_modelview_stack = { };
 
     const float viewport_width = math::Width(m_viewport);
     const float ratio = m_window_size.x / m_window_size.y;
@@ -117,16 +119,16 @@ void Renderer::PrepareDraw()
 
     m_modelview_stack.push(modelview);
 
-    if(!m_frame_buffer || m_frame_buffer->Size() != m_window_size)
+    if(!m_frame_buffer || m_frame_buffer->Size() != m_drawable_size)
     {
-        m_frame_buffer = std::make_unique<FrameBuffer>(m_window_size.x, m_window_size.y);
+        m_frame_buffer = std::make_unique<FrameBuffer>(m_drawable_size.x, m_drawable_size.y);
     }
 
     m_frame_buffer->Use();
 
     glClearColor(m_clear_color.red, m_clear_color.green, m_clear_color.blue, m_clear_color.alpha);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glViewport(0, 0, m_window_size.x, m_window_size.y);
+    glViewport(0, 0, m_drawable_size.x, m_drawable_size.y);
 }
 
 void Renderer::EndDraw()
@@ -136,6 +138,7 @@ void Renderer::EndDraw()
     //PROCESS_GL_ERRORS();
 
     m_imgui_context.window_size = m_window_size;
+    m_imgui_context.drawable_size = m_drawable_size;
     mono::DrawImGui(m_imgui_context, *this);
 
     mono::ClearFrameBuffer();
