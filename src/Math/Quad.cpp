@@ -92,4 +92,11 @@ math::Vector math::TopRight(const math::Quad& quad)
     return quad.mB;
 }
 
+math::Vector math::Center(const math::Quad& quad)
+{
+    const float half_width = math::Width(quad) / 2.0f;
+    const float half_height = math::Height(quad) / 2.0f;
+    return math::Vector(quad.mA.x + half_width, quad.mA.y + half_height);
+}
+
 const math::Quad math::InfQuad = Quad(-math::INF, -math::INF, math::INF, math::INF);
