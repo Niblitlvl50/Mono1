@@ -26,6 +26,7 @@ void Sprite::Init(const SpriteData* sprite_data, mono::ITexturePtr texture)
     m_active_animation_done = false;
     m_active_frame = 0;
     m_active_frame_time = 0;
+    m_playback_mode = PlaybackMode::PLAYING;
 
     m_flip_horizontal = false;
     m_flip_vertical = false;
@@ -86,7 +87,7 @@ mono::VerticalDirection Sprite::GetVerticalDirection() const
 
 void Sprite::Update(const UpdateContext& update_context)
 {
-    if(m_active_animation_done)
+    if(m_active_animation_done || m_playback_mode == PlaybackMode::PAUSED)
         return;
 
     if(!m_sprite_data)
@@ -153,6 +154,11 @@ void Sprite::SetAnimation(int id, const SpriteAnimationCallback& callback)
         RestartAnimation();
 }
 
+void Sprite::SetAnimationPlayback(PlaybackMode mode)
+{
+    m_playback_mode = mode;
+}
+
 void Sprite::RestartAnimation()
 {
     m_active_frame = 0;
@@ -183,9 +189,12 @@ int Sprite::GetActiveAnimation() const
     return m_active_animation;
 }
 
-/*
-void Sprite::SetFrameOffset(int frame_index, const math::Vector& offset)
+void Sprite::SetActiveFrame(int frame)
 {
-    m_sprite_data->frames[frame_index].center_offset = offset;
+    m_active_frame = frame;
 }
-*/
+
+int Sprite::GetActiveFrame() const
+{
+    return m_active_frame;
+}

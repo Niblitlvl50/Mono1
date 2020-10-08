@@ -25,6 +25,12 @@ namespace mono
         DOWN
     };
 
+    enum class PlaybackMode
+    {
+        PLAYING,
+        PAUSED
+    };
+
     using SpriteAnimationCallback = std::function<void()>;
 
     class ISprite : public IUpdatable
@@ -60,8 +66,14 @@ namespace mono
         virtual void SetAnimation(int id, const SpriteAnimationCallback& callback) = 0;
         virtual void SetAnimation(const char* name, const SpriteAnimationCallback& callback) = 0;
 
+        virtual void SetAnimationPlayback(PlaybackMode mode) = 0;
+
         //! Returns the current active animation
         virtual int GetActiveAnimation() const = 0;
+
+        virtual void SetActiveFrame(int frame) = 0;
+        virtual int GetActiveFrame() const = 0;
+        
         virtual void RestartAnimation() = 0;
     };
 }

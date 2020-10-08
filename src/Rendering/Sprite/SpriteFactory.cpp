@@ -70,6 +70,7 @@ namespace
             mono::SpriteAnimation sprite_animation;
             sprite_animation.name = animation["name"];
             sprite_animation.looping = animation["loop"];
+            sprite_animation.frame_rate = 100;
 
             const std::vector<int> frames = animation["frames"];
             const bool even_size = (frames.size() % 2 == 0);

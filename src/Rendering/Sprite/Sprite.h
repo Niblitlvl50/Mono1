@@ -28,16 +28,15 @@ namespace mono
         void SetAnimation(const char* name) override;
         void SetAnimation(int id, const SpriteAnimationCallback& callback) override;
         void SetAnimation(const char* name, const SpriteAnimationCallback& callback) override;
+        void SetAnimationPlayback(PlaybackMode mode) override;
         int GetActiveAnimation() const override;
+        void SetActiveFrame(int frame) override;
+        int GetActiveFrame() const override;
         void RestartAnimation() override;
         void Update(const UpdateContext& update_context) override;
 
         int GetDefinedAnimations() const;
         SpriteFrame GetFrame(int frame_index) const;
-
-        /*
-        void SetFrameOffset(int frame_index, const math::Vector& offset);
-        */
 
     private:
 
@@ -48,6 +47,7 @@ namespace mono
         bool m_active_animation_done;
         int m_active_frame;
         int m_active_frame_time;
+        PlaybackMode m_playback_mode;
 
         bool m_flip_horizontal;
         bool m_flip_vertical;
