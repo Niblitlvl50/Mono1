@@ -30,8 +30,8 @@ namespace mono
         void SetAnimation(const char* name, const SpriteAnimationCallback& callback) override;
         void SetAnimationPlayback(PlaybackMode mode) override;
         int GetActiveAnimation() const override;
-        void SetActiveFrame(int frame) override;
-        int GetActiveFrame() const override;
+        void SetActiveAnimationFrame(int frame) override;
+        int GetActiveAnimationFrame() const override;
         void RestartAnimation() override;
         void Update(const UpdateContext& update_context) override;
 

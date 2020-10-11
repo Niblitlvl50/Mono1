@@ -18,6 +18,7 @@
 #include "Rendering/Texture/ITextureFactory.h"
 
 #include "Math/Quad.h"
+#include "Math/Serialize.h"
 #include "System/File.h"
 #include "System/System.h"
 #include "Util/Hash.h"
@@ -50,7 +51,7 @@ namespace
             const float h = float(frame["h"]) / sprite_data.texture_size.y;
 
             mono::SpriteFrame sprite_frame;
-            sprite_frame.center_offset = math::ZeroVec;
+            sprite_frame.center_offset = frame.value("frame_offset", math::ZeroVec);
             sprite_frame.texture_coordinates = math::Quad(x, y + h, x + w, y);
 
             const float width =
@@ -70,7 +71,7 @@ namespace
             mono::SpriteAnimation sprite_animation;
             sprite_animation.name = animation["name"];
             sprite_animation.looping = animation["loop"];
-            sprite_animation.frame_rate = 100;
+            sprite_animation.frame_duration = animation.value("frame_duration", 100);
 
             const std::vector<int> frames = animation["frames"];
             const bool even_size = (frames.size() % 2 == 0);

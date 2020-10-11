@@ -189,12 +189,12 @@ int Sprite::GetActiveAnimation() const
     return m_active_animation;
 }
 
-void Sprite::SetActiveFrame(int frame)
+void Sprite::SetActiveAnimationFrame(int frame)
 {
     m_active_frame = frame;
 }
 
-int Sprite::GetActiveFrame() const
+int Sprite::GetActiveAnimationFrame() const
 {
     return m_active_frame;
 }

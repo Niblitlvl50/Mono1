@@ -71,8 +71,8 @@ namespace mono
         //! Returns the current active animation
         virtual int GetActiveAnimation() const = 0;
 
-        virtual void SetActiveFrame(int frame) = 0;
-        virtual int GetActiveFrame() const = 0;
+        virtual void SetActiveAnimationFrame(int frame) = 0;
+        virtual int GetActiveAnimationFrame() const = 0;
         
         virtual void RestartAnimation() = 0;
     };

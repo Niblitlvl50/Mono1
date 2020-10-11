@@ -28,7 +28,7 @@ namespace mono
         std::string name;
         std::vector<Frame> frames;
         bool looping;
-        int frame_rate;
+        int frame_duration;
     };
 
     struct SpriteData
