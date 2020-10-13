@@ -15,7 +15,9 @@ namespace mono
     class SystemContext;
 
     class IEntityManager;
+    struct Entity;
     class EntitySystem;
+
     class ParticleSystem;
     class PhysicsSystem;
     class SpriteSystem;
