@@ -103,8 +103,7 @@ void Sprite::Update(const UpdateContext& update_context)
 
     m_active_frame_time += update_context.delta_ms;
 
-    const SpriteAnimation::Frame& active_frame = active_animation.frames[m_active_frame];
-    if(m_active_frame_time > active_frame.duration)
+    if(m_active_frame_time > active_animation.frame_duration)
     {
         m_active_frame_time = 0; // Should we carry over the reminder from m_active_frame_time? (yes)
         m_active_frame++;
