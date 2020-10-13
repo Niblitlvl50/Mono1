@@ -51,7 +51,8 @@ namespace
             const float h = float(frame["h"]) / sprite_data.texture_size.y;
 
             mono::SpriteFrame sprite_frame;
-            sprite_frame.center_offset = frame.value("frame_offset", math::ZeroVec);
+            sprite_frame.center_offset.x = frame.value("x_offset", 0.0f);
+            sprite_frame.center_offset.y = frame.value("y_offset", 0.0f);
             sprite_frame.texture_coordinates = math::Quad(x, y + h, x + w, y);
 
             const float width =
