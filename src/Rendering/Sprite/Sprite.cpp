@@ -175,10 +175,16 @@ mono::SpriteFrame Sprite::GetFrame(int frame_index) const
     SpriteFrame frame = m_sprite_data->frames[frame_index];
 
     if(m_flip_horizontal)
+    {
         std::swap(frame.texture_coordinates.mA.x, frame.texture_coordinates.mB.x);
+        frame.center_offset.x = -frame.center_offset.x;
+    }
     
     if(m_flip_vertical)
+    {
         std::swap(frame.texture_coordinates.mA.y, frame.texture_coordinates.mB.y);
+        frame.center_offset.y = -frame.center_offset.y;
+    }
 
     return frame;
 }
