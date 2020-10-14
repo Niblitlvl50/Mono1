@@ -4,6 +4,7 @@
 #include "SpriteFactory.h"
 #include "TransformSystem/TransformSystem.h"
 #include "Util/Hash.h"
+#include "Util/Random.h"
 
 #include <cassert>
 
@@ -51,7 +52,16 @@ void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& spr
     sprite.SetHorizontalDirection(sprite_args.flip_horizontal ? HorizontalDirection::LEFT : HorizontalDirection::RIGHT);
 
     if(sprite_args.animation_id >= 0 && sprite_args.animation_id < sprite.GetDefinedAnimations())
+    {
         sprite.SetAnimation(sprite_args.animation_id);
+
+        if(sprite_args.random_start_frame)
+        {
+            const size_t n_frames = sprite.GetSpriteData()->animations[sprite.GetActiveAnimation()].frames.size();
+            const int random_frame = mono::RandomInt(0, n_frames -1);
+            sprite.SetActiveAnimationFrame(random_frame);
+        }
+    }
 
     m_sprite_layers[sprite_id] = sprite_args.layer;
 }

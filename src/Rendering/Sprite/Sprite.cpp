@@ -189,6 +189,11 @@ mono::SpriteFrame Sprite::GetFrame(int frame_index) const
     return frame;
 }
 
+const mono::SpriteData* Sprite::GetSpriteData() const
+{
+    return m_sprite_data;
+}
+
 int Sprite::GetActiveAnimation() const
 {
     return m_active_animation;

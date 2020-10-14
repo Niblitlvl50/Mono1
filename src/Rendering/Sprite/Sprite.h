@@ -37,6 +37,7 @@ namespace mono
 
         int GetDefinedAnimations() const;
         SpriteFrame GetFrame(int frame_index) const;
+        const SpriteData* GetSpriteData() const;
 
     private:
 
