@@ -23,7 +23,7 @@ namespace mono
     class Engine
     {
     public:
-        Engine(System::IWindow* window, SystemContext* system_context, EventHandler* event_handler);
+        Engine(System::IWindow* window, ICamera* camera, SystemContext* system_context, EventHandler* event_handler);
         ~Engine();
 
         int Run(IZone* zone);
@@ -42,6 +42,7 @@ namespace mono
         float m_time_scale = 1.0f;
 
         System::IWindow* m_window;
+        ICamera* m_camera;
         SystemContext* m_system_context;
         EventHandler* m_event_handler;
 

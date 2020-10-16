@@ -7,7 +7,7 @@
 #include "SystemContext.h"
 #include "MonoFwd.h"
 #include "IUpdatable.h"
-#include "Camera/ICamera.h"
+#include "Camera/Camera.h"
 #include "Zone/IZone.h"
 #include "Rendering/Shader/IShader.h"
 #include "Rendering/Shader/IShaderFactory.h"
@@ -209,6 +209,7 @@ TEST(EngineTest, Basic)
 {
     mono::EventHandler handler;
     mono::SystemContext system_context;
+    mono::Camera camera;
     mono::LoadCustomShaderFactory(new NullShaderFactory);
     mono::LoadCustomTextureFactory(new NullTextureFactory);
 
@@ -216,7 +217,7 @@ TEST(EngineTest, Basic)
     MocZone zone;
 
     {
-        mono::Engine engine(&window, &system_context, &handler);
+        mono::Engine engine(&window, &camera, &system_context, &handler);
         EXPECT_NO_THROW(engine.Run(&zone));
     }
 

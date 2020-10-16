@@ -12,7 +12,7 @@
 #include "InputHandler.h"
 #include "Updater.h"
 
-#include "Camera/Camera.h"
+#include "Camera/ICamera.h"
 #include "Zone/IZone.h"
 
 #include "System/System.h"
@@ -33,8 +33,9 @@
 
 using namespace mono;
 
-Engine::Engine(System::IWindow* window, SystemContext* system_context, EventHandler* event_handler)
+Engine::Engine(System::IWindow* window, ICamera* camera, SystemContext* system_context, EventHandler* event_handler)
     : m_window(window)
+    , m_camera(camera)
     , m_system_context(system_context)
     , m_event_handler(event_handler)
 {
@@ -65,17 +66,16 @@ Engine::~Engine()
 int Engine::Run(IZone* zone)
 {
     Renderer renderer;
-    Camera camera;
 
-    const ScreenToWorldFunc screen_to_world_func = [&camera](float& x, float& y) {
-        const math::Vector world = camera.ScreenToWorld(math::Vector(x, y));
+    const ScreenToWorldFunc screen_to_world_func = [this](float& x, float& y) {
+        const math::Vector world = m_camera->ScreenToWorld(math::Vector(x, y));
         x = world.x;
         y = world.y;
     };
 
     InputHandler input_handler(screen_to_world_func, m_event_handler);
 
-    zone->OnLoad(&camera);
+    zone->OnLoad(m_camera);
 
     UpdateContext update_context;
     update_context.frame_count = 0;
@@ -104,14 +104,14 @@ int Engine::Run(IZone* zone)
 
         const System::Size& size = m_window->Size();
         const math::Vector window_size(size.width, size.height);
-        camera.SetWindowSize(window_size);
+        m_camera->SetWindowSize(window_size);
 
         const System::Size drawable_size = m_window->DrawableSize();
         const math::Vector drawable_size_vec(drawable_size.width, drawable_size.height);
         renderer.SetWindowSize(window_size);
         renderer.SetDrawableSize(drawable_size_vec);
 
-        const math::Quad& viewport = camera.GetViewport();
+        const math::Quad& viewport = m_camera->GetViewport();
         const math::Quad camera_quad(viewport.mA, viewport.mA + viewport.mB);
         renderer.SetViewport(camera_quad);
 
@@ -130,7 +130,7 @@ int Engine::Run(IZone* zone)
 
             // Update all the stuff...
             zone->Accept(updater);
-            updater.AddUpdatable(&camera);
+            updater.AddUpdatable(m_camera);
             updater.Update(update_context);
 
             // Draw...

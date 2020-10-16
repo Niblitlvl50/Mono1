@@ -19,7 +19,7 @@ namespace mono
         math::Quad GetViewport() const override;
         void SetPosition(const math::Vector& position) override;
         math::Vector GetPosition() const override;
-        void SetWindowSize(const math::Vector& window_size);
+        void SetWindowSize(const math::Vector& window_size) override;
         const math::Vector& GetWindowSize() const override;
         math::Vector ScreenToWorld(const math::Vector& screen_pos) const override;
 
