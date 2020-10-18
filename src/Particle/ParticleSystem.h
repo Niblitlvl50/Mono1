@@ -82,7 +82,6 @@ namespace mono
 
         uint32_t Id() const override;
         const char* Name() const override;
-        uint32_t Capacity() const override;
         void Update(const mono::UpdateContext& update_context) override;
         void Sync() override;
 

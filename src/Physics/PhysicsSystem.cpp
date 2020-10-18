@@ -303,11 +303,6 @@ const char* PhysicsSystem::Name() const
     return "physicssystem";
 }
 
-uint32_t PhysicsSystem::Capacity() const
-{
-    return m_impl->bodies.size();
-}
-
 void PhysicsSystem::Update(const UpdateContext& update_context)
 {
     m_impl->space.Tick(update_context.delta_ms);

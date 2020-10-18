@@ -47,7 +47,7 @@ namespace mono
 
         uint32_t Id() const override;
         const char* Name() const override;
-        uint32_t Capacity() const override;
+        uint32_t Capacity() const;
         void Update(const UpdateContext& update_context) override;
 
         template <typename T>

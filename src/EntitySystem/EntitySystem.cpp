@@ -88,10 +88,5 @@ const char* EntitySystem::Name() const
     return "entitysystem";
 }
 
-uint32_t EntitySystem::Capacity() const
-{
-    return m_entities.size();
-}
-
 void EntitySystem::Update(const UpdateContext& update_context)
 { }

@@ -101,11 +101,6 @@ const char* ParticleSystem::Name() const
     return "ParticleSystem";
 }
 
-uint32_t ParticleSystem::Capacity() const
-{
-    return m_particle_pools.capacity();
-}
-
 void ParticleSystem::Update(const mono::UpdateContext& update_context)
 {
     for(size_t active_pool_index = 0; active_pool_index < m_active_pools.size(); ++active_pool_index)

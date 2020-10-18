@@ -129,7 +129,6 @@ namespace mono
 
         uint32_t Id() const override;
         const char* Name() const override;
-        uint32_t Capacity() const override;
         void Update(const UpdateContext& update_context) override;
 
         mono::IBody* AllocateBody(uint32_t body_id, const BodyComponent& body_params);

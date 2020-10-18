@@ -46,11 +46,6 @@ const char* TextSystem::Name() const
     return "textsystem";
 }
 
-uint32_t TextSystem::Capacity() const
-{
-    return 0;
-}
-
 void TextSystem::Update(const mono::UpdateContext& update_context)
 {
     const auto update_bb = [this](const TextComponent& text, uint32_t index) {
