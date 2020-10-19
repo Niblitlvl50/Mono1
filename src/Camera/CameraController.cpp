@@ -108,14 +108,16 @@ mono::EventResult MouseCameraController::OnMultiGesture(const event::MultiGestur
     if(std::fabs(event.distance) < 1e-3)
         return mono::EventResult::PASS_ON;
 
-    math::Quad quad = m_camera->GetViewport();
+    math::Vector viewport_size = m_camera->GetViewportSize();
 
     const float multiplier = (event.distance < 0.0f) ? 1.0f : -1.0f;
-    const float resize_value = quad.mB.x * multiplier;
-    const float aspect = quad.mB.x / quad.mB.y;
-    math::ResizeQuad(quad, resize_value, aspect);
+    const float resize_value = viewport_size.x * multiplier;
+    const float aspect = viewport_size.x / viewport_size.y;
 
-    m_camera->SetTargetViewport(quad);
+    viewport_size.x += resize_value * aspect;
+    viewport_size.y += resize_value;
+
+    m_camera->SetTargetViewportSize(viewport_size);
 
     return mono::EventResult::HANDLED;
 }
@@ -125,14 +127,16 @@ mono::EventResult MouseCameraController::OnMouseWheel(const event::MouseWheelEve
     if(!m_enabled)
         return mono::EventResult::PASS_ON;
 
-    math::Quad quad = m_camera->GetViewport();
+    math::Vector viewport_size = m_camera->GetViewportSize();
 
     const float multiplier = (event.y < 0.0f) ? 1.0f : -1.0f;
-    const float resizeValue = quad.mB.x * multiplier;
-    const float aspect = quad.mB.x / quad.mB.y;
-    math::ResizeQuad(quad, resizeValue, aspect);
+    const float resize_value = viewport_size.x * multiplier;
+    const float aspect = viewport_size.x / viewport_size.y;
 
-    m_camera->SetTargetViewport(quad);
+    viewport_size.x += resize_value * aspect;
+    viewport_size.y += resize_value;
+
+    m_camera->SetTargetViewportSize(viewport_size);
 
     return mono::EventResult::HANDLED;
 }

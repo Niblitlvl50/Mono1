@@ -2,54 +2,76 @@
 #include "Camera.h"
 #include "Math/Vector.h"
 #include "Math/MathFunctions.h"
+#include "Math/EasingFunctions.h"
 
 #include <cmath>
 
 using namespace mono;
 
 Camera::Camera()
-    : m_viewport(0.0f, 0.0f, 640, 480),
-      m_target_viewport(m_viewport)
+    : m_viewport_size(640.0f, 480.0f)
+    , m_target_viewport_size(m_viewport_size)
 { }
 
 void Camera::Update(const UpdateContext& update_context)
 {
-    const float change = (m_target_viewport.mB.x - m_viewport.mB.x);
-    const float xzero = std::abs(change);
-
-    if(xzero != 0.0f)
+    const bool is_equal = math::IsPrettyMuchEquals(m_target_viewport_size.x, m_viewport_size.x);
+    if(!is_equal)
     {
-        const float aspect = m_viewport.mB.x / m_viewport.mB.y;
-        math::ResizeQuad(m_viewport, change * 0.1f, aspect);
+        const float delta = (m_target_viewport_size.x - m_viewport_size.x) * 0.1f;
+        const float aspect = m_viewport_size.x / m_viewport_size.y;
+
+        m_viewport_size.x += delta * aspect;
+        m_viewport_size.y += delta;
+    }
+
+    const bool is_position_equal = math::IsPrettyMuchEquals(m_target_position, m_position);
+    if(!is_position_equal)
+    {
+        const math::Vector delta = (m_target_position - m_position) * 0.1f;
+        m_position += delta;
     }
 }
 
-void Camera::SetViewport(const math::Quad& viewport)
+void Camera::SetViewportSize(const math::Vector& size)
 {
-    m_viewport = viewport;
-    m_target_viewport = viewport;
+    m_viewport_size = size;
+    m_target_viewport_size = size;
 }
 
-void Camera::SetTargetViewport(const math::Quad& target)
+void Camera::SetTargetViewportSize(const math::Vector& target_size)
 {
-    m_target_viewport = target;
+    m_target_viewport_size = target_size;
+}
+
+math::Vector Camera::GetViewportSize() const
+{
+    return m_viewport_size;
 }
 
 math::Quad Camera::GetViewport() const
 {
-    return m_viewport;
+    math::Quad viewport;
+    viewport.mA = m_position - (m_viewport_size / 2.0f);
+    viewport.mB = m_viewport_size;
+
+    return viewport;
 }
 
 void Camera::SetPosition(const math::Vector& position)
 {
-    // The position is the middle of the quad, not the lower left corner.
-    const math::Vector& xy = position - (m_viewport.mB * 0.5f);
-    m_viewport.mA = xy;
+    m_position = position;
+    m_target_position = position;
+}
+
+void Camera::SetTargetPosition(const math::Vector& position)
+{
+    m_target_position = position;
 }
 
 math::Vector Camera::GetPosition() const
 {
-    return m_viewport.mA + (m_viewport.mB * 0.5f);
+    return m_position;
 }
 
 void Camera::SetWindowSize(const math::Vector& window_size)

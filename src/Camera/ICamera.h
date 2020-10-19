@@ -10,11 +10,13 @@ namespace mono
     {
     public:
 
-        virtual void SetViewport(const math::Quad& viewport) = 0;
-        virtual void SetTargetViewport(const math::Quad& target) = 0;
+        virtual void SetViewportSize(const math::Vector& size) = 0;
+        virtual void SetTargetViewportSize(const math::Vector& target_size) = 0;
+        virtual math::Vector GetViewportSize() const = 0;
         virtual math::Quad GetViewport() const = 0;
 
         virtual void SetPosition(const math::Vector& position) = 0;
+        virtual void SetTargetPosition(const math::Vector& target_position) = 0;
         virtual math::Vector GetPosition() const = 0;
 
         virtual void SetWindowSize(const math::Vector& window_size) = 0;
