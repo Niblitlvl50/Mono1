@@ -50,7 +50,7 @@ mono::SpriteFrame Sprite::GetCurrentFrame() const
         return mono::SpriteFrame();
 
     const SpriteAnimation& animation = m_sprite_data->animations[m_active_animation];
-    const int sprite_frame = animation.frames[m_active_frame].frame;
+    const int sprite_frame = animation.frames[m_active_frame];
 
     return GetFrame(sprite_frame);
 }

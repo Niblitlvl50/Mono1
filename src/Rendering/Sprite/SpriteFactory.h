@@ -3,7 +3,7 @@
 
 #include "ISprite.h"
 #include "ISpriteFactory.h"
-#include "Math/Vector.h"
+
 #include <unordered_map>
 #include <string>
 #include <vector>

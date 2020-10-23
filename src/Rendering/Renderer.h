@@ -13,9 +13,6 @@
 
 namespace mono
 {
-    class IShader;
-    class FrameBuffer;
-
     class Renderer : public IRenderer
     {
     public:
@@ -44,12 +41,12 @@ namespace mono
         void DrawSprite(
             const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, const ITexture* texture) const override;
         void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const override;
-        void DrawLines(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const override;
-        void DrawPolyline(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const override;
-        void DrawClosedPolyline(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const override;
+        void DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const override;
+        void DrawPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const override;
+        void DrawClosedPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const override;
         void DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const override;
         void DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color) const override;
-        void DrawCircle(const math::Vector& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const override;
+        void DrawCircle(const math::Vector& pos, float radie, int segments, float line_width, const mono::Color::RGBA& color) const override;
 
         void DrawGeometry(
             const std::vector<math::Vector>& vertices,
@@ -115,7 +112,7 @@ namespace mono
         std::unique_ptr<IShader> m_point_sprite_shader;
         std::unique_ptr<IShader> m_screen_shader;
 
-        std::unique_ptr<FrameBuffer> m_frame_buffer;
+        std::unique_ptr<class FrameBuffer> m_frame_buffer;
 
         std::vector<const IDrawable*> m_drawables;
         ImGuiContext m_imgui_context;

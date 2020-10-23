@@ -29,9 +29,7 @@ namespace file
     long FileSize(const FilePtr& file);
 
     //! Read the file into a buffer
-    //! \param file The file to read from
-    //! \param bytes Buffer that will hold the data
-    void FileRead(const FilePtr& file, std::vector<byte>& bytes);
+    std::vector<byte> FileRead(const FilePtr& file);
 
     bool Exists(const char* file_name);
 }

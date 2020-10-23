@@ -222,22 +222,22 @@ void Renderer::DrawPoints(const std::vector<math::Vector>& points, const mono::C
     ::DrawPoints(points, color, size, m_color_shader.get());
 }
 
-void Renderer::DrawLines(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const
+void Renderer::DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const
 {
     UseShader(m_color_shader.get());
-    ::DrawLines(linePoints, color, width, m_color_shader.get());
+    ::DrawLines(line_points, color, width, m_color_shader.get());
 }
 
-void Renderer::DrawPolyline(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const
+void Renderer::DrawPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const
 {
     UseShader(m_color_shader.get());
-    ::DrawLine(linePoints, color, width, m_color_shader.get());
+    ::DrawLine(line_points, color, width, m_color_shader.get());
 }
 
-void Renderer::DrawClosedPolyline(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const
+void Renderer::DrawClosedPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const
 {
     UseShader(m_color_shader.get());
-    ::DrawClosedLine(linePoints, color, width, m_color_shader.get());
+    ::DrawClosedLine(line_points, color, width, m_color_shader.get());
 }
 
 void Renderer::DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const
@@ -252,10 +252,10 @@ void Renderer::DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& c
     ::DrawFilledQuad(quad, color, m_color_shader.get());
 }
 
-void Renderer::DrawCircle(const math::Vector& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const
+void Renderer::DrawCircle(const math::Vector& pos, float radie, int segments, float line_width, const mono::Color::RGBA& color) const
 {
     UseShader(m_color_shader.get());
-    ::DrawCircle(pos, radie, segments, lineWidth, color, m_color_shader.get());
+    ::DrawCircle(pos, radie, segments, line_width, color, m_color_shader.get());
 }
 
 void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std::vector<math::Vector>& texture_coordinates, const std::vector<uint16_t>& indices, const ITexture* texture)
@@ -265,11 +265,12 @@ void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std
     ::DrawTexturedGeometry(vertices, texture_coordinates, indices, m_texture_shader.get());
 }
 
-void Renderer::DrawGeometry(const IRenderBuffer* vertices,
-                            const IRenderBuffer* texture_coordinates,
-                            size_t offset,
-                            size_t count,
-                            const ITexture* texture)
+void Renderer::DrawGeometry(
+    const IRenderBuffer* vertices,
+    const IRenderBuffer* texture_coordinates,
+    size_t offset,
+    size_t count,
+    const ITexture* texture)
 {
     UseTexture(texture);
     UseShader(m_texture_shader.get());

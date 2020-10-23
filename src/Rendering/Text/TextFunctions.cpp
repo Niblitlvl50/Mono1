@@ -45,9 +45,7 @@ void mono::LoadFont(int font_id, const char* font_file, float size, float scale)
 {
     file::FilePtr font = file::OpenBinaryFile(font_file);
     
-    std::vector<byte> font_buffer;
-    file::FileRead(font, font_buffer);
-    
+    const std::vector<byte> font_buffer = file::FileRead(font);
     LoadFontRaw(font_id, font_buffer.data(), font_buffer.size(), size, scale);
 }
 

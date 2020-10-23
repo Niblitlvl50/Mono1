@@ -1,12 +1,11 @@
 
 #pragma once
 
-#include "Rendering/RenderPtrFwd.h"
+#include <memory>
 
 namespace mono
 {
-    class Sprite;
-    struct SpriteData;
+    using ISpritePtr = std::unique_ptr<class ISprite>;
 
     class ISpriteFactory
     {
@@ -16,9 +15,8 @@ namespace mono
         
         virtual mono::ISpritePtr CreateSprite(const char* sprite_file) const = 0;
         virtual mono::ISpritePtr CreateSpriteFromRaw(const char* sprite_raw) const = 0;
-        virtual bool CreateSprite(Sprite& sprite, const char* sprite_file) const = 0;
-
-        virtual const mono::SpriteData* GetSpriteDataForFile(const char* sprite_file) const = 0;
+        virtual bool CreateSprite(class Sprite& sprite, const char* sprite_file) const = 0;
+        virtual const struct SpriteData* GetSpriteDataForFile(const char* sprite_file) const = 0;
     };
 
     const ISpriteFactory* GetSpriteFactory();

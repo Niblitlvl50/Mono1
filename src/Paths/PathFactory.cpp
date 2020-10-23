@@ -100,9 +100,7 @@ mono::IPathPtr mono::CreatePath(const char* path_file)
     if(!file)
         return nullptr;
 
-    std::vector<byte> file_data;
-    file::FileRead(file, file_data);
-
+    const std::vector<byte> file_data = file::FileRead(file);
     const nlohmann::json& json = nlohmann::json::parse(file_data);
     const std::vector<float>& points = json["path"];
     const math::Vector position(json["x"], json["y"]);

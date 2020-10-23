@@ -23,12 +23,12 @@ namespace mono
         virtual void DrawSprite(
             const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, const ITexture* texture) const = 0;
         virtual void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const = 0;
-        virtual void DrawLines(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const = 0;
-        virtual void DrawPolyline(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const = 0;
-        virtual void DrawClosedPolyline(const std::vector<math::Vector>& linePoints, const mono::Color::RGBA& color, float width) const = 0;
+        virtual void DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;
+        virtual void DrawPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;
+        virtual void DrawClosedPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;
         virtual void DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const = 0;
         virtual void DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color) const = 0;
-        virtual void DrawCircle(const math::Vector& pos, float radie, int segments, float lineWidth, const mono::Color::RGBA& color) const = 0;
+        virtual void DrawCircle(const math::Vector& pos, float radie, int segments, float line_width, const mono::Color::RGBA& color) const = 0;
 
         virtual void DrawGeometry(
             const std::vector<math::Vector>& vertices,

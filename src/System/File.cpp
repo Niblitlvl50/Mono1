@@ -47,12 +47,14 @@ long file::FileSize(const FilePtr& file)
     return size;
 }
 
-void file::FileRead(const FilePtr& file, std::vector<byte>& bytes)
+std::vector<byte> file::FileRead(const file::FilePtr& file)
 {
-    const long filesize = file::FileSize(file);
-    
-    bytes.resize(filesize, 0);
-    std::fread(bytes.data(), 1, filesize, file.get());
+    const long file_size = file::FileSize(file);
+
+    std::vector<byte> bytes;
+    bytes.resize(file_size, 0);
+    std::fread(bytes.data(), 1, file_size, file.get());
+    return bytes;
 }
 
 #include <sys/stat.h>

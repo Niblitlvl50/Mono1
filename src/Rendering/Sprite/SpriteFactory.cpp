@@ -30,29 +30,36 @@
 
 namespace
 {
-    mono::SpriteData LoadSpriteData(const char* sprite_raw_data, float pixels_per_meter)
+    mono::SpriteData LoadSpriteData(const char* sprite_raw_data, float pixels_per_meter, uint32_t sprite_hash)
     {
         const nlohmann::json& json = nlohmann::json::parse(sprite_raw_data);
         const nlohmann::json& texture_size = json["texture_size"];
 
         mono::SpriteData sprite_data;
+        sprite_data.hash = sprite_hash;
         sprite_data.texture_file = json["texture"];
-        sprite_data.category = json.value("category", "");
+        sprite_data.category = json["category"];
         sprite_data.texture_size = math::Vector(texture_size["w"], texture_size["h"]);
 
         const nlohmann::json& frames = json["frames"];
+        const nlohmann::json& frames_offsets = json["frames_offsets"];
+
         sprite_data.frames.reserve(frames.size());
 
-        for(const nlohmann::json& frame : frames)
+        for(size_t index = 0; index < frames.size(); ++index)
         {
+            const nlohmann::json& frame = frames[index];
+
             const float x = float(frame["x"]) / sprite_data.texture_size.x;
             const float y = float(frame["y"]) / sprite_data.texture_size.y;
             const float w = float(frame["w"]) / sprite_data.texture_size.x;
             const float h = float(frame["h"]) / sprite_data.texture_size.y;
 
+            const nlohmann::json& frame_offset = frames_offsets[index];
+
             mono::SpriteFrame sprite_frame;
-            sprite_frame.center_offset.x = frame.value("x_offset", 0.0f);
-            sprite_frame.center_offset.y = frame.value("y_offset", 0.0f);
+            sprite_frame.center_offset.x = frame_offset["x"];
+            sprite_frame.center_offset.y = frame_offset["y"];
             sprite_frame.texture_coordinates = math::Quad(x, y + h, x + w, y);
 
             const float width =
@@ -72,18 +79,8 @@ namespace
             mono::SpriteAnimation sprite_animation;
             sprite_animation.name = animation["name"];
             sprite_animation.looping = animation["loop"];
-            sprite_animation.frame_duration = animation.value("frame_duration", 100);
-
-            const std::vector<int> frames = animation["frames"];
-            const bool even_size = (frames.size() % 2 == 0);
-
-            if(even_size)
-            {
-                sprite_animation.frames.reserve(frames.size() / 2);
-
-                for(size_t index = 0; index < frames.size(); index += 2)
-                    sprite_animation.frames.push_back({frames[index], frames[index +1]});
-            }
+            sprite_animation.frame_duration = animation["frame_duration"];
+            sprite_animation.frames = static_cast<std::vector<int>>(animation["frames"]);
 
             sprite_data.animations.push_back(sprite_animation);
         }
@@ -93,7 +90,7 @@ namespace
 }
 
 using namespace mono;
- 
+
 SpriteFactoryImpl::SpriteFactoryImpl(float pixels_per_meter)
     : m_pixels_per_meter(pixels_per_meter)
 { }
@@ -115,9 +112,7 @@ mono::ISpritePtr SpriteFactoryImpl::CreateSpriteFromRaw(const char* sprite_raw) 
     auto it = m_sprite_data_cache.find(sprite_raw_hash);
     if(it == m_sprite_data_cache.end())
     {
-        mono::SpriteData sprite_data = LoadSpriteData(sprite_raw, m_pixels_per_meter);
-        sprite_data.hash = sprite_raw_hash;
-
+        mono::SpriteData sprite_data = LoadSpriteData(sprite_raw, m_pixels_per_meter, sprite_raw_hash);
         it = m_sprite_data_cache.insert({sprite_raw_hash, sprite_data}).first;
     }
 
@@ -155,13 +150,10 @@ const mono::SpriteData* SpriteFactoryImpl::GetSpriteDataForFile(const char* spri
         if(!file)
             return nullptr;
 
-        std::vector<byte> file_data;
-        file::FileRead(file, file_data);
+        std::vector<byte> file_data = file::FileRead(file);
         file_data.push_back('\0');
 
-        mono::SpriteData sprite_data = LoadSpriteData((const char*)file_data.data(), m_pixels_per_meter);
-        sprite_data.hash = sprite_filename_hash;
-
+        mono::SpriteData sprite_data = LoadSpriteData((const char*)file_data.data(), m_pixels_per_meter, sprite_filename_hash);
         it = m_sprite_data_cache.insert({sprite_filename_hash, sprite_data}).first;
     }
 

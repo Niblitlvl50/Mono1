@@ -19,14 +19,8 @@ namespace mono
 
     struct SpriteAnimation
     {
-        struct Frame
-        {
-            int frame;
-            int duration;
-        };
-
         std::string name;
-        std::vector<Frame> frames;
+        std::vector<int> frames;
         bool looping;
         int frame_duration;
     };
