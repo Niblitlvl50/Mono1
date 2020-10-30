@@ -95,6 +95,12 @@ void Shader::SetValue(const char* property_name, const mono::Color::RGBA& color)
     glUniform4f(uniform_location, color.red, color.green, color.blue, color.alpha);
 }
 
+void Shader::SetTime(float total_time, float delta_time)
+{
+    SetValue("total_time", total_time);
+    SetValue("delta_time", delta_time);
+}
+
 void Shader::SetProjectionAndModelView(const math::Matrix& projection, const math::Matrix& model_view)
 {
     SetValue("p_matrix", projection);

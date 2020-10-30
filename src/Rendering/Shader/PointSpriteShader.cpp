@@ -5,18 +5,19 @@
 namespace
 {
     constexpr const char* vertex_source = R"(
-
     #ifdef __IPHONEOS__
         precision mediump float;
     #endif
+
+        uniform float total_time;
+        uniform float delta_time;
+        uniform mat4 mv_matrix;
+        uniform mat4 p_matrix;
 
         attribute vec2 vertex_position;
         attribute float vertex_rotation;
         attribute vec4 vertex_color;
         attribute float point_size;
-
-        uniform mat4 mv_matrix;
-        uniform mat4 p_matrix;
 
         varying vec4 color;
         varying float rotation;
@@ -31,7 +32,6 @@ namespace
     )";
 
     constexpr const char* fragment_source = R"(
-
         #version 120
 
     #ifdef __IPHONEOS__

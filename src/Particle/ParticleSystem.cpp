@@ -1,6 +1,6 @@
 
 #include "ParticleSystem.h"
-#include "Rendering/IRenderBuffer.h"
+#include "Rendering/RenderBuffer/IRenderBuffer.h"
 #include "Util/Hash.h"
 #include "Util/Algorithm.h"
 #include "Util/Random.h"

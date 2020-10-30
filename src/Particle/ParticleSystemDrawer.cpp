@@ -2,8 +2,8 @@
 #include "ParticleSystemDrawer.h"
 #include "ParticleSystem.h"
 #include "Rendering/IRenderer.h"
-#include "Rendering/IRenderBuffer.h"
-#include "Rendering/BufferFactory.h"
+#include "Rendering/RenderBuffer/IRenderBuffer.h"
+#include "Rendering/RenderBuffer/BufferFactory.h"
 #include "Math/Quad.h"
 
 using namespace mono;

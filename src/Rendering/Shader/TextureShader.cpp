@@ -10,17 +10,25 @@ namespace
         precision mediump float;
     #endif
 
-        attribute vec2 vertex_position;
-        attribute vec2 texture_coord;
-
+        uniform float total_time;
+        uniform float delta_time;
         uniform mat4 mv_matrix;
         uniform mat4 p_matrix;
+
+        uniform bool wind_sway_enabled;
+
+        attribute vec2 vertex_position;
+        attribute vec2 texture_coord;
 
         varying vec2 v_texture_coord;
 
         void main()
         {
-            gl_Position = p_matrix * mv_matrix * vec4(vertex_position, 0.0, 1.0);
+            vec2 wind_sway_offset = vec2(0.0, 0.0);
+            if(wind_sway_enabled)
+                wind_sway_offset.x = sin(total_time);
+
+            gl_Position = p_matrix * mv_matrix * vec4(vertex_position + wind_sway_offset, 0.0, 1.0);
             v_texture_coord = texture_coord;
         }
     )";
@@ -62,6 +70,11 @@ void TextureShader::SetShade(IShader* shader, const mono::Color::RGBA& color)
 void TextureShader::SetAlphaTexture(IShader* shader, bool is_alpha)
 {
     shader->SetValue("is_alpha_texture", is_alpha);
+}
+
+void TextureShader::SetWindSway(IShader* shader, bool enable_wind)
+{
+    shader->SetValue("wind_sway_enabled", enable_wind);
 }
 
 void TextureShader::SetTextureOffset(IShader* shader, float offset)

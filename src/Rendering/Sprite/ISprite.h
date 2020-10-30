@@ -52,6 +52,9 @@ namespace mono
         //! Sets the color shade of the sprite
         virtual void SetShade(const mono::Color::RGBA& color) = 0;
 
+        virtual uint32_t GetProperties() const = 0;
+        virtual void SetProperties(uint32_t properties) = 0;
+
         virtual void SetHorizontalDirection(mono::HorizontalDirection direction) = 0;
         virtual mono::HorizontalDirection GetHorizontalDirection() const = 0;
 

@@ -1,7 +1,7 @@
 
 #include "FrameBufferCD.h"
-#include "Texture/ITextureFactory.h"
-#include "Texture/ITexture.h"
+#include "Rendering/Texture/ITextureFactory.h"
+#include "Rendering/Texture/ITexture.h"
 #include "System/open_gl.h"
 #include "System/System.h"
 

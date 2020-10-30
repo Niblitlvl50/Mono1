@@ -28,6 +28,7 @@ void Sprite::Init(const SpriteData* sprite_data, mono::ITexturePtr texture)
     m_active_frame_time = 0;
     m_playback_mode = PlaybackMode::PLAYING;
 
+    m_properties = 0;
     m_flip_horizontal = false;
     m_flip_vertical = false;
     m_color = mono::Color::RGBA();
@@ -63,6 +64,16 @@ const Color::RGBA& Sprite::GetShade() const
 void Sprite::SetShade(const mono::Color::RGBA& color)
 {
     m_color = color;
+}
+
+uint32_t Sprite::GetProperties() const
+{
+    return m_properties;
+}
+
+void Sprite::SetProperties(uint32_t properties)
+{
+    m_properties = properties;
 }
 
 void Sprite::SetHorizontalDirection(HorizontalDirection direction)

@@ -48,6 +48,7 @@ void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& spr
     mono::GetSpriteFactory()->CreateSprite(sprite, sprite_args.sprite_file);
 
     sprite.SetShade(sprite_args.shade);
+    sprite.SetProperties(sprite_args.properties);
     sprite.SetVerticalDirection(sprite_args.flip_vertical ? VerticalDirection::DOWN : VerticalDirection::UP);
     sprite.SetHorizontalDirection(sprite_args.flip_horizontal ? HorizontalDirection::LEFT : HorizontalDirection::RIGHT);
 

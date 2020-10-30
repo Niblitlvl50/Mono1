@@ -9,12 +9,15 @@ namespace
         precision mediump float;
     #endif
 
-        attribute vec2 vertex_position;
-        attribute vec4 vertex_color;
-
+        uniform float total_time;
+        uniform float delta_time;
         uniform mat4 mv_matrix;
         uniform mat4 p_matrix;
+
         uniform float point_size;
+
+        attribute vec2 vertex_position;
+        attribute vec4 vertex_color;
 
         varying vec4 color;
 

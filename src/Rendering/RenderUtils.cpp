@@ -1,6 +1,6 @@
 
 #include "RenderUtils.h"
-#include "IRenderBuffer.h"
+#include "RenderBuffer/IRenderBuffer.h"
 #include "Shader/ColorShader.h"
 #include "Shader/TextureShader.h"
 #include "Shader/PointSpriteShader.h"

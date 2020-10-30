@@ -37,7 +37,6 @@ namespace mono
 
         void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const override;
         void DrawSprite(const ISprite& sprite) const override;
-        void DrawSprite(const ISprite& sprite, const math::Vector& offset) const override;
         void DrawSprite(
             const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, const ITexture* texture) const override;
         void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const override;

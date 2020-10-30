@@ -22,6 +22,7 @@ namespace mono
         bool flip_horizontal = false;
         int animation_id = 0;
         int layer = 0;
+        uint32_t properties = 0;
     };
 
     using ForEachSpriteFunc = std::function<void (mono::ISprite* sprite, int layer, uint32_t sprite_id)>;

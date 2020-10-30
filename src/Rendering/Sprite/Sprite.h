@@ -20,6 +20,8 @@ namespace mono
         SpriteFrame GetCurrentFrame() const override;
         const Color::RGBA& GetShade() const override;
         void SetShade(const mono::Color::RGBA& color) override;
+        uint32_t GetProperties() const override;
+        void SetProperties(uint32_t properties) override;
         void SetHorizontalDirection(HorizontalDirection direction) override;
         mono::HorizontalDirection GetHorizontalDirection() const override;
         void SetVerticalDirection(VerticalDirection direction) override;
@@ -50,6 +52,7 @@ namespace mono
         int m_active_frame_time;
         PlaybackMode m_playback_mode;
 
+        uint32_t m_properties;
         bool m_flip_horizontal;
         bool m_flip_vertical;
         Color::RGBA m_color;

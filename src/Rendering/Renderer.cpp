@@ -18,7 +18,7 @@
 #include "Math/MathFunctions.h"
 
 #include "ImGui.h"
-#include "FrameBufferCD.h"
+#include "RenderBuffer/FrameBufferCD.h"
 
 #include "System/open_gl.h"
 
@@ -194,16 +194,12 @@ void Renderer::DrawText(int font_id, const char* text, const math::Vector& pos, 
 
 void Renderer::DrawSprite(const ISprite& sprite) const
 {
-    DrawSprite(sprite, math::ZeroVec);
-}
-
-void Renderer::DrawSprite(const ISprite& sprite, const math::Vector& offset) const
-{
     const mono::ITexturePtr texture = sprite.GetTexture();
     const SpriteFrame& current_frame = sprite.GetCurrentFrame();
     UseShader(m_texture_shader.get());
     TextureShader::SetShade(m_texture_shader.get(), sprite.GetShade());
-    DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset + offset, texture.get());
+    TextureShader::SetWindSway(m_texture_shader.get(), sprite.GetProperties() != 0);
+    DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset, texture.get());
 }
 
 void Renderer::DrawSprite(
@@ -317,6 +313,8 @@ void Renderer::UseShader(IShader* shader) const
         shader->Use();
         m_current_shader_id = id;
     }
+
+    shader->SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
 
     const math::Matrix& projection = m_projection_stack.top();
     const math::Matrix& modelview = m_modelview_stack.top();
