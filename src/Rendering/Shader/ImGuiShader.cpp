@@ -13,8 +13,9 @@ namespace
 
         uniform float total_time;
         uniform float delta_time;
-        uniform mat4 mv_matrix;
-        uniform mat4 p_matrix;
+        uniform mat4 model;
+        uniform mat4 view;
+        uniform mat4 projection;
 
         attribute vec2 Position;
         attribute vec2 UV;
@@ -27,7 +28,7 @@ namespace
         {
             Frag_UV = UV;
             Frag_Color = Color;
-            gl_Position = p_matrix * mv_matrix * vec4(Position.xy, 0.0, 1.0);
+            gl_Position = projection * view * model * vec4(Position.xy, 0.0, 1.0);
         }
     )";
 

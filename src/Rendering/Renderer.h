@@ -98,7 +98,8 @@ namespace mono
         math::Quad m_viewport;
 
         std::stack<math::Matrix> m_projection_stack;
-        std::stack<math::Matrix> m_modelview_stack;
+        std::stack<math::Matrix> m_model_stack;
+        math::Matrix m_view_matrix;
 
         uint32_t m_delta_time_ms = 0;
         uint32_t m_timestamp = 0;
@@ -110,6 +111,7 @@ namespace mono
         std::unique_ptr<IShader> m_texture_shader;
         std::unique_ptr<IShader> m_point_sprite_shader;
         std::unique_ptr<IShader> m_screen_shader;
+        std::unique_ptr<IShader> m_sprite_shader;
 
         std::unique_ptr<class FrameBuffer> m_frame_buffer;
 

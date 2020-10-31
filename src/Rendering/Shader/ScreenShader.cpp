@@ -11,8 +11,9 @@ namespace
 
         uniform float total_time;
         uniform float delta_time;
-        uniform mat4 mv_matrix;
-        uniform mat4 p_matrix;
+        uniform mat4 model;
+        uniform mat4 view;
+        uniform mat4 projection;
 
         attribute vec2 vertex_position;
         attribute vec2 texture_coord;

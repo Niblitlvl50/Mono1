@@ -137,7 +137,7 @@ namespace
         {}
         void SetTime(float total_time, float delta_time) override
         {}
-        void SetProjectionAndModelView(const math::Matrix& projection, const math::Matrix& model_view) override
+        void SetProjectionViewModel(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model) override
         {}
     };
 
@@ -161,6 +161,10 @@ namespace
             return std::make_unique<NullShader>();
         }
         std::unique_ptr<mono::IShader> CreateImGuiShader() const override
+        {
+            return std::make_unique<NullShader>();
+        }
+        std::unique_ptr<mono::IShader> CreateSpriteShader() const override
         {
             return std::make_unique<NullShader>();
         }

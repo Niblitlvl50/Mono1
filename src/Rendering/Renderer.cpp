@@ -10,6 +10,7 @@
 #include "Shader/IShaderFactory.h"
 #include "Shader/ShaderFunctions.h"
 #include "Shader/TextureShader.h"
+#include "Shader/SpriteShader.h"
 
 #include "Sprite/ISprite.h"
 
@@ -54,6 +55,7 @@ Renderer::Renderer()
     m_texture_shader = GetShaderFactory()->CreateTextureShader();
     m_point_sprite_shader = GetShaderFactory()->CreatePointSpriteShader();
     m_screen_shader = GetShaderFactory()->CreateScreenShader();
+    m_sprite_shader = GetShaderFactory()->CreateSpriteShader();
 
     m_imgui_context.shader = GetShaderFactory()->CreateImGuiShader();
     mono::InitializeImGui(m_imgui_context);
@@ -108,16 +110,16 @@ uint32_t Renderer::GetTimestamp() const
 void Renderer::PrepareDraw()
 {
     m_projection_stack = { };
-    m_modelview_stack = { };
+    m_model_stack = { };
 
     const float viewport_width = math::Width(m_viewport);
     const float ratio = m_window_size.x / m_window_size.y;
     m_projection_stack.push(math::Ortho(0.0f, viewport_width, 0.0f, viewport_width / ratio, -10.0f, 10.0f));
 
-    math::Matrix modelview;
-    math::Translate(modelview, -m_viewport.mA);
+    math::Identity(m_view_matrix);
+    math::Translate(m_view_matrix, -m_viewport.mA);
 
-    m_modelview_stack.push(modelview);
+    m_model_stack.push(math::Matrix()); // Push identity
 
     if(!m_frame_buffer || m_frame_buffer->Size() != m_drawable_size)
     {
@@ -196,9 +198,9 @@ void Renderer::DrawSprite(const ISprite& sprite) const
 {
     const mono::ITexturePtr texture = sprite.GetTexture();
     const SpriteFrame& current_frame = sprite.GetCurrentFrame();
-    UseShader(m_texture_shader.get());
-    TextureShader::SetShade(m_texture_shader.get(), sprite.GetShade());
-    TextureShader::SetWindSway(m_texture_shader.get(), sprite.GetProperties() != 0);
+    UseShader(m_sprite_shader.get());
+    SpriteShader::SetShade(m_sprite_shader.get(), sprite.GetShade());
+    SpriteShader::SetWindSway(m_sprite_shader.get(), sprite.GetProperties() != 0);
     DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset, texture.get());
 }
 
@@ -206,8 +208,8 @@ void Renderer::DrawSprite(
     const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, const ITexture* texture) const
 {
     UseTexture(texture);
-    UseShader(m_texture_shader.get());
-    ::DrawSprite(sprite_coords, size, offset, m_texture_shader.get());
+    UseShader(m_sprite_shader.get());
+    ::DrawSprite(sprite_coords, size, offset, m_sprite_shader.get());
 
     PROCESS_GL_ERRORS();
 }
@@ -317,8 +319,8 @@ void Renderer::UseShader(IShader* shader) const
     shader->SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
 
     const math::Matrix& projection = m_projection_stack.top();
-    const math::Matrix& modelview = m_modelview_stack.top();
-    shader->SetProjectionAndModelView(projection, modelview);
+    const math::Matrix& model = m_model_stack.top();
+    shader->SetProjectionViewModel(projection, m_view_matrix, model);
 
     PROCESS_GL_ERRORS();
 }
@@ -343,17 +345,17 @@ void Renderer::ClearTexture()
 
 const math::Matrix& Renderer::GetTransform() const
 {
-    return m_modelview_stack.top();
+    return m_model_stack.top();
 }
 
 void Renderer::PushNewTransform(const math::Matrix& transform)
 {
-    m_modelview_stack.push(transform);
+    m_model_stack.push(transform);
 }
 
 void Renderer::PopTransform()
 {
-    m_modelview_stack.pop();
+    m_model_stack.pop();
 }
 
 void Renderer::PushNewProjection(const math::Matrix& projection)

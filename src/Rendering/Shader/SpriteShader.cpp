@@ -1,5 +1,5 @@
 
-#include "TextureShader.h"
+#include "SpriteShader.h"
 #include "Shader.h"
 #include "Rendering/Color.h"
 
@@ -20,6 +20,7 @@ namespace
 
         attribute vec2 vertex_position;
         attribute vec2 texture_coord;
+        attribute float vertex_height;
 
         varying vec2 v_texture_coord;
 
@@ -27,7 +28,10 @@ namespace
         {
             vec2 wind_sway_offset = vec2(0.0, 0.0);
             if(wind_sway_enabled)
-                wind_sway_offset.x = sin(total_time);
+            {
+                float noise = abs(noise1(model[3][0]));
+                wind_sway_offset.x = sin(total_time) * noise * (vertex_height * 0.5);
+            }
 
             gl_Position = projection * view * model * vec4(vertex_position + wind_sway_offset, 0.0, 1.0);
             v_texture_coord = texture_coord;
@@ -43,52 +47,42 @@ namespace
 
         uniform vec4 color_shade;
         uniform sampler2D sampler;
-        uniform bool is_alpha_texture;
-        uniform float texture_offset;
 
         void main()
         {
-            if(is_alpha_texture)
-                gl_FragColor = texture2D(sampler, v_texture_coord).aaaa * color_shade;
-            else
-                gl_FragColor = texture2D(sampler, v_texture_coord) * color_shade;
+            gl_FragColor = texture2D(sampler, v_texture_coord) * color_shade;
         }
     )";
 }
 
 using namespace mono;
 
-std::unique_ptr<mono::IShader> TextureShader::MakeShader()
+std::unique_ptr<mono::IShader> SpriteShader::MakeShader()
 {
     return std::make_unique<Shader>(vertex_source, fragment_source);
 }
 
-void TextureShader::SetShade(IShader* shader, const mono::Color::RGBA& color)
+void SpriteShader::SetShade(IShader* shader, const mono::Color::RGBA& color)
 {
     shader->SetValue("color_shade", color);
 }
 
-void TextureShader::SetAlphaTexture(IShader* shader, bool is_alpha)
-{
-    shader->SetValue("is_alpha_texture", is_alpha);
-}
-
-void TextureShader::SetWindSway(IShader* shader, bool enable_wind)
+void SpriteShader::SetWindSway(IShader* shader, bool enable_wind)
 {
     shader->SetValue("wind_sway_enabled", enable_wind);
 }
 
-void TextureShader::SetTextureOffset(IShader* shader, float offset)
-{
-    shader->SetValue("texture_offset", offset);
-}
-
-uint32_t TextureShader::GetPositionAttribute(IShader* shader)
+uint32_t SpriteShader::GetPositionAttribute(IShader* shader)
 {
     return shader->GetAttributeLocation("vertex_position");
 }
 
-uint32_t TextureShader::GetTextureAttribute(IShader* shader)
+uint32_t SpriteShader::GetTextureAttribute(IShader* shader)
 {
     return shader->GetAttributeLocation("texture_coord");
+}
+
+uint32_t SpriteShader::GetHeightAttribute(IShader* shader)
+{
+    return shader->GetAttributeLocation("vertex_height");
 }

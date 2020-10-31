@@ -11,8 +11,9 @@ namespace
 
         uniform float total_time;
         uniform float delta_time;
-        uniform mat4 mv_matrix;
-        uniform mat4 p_matrix;
+        uniform mat4 model;
+        uniform mat4 view;
+        uniform mat4 projection;
 
         uniform float point_size;
 
@@ -23,7 +24,7 @@ namespace
 
         void main()
         {
-            gl_Position = p_matrix * mv_matrix * vec4(vertex_position, 0.0, 1.0);
+            gl_Position = projection * view * model * vec4(vertex_position, 0.0, 1.0);
             gl_PointSize = point_size;
             color = vertex_color;
         }

@@ -101,8 +101,9 @@ void Shader::SetTime(float total_time, float delta_time)
     SetValue("delta_time", delta_time);
 }
 
-void Shader::SetProjectionAndModelView(const math::Matrix& projection, const math::Matrix& model_view)
+void Shader::SetProjectionViewModel(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model)
 {
-    SetValue("p_matrix", projection);
-    SetValue("mv_matrix", model_view);
+    SetValue("projection", projection);
+    SetValue("view", view);
+    SetValue("model", model);
 }

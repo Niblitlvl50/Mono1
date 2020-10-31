@@ -23,7 +23,7 @@ namespace mono
         void SetValue(const char* property_name, const math::Matrix& transform) override;
         void SetValue(const char* property_name, const mono::Color::RGBA& color) override;
         void SetTime(float total_time, float delta_time) override;
-        void SetProjectionAndModelView(const math::Matrix& projection, const math::Matrix& model_view) override;
+        void SetProjectionViewModel(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model) override;
 
     private:
 

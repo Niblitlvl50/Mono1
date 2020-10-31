@@ -17,5 +17,6 @@ namespace mono
         virtual std::unique_ptr<IShader> CreatePointSpriteShader() const = 0;
         virtual std::unique_ptr<IShader> CreateScreenShader() const = 0;
         virtual std::unique_ptr<IShader> CreateImGuiShader() const = 0;
+        virtual std::unique_ptr<IShader> CreateSpriteShader() const = 0;
     };
 }

@@ -21,6 +21,6 @@ namespace mono
         virtual void SetValue(const char* property_name, const math::Matrix& transform) = 0;
         virtual void SetValue(const char* property_name, const mono::Color::RGBA& color) = 0;
         virtual void SetTime(float total_time, float delta_time) = 0;
-        virtual void SetProjectionAndModelView(const math::Matrix& projection, const math::Matrix& model_view) = 0;
+        virtual void SetProjectionViewModel(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model) = 0;
     };
 }

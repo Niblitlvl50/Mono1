@@ -5,6 +5,7 @@
 #include "Shader/TextureShader.h"
 #include "Shader/PointSpriteShader.h"
 #include "Shader/ScreenShader.h"
+#include "Shader/SpriteShader.h"
 #include "Sprite/ISprite.h"
 #include "Text/TextDefinition.h"
 #include "Texture/ITexture.h"
@@ -100,10 +101,6 @@ void mono::DrawSprite(
         math::Vector( sprite_size.x, -sprite_size.y) + offset
     };
 
-    constexpr uint16_t indices[] = {
-        0, 1, 2, 0, 2, 3
-    };
-
     const float texture_coords[] = {
         sprite_coords.mA.x, sprite_coords.mA.y,
         sprite_coords.mA.x, sprite_coords.mB.y,
@@ -111,18 +108,31 @@ void mono::DrawSprite(
         sprite_coords.mB.x, sprite_coords.mA.y
     };
 
-    TextureShader::SetAlphaTexture(shader, false);
+    const float height_values[] = {
+        0.0f, 1.0f, 1.0f, 0.0f
+    };
 
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
+    constexpr uint16_t indices[] = {
+        0, 1, 2, 0, 2, 3
+    };
 
-    glVertexAttribPointer(TextureShader::GetPositionAttribute(shader), 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(TextureShader::GetTextureAttribute(shader), 2, GL_FLOAT, GL_FALSE, 0, texture_coords);
+    const uint32_t vertex_location = SpriteShader::GetPositionAttribute(shader);
+    const uint32_t texture_location = SpriteShader::GetTextureAttribute(shader);
+    const uint32_t height_location = SpriteShader::GetHeightAttribute(shader);
+
+    glEnableVertexAttribArray(vertex_location);
+    glEnableVertexAttribArray(texture_location);
+    glEnableVertexAttribArray(height_location);
+
+    glVertexAttribPointer(vertex_location, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(texture_location, 2, GL_FLOAT, GL_FALSE, 0, texture_coords);
+    glVertexAttribPointer(height_location, 1, GL_FLOAT, GL_FALSE, 0, height_values);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
 
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(vertex_location);
+    glDisableVertexAttribArray(texture_location);
+    glDisableVertexAttribArray(height_location);
 }
 
 void mono::DrawScreen(const math::Quad& sprite_coords, const math::Vector& size, IShader* shader)

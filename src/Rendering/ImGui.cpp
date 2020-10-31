@@ -65,10 +65,10 @@ void mono::DrawImGui(mono::ImGuiContext& imgui_context, mono::IRenderer& rendere
 
     const math::Matrix& projection =
         math::Ortho(0.0f, imgui_context.window_size.x, imgui_context.window_size.y, 0.0f, -10.0f, 10.0f);
-    constexpr math::Matrix model_view;
+    constexpr math::Matrix identity;
 
     renderer.UseShader(imgui_context.shader.get());
-    imgui_context.shader->SetProjectionAndModelView(projection, model_view);
+    imgui_context.shader->SetProjectionViewModel(projection, identity, identity);
 
     glEnable(GL_SCISSOR_TEST);
 

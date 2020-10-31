@@ -14,6 +14,7 @@ namespace mono
         std::unique_ptr<IShader> CreatePointSpriteShader() const override;
         std::unique_ptr<IShader> CreateScreenShader() const override;
         std::unique_ptr<IShader> CreateImGuiShader() const override;
+        std::unique_ptr<IShader> CreateSpriteShader() const override;
     };
 }
 
