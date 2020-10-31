@@ -200,7 +200,7 @@ void Renderer::DrawSprite(const ISprite& sprite) const
     const SpriteFrame& current_frame = sprite.GetCurrentFrame();
     UseShader(m_sprite_shader.get());
     SpriteShader::SetShade(m_sprite_shader.get(), sprite.GetShade());
-    SpriteShader::SetWindSway(m_sprite_shader.get(), sprite.GetProperties() != 0);
+    SpriteShader::SetWindSway(m_sprite_shader.get(), sprite.GetProperties() != 0); // This is not great!
     DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset, texture.get());
 }
 

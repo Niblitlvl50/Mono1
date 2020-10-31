@@ -29,8 +29,8 @@ namespace
             vec2 wind_sway_offset = vec2(0.0, 0.0);
             if(wind_sway_enabled)
             {
-                float noise = abs(noise1(model[3][0]));
-                wind_sway_offset.x = sin(total_time) * noise * (vertex_height * 0.5);
+                float noise = abs(noise1(model[3][0])); // Use world x as noise parameter to make some difference.
+                wind_sway_offset.x = clamp(sin(total_time) * noise * (vertex_height * 0.25), -0.5, 0.5);
             }
 
             gl_Position = projection * view * model * vec4(vertex_position + wind_sway_offset, 0.0, 1.0);
