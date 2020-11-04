@@ -110,14 +110,16 @@ uint32_t Renderer::GetTimestamp() const
 void Renderer::PrepareDraw()
 {
     m_projection_stack = { };
+    m_view_stack = { };
     m_model_stack = { };
 
     const float viewport_width = math::Width(m_viewport);
     const float ratio = m_window_size.x / m_window_size.y;
     m_projection_stack.push(math::Ortho(0.0f, viewport_width, 0.0f, viewport_width / ratio, -10.0f, 10.0f));
 
-    math::Identity(m_view_matrix);
-    math::Translate(m_view_matrix, -m_viewport.mA);
+    math::Matrix view_transform;
+    math::Translate(view_transform, -m_viewport.mA);
+    m_view_stack.push(view_transform);
 
     m_model_stack.push(math::Matrix()); // Push identity
 
@@ -319,8 +321,9 @@ void Renderer::UseShader(IShader* shader) const
     shader->SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
 
     const math::Matrix& projection = m_projection_stack.top();
+    const math::Matrix& view = m_view_stack.top();
     const math::Matrix& model = m_model_stack.top();
-    shader->SetProjectionViewModel(projection, m_view_matrix, model);
+    shader->SetProjectionViewModel(projection, view, model);
 
     PROCESS_GL_ERRORS();
 }
@@ -366,4 +369,14 @@ void Renderer::PushNewProjection(const math::Matrix& projection)
 void Renderer::PopProjection()
 {
     m_projection_stack.pop();
+}
+
+void Renderer::PushNewViewTransform(const math::Matrix& transform)
+{
+    m_view_stack.push(transform);
+}
+
+void Renderer::PopViewTransform()
+{
+    m_view_stack.pop();
 }

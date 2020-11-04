@@ -88,6 +88,9 @@ namespace mono
         void PushNewProjection(const math::Matrix& projection) override;
         void PopProjection() override;
 
+        void PushNewViewTransform(const math::Matrix& transform) override;
+        void PopViewTransform() override;
+
     private:
 
         void PrepareDraw();
@@ -99,7 +102,7 @@ namespace mono
 
         std::stack<math::Matrix> m_projection_stack;
         std::stack<math::Matrix> m_model_stack;
-        math::Matrix m_view_matrix;
+        std::stack<math::Matrix> m_view_stack;
 
         uint32_t m_delta_time_ms = 0;
         uint32_t m_timestamp = 0;

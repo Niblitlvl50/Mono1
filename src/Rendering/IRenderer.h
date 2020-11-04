@@ -70,6 +70,9 @@ namespace mono
         virtual void PushNewProjection(const math::Matrix& projection) = 0;
         virtual void PopProjection() = 0;
 
+        virtual void PushNewViewTransform(const math::Matrix& transform) = 0;
+        virtual void PopViewTransform() = 0;
+
         virtual const math::Quad& GetViewport() const = 0;
         virtual bool Cull(const math::Quad& world_bb) const = 0;
 
@@ -111,5 +114,10 @@ namespace mono
     inline ScopedTransform MakeProjectionScope(const math::Matrix& transform, IRenderer* renderer)
     {
         return ScopedTransform(transform, renderer, &mono::IRenderer::PushNewProjection, &mono::IRenderer::PopProjection);
+    }
+
+    inline ScopedTransform MakeViewTransformScope(const math::Matrix& transform, IRenderer* renderer)
+    {
+        return ScopedTransform(transform, renderer, &mono::IRenderer::PushNewViewTransform, &mono::IRenderer::PopViewTransform);
     }
 }
