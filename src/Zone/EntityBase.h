@@ -41,7 +41,7 @@ namespace mono
         ~EntityBase();
 
         virtual void EntityDraw(mono::IRenderer& renderer) const = 0;
-        virtual void EntityUpdate(const UpdateContext& update_context) = 0;
+        virtual void EntityUpdate(const mono::UpdateContext& update_context) = 0;
 
         void Draw(IRenderer& renderer) const override;
         void Update(const UpdateContext& update_context) override;
