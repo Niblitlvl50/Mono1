@@ -109,7 +109,7 @@ void mono::DrawSprite(
     };
 
     const float height_values[] = {
-        0.0f, 1.0f, 1.0f, 0.0f
+        0.0f, size.y, size.y, 0.0f
     };
 
     constexpr uint16_t indices[] = {
