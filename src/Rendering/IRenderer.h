@@ -20,7 +20,7 @@ namespace mono
         virtual void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const = 0;
         virtual void DrawSprite(const ISprite& sprite) const = 0;
         virtual void DrawSprite(
-            const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, const ITexture* texture) const = 0;
+            const math::Quad& texture_coordinates, const math::Vector& size, const math::Vector& offset, const ITexture* texture) const = 0;
         virtual void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const = 0;
         virtual void DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;
         virtual void DrawPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;

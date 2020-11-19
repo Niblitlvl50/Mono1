@@ -16,9 +16,9 @@ namespace mono
     void DrawCircle(
         const math::Vector& position, float radie, uint32_t segments, float line_width, const mono::Color::RGBA& color, IShader* shader);
     void DrawSprite(
-        const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, IShader* shader);
+        const math::Quad& texture_coordinates, const math::Vector& size, const math::Vector& offset, IShader* shader);
     // Special drawing the screen...
-    void DrawScreen(const math::Quad& sprite_coords, const math::Vector& size, IShader* shader);
+    void DrawScreen(const math::Quad& texture_coordinates, const math::Vector& size, IShader* shader);
     void DrawText(const struct TextDefinition& text, IShader* shader);
     //! Draws a single line
     void DrawLine(

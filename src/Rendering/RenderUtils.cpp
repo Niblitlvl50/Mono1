@@ -90,7 +90,7 @@ void mono::DrawCircle(const math::Vector& position,
 }
 
 void mono::DrawSprite(
-    const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, IShader* shader)
+    const math::Quad& texture_coordinates, const math::Vector& size, const math::Vector& offset, IShader* shader)
 {
    const math::Vector& sprite_size = size / 2.0f;
 
@@ -102,10 +102,10 @@ void mono::DrawSprite(
     };
 
     const float texture_coords[] = {
-        sprite_coords.mA.x, sprite_coords.mA.y,
-        sprite_coords.mA.x, sprite_coords.mB.y,
-        sprite_coords.mB.x, sprite_coords.mB.y,
-        sprite_coords.mB.x, sprite_coords.mA.y
+        texture_coordinates.mA.x, texture_coordinates.mA.y,
+        texture_coordinates.mA.x, texture_coordinates.mB.y,
+        texture_coordinates.mB.x, texture_coordinates.mB.y,
+        texture_coordinates.mB.x, texture_coordinates.mA.y
     };
 
     const float height_values[] = {
@@ -135,7 +135,7 @@ void mono::DrawSprite(
     glDisableVertexAttribArray(height_location);
 }
 
-void mono::DrawScreen(const math::Quad& sprite_coords, const math::Vector& size, IShader* shader)
+void mono::DrawScreen(const math::Quad& texture_coordinates, const math::Vector& size, IShader* shader)
 {
     const math::Vector vertices[] = {
         math::Vector(-size.x, -size.y),
@@ -149,10 +149,10 @@ void mono::DrawScreen(const math::Quad& sprite_coords, const math::Vector& size,
     };
 
     const float texture_coords[] = {
-        sprite_coords.mA.x, sprite_coords.mA.y,
-        sprite_coords.mA.x, sprite_coords.mB.y,
-        sprite_coords.mB.x, sprite_coords.mB.y,
-        sprite_coords.mB.x, sprite_coords.mA.y
+        texture_coordinates.mA.x, texture_coordinates.mA.y,
+        texture_coordinates.mA.x, texture_coordinates.mB.y,
+        texture_coordinates.mB.x, texture_coordinates.mB.y,
+        texture_coordinates.mB.x, texture_coordinates.mA.y
     };
 
     glEnableVertexAttribArray(0);

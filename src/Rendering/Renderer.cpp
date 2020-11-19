@@ -207,11 +207,11 @@ void Renderer::DrawSprite(const ISprite& sprite) const
 }
 
 void Renderer::DrawSprite(
-    const math::Quad& sprite_coords, const math::Vector& size, const math::Vector& offset, const ITexture* texture) const
+    const math::Quad& texture_coordinates, const math::Vector& size, const math::Vector& offset, const ITexture* texture) const
 {
     UseTexture(texture);
     UseShader(m_sprite_shader.get());
-    ::DrawSprite(sprite_coords, size, offset, m_sprite_shader.get());
+    ::DrawSprite(texture_coordinates, size, offset, m_sprite_shader.get());
 
     PROCESS_GL_ERRORS();
 }
