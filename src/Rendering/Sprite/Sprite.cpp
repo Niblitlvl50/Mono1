@@ -140,15 +140,10 @@ void Sprite::SetAnimation(const char* name)
     SetAnimation(name, nullptr);
 }
 
-void Sprite::SetAnimation(const char* name, const SpriteAnimationCallback& callback)
+void Sprite::SetAnimation(const char* animation_name, const SpriteAnimationCallback& callback)
 {
-    const auto find_by_name = [name](const SpriteAnimation& animation) {
-        return (std::strcmp(name, animation.name.c_str()));
-    };
-
-    const auto it = std::find_if(m_sprite_data->animations.begin(), m_sprite_data->animations.end(), find_by_name);
-    if(it != m_sprite_data->animations.end())
-        SetAnimation(std::distance(m_sprite_data->animations.begin(), it), callback);
+    const int animation_id = GetAnimationIdFromName(animation_name);
+    SetAnimation(animation_id, callback);
 }
 
 void Sprite::SetAnimation(int id, const SpriteAnimationCallback& callback)
@@ -208,6 +203,31 @@ const mono::SpriteData* Sprite::GetSpriteData() const
 int Sprite::GetActiveAnimation() const
 {
     return m_active_animation;
+}
+
+uint32_t Sprite::GetAnimationLength(int animation_id) const
+{
+    const mono::SpriteAnimation& animation = m_sprite_data->animations[animation_id];
+    return (animation.frames.size() * animation.frame_duration);
+}
+
+uint32_t Sprite::GetAnimationLength(const char* animation_name) const
+{
+    const int animation_id = GetAnimationIdFromName(animation_name);
+    return GetAnimationLength(animation_id);
+}
+
+int Sprite::GetAnimationIdFromName(const char* animation_name) const
+{
+    const auto find_by_name = [animation_name](const SpriteAnimation& animation) {
+        return (std::strcmp(animation_name, animation.name.c_str()) == 0);
+    };
+
+    const auto it = std::find_if(m_sprite_data->animations.begin(), m_sprite_data->animations.end(), find_by_name);
+    if(it != m_sprite_data->animations.end())
+        return std::distance(m_sprite_data->animations.begin(), it);
+
+    return -1;
 }
 
 void Sprite::SetActiveAnimationFrame(int frame)
