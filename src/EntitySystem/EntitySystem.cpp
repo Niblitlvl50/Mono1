@@ -40,6 +40,8 @@ void EntitySystem::ReleaseEntity(uint32_t entity_id)
 
 Entity* EntitySystem::GetEntity(uint32_t entity_id)
 {
+    if(entity_id >= m_entities.size())
+        return nullptr;
     return &m_entities[entity_id];
 }
 
