@@ -69,12 +69,12 @@ math::Vector BodyImpl::GetPosition() const
 
 void BodyImpl::ApplyForce(const math::Vector& force, const math::Vector& offset) 
 {
-    cpBodyApplyForceAtWorldPoint(m_body_handle, cpv(force.y, force.y), cpv(offset.x, offset.y));
+    cpBodyApplyForceAtWorldPoint(m_body_handle, cpv(force.x, force.y), cpv(offset.x, offset.y));
 }
 
 void BodyImpl::ApplyLocalForce(const math::Vector& force, const math::Vector& offset) 
 {
-    cpBodyApplyForceAtLocalPoint(m_body_handle, cpv(force.y, force.y), cpv(offset.x, offset.y));
+    cpBodyApplyForceAtLocalPoint(m_body_handle, cpv(force.x, force.y), cpv(offset.x, offset.y));
 }
 
 void BodyImpl::ApplyImpulse(const math::Vector& impulse, const math::Vector& offset) 
@@ -135,7 +135,10 @@ void BodyImpl::OnSeparateFrom(IBody* body)
 void BodyImpl::SetNoDamping() 
 {
     const cpBodyVelocityFunc null_func = [](cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
-    { };
+    {
+        // Use default but set no damping.
+        cpBodyUpdateVelocity(body, gravity, 1.0f, dt);
+    };
 
     cpBodySetVelocityUpdateFunc(m_body_handle, null_func);
 }
