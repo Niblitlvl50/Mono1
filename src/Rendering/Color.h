@@ -60,12 +60,14 @@ namespace mono
         uint32_t ToHex(const mono::Color::RGBA& color);
         mono::Color::RGBA ToRGBA(uint32_t hex_color);
 
-        constexpr mono::Color::RGBA WHITE   = mono::Color::RGBA(1.0f, 1.0f, 1.0f);
-        constexpr mono::Color::RGBA BLACK   = mono::Color::RGBA(0.0f, 0.0f, 0.0f);
-        constexpr mono::Color::RGBA RED     = mono::Color::RGBA(1.0f, 0.0f, 0.0f);
-        constexpr mono::Color::RGBA GREEN   = mono::Color::RGBA(0.0f, 1.0f, 0.0f);
-        constexpr mono::Color::RGBA BLUE    = mono::Color::RGBA(0.0f, 0.0f, 1.0f);
-        constexpr mono::Color::RGBA MAGENTA = mono::Color::RGBA(1.0f, 0.0f, 1.0f);
-        constexpr mono::Color::RGBA CYAN    = mono::Color::RGBA(0.0f, 1.0f, 1.0f);
+        constexpr mono::Color::RGBA WHITE       = mono::Color::RGBA(1.0f, 1.0f, 1.0f);
+        constexpr mono::Color::RGBA OFF_WHITE   = mono::Color::RGBA(0.9f, 0.9f, 0.9f);
+        constexpr mono::Color::RGBA GRAY        = mono::Color::RGBA(0.5f, 0.5f, 0.5f);
+        constexpr mono::Color::RGBA BLACK       = mono::Color::RGBA(0.0f, 0.0f, 0.0f);
+        constexpr mono::Color::RGBA RED         = mono::Color::RGBA(1.0f, 0.0f, 0.0f);
+        constexpr mono::Color::RGBA GREEN       = mono::Color::RGBA(0.0f, 1.0f, 0.0f);
+        constexpr mono::Color::RGBA BLUE        = mono::Color::RGBA(0.0f, 0.0f, 1.0f);
+        constexpr mono::Color::RGBA MAGENTA     = mono::Color::RGBA(1.0f, 0.0f, 1.0f);
+        constexpr mono::Color::RGBA CYAN        = mono::Color::RGBA(0.0f, 1.0f, 1.0f);
     }
 }
