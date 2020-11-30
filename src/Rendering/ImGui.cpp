@@ -24,6 +24,7 @@ void mono::InitializeImGui(mono::ImGuiContext& imgui_context)
 {
     ImGui::CreateContext();
     ImGui::GetIO().DisplaySize = ImVec2(imgui_context.window_size.x, imgui_context.window_size.y);
+    ImGui::GetIO().IniFilename = nullptr;
 
     int width;
     int height;
