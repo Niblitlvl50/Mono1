@@ -15,6 +15,7 @@ SpriteSystem::SpriteSystem(size_t n_sprites, mono::TransformSystem* transform_sy
 {
     m_sprites.resize(n_sprites);
     m_sprite_layers.resize(n_sprites, 0);
+    m_enabled.resize(n_sprites, true);
     m_alive.resize(n_sprites, false);
 }
 
@@ -82,6 +83,11 @@ int SpriteSystem::GetSpriteLayer(uint32_t sprite_id) const
     return m_sprite_layers[sprite_id];
 }
 
+void SpriteSystem::SetSpriteEnabled(uint32_t sprite_id, bool enabled)
+{
+    m_enabled[sprite_id] = enabled;
+}
+
 uint32_t SpriteSystem::Id() const
 {
     return mono::Hash(Name());
@@ -96,7 +102,7 @@ void SpriteSystem::Update(const UpdateContext& update_context)
 {
     for(size_t index = 0; index < m_sprites.size(); ++index)
     {
-        if(m_alive[index])
+        if(m_alive[index] && m_enabled[index])
         {
             mono::Sprite& sprite = m_sprites[index];
             sprite.Update(update_context);
@@ -118,7 +124,7 @@ void SpriteSystem::ForEachSprite(ForEachSpriteFunc func)
 {
     for(size_t index = 0; index < m_sprites.size(); ++index)
     {
-        if(m_alive[index])
+        if(m_alive[index] && m_enabled[index])
             func(&m_sprites[index], m_sprite_layers[index], index);
     }
 }

@@ -42,6 +42,7 @@ namespace mono
 
         mono::Sprite* GetSprite(uint32_t sprite_id);
         int GetSpriteLayer(uint32_t sprite_id) const;
+        void SetSpriteEnabled(uint32_t sprite_id, bool enabled);
         void ForEachSprite(ForEachSpriteFunc func);
 
         uint32_t Id() const override;
@@ -53,6 +54,7 @@ namespace mono
         mono::TransformSystem* m_transform_system;
         std::vector<mono::Sprite> m_sprites;
         std::vector<int> m_sprite_layers;
+        std::vector<bool> m_enabled;
         std::vector<bool> m_alive;
     };
 }
