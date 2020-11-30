@@ -97,7 +97,7 @@ namespace mono
         ParticleEmitterComponent* AttachEmitter(
             uint32_t pool_id,
             const math::Vector& position,
-            float duration,
+            float duration_seconds,
             float emit_rate,
             EmitterType emitter_type,
             ParticleGenerator generator);
