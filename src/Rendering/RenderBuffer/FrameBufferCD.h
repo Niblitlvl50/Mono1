@@ -4,6 +4,8 @@
 #include "Math/Vector.h"
 #include "Rendering/Texture/ITextureFactory.h"
 
+#include <cstdint>
+
 namespace mono
 {
     class FrameBuffer
@@ -17,12 +19,16 @@ namespace mono
         mono::ITexturePtr Texture() const;
         void Use();
 
+        bool CopyFrameBufferData(byte* data, uint32_t data_length);
+
     private:
         const math::Vector m_size;
         ITexturePtr m_texture;
-        unsigned int m_fbo;
-        //unsigned int m_fbo_texture;
-        unsigned int m_rbo;
+        uint32_t m_fbo;
+        uint32_t m_rbo_depth_stencil;
+        uint32_t m_rbo_color;
+
+        uint32_t m_pbo;
     };
 
     void ClearFrameBuffer();

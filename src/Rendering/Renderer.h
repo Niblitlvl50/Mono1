@@ -13,6 +13,8 @@
 
 namespace mono
 {
+    class FrameBuffer;
+
     class Renderer : public IRenderer
     {
     public:
@@ -26,6 +28,7 @@ namespace mono
         void SetDeltaAndTimestamp(uint32_t delta_ms, uint32_t timestamp);
 
         void DrawFrame();
+        mono::FrameBuffer* GetFramebuffer() const;
 
         const math::Quad& GetViewport() const override;
         bool Cull(const math::Quad& world_bb) const override;

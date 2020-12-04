@@ -176,6 +176,11 @@ void Renderer::DrawFrame()
     EndDraw();
 }
 
+mono::FrameBuffer* Renderer::GetFramebuffer() const
+{
+    return m_frame_buffer.get();
+}
+
 void Renderer::AddDrawable(const IDrawable* drawable)
 {
     m_drawables.push_back(drawable);
