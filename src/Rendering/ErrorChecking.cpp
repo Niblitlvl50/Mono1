@@ -4,13 +4,13 @@
 #include "System/System.h"
 #include <cstdio>
 
-void ProcessGLErrors(const char* error_context)
+void ProcessGLErrors(int line, const char* error_context)
 {
     bool print_backtrace = false;
     GLenum error;
     while((error = glGetError()) != GL_NO_ERROR)
     {
-        System::Log("OpenGL Error: 0x%X - context: %s\n", error, error_context);
+        System::Log("OpenGL Error: 0x%X - %s @ line %d\n", error, error_context, line);
         print_backtrace = true;
     }
 
