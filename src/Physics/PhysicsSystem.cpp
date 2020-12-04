@@ -197,7 +197,15 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const CircleComponent& p
 
     m_impl->m_shape_release_funcs[shape_impl] = &PhysicsSystem::Impl::ReleaseCircleShape;
 
-    m_impl->bodies_shapes[body_id].push_back(shape_impl);
+    std::vector<cm::ShapeImpl*>& shapes_for_body = m_impl->bodies_shapes[body_id];
+    shapes_for_body.push_back(shape_impl);
+
+    float inertia = 0.0f;
+    for(const cm::ShapeImpl* shape : shapes_for_body)
+        inertia += shape->GetInertiaValue();
+
+    body.SetMoment(inertia);
+
     m_impl->space.Add(shape_impl);
 
     return shape_impl;
@@ -310,28 +318,28 @@ void PhysicsSystem::Update(const UpdateContext& update_context)
     for(size_t index = 0; index < m_impl->bodies.size(); ++index)
     {
         const bool is_active = m_impl->active_bodies[index];
-        if(is_active)
+        if(!is_active)
+            continue;
+
+        mono::IBody& body = m_impl->bodies[index];
+        math::Matrix& transform = m_transform_system->GetTransform(index);
+
+        const mono::TransformState state = m_transform_system->GetTransformState(index);
+        if(state == TransformState::CLIENT)
         {
-            mono::IBody& body = m_impl->bodies[index];
-            math::Matrix& transform = m_transform_system->GetTransform(index);
-
-            const mono::TransformState state = m_transform_system->GetTransformState(index);
-            if(state == TransformState::CLIENT)
-            {
-                body.SetPosition(math::GetPosition(transform));
-                body.SetAngle(math::GetZRotation(transform));
-            }
-            else
-            {
-                const math::Vector position = body.GetPosition();
-                const float rotation = body.GetAngle();
-
-                transform = math::CreateMatrixFromZRotation(rotation);
-                math::Position(transform, position);
-            }
-
-            m_transform_system->SetTransformState(index, TransformState::PHYSICS);
+            body.SetPosition(math::GetPosition(transform));
+            body.SetAngle(math::GetZRotation(transform));
         }
+        else
+        {
+            const math::Vector position = body.GetPosition();
+            const float rotation = body.GetAngle();
+
+            transform = math::CreateMatrixFromZRotation(rotation);
+            math::Position(transform, position);
+        }
+
+        m_transform_system->SetTransformState(index, TransformState::PHYSICS);
     }
 }
 
