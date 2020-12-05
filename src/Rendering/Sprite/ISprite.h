@@ -80,6 +80,7 @@ namespace mono
 
         virtual void SetActiveAnimationFrame(int frame) = 0;
         virtual int GetActiveAnimationFrame() const = 0;
+        virtual bool IsActiveAnimationDone() const = 0;
         
         virtual void RestartAnimation() = 0;
     };

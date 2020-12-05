@@ -37,6 +37,7 @@ namespace mono
         int GetAnimationIdFromName(const char* animation_name) const override;
         void SetActiveAnimationFrame(int frame) override;
         int GetActiveAnimationFrame() const override;
+        bool IsActiveAnimationDone() const override;
         void RestartAnimation() override;
         void Update(const UpdateContext& update_context) override;
 

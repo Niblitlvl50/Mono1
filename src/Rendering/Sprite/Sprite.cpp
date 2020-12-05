@@ -245,3 +245,8 @@ int Sprite::GetActiveAnimationFrame() const
 {
     return m_active_frame;
 }
+
+bool Sprite::IsActiveAnimationDone() const
+{
+    return m_active_animation_done;
+}
