@@ -117,15 +117,21 @@ void Sprite::Update(const UpdateContext& update_context)
     if(m_active_frame_time > active_animation.frame_duration)
     {
         m_active_frame_time = 0; // Should we carry over the reminder from m_active_frame_time? (yes)
-        m_active_frame++;
-     
-        if(m_active_frame >= (int)active_animation.frames.size())
+
+        const bool is_last_frame = (m_active_frame == int(active_animation.frames.size() - 1));
+        if(is_last_frame)
         {
-            m_active_frame = 0;
             if(m_callback)
                 m_callback();
 
-            m_active_animation_done = !active_animation.looping;
+            if(active_animation.looping)
+                m_active_frame = 0;
+            else
+                m_active_animation_done = true;
+        }
+        else
+        {
+            m_active_frame++;
         }
     }
 }
