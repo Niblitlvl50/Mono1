@@ -42,6 +42,7 @@ namespace mono
 
         mono::Sprite* GetSprite(uint32_t sprite_id);
         int GetSpriteLayer(uint32_t sprite_id) const;
+        void SetSpriteLayer(uint32_t sprite_id, int new_layer);
         void SetSpriteEnabled(uint32_t sprite_id, bool enabled);
         void ForEachSprite(ForEachSpriteFunc func);
 

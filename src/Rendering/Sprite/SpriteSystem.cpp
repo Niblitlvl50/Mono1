@@ -83,6 +83,11 @@ int SpriteSystem::GetSpriteLayer(uint32_t sprite_id) const
     return m_sprite_layers[sprite_id];
 }
 
+void SpriteSystem::SetSpriteLayer(uint32_t sprite_id, int new_layer)
+{
+    m_sprite_layers[sprite_id] = new_layer;
+}
+
 void SpriteSystem::SetSpriteEnabled(uint32_t sprite_id, bool enabled)
 {
     m_enabled[sprite_id] = enabled;

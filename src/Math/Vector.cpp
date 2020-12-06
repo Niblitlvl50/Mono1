@@ -83,7 +83,7 @@ void math::Normalize(math::Vector& vector)
     vector.y /= length;
 }
 
-math::Vector math::Normalize(const math::Vector& vector)
+math::Vector math::Normalized(const math::Vector& vector)
 {
     math::Vector temp_vector = vector;
     Normalize(temp_vector);
