@@ -6,6 +6,8 @@
 #include "System/System.h"
 #include "Rendering/ErrorChecking.h"
 
+#include <cstring>
+
 using namespace mono;
 
 FrameBuffer::FrameBuffer(int width, int height)
