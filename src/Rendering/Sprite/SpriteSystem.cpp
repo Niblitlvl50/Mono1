@@ -26,6 +26,9 @@ mono::Sprite* SpriteSystem::AllocateSprite(uint32_t sprite_id)
 {
     assert(!m_alive[sprite_id]);
     m_alive[sprite_id] = true;
+    m_sprite_layers[sprite_id] = 0;
+    m_enabled[sprite_id] = true;
+
     return &m_sprites[sprite_id];
 }
 
