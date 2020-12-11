@@ -51,6 +51,7 @@ void mono::DefaultGenerator(const math::Vector& position, struct ParticlePoolCom
     pool.position[index] = position;
     pool.velocity[index] = math::Vector(x, y);
     pool.rotation[index] = 0.0f;
+    pool.angular_velocity[index] = 0.0f;
     //pool.m_color[index];
     pool.start_color[index] = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
     pool.end_color[index] = mono::Color::RGBA(0.0f, 1.0f, 0.0f, 0.1f);
