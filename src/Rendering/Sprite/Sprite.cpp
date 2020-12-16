@@ -216,6 +216,16 @@ const mono::SpriteData* Sprite::GetSpriteData() const
     return m_sprite_data;
 }
 
+void Sprite::SetShadowSize(float size)
+{
+    m_shadow_size = size;
+}
+
+float Sprite::GetShadowSize() const
+{
+    return m_shadow_size;
+}
+
 int Sprite::GetActiveAnimation() const
 {
     return m_active_animation;

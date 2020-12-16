@@ -47,6 +47,9 @@ namespace mono
         SpriteFrame GetFrame(int frame_index) const;
         const SpriteData* GetSpriteData() const;
 
+        void SetShadowSize(float size);
+        float GetShadowSize() const override;
+
     private:
 
         const SpriteData* m_sprite_data;
@@ -63,6 +66,7 @@ namespace mono
         bool m_flip_vertical;
         Color::RGBA m_color;
         math::Vector m_shadow_offset;
+        float m_shadow_size;
         SpriteAnimationCallback m_callback;
     };
 }

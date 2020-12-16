@@ -15,6 +15,8 @@ namespace mono
     void DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color, IShader* shader);
     void DrawCircle(
         const math::Vector& position, float radie, uint32_t segments, float line_width, const mono::Color::RGBA& color, IShader* shader);
+    void DrawFilledCircle(
+        const math::Vector& position, const math::Vector& radie_size, uint32_t segments, const mono::Color::RGBA& color, IShader* shader);
     void DrawSprite(
         const math::Quad& texture_coordinates, const math::Vector& size, const math::Vector& offset, IShader* shader);
     // Special drawing the screen...

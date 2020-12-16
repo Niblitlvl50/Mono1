@@ -2,6 +2,7 @@
 #pragma once
 
 #include "IGameSystem.h"
+#include "Math/Vector.h"
 #include "Rendering/Color.h"
 
 #include <vector>
@@ -23,6 +24,8 @@ namespace mono
         int animation_id = 0;
         int layer = 0;
         uint32_t properties = 0;
+        math::Vector shadow_offset;
+        float shadow_size;
     };
 
     using ForEachSpriteFunc = std::function<void (mono::ISprite* sprite, int layer, uint32_t sprite_id)>;

@@ -20,7 +20,6 @@
 #include <cassert>
 #include <cstdio>
 
-//void DrawPrimitive(IShader* shader, )
 
 void mono::DrawQuad(const math::Quad& quad,
                     const mono::Color::RGBA& color,
@@ -68,7 +67,7 @@ void mono::DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color
 void mono::DrawCircle(const math::Vector& position,
                       float radie,
                       uint32_t segments,
-                      float lineWidth,
+                      float line_width,
                       const mono::Color::RGBA& color,
                       IShader* shader)
 {
@@ -86,7 +85,49 @@ void mono::DrawCircle(const math::Vector& position,
         vertices.emplace_back(x, y);
     }
 
-    DrawClosedLine(vertices, color, lineWidth, shader);
+    DrawClosedLine(vertices, color, line_width, shader);
+}
+
+void mono::DrawFilledCircle(
+    const math::Vector& position,
+    const math::Vector& radie_size,
+    uint32_t segments,
+    const mono::Color::RGBA& color,
+    IShader* shader)
+{
+    std::vector<math::Vector> vertices;
+    vertices.reserve(segments + 1);
+    vertices.push_back(position);
+
+    const float coef = 2.0f * math::PI() / float(segments);
+    
+    for(uint32_t index = 0; index < segments; ++index)
+    {
+        const float radians = index * coef;
+        const float x = radie_size.x * std::cos(radians) + position.x;
+        const float y = radie_size.y * std::sin(radians) + position.y;
+
+        vertices.emplace_back(x, y);
+    }
+
+    vertices.push_back(vertices[1]);
+
+    std::vector<mono::Color::RGBA> colors(vertices.size());
+    std::fill(colors.begin(), colors.end(), color);
+
+    const uint32_t position_attribute = ColorShader::GetPositionAttribute(shader);
+    const uint32_t color_attribute = ColorShader::GetColorAttribute(shader);
+
+    glEnableVertexAttribArray(position_attribute);
+    glEnableVertexAttribArray(color_attribute);
+
+    glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 0, vertices.data());
+    glVertexAttribPointer(color_attribute, 4, GL_FLOAT, GL_FALSE, 0, colors.data());
+
+    glDrawArrays(GL_TRIANGLE_FAN, 0, static_cast<int>(vertices.size()));
+
+    glDisableVertexAttribArray(position_attribute);
+    glDisableVertexAttribArray(color_attribute);
 }
 
 void mono::DrawSprite(
@@ -180,9 +221,9 @@ void mono::DrawText(const TextDefinition& text, IShader* shader)
 
     // Number of chars in the text, times 3 since each triangle contains 3 vertices,
     // times 2 since each char containts two triangles.
-    const int verticesToDraw = (int)text.chars * 3 * 2;
+    const int vertices_to_draw = (int)text.chars * 3 * 2;
 
-    glDrawArrays(GL_TRIANGLES, 0, verticesToDraw);
+    glDrawArrays(GL_TRIANGLES, 0, vertices_to_draw);
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);

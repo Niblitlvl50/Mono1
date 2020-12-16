@@ -215,7 +215,12 @@ void Renderer::DrawSprite(const ISprite& sprite) const
     if(sprite_properties & mono::SpriteProperty::SHADOW)
     {
         const math::Vector shadow_offset = sprite.GetShadowOffset();
-        // Render shadow here...
+        const float shadow_size = sprite.GetShadowSize();
+        constexpr mono::Color::RGBA shadow_color(0.2f, 0.2f, 0.2f, 0.7f);
+
+        UseShader(m_color_shader.get());
+        DrawFilledCircle(
+            shadow_offset, math::Vector(shadow_size, shadow_size / 2.0f), 16, shadow_color, m_color_shader.get());
     }
 
     DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset, texture.get());

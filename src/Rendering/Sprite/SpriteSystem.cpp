@@ -53,6 +53,8 @@ void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& spr
 
     sprite.SetShade(sprite_args.shade);
     sprite.SetProperties(sprite_args.properties);
+    sprite.SetShadowOffset(sprite_args.shadow_offset);
+    sprite.SetShadowSize(sprite_args.shadow_size);
     sprite.SetVerticalDirection(sprite_args.flip_vertical ? VerticalDirection::DOWN : VerticalDirection::UP);
     sprite.SetHorizontalDirection(sprite_args.flip_horizontal ? HorizontalDirection::LEFT : HorizontalDirection::RIGHT);
 
