@@ -13,6 +13,7 @@
 #include "Shader/SpriteShader.h"
 
 #include "Sprite/ISprite.h"
+#include "Sprite/SpriteProperties.h"
 
 #include "Math/Vector.h"
 #include "Math/Quad.h"
@@ -207,7 +208,16 @@ void Renderer::DrawSprite(const ISprite& sprite) const
     const SpriteFrame& current_frame = sprite.GetCurrentFrame();
     UseShader(m_sprite_shader.get());
     SpriteShader::SetShade(m_sprite_shader.get(), sprite.GetShade());
-    SpriteShader::SetWindSway(m_sprite_shader.get(), sprite.GetProperties() != 0); // This is not great!
+
+    const uint32_t sprite_properties = sprite.GetProperties();
+    SpriteShader::SetWindSway(m_sprite_shader.get(), sprite_properties & mono::SpriteProperty::WIND_SWAY);
+
+    if(sprite_properties & mono::SpriteProperty::SHADOW)
+    {
+        const math::Vector shadow_offset = sprite.GetShadowOffset();
+        // Render shadow here...
+    }
+
     DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset, texture.get());
 }
 

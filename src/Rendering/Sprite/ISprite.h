@@ -43,11 +43,10 @@ namespace mono
         //! Gets the quad representing the texture coordinates.
         virtual mono::SpriteFrame GetCurrentFrame() const = 0;
 
-        //! Gets the color shade of the sprite
         virtual const mono::Color::RGBA& GetShade() const = 0;
-
-        //! Sets the color shade of the sprite
         virtual void SetShade(const mono::Color::RGBA& color) = 0;
+
+        virtual math::Vector GetShadowOffset() const = 0;
 
         virtual uint32_t GetProperties() const = 0;
         virtual void SetProperties(uint32_t properties) = 0;

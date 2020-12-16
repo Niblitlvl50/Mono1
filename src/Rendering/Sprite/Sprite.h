@@ -20,6 +20,8 @@ namespace mono
         SpriteFrame GetCurrentFrame() const override;
         const Color::RGBA& GetShade() const override;
         void SetShade(const mono::Color::RGBA& color) override;
+        math::Vector GetShadowOffset() const override;
+        void SetShadowOffset(const math::Vector& shadow_offset);
         uint32_t GetProperties() const override;
         void SetProperties(uint32_t properties) override;
         void SetHorizontalDirection(HorizontalDirection direction) override;
@@ -60,6 +62,7 @@ namespace mono
         bool m_flip_horizontal;
         bool m_flip_vertical;
         Color::RGBA m_color;
+        math::Vector m_shadow_offset;
         SpriteAnimationCallback m_callback;
     };
 }

@@ -66,6 +66,16 @@ void Sprite::SetShade(const mono::Color::RGBA& color)
     m_color = color;
 }
 
+math::Vector Sprite::GetShadowOffset() const
+{
+    return m_shadow_offset;
+}
+
+void Sprite::SetShadowOffset(const math::Vector& shadow_offset)
+{
+    m_shadow_offset = shadow_offset;
+}
+
 uint32_t Sprite::GetProperties() const
 {
     return m_properties;
