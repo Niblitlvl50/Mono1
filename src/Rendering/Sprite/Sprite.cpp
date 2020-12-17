@@ -198,13 +198,13 @@ mono::SpriteFrame Sprite::GetFrame(int frame_index) const
 
     if(m_flip_horizontal)
     {
-        std::swap(frame.texture_coordinates.mA.x, frame.texture_coordinates.mB.x);
+        std::swap(frame.uv_upper_left.x, frame.uv_lower_right.x);
         frame.center_offset.x = -frame.center_offset.x;
     }
     
     if(m_flip_vertical)
     {
-        std::swap(frame.texture_coordinates.mA.y, frame.texture_coordinates.mB.y);
+        std::swap(frame.uv_lower_right.y, frame.uv_upper_left.y);
         frame.center_offset.y = -frame.center_offset.y;
     }
 

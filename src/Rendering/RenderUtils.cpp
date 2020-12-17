@@ -131,7 +131,7 @@ void mono::DrawFilledCircle(
 }
 
 void mono::DrawSprite(
-    const math::Quad& texture_coordinates, const math::Vector& size, const math::Vector& offset, IShader* shader)
+    const math::Vector& uv_upper_left, const math::Vector& uv_lower_right, const math::Vector& size, const math::Vector& offset, IShader* shader)
 {
    const math::Vector& sprite_size = size / 2.0f;
 
@@ -143,10 +143,10 @@ void mono::DrawSprite(
     };
 
     const float texture_coords[] = {
-        texture_coordinates.mA.x, texture_coordinates.mA.y,
-        texture_coordinates.mA.x, texture_coordinates.mB.y,
-        texture_coordinates.mB.x, texture_coordinates.mB.y,
-        texture_coordinates.mB.x, texture_coordinates.mA.y
+        uv_upper_left.x, uv_upper_left.y,
+        uv_upper_left.x, uv_lower_right.y,
+        uv_lower_right.x, uv_lower_right.y,
+        uv_lower_right.x, uv_upper_left.y
     };
 
     const float height_values[] = {

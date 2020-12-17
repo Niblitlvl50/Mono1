@@ -60,12 +60,13 @@ namespace
             mono::SpriteFrame sprite_frame;
             sprite_frame.center_offset.x = frame_offset["x"];
             sprite_frame.center_offset.y = frame_offset["y"];
-            sprite_frame.texture_coordinates = math::Quad(x, y + h, x + w, y);
+            sprite_frame.uv_upper_left = math::Vector(x, y + h);
+            sprite_frame.uv_lower_right = math::Vector(x + w, y);
 
             const float width =
-                (sprite_frame.texture_coordinates.mB.x - sprite_frame.texture_coordinates.mA.x) * sprite_data.texture_size.x;
+                (sprite_frame.uv_lower_right.x - sprite_frame.uv_upper_left.x) * sprite_data.texture_size.x;
             const float height =
-                (sprite_frame.texture_coordinates.mA.y - sprite_frame.texture_coordinates.mB.y) * sprite_data.texture_size.y;
+                (sprite_frame.uv_upper_left.y - sprite_frame.uv_lower_right.y) * sprite_data.texture_size.y;
 
             sprite_frame.size = math::Vector(width, height) / pixels_per_meter;
             sprite_data.frames.push_back(sprite_frame);

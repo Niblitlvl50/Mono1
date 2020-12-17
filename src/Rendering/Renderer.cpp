@@ -206,21 +206,31 @@ void Renderer::DrawSprite(const ISprite& sprite) const
 {
     const mono::ITexturePtr texture = sprite.GetTexture();
     const SpriteFrame& current_frame = sprite.GetCurrentFrame();
+
     UseShader(m_sprite_shader.get());
     SpriteShader::SetShade(m_sprite_shader.get(), sprite.GetShade());
 
     const uint32_t sprite_properties = sprite.GetProperties();
     SpriteShader::SetWindSway(m_sprite_shader.get(), sprite_properties & mono::SpriteProperty::WIND_SWAY);
 
-    DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset, texture.get());
+    DrawSprite(
+        current_frame.uv_upper_left,
+        current_frame.uv_lower_right,
+        current_frame.size,
+        current_frame.center_offset,
+        texture.get());
 }
 
 void Renderer::DrawSprite(
-    const math::Quad& texture_coordinates, const math::Vector& size, const math::Vector& offset, const ITexture* texture) const
+    const math::Vector& uv_upper_left,
+    const math::Vector& uv_lower_right,
+    const math::Vector& size,
+    const math::Vector& offset,
+    const ITexture* texture) const
 {
     UseTexture(texture);
     UseShader(m_sprite_shader.get());
-    ::DrawSprite(texture_coordinates, size, offset, m_sprite_shader.get());
+    ::DrawSprite(uv_upper_left, uv_lower_right, size, offset, m_sprite_shader.get());
 
     PROCESS_GL_ERRORS();
 }

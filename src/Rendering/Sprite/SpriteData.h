@@ -2,7 +2,6 @@
 #pragma once
 
 #include "Math/Vector.h"
-#include "Math/Quad.h"
 
 #include <string>
 #include <vector>
@@ -12,7 +11,8 @@ namespace mono
 {
     struct SpriteFrame
     {
-        math::Quad texture_coordinates;
+        math::Vector uv_upper_left;
+        math::Vector uv_lower_right;
         math::Vector center_offset;
         math::Vector size;
     };
