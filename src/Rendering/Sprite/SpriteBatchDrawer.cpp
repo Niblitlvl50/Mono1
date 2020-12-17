@@ -3,6 +3,7 @@
 
 #include "ISprite.h"
 #include "SpriteSystem.h"
+#include "SpriteProperties.h"
 #include "Rendering/IRenderer.h"
 #include "TransformSystem/TransformSystem.h"
 
@@ -29,7 +30,7 @@ SpriteBatchDrawer::SpriteBatchDrawer(const mono::TransformSystem* transform_syst
 void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 {
     std::vector<SpriteTransformPair> sprites_to_draw;
-    sprites_to_draw.reserve(64);
+    sprites_to_draw.reserve(128);
 
     const auto collect_sprites = [this, &renderer, &sprites_to_draw](mono::ISprite* sprite, int layer, uint32_t id)
     {
@@ -60,6 +61,17 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
     {
         const math::Matrix& world_transform = renderer.GetTransform() * sprite_transform.transform;
         auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
+
+        const uint32_t sprite_properties = sprite_transform.sprite->GetProperties();
+        if(sprite_properties & mono::SpriteProperty::SHADOW)
+        {
+            const math::Vector shadow_offset = sprite_transform.sprite->GetShadowOffset();
+            const float shadow_size = sprite_transform.sprite->GetShadowSize();
+            constexpr mono::Color::RGBA shadow_color(0.2f, 0.2f, 0.2f, 0.7f);
+
+            renderer.DrawFilledCircle(shadow_offset, math::Vector(shadow_size, shadow_size / 2.0f), 16, shadow_color);
+        }
+
         renderer.DrawSprite(*sprite_transform.sprite);
     }
 }

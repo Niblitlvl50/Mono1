@@ -212,17 +212,6 @@ void Renderer::DrawSprite(const ISprite& sprite) const
     const uint32_t sprite_properties = sprite.GetProperties();
     SpriteShader::SetWindSway(m_sprite_shader.get(), sprite_properties & mono::SpriteProperty::WIND_SWAY);
 
-    if(sprite_properties & mono::SpriteProperty::SHADOW)
-    {
-        const math::Vector shadow_offset = sprite.GetShadowOffset();
-        const float shadow_size = sprite.GetShadowSize();
-        constexpr mono::Color::RGBA shadow_color(0.2f, 0.2f, 0.2f, 0.7f);
-
-        UseShader(m_color_shader.get());
-        DrawFilledCircle(
-            shadow_offset, math::Vector(shadow_size, shadow_size / 2.0f), 16, shadow_color, m_color_shader.get());
-    }
-
     DrawSprite(current_frame.texture_coordinates, current_frame.size, current_frame.center_offset, texture.get());
 }
 
@@ -276,6 +265,12 @@ void Renderer::DrawCircle(const math::Vector& pos, float radie, int segments, fl
 {
     UseShader(m_color_shader.get());
     ::DrawCircle(pos, radie, segments, line_width, color, m_color_shader.get());
+}
+
+void Renderer::DrawFilledCircle(const math::Vector& pos, const math::Vector& size, int segments, const mono::Color::RGBA& color) const
+{
+    UseShader(m_color_shader.get());
+    ::DrawFilledCircle(pos, size, segments, color, m_color_shader.get());
 }
 
 void Renderer::DrawGeometry(const std::vector<math::Vector>& vertices, const std::vector<math::Vector>& texture_coordinates, const std::vector<uint16_t>& indices, const ITexture* texture)

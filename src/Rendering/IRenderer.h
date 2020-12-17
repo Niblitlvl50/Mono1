@@ -28,6 +28,7 @@ namespace mono
         virtual void DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const = 0;
         virtual void DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color) const = 0;
         virtual void DrawCircle(const math::Vector& pos, float radie, int segments, float line_width, const mono::Color::RGBA& color) const = 0;
+        virtual void DrawFilledCircle(const math::Vector& pos, const math::Vector& size, int segments, const mono::Color::RGBA& color) const = 0;
 
         virtual void DrawGeometry(
             const std::vector<math::Vector>& vertices,
