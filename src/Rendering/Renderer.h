@@ -46,6 +46,12 @@ namespace mono
             const math::Vector& size,
             const math::Vector& offset,
             const ITexture* texture) const override;
+        void DrawSprite(
+            const IRenderBuffer* vertices,
+            const IRenderBuffer* uv_coordinates,
+            const IRenderBuffer* height_values,
+            uint32_t offset,
+            const ITexture* texture) const override;
         void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const override;
         void DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const override;
         void DrawPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const override;
@@ -81,7 +87,7 @@ namespace mono
             const IRenderBuffer* vertices, const IRenderBuffer* colors, size_t offset, size_t count) override;
 
         void DrawTrianges(
-            const mono::IRenderBuffer* vertices, const mono::IRenderBuffer* colors, const mono::IRenderBuffer* indices, size_t count) const override;
+            const mono::IRenderBuffer* vertices, const mono::IRenderBuffer* colors, const mono::IElementBuffer* indices, size_t count) const override;
 
         void SetClearColor(const mono::Color::RGBA& color) override;
 
@@ -98,6 +104,8 @@ namespace mono
 
         void PushNewViewTransform(const math::Matrix& transform) override;
         void PopViewTransform() override;
+
+        IShader* GetSpriteShader() override;
 
     private:
 

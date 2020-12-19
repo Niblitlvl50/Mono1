@@ -133,13 +133,13 @@ void mono::DrawFilledCircle(
 void mono::DrawSprite(
     const math::Vector& uv_upper_left, const math::Vector& uv_lower_right, const math::Vector& size, const math::Vector& offset, IShader* shader)
 {
-   const math::Vector& sprite_size = size / 2.0f;
+   const math::Vector& sprite_half_size = size / 2.0f;
 
     const math::Vector vertices[] = {
-        math::Vector(-sprite_size.x, -sprite_size.y) + offset,
-        math::Vector(-sprite_size.x,  sprite_size.y) + offset,
-        math::Vector( sprite_size.x,  sprite_size.y) + offset,
-        math::Vector( sprite_size.x, -sprite_size.y) + offset
+        math::Vector(-sprite_half_size.x, -sprite_half_size.y) + offset,
+        math::Vector(-sprite_half_size.x,  sprite_half_size.y) + offset,
+        math::Vector( sprite_half_size.x,  sprite_half_size.y) + offset,
+        math::Vector( sprite_half_size.x, -sprite_half_size.y) + offset
     };
 
     const float texture_coords[] = {
@@ -174,6 +174,51 @@ void mono::DrawSprite(
     glDisableVertexAttribArray(vertex_location);
     glDisableVertexAttribArray(texture_location);
     glDisableVertexAttribArray(height_location);
+}
+
+void mono::DrawSprite(
+    const IRenderBuffer* vertices,
+    const IRenderBuffer* uv_coordinates,
+    const IRenderBuffer* height_values,
+    uint32_t vertex_attribute_offset,
+    IShader* shader)
+{
+    const uint32_t buffer_half_size_bytes = uv_coordinates->SizeInBytes() / 2;
+
+    const uint32_t vertices_byte_offset = vertex_attribute_offset * vertices->Components() * sizeof(float);
+    const uint32_t uv_byte_offset = vertex_attribute_offset * uv_coordinates->Components() * sizeof(float);
+    const uint32_t flipped_uv_byte_offset = buffer_half_size_bytes + uv_byte_offset;
+    const uint32_t height_values_byte_offset = vertex_attribute_offset * height_values->Components() * sizeof(float);
+
+    const uint32_t vertex_location = SpriteShader::GetPositionAttribute(shader);
+    const uint32_t texture_location = SpriteShader::GetTextureAttribute(shader);
+    const uint32_t texture_flipped_location = SpriteShader::GetFlippedTextureAttribute(shader);
+    const uint32_t height_location = SpriteShader::GetHeightAttribute(shader);
+
+    glEnableVertexAttribArray(vertex_location);
+    glEnableVertexAttribArray(texture_location);
+    glEnableVertexAttribArray(texture_flipped_location);
+    glEnableVertexAttribArray(height_location);
+
+    vertices->Use();
+    glVertexAttribPointer(vertex_location, vertices->Components(), GL_FLOAT, GL_FALSE, 0, (void*)vertices_byte_offset);
+
+    uv_coordinates->Use();
+    glVertexAttribPointer(texture_location, uv_coordinates->Components(), GL_FLOAT, GL_FALSE, 0, (void*)uv_byte_offset);
+    glVertexAttribPointer(texture_flipped_location, uv_coordinates->Components(), GL_FLOAT, GL_FALSE, 0, (void*)flipped_uv_byte_offset);
+
+    height_values->Use();
+    glVertexAttribPointer(height_location, height_values->Components(), GL_FLOAT, GL_FALSE, 0, (void*)height_values_byte_offset);
+
+    constexpr uint16_t indices[] = { 0, 1, 2, 0, 2, 3 };
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+
+    glDisableVertexAttribArray(vertex_location);
+    glDisableVertexAttribArray(texture_location);
+    glDisableVertexAttribArray(texture_flipped_location);
+    glDisableVertexAttribArray(height_location);
+
+    ClearRenderBuffer();
 }
 
 void mono::DrawScreen(const math::Quad& texture_coordinates, const math::Vector& size, IShader* shader)
@@ -358,7 +403,7 @@ void mono::DrawTexturedGeometry(const mono::IRenderBuffer* vertices,
 void mono::DrawTrianges(
     const mono::IRenderBuffer* vertices,
     const mono::IRenderBuffer* colors,
-    const mono::IRenderBuffer* indices,
+    const mono::IElementBuffer* indices,
     size_t count,
     IShader* shader)
 {

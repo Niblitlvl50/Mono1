@@ -4,6 +4,7 @@
 #include "ISprite.h"
 #include "Math/Quad.h"
 #include "Rendering/Color.h"
+#include "Rendering/Texture/ITextureFactory.h"
 
 namespace mono
 {
@@ -16,8 +17,9 @@ namespace mono
         void Init(const SpriteData* sprite_data, mono::ITexturePtr texture);
 
         uint32_t GetSpriteHash() const override;
-        ITexturePtr GetTexture() const override;
+        ITexture* GetTexture() const override;
         SpriteFrame GetCurrentFrame() const override;
+        int GetCurrentFrameIndex() const override;
         const Color::RGBA& GetShade() const override;
         void SetShade(const mono::Color::RGBA& color) override;
         math::Vector GetShadowOffset() const override;
@@ -42,10 +44,10 @@ namespace mono
         bool IsActiveAnimationDone() const override;
         void RestartAnimation() override;
         void Update(const UpdateContext& update_context) override;
+        const SpriteData* GetSpriteData() const override;
 
         int GetDefinedAnimations() const;
         SpriteFrame GetFrame(int frame_index) const;
-        const SpriteData* GetSpriteData() const;
 
         void SetShadowSize(float size);
         float GetShadowSize() const override;

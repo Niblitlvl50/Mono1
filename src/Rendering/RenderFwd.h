@@ -9,6 +9,7 @@ namespace mono
     class IShader;
     class ISprite;
     class IRenderBuffer;
+    class IElementBuffer;
 
     namespace Color
     {

@@ -204,7 +204,7 @@ void Renderer::DrawText(int font_id, const char* text, const math::Vector& pos, 
 
 void Renderer::DrawSprite(const ISprite& sprite) const
 {
-    const mono::ITexturePtr texture = sprite.GetTexture();
+    const mono::ITexture* texture = sprite.GetTexture();
     const SpriteFrame& current_frame = sprite.GetCurrentFrame();
 
     UseShader(m_sprite_shader.get());
@@ -218,7 +218,7 @@ void Renderer::DrawSprite(const ISprite& sprite) const
         current_frame.uv_lower_right,
         current_frame.size,
         current_frame.center_offset,
-        texture.get());
+        texture);
 }
 
 void Renderer::DrawSprite(
@@ -233,6 +233,18 @@ void Renderer::DrawSprite(
     ::DrawSprite(uv_upper_left, uv_lower_right, size, offset, m_sprite_shader.get());
 
     PROCESS_GL_ERRORS();
+}
+
+void Renderer::DrawSprite(
+    const IRenderBuffer* vertices,
+    const IRenderBuffer* uv_coordinates,
+    const IRenderBuffer* height_values,
+    uint32_t offset,
+    const ITexture* texture) const
+{
+    UseTexture(texture);
+    UseShader(m_sprite_shader.get());
+    ::DrawSprite(vertices, uv_coordinates, height_values, offset, m_sprite_shader.get());
 }
 
 void Renderer::DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const
@@ -323,7 +335,7 @@ void Renderer::DrawPolyline(const IRenderBuffer* vertices, const IRenderBuffer* 
 }
 
 void Renderer::DrawTrianges(
-    const IRenderBuffer* vertices, const IRenderBuffer* colors, const IRenderBuffer* indices, size_t count) const
+    const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, size_t count) const
 {
     UseShader(m_color_shader.get());
     ::DrawTrianges(vertices, colors, indices, count, m_color_shader.get());
@@ -404,4 +416,9 @@ void Renderer::PushNewViewTransform(const math::Matrix& transform)
 void Renderer::PopViewTransform()
 {
     m_view_stack.pop();
+}
+
+mono::IShader* Renderer::GetSpriteShader()
+{
+    return m_sprite_shader.get();
 }

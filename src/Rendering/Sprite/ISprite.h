@@ -3,7 +3,6 @@
 
 #include "IUpdatable.h"
 #include "Rendering/RenderFwd.h"
-#include "Rendering/Texture/ITextureFactory.h"
 #include "SpriteData.h"
 
 #include <functional>
@@ -38,10 +37,12 @@ namespace mono
         virtual uint32_t GetSpriteHash() const = 0;
 
         //! Gets the sprites texture
-        virtual mono::ITexturePtr GetTexture() const = 0;
+        virtual mono::ITexture* GetTexture() const = 0;
 
         //! Gets the quad representing the texture coordinates.
         virtual mono::SpriteFrame GetCurrentFrame() const = 0;
+
+        virtual int GetCurrentFrameIndex() const = 0;
 
         virtual const mono::Color::RGBA& GetShade() const = 0;
         virtual void SetShade(const mono::Color::RGBA& color) = 0;
@@ -83,5 +84,7 @@ namespace mono
         virtual bool IsActiveAnimationDone() const = 0;
         
         virtual void RestartAnimation() = 0;
+
+        virtual const SpriteData* GetSpriteData() const = 0;
     };
 }

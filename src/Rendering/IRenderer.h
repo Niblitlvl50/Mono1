@@ -25,6 +25,14 @@ namespace mono
             const math::Vector& size,
             const math::Vector& offset,
             const ITexture* texture) const = 0;
+
+        virtual void DrawSprite(
+            const IRenderBuffer* vertices,
+            const IRenderBuffer* uv_coordinates,
+            const IRenderBuffer* height_values,
+            uint32_t offset,
+            const ITexture* texture) const = 0;
+
         virtual void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const = 0;
         virtual void DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;
         virtual void DrawPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;
@@ -60,7 +68,7 @@ namespace mono
             const IRenderBuffer* vertices, const IRenderBuffer* colors, size_t offset, size_t count) = 0;
 
         virtual void DrawTrianges(
-            const IRenderBuffer* vertices, const IRenderBuffer* colors, const IRenderBuffer* indices, size_t count) const = 0;
+            const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, size_t count) const = 0;
 
         virtual void SetClearColor(const mono::Color::RGBA& color) = 0;
 
@@ -83,6 +91,8 @@ namespace mono
 
         virtual uint32_t GetDeltaTimeMS() const = 0;
         virtual uint32_t GetTimestamp() const = 0;
+
+        virtual IShader* GetSpriteShader() = 0;
     };
 
     using PushTransformFunc = void (mono::IRenderer::*)(const math::Matrix& transform);

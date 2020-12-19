@@ -13,9 +13,13 @@ namespace mono
 
         static std::unique_ptr<IShader> MakeShader();
         static void SetShade(IShader* shader, const mono::Color::RGBA& color);
+        static void FlipVertical(IShader* shader, bool flip);
+        static void FlipHorizontal(IShader* shader, bool flip);
+        static void SetSpriteSize(IShader* shader, float width, float height);
         static void SetWindSway(IShader* shader, bool enable_wind);
         static uint32_t GetPositionAttribute(IShader* shader);
         static uint32_t GetTextureAttribute(IShader* shader);
+        static uint32_t GetFlippedTextureAttribute(IShader* shader);
         static uint32_t GetHeightAttribute(IShader* shader);
     };
 }

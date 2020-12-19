@@ -40,9 +40,9 @@ uint32_t Sprite::GetSpriteHash() const
     return m_sprite_data != nullptr ? m_sprite_data->hash : 0;
 }
 
-ITexturePtr Sprite::GetTexture() const
+ITexture* Sprite::GetTexture() const
 {
-    return m_texture;
+    return m_texture.get();
 }
 
 mono::SpriteFrame Sprite::GetCurrentFrame() const
@@ -50,10 +50,13 @@ mono::SpriteFrame Sprite::GetCurrentFrame() const
     if(!m_sprite_data || m_sprite_data->animations.empty())
         return mono::SpriteFrame();
 
-    const SpriteAnimation& animation = m_sprite_data->animations[m_active_animation];
-    const int sprite_frame = animation.frames[m_active_frame];
+    return GetFrame(GetCurrentFrameIndex());
+}
 
-    return GetFrame(sprite_frame);
+int Sprite::GetCurrentFrameIndex() const
+{
+    const SpriteAnimation& animation = m_sprite_data->animations[m_active_animation];
+    return  animation.frames[m_active_frame];
 }
 
 const Color::RGBA& Sprite::GetShade() const

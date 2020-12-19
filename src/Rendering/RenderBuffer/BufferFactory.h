@@ -6,12 +6,6 @@
 
 namespace mono
 {
-    enum class BufferTarget : int
-    {
-        ARRAY_BUFFER,
-        ELEMENT_BUFFER
-    };
-
     enum class BufferType : int
     {
         STATIC,
@@ -24,6 +18,6 @@ namespace mono
         FLOAT
     };
 
-    std::unique_ptr<IRenderBuffer> CreateRenderBuffer(
-        mono::BufferTarget target, mono::BufferType type, mono::BufferData data, size_t count);
+    std::unique_ptr<IRenderBuffer> CreateRenderBuffer(mono::BufferType type, mono::BufferData data, int components, size_t count);
+    std::unique_ptr<IElementBuffer> CreateElementBuffer(mono::BufferType type, mono::BufferData data, size_t count);
 }
