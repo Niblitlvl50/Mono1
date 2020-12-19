@@ -3,5 +3,5 @@
 
 namespace debug
 {
-    void PrintStacktrace();
+    void PrintStacktrace(int skip_frames, int n_frames);
 }

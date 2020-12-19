@@ -10,13 +10,21 @@
 #include <execinfo.h>
 #endif
 
-void debug::PrintStacktrace()
+void debug::PrintStacktrace(int skip_frames, int n_frames)
 {
+    if(n_frames <= skip_frames)
+        return;
+
 #ifdef __APPLE__
-    void* callstack[128];
-    const int frames = backtrace(callstack, 128);
+
+    constexpr int max_stack_frames = 64;
+    if(n_frames > max_stack_frames)
+        n_frames = max_stack_frames;
+
+    void* callstack[max_stack_frames];
+    const int frames = backtrace(callstack, n_frames);
     char** strs = backtrace_symbols(callstack, frames);
-    for (int i = 0; i < frames; ++i)
+    for (int i = skip_frames; i < frames; ++i)
         System::Log("%s\n", strs[i]);
     
     free(strs);

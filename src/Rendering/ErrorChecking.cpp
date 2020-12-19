@@ -2,6 +2,7 @@
 #include "ErrorChecking.h"
 #include "System/open_gl.h"
 #include "System/System.h"
+#include "System/Debug.h"
 #include <cstdio>
 
 void ProcessGLErrors(int line, const char* error_context)
@@ -14,9 +15,9 @@ void ProcessGLErrors(int line, const char* error_context)
         print_backtrace = true;
     }
 
-//    if(print_backtrace)
-//    {
-//        System::DebugPrintBacktrace();
-//        System::DebugBreakpoint();
-//    }
+    if(print_backtrace)
+    {
+        debug::PrintStacktrace(3, 4);
+        //System::DebugBreakpoint();
+    }
 }
