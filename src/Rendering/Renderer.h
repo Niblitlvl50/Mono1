@@ -46,12 +46,6 @@ namespace mono
             const math::Vector& size,
             const math::Vector& offset,
             const ITexture* texture) const override;
-        void DrawSprite(
-            const IRenderBuffer* vertices,
-            const IRenderBuffer* uv_coordinates,
-            const IRenderBuffer* height_values,
-            uint32_t offset,
-            const ITexture* texture) const override;
         void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const override;
         void DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const override;
         void DrawPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const override;

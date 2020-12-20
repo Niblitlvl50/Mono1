@@ -17,14 +17,10 @@ namespace
         uniform mat4 view;
         uniform mat4 projection;
 
-        uniform bool flip_vertical;
-        uniform bool flip_horizontal;
         uniform bool wind_sway_enabled;
-        uniform vec2 size_in_texels;
 
         attribute vec2 vertex_position;
         attribute vec2 texture_coord;
-        attribute vec2 texture_coord_flipped;
         attribute float vertex_height;
 
         varying vec2 v_texture_coord;
@@ -40,14 +36,7 @@ namespace
             }
 
             gl_Position = projection * view * model * vec4(vertex_position + wind_sway_offset, 0.0, 1.0);
-
-            vec2 local_texture_coord = texture_coord;
-            if(flip_vertical)
-                local_texture_coord.y = texture_coord_flipped.y;
-            if(flip_horizontal)
-                local_texture_coord.x = texture_coord_flipped.x;
-
-            v_texture_coord = local_texture_coord;
+            v_texture_coord = texture_coord;
         }
     )";
 
@@ -80,21 +69,6 @@ void SpriteShader::SetShade(IShader* shader, const mono::Color::RGBA& color)
     shader->SetValue("color_shade", color);
 }
 
-void SpriteShader::FlipVertical(IShader* shader, bool flip)
-{
-    shader->SetValue("flip_vertical", flip);
-}
-
-void SpriteShader::FlipHorizontal(IShader* shader, bool flip)
-{
-    shader->SetValue("flip_horizontal", flip);
-}
-
-void SpriteShader::SetSpriteSize(IShader* shader, float width, float height)
-{
-    shader->SetValue("size_in_texels", math::Vector(width, height));
-}
-
 void SpriteShader::SetWindSway(IShader* shader, bool enable_wind)
 {
     shader->SetValue("wind_sway_enabled", enable_wind);
@@ -108,11 +82,6 @@ uint32_t SpriteShader::GetPositionAttribute(IShader* shader)
 uint32_t SpriteShader::GetTextureAttribute(IShader* shader)
 {
     return shader->GetAttributeLocation("texture_coord");
-}
-
-uint32_t SpriteShader::GetFlippedTextureAttribute(IShader* shader)
-{
-    return shader->GetAttributeLocation("texture_coord_flipped");
 }
 
 uint32_t SpriteShader::GetHeightAttribute(IShader* shader)

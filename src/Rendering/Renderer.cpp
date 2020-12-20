@@ -235,18 +235,6 @@ void Renderer::DrawSprite(
     PROCESS_GL_ERRORS();
 }
 
-void Renderer::DrawSprite(
-    const IRenderBuffer* vertices,
-    const IRenderBuffer* uv_coordinates,
-    const IRenderBuffer* height_values,
-    uint32_t offset,
-    const ITexture* texture) const
-{
-    UseTexture(texture);
-    UseShader(m_sprite_shader.get());
-    ::DrawSprite(vertices, uv_coordinates, height_values, offset, m_sprite_shader.get());
-}
-
 void Renderer::DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const
 {
     UseShader(m_color_shader.get());

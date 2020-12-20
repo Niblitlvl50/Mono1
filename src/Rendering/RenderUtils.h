@@ -19,8 +19,6 @@ namespace mono
         const math::Vector& position, const math::Vector& radie_size, uint32_t segments, const mono::Color::RGBA& color, IShader* shader);
     void DrawSprite(
         const math::Vector& uv_upper_left, const math::Vector& uv_lower_right, const math::Vector& size, const math::Vector& offset, IShader* shader);
-    void DrawSprite(
-        const IRenderBuffer* vertices, const IRenderBuffer* uv_coordinates, const IRenderBuffer* height_values, uint32_t vertex_attribute_offset, IShader* shader);
 
     // Special drawing the screen...
     void DrawScreen(const math::Quad& texture_coordinates, const math::Vector& size, IShader* shader);
