@@ -14,7 +14,7 @@ namespace mono
 
         virtual void Accept(mono::IRenderer& renderer) = 0;
         virtual void Accept(mono::IUpdater& updater) = 0;
-        virtual void OnLoad(mono::ICamera* camera) = 0;
+        virtual void OnLoad(mono::ICamera* camera, mono::IRenderer* renderer) = 0;
         virtual int OnUnload() = 0;
 
         virtual void AddEntity(mono::IEntity* entity, int layer) = 0;

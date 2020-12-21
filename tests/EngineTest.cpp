@@ -82,7 +82,7 @@ namespace
         }
         void Accept(mono::IUpdater& updater) override
         { }
-        void OnLoad(mono::ICamera* camera) override
+        void OnLoad(mono::ICamera* camera, mono::IRenderer* renderer) override
         {
             mOnLoadCalled = true;
         }

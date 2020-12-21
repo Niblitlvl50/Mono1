@@ -12,6 +12,7 @@ namespace mono
     public:
 
         static std::unique_ptr<IShader> MakeShader();
+        static void FadeCorners(IShader* shader, bool enable);
         static uint32_t GetPositionAttribute(IShader* shader);
         static uint32_t GetTextureAttribute(IShader* shader);
     };

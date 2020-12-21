@@ -100,6 +100,7 @@ namespace mono
         void PopViewTransform() override;
 
         IShader* GetSpriteShader() override;
+        IShader* GetScreenShader() override;
 
     private:
 

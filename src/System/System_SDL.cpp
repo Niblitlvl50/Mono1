@@ -56,8 +56,12 @@ namespace
             SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
             SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
-            //const uint32_t screenflag = fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE;
-            const uint32_t flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI; // | SDL_WINDOW_BORDERLESS; //| SDL_WINDOW_ALLOW_HIGHDPI; // | screenflag;
+            const uint32_t flags =
+                SDL_WINDOW_SHOWN |
+                SDL_WINDOW_OPENGL |
+                SDL_WINDOW_RESIZABLE |
+                SDL_WINDOW_ALLOW_HIGHDPI |
+                (options & System::WindowOptions::BORDERLESS ? SDL_WINDOW_BORDERLESS : 0);
 
             // Create our window centered and with the given resolution
             m_window = SDL_CreateWindow(title, x, y, width, height, flags);

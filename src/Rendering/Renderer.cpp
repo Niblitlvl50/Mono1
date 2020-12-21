@@ -345,10 +345,13 @@ void Renderer::UseShader(IShader* shader) const
 
     shader->SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
 
-    const math::Matrix& projection = m_projection_stack.top();
-    const math::Matrix& view = m_view_stack.top();
-    const math::Matrix& model = m_model_stack.top();
-    shader->SetProjectionViewModel(projection, view, model);
+    if(!m_projection_stack.empty() && !m_view_stack.empty() && !m_model_stack.empty())
+    {
+        const math::Matrix& projection = m_projection_stack.top();
+        const math::Matrix& view = m_view_stack.top();
+        const math::Matrix& model = m_model_stack.top();
+        shader->SetProjectionViewModel(projection, view, model);
+    }
 
     PROCESS_GL_ERRORS();
 }
@@ -409,4 +412,9 @@ void Renderer::PopViewTransform()
 mono::IShader* Renderer::GetSpriteShader()
 {
     return m_sprite_shader.get();
+}
+
+mono::IShader* Renderer::GetScreenShader()
+{
+    return m_screen_shader.get();
 }

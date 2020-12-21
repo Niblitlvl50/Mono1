@@ -86,6 +86,7 @@ namespace mono
         virtual uint32_t GetTimestamp() const = 0;
 
         virtual IShader* GetSpriteShader() = 0;
+        virtual IShader* GetScreenShader() = 0;
     };
 
     using PushTransformFunc = void (mono::IRenderer::*)(const math::Matrix& transform);

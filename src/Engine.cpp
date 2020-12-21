@@ -75,7 +75,7 @@ int Engine::Run(IZone* zone)
 
     InputHandler input_handler(screen_to_world_func, m_event_handler);
 
-    zone->OnLoad(m_camera);
+    zone->OnLoad(m_camera, &renderer);
 
     UpdateContext update_context;
     update_context.frame_count = 0;
