@@ -15,12 +15,14 @@ Camera::Camera()
 
 void Camera::Update(const UpdateContext& update_context)
 {
+    constexpr float camera_speed = 5.0f;
+
     const float delta_s = float(update_context.delta_ms) / 1000.0f;
 
     const bool is_equal = math::IsPrettyMuchEquals(m_target_viewport_size.x, m_viewport_size.x);
     if(!is_equal)
     {
-        const float delta = (m_target_viewport_size.x - m_viewport_size.x) * 5.0f * delta_s;
+        const float delta = (m_target_viewport_size.x - m_viewport_size.x) * camera_speed * delta_s;
         const float aspect = m_viewport_size.x / m_viewport_size.y;
 
         m_viewport_size.x += delta * aspect;
@@ -30,7 +32,7 @@ void Camera::Update(const UpdateContext& update_context)
     const bool is_position_equal = math::IsPrettyMuchEquals(m_target_position, m_position);
     if(!is_position_equal)
     {
-        const math::Vector delta = (m_target_position - m_position) * 0.1f * delta_s;
+        const math::Vector delta = (m_target_position - m_position) * camera_speed * delta_s;
         m_position += delta;
     }
 }
