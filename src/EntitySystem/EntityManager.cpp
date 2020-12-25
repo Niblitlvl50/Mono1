@@ -151,6 +151,15 @@ void EntityManager::ReleaseEntity(uint32_t entity_id)
     m_spawn_events.push_back({ false, entity_id });
 }
 
+void EntityManager::ReleaseAllEntities()
+{
+    const auto collect_active_entities = [this](Entity& entity) {
+        ReleaseEntity(entity.id);
+    };
+
+    m_entity_system->ForEachEntity(collect_active_entities);
+}
+
 const std::vector<EntityManager::SpawnEvent>& EntityManager::GetSpawnEvents() const
 {
     return m_spawn_events;

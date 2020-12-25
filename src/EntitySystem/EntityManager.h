@@ -38,6 +38,8 @@ namespace mono
         uint32_t GetEntityProperties(uint32_t entity_id) const override;
 
         void ReleaseEntity(uint32_t entity_id) override;
+        void ReleaseAllEntities() override;
+
         const std::vector<SpawnEvent>& GetSpawnEvents() const override;
         void Sync() override;
 

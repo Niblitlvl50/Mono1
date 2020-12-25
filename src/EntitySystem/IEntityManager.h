@@ -46,6 +46,8 @@ namespace mono
         virtual uint32_t GetEntityProperties(uint32_t entity_id) const = 0;
 
         virtual void ReleaseEntity(uint32_t entity_id) = 0;
+        virtual void ReleaseAllEntities() = 0;
+
         virtual const std::vector<SpawnEvent>& GetSpawnEvents() const = 0;
         virtual void Sync() = 0;
 
