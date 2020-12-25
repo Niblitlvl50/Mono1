@@ -14,11 +14,9 @@ namespace
 TransformSystem::TransformSystem(size_t n_components)
 {
     m_transforms.resize(n_components);
-    for(Component& component : m_transforms)
-    {
-        component.parent = no_parent;
-        component.bounding_box = math::Quad(-0.5f, -0.5f, 0.5f, 0.5f);
-    }
+
+    for(uint32_t index = 0; index < m_transforms.size(); ++index)
+        ResetTransformComponent(index);
 }
 
 math::Matrix TransformSystem::GetWorld(uint32_t id) const
@@ -88,6 +86,16 @@ TransformState TransformSystem::GetTransformState(uint32_t id) const
 void TransformSystem::SetTransformState(uint32_t id, TransformState new_state)
 {
     m_transforms[id].state = new_state;
+}
+
+void TransformSystem::ResetTransformComponent(uint32_t id)
+{
+    Component& component = m_transforms[id];
+
+    math::Identity(component.transform);
+    component.bounding_box = math::Quad(-0.5f, -0.5f, 0.5f, 0.5f);
+    component.parent = no_parent;
+    component.state = TransformState::NONE;
 }
 
 uint32_t TransformSystem::Id() const

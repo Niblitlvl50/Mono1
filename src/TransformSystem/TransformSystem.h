@@ -45,6 +45,8 @@ namespace mono
         TransformState GetTransformState(uint32_t id) const;
         void SetTransformState(uint32_t id, TransformState new_state);
 
+        void ResetTransformComponent(uint32_t id);
+
         uint32_t Id() const override;
         const char* Name() const override;
         uint32_t Capacity() const;
