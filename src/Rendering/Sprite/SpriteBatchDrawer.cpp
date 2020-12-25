@@ -70,7 +70,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
         {
             const math::Vector shadow_offset = sprite_transform.sprite->GetShadowOffset();
             const float shadow_size = sprite_transform.sprite->GetShadowSize();
-            constexpr mono::Color::RGBA shadow_color(0.2f, 0.2f, 0.2f, 0.7f);
+            constexpr mono::Color::RGBA shadow_color(0.2f, 0.2f, 0.2f, 0.5f);
             renderer.DrawFilledCircle(shadow_offset, math::Vector(shadow_size, shadow_size / 2.0f), 8, shadow_color);
         }
 
