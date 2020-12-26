@@ -35,6 +35,7 @@ Entity* EntitySystem::AllocateEntity()
 void EntitySystem::ReleaseEntity(uint32_t entity_id)
 {
     m_entities[entity_id] = Entity();
+    m_debug_names[entity_id].clear();
     m_free_indices.push_back(entity_id);
 }
 
