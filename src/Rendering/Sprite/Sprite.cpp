@@ -192,7 +192,10 @@ void Sprite::RestartAnimation()
 
 int Sprite::GetDefinedAnimations() const
 {
-    return static_cast<int>(m_sprite_data->animations.size());
+    if(m_sprite_data)
+        return static_cast<int>(m_sprite_data->animations.size());
+
+    return 0;
 }
 
 mono::SpriteFrame Sprite::GetFrame(int frame_index) const

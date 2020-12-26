@@ -91,6 +91,8 @@ namespace
             mOnUnloadCalled = true;
             return 0;
         }
+        void PostUpdate() override
+        { }
         void AddEntity(mono::IEntity* entity, int layer) override
         { }
         void RemoveEntity(mono::IEntity* entity) override

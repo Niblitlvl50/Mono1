@@ -14,6 +14,9 @@ namespace mono
 
         ~ZoneBase();
 
+        void PostUpdate() override
+        { }
+
         void AddEntity(IEntity* entity, int layer) override;
         void RemoveEntity(IEntity* entity) override;
         

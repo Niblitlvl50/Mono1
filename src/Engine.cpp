@@ -74,15 +74,10 @@ int Engine::Run(IZone* zone)
     };
 
     InputHandler input_handler(screen_to_world_func, m_event_handler);
+    UpdateContext update_context = { 0, 0, 0 };
+    Updater updater;
 
     zone->OnLoad(m_camera, &renderer);
-
-    UpdateContext update_context;
-    update_context.frame_count = 0;
-    update_context.delta_ms = 0;
-    update_context.timestamp = 0;
-
-    Updater updater;
 
     uint32_t last_time = System::GetMilliseconds();
 
@@ -138,6 +133,8 @@ int Engine::Run(IZone* zone)
             renderer.DrawFrame();
 
             m_window->SwapBuffers();
+
+            zone->PostUpdate();
             m_system_context->Sync();
         }
 
