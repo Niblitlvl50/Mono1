@@ -52,6 +52,9 @@ namespace mono
         void SetShadowSize(float size);
         float GetShadowSize() const override;
 
+        void FlashSprite();
+        bool ShouldFlashSprite() const override;
+
     private:
 
         const SpriteData* m_sprite_data;
@@ -69,6 +72,7 @@ namespace mono
         Color::RGBA m_color;
         math::Vector m_shadow_offset;
         float m_shadow_size;
+        int m_flash_timer;
         SpriteAnimationCallback m_callback;
     };
 }

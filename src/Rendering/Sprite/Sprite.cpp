@@ -32,6 +32,7 @@ void Sprite::Init(const SpriteData* sprite_data, mono::ITexturePtr texture)
     m_flip_horizontal = false;
     m_flip_vertical = false;
     m_color = mono::Color::RGBA();
+    m_flash_timer = 0;
     m_callback = nullptr;
 }
 
@@ -111,6 +112,8 @@ mono::VerticalDirection Sprite::GetVerticalDirection() const
 
 void Sprite::Update(const UpdateContext& update_context)
 {
+    m_flash_timer -= 1;
+
     if(m_active_animation_done || m_playback_mode == PlaybackMode::PAUSED)
         return;
 
@@ -230,6 +233,16 @@ void Sprite::SetShadowSize(float size)
 float Sprite::GetShadowSize() const
 {
     return m_shadow_size;
+}
+
+void Sprite::FlashSprite()
+{
+    m_flash_timer = 3;
+}
+
+bool Sprite::ShouldFlashSprite() const
+{
+    return m_flash_timer > 0;
 }
 
 int Sprite::GetActiveAnimation() const

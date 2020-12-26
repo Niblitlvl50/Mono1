@@ -48,11 +48,17 @@ namespace
         varying vec2 v_texture_coord;
 
         uniform vec4 color_shade;
+        uniform bool flash_sprite;
+
         uniform sampler2D sampler;
 
         void main()
         {
-            gl_FragColor = texture2D(sampler, v_texture_coord) * color_shade;
+            vec4 frag_color = texture2D(sampler, v_texture_coord) * color_shade;
+            if(flash_sprite)
+                frag_color.rgb = vec3(1.0);
+
+            gl_FragColor = frag_color;
         }
     )";
 }
@@ -72,6 +78,11 @@ void SpriteShader::SetShade(IShader* shader, const mono::Color::RGBA& color)
 void SpriteShader::SetWindSway(IShader* shader, bool enable_wind)
 {
     shader->SetValue("wind_sway_enabled", enable_wind);
+}
+
+void SpriteShader::SetFlashSprite(IShader* shader, bool flash_sprite)
+{
+    shader->SetValue("flash_sprite", flash_sprite);
 }
 
 uint32_t SpriteShader::GetPositionAttribute(IShader* shader)

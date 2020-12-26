@@ -213,6 +213,9 @@ void Renderer::DrawSprite(const ISprite& sprite) const
     const uint32_t sprite_properties = sprite.GetProperties();
     SpriteShader::SetWindSway(m_sprite_shader.get(), sprite_properties & mono::SpriteProperty::WIND_SWAY);
 
+    const bool flash_sprite = sprite.ShouldFlashSprite();
+    SpriteShader::SetFlashSprite(m_sprite_shader.get(), flash_sprite);
+
     DrawSprite(
         current_frame.uv_upper_left,
         current_frame.uv_lower_right,
