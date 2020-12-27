@@ -2,9 +2,9 @@
 #pragma once
 
 #include "IEntityManager.h"
+#include "IGameSystem.h"
 
 #include "MonoFwd.h"
-#include "EntitySystem/EntitySystem.h"
 #include "ObjectAttribute.h"
 
 #include <string>
@@ -17,12 +17,12 @@ using ComponentNameLookupFunc = const char* (*)(uint32_t component_hash);
 
 namespace mono
 {
-    class EntityManager : public mono::IEntityManager
+    class EntityManager : public mono::IGameSystem, public mono::IEntityManager
     {
     public:
 
         EntityManager(
-            mono::EntitySystem* entity_system,
+            uint32_t n_entities,
             mono::SystemContext* system_context,
             EntityLoadFunc load_func,
             ComponentNameLookupFunc component_lookup);
@@ -52,14 +52,49 @@ namespace mono
             ComponentUpdateFunc update_component,
             ComponentGetFunc get_component = nullptr) override;
 
+
+
+        Entity* AllocateEntity();
+        void ReleaseEntity2(uint32_t entity_id);
+        Entity* GetEntity(uint32_t entity_id);
+        const Entity* GetEntity(uint32_t entity_id) const;
+
+        void SetProperty(Entity entity, uint32_t property);
+        bool HasProperty(Entity entity, uint32_t property) const;
+
+        bool HasComponent(const mono::Entity* entity, uint32_t component_hash) const;
+
+        void SetName(uint32_t entity_id, const std::string& name);
+        const std::string& GetName(uint32_t entity_id) const;
+        uint32_t FindEntityByName(const char* name) const;
+
+        template <typename T>
+        inline void ForEachEntity(T&& functor)
+        {
+            for(size_t index = 0; index < m_entities.size(); ++index)
+            {
+                Entity& entity = m_entities[index];
+                if(entity.id != INVALID_ID)
+                    functor(entity);
+            }
+        }
+
+        uint32_t Id() const override;
+        const char* Name() const override;
+        void Update(const UpdateContext& update_context) override;
+
+
     private:
 
         void DeferredRelease();
 
-        mono::EntitySystem* m_entity_system;
         mono::SystemContext* m_system_context;
         EntityLoadFunc m_load_func;
         ComponentNameLookupFunc m_component_name_lookup;
+
+        std::vector<Entity> m_entities;
+        std::vector<uint32_t> m_free_indices;
+        std::vector<std::string> m_debug_names;
 
         std::unordered_set<uint32_t> m_entities_to_release;
         std::unordered_map<uint32_t, EntityData> m_cached_entities;
