@@ -22,6 +22,7 @@ EntitySystem::EntitySystem(
     : m_system_context(system_context)
     , m_load_func(load_func)
     , m_component_name_lookup(component_lookup)
+    , m_ignore_releases(false)
 {
     m_entities.resize(n_entities);
     m_free_indices.resize(n_entities);
@@ -166,6 +167,9 @@ void EntitySystem::RegisterComponent(
 
 void EntitySystem::ReleaseEntity(uint32_t entity_id)
 {
+    if(m_ignore_releases)
+        return;
+
     m_entities_to_release.insert(entity_id);
     m_spawn_events.push_back({ false, entity_id });
 }
@@ -177,6 +181,10 @@ void EntitySystem::ReleaseAllEntities()
     };
 
     ForEachEntity(collect_active_entities);
+
+    m_ignore_releases = true;
+    Sync();
+    m_ignore_releases = false;
 }
 
 const std::vector<EntitySystem::SpawnEvent>& EntitySystem::GetSpawnEvents() const

@@ -96,6 +96,7 @@ namespace mono
         std::vector<uint32_t> m_free_indices;
         std::vector<std::string> m_debug_names;
 
+        bool m_ignore_releases;
         std::unordered_set<uint32_t> m_entities_to_release;
         std::unordered_map<uint32_t, EntityData> m_cached_entities;
 
