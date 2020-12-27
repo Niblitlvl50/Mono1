@@ -17,16 +17,16 @@ using ComponentNameLookupFunc = const char* (*)(uint32_t component_hash);
 
 namespace mono
 {
-    class EntityManager : public mono::IGameSystem, public mono::IEntityManager
+    class EntitySystem : public mono::IGameSystem, public mono::IEntityManager
     {
     public:
 
-        EntityManager(
+        EntitySystem(
             uint32_t n_entities,
             mono::SystemContext* system_context,
             EntityLoadFunc load_func,
             ComponentNameLookupFunc component_lookup);
-        ~EntityManager();
+        ~EntitySystem();
 
         mono::Entity CreateEntity(const char* name, const std::vector<uint32_t>& components) override;
         mono::Entity CreateEntity(const char* entity_file) override;

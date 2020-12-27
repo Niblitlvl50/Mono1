@@ -12,12 +12,12 @@ namespace mono
     class ISound;
 
     class EventHandler;
-    class SystemContext;
 
     struct Entity;
     class IEntityManager;
-    class EntityManager;
 
+    class SystemContext;
+    class EntitySystem;
     class ParticleSystem;
     class PhysicsSystem;
     class SpriteSystem;

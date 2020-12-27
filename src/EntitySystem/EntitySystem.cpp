@@ -1,5 +1,5 @@
 
-#include "EntityManager.h"
+#include "EntitySystem.h"
 
 #include "Util/Hash.h"
 #include "SystemContext.h"
@@ -14,7 +14,7 @@
 
 using namespace mono;
 
-EntityManager::EntityManager(
+EntitySystem::EntitySystem(
     uint32_t n_entities,
     mono::SystemContext* system_context,
     EntityLoadFunc load_func,
@@ -31,12 +31,12 @@ EntityManager::EntityManager(
     std::reverse(m_free_indices.begin(), m_free_indices.end());
 }
 
-EntityManager::~EntityManager()
+EntitySystem::~EntitySystem()
 {
     Sync();
 }
 
-mono::Entity EntityManager::CreateEntity(const char* name, const std::vector<uint32_t>& components)
+mono::Entity EntitySystem::CreateEntity(const char* name, const std::vector<uint32_t>& components)
 {
     mono::Entity* new_entity = AllocateEntity();
     SetName(new_entity->id, name);
@@ -47,7 +47,7 @@ mono::Entity EntityManager::CreateEntity(const char* name, const std::vector<uin
     return *new_entity;
 }
 
-mono::Entity EntityManager::CreateEntity(const char* entity_file)
+mono::Entity EntitySystem::CreateEntity(const char* entity_file)
 {
     const uint32_t entity_hash = mono::Hash(entity_file);
     const auto it = m_cached_entities.find(entity_hash);
@@ -71,7 +71,7 @@ mono::Entity EntityManager::CreateEntity(const char* entity_file)
     return *new_entity;
 }
 
-bool EntityManager::AddComponent(uint32_t entity_id, uint32_t component_hash)
+bool EntitySystem::AddComponent(uint32_t entity_id, uint32_t component_hash)
 {
     mono::Entity* entity = GetEntity(entity_id);
 
@@ -85,11 +85,11 @@ bool EntityManager::AddComponent(uint32_t entity_id, uint32_t component_hash)
     }
 
     const char* component_name = m_component_name_lookup(component_hash);
-    System::Log("EntityManager|There is no component registered with hash '%ul', %s\n", component_hash, component_name);
+    System::Log("EntitySystem|There is no component registered with hash '%ul', %s\n", component_hash, component_name);
     return false;
 }
 
-bool EntityManager::RemoveComponent(uint32_t entity_id, uint32_t component_hash)
+bool EntitySystem::RemoveComponent(uint32_t entity_id, uint32_t component_hash)
 {
     mono::Entity* entity = GetEntity(entity_id);
 
@@ -103,11 +103,11 @@ bool EntityManager::RemoveComponent(uint32_t entity_id, uint32_t component_hash)
     }
 
     const char* component_name = m_component_name_lookup(component_hash);
-    System::Log("EntityManager|Unable to remove component with hash: %ul, %s\n", component_hash, component_name);
+    System::Log("EntitySystem|Unable to remove component with hash: %ul, %s\n", component_hash, component_name);
     return false;
 }
 
-bool EntityManager::SetComponentData(uint32_t entity_id, uint32_t component_hash, const std::vector<Attribute>& properties)
+bool EntitySystem::SetComponentData(uint32_t entity_id, uint32_t component_hash, const std::vector<Attribute>& properties)
 {
     mono::Entity* entity = GetEntity(entity_id);
 
@@ -116,11 +116,11 @@ bool EntityManager::SetComponentData(uint32_t entity_id, uint32_t component_hash
         return factory_it->second.update(entity, properties, m_system_context);
 
     const char* component_name = m_component_name_lookup(component_hash);
-    System::Log("EntityManager|Unable to update component with hash: %ul, %s\n", component_hash, component_name);
+    System::Log("EntitySystem|Unable to update component with hash: %ul, %s\n", component_hash, component_name);
     return false;
 }
 
-std::vector<Attribute> EntityManager::GetComponentData(uint32_t entity_id, uint32_t component_hash) const
+std::vector<Attribute> EntitySystem::GetComponentData(uint32_t entity_id, uint32_t component_hash) const
 {
     const mono::Entity* entity = GetEntity(entity_id);
 
@@ -133,23 +133,23 @@ std::vector<Attribute> EntityManager::GetComponentData(uint32_t entity_id, uint3
     }
 
     const char* component_name = m_component_name_lookup(component_hash);
-    System::Log("EntityManager|Unable to get component with hash: %ul, %s\n", component_hash, component_name);
+    System::Log("EntitySystem|Unable to get component with hash: %ul, %s\n", component_hash, component_name);
     return { };
 }
 
-void EntityManager::SetEntityProperties(uint32_t entity_id, uint32_t properties)
+void EntitySystem::SetEntityProperties(uint32_t entity_id, uint32_t properties)
 {
     mono::Entity* entity = GetEntity(entity_id);
     entity->properties = properties;
 }
 
-uint32_t EntityManager::GetEntityProperties(uint32_t entity_id) const
+uint32_t EntitySystem::GetEntityProperties(uint32_t entity_id) const
 {
     const mono::Entity* entity = GetEntity(entity_id);
     return entity->properties;
 }
 
-void EntityManager::RegisterComponent(
+void EntitySystem::RegisterComponent(
     uint32_t component_hash,
     ComponentCreateFunc create_component,
     ComponentReleaseFunc release_component,
@@ -164,13 +164,13 @@ void EntityManager::RegisterComponent(
     };
 }
 
-void EntityManager::ReleaseEntity(uint32_t entity_id)
+void EntitySystem::ReleaseEntity(uint32_t entity_id)
 {
     m_entities_to_release.insert(entity_id);
     m_spawn_events.push_back({ false, entity_id });
 }
 
-void EntityManager::ReleaseAllEntities()
+void EntitySystem::ReleaseAllEntities()
 {
     const auto collect_active_entities = [this](Entity& entity) {
         ReleaseEntity(entity.id);
@@ -179,18 +179,18 @@ void EntityManager::ReleaseAllEntities()
     ForEachEntity(collect_active_entities);
 }
 
-const std::vector<EntityManager::SpawnEvent>& EntityManager::GetSpawnEvents() const
+const std::vector<EntitySystem::SpawnEvent>& EntitySystem::GetSpawnEvents() const
 {
     return m_spawn_events;
 }
 
-void EntityManager::Sync()
+void EntitySystem::Sync()
 {
     DeferredRelease();
     m_spawn_events.clear();
 }
 
-void EntityManager::DeferredRelease()
+void EntitySystem::DeferredRelease()
 {
     std::unordered_set<uint32_t> local_entities_to_release = m_entities_to_release;
     m_entities_to_release.clear();
@@ -211,7 +211,7 @@ void EntityManager::DeferredRelease()
 
 
 
-Entity* EntityManager::AllocateEntity()
+Entity* EntitySystem::AllocateEntity()
 {
     const uint32_t entity_id = m_free_indices.back();
     m_free_indices.pop_back();
@@ -225,54 +225,54 @@ Entity* EntityManager::AllocateEntity()
     return &entity;
 }
 
-void EntityManager::ReleaseEntity2(uint32_t entity_id)
+void EntitySystem::ReleaseEntity2(uint32_t entity_id)
 {
     m_entities[entity_id] = Entity();
     m_debug_names[entity_id].clear();
     m_free_indices.push_back(entity_id);
 }
 
-Entity* EntityManager::GetEntity(uint32_t entity_id)
+Entity* EntitySystem::GetEntity(uint32_t entity_id)
 {
     if(entity_id >= m_entities.size())
         return nullptr;
     return &m_entities[entity_id];
 }
 
-const Entity* EntityManager::GetEntity(uint32_t entity_id) const
+const Entity* EntitySystem::GetEntity(uint32_t entity_id) const
 {
     if(entity_id >= m_entities.size())
         return nullptr;
     return &m_entities[entity_id];
 }
 
-void EntityManager::SetProperty(Entity entity, uint32_t property)
+void EntitySystem::SetProperty(Entity entity, uint32_t property)
 {
     m_entities[entity.id].properties |= property;
 }
 
-bool EntityManager::HasProperty(Entity entity, uint32_t property) const
+bool EntitySystem::HasProperty(Entity entity, uint32_t property) const
 {
     return m_entities[entity.id].properties & property;
 }
 
-bool EntityManager::HasComponent(const mono::Entity* entity, uint32_t component_hash) const
+bool EntitySystem::HasComponent(const mono::Entity* entity, uint32_t component_hash) const
 {
     const std::vector<uint32_t>& entity_components = entity->components;
     return (std::find(entity_components.begin(), entity_components.end(), component_hash) != entity_components.end());
 }
 
-void EntityManager::SetName(uint32_t entity_id, const std::string& name)
+void EntitySystem::SetName(uint32_t entity_id, const std::string& name)
 {
     m_debug_names[entity_id] = name;
 }
 
-const std::string& EntityManager::GetName(uint32_t entity_id) const
+const std::string& EntitySystem::GetName(uint32_t entity_id) const
 {
     return m_debug_names[entity_id];
 }
 
-uint32_t EntityManager::FindEntityByName(const char* name) const
+uint32_t EntitySystem::FindEntityByName(const char* name) const
 {
     const auto it = std::find(m_debug_names.begin(), m_debug_names.end(), name);
     if(it != m_debug_names.end())
@@ -281,15 +281,15 @@ uint32_t EntityManager::FindEntityByName(const char* name) const
     return INVALID_ID;
 }
 
-uint32_t EntityManager::Id() const
+uint32_t EntitySystem::Id() const
 {
     return mono::Hash(Name());
 }
 
-const char* EntityManager::Name() const
+const char* EntitySystem::Name() const
 {
     return "entitysystem";
 }
 
-void EntityManager::Update(const UpdateContext& update_context)
+void EntitySystem::Update(const UpdateContext& update_context)
 { }
