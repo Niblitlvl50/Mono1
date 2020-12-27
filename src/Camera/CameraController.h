@@ -12,7 +12,6 @@ namespace mono
     {
     public:
         
-        //MouseCameraController(int window_width, int window_height, ICamera* camera, EventHandler& event_handler);
         MouseCameraController(ICamera* camera, EventHandler& event_handler);
         ~MouseCameraController();
 
@@ -27,8 +26,6 @@ namespace mono
         mono::EventResult OnMultiGesture(const event::MultiGestureEvent& event);
         mono::EventResult OnMouseWheel(const event::MouseWheelEvent& event);
         
-        // int m_window_width;
-        // int m_window_height;
         ICamera* m_camera;
         EventHandler& m_event_handler;
         bool m_enabled;

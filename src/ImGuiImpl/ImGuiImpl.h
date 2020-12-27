@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Math/Quad.h"
+#include "Math/Vector.h"
 #include "imgui/imgui.h"
 
 struct ImageCoords
