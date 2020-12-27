@@ -1,12 +1,18 @@
 
 #pragma once
 
+#include "MonoFwd.h"
 #include "EntitySystem/Entity.h"
 #include "EntitySystem/ObjectAttribute.h"
 
 #include <cstdint>
 #include <vector>
 #include <string>
+
+using ComponentCreateFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
+using ComponentReleaseFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
+using ComponentUpdateFunc = bool(*)(mono::Entity* entity, const std::vector<Attribute>& properties, mono::SystemContext* context);
+using ComponentGetFunc = std::vector<Attribute>(*)(const mono::Entity* entity, mono::SystemContext* context);
 
 namespace mono
 {
@@ -42,6 +48,13 @@ namespace mono
         virtual bool SetComponentData(uint32_t entity_id, uint32_t component_hash, const std::vector<Attribute>& properties) = 0;
         virtual std::vector<Attribute> GetComponentData(uint32_t entity_id, uint32_t component_hash) const = 0;
 
+        virtual void RegisterComponent(
+            uint32_t component_hash,
+            ComponentCreateFunc create_component,
+            ComponentReleaseFunc release_component,
+            ComponentUpdateFunc update_component,
+            ComponentGetFunc get_component = nullptr) = 0;
+
         virtual void SetEntityProperties(uint32_t entity_id, uint32_t properties) = 0;
         virtual uint32_t GetEntityProperties(uint32_t entity_id) const = 0;
 
@@ -50,10 +63,5 @@ namespace mono
 
         virtual const std::vector<SpawnEvent>& GetSpawnEvents() const = 0;
         virtual void Sync() = 0;
-
-        // Game implementation needed...
-        // ...this could probably be solved with function pointers passed in.
-        virtual EntityData LoadEntityFile(const char* entity_file) const = 0;
-        virtual const char* ComponentNameFromHash(uint32_t component_hash) const = 0;
     };
 }

@@ -12,10 +12,8 @@
 #include <unordered_set>
 #include <unordered_map>
 
-using ComponentCreateFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
-using ComponentReleaseFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
-using ComponentUpdateFunc = bool(*)(mono::Entity* entity, const std::vector<Attribute>& properties, mono::SystemContext* context);
-using ComponentGetFunc = std::vector<Attribute>(*)(const mono::Entity* entity, mono::SystemContext* context);
+using EntityLoadFunc = mono::EntityData (*)(const char* entity_file);
+using ComponentNameLookupFunc = const char* (*)(uint32_t component_hash);
 
 namespace mono
 {
@@ -23,7 +21,11 @@ namespace mono
     {
     public:
 
-        EntityManager(mono::EntitySystem* entity_system, mono::SystemContext* system_context);
+        EntityManager(
+            mono::EntitySystem* entity_system,
+            mono::SystemContext* system_context,
+            EntityLoadFunc load_func,
+            ComponentNameLookupFunc component_lookup);
         ~EntityManager();
 
         mono::Entity CreateEntity(const char* name, const std::vector<uint32_t>& components) override;
@@ -48,7 +50,7 @@ namespace mono
             ComponentCreateFunc create_component,
             ComponentReleaseFunc release_component,
             ComponentUpdateFunc update_component,
-            ComponentGetFunc get_component = nullptr);
+            ComponentGetFunc get_component = nullptr) override;
 
     private:
 
@@ -56,6 +58,9 @@ namespace mono
 
         mono::EntitySystem* m_entity_system;
         mono::SystemContext* m_system_context;
+        EntityLoadFunc m_load_func;
+        ComponentNameLookupFunc m_component_name_lookup;
+
         std::unordered_set<uint32_t> m_entities_to_release;
         std::unordered_map<uint32_t, EntityData> m_cached_entities;
 
