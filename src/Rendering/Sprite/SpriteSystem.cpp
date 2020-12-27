@@ -76,6 +76,7 @@ void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& spr
 void SpriteSystem::ReleaseSprite(uint32_t sprite_id)
 {
     m_alive[sprite_id] = false;
+    m_sprites[sprite_id].Init(nullptr, nullptr);
 }
 
 mono::Sprite* SpriteSystem::GetSprite(uint32_t sprite_id)
