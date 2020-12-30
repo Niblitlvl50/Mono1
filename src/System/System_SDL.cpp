@@ -522,7 +522,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 {
                     if(g_controller_states[index].id == -1)
                     {
-                        free_index = index;        
+                        free_index = index;
                         break;
                     }
                 }
@@ -540,7 +540,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 g_controller_states[free_index].id = SDL_JoystickInstanceID(joystick);
 
-                Log("System|Controller added: %d, %d, %s\n", free_index, g_controller_states[id].id, SDL_GameControllerName(controller));
+                Log("System|Controller connected, index: %d, id: %d, %s\n", free_index, g_controller_states[id].id, SDL_GameControllerName(controller));
 
                 handler->OnControllerAdded(free_index);
                 break;
@@ -561,7 +561,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 if(id == -1)
                 {
-                    Log("System|Unable to find controller with instance_id: %d\n", instance_id);                    
+                    Log("System|Unable to find controller with instance_id: %d\n", instance_id);
                     return;
                 }
 
@@ -570,7 +570,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 g_controller_states[id].id = -1;
 
-                Log("System|Controller removed: %d, %d\n", id, instance_id);
+                Log("System|Controller disconnected, id: %d, instance_id: %d\n", id, instance_id);
 
                 break;
             }
@@ -734,7 +734,7 @@ void System::ProcessControllerState()
         state.y = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_Y);
 
         state.left_shoulder  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
-        state.right_shoulder = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);        
+        state.right_shoulder = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
         
         state.left_stick  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_LEFTSTICK);
         state.right_stick = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
@@ -754,7 +754,7 @@ void System::ProcessControllerState()
         state.right_y = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_RIGHTY)) / -max_value;
 
         state.left_trigger  = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_TRIGGERLEFT)) /  max_value;
-        state.right_trigger = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_TRIGGERRIGHT)) / max_value;        
+        state.right_trigger = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_TRIGGERRIGHT)) / max_value;
 
         if(std::fabs(state.left_shoulder) < dead_zone)
             state.left_shoulder = 0.0f;
