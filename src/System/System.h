@@ -4,6 +4,8 @@
 #include "Keycodes.h"
 #include <cstdint>
 
+#define ENUM_BIT(n) (1 << (n))
+
 namespace System
 {
     struct Size
@@ -20,35 +22,42 @@ namespace System
 
     struct ControllerState
     {
-        int id = -1;
+        int id;
 
-        float left_x    = 0.0f;
-        float left_y    = 0.0f;
-        float right_x   = 0.0f;
-        float right_y   = 0.0f;
+        float left_x;
+        float left_y;
+        float right_x;
+        float right_y;
 
-        float left_trigger  = 0.0f;
-        float right_trigger = 0.0f;
+        float left_trigger;
+        float right_trigger;
 
-        bool a = false;
-        bool b = false;
-        bool x = false;
-        bool y = false;
+        uint16_t button_state;
+    };
 
-        bool left_shoulder  = false;
-        bool right_shoulder = false;
+    enum ControllerButton
+    {
+        A               = ENUM_BIT(0),
+        B               = ENUM_BIT(1),
+        X               = ENUM_BIT(2),
+        Y               = ENUM_BIT(3),
 
-        bool left_stick  = false;
-        bool right_stick = false;
+        LEFT_SHOULDER   = ENUM_BIT(4),
+        RIGHT_SHOULDER  = ENUM_BIT(5),
 
-        bool back = false;
-        bool guide = false;
-        bool start = false;
+        LEFT_STICK      = ENUM_BIT(6),
+        RIGHT_STICK     = ENUM_BIT(7),
 
-        bool up    = false;
-        bool down  = false;
-        bool left  = false;
-        bool right = false;
+        BACK            = ENUM_BIT(8),
+        GUIDE           = ENUM_BIT(9),
+        START           = ENUM_BIT(10),
+
+        UP              = ENUM_BIT(11),
+        DOWN            = ENUM_BIT(12),
+        LEFT            = ENUM_BIT(13),
+        RIGHT           = ENUM_BIT(14),
+
+        UNUSED          = ENUM_BIT(15)
     };
 
     class IWindow
@@ -168,4 +177,26 @@ namespace System
     const ControllerState& GetController(ControllerId controller_id);
     bool IsControllerActive(ControllerId controller_id);
     int GetControllerId(ControllerId controller_id);
+
+    inline bool IsButtonDown(uint16_t button_state, ControllerButton button_bit)
+    {
+        return (button_state & button_bit);
+    }
+
+    inline bool IsButtonTriggered(uint16_t last_button_state, uint16_t current_button_state, ControllerButton button_bit)
+    {
+        return (!IsButtonDown(last_button_state, button_bit) && IsButtonDown(current_button_state, button_bit));
+    }
+
+    inline bool HasButtonChanged(uint16_t last_button_state, uint16_t current_button_state, ControllerButton button_bit)
+    {
+        return IsButtonDown(last_button_state, button_bit) != IsButtonDown(current_button_state, button_bit);
+    }
+
+    inline bool ButtonTriggeredAndChanged(uint16_t last_button_state, uint16_t current_button_state, ControllerButton button_bit)
+    {
+        return 
+            IsButtonTriggered(last_button_state, current_button_state, button_bit) &&
+            HasButtonChanged(last_button_state, current_button_state, button_bit);
+    }
 }

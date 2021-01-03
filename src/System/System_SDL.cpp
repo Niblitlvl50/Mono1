@@ -18,8 +18,8 @@
 
 namespace
 {
-    constexpr int num_states = 2;
-    System::ControllerState g_controller_states[num_states];
+    constexpr int g_num_states = 2;
+    System::ControllerState g_controller_states[g_num_states];
 
     FILE* g_log_file = nullptr;
 
@@ -347,6 +347,11 @@ namespace
 
 void System::Initialize(const InitializeContext& context)
 {
+    std::memset(g_controller_states, 0, std::size(g_controller_states) * sizeof(ControllerState));
+
+    for(int index = 0; index < g_num_states; ++index)
+        g_controller_states[index].id = -1;
+
     if(context.log_file)
         g_log_file = std::fopen(context.log_file, "w");
 
@@ -518,7 +523,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
             {
                 int free_index = -1;
 
-                for(int index = 0; index < num_states; ++index)
+                for(int index = 0; index < g_num_states; ++index)
                 {
                     if(g_controller_states[index].id == -1)
                     {
@@ -550,7 +555,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 const int instance_id = event.cdevice.which;
                 int id = -1;
 
-                for(int index = 0; index < num_states; ++index)
+                for(int index = 0; index < g_num_states; ++index)
                 {
                     if(g_controller_states[index].id == instance_id)
                     {
@@ -720,7 +725,7 @@ void System::ProcessControllerState()
     constexpr float dead_zone = 0.08f;
     const float max_value = float(std::numeric_limits<Sint16>::max());
 
-    for(int index = 0; index < num_states; ++index)
+    for(int index = 0; index < g_num_states; ++index)
     {
         ControllerState& state = g_controller_states[index];
         if(state.id == -1)
@@ -728,25 +733,40 @@ void System::ProcessControllerState()
 
         SDL_GameController* handle = SDL_GameControllerFromInstanceID(state.id);
 
-        state.a = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_A);
-        state.b = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_B);
-        state.x = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_X);
-        state.y = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_Y);
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_A))
+            state.button_state |= ControllerButton::A;
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_B))
+            state.button_state |= ControllerButton::B;
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_X))
+            state.button_state |= ControllerButton::X;
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_Y))
+            state.button_state |= ControllerButton::Y;
 
-        state.left_shoulder  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
-        state.right_shoulder = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
-        
-        state.left_stick  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_LEFTSTICK);
-        state.right_stick = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_LEFTSHOULDER))
+            state.button_state |= ControllerButton::LEFT_SHOULDER;
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER))
+            state.button_state |= ControllerButton::RIGHT_SHOULDER;
 
-        state.back  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_BACK);
-        state.guide = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_GUIDE);
-        state.start = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_START);
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_LEFTSTICK))
+            state.button_state |= ControllerButton::LEFT_STICK;
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_RIGHTSTICK))
+            state.button_state |= ControllerButton::RIGHT_STICK;
 
-        state.up    = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_DPAD_UP);
-        state.down  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
-        state.left  = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
-        state.right = SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_BACK))
+            state.button_state |= ControllerButton::BACK;
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_GUIDE))
+            state.button_state |= ControllerButton::GUIDE;
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_START))
+            state.button_state |= ControllerButton::START;
+
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_DPAD_UP))
+            state.button_state |= ControllerButton::UP;
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_DPAD_DOWN))
+            state.button_state |= ControllerButton::DOWN;
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_DPAD_LEFT))
+            state.button_state |= ControllerButton::LEFT;
+        if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
+            state.button_state |= ControllerButton::RIGHT;
 
         state.left_x  = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_LEFTX))  /  max_value;
         state.left_y  = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_LEFTY))  / -max_value;
@@ -756,11 +776,11 @@ void System::ProcessControllerState()
         state.left_trigger  = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_TRIGGERLEFT)) /  max_value;
         state.right_trigger = float(SDL_GameControllerGetAxis(handle, SDL_CONTROLLER_AXIS_TRIGGERRIGHT)) / max_value;
 
-        if(std::fabs(state.left_shoulder) < dead_zone)
-            state.left_shoulder = 0.0f;
+        if(std::fabs(state.left_trigger) < dead_zone)
+            state.left_trigger = 0.0f;
 
-        if(std::fabs(state.right_shoulder) < dead_zone)
-            state.right_shoulder = 0.0f;
+        if(std::fabs(state.right_trigger) < dead_zone)
+            state.right_trigger = 0.0f;
 
         if(std::fabs(state.left_x) < dead_zone)
             state.left_x = 0.0f;
