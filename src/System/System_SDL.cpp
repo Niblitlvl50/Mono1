@@ -11,6 +11,7 @@
 #include <stdexcept>
 #include <cstdio>
 #include <string>
+#include <cstring>
 #include <cmath>
 #include <limits>
 
