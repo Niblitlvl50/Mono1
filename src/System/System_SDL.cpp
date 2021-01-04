@@ -732,6 +732,8 @@ void System::ProcessControllerState()
         if(state.id == -1)
             continue;
 
+        state.button_state = 0;
+
         SDL_GameController* handle = SDL_GameControllerFromInstanceID(state.id);
 
         if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_A))
