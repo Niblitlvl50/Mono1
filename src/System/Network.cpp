@@ -36,7 +36,7 @@ namespace
             }
 
             timeval tv;
-            tv.tv_sec = 2;
+            tv.tv_sec = 1;
             tv.tv_usec = 0;
             const int set_timeout_result = setsockopt(m_handle.handle, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(timeval));
             if(set_timeout_result == -1)
