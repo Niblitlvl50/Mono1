@@ -78,6 +78,11 @@ math::Vector Camera::GetPosition() const
     return m_position;
 }
 
+math::Vector Camera::GetTargetPosition() const
+{
+    return m_target_position;
+}
+
 void Camera::SetWindowSize(const math::Vector& window_size)
 {
     m_window_size = window_size;

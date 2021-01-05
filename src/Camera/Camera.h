@@ -22,6 +22,7 @@ namespace mono
         void SetPosition(const math::Vector& position) override;
         void SetTargetPosition(const math::Vector& target_position) override;
         math::Vector GetPosition() const override;
+        math::Vector GetTargetPosition() const override;
 
         void SetWindowSize(const math::Vector& window_size) override;
         const math::Vector& GetWindowSize() const override;
