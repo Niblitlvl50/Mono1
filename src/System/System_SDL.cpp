@@ -546,7 +546,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 g_controller_states[free_index].id = SDL_JoystickInstanceID(joystick);
 
-                Log("System|Controller connected, index: %d, id: %d, %s\n", free_index, g_controller_states[id].id, SDL_GameControllerName(controller));
+                Log("System|Controller connected (%s), index: %d, id: %d\n", SDL_GameControllerName(controller), free_index, g_controller_states[id].id);
 
                 handler->OnControllerAdded(free_index);
                 break;
