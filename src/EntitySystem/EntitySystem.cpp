@@ -150,6 +150,12 @@ uint32_t EntitySystem::GetEntityProperties(uint32_t entity_id) const
     return entity->properties;
 }
 
+const char* EntitySystem::GetEntityName(uint32_t entity_id) const
+{
+    const std::string& name = GetName(entity_id);
+    return name.c_str();
+}
+
 void EntitySystem::RegisterComponent(
     uint32_t component_hash,
     ComponentCreateFunc create_component,
