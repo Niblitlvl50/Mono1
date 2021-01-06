@@ -57,21 +57,21 @@ void MouseCameraController::Disable()
 
 mono::EventResult MouseCameraController::OnMouseDown(const event::MouseDownEvent& event)
 {
-    if(!m_enabled)
-        return mono::EventResult::PASS_ON;
+    if(m_enabled)
+    {
+        m_translate = true;
+        m_translate_delta = math::Vector(event.screen_x, event.screen_y);
+    }
 
-    m_translate = true;
-    m_translate_delta = math::Vector(event.screen_x, event.screen_y);
-    return mono::EventResult::HANDLED;
+    return mono::EventResult::PASS_ON;
 }
 
 mono::EventResult MouseCameraController::OnMouseUp(const event::MouseUpEvent& event)
 {
-    if(!m_enabled)
-        return mono::EventResult::PASS_ON;
-
-    m_translate = false;
-    return mono::EventResult::HANDLED;
+    if(m_enabled)
+        m_translate = false;
+        
+    return mono::EventResult::PASS_ON;
 }
 
 mono::EventResult MouseCameraController::OnMouseMove(const event::MouseMotionEvent& event)
