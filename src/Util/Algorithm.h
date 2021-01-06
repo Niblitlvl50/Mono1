@@ -31,4 +31,11 @@ namespace mono
         
         return false;
     }
+
+    template <typename T>
+    inline bool contains(const std::vector<T>& collection, const T& thing)
+    {
+        const auto it = std::find(collection.begin(), collection.end(), thing);
+        return it != collection.end();
+    }
 }

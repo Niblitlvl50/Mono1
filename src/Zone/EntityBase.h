@@ -49,6 +49,7 @@ namespace mono
         uint32_t m_uid;
         uint32_t m_properties;
 
+        bool m_draw;
         math::Vector m_position;
         math::Vector m_pivot_point;
         math::Vector m_scale;

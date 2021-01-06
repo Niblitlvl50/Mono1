@@ -10,10 +10,11 @@
 using namespace mono;
 
 EntityBase::EntityBase()
-    : m_uid(System::CreateUID()),
-      m_properties(0),
-      m_scale(1.0f, 1.0f),
-      m_rotation(0.0f)
+    : m_uid(System::CreateUID())
+    , m_properties(0)
+    , m_scale(1.0f, 1.0f)
+    , m_rotation(0.0f)
+    , m_draw(true)
 { }
 
 EntityBase::~EntityBase()
@@ -24,6 +25,9 @@ EntityBase::~EntityBase()
 
 void EntityBase::Draw(IRenderer& renderer) const
 {
+    if(!m_draw)
+        return;
+
     const math::Matrix& matrix = renderer.GetTransform() * Transformation();
 
     for(const mono::IEntity* child : m_children)
