@@ -348,7 +348,7 @@ namespace
 
 void System::Initialize(const InitializeContext& context)
 {
-    std::memset(g_controller_states, 0, std::size(g_controller_states) * sizeof(ControllerState));
+    std::memset(g_controller_states, 0, sizeof(g_controller_states));
 
     for(int index = 0; index < g_num_states; ++index)
         g_controller_states[index].id = -1;
@@ -554,29 +554,32 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
             case SDL_CONTROLLERDEVICEREMOVED:
             {
                 const int instance_id = event.cdevice.which;
-                int id = -1;
+                int controller_index = -1;
 
                 for(int index = 0; index < g_num_states; ++index)
                 {
                     if(g_controller_states[index].id == instance_id)
                     {
-                        id = index;
+                        controller_index = index;
                         break;
                     }
                 }
 
-                if(id == -1)
+                if(controller_index == -1)
                 {
-                    Log("System|Unable to find controller with instance_id: %d\n", instance_id);
+                    Log("System|Unable to find controller with id: %d\n", instance_id);
                     return;
                 }
 
-                handler->OnControllerRemoved(id);
-                SDL_GameControllerClose(SDL_GameControllerFromInstanceID(instance_id));
+                handler->OnControllerRemoved(controller_index);
+                g_controller_states[controller_index].id = -1;
 
-                g_controller_states[id].id = -1;
-
-                Log("System|Controller disconnected, id: %d, instance_id: %d\n", id, instance_id);
+                SDL_GameController* controller = SDL_GameControllerFromInstanceID(instance_id);
+                Log("System|Controller disconnected (%s), index: %d, id: %d\n",
+                    SDL_GameControllerName(controller),
+                    controller_index,
+                    instance_id);
+                SDL_GameControllerClose(controller);
 
                 break;
             }

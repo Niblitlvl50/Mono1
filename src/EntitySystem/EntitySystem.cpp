@@ -98,9 +98,7 @@ bool EntitySystem::RemoveComponent(uint32_t entity_id, uint32_t component_hash)
     if(factory_it != m_component_factories.end())
     {
         const bool success = factory_it->second.release(entity, m_system_context);
-        if(success)
-            mono::remove(entity->components, component_hash);
-        return success;
+        return success && mono::remove(entity->components, component_hash);
     }
 
     const char* component_name = m_component_name_lookup(component_hash);
