@@ -42,6 +42,7 @@ enum class Keycode
     T,
     I,
     O,
+    P,
 
     A,
     S,
