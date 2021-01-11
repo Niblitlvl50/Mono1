@@ -12,9 +12,11 @@ using namespace mono;
 EntityBase::EntityBase()
     : m_uid(System::CreateUID())
     , m_properties(0)
+    , m_draw(true)
+    , m_position()
+    , m_pivot_point()
     , m_scale(1.0f, 1.0f)
     , m_rotation(0.0f)
-    , m_draw(true)
 { }
 
 EntityBase::~EntityBase()
