@@ -1,7 +1,7 @@
 
 #include "PhysicsDebugDrawer.h"
 #include "PhysicsSystem.h"
-#include "CMSpace.h"
+#include "PhysicsSpace.h"
 #include "Math/Quad.h"
 #include "Rendering/Color.h"
 #include "Rendering/IRenderer.h"

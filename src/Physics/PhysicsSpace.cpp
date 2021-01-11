@@ -1,5 +1,5 @@
 
-#include "CMSpace.h"
+#include "PhysicsSpace.h"
 #include "IBody.h"
 #include "IShape.h"
 #include "IConstraint.h"
@@ -9,6 +9,7 @@
 #include "Math/Quad.h"
 
 #include "chipmunk/chipmunk.h"
+#include "chipmunk/chipmunk_private.h"
 
 #include <cstdio>
 
@@ -135,9 +136,6 @@ std::vector<IBody*> PhysicsSpace::QueryBox(const math::Quad& world_bb, uint32_t 
 {
     std::vector<cpBody*> found_bodies;
 
-    std::vector<IBody*> bodies;
-    bodies.reserve(found_bodies.size());
-
     const cpSpaceBBQueryFunc query_func = [](cpShape* shape, void* data) {
         std::vector<cpBody*>* found_bodies = (std::vector<cpBody*>*)data;
         found_bodies->push_back(cpShapeGetBody(shape));
@@ -151,6 +149,9 @@ std::vector<IBody*> PhysicsSpace::QueryBox(const math::Quad& world_bb, uint32_t 
     const cpBB bounding_box = cpBBNew(left, bottom, right, top);
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
     cpSpaceBBQuery(m_space, bounding_box, shape_filter, query_func, &found_bodies);
+
+    std::vector<IBody*> bodies;
+    bodies.reserve(found_bodies.size());
 
     for(const cpBody* cpbody : found_bodies)
     {
@@ -167,6 +168,36 @@ typedef void (*cpSpaceBBQueryFunc)(cpShape *shape, void *data);
 /// Only the shape's bounding boxes are checked for overlap, not their full shape.
 CP_EXPORT void cpSpaceBBQuery(cpSpace *space, cpBB bb, cpShapeFilter filter, cpSpaceBBQueryFunc func, void *data);
 */
+}
+
+std::vector<IBody*> PhysicsSpace::QueryRadius(const math::Vector& position, float radius, uint32_t category)
+{
+    cpCircleShape circle_shape;
+    cpCircleShapeInit(&circle_shape, cpSpaceGetStaticBody(m_space), radius, cpv(position.x, position.y));
+
+    const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
+    cpShapeSetFilter((cpShape*)&circle_shape, shape_filter);
+
+    const cpSpaceShapeQueryFunc query_func = [](cpShape* shape, cpContactPointSet* points, void* data) {
+        std::vector<cpBody*>* found_bodies = (std::vector<cpBody*>*)data;
+        found_bodies->push_back(cpShapeGetBody(shape));
+    };
+
+    std::vector<cpBody*> found_bodies;
+    const bool result = cpSpaceShapeQuery(m_space, (cpShape*)&circle_shape, query_func, &found_bodies);
+    if(!result)
+        return { };
+
+    std::vector<IBody*> bodies;
+    bodies.reserve(found_bodies.size());
+
+    for(const cpBody* cpbody : found_bodies)
+    {
+        const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(cpbody));
+        bodies.push_back(m_physics_system->GetBody(body_id));
+    }
+
+    return bodies;
 }
 
 IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category)

@@ -46,6 +46,7 @@ namespace mono
 
         std::vector<IBody*> QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category);
         std::vector<IBody*> QueryBox(const math::Quad& world_bb, uint32_t category);
+        std::vector<IBody*> QueryRadius(const math::Vector& position, float radius, uint32_t category);
 
         IBody* GetStaticBody();
 
