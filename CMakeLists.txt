@@ -15,7 +15,7 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-unused-parameter")
 
 # Chipmunk2D
-set(BUILD_SHARED OFF)
+set(BUILD_SHARED OFF CACHE BOOL "Build and install the shared library" FORCE)
 set(BUILD_STATIC ON)
 set(BUILD_DEMOS OFF CACHE BOOL "Build chipmunk demo application" FORCE)
 set(LIB_INSTALL_DIR ${LIBRARY_OUTPUT_PATH})
