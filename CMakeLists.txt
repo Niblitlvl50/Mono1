@@ -36,13 +36,6 @@ if(SDL2_FOUND)
     include_directories(SYSTEM ${SDL2_INCLUDE_DIR})
 endif(SDL2_FOUND)
 
-if(APPLE)
-    find_library(AUDIOTOOLBOX AudioToolbox)
-    if(NOT AUDIOTOOLBOX)
-        message(FATAL_ERROR "AudioToolbox not found")
-    endif()
-endif()
-
 # huffandpuff
 file(GLOB_RECURSE huffandpuff_source_files "third_party/huffandpuff/*.c" "third_party/huffandpuff/*.h")
 add_library(huffandpuff STATIC ${huffandpuff_source_files})
@@ -63,10 +56,6 @@ file(GLOB_RECURSE engine_source_files "src/*.cpp" "src/*.h")
 add_library(mono STATIC ${engine_source_files})
 add_dependencies(mono huffandpuff imgui chipmunk_static)
 target_link_libraries(mono huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${AUDIOTOOLBOX})
-
-if(APPLE)
-    target_link_libraries(mono ${AUDIOTOOLBOX})
-endif()
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "tests/*.cpp")
