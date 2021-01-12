@@ -31,15 +31,15 @@ if(OPENGL_FOUND)
     include_directories(SYSTEM ${OPENGL_INCLUDE_DIR})
 endif(OPENGL_FOUND)
 
-find_package(OpenAL REQUIRED)
-if(OPENAL_FOUND)
-    include_directories(SYSTEM ${OPENAL_INCLUDE_DIR})
-endif(OPENAL_FOUND)
-
 find_package(SDL2 REQUIRED)
 if(SDL2_FOUND)
     include_directories(SYSTEM ${SDL2_INCLUDE_DIR})
 endif(SDL2_FOUND)
+
+find_library(AUDIOTOOLBOX AudioToolbox)
+if(NOT AUDIOTOOLBOX)
+    message(WARNING "AudioToolbox not found")
+endif()
 
 # huffandpuff
 file(GLOB_RECURSE huffandpuff_source_files "third_party/huffandpuff/*.c" "third_party/huffandpuff/*.h")
@@ -60,7 +60,7 @@ set_target_properties(gtest PROPERTIES COMPILE_FLAGS -Wno-missing-field-initiali
 file(GLOB_RECURSE engine_source_files "src/*.cpp" "src/*.h")
 add_library(mono STATIC ${engine_source_files})
 add_dependencies(mono huffandpuff imgui chipmunk_static)
-target_link_libraries(mono huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENAL_LIBRARY})
+target_link_libraries(mono huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${AUDIOTOOLBOX})
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "tests/*.cpp")
