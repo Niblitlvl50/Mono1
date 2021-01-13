@@ -64,7 +64,7 @@ endif()
 file(GLOB_RECURSE engine_source_files "src/*.cpp" "src/*.h")
 add_library(mono STATIC ${engine_source_files})
 add_dependencies(mono huffandpuff imgui chipmunk_static)
-target_link_libraries(mono huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY})
+target_link_libraries(mono huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} ${OPENGL_LIBRARIES})
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "tests/*.cpp")
