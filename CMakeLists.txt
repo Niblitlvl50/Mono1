@@ -43,19 +43,19 @@ add_library(huffandpuff STATIC ${huffandpuff_source_files})
 # imgui
 file(GLOB_RECURSE imgui_source_files "third_party/imgui/*.cpp" "third_party/imgui/*.h")
 add_library(imgui STATIC ${imgui_source_files})
-set_target_properties(imgui PROPERTIES COMPILE_FLAGS -Wno-implicit-fallthrough)
+# set_target_properties(imgui PROPERTIES COMPILE_FLAGS -Wno-implicit-fallthrough)
 
 # gtest
 file(GLOB_RECURSE gtest_source_files "third_party/gtest-1.7.0/src/*.cc")
 add_library(gtest STATIC ${gtest_source_files})
 target_include_directories(gtest PRIVATE "third_party/gtest-1.7.0/include" "third_party/gtest-1.7.0")
-set_target_properties(gtest PROPERTIES COMPILE_FLAGS -Wno-missing-field-initializers)
+# set_target_properties(gtest PROPERTIES COMPILE_FLAGS -Wno-missing-field-initializers)
 
 # Mono
 file(GLOB_RECURSE engine_source_files "src/*.cpp" "src/*.h")
 add_library(mono STATIC ${engine_source_files})
 add_dependencies(mono huffandpuff imgui chipmunk_static)
-target_link_libraries(mono huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY} ${AUDIOTOOLBOX})
+target_link_libraries(mono huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} ${OPENGL_gl_LIBRARY})
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "tests/*.cpp")
