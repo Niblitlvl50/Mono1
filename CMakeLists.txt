@@ -13,7 +13,11 @@ set(CMAKE_BUILD_TYPE Debug)
 # set(CMAKE_BUILD_TYPE Release)
 
 if(MSVC)
-    add_compile_options("/W4" "$<$<CONFIG:RELEASE>:/O2>")
+    # 4100 "unreferenced formal parameter"
+    # 4244 "conversion from '__int64' to 'uint32_t', possible loss of data"
+    # 4245 "conversion from 'int' to 'uint32_t', signed/unsigned mismatch"
+    # 4267 "conversion from 'size_t' to 'uint32_t', possible loss of data"
+    add_compile_options("/W4" "/wd4100" "/wd4244" "/wd4245" "/wd4267" "$<$<CONFIG:RELEASE>:/O2>")
 else()
     add_compile_options("-Wall" "-Wextra" "-Wno-unused-parameter" "$<$<CONFIG:RELEASE>:-O3>")
 endif()
@@ -46,13 +50,15 @@ add_library(huffandpuff STATIC ${huffandpuff_source_files})
 # imgui
 file(GLOB_RECURSE imgui_source_files "third_party/imgui/*.cpp" "third_party/imgui/*.h")
 add_library(imgui STATIC ${imgui_source_files})
-# set_target_properties(imgui PROPERTIES COMPILE_FLAGS -Wno-implicit-fallthrough)
 
 # gtest
 file(GLOB_RECURSE gtest_source_files "third_party/gtest-1.7.0/src/*.cc")
 add_library(gtest STATIC ${gtest_source_files})
 target_include_directories(gtest PRIVATE "third_party/gtest-1.7.0/include" "third_party/gtest-1.7.0")
-# set_target_properties(gtest PROPERTIES COMPILE_FLAGS -Wno-missing-field-initializers)
+
+if(NOT MSVC)
+    target_compile_options(gtest PRIVATE -Wno-missing-field-initializers)
+endif()
 
 # Mono
 file(GLOB_RECURSE engine_source_files "src/*.cpp" "src/*.h")
