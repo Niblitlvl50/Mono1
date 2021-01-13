@@ -9,6 +9,8 @@
 
 #include "Math/Quad.h"
 
+#include <algorithm>
+
 using namespace mono;
 
 namespace

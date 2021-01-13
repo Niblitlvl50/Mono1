@@ -15,7 +15,9 @@
 #include <cmath>
 #include <limits>
 
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 
 namespace
 {
@@ -379,10 +381,12 @@ void System::Initialize(const InitializeContext& context)
     if(chdir_result != 0)
         throw std::runtime_error("System|Unable to set resource directory");
 
+#ifndef _WIN32
     char cwd_buffer[1024] = { 0 };
     getcwd(cwd_buffer, std::size(cwd_buffer));
-
     Log("\tresouce directory: %s\n", cwd_buffer);
+#endif
+
     SDL_free(base_path);
 }
 

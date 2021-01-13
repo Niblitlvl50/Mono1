@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 // Initialized in RenderSystem.cpp
 extern mono::IShaderFactory* g_shader_factory;

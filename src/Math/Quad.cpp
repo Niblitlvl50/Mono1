@@ -105,4 +105,4 @@ math::Vector math::Center(const math::Quad& quad)
     return math::Vector(quad.mA.x + half_width, quad.mA.y + half_height);
 }
 
-const math::Quad math::InfQuad = Quad(-math::INF, -math::INF, math::INF, math::INF);
+const math::Quad math::InfQuad = math::Quad(-math::INF, -math::INF, math::INF, math::INF);
