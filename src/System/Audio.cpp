@@ -26,7 +26,7 @@ namespace
         { }
         bool IsPlaying() const override
         {
-            return true;
+            return false;
         }
     };
 
