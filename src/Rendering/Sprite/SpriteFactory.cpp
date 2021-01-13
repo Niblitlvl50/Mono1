@@ -81,7 +81,7 @@ namespace
             sprite_animation.name = animation["name"];
             sprite_animation.looping = animation["loop"];
             sprite_animation.frame_duration = animation["frame_duration"];
-            sprite_animation.frames = static_cast<std::vector<int>>(animation["frames"]);
+            sprite_animation.frames = animation["frames"].get<std::vector<int>>();
 
             sprite_data.animations.push_back(sprite_animation);
         }
