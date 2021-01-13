@@ -8,6 +8,10 @@
 #include <stdexcept>
 
 
+#ifdef _WIN32
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #define CUTE_SOUND_FORCE_SDL
 #define CUTE_SOUND_IMPLEMENTATION
 #include "cute_headers/cute_sound.h"

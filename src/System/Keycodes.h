@@ -1,6 +1,8 @@
 
 #pragma once
 
+#undef DELETE
+
 enum class Keycode
 {
     NONE,
