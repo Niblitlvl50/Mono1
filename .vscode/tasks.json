@@ -6,10 +6,13 @@
         {
             "taskName": "build",
             "command": "make",
+            "type": "process",
             "args": [
                 "-j8"
             ],
-            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}/build"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -22,6 +25,9 @@
             "args": [
                 "clean"
             ],
+            "options": {
+                "cwd": "${workspaceRoot}/build"
+            },
             "type": "process",
             "problemMatcher": []
         },
@@ -29,20 +35,23 @@
             "taskName": "cmake",
             "command": "cmake",
             "args": [
-                "."
+                "../"
             ],
+            "options": {
+                "cwd": "${workspaceRoot}/build"
+            },
             "type": "process",
             "problemMatcher": []
         },
         {
             "taskName": "run tests",
             "type": "process",
+            "command": "./bin/unittest",
+            "args": [ ],
             "group": {
                 "kind": "test",
                 "isDefault": true
             },
-            "command": "./bin/unittest",
-            "args": [ ],
             "problemMatcher": []
         }
     ]
