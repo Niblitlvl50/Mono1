@@ -19,6 +19,8 @@
 #include <unistd.h>
 #endif
 
+#undef DELETE
+
 namespace
 {
     constexpr int g_num_states = 2;
