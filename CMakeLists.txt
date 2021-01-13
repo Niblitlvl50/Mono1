@@ -55,7 +55,6 @@ add_library(imgui STATIC ${imgui_source_files})
 file(GLOB_RECURSE gtest_source_files "third_party/gtest-1.7.0/src/*.cc")
 add_library(gtest STATIC ${gtest_source_files})
 target_include_directories(gtest PRIVATE "third_party/gtest-1.7.0/include" "third_party/gtest-1.7.0")
-
 if(NOT MSVC)
     target_compile_options(gtest PRIVATE -Wno-missing-field-initializers)
 endif()
