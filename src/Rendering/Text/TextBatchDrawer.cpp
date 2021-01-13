@@ -30,10 +30,10 @@ void TextBatchDrawer::Draw(mono::IRenderer& renderer) const
                 mono::Color::HSL hsl_color = mono::Color::ToHSL(text.tint);
                 hsl_color.lightness -= 0.3f;
 
-                renderer.DrawText(text.font_id, text.text.c_str(), shadow_position, text.centered, mono::Color::ToRGBA(hsl_color, text.tint.alpha));
+                renderer.RenderText(text.font_id, text.text.c_str(), shadow_position, text.centered, mono::Color::ToRGBA(hsl_color, text.tint.alpha));
             }
 
-            renderer.DrawText(text.font_id, text.text.c_str(), text_position, text.centered, text.tint);
+            renderer.RenderText(text.font_id, text.text.c_str(), text_position, text.centered, text.tint);
         }
     };
 

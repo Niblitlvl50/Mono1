@@ -22,7 +22,7 @@ namespace mono
 
     // Special drawing the screen...
     void DrawScreen(const math::Quad& texture_coordinates, const math::Vector& size, IShader* shader);
-    void DrawText(const struct TextDefinition& text, IShader* shader);
+    void RenderText(const struct TextDefinition& text, IShader* shader);
     //! Draws a single line
     void DrawLine(
         const std::vector<math::Vector>& vertices, const mono::Color::RGBA& color, float width, IShader* shader);

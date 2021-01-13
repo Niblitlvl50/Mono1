@@ -29,7 +29,7 @@ void TransformSystemDrawer::Draw(mono::IRenderer& renderer) const
         std::sprintf(buffer, "%u", index);
 
         renderer.DrawQuad(bb, mono::Color::RED, 1.0f);
-        renderer.DrawText(0, buffer, math::GetPosition(world_transform), true, mono::Color::RED);
+        renderer.RenderText(0, buffer, math::GetPosition(world_transform), true, mono::Color::RED);
     };
 
     m_transform_system->ForEachComponent(draw_bounding_boxes);

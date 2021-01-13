@@ -17,7 +17,7 @@ namespace mono
         virtual ~IRenderer() = default;
         virtual void AddDrawable(const IDrawable* drawable) = 0;
 
-        virtual void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const = 0;
+        virtual void RenderText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const = 0;
         virtual void DrawSprite(const ISprite& sprite) const = 0;
         virtual void DrawSprite(
             const math::Vector& uv_upper_left,

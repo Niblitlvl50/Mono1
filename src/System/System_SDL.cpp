@@ -450,7 +450,7 @@ System::Size System::GetCurrentWindowSize()
     return { mode.w, mode.h };
 }
 
-System::IWindow* System::CreateWindow(const char* title, int x, int y, int width, int height, WindowOptions options)
+System::IWindow* System::MakeWindow(const char* title, int x, int y, int width, int height, WindowOptions options)
 {
     return new SDLWindow(title, x, y, width, height, options);
 }

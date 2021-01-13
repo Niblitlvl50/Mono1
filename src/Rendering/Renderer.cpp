@@ -187,7 +187,7 @@ void Renderer::AddDrawable(const IDrawable* drawable)
     m_drawables.push_back(drawable);
 }
 
-void Renderer::DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const
+void Renderer::RenderText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const
 {
     const mono::ITexturePtr& texture = mono::GetFontTexture(font_id);
     if(!texture)
@@ -199,7 +199,7 @@ void Renderer::DrawText(int font_id, const char* text, const math::Vector& pos, 
     UseTexture(texture.get());
     UseShader(m_texture_shader.get());
 
-    ::DrawText(def, m_texture_shader.get());
+    ::RenderText(def, m_texture_shader.get());
 }
 
 void Renderer::DrawSprite(const ISprite& sprite) const

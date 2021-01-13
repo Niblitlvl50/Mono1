@@ -208,7 +208,7 @@ void mono::DrawScreen(const math::Quad& texture_coordinates, const math::Vector&
     glDisableVertexAttribArray(1);
 }
 
-void mono::DrawText(const TextDefinition& text, IShader* shader)
+void mono::RenderText(const TextDefinition& text, IShader* shader)
 {
     TextureShader::SetAlphaTexture(shader, true);
     TextureShader::SetShade(shader, text.color);

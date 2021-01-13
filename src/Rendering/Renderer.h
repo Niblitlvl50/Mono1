@@ -38,7 +38,7 @@ namespace mono
 
         void AddDrawable(const IDrawable* drawable) override;
 
-        void DrawText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const override;
+        void RenderText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const override;
         void DrawSprite(const ISprite& sprite) const override;
         void DrawSprite(
             const math::Vector& uv_upper_left,
