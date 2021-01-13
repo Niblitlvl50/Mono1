@@ -7,10 +7,8 @@
 #include <unordered_map>
 #include <stdexcept>
 
-#ifdef __linux__
-    #define CUTE_SOUND_FORCE_SDL
-#endif
 
+#define CUTE_SOUND_FORCE_SDL
 #define CUTE_SOUND_IMPLEMENTATION
 #include "cute_headers/cute_sound.h"
 
