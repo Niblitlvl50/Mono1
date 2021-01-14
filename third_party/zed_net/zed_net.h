@@ -98,7 +98,7 @@ ZED_NET_DEF const char *zed_net_host_to_str(unsigned int host);
 // Wraps the system handle for a UDP/TCP socket
 typedef struct {
     int handle;
-    int non_blocking;
+    unsigned long non_blocking;
     int ready;
 } zed_net_socket_t;
 
@@ -117,7 +117,7 @@ ZED_NET_DEF void zed_net_socket_close(zed_net_socket_t *socket);
 //
 // Returns 0 on success
 // Returns -1 on failure (call 'zed_net_get_error' for more info)
-ZED_NET_DEF int zed_net_udp_socket_open(zed_net_socket_t *socket, unsigned int port, int non_blocking);
+ZED_NET_DEF int zed_net_udp_socket_open(zed_net_socket_t *socket, unsigned int port, unsigned long non_blocking);
 
 // Sends a specific amount of data to 'destination'
 //
@@ -143,7 +143,7 @@ ZED_NET_DEF int zed_net_udp_socket_receive(zed_net_socket_t *socket, zed_net_add
 // Socket will listen for incoming connections if 'listen_socket' is non-zero
 // Returns 0 on success
 // Returns -1 on failure (call 'zed_net_get_error' for more info)
-ZED_NET_DEF int zed_net_tcp_socket_open(zed_net_socket_t *socket, unsigned int port, int non_blocking, int listen_socket);
+ZED_NET_DEF int zed_net_tcp_socket_open(zed_net_socket_t *socket, unsigned int port, unsigned long non_blocking, int listen_socket);
 
 // Connect to a remote endpoint
 // Returns 0 on success.
@@ -262,7 +262,7 @@ ZED_NET_DEF const char *zed_net_host_to_str(unsigned int host) {
     return inet_ntoa(in);
 }
 
-ZED_NET_DEF int zed_net_udp_socket_open(zed_net_socket_t *sock, unsigned int port, int non_blocking) {
+ZED_NET_DEF int zed_net_udp_socket_open(zed_net_socket_t *sock, unsigned int port, unsigned long non_blocking) {
     if (!sock)
         return zed_net__error("Socket is NULL");
 
@@ -304,7 +304,7 @@ ZED_NET_DEF int zed_net_udp_socket_open(zed_net_socket_t *sock, unsigned int por
     return 0;
 }
 
-ZED_NET_DEF int zed_net_tcp_socket_open(zed_net_socket_t *sock, unsigned int port, int non_blocking, int listen_socket) {
+ZED_NET_DEF int zed_net_tcp_socket_open(zed_net_socket_t *sock, unsigned int port, unsigned long non_blocking, int listen_socket) {
     if (!sock)
         return zed_net__error("Socket is NULL");
 
