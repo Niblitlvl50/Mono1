@@ -18,6 +18,7 @@ if(MSVC)
     # 4245 "conversion from 'int' to 'uint32_t', signed/unsigned mismatch"
     # 4267 "conversion from 'size_t' to 'uint32_t', possible loss of data"
     add_compile_options("/W4" "/wd4100" "/wd4244" "/wd4245" "/wd4267" "$<$<CONFIG:RELEASE>:/O2>")
+    add_compile_definitions(_CRT_SECURE_NO_WARNINGS=1)
 else()
     add_compile_options("-Wall" "-Wextra" "-Wno-unused-parameter" "$<$<CONFIG:RELEASE>:-O3>")
 endif()
