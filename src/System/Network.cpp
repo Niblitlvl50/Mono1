@@ -8,9 +8,6 @@
 #define ZED_NET_STATIC
 
 #include "zed_net/zed_net.h"
-#include <ifaddrs.h>
-#include <net/if.h>
-
 #include <errno.h>
 
 namespace
@@ -122,13 +119,11 @@ void network::Initialize(uint16_t socket_port_start, uint16_t socket_port_end)
     
     const std::string& localhost_name = GetLocalhostName();
     const std::string& broadcast_address = AddressToString(GetBroadcastAddress(0));
-    const std::string& loopback_address = AddressToString(GetLoopbackAddress(0));
 
     System::Log("Network\n");
     System::Log("\tport range: %d - %d\n", s_socket_range_start, s_socket_range_end);
     System::Log("\tlocalhost: %s\n", localhost_name.c_str());
     System::Log("\tbroadcast: %s\n", broadcast_address.c_str());
-    System::Log("\tloopback: %s\n", loopback_address.c_str());
 }
 
 void network::Shutdown()
@@ -155,6 +150,7 @@ network::Address network::MakeAddress(const char* host, uint16_t port)
     return { zed_address.host, zed_address.port };
 }
 
+/*
 static network::Address FindSystemAddress(uint32_t address_type, uint16_t port)
 {
     std::string address_string;
@@ -182,16 +178,22 @@ static network::Address FindSystemAddress(uint32_t address_type, uint16_t port)
 
     return network::MakeAddress(address_string.c_str(), port);
 }
+*/
 
 
 network::Address network::GetBroadcastAddress(uint16_t port)
 {
-    return FindSystemAddress(IFF_BROADCAST, port);
-}
+    zed_net_interfaceinfo_t interfaces[16];
+    const int n_interfaces = zed_net_enumerate_interfaces(interfaces, std::size(interfaces), true, false);
+    for(int index = 0; index < n_interfaces; ++index)
+    {
+        const zed_net_interfaceinfo_t& interfaceinfo = interfaces[index];
+        std::printf("%s, %s, %s, %u\n", interfaceinfo.address, interfaceinfo.interface_name, interfaceinfo.netmask, interfaceinfo.is_ipv6);
+    }
 
-network::Address network::GetLoopbackAddress(uint16_t port)
-{
-    return FindSystemAddress(IFF_LOOPBACK, port);
+    return network::MakeAddress(interfaces[0].address, port);
+
+    //return FindSystemAddress(IFF_BROADCAST, port);
 }
 
 std::string network::AddressToString(const Address& address)

@@ -213,7 +213,7 @@ namespace
     };
 }
 
-TEST(EngineTest, Basic)
+TEST(EngineTest, DISABLED_Basic)
 {
     mono::EventHandler handler;
     mono::SystemContext system_context;

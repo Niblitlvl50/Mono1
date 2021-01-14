@@ -30,7 +30,6 @@ namespace network
 
     Address MakeAddress(const char* host, uint16_t port);
     Address GetBroadcastAddress(uint16_t port);
-    Address GetLoopbackAddress(uint16_t port);
 
     std::string GetLocalhostName();
     std::string AddressToString(const Address& address);

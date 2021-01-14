@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 //
-// zed_net - v0.20 - public domain networking library
+// zed_net - v0.22 - public domain networking library
 // (inspired by the excellent stb libraries: https://github.com/nothings/stb)
 //
 // This library is intended primarily for use in games and provides a simple wrapper
@@ -11,6 +11,8 @@
 //
 // VERSION HISTORY
 //
+//    0.22 (14/01/2021) Added function to enumarate network devices.
+//    0.21 (14/01/2021) Win compilation fixes.
 //    0.20 (7/28/2019) OSX compilation fixes.
 //    0.19 (3/4/2016) TCP added and malloc/free calls removed.
 //                     Not backwards compatible. - Ian T. Jacobsen (itjac.me)
@@ -89,6 +91,24 @@ ZED_NET_DEF int zed_net_get_address(zed_net_address_t *address, const char *host
 //
 // Returns NULL on failure (call 'zed_net_get_error' for more info)
 ZED_NET_DEF const char *zed_net_host_to_str(unsigned int host);
+
+
+#define ZED_INET6_ADDRSTRLEN 46 // Length of the string form for IPv6.
+
+typedef struct {
+    char interface_name[48];
+    char address[ZED_INET6_ADDRSTRLEN];
+    char netmask[ZED_INET6_ADDRSTRLEN];
+    char is_ipv6;
+    unsigned int flags;
+} zed_net_interfaceinfo_t;
+
+// Get a list of interface names and ip-addresses of the host machine
+// The supplied table needs to be allocated memory of size tablesize * sizeof(zed_net_interfaceinfo_t)
+// Boolean parametrs want_ipv4 and want_ipv6 can be set to 0 or 1
+// The function returns the max number of table entries (can be more than tablesize)
+// You can supply NULL as table and 0 as tablesize to query for the count of entries.
+int zed_net_enumerate_interfaces(zed_net_interfaceinfo_t* table, int tablesize, int want_ipv4, int want_ipv6);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -190,6 +210,8 @@ ZED_NET_DEF int zed_net_tcp_make_socket_ready(zed_net_socket_t *socket);
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <WinSock2.h>
 #pragma comment(lib, "wsock32.lib")
+#include <iphlpapi.h>
+#pragma comment(lib, "iphlpapi.lib")
 #define ZED_NET_SOCKET_ERROR SOCKET_ERROR
 #define ZED_NET_INVALID_SOCKET INVALID_SOCKET
 #else
@@ -199,6 +221,7 @@ ZED_NET_DEF int zed_net_tcp_make_socket_ready(zed_net_socket_t *socket);
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <fcntl.h>
+#include <ifaddrs.h>
 #define ZED_NET_SOCKET_ERROR -1
 #define ZED_NET_INVALID_SOCKET -1
 #endif
@@ -260,6 +283,141 @@ ZED_NET_DEF const char *zed_net_host_to_str(unsigned int host) {
     in.s_addr = host;
 
     return inet_ntoa(in);
+}
+
+int zed_net_enumerate_interfaces(zed_net_interfaceinfo_t* table, int tablesize, int want_ipv4, int want_ipv6) {
+    int totalcount = 0;
+
+#ifdef _WIN32
+    DWORD size;
+    if (GetAdaptersAddresses(AF_UNSPEC, GAA_FLAG_INCLUDE_PREFIX, NULL, NULL, &size) != ERROR_BUFFER_OVERFLOW || !size)
+        return 0;
+    PIP_ADAPTER_ADDRESSES adapter_addresses = (PIP_ADAPTER_ADDRESSES)HeapAlloc(GetProcessHeap(), 0, size);
+    if (GetAdaptersAddresses(AF_UNSPEC, GAA_FLAG_INCLUDE_PREFIX, NULL, adapter_addresses, &size) != ERROR_SUCCESS) {
+        free(adapter_addresses);
+        return 0;
+    }
+
+    for (PIP_ADAPTER_ADDRESSES aa = adapter_addresses; aa; aa = aa->Next) {
+        if (aa->OperStatus != IfOperStatusUp) 
+            continue;
+
+        for (PIP_ADAPTER_UNICAST_ADDRESS ua = aa->FirstUnicastAddress; ua; ua = ua->Next) {
+            sockaddr* addr = ua->Address.lpSockaddr;
+
+            const int family = addr->sa_family;
+            if (family == AF_INET)
+            {
+                if (!want_ipv4)
+                    continue;
+            }
+            else if (family == AF_INET6)
+            {
+                if (!want_ipv6)
+                    continue;
+            }
+            else
+            {
+                continue;
+            }
+        
+            totalcount++;
+            if (!tablesize)
+                continue;
+
+            table->flags = aa->Flags;
+
+            void* sinaddr;
+            if (family == AF_INET) {
+                sinaddr = &((struct sockaddr_in*)addr)->sin_addr;
+                table->is_ipv6 = 0;
+            }
+            else {
+                sinaddr = &((struct sockaddr_in6*)addr)->sin6_addr;
+                table->is_ipv6 = 1;
+            }
+
+            int ifnamelen = WideCharToMultiByte(CP_UTF8, 0, aa->FriendlyName, -1, table->interface_name, sizeof(table->interface_name) - 1, 0, 0);
+            if (!ifnamelen)
+                ifnamelen = sizeof(table->interface_name) - 1;
+
+            table->interface_name[ifnamelen] = '\0';
+            inet_ntop(family, sinaddr, table->address, sizeof(table->address));
+            tablesize--;
+            table++;
+        }
+    }
+
+    HeapFree(GetProcessHeap(), 0, adapter_addresses);
+
+#else
+    struct ifaddrs* ifAddrStruct;
+    getifaddrs(&ifAddrStruct);
+
+    for (ifaddrs* ifa = ifAddrStruct; ifa != nullptr; ifa = ifa->ifa_next) {
+        if (!ifa->ifa_addr)
+            continue;
+
+        struct sockaddr* addr = ifa->ifa_addr;
+        int family = addr->sa_family;
+        if (family == AF_INET)
+        {
+            if (!want_ipv4)
+                continue;
+        }
+        else if (family == AF_INET6)
+        {
+            if (!want_ipv6)
+                continue;
+        }
+        else
+        {
+            continue;
+        }
+
+        totalcount++;
+        if (!tablesize)
+            continue;
+
+        table->flags = ifa->ifa_flags;
+
+        void* sinaddr;
+        if (family == AF_INET) {
+            sinaddr = &((struct sockaddr_in*)addr)->sin_addr;
+            table->is_ipv6 = 0;
+        }
+        else {
+            sinaddr = &((struct sockaddr_in6*)addr)->sin6_addr;
+            table->is_ipv6 = 1;
+        }
+
+        int ifnamelen = strlen(ifa->ifa_name);
+        if (ifnamelen >= sizeof(table->interface_name))
+            ifnamelen = sizeof(table->interface_name) - 1;
+        memcpy(table->interface_name, ifa->ifa_name, ifnamelen);
+
+        table->interface_name[ifnamelen] = '\0';
+        inet_ntop(family, sinaddr, table->address, sizeof(table->address));
+
+        if(ifa->ifa_netmask)
+        {
+            struct sockaddr_in* netmask_addr = (sockaddr_in*)ifa->ifa_netmask;
+            inet_ntop(family, &netmask_addr->sin_addr, table->netmask, sizeof(table->netmask));
+        }
+        else
+        {
+            memset(table->netmask, '\0', sizeof(table->netmask));
+        }
+
+        tablesize--;
+        table++;
+    }
+
+    if (ifAddrStruct != NULL)
+        freeifaddrs(ifAddrStruct);
+#endif
+
+    return totalcount;
 }
 
 ZED_NET_DEF int zed_net_udp_socket_open(zed_net_socket_t *sock, unsigned int port, unsigned long non_blocking) {
