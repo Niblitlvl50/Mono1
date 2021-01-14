@@ -53,8 +53,7 @@ file(GLOB_RECURSE imgui_source_files "third_party/imgui/*.cpp" "third_party/imgu
 add_library(imgui STATIC ${imgui_source_files})
 
 # gtest
-file(GLOB_RECURSE gtest_source_files "third_party/gtest-1.7.0/src/*.cc")
-add_library(gtest STATIC ${gtest_source_files})
+add_library(gtest STATIC "third_party/gtest-1.7.0/src/gtest-all.cc")
 target_include_directories(gtest PRIVATE "third_party/gtest-1.7.0/include" "third_party/gtest-1.7.0")
 target_compile_definitions(gtest PRIVATE GTEST_HAS_TR1_TUPLE=0)
 if(NOT MSVC)
