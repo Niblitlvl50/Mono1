@@ -32,10 +32,14 @@ namespace
                 throw std::runtime_error(buffer);
             }
 
+#ifdef _WIN32
+            const DWORD tv = 1000;
+#else
             timeval tv;
             tv.tv_sec = 1;
             tv.tv_usec = 0;
-            const int set_timeout_result = setsockopt(m_handle.handle, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(timeval));
+#endif
+            const int set_timeout_result = setsockopt(m_handle.handle, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof(timeval));
             if(set_timeout_result == -1)
             {
                 char buffer[128];
@@ -48,7 +52,7 @@ namespace
             //if(result1 == -1)
             //    throw std::runtime_error("network|Unable to set reuse address option");
 
-            const int result2 = setsockopt(m_handle.handle, SOL_SOCKET, SO_BROADCAST, &yes, sizeof(yes));
+            const int result2 = setsockopt(m_handle.handle, SOL_SOCKET, SO_BROADCAST, (const char*)&yes, sizeof(yes));
             if(result2 == -1)
                 throw std::runtime_error("network|Unable to set broadcast option\n");
         }
