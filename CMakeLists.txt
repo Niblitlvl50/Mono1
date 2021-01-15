@@ -74,3 +74,5 @@ add_dependencies(unittest mono gtest)
 target_include_directories(unittest PRIVATE "third_party/gtest-1.7.0/include")
 target_compile_definitions(unittest PRIVATE GTEST_HAS_TR1_TUPLE=0)
 target_link_libraries(unittest mono gtest OpenGL::GL)
+
+message(WARNING ${OPENGL_LIBRARIES})
