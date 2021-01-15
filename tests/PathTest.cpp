@@ -96,6 +96,7 @@ TEST(PathTest, CreatePathFromFileAndVerifyCoordinates)
 
 TEST(PathTest, NonExistingPathFileShouldReturnNullptr)
 {
-    EXPECT_EQ(mono::CreatePath("whatever"), nullptr);
+    const mono::IPathPtr path = mono::CreatePath("whatever");
+    EXPECT_TRUE(path == nullptr);
 }
 
