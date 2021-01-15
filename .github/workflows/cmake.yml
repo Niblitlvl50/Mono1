@@ -17,8 +17,8 @@ jobs:
             exe_suffix: ''
           - os: macos-latest
             exe_suffix: ''
-          - os: windows-latest
-            exe_suffix: '.exe'
+#          - os: windows-latest
+#            exe_suffix: '.exe'
 
     # The CMake configure and build commands are platform agnostic and should work equally
     # well on Windows or Mac.  You can convert this to a matrix build if you need
