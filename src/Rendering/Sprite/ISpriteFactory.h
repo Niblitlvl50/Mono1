@@ -18,6 +18,4 @@ namespace mono
         virtual bool CreateSprite(class Sprite& sprite, const char* sprite_file) const = 0;
         virtual const struct SpriteData* GetSpriteDataForFile(const char* sprite_file) const = 0;
     };
-
-    const ISpriteFactory* GetSpriteFactory();
 }

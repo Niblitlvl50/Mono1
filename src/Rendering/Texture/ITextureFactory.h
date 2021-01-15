@@ -24,6 +24,4 @@ namespace mono
         //! Create a texture from memory
         virtual ITexturePtr CreateTexture(const byte* data, int width, int height, int color_components) const = 0;
     };
-
-    const ITextureFactory* GetTextureFactory();
 }

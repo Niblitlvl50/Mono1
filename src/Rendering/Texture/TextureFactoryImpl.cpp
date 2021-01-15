@@ -123,9 +123,3 @@ mono::ITexturePtr TextureFactoryImpl::CreateAndCacheTexture(const unsigned char*
     return texture;
 }
 
-extern mono::ITextureFactory* g_texture_factory;
-
-const mono::ITextureFactory* mono::GetTextureFactory()
-{
-    return g_texture_factory;
-}

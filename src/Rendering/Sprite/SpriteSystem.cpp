@@ -2,6 +2,7 @@
 #include "SpriteSystem.h"
 #include "Sprite.h"
 #include "SpriteFactory.h"
+#include "Rendering/RenderSystem.h"
 #include "TransformSystem/TransformSystem.h"
 #include "Util/Hash.h"
 #include "Util/Random.h"

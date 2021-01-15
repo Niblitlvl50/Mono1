@@ -14,6 +14,7 @@
 #include "SpriteFactory.h"
 #include "Sprite.h"
 
+#include "Rendering/RenderSystem.h"
 #include "Rendering/Texture/ITexture.h"
 #include "Rendering/Texture/ITextureFactory.h"
 
@@ -159,11 +160,4 @@ const mono::SpriteData* SpriteFactoryImpl::GetSpriteDataForFile(const char* spri
     }
 
     return &it->second;
-}
-
-extern mono::ISpriteFactory* g_sprite_factory;
-
-const mono::ISpriteFactory* mono::GetSpriteFactory()
-{
-    return g_sprite_factory;
 }

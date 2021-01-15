@@ -54,3 +54,12 @@ void mono::LoadCustomTextureFactory(const ITextureFactory* texture_factory)
     g_texture_factory = texture_factory;
 }
 
+const mono::ISpriteFactory* mono::GetSpriteFactory()
+{
+    return g_sprite_factory;
+}
+
+const mono::ITextureFactory* mono::GetTextureFactory()
+{
+    return g_texture_factory;
+}

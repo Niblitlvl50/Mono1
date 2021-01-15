@@ -4,6 +4,7 @@
 #include "Math/Quad.h"
 #include "Math/Matrix.h"
 
+#include "Rendering/RenderSystem.h"
 #include "Rendering/Texture/ITexture.h"
 #include "Rendering/Texture/ITextureFactory.h"
 #include "Rendering/IRenderer.h"

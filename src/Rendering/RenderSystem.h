@@ -15,4 +15,7 @@ namespace mono
 
     void LoadCustomShaderFactory(const class IShaderFactory* custom_factory);
     void LoadCustomTextureFactory(const class ITextureFactory* texture_factory);
+
+    const class ISpriteFactory* GetSpriteFactory();
+    const class ITextureFactory* GetTextureFactory();
 }
