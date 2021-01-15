@@ -17,7 +17,8 @@ if(MSVC)
     # 4244 "conversion from '__int64' to 'uint32_t', possible loss of data"
     # 4245 "conversion from 'int' to 'uint32_t', signed/unsigned mismatch"
     # 4267 "conversion from 'size_t' to 'uint32_t', possible loss of data"
-    add_compile_options("/W4" "/wd4100" "/wd4244" "/wd4245" "/wd4267" "$<$<CONFIG:RELEASE>:/O2>")
+    # 4505 "unreferenced local function has been removed"
+    add_compile_options("/W4" "/wd4100" "/wd4244" "/wd4245" "/wd4267" "/wd4505" "$<$<CONFIG:RELEASE>:/O2>")
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS=1)
 else()
     add_compile_options("-Wall" "-Wextra" "-Wno-unused-parameter" "$<$<CONFIG:RELEASE>:-O3>")
@@ -71,4 +72,5 @@ file(GLOB_RECURSE unittest_source_files "tests/*.cpp")
 add_executable(unittest ${unittest_source_files})
 add_dependencies(unittest mono gtest)
 target_include_directories(unittest PRIVATE "third_party/gtest-1.7.0/include")
+target_compile_definitions(unittest PRIVATE GTEST_HAS_TR1_TUPLE=0)
 target_link_libraries(unittest mono gtest)
