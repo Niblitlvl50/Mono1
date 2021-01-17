@@ -2,6 +2,7 @@
 #include "Texture.h"
 #include "System/open_gl.h"
 #include "System/System.h"
+#include "Rendering/ErrorChecking.h"
 #include <cstdio>
 
 using namespace mono;
@@ -26,24 +27,24 @@ Texture::Texture(uint32_t width, uint32_t height, uint32_t color_components, con
     //width = NextPowerOfTwo(width);
     //height = NextPowerOfTwo(height);
 
-    GLenum format = GL_ALPHA;
+    GLenum data_format = GL_RED;
     if(color_components == 3)
-        format = GL_RGB;
+        data_format = GL_RGB;
     else if(color_components == 4)
-        format = GL_RGBA;
+        data_format = GL_RGBA;
+
+    const GLenum internal_format = data_format;
 
     glGenTextures(1, &m_texture_id);
     glBindTexture(GL_TEXTURE_2D, m_texture_id);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, format, (int)width, (int)height, 0, format, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, internal_format, width, height, 0, data_format, GL_UNSIGNED_BYTE, data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-    const GLenum error = glGetError();
-    if(error != GL_NO_ERROR)
-        System::Log("Texture|OpenGL error in Texture. Error no: 0x%X\n", error);
+    PROCESS_GL_ERRORS();
 
     glBindTexture(GL_TEXTURE_2D, 0);
 }
