@@ -20,7 +20,7 @@ jobs:
             bin_subdir: ''
             exe_suffix: ''
           - os: windows-latest
-            bin_subdir: '${{BUILD_TYPE}}/'
+            bin_subdir: $BUILD_TYPE + '/'
             exe_suffix: '.exe'
 
     # The CMake configure and build commands are platform agnostic and should work equally
@@ -76,4 +76,4 @@ jobs:
 
     - name: Test
       working-directory: ${{github.workspace}}
-      run: ./bin/${{ matrix.bin_subdir }}unittest${{ matrix.exe_suffix }}
+      run: ./bin/${{matrix.bin_subdir}}unittest${{matrix.exe_suffix}}
