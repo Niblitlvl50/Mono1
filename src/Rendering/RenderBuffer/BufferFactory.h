@@ -6,18 +6,20 @@
 
 namespace mono
 {
-    enum class BufferType : int
+    enum class BufferType
     {
         STATIC,
         DYNAMIC
     };
 
-    enum class BufferData
+    enum class BufferData : int
     {
         INT,
-        FLOAT
+        INT_16,
+        FLOAT,
     };
 
-    std::unique_ptr<IRenderBuffer> CreateRenderBuffer(mono::BufferType type, mono::BufferData data, int components, size_t count);
-    std::unique_ptr<IElementBuffer> CreateElementBuffer(mono::BufferType type, mono::BufferData data, size_t count);
+    std::unique_ptr<IRenderBuffer> CreateRenderBuffer(
+        BufferType type, BufferData data, uint32_t components, uint32_t count, const void* data_ptr);
+    std::unique_ptr<IElementBuffer> CreateElementBuffer(BufferType type, uint32_t count, const uint16_t* data_ptr);
 }

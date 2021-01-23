@@ -11,10 +11,7 @@ namespace mono
 
         virtual ~IRenderBuffer() = default;
         virtual void UpdateData(const void* data, uint32_t offset, uint32_t count) = 0;
-        virtual void Use() const = 0;
-        virtual int Components() const = 0;
         virtual uint32_t Size() const = 0;
-        virtual uint32_t SizeInBytes() const = 0;
         virtual uint32_t Id() const = 0;
     };
 
@@ -24,10 +21,7 @@ namespace mono
 
         virtual ~IElementBuffer() = default;
         virtual void UpdateData(const void* data, uint32_t offset, uint32_t count) = 0;
-        virtual void Use() const = 0;
         virtual uint32_t Size() const = 0;
         virtual uint32_t Id() const = 0;
     };
-
-    void ClearRenderBuffer();
 }

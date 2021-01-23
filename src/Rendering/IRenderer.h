@@ -17,7 +17,9 @@ namespace mono
         virtual ~IRenderer() = default;
         virtual void AddDrawable(const IDrawable* drawable) = 0;
 
-        virtual void RenderText(int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const = 0;
+        virtual void RenderText(
+            int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const = 0;
+
         virtual void DrawSprite(const ISprite& sprite) const = 0;
         virtual void DrawSprite(
             const math::Vector& uv_upper_left,
@@ -26,7 +28,7 @@ namespace mono
             const math::Vector& offset,
             const ITexture* texture) const = 0;
 
-        virtual void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float size) const = 0;
+        virtual void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float point_size) const = 0;
         virtual void DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;
         virtual void DrawPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;
         virtual void DrawClosedPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;
@@ -36,17 +38,11 @@ namespace mono
         virtual void DrawFilledCircle(const math::Vector& pos, const math::Vector& size, int segments, const mono::Color::RGBA& color) const = 0;
 
         virtual void DrawGeometry(
-            const std::vector<math::Vector>& vertices,
-            const std::vector<math::Vector>& texture_coordinates,
-            const std::vector<uint16_t>& indices,
-            const ITexture* texture) = 0;
-
-        virtual void DrawGeometry(
             const IRenderBuffer* vertices,
             const IRenderBuffer* texture_coordinates,
-            size_t offset,
-            size_t count,
-            const ITexture* texture) = 0;
+            const IElementBuffer* indices,
+            const ITexture* texture,
+            uint32_t count) = 0;
 
         virtual void DrawParticlePoints(
             const IRenderBuffer* position,
@@ -55,19 +51,15 @@ namespace mono
             const IRenderBuffer* point_size,
             const ITexture* texture,
             BlendMode blend_mode,
-            size_t count) = 0;
+            uint32_t count) = 0;
 
         virtual void DrawPolyline(
-            const IRenderBuffer* vertices, const IRenderBuffer* colors, size_t offset, size_t count) = 0;
+            const IRenderBuffer* vertices, const IRenderBuffer* colors, uint32_t offset, uint32_t count) = 0;
 
         virtual void DrawTrianges(
-            const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, size_t count) const = 0;
+            const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t count) const = 0;
 
         virtual void SetClearColor(const mono::Color::RGBA& color) = 0;
-
-        virtual void UseShader(IShader* shader) const = 0;
-        virtual void UseTexture(const ITexture* texture) const = 0;
-        virtual void ClearTexture() = 0;
 
         virtual const math::Matrix& GetTransform() const = 0;
         virtual void PushNewTransform(const math::Matrix& transform) = 0;
@@ -84,9 +76,6 @@ namespace mono
 
         virtual uint32_t GetDeltaTimeMS() const = 0;
         virtual uint32_t GetTimestamp() const = 0;
-
-        virtual IShader* GetSpriteShader() = 0;
-        virtual IShader* GetScreenShader() = 0;
     };
 
     using PushTransformFunc = void (mono::IRenderer::*)(const math::Matrix& transform);

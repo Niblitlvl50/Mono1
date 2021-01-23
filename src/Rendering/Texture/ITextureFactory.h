@@ -23,5 +23,7 @@ namespace mono
 
         //! Create a texture from memory
         virtual ITexturePtr CreateTexture(const byte* data, int width, int height, int color_components) const = 0;
+
+        virtual ITexturePtr CreateFromNativeHandle(uint32_t native_handle) const = 0;
     };
 }

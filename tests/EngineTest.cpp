@@ -9,9 +9,6 @@
 #include "IUpdatable.h"
 #include "Camera/Camera.h"
 #include "Zone/IZone.h"
-#include "Rendering/Shader/IShader.h"
-#include "Rendering/Shader/IShaderFactory.h"
-#include "Rendering/Shader/ShaderFunctions.h"
 #include "Rendering/RenderSystem.h"
 
 #include "Rendering/Texture/ITexture.h"
@@ -113,71 +110,10 @@ namespace
         bool mOnUnloadCalled = false;
     };
 
-    class NullShader : public mono::IShader
-    {
-    public:
-        
-        void Use() override
-        { }
-        uint32_t GetShaderId() const override
-        {
-            return 0;
-        }
-        int GetAttributeLocation(const char* attribute_name) override
-        {
-            return 0;
-        }
-        void SetValue(const char* property_name, int value) override
-        {}
-        void SetValue(const char* property_name, float value) override
-        {}
-        void SetValue(const char* property_name, const math::Vector& vector) override
-        {}
-        void SetValue(const char* property_name, const math::Matrix& transform) override
-        {}
-        void SetValue(const char* property_name, const mono::Color::RGBA& color) override
-        {}
-        void SetTime(float total_time, float delta_time) override
-        {}
-        void SetProjectionViewModel(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model) override
-        {}
-    };
-
-    class NullShaderFactory : public mono::IShaderFactory
-    {
-    public:
-        std::unique_ptr<mono::IShader> CreateTextureShader() const override
-        {
-            return std::make_unique<NullShader>();
-        }
-        std::unique_ptr<mono::IShader> CreateColorShader() const override
-        {
-            return std::make_unique<NullShader>();
-        }
-        std::unique_ptr<mono::IShader> CreatePointSpriteShader() const override
-        {
-            return std::make_unique<NullShader>();
-        }
-        std::unique_ptr<mono::IShader> CreateScreenShader() const override
-        {
-            return std::make_unique<NullShader>();
-        }
-        std::unique_ptr<mono::IShader> CreateImGuiShader() const override
-        {
-            return std::make_unique<NullShader>();
-        }
-        std::unique_ptr<mono::IShader> CreateSpriteShader() const override
-        {
-            return std::make_unique<NullShader>();
-        }
-    };
-
     class NullTexture : public mono::ITexture
     {
     public:
 
-        void Use() const override
-        { }
         uint32_t Id() const override
         {
             return 0;
@@ -210,6 +146,11 @@ namespace
         {
             return std::make_shared<NullTexture>();
         }
+
+        mono::ITexturePtr CreateFromNativeHandle(uint32_t native_handle) const
+        {
+            return std::make_shared<NullTexture>();
+        }
     };
 }
 
@@ -218,7 +159,6 @@ TEST(EngineTest, DISABLED_Basic)
     mono::EventHandler handler;
     mono::SystemContext system_context;
     mono::Camera camera;
-    mono::LoadCustomShaderFactory(new NullShaderFactory);
     mono::LoadCustomTextureFactory(new NullTextureFactory);
 
     MocWindow window(handler);

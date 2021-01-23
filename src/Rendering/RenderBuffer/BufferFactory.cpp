@@ -1,15 +1,14 @@
 
 #include "BufferFactory.h"
-#include "RenderBuffer.h"
+#include "RenderBufferImpl.h"
 
 std::unique_ptr<mono::IRenderBuffer> mono::CreateRenderBuffer(
-    mono::BufferType type, mono::BufferData data, int components, size_t count)
+    mono::BufferType buffer_type, mono::BufferData data_type, uint32_t components, uint32_t count, const void* data_ptr)
 {
-    return std::make_unique<mono::RenderBuffer>(type, data, components, count);
+    return std::make_unique<mono::RenderBufferImpl>(buffer_type, data_type, components, count, data_ptr);
 }
 
-std::unique_ptr<mono::IElementBuffer> mono::CreateElementBuffer(
-    mono::BufferType type, mono::BufferData data, size_t count)
+std::unique_ptr<mono::IElementBuffer> mono::CreateElementBuffer(mono::BufferType buffer_type, uint32_t count, const uint16_t* data_ptr)
 {
-    return std::make_unique<mono::ElementBuffer>(type, data, count);
+    return std::make_unique<mono::IndexBufferImpl>(buffer_type, count, data_ptr);
 }

@@ -12,24 +12,6 @@
 
 using namespace mono;
 
-namespace
-{
-    mono::ITexturePtr CreateTextureFromData(const unsigned char* data, int data_length)
-    {
-        int width;
-        int height;
-        int components;
-        std::unique_ptr<unsigned char> image_data(stbi_load_from_memory(data, data_length, &width, &height, &components, 0));
-        if(!image_data)
-        {
-            System::Log("TextureFactory|Unable to load from data chunk\n");
-            throw std::runtime_error("Unable to load image!");
-        }
-
-        return std::make_shared<mono::Texture>(width, height, components, image_data.get());
-    }
-}
-
 mono::ITexturePtr TextureFactoryImpl::CreateTexture(const char* texture_name) const
 {
     const uint32_t texture_hash = mono::Hash(texture_name);
@@ -56,12 +38,29 @@ mono::ITexturePtr TextureFactoryImpl::CreateTextureFromData(const byte* data, in
     }
     else
     {
-        return ::CreateTextureFromData(data, data_length);
+        int width;
+        int height;
+        int components;
+        std::unique_ptr<unsigned char> image_data(stbi_load_from_memory(data, data_length, &width, &height, &components, 0));
+        if(!image_data)
+        {
+            System::Log("TextureFactory|Unable to load from data chunk\n");
+            throw std::runtime_error("Unable to load image!");
+        }
+
+        return std::make_shared<mono::TextureImpl>(width, height, components, image_data.get());
     }}
 
 mono::ITexturePtr TextureFactoryImpl::CreateTexture(const byte* data, int width, int height, int color_components) const
 {
-    return std::make_shared<Texture>(width, height, color_components, data);
+    return std::make_shared<TextureImpl>(width, height, color_components, data);
+}
+
+mono::ITexturePtr TextureFactoryImpl::CreateFromNativeHandle(uint32_t native_handle) const
+{
+    sg_image handle;
+    handle.id = native_handle;
+    return std::make_shared<TextureImpl>(handle);
 }
 
 mono::ITexturePtr TextureFactoryImpl::GetTextureFromCache(uint32_t texture_hash) const
@@ -94,7 +93,7 @@ mono::ITexturePtr TextureFactoryImpl::CreateAndCacheTexture(const char* source_f
         delete ptr;
     };
 
-    mono::ITexturePtr texture(new mono::Texture(width, height, components, image_data.get()), deleter);
+    mono::ITexturePtr texture(new mono::TextureImpl(width, height, components, image_data.get()), deleter);
     m_texture_storage[texture_hash] = texture;
 
     return texture;
@@ -117,7 +116,7 @@ mono::ITexturePtr TextureFactoryImpl::CreateAndCacheTexture(const unsigned char*
         delete ptr;
     };
 
-    mono::ITexturePtr texture(new mono::Texture(width, height, components, image_data.get()), deleter);
+    mono::ITexturePtr texture(new mono::TextureImpl(width, height, components, image_data.get()), deleter);
     m_texture_storage[texture_hash] = texture;
 
     return texture;

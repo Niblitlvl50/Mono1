@@ -45,6 +45,9 @@ if(SDL2_FOUND)
     include_directories(SYSTEM ${SDL2_INCLUDE_DIR})
 endif(SDL2_FOUND)
 
+# glad
+add_library(glad STATIC "third_party/glad/glad_gl_33/glad.c")
+
 # huffandpuff
 file(GLOB_RECURSE huffandpuff_source_files "third_party/huffandpuff/*.c" "third_party/huffandpuff/*.h")
 add_library(huffandpuff STATIC ${huffandpuff_source_files})
@@ -65,7 +68,7 @@ endif()
 file(GLOB_RECURSE engine_source_files "src/*.cpp" "src/*.h")
 add_library(mono STATIC ${engine_source_files})
 add_dependencies(mono huffandpuff imgui chipmunk_static)
-target_link_libraries(mono huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} OpenGL::GL)
+target_link_libraries(mono glad huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} OpenGL::GL)
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "tests/*.cpp")

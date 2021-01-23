@@ -26,7 +26,8 @@
 #include "Events/ActivatedEvent.h"
 #include "Events/TimeScaleEvent.h"
 
-#include "Rendering/Renderer.h"
+//#include "Rendering/Renderer.h"
+#include "Rendering/RendererSokol.h"
 
 #include "Math/Vector.h"
 #include "Math/Quad.h"
@@ -65,7 +66,7 @@ Engine::~Engine()
 
 int Engine::Run(IZone* zone)
 {
-    Renderer renderer;
+    RendererSokol renderer;
 
     const ScreenToWorldFunc screen_to_world_func = [this](float& x, float& y) {
         const math::Vector world = m_camera->ScreenToWorld(math::Vector(x, y));

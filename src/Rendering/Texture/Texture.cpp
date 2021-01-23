@@ -2,79 +2,59 @@
 #include "Texture.h"
 #include "System/open_gl.h"
 #include "System/System.h"
-#include "Rendering/ErrorChecking.h"
 #include <cstdio>
 
 using namespace mono;
 
-namespace
-{
-    uint32_t NextPowerOfTwo(uint32_t x)
-    {
-        uint32_t val = 1;
-        while(val < x)
-            val *= 2;
-
-        return val;
-    }
-}
-
-Texture::Texture(uint32_t width, uint32_t height, uint32_t color_components, const unsigned char* data)
-    : m_texture_id(-1)
-    , m_width(width)
+TextureImpl::TextureImpl(
+    uint32_t width, uint32_t height, uint32_t color_components, const unsigned char* image_data)
+    : m_width(width)
     , m_height(height)
 {
-    //width = NextPowerOfTwo(width);
-    //height = NextPowerOfTwo(height);
-
-    GLenum data_format = GL_RED;
+    sg_pixel_format data_format = SG_PIXELFORMAT_R8;
     if(color_components == 3)
-        data_format = GL_RGB;
+        data_format = SG_PIXELFORMAT_ETC2_RGB8;
     else if(color_components == 4)
-        data_format = GL_RGBA;
+        data_format = SG_PIXELFORMAT_RGBA8;
 
-    const GLenum internal_format = data_format;
+    sg_image_desc image_desc = {};
+    image_desc.width = width;
+    image_desc.height = height;
+    image_desc.pixel_format = data_format;
+    image_desc.content.subimage[0][0].ptr = image_data;
+    image_desc.content.subimage[0][0].size = width * height * color_components * sizeof(unsigned char);
 
-    glGenTextures(1, &m_texture_id);
-    glBindTexture(GL_TEXTURE_2D, m_texture_id);
+    m_handle = sg_make_image(&image_desc);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, internal_format, width, height, 0, data_format, GL_UNSIGNED_BYTE, data);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-    PROCESS_GL_ERRORS();
-
-    glBindTexture(GL_TEXTURE_2D, 0);
+    const sg_resource_state state = sg_query_image_state(m_handle);
+    if(state != SG_RESOURCESTATE_VALID)
+        System::Log("Failed to create texture\n");
 }
 
-Texture::~Texture()
+TextureImpl::TextureImpl(sg_image image_handle)
+    : m_handle(image_handle)
 {
-    glDeleteTextures(1, &m_texture_id);
+    const sg_resource_state state = sg_query_image_state(m_handle);
+    if(state != SG_RESOURCESTATE_VALID)
+        System::Log("Failed to create texture\n");
 }
 
-void Texture::Use() const
+TextureImpl::~TextureImpl()
 {
-    glBindTexture(GL_TEXTURE_2D, m_texture_id);
+    sg_destroy_image(m_handle);
 }
 
-uint32_t Texture::Id() const
-{
-    return m_texture_id;
-}
-
-uint32_t Texture::Width() const
+uint32_t TextureImpl::Width() const
 {
     return m_width;
 }
 
-uint32_t Texture::Height() const
+uint32_t TextureImpl::Height() const
 {
     return m_height;
 }
 
-void mono::ClearTexture()
+uint32_t TextureImpl::Id() const
 {
-    glBindTexture(GL_TEXTURE_2D, 0);
+    return m_handle.id;
 }

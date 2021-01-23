@@ -6,7 +6,7 @@ namespace mono
     class IDrawable;
     class IRenderer;
     class ITexture;
-    class IShader;
+    class IPipeline;
     class ISprite;
     class IRenderBuffer;
     class IElementBuffer;

@@ -101,16 +101,13 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
     const uint32_t text_length = std::strlen(text);
 
     mono::TextDefinition text_def;
-    text_def.chars = text_length;
-    text_def.color = mono::Color::RGBA(1.0f, 1.0f, 1.0f);
-    text_def.vertices.reserve(text_def.chars * 12);
-    text_def.texcoords.reserve(text_def.chars * 12);
+    text_def.vertices.reserve(text_length * 4);
+    text_def.texcoords.reserve(text_length * 4);
+    text_def.indices.reserve(text_length * 6);
     
-    float x_position = pos.x;
-    float y_position = pos.y;
-    
+    math::Vector current_position(pos);
     if(center)
-        x_position -= MeasureString(font_id, text).x / 2.0f;
+        current_position.x -= MeasureString(font_id, text).x / 2.0f;
 
     const FontData& font_data = g_fonts.find(font_id)->second;
 
@@ -123,43 +120,32 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
         const uint32_t offset_index = char_index - g_base;
         const CharData& data = font_data.chars[offset_index];
 
-        const float x0 = x_position + data.xoffset;
-        const float y0 = y_position - data.yoffset;
+        const float x0 = current_position.x + data.xoffset;
+        const float y0 = current_position.y - data.yoffset;
         const float x1 = x0 + data.width;
         const float y1 = y0 + data.height;
 
-        // First triangle
-        text_def.vertices.emplace_back(x0);
-        text_def.vertices.emplace_back(y0);
-        text_def.vertices.emplace_back(x1);
-        text_def.vertices.emplace_back(y1);
-        text_def.vertices.emplace_back(x0);
-        text_def.vertices.emplace_back(y1);
+        text_def.vertices.emplace_back(x0, y0);
+        text_def.vertices.emplace_back(x0, y1);
+        text_def.vertices.emplace_back(x1, y1);
+        text_def.vertices.emplace_back(x1, y0);
 
-        text_def.texcoords.emplace_back(data.texCoordX0);
-        text_def.texcoords.emplace_back(data.texCoordY0);
-        text_def.texcoords.emplace_back(data.texCoordX1);
-        text_def.texcoords.emplace_back(data.texCoordY1);
-        text_def.texcoords.emplace_back(data.texCoordX0);
-        text_def.texcoords.emplace_back(data.texCoordY1);
-        
-        // Second triangle
-        text_def.vertices.emplace_back(x0);
-        text_def.vertices.emplace_back(y0);
-        text_def.vertices.emplace_back(x1);
-        text_def.vertices.emplace_back(y0);
-        text_def.vertices.emplace_back(x1);
-        text_def.vertices.emplace_back(y1);
+        text_def.texcoords.emplace_back(data.texCoordX0, data.texCoordY0);
+        text_def.texcoords.emplace_back(data.texCoordX0, data.texCoordY1);
+        text_def.texcoords.emplace_back(data.texCoordX1, data.texCoordY1);
+        text_def.texcoords.emplace_back(data.texCoordX1, data.texCoordY0);
 
-        text_def.texcoords.emplace_back(data.texCoordX0);
-        text_def.texcoords.emplace_back(data.texCoordY0);
-        text_def.texcoords.emplace_back(data.texCoordX1);
-        text_def.texcoords.emplace_back(data.texCoordY0);
-        text_def.texcoords.emplace_back(data.texCoordX1);
-        text_def.texcoords.emplace_back(data.texCoordY1);
-        
-        // Add x size of char so that the next char is placed a little bit to the right.
-        x_position += data.xadvance;
+        const uint16_t indices_base = index * 4;
+
+        text_def.indices.push_back(indices_base + 0);
+        text_def.indices.push_back(indices_base + 1);
+        text_def.indices.push_back(indices_base + 2);
+
+        text_def.indices.push_back(indices_base + 0);
+        text_def.indices.push_back(indices_base + 2);
+        text_def.indices.push_back(indices_base + 3);
+
+        current_position.x += data.xadvance;
     }
 
     return text_def;

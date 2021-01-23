@@ -1,17 +1,17 @@
 
 #pragma once
 
+#include "Math/Vector.h"
+
 #include <vector>
 #include <cstdint>
-#include "Rendering/Color.h"
 
 namespace mono
 {
     struct TextDefinition
     {
-        std::vector<float> vertices;
-        std::vector<float> texcoords;
-        mono::Color::RGBA color;
-        uint32_t chars;
+        std::vector<math::Vector> vertices;
+        std::vector<math::Vector> texcoords;
+        std::vector<uint16_t> indices;
     };
 }

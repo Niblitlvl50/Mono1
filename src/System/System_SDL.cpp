@@ -1,7 +1,6 @@
 
 #include "System.h"
 #include "Keycodes.h"
-#include "open_gl.h"
 
 #include "SDL.h"
 #include "SDL_gamecontroller.h"
@@ -35,21 +34,6 @@ namespace
         TIMER_CALLBACK = 1
     };
 
-    void PrintOpenGLInfo()
-    {
-        const GLubyte* vendor = glGetString(GL_VENDOR);
-        const GLubyte* renderer = glGetString(GL_RENDERER);
-        const GLubyte* version = glGetString(GL_VERSION);
-        const GLubyte* glslversion = glGetString(GL_SHADING_LANGUAGE_VERSION);
-        //const GLubyte* extensions = glGetString(GL_EXTENSIONS);
-
-        System::Log("OpenGL\n"
-                    "\tvendor: %s\n"
-                    "\trenderer: %s\n"
-                    "\tversion: %s\n"
-                    "\tglsl: %s\n", vendor, renderer, version, glslversion);
-    }
-
     class SDLWindow : public System::IWindow
     {
     public:
@@ -57,11 +41,13 @@ namespace
         SDLWindow(const char* title, int x, int y, int width, int height, System::WindowOptions options)
         {
             // Request opengl 2.1 context.
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+            SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+
             SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
             SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
-            SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
             const uint32_t flags =
                 SDL_WINDOW_SHOWN |
@@ -73,17 +59,22 @@ namespace
             // Create our window centered and with the given resolution
             m_window = SDL_CreateWindow(title, x, y, width, height, flags);
             if(m_window == 0)
-                throw std::runtime_error("System|Unable to create SDL window");
+            {
+                const std::string sdl_error = SDL_GetError();
+                throw std::runtime_error("System|Unable to create SDL window. (" + sdl_error + ")");
+            }
 
             m_context = SDL_GL_CreateContext(m_window);
             if(!m_context)
-                throw std::runtime_error("System|Unable to create OpenGL context");
+            {
+                const std::string sdl_error = SDL_GetError();
+                throw std::runtime_error("System|Unable to create OpenGL context. (" + sdl_error + ")");
+            }
 
             const int vsync_value = (options & System::WindowOptions::DISABLE_VSYNC) ? 0 : 1;
             SDL_GL_SetSwapInterval(vsync_value);
 
             MakeCurrent();
-            PrintOpenGLInfo();
         }
         ~SDLWindow()
         {
