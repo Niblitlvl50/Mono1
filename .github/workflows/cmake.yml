@@ -20,7 +20,7 @@ jobs:
             bin_subdir: ''
             exe_suffix: ''
           - os: windows-latest
-            bin_subdir: $BUILD_TYPE + '/'
+            bin_subdir:  'Release/'
             exe_suffix: '.exe'
 
     # The CMake configure and build commands are platform agnostic and should work equally
