@@ -38,7 +38,11 @@ namespace
 
         void main()
         {
-            gl_Position = transform_input.projection * transform_input.view * transform_input.model * vec4(vertex_position, 0.0, 1.0);
+            gl_Position = 
+                transform_input.projection *
+                transform_input.view *
+                transform_input.model *
+                vec4(vertex_position, 0.0, 1.0);
             v_texture_coord = texture_coord;
         }
     )";
@@ -55,10 +59,11 @@ namespace
 
         void main()
         {
+            vec4 sampled_color = texture(sampler, v_texture_coord);
             if(is_alpha_texture != 0.0)
-                frag_color = texture(sampler, v_texture_coord).aaaa * color_shade;
-            else
-                frag_color = texture(sampler, v_texture_coord) * color_shade;
+                sampled_color = vec4(sampled_color.r);
+
+            frag_color = sampled_color * color_shade;
         }
     )";
 
