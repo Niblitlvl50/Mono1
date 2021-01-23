@@ -27,6 +27,7 @@ using namespace mono;
 
 RendererSokol::RendererSokol()
     : m_offscreen_pass{}
+    , m_clear_color(0.7f, 0.7f, 0.7f, 1.0f)
 {
     m_color_points_pipeline = mono::ColorPipeline::MakePointsPipeline();
     m_color_lines_pipeline = mono::ColorPipeline::MakeLinesPipeline();

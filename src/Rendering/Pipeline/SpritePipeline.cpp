@@ -65,7 +65,7 @@ namespace
 
         void main()
         {
-            vec4 color = texture(sampler, v_texture_coord); // * color_shade;
+            vec4 color = texture(sampler, v_texture_coord) * color_shade;
             if(flash_sprite != 0.0)
                 color.rgb = vec3(1.0);
 
@@ -229,5 +229,5 @@ void SpritePipeline::SetShade(IPipeline* pipeline, const mono::Color::RGBA& colo
 void SpritePipeline::SetFlashSprite(IPipeline* pipeline, bool flash)
 {
     const float value = flash ? 1.0f : 0.0f;
-    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FS_COLOR_SHADE_BLOCK, &value, sizeof(float));
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FS_FLASH_BLOCK, &value, sizeof(float));
 }
