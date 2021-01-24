@@ -12,8 +12,10 @@ TextureImpl::TextureImpl(
     , m_height(height)
 {
     sg_pixel_format data_format = SG_PIXELFORMAT_R8;
-    if(color_components == 3)
-        data_format = SG_PIXELFORMAT_ETC2_RGB8;
+    if(color_components == 2)
+        data_format = SG_PIXELFORMAT_RG8;
+    //else if(color_components == 3)
+    //    data_format = SG_PIXELFORMAT_RGB8;
     else if(color_components == 4)
         data_format = SG_PIXELFORMAT_RGBA8;
 
