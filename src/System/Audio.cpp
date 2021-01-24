@@ -55,7 +55,8 @@ namespace
         void Play() override
         {
             m_playing_sound = cs_play_sound(m_context, m_sound_def);
-            cs_loop_sound(m_playing_sound, m_playback == audio::SoundPlayback::LOOPING);
+            if(IsPlaying())
+                cs_loop_sound(m_playing_sound, m_playback == audio::SoundPlayback::LOOPING);
         }
 
         void Pause() override
