@@ -166,7 +166,7 @@ void ColorPipeline::Apply(
     sg_apply_bindings(&bindings);
 }
 
-void ColorPipeline::SetTime(IPipeline* pipeline, float total_time_s, float delta_time_s)
+void ColorPipeline::SetTime(float total_time_s, float delta_time_s)
 {
     /*
     struct TimeBlock
@@ -182,8 +182,7 @@ void ColorPipeline::SetTime(IPipeline* pipeline, float total_time_s, float delta
     */
 }
 
-void ColorPipeline::SetTransforms(
-    IPipeline* pipeline, const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model)
+void ColorPipeline::SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model)
 {
     struct TransformBlock
     {
@@ -199,12 +198,12 @@ void ColorPipeline::SetTransforms(
     sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TRANSFORM_BLOCK, &transform_block, sizeof(TransformBlock));
 }
 
-void ColorPipeline::SetPointSize(IPipeline* pipeline, float point_size)
+void ColorPipeline::SetPointSize(float point_size)
 {
     sg_apply_uniforms(SG_SHADERSTAGE_VS, U_POINT_SIZE_BLOCK, &point_size, sizeof(float));
 }
 
-void ColorPipeline::SetLineWidth(IPipeline* pipeline, float line_width)
+void ColorPipeline::SetLineWidth(float line_width)
 {
     glLineWidth(line_width);
 }

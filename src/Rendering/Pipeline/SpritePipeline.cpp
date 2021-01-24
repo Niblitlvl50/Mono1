@@ -184,7 +184,7 @@ void SpritePipeline::Apply(
     sg_apply_bindings(&bindings);
 }
 
-void SpritePipeline::SetTime(IPipeline* pipeline, float total_time_s, float delta_time_s)
+void SpritePipeline::SetTime(float total_time_s, float delta_time_s)
 {
     struct TimeBlock
     {
@@ -198,8 +198,7 @@ void SpritePipeline::SetTime(IPipeline* pipeline, float total_time_s, float delt
     sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_TIME_BLOCK, &time_block, sizeof(TimeBlock));
 }
 
-void SpritePipeline::SetTransforms(
-    IPipeline* pipeline, const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model)
+void SpritePipeline::SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model)
 {
     struct TransformBlock
     {
@@ -215,18 +214,18 @@ void SpritePipeline::SetTransforms(
     sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_TRANSFORM_BLOCK, &transform_block, sizeof(TransformBlock));
 }
 
-void SpritePipeline::SetWindSway(IPipeline* pipeline, bool enable_wind)
+void SpritePipeline::SetWindSway(bool enable_wind)
 {
     const float value = enable_wind ? 1.0f : 0.0f;
     sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_WIND_SWAY_BLOCK, &value, sizeof(float));
 }
 
-void SpritePipeline::SetShade(IPipeline* pipeline, const mono::Color::RGBA& color)
+void SpritePipeline::SetShade(const mono::Color::RGBA& color)
 {
     sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FS_COLOR_SHADE_BLOCK, &color, sizeof(mono::Color::RGBA));
 }
 
-void SpritePipeline::SetFlashSprite(IPipeline* pipeline, bool flash)
+void SpritePipeline::SetFlashSprite(bool flash)
 {
     const float value = flash ? 1.0f : 0.0f;
     sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FS_FLASH_BLOCK, &value, sizeof(float));

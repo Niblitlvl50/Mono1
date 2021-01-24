@@ -20,8 +20,7 @@ namespace mono
             const IRenderBuffer* point_size,
             const ITexture* texture);
 
-        //static void SetTime(IPipeline* pipeline, float total_time_s, float delta_time_s);
-        static void SetTransforms(
-            IPipeline* pipeline, const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model);
+        //static void SetTime(float total_time_s, float delta_time_s);
+        static void SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model);
     };
 }

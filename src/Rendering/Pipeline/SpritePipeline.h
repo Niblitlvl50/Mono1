@@ -20,12 +20,11 @@ namespace mono
             const IElementBuffer* indices,
             const ITexture* texture);
 
-        static void SetTime(IPipeline* pipeline, float total_time_s, float delta_time_s);
-        static void SetTransforms(
-            IPipeline* pipeline, const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model);
+        static void SetTime(float total_time_s, float delta_time_s);
+        static void SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model);
 
-        static void SetWindSway(IPipeline* pipeline, bool enable_wind);
-        static void SetShade(IPipeline* pipeline, const mono::Color::RGBA& color);
-        static void SetFlashSprite(IPipeline* pipeline, bool flash);
+        static void SetWindSway(bool enable_wind);
+        static void SetShade(const mono::Color::RGBA& color);
+        static void SetFlashSprite(bool flash);
     };
 }

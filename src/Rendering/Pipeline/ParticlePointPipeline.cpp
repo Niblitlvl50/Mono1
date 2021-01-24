@@ -66,7 +66,7 @@ namespace
             coord = (coord - 0.5) * mat2(cos_factor, sin_factor, -sin_factor, cos_factor);
             coord += 0.5;
 
-            frag_color = texture(sampler, coord) * color;
+            frag_color = texture(sampler, coord).r * color;
         }
     )";
 
@@ -139,6 +139,7 @@ mono::IPipelinePtr ParticlePointPipeline::MakePipeline()
     pipeline_desc.blend.enabled = true;
     pipeline_desc.blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
     pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+    //pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -170,7 +171,7 @@ void ParticlePointPipeline::Apply(
 }
 
 /*
-void ParticlePointPipeline::SetTime(IPipeline* pipeline, float total_time_s, float delta_time_s)
+void ParticlePointPipeline::SetTime(float total_time_s, float delta_time_s)
 {
     struct TimeBlock
     {
@@ -185,8 +186,7 @@ void ParticlePointPipeline::SetTime(IPipeline* pipeline, float total_time_s, flo
 }
 */
 
-void ParticlePointPipeline::SetTransforms(
-    IPipeline* pipeline, const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model)
+void ParticlePointPipeline::SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model)
 {
     struct TransformBlock
     {

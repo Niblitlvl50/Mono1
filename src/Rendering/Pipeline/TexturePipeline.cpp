@@ -181,8 +181,7 @@ void TexturePipeline::SetTime(IPipeline* pipeline, float total_time_s, float del
 }
 */
 
-void TexturePipeline::SetTransforms(
-    IPipeline* pipeline, const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model)
+void TexturePipeline::SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model)
 {
     struct TransformBlock
     {
@@ -198,13 +197,13 @@ void TexturePipeline::SetTransforms(
     sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TRANSFORM_BLOCK, &transform_block, sizeof(TransformBlock));
 }
 
-void TexturePipeline::SetIsAlpha(IPipeline* pipeline, bool is_alpha_texture)
+void TexturePipeline::SetIsAlpha(bool is_alpha_texture)
 {
     const float magic_value = is_alpha_texture ? 1.0f : 0.0f;
     sg_apply_uniforms(SG_SHADERSTAGE_FS, U_IS_ALPHA_BLOCK, &magic_value, sizeof(float));
 }
 
-void TexturePipeline::SetShade(IPipeline* pipeline, const mono::Color::RGBA& color)
+void TexturePipeline::SetShade(const mono::Color::RGBA& color)
 {
     sg_apply_uniforms(SG_SHADERSTAGE_FS, U_COLOR_SHADE_BLOCK, &color, sizeof(mono::Color::RGBA));
 }

@@ -20,10 +20,9 @@ namespace mono
         static void Apply(
             IPipeline* pipeline, const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices);
 
-        static void SetTime(IPipeline* pipeline, float total_time_s, float delta_time_s);
-        static void SetTransforms(
-            IPipeline* pipeline, const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model);
-        static void SetPointSize(IPipeline* pipeline, float point_size);
-        static void SetLineWidth(IPipeline* pipeline, float line_width);
+        static void SetTime(float total_time_s, float delta_time_s);
+        static void SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model);
+        static void SetPointSize(float point_size);
+        static void SetLineWidth(float line_width);
     };
 }

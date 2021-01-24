@@ -18,7 +18,7 @@ namespace mono
             const IElementBuffer* indices,
             const ITexture* texture);
 
-        static void FadeCorners(IPipeline* pipeline, bool enable);
-        static void InvertColors(IPipeline* pipeline, bool enable);
+        static void FadeCorners(bool enable);
+        static void InvertColors(bool enable);
     };
 }

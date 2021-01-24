@@ -162,8 +162,8 @@ void RendererSokol::EndDraw()
         m_screen_uv.get(),
         m_screen_indices.get(),
         m_offscreen_pass.offscreen_texture.get());
-    ScreenPipeline::FadeCorners(m_screen_pipeline.get(), false);
-    ScreenPipeline::InvertColors(m_screen_pipeline.get(), false);
+    ScreenPipeline::FadeCorners(false);
+    ScreenPipeline::InvertColors(false);
     sg_draw(0, 6, 1);
 
     sg_end_pass(); // End default pass
@@ -208,10 +208,9 @@ void RendererSokol::RenderText(
 
     TexturePipeline::Apply(
         m_texture_pipeline.get(), m_temp_vertices.get(), m_temp_uv_coords.get(), m_temp_indices.get(), texture.get());
-    TexturePipeline::SetTransforms(
-        m_texture_pipeline.get(), m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
-    TexturePipeline::SetIsAlpha(m_texture_pipeline.get(), true);
-    TexturePipeline::SetShade(m_texture_pipeline.get(), color);
+    TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    TexturePipeline::SetIsAlpha(true);
+    TexturePipeline::SetShade(color);
 
     sg_draw(0, def.indices.size(), 1);
 }
@@ -262,13 +261,12 @@ void RendererSokol::DrawSprite(const ISprite& sprite) const
         m_temp_indices.get(),
         texture);
 
-    SpritePipeline::SetTime(m_sprite_pipeline.get(), float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
-    SpritePipeline::SetTransforms(
-        m_sprite_pipeline.get(), m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    SpritePipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    SpritePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
-    SpritePipeline::SetWindSway(m_sprite_pipeline.get(), sprite_properties & mono::SpriteProperty::WIND_SWAY);
-    SpritePipeline::SetShade(m_sprite_pipeline.get(), shade);
-    SpritePipeline::SetFlashSprite(m_sprite_pipeline.get(), flash_sprite);
+    SpritePipeline::SetWindSway(sprite_properties & mono::SpriteProperty::WIND_SWAY);
+    SpritePipeline::SetShade(shade);
+    SpritePipeline::SetFlashSprite(flash_sprite);
 
     sg_draw(0, 6, 1);
 }
@@ -290,9 +288,8 @@ void RendererSokol::DrawPoints(const std::vector<math::Vector>& points, const mo
     m_temp_colors->UpdateData(colors.data(), 0, colors.size());
 
     ColorPipeline::Apply(m_color_points_pipeline.get(), m_temp_vertices.get(), m_temp_colors.get());
-    ColorPipeline::SetTransforms(
-        m_color_points_pipeline.get(), m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
-    ColorPipeline::SetPointSize(m_color_points_pipeline.get(), point_size);
+    ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    ColorPipeline::SetPointSize(point_size);
 
     sg_draw(0, points.size(), 1);
 }
@@ -306,8 +303,7 @@ void RendererSokol::DrawLines(const std::vector<math::Vector>& line_points, cons
     m_temp_colors->UpdateData(colors.data(), 0, colors.size());
 
     ColorPipeline::Apply(m_color_lines_pipeline.get(), m_temp_vertices.get(), m_temp_colors.get());
-    ColorPipeline::SetTransforms(
-        m_color_lines_pipeline.get(), m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
     sg_draw(0, line_points.size(), 1);
 }
@@ -321,9 +317,8 @@ void RendererSokol::DrawPolyline(const std::vector<math::Vector>& line_points, c
     m_temp_colors->UpdateData(colors.data(), 0, colors.size());
 
     ColorPipeline::Apply(m_color_line_strip_pipeline.get(), m_temp_vertices.get(), m_temp_colors.get());
-    ColorPipeline::SetTransforms(
-        m_color_line_strip_pipeline.get(), m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
-    //ColorPipeline::SetLineWidth(m_color_line_strip_pipeline.get(), line_width);
+    ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    //ColorPipeline::SetLineWidth(line_width);
 
     sg_draw(0, line_points.size(), 1);
 }
@@ -354,8 +349,51 @@ void RendererSokol::DrawCircle(const math::Vector& position, float radie, int se
     DrawClosedPolyline(vertices, color, line_width);
 }
 
-void RendererSokol::DrawFilledCircle(const math::Vector& pos, const math::Vector& size, int segments, const mono::Color::RGBA& color) const
-{}
+void RendererSokol::DrawFilledCircle(const math::Vector& position, const math::Vector& size, int segments, const mono::Color::RGBA& color) const
+{
+    if((segments % 2) != 0)
+        segments += 1;
+
+    std::vector<math::Vector> vertices;
+    vertices.reserve(segments +1);
+    vertices.push_back(position);
+
+    const uint16_t n_indices = segments * 3;
+    std::vector<uint16_t> indices;
+    indices.reserve(n_indices);
+
+    const float coef = 2.0f * math::PI() / float(segments);
+
+    for(int index = 0; index < segments; ++index)
+    {
+        const float radians = index * coef;
+        const float x = size.x * std::cos(radians) + position.x;
+        const float y = size.y * std::sin(radians) + position.y;
+        vertices.emplace_back(x, y);
+
+        indices.push_back(0);
+        indices.push_back(index +1);
+        indices.push_back(index +2);
+    }
+
+    indices.pop_back();
+    indices.pop_back();
+
+    indices.push_back(vertices.size() -1);
+    indices.push_back(1);
+
+    const std::vector<mono::Color::RGBA> colors(vertices.size(), color);
+
+    m_temp_vertices->UpdateData(vertices.data(), 0, vertices.size());
+    m_temp_colors->UpdateData(colors.data(), 0, colors.size());
+    m_temp_indices->UpdateData(indices.data(), 0, indices.size());
+
+    ColorPipeline::Apply(
+        m_color_triangles_pipeline.get(), m_temp_vertices.get(), m_temp_colors.get(), m_temp_indices.get());
+    ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+
+    sg_draw(0, indices.size(), 1);
+}
 
 void RendererSokol::DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const
 {
@@ -371,7 +409,28 @@ void RendererSokol::DrawQuad(const math::Quad& quad, const mono::Color::RGBA& co
 }
 
 void RendererSokol::DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color) const
-{}
+{
+    const std::vector<math::Vector> line_points = {
+        math::BottomLeft(quad),
+        math::TopLeft(quad),
+        math::TopRight(quad),
+        math::BottomRight(quad),
+    };
+
+    std::vector<mono::Color::RGBA> colors(line_points.size());
+    std::fill(colors.begin(), colors.end(), color);
+
+    m_temp_vertices->UpdateData(line_points.data(), 0, line_points.size());
+    m_temp_colors->UpdateData(colors.data(), 0, colors.size());
+
+    constexpr uint16_t indices[] = { 0, 1, 2, 0, 2, 3};
+    m_temp_indices->UpdateData(indices, 0, std::size(indices));
+
+    ColorPipeline::Apply(m_color_triangles_pipeline.get(), m_temp_vertices.get(), m_temp_colors.get(), m_temp_indices.get());
+    ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+
+    sg_draw(0, std::size(indices), 1);
+}
 
 void RendererSokol::DrawGeometry(
     const IRenderBuffer* vertices,
@@ -382,11 +441,10 @@ void RendererSokol::DrawGeometry(
 {
     TexturePipeline::Apply(m_texture_pipeline.get(), vertices, texture_coordinates, indices, texture);
     //TexturePipeline::SetTime(m_texture_pipeline.get(), float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
-    TexturePipeline::SetTransforms(
-        m_texture_pipeline.get(), m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
-    TexturePipeline::SetIsAlpha(m_texture_pipeline.get(), false);
-    TexturePipeline::SetShade(m_texture_pipeline.get(), mono::Color::WHITE);
+    TexturePipeline::SetIsAlpha(false);
+    TexturePipeline::SetShade(mono::Color::WHITE);
 
     sg_draw(0, count, 1);
 }
@@ -401,9 +459,8 @@ void RendererSokol::DrawParticlePoints(
     uint32_t count)
 {
     ParticlePointPipeline::Apply(m_particle_pipeline.get(), position, rotation, color, point_size, texture);
-    //ParticlePointPipeline::SetTime(m_particle_pipeline.get(), float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
-    ParticlePointPipeline::SetTransforms(
-        m_particle_pipeline.get(), m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    //ParticlePointPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    ParticlePointPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
     sg_draw(0, count, 1);
 }
@@ -412,10 +469,9 @@ void RendererSokol::DrawPolyline(
     const IRenderBuffer* vertices, const IRenderBuffer* colors, uint32_t offset, uint32_t count)
 {
     ColorPipeline::Apply(m_color_line_strip_pipeline.get(), vertices, colors);
-    ColorPipeline::SetTime(m_color_line_strip_pipeline.get(), float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
-    ColorPipeline::SetTransforms(
-        m_color_line_strip_pipeline.get(), m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
-    //ColorPipeline::SetLineWidth(m_color_line_strip_pipeline.get(), 10.0f);
+    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    //ColorPipeline::SetLineWidth(10.0f);
 
     sg_draw(offset, count, 1);
 }
@@ -424,9 +480,8 @@ void RendererSokol::DrawTrianges(
     const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t count) const
 {
     ColorPipeline::Apply(m_color_triangles_pipeline.get(), vertices, colors, indices);
-    ColorPipeline::SetTime(m_color_triangles_pipeline.get(), float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
-    ColorPipeline::SetTransforms(
-        m_color_triangles_pipeline.get(), m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
     sg_draw(0, count, 1);
 }

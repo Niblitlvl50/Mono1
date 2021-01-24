@@ -141,13 +141,13 @@ void ScreenPipeline::Apply(
     sg_apply_bindings(&bindings);
 }
 
-void ScreenPipeline::FadeCorners(IPipeline* pipeline, bool enable)
+void ScreenPipeline::FadeCorners(bool enable)
 {
     const float magic_value = enable ? 1.0f : 0.0f;
     sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FADE_CORNERS_BLOCK, &magic_value, sizeof(float));
 }
 
-void ScreenPipeline::InvertColors(IPipeline* pipeline, bool enable)
+void ScreenPipeline::InvertColors(bool enable)
 {
     const float magic_value = enable ? 1.0f : 0.0f;
     sg_apply_uniforms(SG_SHADERSTAGE_FS, U_INVERT_COLORS_BLOCK, &magic_value, sizeof(float));
