@@ -4,6 +4,7 @@
 #include "Rendering/IDrawable.h"
 #include "Rendering/RenderFwd.h"
 #include <unordered_map>
+#include <vector>
 #include <cstdint>
 #include <memory>
 
@@ -33,5 +34,6 @@ namespace mono
 
         const mono::ParticleSystem* m_particle_system;
         mutable std::unordered_map<uint32_t, InternalRenderData> m_render_data;
+        mutable std::vector<uint32_t> m_last_active_particles;
     };
 }

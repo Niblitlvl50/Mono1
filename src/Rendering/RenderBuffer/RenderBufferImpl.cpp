@@ -22,6 +22,7 @@ RenderBufferImpl::RenderBufferImpl(
     mono::BufferType buffer_type, mono::BufferData data_type, uint32_t components, uint32_t count, const void* data_ptr)
     : m_data_type(data_type)
     , m_components(components)
+    , m_count(count)
 {
     sg_buffer_desc buffer_desc = {};
     buffer_desc.size = CalculateByteSize(m_data_type, m_components, count);

@@ -17,7 +17,11 @@ ParticleSystemDrawer::~ParticleSystemDrawer()
 
 void ParticleSystemDrawer::Draw(mono::IRenderer& renderer) const
 {
-    const auto callback = [this, &renderer](uint32_t pool_index, const ParticlePoolComponent& pool, const ParticleDrawerComponent& drawer) {
+    std::vector<uint32_t> active_particles;
+
+    const auto callback = [this, &renderer, &active_particles](uint32_t pool_index, const ParticlePoolComponent& pool, const ParticleDrawerComponent& drawer)
+    {
+        active_particles.push_back(pool_index);
 
         auto it = m_render_data.find(pool_index);
         if(it == m_render_data.end())
@@ -50,6 +54,19 @@ void ParticleSystemDrawer::Draw(mono::IRenderer& renderer) const
     };
 
     m_particle_system->ForEach(callback);
+
+    std::vector<uint32_t> diff_result;
+    std::set_difference(
+        m_last_active_particles.begin(),
+        m_last_active_particles.end(),
+        active_particles.begin(),
+        active_particles.end(),
+        std::back_inserter(diff_result));
+
+    for(uint32_t id : diff_result)
+        m_render_data.erase(id);
+
+    m_last_active_particles = active_particles;
 }
 
 math::Quad ParticleSystemDrawer::BoundingBox() const
