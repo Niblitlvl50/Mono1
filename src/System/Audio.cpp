@@ -100,7 +100,7 @@ void audio::Initialize()
 
     g_context = cs_make_context(nullptr, frequency, buffered_samples, num_elements_in_playing_pool, nullptr);
     if(!g_context)
-        throw std::runtime_error("Unable to initialize Audio lib.");
+        throw std::runtime_error("Audio|Unable to initialize Audio lib.");
 }
 
 void audio::Shutdown()
@@ -119,7 +119,7 @@ audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback 
         if(loaded_sound)
             return std::make_unique<SoundInstanceImpl>(g_context, loaded_sound, playback);
 
-        System::Log("AudioFactory|Recreating '%s'\n", file_name);
+        System::Log("Audio|Recreating '%s'\n", file_name);
     }
 
     // Custom deleter to actualy erase the file from the repository when the last reference goes out of scope.
@@ -131,6 +131,8 @@ audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback 
 
     std::shared_ptr<SoundData> loaded_sound(new SoundData, deleter);
     loaded_sound->sound = cs_load_wav(file_name);
+    if(loaded_sound->sound.channels[0] == nullptr)
+        System::Log("Audio|Unable to load wav file '%s' ['%s']\n", cs_error_reason, file_name);
 
     // Store it in the repository for others to retreive
     g_sound_repository[sound_hash] = loaded_sound;
