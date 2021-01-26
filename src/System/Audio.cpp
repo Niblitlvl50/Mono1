@@ -94,7 +94,7 @@ namespace
         cs_playing_sound_t* m_playing_sound;
     };
 
-    std::unordered_map<uint32_t, std::weak_ptr<SoundData>> g_sound_repository;
+    std::unordered_map<uint32_t, std::shared_ptr<SoundData>> g_sound_repository;
     cs_context_t* g_context = nullptr;
 }
 
@@ -122,7 +122,7 @@ audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback 
     auto it = g_sound_repository.find(sound_hash);
     if(it != g_sound_repository.end())
     {
-        auto loaded_sound = it->second.lock();
+        auto loaded_sound = it->second; //.lock();
         if(loaded_sound)
             return std::make_unique<SoundInstanceImpl>(g_context, loaded_sound, playback);
 
@@ -162,4 +162,9 @@ void audio::MixSounds()
 void audio::StopAllSounds()
 {
     cs_stop_all_sounds(g_context);
+}
+
+void audio::ClearLoadedSounds()
+{
+    g_sound_repository.clear();
 }

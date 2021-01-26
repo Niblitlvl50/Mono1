@@ -16,7 +16,6 @@ namespace audio
     public:
 
         virtual ~ISound() = default;
-
         virtual void Play() = 0;
         virtual void Pause() = 0;
         virtual void Stop() = 0;
@@ -33,4 +32,5 @@ namespace audio
 
     void MixSounds();
     void StopAllSounds();
+    void ClearLoadedSounds();
 }
