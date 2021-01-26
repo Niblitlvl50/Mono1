@@ -134,6 +134,9 @@ namespace System
     uint64_t GetPerformanceCounter();
     uint64_t GetPerformanceFrequency();
 
+    using ProcLoadFunc = void* (*)(const char* name);
+    ProcLoadFunc GetProcLoader();
+
     void Sleep(uint32_t ms);
 
     // The caller is responsible for deleting the pointer

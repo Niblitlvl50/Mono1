@@ -12,7 +12,7 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #endif
 
-#define CUTE_SOUND_FORCE_SDL
+//#define CUTE_SOUND_FORCE_SDL
 #define CUTE_SOUND_IMPLEMENTATION
 #include "cute_headers/cute_sound.h"
 
@@ -52,6 +52,11 @@ namespace
             , m_playing_sound(nullptr)
         { }
 
+        ~SoundInstanceImpl()
+        {
+            Stop();
+        }
+
         void Play() override
         {
             m_playing_sound = cs_play_sound(m_context, m_sound_def);
@@ -73,6 +78,7 @@ namespace
             if(IsPlaying())
                 cs_stop_sound(m_playing_sound);
         }
+
         bool IsPlaying() const override
         {
             if(m_playing_sound)
@@ -94,7 +100,7 @@ namespace
 
 void audio::Initialize()
 {
-    constexpr int frequency = 44000; // a good standard frequency for playing commonly saved OGG + wav files
+    constexpr int frequency = 44100; // a good standard frequency for playing commonly saved OGG + wav files
     constexpr int buffered_samples = 8192; // number of samples internal buffers can hold at once
     constexpr int num_elements_in_playing_pool = 8; // pooled memory array size for playing sounds
 
@@ -105,6 +111,7 @@ void audio::Initialize()
 
 void audio::Shutdown()
 {
+    g_sound_repository.clear();
     cs_shutdown_context(g_context);
     g_context = nullptr;
 }
@@ -132,17 +139,24 @@ audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback 
     std::shared_ptr<SoundData> loaded_sound(new SoundData, deleter);
     loaded_sound->sound = cs_load_wav(file_name);
     if(loaded_sound->sound.channels[0] == nullptr)
+    {
         System::Log("Audio|Unable to load wav file '%s' ['%s']\n", cs_error_reason, file_name);
+        return CreateNullSound();
+    }
 
     // Store it in the repository for others to retreive
     g_sound_repository[sound_hash] = loaded_sound;
-
     return std::make_unique<SoundInstanceImpl>(g_context, loaded_sound, playback);
 }
 
 audio::ISoundPtr audio::CreateNullSound()
 {
     return std::make_unique<NullSound>();
+}
+
+void audio::MixSounds()
+{
+    cs_mix(g_context);
 }
 
 void audio::StopAllSounds()

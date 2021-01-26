@@ -7,8 +7,8 @@
 #include "Rendering/Texture/TextureFactoryImpl.h"
 
 #include "System/System.h"
-#include "System/open_gl.h"
 
+#include "glad/glad_gl_33/glad.h"
 #include "imgui/imgui.h"
 
 #define SOKOL_GLCORE33
@@ -19,7 +19,6 @@
 #define SOKOL_IMGUI_NO_SOKOL_APP
 #include "sokol/sokol_imgui.h"
 
-#include "SDL.h"
 #include <cstdio>
 #include <stdexcept>
 
@@ -65,7 +64,7 @@ namespace
 
 void mono::InitializeRender(const RenderInitParams& init_params)
 {
-    const int load_gl_result = gladLoadGLLoader(SDL_GL_GetProcAddress);
+    const int load_gl_result = gladLoadGLLoader(System::GetProcLoader());
     if(load_gl_result == 0)
         throw std::runtime_error("RenderSystem|Unble to initialize OpenGL functions.");
 

@@ -31,5 +31,6 @@ namespace audio
     audio::ISoundPtr CreateSound(const char* file_name, SoundPlayback playback);
     audio::ISoundPtr CreateNullSound();
 
+    void MixSounds();
     void StopAllSounds();
 }

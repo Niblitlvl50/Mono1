@@ -1,6 +1,5 @@
 
 #include "Texture.h"
-#include "System/open_gl.h"
 #include "System/System.h"
 #include <cstdio>
 

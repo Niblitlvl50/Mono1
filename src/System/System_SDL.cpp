@@ -433,6 +433,11 @@ uint64_t System::GetPerformanceFrequency()
     return SDL_GetPerformanceFrequency();
 }
 
+System::ProcLoadFunc System::GetProcLoader()
+{
+    return SDL_GL_GetProcAddress;
+}
+
 void System::Sleep(uint32_t ms)
 {
     SDL_Delay(ms);

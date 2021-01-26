@@ -15,6 +15,7 @@
 #include "Camera/ICamera.h"
 #include "Zone/IZone.h"
 
+#include "System/Audio.h"
 #include "System/System.h"
 
 #include "EventHandler/EventHandler.h"
@@ -26,7 +27,6 @@
 #include "Events/ActivatedEvent.h"
 #include "Events/TimeScaleEvent.h"
 
-//#include "Rendering/Renderer.h"
 #include "Rendering/RendererSokol.h"
 
 #include "Math/Vector.h"
@@ -113,6 +113,8 @@ int Engine::Run(IZone* zone)
 
         // Handle input events
         System::ProcessSystemEvents(&input_handler);
+
+        audio::MixSounds();
 
         if(!m_pause)
         {
