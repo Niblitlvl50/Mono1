@@ -156,7 +156,8 @@ audio::ISoundPtr audio::CreateNullSound()
 
 void audio::MixSounds()
 {
-    cs_mix(g_context);
+    if(g_context)
+        cs_mix(g_context);
 }
 
 void audio::StopAllSounds()
