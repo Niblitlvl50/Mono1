@@ -15,6 +15,7 @@ namespace mono
         ~RenderBufferImpl();
         void UpdateData(const void* data, uint32_t offset, uint32_t count) override;
         uint32_t Size() const override;
+        uint32_t ByteOffsetToIndex(uint32_t index) const override;
         uint32_t Id() const override;
 
         mono::BufferData m_data_type;

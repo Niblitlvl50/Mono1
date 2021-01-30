@@ -52,6 +52,11 @@ uint32_t RenderBufferImpl::Size() const
     return m_count;
 }
 
+uint32_t RenderBufferImpl::ByteOffsetToIndex(uint32_t index) const
+{
+    return CalculateByteSize(m_data_type, m_components, index);
+}
+
 uint32_t RenderBufferImpl::Id() const
 {
     return m_handle.id;
