@@ -90,10 +90,6 @@ namespace
         }
         void PostUpdate() override
         { }
-        void AddEntity(mono::IEntity* entity, int layer) override
-        { }
-        void RemoveEntity(mono::IEntity* entity) override
-        { }
         void AddDrawable(mono::IDrawable* drawable, int layer) override
         { }
         void RemoveDrawable(mono::IDrawable* drawable) override

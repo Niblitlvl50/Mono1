@@ -2,7 +2,6 @@
 #include "ZoneBase.h"
 #include "IUpdater.h"
 #include "Rendering/IRenderer.h"
-#include "Zone/IEntity.h"
 #include "Util/Algorithm.h"
 #include "Math/Quad.h"
 #include "Math/MathFunctions.h"
@@ -28,13 +27,6 @@ ZoneBase::~ZoneBase()
 
     std::set<mono::IDrawable*> deleted_drawables;
     std::set<mono::IUpdatable*> deleted_updatables;
-
-    for(mono::IEntity* entity : m_entities)
-    {
-        delete entity;
-        deleted_drawables.insert(entity);
-        deleted_updatables.insert(entity);
-    }
 
     for(std::pair<int, mono::IDrawable*>& drawable_pair : m_drawables)
     {
@@ -73,11 +65,6 @@ void ZoneBase::Accept(mono::IUpdater& updater)
 
 void ZoneBase::DoDeferredDelete()
 {
-    const auto remove_entity_func = [this](const mono::IEntity* entity) {
-        return std::find(m_entities_remove.begin(), m_entities_remove.end(), entity) != m_entities_remove.end();
-    };
-    mono::remove_if(m_entities, remove_entity_func);
-
     const auto remove_updatable_func = [this](const mono::IUpdatable* updatable) {
         return std::find(m_updatables_remove.begin(), m_updatables_remove.end(), updatable) != m_updatables_remove.end();
     };
@@ -88,24 +75,8 @@ void ZoneBase::DoDeferredDelete()
     };
     mono::remove_if(m_drawables, remove_drawable_func);
 
-    m_entities_remove.clear();
     m_updatables_remove.clear();
     m_drawables_remove.clear();
-}
-
-void ZoneBase::AddEntity(IEntity* entity, int layer)
-{
-    AddDrawable(entity, layer);
-    AddUpdatable(entity);
-
-    m_entities.push_back(entity);
-}
-
-void ZoneBase::RemoveEntity(IEntity* entity)
-{
-    m_entities_remove.push_back(entity);
-    m_updatables_remove.push_back(entity);
-    m_drawables_remove.push_back(entity);
 }
 
 void ZoneBase::AddUpdatable(IUpdatable* updatable)

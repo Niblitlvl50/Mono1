@@ -17,9 +17,6 @@ namespace mono
         void PostUpdate() override
         { }
 
-        void AddEntity(IEntity* entity, int layer) override;
-        void RemoveEntity(IEntity* entity) override;
-        
         void AddUpdatable(IUpdatable* updatable) override;
         void RemoveUpdatable(IUpdatable* updatable) override;
 
@@ -34,11 +31,9 @@ namespace mono
         void Accept(mono::IUpdater& updater) override;
         void DoDeferredDelete();
 
-        std::vector<mono::IEntity*> m_entities;
         std::vector<mono::IUpdatable*> m_updatables;
         std::vector<std::pair<int, mono::IDrawable*>> m_drawables;
 
-        std::vector<mono::IEntity*> m_entities_remove;
         std::vector<mono::IUpdatable*> m_updatables_remove;
         std::vector<mono::IDrawable*> m_drawables_remove;
     };

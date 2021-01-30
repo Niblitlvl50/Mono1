@@ -4,7 +4,6 @@
 namespace mono
 {
     class ICamera;
-    class IEntity;
     class IUpdatable;
     class IUpdater;
     class IZone;
