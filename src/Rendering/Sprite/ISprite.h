@@ -9,18 +9,6 @@
 
 namespace mono
 {
-    enum class HorizontalDirection
-    {
-        LEFT,
-        RIGHT
-    };
-
-    enum class VerticalDirection
-    {
-        UP,
-        DOWN
-    };
-
     enum class PlaybackMode
     {
         PAUSED,
@@ -52,12 +40,6 @@ namespace mono
 
         virtual uint32_t GetProperties() const = 0;
         virtual void SetProperties(uint32_t properties) = 0;
-
-        virtual void SetHorizontalDirection(mono::HorizontalDirection direction) = 0;
-        virtual mono::HorizontalDirection GetHorizontalDirection() const = 0;
-
-        virtual void SetVerticalDirection(mono::VerticalDirection direction) = 0;
-        virtual mono::VerticalDirection GetVerticalDirection() const = 0;
 
         //! Tell the sprite to run a specific animation.
         virtual void SetAnimation(int animation_id) = 0;

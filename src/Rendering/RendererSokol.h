@@ -39,13 +39,23 @@ namespace mono
             const math::Vector& pos,
             bool center,
             const mono::Color::RGBA& color) const override;
-        void DrawSprite(const ISprite& sprite) const override;
+        void RenderText(
+            const IRenderBuffer* vertices,
+            const IRenderBuffer* uv,
+            const IElementBuffer* indices,
+            const ITexture* texture,
+            const mono::Color::RGBA& color) const override;
+
         void DrawSprite(
-            const math::Vector& uv_upper_left,
-            const math::Vector& uv_lower_right,
-            const math::Vector& size,
-            const math::Vector& offset,
-            const ITexture* texture) const override;
+            const ISprite* sprite,
+            const IRenderBuffer* vertices,
+            const IRenderBuffer* offsets,
+            const IRenderBuffer* uv_coordinates,
+            const IRenderBuffer* uv_coordinates_flipped,
+            const IRenderBuffer* height_values,
+            const IElementBuffer* indices,
+            const ITexture* texture,
+            uint32_t buffer_offset) const override;
 
         void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float point_size) const override;
         void DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const override;
@@ -131,12 +141,6 @@ namespace mono
         std::unique_ptr<IRenderBuffer> m_screen_vertices;
         std::unique_ptr<IRenderBuffer> m_screen_uv;
         std::unique_ptr<IElementBuffer> m_screen_indices;
-
-        std::unique_ptr<IRenderBuffer> m_temp_vertices;
-        std::unique_ptr<IRenderBuffer> m_temp_uv_coords;
-        std::unique_ptr<IRenderBuffer> m_temp_colors;
-        std::unique_ptr<IRenderBuffer> m_temp_heights;
-        std::unique_ptr<IElementBuffer> m_temp_indices;
 
         uint32_t m_delta_time_ms = 0;
         uint32_t m_timestamp = 0;

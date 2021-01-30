@@ -19,8 +19,6 @@ namespace mono
         const char* sprite_file = nullptr;
         mono::Color::RGBA shade;
         bool random_start_frame = false;
-        bool flip_vertical = false;
-        bool flip_horizontal = false;
         int animation_id = 0;
         int layer = 0;
         uint32_t properties = 0;

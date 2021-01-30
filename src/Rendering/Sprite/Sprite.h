@@ -26,10 +26,6 @@ namespace mono
         void SetShadowOffset(const math::Vector& shadow_offset);
         uint32_t GetProperties() const override;
         void SetProperties(uint32_t properties) override;
-        void SetHorizontalDirection(HorizontalDirection direction) override;
-        mono::HorizontalDirection GetHorizontalDirection() const override;
-        void SetVerticalDirection(VerticalDirection direction) override;
-        mono::VerticalDirection GetVerticalDirection() const override;
         void SetAnimation(int id) override;
         void SetAnimation(const char* name) override;
         void SetAnimation(int id, const SpriteAnimationCallback& callback) override;
@@ -67,8 +63,6 @@ namespace mono
         PlaybackMode m_playback_mode;
 
         uint32_t m_properties;
-        bool m_flip_horizontal;
-        bool m_flip_vertical;
         Color::RGBA m_color;
         math::Vector m_shadow_offset;
         float m_shadow_size;

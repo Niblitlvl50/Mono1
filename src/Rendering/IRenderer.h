@@ -19,14 +19,23 @@ namespace mono
 
         virtual void RenderText(
             int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const = 0;
+        virtual void RenderText(
+            const IRenderBuffer* vertices,
+            const IRenderBuffer* uv,
+            const IElementBuffer* indices,
+            const ITexture* texture,
+            const mono::Color::RGBA& color) const = 0;
 
-        virtual void DrawSprite(const ISprite& sprite) const = 0;
         virtual void DrawSprite(
-            const math::Vector& uv_upper_left,
-            const math::Vector& uv_lower_right,
-            const math::Vector& size,
-            const math::Vector& offset,
-            const ITexture* texture) const = 0;
+            const ISprite* sprite,
+            const IRenderBuffer* vertices,
+            const IRenderBuffer* offsets,
+            const IRenderBuffer* uv_coordinates,
+            const IRenderBuffer* uv_coordinates_flipped,
+            const IRenderBuffer* height_values,
+            const IElementBuffer* indices,
+            const ITexture* texture,
+            uint32_t buffer_offset) const = 0;
 
         virtual void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float point_size) const = 0;
         virtual void DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;

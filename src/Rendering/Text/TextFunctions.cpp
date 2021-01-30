@@ -96,7 +96,7 @@ mono::ITexturePtr mono::GetFontTexture(int font_id)
     return g_fonts.find(font_id)->second.texture;
 }
 
-mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char* text, const math::Vector& pos, bool center)
+mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char* text, bool center)
 {
     const uint32_t text_length = std::strlen(text);
 
@@ -105,9 +105,7 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
     text_def.texcoords.reserve(text_length * 4);
     text_def.indices.reserve(text_length * 6);
     
-    math::Vector current_position(pos);
-    if(center)
-        current_position.x -= MeasureString(font_id, text).x / 2.0f;
+    math::Vector current_position = center ? -(MeasureString(font_id, text) / 2.0f) : math::ZeroVec;
 
     const FontData& font_data = g_fonts.find(font_id)->second;
 

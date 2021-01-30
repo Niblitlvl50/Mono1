@@ -1,5 +1,6 @@
 
 #include "Sprite.h"
+#include "SpriteProperties.h"
 #include "Rendering/Texture/ITexture.h"
 
 #include <stdexcept>
@@ -29,8 +30,6 @@ void Sprite::Init(const SpriteData* sprite_data, mono::ITexturePtr texture)
     m_playback_mode = PlaybackMode::PLAYING;
 
     m_properties = 0;
-    m_flip_horizontal = false;
-    m_flip_vertical = false;
     m_color = mono::Color::RGBA();
     m_flash_timer = 0;
     m_callback = nullptr;
@@ -88,26 +87,6 @@ uint32_t Sprite::GetProperties() const
 void Sprite::SetProperties(uint32_t properties)
 {
     m_properties = properties;
-}
-
-void Sprite::SetHorizontalDirection(HorizontalDirection direction)
-{
-    m_flip_horizontal = (direction == HorizontalDirection::LEFT);
-}
-
-mono::HorizontalDirection Sprite::GetHorizontalDirection() const
-{
-    return m_flip_horizontal ? mono::HorizontalDirection::LEFT : mono::HorizontalDirection::RIGHT;
-}
-
-void Sprite::SetVerticalDirection(VerticalDirection direction)
-{
-    m_flip_vertical = (direction == VerticalDirection::DOWN);
-}
-
-mono::VerticalDirection Sprite::GetVerticalDirection() const
-{
-    return m_flip_vertical ? mono::VerticalDirection::DOWN : mono::VerticalDirection::UP;
 }
 
 void Sprite::Update(const UpdateContext& update_context)
@@ -205,13 +184,13 @@ mono::SpriteFrame Sprite::GetFrame(int frame_index) const
 {
     SpriteFrame frame = m_sprite_data->frames[frame_index];
 
-    if(m_flip_horizontal)
+    if(m_properties & mono::SpriteProperty::FLIP_HORIZONTAL)
     {
         std::swap(frame.uv_upper_left.x, frame.uv_lower_right.x);
         frame.center_offset.x = -frame.center_offset.x;
     }
     
-    if(m_flip_vertical)
+    if(m_properties & mono::SpriteProperty::FLIP_VERTICAL)
     {
         std::swap(frame.uv_lower_right.y, frame.uv_upper_left.y);
         frame.center_offset.y = -frame.center_offset.y;

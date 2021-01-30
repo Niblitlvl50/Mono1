@@ -12,10 +12,10 @@ namespace mono
 {
     struct TextComponent
     {
-        int font_id;
         std::string text;
-        bool centered;
+        int font_id;
         mono::Color::RGBA tint;
+        bool centered;
         bool draw_shadow;
     };
 

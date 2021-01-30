@@ -20,6 +20,6 @@ namespace mono
     //! Get the loaded font texture, might be nullptr if no texture is loaded.
     ITexturePtr GetFontTexture(int font_id);
 
-    TextDefinition GenerateVertexDataFromString(int font_id, const char* text, const math::Vector& pos, bool center);
+    TextDefinition GenerateVertexDataFromString(int font_id, const char* text, bool center);
     math::Vector MeasureString(int font_id, const char* text);
 }

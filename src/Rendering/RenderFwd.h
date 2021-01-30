@@ -11,6 +11,8 @@ namespace mono
     class IRenderBuffer;
     class IElementBuffer;
 
+    struct TextDefinition;
+
     namespace Color
     {
         struct RGBA;

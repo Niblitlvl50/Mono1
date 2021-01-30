@@ -28,13 +28,22 @@ namespace
             mat4 model;
         };
 
+        struct FlipSpriteInput
+        {
+            float flip_horizontal;
+            float flip_vertical;
+        };
+
         uniform TimeInput time_input;
         uniform TransformInput transform_input;
+        uniform FlipSpriteInput flip_input;
         uniform float wind_sway_enabled;
 
         layout (location = 0) in vec2 vertex_position;
-        layout (location = 1) in vec2 texture_coord;
-        layout (location = 2) in float vertex_height;
+        layout (location = 1) in vec2 vertex_offset;
+        layout (location = 2) in vec2 uv;
+        layout (location = 3) in vec2 uv_flipped;
+        layout (location = 4) in float vertex_height;
 
         out vec2 v_texture_coord;
 
@@ -48,8 +57,18 @@ namespace
                 wind_sway_offset.x = sin(time_input.total_time * noise * 3.0) * (vertex_height * 0.025);
             }
 
-            gl_Position = transform_input.projection * transform_input.view * transform_input.model * vec4(vertex_position + wind_sway_offset, 0.0, 1.0);
-            v_texture_coord = texture_coord;
+            gl_Position =
+                transform_input.projection *
+                transform_input.view *
+                transform_input.model *
+                vec4(vertex_position + vertex_offset + wind_sway_offset, 0.0, 1.0);
+
+            vec2 local_texture_coord = uv;
+            if(flip_input.flip_vertical != 0.0)
+                local_texture_coord.y = uv_flipped.y;
+            if(flip_input.flip_horizontal != 0.0)
+                local_texture_coord.x = uv_flipped.x;
+            v_texture_coord = local_texture_coord;
         }
     )";
 
@@ -76,14 +95,17 @@ namespace
 
     constexpr int U_VS_TIME_BLOCK = 0;
     constexpr int U_VS_TRANSFORM_BLOCK = 1;
-    constexpr int U_VS_WIND_SWAY_BLOCK = 2;
+    constexpr int U_VS_FLIP_SPRITE_BLOCK = 2;
+    constexpr int U_VS_WIND_SWAY_BLOCK = 3;
 
     constexpr int U_FS_COLOR_SHADE_BLOCK = 0;
     constexpr int U_FS_FLASH_BLOCK = 1;
 
     constexpr int ATTR_POSITION = 0;
-    constexpr int ATTR_UV = 1;
-    constexpr int ATTR_HEIGHT = 2;
+    constexpr int ATTR_POSITION_OFFSET = 1;
+    constexpr int ATTR_UV = 2;
+    constexpr int ATTR_UV_FLIPPED = 3;
+    constexpr int ATTR_HEIGHT = 4;
 }
 
 using namespace mono;
@@ -93,7 +115,9 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
     sg_shader_desc shader_desc = {};
     shader_desc.vs.source = vertex_source;
     shader_desc.attrs[ATTR_POSITION].name = "vertex_position";
-    shader_desc.attrs[ATTR_UV].name = "texture_coord";
+    shader_desc.attrs[ATTR_POSITION_OFFSET].name = "vertex_offset";
+    shader_desc.attrs[ATTR_UV].name = "uv";
+    shader_desc.attrs[ATTR_UV_FLIPPED].name = "uv_flipped";
     shader_desc.attrs[ATTR_HEIGHT].name = "vertex_height";
 
     shader_desc.vs.uniform_blocks[U_VS_TIME_BLOCK].size = sizeof(float) * 2;
@@ -109,6 +133,12 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
     shader_desc.vs.uniform_blocks[U_VS_TRANSFORM_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_MAT4;
     shader_desc.vs.uniform_blocks[U_VS_TRANSFORM_BLOCK].uniforms[2].name = "transform_input.model";
     shader_desc.vs.uniform_blocks[U_VS_TRANSFORM_BLOCK].uniforms[2].type = SG_UNIFORMTYPE_MAT4;
+
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].size = sizeof(float) * 2;
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[0].name = "flip_input.flip_horizontal";
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].name = "flip_input.flip_vertical";
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_FLOAT;
 
     shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].size = sizeof(float);
     shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].name = "wind_sway_enabled";
@@ -142,8 +172,14 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
     pipeline_desc.layout.attrs[ATTR_POSITION].format = SG_VERTEXFORMAT_FLOAT2;
     pipeline_desc.layout.attrs[ATTR_POSITION].buffer_index = ATTR_POSITION;
 
+    pipeline_desc.layout.attrs[ATTR_POSITION_OFFSET].format = SG_VERTEXFORMAT_FLOAT2;
+    pipeline_desc.layout.attrs[ATTR_POSITION_OFFSET].buffer_index = ATTR_POSITION_OFFSET;
+
     pipeline_desc.layout.attrs[ATTR_UV].format = SG_VERTEXFORMAT_FLOAT2;
     pipeline_desc.layout.attrs[ATTR_UV].buffer_index = ATTR_UV;
+
+    pipeline_desc.layout.attrs[ATTR_UV_FLIPPED].format = SG_VERTEXFORMAT_FLOAT2;
+    pipeline_desc.layout.attrs[ATTR_UV_FLIPPED].buffer_index = ATTR_UV_FLIPPED;
 
     pipeline_desc.layout.attrs[ATTR_HEIGHT].format = SG_VERTEXFORMAT_FLOAT;
     pipeline_desc.layout.attrs[ATTR_HEIGHT].buffer_index = ATTR_HEIGHT;
@@ -154,6 +190,7 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
     pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
     pipeline_desc.blend.src_factor_alpha = SG_BLENDFACTOR_SRC_ALPHA;
     pipeline_desc.blend.dst_factor_alpha = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+    pipeline_desc.blend.depth_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -166,17 +203,28 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
 void SpritePipeline::Apply(
     IPipeline* pipeline,
     const IRenderBuffer* position,
+    const IRenderBuffer* offsets,
     const IRenderBuffer* uv_coordinates,
+    const IRenderBuffer* uv_coordinates_flipped,
     const IRenderBuffer* heights,
     const IElementBuffer* indices,
-    const ITexture* texture)
+    const ITexture* texture,
+    uint32_t buffer_offset)
 {
     pipeline->Apply();
 
     sg_bindings bindings = {};
     bindings.vertex_buffers[ATTR_POSITION].id = position->Id();
+    bindings.vertex_buffers[ATTR_POSITION_OFFSET].id = offsets->Id();
     bindings.vertex_buffers[ATTR_UV].id = uv_coordinates->Id();
+    bindings.vertex_buffers[ATTR_UV_FLIPPED].id = uv_coordinates_flipped->Id();
     bindings.vertex_buffers[ATTR_HEIGHT].id = heights->Id();
+
+    bindings.vertex_buffer_offsets[ATTR_POSITION] = position->ByteOffsetToIndex(buffer_offset);
+    bindings.vertex_buffer_offsets[ATTR_POSITION_OFFSET] = offsets->ByteOffsetToIndex(buffer_offset);
+    bindings.vertex_buffer_offsets[ATTR_UV] = uv_coordinates->ByteOffsetToIndex(buffer_offset);
+    bindings.vertex_buffer_offsets[ATTR_UV_FLIPPED] = uv_coordinates_flipped->ByteOffsetToIndex(buffer_offset);
+    bindings.vertex_buffer_offsets[ATTR_HEIGHT] = heights->ByteOffsetToIndex(buffer_offset);
 
     bindings.fs_images[0].id = texture->Id();
     bindings.index_buffer.id = indices->Id();
@@ -212,6 +260,20 @@ void SpritePipeline::SetTransforms(const math::Matrix& projection, const math::M
     transform_block.model = model;
 
     sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_TRANSFORM_BLOCK, &transform_block, sizeof(TransformBlock));
+}
+
+void SpritePipeline::SetFlipSprite(bool flip_horizontal, bool flip_vertical)
+{
+    struct FlipInputBlock
+    {
+        float flip_horizontal;
+        float flip_vertical;
+    } flip_sprite_block;
+
+    flip_sprite_block.flip_horizontal = flip_horizontal ? 1.0f : 0.0f;
+    flip_sprite_block.flip_vertical = flip_vertical ? 1.0f : 0.0f;
+
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_FLIP_SPRITE_BLOCK, &flip_sprite_block, sizeof(FlipInputBlock));
 }
 
 void SpritePipeline::SetWindSway(bool enable_wind)
