@@ -11,8 +11,11 @@
 #include "glad/glad_gl_33/glad.h"
 #include "imgui/imgui.h"
 
+#define SOKOL_ASSERT(c) if(!(c)) __builtin_trap();
+
 #define SOKOL_GLCORE33
 #define SOKOL_GFX_IMPL
+#define SOKOL_DEBUG
 #include "sokol/sokol_gfx.h"
 
 #define SOKOL_IMGUI_IMPL
@@ -69,6 +72,7 @@ void mono::InitializeRender(const RenderInitParams& init_params)
         throw std::runtime_error("RenderSystem|Unble to initialize OpenGL functions.");
 
     sg_desc desc = {};
+    desc.buffer_pool_size = 500;
     sg_setup(&desc);
 
     sg_trace_hooks trace_hooks = {};
@@ -84,6 +88,7 @@ void mono::InitializeRender(const RenderInitParams& init_params)
 
     simgui_desc_t imgui_desc = {};
     imgui_desc.dpi_scale = 1.0f; // could be 2.0f for retina mac
+    imgui_desc.depth_format = SG_PIXELFORMAT_NONE;
     imgui_desc.ini_filename = init_params.imgui_ini;
     simgui_setup(&imgui_desc);
 
