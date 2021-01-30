@@ -38,6 +38,10 @@ TextureImpl::TextureImpl(sg_image image_handle)
     const sg_resource_state state = sg_query_image_state(m_handle);
     if(state != SG_RESOURCESTATE_VALID)
         System::Log("Failed to create texture\n");
+
+    const sg_image_info info = sg_query_image_info(m_handle);
+    m_width = info.width;
+    m_height = info.height;
 }
 
 TextureImpl::~TextureImpl()
