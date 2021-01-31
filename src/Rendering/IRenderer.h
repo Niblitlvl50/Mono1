@@ -62,6 +62,9 @@ namespace mono
             BlendMode blend_mode,
             uint32_t count) = 0;
 
+        virtual void DrawPoints(
+            const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count) = 0;
+
         virtual void DrawLines(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, uint32_t offset, uint32_t count) = 0;
         virtual void DrawLines(

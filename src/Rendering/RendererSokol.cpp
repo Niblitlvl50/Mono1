@@ -441,6 +441,16 @@ void RendererSokol::DrawParticlePoints(
     sg_draw(0, count, 1);
 }
 
+void RendererSokol::DrawPoints(
+    const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count)
+{
+    ColorPipeline::Apply(m_color_points_pipeline.get(), vertices, colors);
+    ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    ColorPipeline::SetPointSize(point_size);
+
+    sg_draw(offset, count, 1);
+}
+
 void RendererSokol::DrawLines(
     const IRenderBuffer* vertices, const IRenderBuffer* colors, uint32_t offset, uint32_t count)
 {
