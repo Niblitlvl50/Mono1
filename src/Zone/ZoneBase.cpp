@@ -1,6 +1,8 @@
 
 #include "ZoneBase.h"
+#include "IUpdatable.h"
 #include "IUpdater.h"
+#include "Rendering/IDrawable.h"
 #include "Rendering/IRenderer.h"
 #include "Util/Algorithm.h"
 #include "Math/Quad.h"

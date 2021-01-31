@@ -13,6 +13,7 @@ namespace mono
 
         static mono::IPipelinePtr MakePointsPipeline();
         static mono::IPipelinePtr MakeLinesPipeline();
+        static mono::IPipelinePtr MakeLinesPipelineIndices();
         static mono::IPipelinePtr MakeLineStripPipeline();
         static mono::IPipelinePtr MakeTrianglesPipeline();
 

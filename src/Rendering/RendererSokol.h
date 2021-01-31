@@ -82,6 +82,11 @@ namespace mono
             BlendMode blend_mode,
             uint32_t count) override;
 
+        void DrawLines(
+            const IRenderBuffer* vertices, const IRenderBuffer* colors, uint32_t offset, uint32_t count) override;
+        void DrawLines(
+            const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t offset, uint32_t count) override;
+
         void DrawPolyline(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, uint32_t offset, uint32_t count) override;
 
@@ -131,6 +136,7 @@ namespace mono
 
         std::unique_ptr<IPipeline> m_color_points_pipeline;
         std::unique_ptr<IPipeline> m_color_lines_pipeline;
+        std::unique_ptr<IPipeline> m_color_lines_indices_pipeline;
         std::unique_ptr<IPipeline> m_color_line_strip_pipeline;
         std::unique_ptr<IPipeline> m_color_triangles_pipeline;
         std::unique_ptr<IPipeline> m_particle_pipeline;

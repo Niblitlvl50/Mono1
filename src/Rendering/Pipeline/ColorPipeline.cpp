@@ -135,6 +135,11 @@ mono::IPipelinePtr ColorPipeline::MakeLinesPipeline()
     return MakePipeline(SG_PRIMITIVETYPE_LINES, SG_INDEXTYPE_NONE);
 }
 
+mono::IPipelinePtr ColorPipeline::MakeLinesPipelineIndices()
+{
+    return MakePipeline(SG_PRIMITIVETYPE_LINES, SG_INDEXTYPE_UINT16);
+}
+
 mono::IPipelinePtr ColorPipeline::MakeLineStripPipeline()
 {
     return MakePipeline(SG_PRIMITIVETYPE_LINE_STRIP, SG_INDEXTYPE_NONE);
