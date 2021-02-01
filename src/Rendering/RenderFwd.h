@@ -12,6 +12,7 @@ namespace mono
     class IElementBuffer;
 
     struct TextDefinition;
+    struct SpriteData;
 
     namespace Color
     {

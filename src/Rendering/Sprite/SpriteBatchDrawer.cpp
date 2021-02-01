@@ -12,6 +12,7 @@
 
 #include "TransformSystem/TransformSystem.h"
 #include "Math/Quad.h"
+#include "Math/MathFunctions.h"
 
 #include <algorithm>
 
@@ -21,6 +22,7 @@ namespace
 {
     struct SpriteTransformPair
     {
+        uint32_t entity_id;
         math::Matrix transform;
         math::Quad world_bb;
         mono::ISprite* sprite;
@@ -123,6 +125,51 @@ void SpriteBatchDrawer::BuildSpriteDrawBuffers(const mono::SpriteData* sprite_da
     m_sprite_buffers[sprite_data->hash] = std::move(buffers);
 }
 
+void SpriteBatchDrawer::BuildSpriteShadowBuffers(const ISprite* sprite, uint32_t id) const
+{
+    const math::Vector& offset = sprite->GetShadowOffset();
+    const float shadow_size = sprite->GetShadowSize();
+    const math::Vector size(shadow_size, shadow_size / 2.0f);
+
+    const int segments = 8;
+    std::vector<math::Vector> vertices;
+    vertices.reserve(segments +1);
+    vertices.push_back(offset);
+
+    const uint16_t n_indices = segments * 3;
+    std::vector<uint16_t> indices;
+    indices.reserve(n_indices);
+
+    const float coef = 2.0f * math::PI() / float(segments);
+
+    for(int index = 0; index < segments; ++index)
+    {
+        const float radians = index * coef;
+        const float x = size.x * std::cos(radians) + offset.x;
+        const float y = size.y * std::sin(radians) + offset.y;
+        vertices.emplace_back(x, y);
+
+        indices.push_back(0);
+        indices.push_back(index +1);
+        indices.push_back(index +2);
+    }
+
+    indices.pop_back();
+    indices.pop_back();
+
+    indices.push_back(vertices.size() -1);
+    indices.push_back(1);
+
+    constexpr mono::Color::RGBA shadow_color(0.2f, 0.2f, 0.2f, 0.5f);
+    const std::vector<mono::Color::RGBA> colors(vertices.size(), shadow_color);
+
+    SpriteShadowBuffers buffers;
+    buffers.vertices = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertices.size(), vertices.data());
+    buffers.colors = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data());
+    buffers.indices = mono::CreateElementBuffer(BufferType::STATIC, indices.size(), indices.data());
+    m_shadow_buffers[id] = std::move(buffers);
+}
+
 void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 {
     std::vector<SpriteTransformPair> sprites_to_draw;
@@ -141,8 +188,16 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
             if(it == m_sprite_buffers.end())
                 BuildSpriteDrawBuffers(sprite->GetSpriteData());
 
+            const bool has_shadow = (sprite->GetProperties() & mono::SpriteProperty::SHADOW);
+            if(has_shadow)
+            {
+                auto shadow_it = m_shadow_buffers.find(id);
+                if(shadow_it == m_shadow_buffers.end())
+                    BuildSpriteShadowBuffers(sprite, id);
+            }
+
             const math::Matrix& transform = m_transform_system->GetWorld(id);
-            sprites_to_draw.push_back({ transform, world_bounds, sprite, layer });
+            sprites_to_draw.push_back({ id, transform, world_bounds, sprite, layer });
         }
     };
 
@@ -163,13 +218,15 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
         const math::Matrix& world_transform = renderer.GetTransform() * sprite_transform.transform;
         auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
 
-        const uint32_t sprite_properties = sprite_transform.sprite->GetProperties();
-        if(sprite_properties & mono::SpriteProperty::SHADOW)
+        const auto it = m_shadow_buffers.find(sprite_transform.entity_id);
+        if(it != m_shadow_buffers.end())
         {
-            //const math::Vector shadow_offset = sprite_transform.sprite->GetShadowOffset();
-            //const float shadow_size = sprite_transform.sprite->GetShadowSize();
-            //constexpr mono::Color::RGBA shadow_color(0.2f, 0.2f, 0.2f, 0.5f);
-            //renderer.DrawFilledCircle(shadow_offset, math::Vector(shadow_size, shadow_size / 2.0f), 8, shadow_color);
+            const SpriteShadowBuffers& shadow_buffers = it->second;
+            renderer.DrawTrianges(
+                shadow_buffers.vertices.get(),
+                shadow_buffers.colors.get(),
+                shadow_buffers.indices.get(),
+                shadow_buffers.indices->Size());
         }
 
         const SpriteDrawBuffers& sprite_buffers = m_sprite_buffers[sprite_transform.sprite->GetSpriteHash()];
