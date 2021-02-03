@@ -197,12 +197,7 @@ void RendererSokol::RenderText(
     auto uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.texcoords.size(), def.texcoords.data());
     auto indices = CreateElementBuffer(BufferType::STATIC, def.indices.size(), def.indices.data());
 
-    TexturePipeline::Apply(m_texture_pipeline.get(), vertices.get(), uv.get(), indices.get(), texture.get());
-    TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
-    TexturePipeline::SetIsAlpha(true);
-    TexturePipeline::SetShade(color);
-
-    sg_draw(0, def.indices.size(), 1);
+    RenderText(vertices.get(), uv.get(), indices.get(), texture.get(), color);
 }
 
 void RendererSokol::RenderText(
@@ -485,13 +480,13 @@ void RendererSokol::DrawPolyline(
 }
 
 void RendererSokol::DrawTrianges(
-    const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t count) const
+    const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t offset, uint32_t count) const
 {
     ColorPipeline::Apply(m_color_triangles_pipeline.get(), vertices, colors, indices);
     ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
-    sg_draw(0, count, 1);
+    sg_draw(offset, count, 1);
 }
 
 void RendererSokol::SetClearColor(const mono::Color::RGBA& color)

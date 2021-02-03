@@ -72,7 +72,7 @@ void mono::InitializeRender(const RenderInitParams& init_params)
         throw std::runtime_error("RenderSystem|Unble to initialize OpenGL functions.");
 
     sg_desc desc = {};
-    desc.buffer_pool_size = 500;
+    desc.buffer_pool_size = 1024;
     sg_setup(&desc);
 
     sg_trace_hooks trace_hooks = {};

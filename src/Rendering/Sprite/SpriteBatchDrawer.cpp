@@ -226,6 +226,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
                 shadow_buffers.vertices.get(),
                 shadow_buffers.colors.get(),
                 shadow_buffers.indices.get(),
+                0,
                 shadow_buffers.indices->Size());
         }
 
