@@ -55,7 +55,7 @@ void SpriteBatchDrawer::PreloadSpriteData(const std::vector<std::string>& sprite
     }
 }
 
-void SpriteBatchDrawer::BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data) const
+SpriteDrawBuffers SpriteBatchDrawer::BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data)
 {
     std::vector<math::Vector> vertices;
     std::vector<math::Vector> vertex_offsets;
@@ -122,10 +122,10 @@ void SpriteBatchDrawer::BuildSpriteDrawBuffers(const mono::SpriteData* sprite_da
     buffers.uv_flipped = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, uv_coordinates_flipped.size(), uv_coordinates_flipped.data());
     buffers.heights = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 1, height_values.size(), height_values.data());
 
-    m_sprite_buffers[sprite_data->hash] = std::move(buffers);
+    return buffers;
 }
 
-void SpriteBatchDrawer::BuildSpriteShadowBuffers(const ISprite* sprite, uint32_t id) const
+SpriteShadowBuffers SpriteBatchDrawer::BuildSpriteShadowBuffers(const ISprite* sprite)
 {
     const math::Vector& offset = sprite->GetShadowOffset();
     const float shadow_size = sprite->GetShadowSize();
@@ -167,7 +167,8 @@ void SpriteBatchDrawer::BuildSpriteShadowBuffers(const ISprite* sprite, uint32_t
     buffers.vertices = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertices.size(), vertices.data());
     buffers.colors = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data());
     buffers.indices = mono::CreateElementBuffer(BufferType::STATIC, indices.size(), indices.data());
-    m_shadow_buffers[id] = std::move(buffers);
+
+    return buffers;
 }
 
 void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
@@ -186,14 +187,14 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
             const uint32_t sprite_hash = sprite->GetSpriteHash();
             auto it = m_sprite_buffers.find(sprite_hash);
             if(it == m_sprite_buffers.end())
-                BuildSpriteDrawBuffers(sprite->GetSpriteData());
+                m_sprite_buffers[sprite_hash] = BuildSpriteDrawBuffers(sprite->GetSpriteData());
 
             const bool has_shadow = (sprite->GetProperties() & mono::SpriteProperty::SHADOW);
             if(has_shadow)
             {
                 auto shadow_it = m_shadow_buffers.find(id);
                 if(shadow_it == m_shadow_buffers.end())
-                    BuildSpriteShadowBuffers(sprite, id);
+                    m_shadow_buffers[id] = BuildSpriteShadowBuffers(sprite);
             }
 
             const math::Matrix& transform = m_transform_system->GetWorld(id);

@@ -38,11 +38,11 @@ namespace mono
         ~SpriteBatchDrawer();
 
         void PreloadSpriteData(const std::vector<std::string>& sprite_files);
-    
-    private:
 
-        void BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data) const;
-        void BuildSpriteShadowBuffers(const mono::ISprite* sprite, uint32_t id) const;
+        static SpriteDrawBuffers BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data);
+        static SpriteShadowBuffers BuildSpriteShadowBuffers(const mono::ISprite* sprite);
+
+    private:
 
         void Draw(mono::IRenderer& renderer) const override;
         math::Quad BoundingBox() const override;

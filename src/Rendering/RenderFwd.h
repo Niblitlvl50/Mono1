@@ -13,6 +13,7 @@ namespace mono
 
     struct TextDefinition;
     struct SpriteData;
+    struct SpriteDrawBuffers;
 
     namespace Color
     {
