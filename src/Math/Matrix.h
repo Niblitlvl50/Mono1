@@ -27,6 +27,7 @@ namespace math
     };
 
     Matrix CreateMatrixWithPosition(const math::Vector& position);
+    Matrix CreateMatrixWithScale(const math::Vector& scale);
     Matrix CreateMatrixFromZRotation(float radians);
 
     void Identity(Matrix& matrix);

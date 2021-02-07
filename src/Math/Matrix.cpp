@@ -35,6 +35,13 @@ math::Matrix math::CreateMatrixWithPosition(const math::Vector& position)
     return matrix;
 }
 
+math::Matrix math::CreateMatrixWithScale(const math::Vector& scale)
+{
+    math::Matrix matrix;
+    math::ScaleXY(matrix, scale);
+    return matrix;
+}
+
 math::Matrix math::CreateMatrixFromZRotation(float radians)
 {
     math::Matrix matrix;
