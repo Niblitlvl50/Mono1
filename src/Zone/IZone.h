@@ -27,5 +27,19 @@ namespace mono
         virtual void RemoveUpdatable(mono::IUpdatable* updatable) = 0;
 
         virtual void SetDrawableLayer(const IDrawable* drawable, int new_layer) = 0;
+
+        template <typename T>
+        void AddUpdatableDrawable(T* object, int layer)
+        {
+            AddUpdatable(object);
+            AddDrawable(object, layer);
+        }
+
+        template <typename T>
+        void RemoveUpdatableDrawable(T* object)
+        {
+            RemoveUpdatable(object);
+            RemoveDrawable(object);
+        }
     };
 }
