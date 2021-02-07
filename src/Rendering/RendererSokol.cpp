@@ -33,6 +33,7 @@ RendererSokol::RendererSokol()
     m_color_lines_pipeline = mono::ColorPipeline::MakeLinesPipeline();
     m_color_lines_indices_pipeline = mono::ColorPipeline::MakeLinesPipelineIndices();
     m_color_line_strip_pipeline = mono::ColorPipeline::MakeLineStripPipeline();
+    m_color_line_strip_indices_pipeline = mono::ColorPipeline::MakeLineStripIndicesPipeline();
     m_color_triangles_pipeline = mono::ColorPipeline::MakeTrianglesPipeline();
 
     m_particle_pipeline = mono::ParticlePointPipeline::MakePipeline();
@@ -475,6 +476,16 @@ void RendererSokol::DrawPolyline(
     ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
     //ColorPipeline::SetLineWidth(10.0f);
+
+    sg_draw(offset, count, 1);
+}
+
+void RendererSokol::DrawPolyline(
+    const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t offset, uint32_t count)
+{
+    ColorPipeline::Apply(m_color_line_strip_indices_pipeline.get(), vertices, colors, indices);
+    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
     sg_draw(offset, count, 1);
 }

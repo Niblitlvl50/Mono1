@@ -72,6 +72,8 @@ namespace mono
 
         virtual void DrawPolyline(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, uint32_t offset, uint32_t count) = 0;
+        virtual void DrawPolyline(
+            const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t offset, uint32_t count) = 0;
 
         virtual void DrawTrianges(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t offset, uint32_t count) const = 0;

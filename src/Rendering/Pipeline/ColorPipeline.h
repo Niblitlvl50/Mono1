@@ -15,6 +15,7 @@ namespace mono
         static mono::IPipelinePtr MakeLinesPipeline();
         static mono::IPipelinePtr MakeLinesPipelineIndices();
         static mono::IPipelinePtr MakeLineStripPipeline();
+        static mono::IPipelinePtr MakeLineStripIndicesPipeline();
         static mono::IPipelinePtr MakeTrianglesPipeline();
 
         static void Apply(IPipeline* pipeline, const IRenderBuffer* position, const IRenderBuffer* color);
