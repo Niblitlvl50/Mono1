@@ -35,6 +35,11 @@ namespace System
         uint16_t button_state;
     };
 
+    //
+    //         Y
+    //       X   B
+    //         A
+    //
     enum ControllerButton
     {
         A               = ENUM_BIT(0),
