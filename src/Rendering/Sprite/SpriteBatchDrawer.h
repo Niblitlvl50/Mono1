@@ -2,9 +2,8 @@
 #pragma once
 
 #include "MonoFwd.h"
-#include "Rendering/RenderFwd.h"
 #include "Rendering/IDrawable.h"
-#include "Rendering/RenderBuffer/IRenderBuffer.h"
+#include "SpriteBufferFactory.h"
 
 #include <vector>
 #include <unordered_map>
@@ -13,23 +12,6 @@
 
 namespace mono
 {
-    struct SpriteDrawBuffers
-    {
-        std::unique_ptr<IRenderBuffer> vertices;
-        std::unique_ptr<IRenderBuffer> offsets;
-        std::unique_ptr<IRenderBuffer> uv;
-        std::unique_ptr<IRenderBuffer> uv_flipped;
-        std::unique_ptr<IRenderBuffer> heights;
-        int vertices_per_sprite;
-    };
-
-    struct SpriteShadowBuffers
-    {
-        std::unique_ptr<IRenderBuffer> vertices;
-        std::unique_ptr<IRenderBuffer> colors;
-        std::unique_ptr<IElementBuffer> indices;
-    };
-
     class SpriteBatchDrawer : public mono::IDrawable
     {
     public:
@@ -38,9 +20,6 @@ namespace mono
         ~SpriteBatchDrawer();
 
         void PreloadSpriteData(const std::vector<std::string>& sprite_files);
-
-        static SpriteDrawBuffers BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data);
-        static SpriteShadowBuffers BuildSpriteShadowBuffers(const mono::ISprite* sprite);
 
     private:
 
