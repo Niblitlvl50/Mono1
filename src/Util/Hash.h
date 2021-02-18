@@ -28,6 +28,6 @@ namespace mono
         return Hash(text, length);
     }
 
-    void HashRegister(uint32_t hash_value, const char* string);
+    void HashRegisterString(const char* string);
     const char* HashLookup(uint32_t hash_value);
 }

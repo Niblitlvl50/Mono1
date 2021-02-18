@@ -8,9 +8,9 @@ namespace
     std::unordered_map<uint32_t, std::string> g_hash_register;
 }
 
-void mono::HashRegister(uint32_t hash_value, const char* string)
+void mono::HashRegisterString(const char* string)
 {
-    g_hash_register[hash_value] = string;
+    g_hash_register[mono::Hash(string)] = string;
 }
 
 const char* mono::HashLookup(uint32_t hash_value)
