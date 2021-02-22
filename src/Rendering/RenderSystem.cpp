@@ -11,7 +11,9 @@
 #include "glad/glad_gl_33/glad.h"
 #include "imgui/imgui.h"
 
-#define SOKOL_ASSERT(c) if(!(c)) __builtin_trap();
+#ifdef __APPLE__
+    #define SOKOL_ASSERT(c) if(!(c)) __builtin_trap();
+#endif
 
 #define SOKOL_GLCORE33
 #define SOKOL_GFX_IMPL

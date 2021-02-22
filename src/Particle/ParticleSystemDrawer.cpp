@@ -6,6 +6,8 @@
 #include "Rendering/RenderBuffer/BufferFactory.h"
 #include "Math/Quad.h"
 
+#include <iterator>
+
 using namespace mono;
 
 ParticleSystemDrawer::ParticleSystemDrawer(const mono::ParticleSystem* particle_system)
