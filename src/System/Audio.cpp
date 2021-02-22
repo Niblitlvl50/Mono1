@@ -9,11 +9,15 @@
 
 
 #ifdef _WIN32
-#define _CRT_SECURE_NO_WARNINGS 1
+    #define _CRT_SECURE_NO_WARNINGS 1
 #endif
 
-//#define CUTE_SOUND_FORCE_SDL
-#define CUTE_SOUND_IMPLEMENTATION
+#ifdef __linux__
+    #define CUTE_SOUND_FORCE_SDL
+#else
+    #define CUTE_SOUND_IMPLEMENTATION
+#endif
+
 #include "cute_headers/cute_sound.h"
 
 
