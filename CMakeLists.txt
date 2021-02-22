@@ -45,7 +45,9 @@ if(SDL2_FOUND)
     include_directories(SYSTEM ${SDL2_INCLUDE_DIR})
 endif(SDL2_FOUND)
 
-find_library(AUDIOTOOLBOX AudioToolbox)
+if(APPLE)
+    find_library(AUDIOTOOLBOX AudioToolbox)
+endif(APPLE)
 
 # glad
 add_library(glad STATIC "third_party/glad/glad_gl_33/glad.c")
