@@ -4,6 +4,7 @@
 #include "MonoFwd.h"
 #include "Rendering/IDrawable.h"
 #include "Rendering/RenderFwd.h"
+#include "TextSystem.h"
 
 #include <memory>
 #include <vector>

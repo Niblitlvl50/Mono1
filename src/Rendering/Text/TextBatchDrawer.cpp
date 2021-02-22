@@ -1,6 +1,5 @@
 
 #include "TextBatchDrawer.h"
-#include "TextSystem.h"
 #include "TextFunctions.h"
 #include "TransformSystem/TransformSystem.h"
 
