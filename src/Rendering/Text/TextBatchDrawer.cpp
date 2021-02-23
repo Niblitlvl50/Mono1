@@ -35,6 +35,9 @@ void TextBatchDrawer::Draw(mono::IRenderer& renderer) const
             const TextDrawBuffers* render_buffers = UpdateDrawBuffers(text, index);
             const ITexturePtr texture = mono::GetFontTexture(text.font_id);
 
+            if(text.text.empty())
+                return;
+
             if(text.draw_shadow)
             {
                 math::Matrix shadow_world_transform = world_transform;
@@ -88,7 +91,7 @@ const mono::TextDrawBuffers* TextBatchDrawer::UpdateDrawBuffers(const mono::Text
 
     TextDrawBuffers& draw_buffers = m_draw_buffers[index];
 
-    if(needs_update)
+    if(needs_update && !text_component.text.empty())
     {
         const mono::TextDefinition& def = mono::GenerateVertexDataFromString(
             text_component.font_id, text_component.text.c_str(), text_component.centered);
