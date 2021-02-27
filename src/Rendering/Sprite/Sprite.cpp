@@ -151,13 +151,9 @@ void Sprite::SetAnimation(int id, const SpriteAnimationCallback& callback)
 {
     assert(id < static_cast<int>(m_sprite_data->animations.size()));
 
-    const bool same_id = (id == m_active_animation);
-
     m_active_animation = id;
     m_callback = callback;
-
-    if(!same_id)
-        RestartAnimation();
+    RestartAnimation();
 }
 
 void Sprite::SetAnimationPlayback(PlaybackMode mode)
