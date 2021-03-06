@@ -98,6 +98,18 @@ math::Vector math::TopRight(const math::Quad& quad)
     return quad.mB;
 }
 
+math::Vector math::RightCenter(const math::Quad& quad)
+{
+    const float half_height = (quad.mB.y - quad.mA.y) / 2.0f;
+    return math::Vector(quad.mB.x, quad.mA.y + half_height);
+}
+
+math::Vector math::LeftCenter(const math::Quad& quad)
+{
+    const float half_height = (quad.mB.y - quad.mA.y) / 2.0f;
+    return math::Vector(quad.mA.x, quad.mA.y + half_height);
+}
+
 math::Vector math::Center(const math::Quad& quad)
 {
     const float half_width = math::Width(quad) / 2.0f;

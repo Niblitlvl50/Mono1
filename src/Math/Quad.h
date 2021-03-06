@@ -54,6 +54,8 @@ namespace math
     math::Vector TopLeft(const math::Quad& quad);
     math::Vector TopCenter(const math::Quad& quad);
     math::Vector TopRight(const math::Quad& quad);
+    math::Vector RightCenter(const math::Quad& quad);
+    math::Vector LeftCenter(const math::Quad& quad);
 
     //! Zero quad defined for convenience
     constexpr Quad ZeroQuad = Quad(ZeroVec, ZeroVec);
