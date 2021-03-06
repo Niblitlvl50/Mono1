@@ -14,6 +14,7 @@ namespace mono
     void InitializeRender(const RenderInitParams& init_params);
     void ShutdownRender();
 
+    float PixelsPerMeter();
     void LoadCustomTextureFactory(const class ITextureFactory* texture_factory);
 
     const class ISpriteFactory* GetSpriteFactory();
