@@ -51,7 +51,7 @@ void SpriteBatchDrawer::PreloadSpriteData(const std::vector<std::string>& sprite
         if(!sprite_data)
             continue; // Error
 
-        BuildSpriteDrawBuffers(sprite_data);
+        m_sprite_buffers[sprite_data->hash] = BuildSpriteDrawBuffers(sprite_data);
     }
 }
 
