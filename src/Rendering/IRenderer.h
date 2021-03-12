@@ -3,6 +3,7 @@
 
 #include "RenderFwd.h"
 #include "BlendMode.h"
+#include "Rendering/Text/TextFlags.h"
 #include "Math/MathFwd.h"
 
 #include <vector>
@@ -18,7 +19,11 @@ namespace mono
         virtual void AddDrawable(const IDrawable* drawable) = 0;
 
         virtual void RenderText(
-            int font_id, const char* text, const math::Vector& pos, bool center, const mono::Color::RGBA& color) const = 0;
+            int font_id,
+            const char* text,
+            const math::Vector& pos,
+            const mono::Color::RGBA& color,
+            mono::FontCentering center_flags) const = 0;
         virtual void RenderText(
             const IRenderBuffer* vertices,
             const IRenderBuffer* uv,
@@ -61,6 +66,9 @@ namespace mono
             const ITexture* texture,
             BlendMode blend_mode,
             uint32_t count) = 0;
+
+        virtual void DrawFog(
+            const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture) = 0;
 
         virtual void DrawPoints(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count) = 0;

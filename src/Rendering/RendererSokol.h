@@ -37,8 +37,8 @@ namespace mono
             int font_id,
             const char* text,
             const math::Vector& pos,
-            bool center,
-            const mono::Color::RGBA& color) const override;
+            const mono::Color::RGBA& color,
+            mono::FontCentering center_flags) const override;
         void RenderText(
             const IRenderBuffer* vertices,
             const IRenderBuffer* uv,
@@ -81,6 +81,9 @@ namespace mono
             const ITexture* texture,
             BlendMode blend_mode,
             uint32_t count) override;
+
+        void DrawFog(
+            const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture) override;
 
         void DrawPoints(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count) override;
@@ -148,6 +151,7 @@ namespace mono
         std::unique_ptr<IPipeline> m_particle_pipeline;
         std::unique_ptr<IPipeline> m_texture_pipeline;
         std::unique_ptr<IPipeline> m_sprite_pipeline;
+        std::unique_ptr<IPipeline> m_fog_pipeline;
         std::unique_ptr<IPipeline> m_screen_pipeline;
 
         std::unique_ptr<IRenderBuffer> m_screen_vertices;

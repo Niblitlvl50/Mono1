@@ -2,6 +2,7 @@
 #pragma once
 
 #include "IGameSystem.h"
+#include "TextFlags.h"
 #include "MonoFwd.h"
 #include "Rendering/Color.h"
 
@@ -15,7 +16,7 @@ namespace mono
         std::string text;
         int font_id;
         mono::Color::RGBA tint;
-        bool centered;
+        mono::FontCentering center_flags;
         bool draw_shadow;
     };
 

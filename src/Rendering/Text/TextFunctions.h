@@ -2,6 +2,7 @@
 #pragma once
 
 #include "TextDefinition.h"
+#include "TextFlags.h"
 #include "Math/MathFwd.h"
 #include "Rendering/Texture/ITextureFactory.h"
 
@@ -20,6 +21,6 @@ namespace mono
     //! Get the loaded font texture, might be nullptr if no texture is loaded.
     ITexturePtr GetFontTexture(int font_id);
 
-    TextDefinition GenerateVertexDataFromString(int font_id, const char* text, bool center);
+    TextDefinition GenerateVertexDataFromString(int font_id, const char* text, FontCentering center_flags);
     math::Vector MeasureString(int font_id, const char* text);
 }

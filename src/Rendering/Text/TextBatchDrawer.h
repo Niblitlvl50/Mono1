@@ -4,22 +4,14 @@
 #include "MonoFwd.h"
 #include "Rendering/IDrawable.h"
 #include "Rendering/RenderFwd.h"
-#include "TextSystem.h"
 
-#include <memory>
 #include <vector>
 #include <unordered_map>
 
 namespace mono
 {
     struct TextComponent;
-
-    struct TextDrawBuffers
-    {
-        std::unique_ptr<IRenderBuffer> vertices;
-        std::unique_ptr<IRenderBuffer> uv;
-        std::unique_ptr<IElementBuffer> indices;
-    };
+    struct TextDrawBuffers;
 
     class TextBatchDrawer : public mono::IDrawable
     {

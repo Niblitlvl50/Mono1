@@ -12,6 +12,7 @@
 #include "Rendering/Pipeline/TexturePipeline.h"
 #include "Rendering/Pipeline/ScreenPipeline.h"
 #include "Rendering/Pipeline/SpritePipeline.h"
+#include "Rendering/Pipeline/FogPipeline.h"
 
 #include "Rendering/RenderBuffer/BufferFactory.h"
 #include "Rendering/Texture/ITextureFactory.h"
@@ -39,6 +40,7 @@ RendererSokol::RendererSokol()
     m_particle_pipeline = mono::ParticlePointPipeline::MakePipeline();
     m_texture_pipeline = mono::TexturePipeline::MakePipeline();
     m_sprite_pipeline = mono::SpritePipeline::MakePipeline();
+    m_fog_pipeline = mono::FogPipeline::MakePipeline();
     m_screen_pipeline = mono::ScreenPipeline::MakePipeline();
 
     const math::Vector vertices[] = { {-1.0f, -1.0f}, {-1.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, -1.0f} };
@@ -185,14 +187,14 @@ void RendererSokol::RenderText(
     int font_id,
     const char* text,
     const math::Vector& pos,
-    bool center,
-    const mono::Color::RGBA& color) const
+    const mono::Color::RGBA& color,
+    mono::FontCentering center_flags) const
 {
     const mono::ITexturePtr& texture = mono::GetFontTexture(font_id);
     if(!texture)
         return;
 
-    const TextDefinition& def = mono::GenerateVertexDataFromString(font_id, text, center);
+    const TextDefinition& def = mono::GenerateVertexDataFromString(font_id, text, center_flags);
 
     auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.vertices.size(), def.vertices.data());
     auto uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.texcoords.size(), def.texcoords.data());
@@ -251,6 +253,16 @@ void RendererSokol::DrawSprite(
     SpritePipeline::SetFlashSprite(sprite_properties & mono::SpriteProperty::FLASH);
 
     sg_draw(0, 6, 1);
+}
+
+void RendererSokol::DrawFog(const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture)
+{
+    FogPipeline::Apply(m_fog_pipeline.get(), vertices, indices, texture);
+    FogPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    FogPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    FogPipeline::SetShade(mono::Color::WHITE);
+
+    sg_draw(0, indices->Size(), 1);
 }
 
 void RendererSokol::DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float point_size) const

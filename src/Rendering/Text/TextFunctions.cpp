@@ -96,7 +96,7 @@ mono::ITexturePtr mono::GetFontTexture(int font_id)
     return g_fonts.find(font_id)->second.texture;
 }
 
-mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char* text, bool center)
+mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char* text, FontCentering center_flags)
 {
     const uint32_t text_length = std::strlen(text);
 
@@ -104,8 +104,16 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
     text_def.vertices.reserve(text_length * 4);
     text_def.texcoords.reserve(text_length * 4);
     text_def.indices.reserve(text_length * 6);
-    
-    math::Vector current_position = center ? -(MeasureString(font_id, text) / 2.0f) : math::ZeroVec;
+
+    math::Vector current_position = math::ZeroVec;
+    if(center_flags != 0)
+    {
+        const math::Vector half_size = MeasureString(font_id, text) / 2.0f;
+        if(center_flags & FontCentering::HORIZONTAL)
+            current_position.x -= half_size.x;
+        if(center_flags & FontCentering::VERTICAL)
+            current_position.y -= half_size.y;
+    }
 
     const FontData& font_data = g_fonts.find(font_id)->second;
 
@@ -165,7 +173,10 @@ math::Vector mono::MeasureString(int font_id, const char* text)
         const uint32_t offset_index = char_index - g_base;
         const CharData& data = font_data.chars[offset_index];
 
-        size.x += data.xadvance;
+        if(index == text_length -1)
+            size.x += data.width;
+        else
+            size.x += data.xadvance;
         size.y = std::max(data.height, size.y);
     }
 

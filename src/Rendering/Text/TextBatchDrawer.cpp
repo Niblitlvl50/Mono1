@@ -1,6 +1,8 @@
 
 #include "TextBatchDrawer.h"
+#include "TextSystem.h"
 #include "TextFunctions.h"
+#include "TextBufferFactory.h"
 #include "TransformSystem/TransformSystem.h"
 
 #include "Math/Quad.h"
@@ -82,10 +84,9 @@ const mono::TextDrawBuffers* TextBatchDrawer::UpdateDrawBuffers(const mono::Text
     if(it != m_current_data.end())
     {
         const mono::TextComponent& last_text_update = it->second;
-
         needs_update =
             last_text_update.font_id != text_component.font_id ||
-            last_text_update.centered != text_component.centered ||
+            last_text_update.center_flags != text_component.center_flags ||
             last_text_update.text != text_component.text;
     }
 
@@ -93,13 +94,8 @@ const mono::TextDrawBuffers* TextBatchDrawer::UpdateDrawBuffers(const mono::Text
 
     if(needs_update && !text_component.text.empty())
     {
-        const mono::TextDefinition& def = mono::GenerateVertexDataFromString(
-            text_component.font_id, text_component.text.c_str(), text_component.centered);
-
-        draw_buffers.vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.vertices.size(), def.vertices.data());
-        draw_buffers.uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.texcoords.size(), def.texcoords.data());
-        draw_buffers.indices = CreateElementBuffer(BufferType::STATIC, def.indices.size(), def.indices.data());
-
+        draw_buffers =
+            mono::BuildTextDrawBuffers(text_component.font_id, text_component.text.c_str(), text_component.center_flags);
         m_current_data[index] = text_component;
     }
 
