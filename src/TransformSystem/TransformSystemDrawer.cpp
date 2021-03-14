@@ -24,12 +24,14 @@ void TransformSystemDrawer::Draw(mono::IRenderer& renderer) const
         if(!renderer.Cull(bb))
             return;
 
+        renderer.DrawQuad(bb, mono::Color::RED, 1.0f);
+
         const math::Matrix& world_transform = m_transform_system->GetWorld(index);
+        const auto scope = mono::MakeTransformScope(world_transform, &renderer);
+        
         char buffer[8] = { 0 };
         std::sprintf(buffer, "%u", index);
-
-        renderer.DrawQuad(bb, mono::Color::RED, 1.0f);
-        renderer.RenderText(0, buffer, math::GetPosition(world_transform), mono::Color::RED, mono::FontCentering::HORIZONTAL_VERTICAL);
+        renderer.RenderText(0, buffer, mono::Color::RED, mono::FontCentering::HORIZONTAL_VERTICAL);
     };
 
     m_transform_system->ForEachComponent(draw_bounding_boxes);

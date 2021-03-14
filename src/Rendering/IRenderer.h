@@ -21,7 +21,6 @@ namespace mono
         virtual void RenderText(
             int font_id,
             const char* text,
-            const math::Vector& pos,
             const mono::Color::RGBA& color,
             mono::FontCentering center_flags) const = 0;
         virtual void RenderText(

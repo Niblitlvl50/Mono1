@@ -186,10 +186,12 @@ void RendererSokol::AddDrawable(const IDrawable* drawable)
 void RendererSokol::RenderText(
     int font_id,
     const char* text,
-    const math::Vector& pos,
     const mono::Color::RGBA& color,
     mono::FontCentering center_flags) const
 {
+    if(std::strlen(text) == 0)
+        return;
+
     const mono::ITexturePtr& texture = mono::GetFontTexture(font_id);
     if(!texture)
         return;
