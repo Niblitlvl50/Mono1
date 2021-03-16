@@ -9,6 +9,7 @@
 
 #include <string>
 #include <vector>
+#include <array>
 #include <unordered_set>
 #include <unordered_map>
 
@@ -43,6 +44,9 @@ namespace mono
 
         void ReleaseEntity(uint32_t entity_id) override;
         void ReleaseAllEntities() override;
+
+        uint32_t AddReleaseCallback(uint32_t entity_id, const ReleaseCallback& callback) override;
+        void RemoveReleaseCallback(uint32_t entity_id, uint32_t callback_id) override;
 
         const std::vector<SpawnEvent>& GetSpawnEvents() const override;
         void Sync() override;
@@ -97,6 +101,9 @@ namespace mono
         std::vector<Entity> m_entities;
         std::vector<uint32_t> m_free_indices;
         std::vector<std::string> m_debug_names;
+
+        using ReleaseCallbacks = std::array<ReleaseCallback, 8>;
+        std::vector<ReleaseCallbacks> m_release_callbacks;
 
         bool m_ignore_releases;
         std::unordered_set<uint32_t> m_entities_to_release;

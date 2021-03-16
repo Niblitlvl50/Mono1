@@ -27,6 +27,7 @@ EntitySystem::EntitySystem(
     m_entities.resize(n_entities);
     m_free_indices.resize(n_entities);
     m_debug_names.resize(n_entities);
+    m_release_callbacks.resize(n_entities);
 
     std::iota(m_free_indices.begin(), m_free_indices.end(), 0);
     std::reverse(m_free_indices.begin(), m_free_indices.end());
@@ -191,6 +192,30 @@ void EntitySystem::ReleaseAllEntities()
     m_ignore_releases = false;
 }
 
+uint32_t EntitySystem::AddReleaseCallback(uint32_t entity_id, const ReleaseCallback& callback)
+{
+   uint32_t callback_id = std::numeric_limits<uint32_t>::max();
+
+    const ReleaseCallbacks& callbacks = m_release_callbacks[entity_id];
+    for(size_t index = 0; index < callbacks.size(); ++index)
+    {
+        if(callbacks[index] == nullptr)
+        {
+            callback_id = index;
+            break;
+        }
+    }
+
+    assert(callback_id != std::numeric_limits<uint32_t>::max());
+    m_release_callbacks[entity_id][callback_id] = callback;
+    return callback_id;
+}
+
+void EntitySystem::RemoveReleaseCallback(uint32_t entity_id, uint32_t callback_id)
+{
+    m_release_callbacks[entity_id][callback_id] = nullptr;
+}
+
 const std::vector<EntitySystem::SpawnEvent>& EntitySystem::GetSpawnEvents() const
 {
     return m_spawn_events;
@@ -241,6 +266,16 @@ void EntitySystem::ReleaseEntity2(uint32_t entity_id)
 {
     m_entities[entity_id] = Entity();
     m_debug_names[entity_id].clear();
+    
+    ReleaseCallbacks& callbacks = m_release_callbacks[entity_id];
+    for(auto& callback : callbacks)
+    {
+        if(callback != nullptr)
+            callback(entity_id);
+
+        callback = nullptr;
+    }
+
     m_free_indices.push_back(entity_id);
 }
 

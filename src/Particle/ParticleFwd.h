@@ -10,6 +10,7 @@ namespace mono
 {
     class ParticleSystem;
     struct ParticlePoolComponent;
+    struct ParticleEmitterComponent;
 
     using ParticleGenerator = std::function<void (const math::Vector& position, ParticlePoolComponent& pool, size_t index)>;
     using ParticleUpdater   = std::function<void (ParticlePoolComponent& pool, size_t count, uint32_t delta_ms)>;

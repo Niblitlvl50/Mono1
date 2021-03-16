@@ -8,11 +8,14 @@
 #include <cstdint>
 #include <vector>
 #include <string>
+#include <functional>
 
 using ComponentCreateFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
 using ComponentReleaseFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
 using ComponentUpdateFunc = bool(*)(mono::Entity* entity, const std::vector<Attribute>& properties, mono::SystemContext* context);
 using ComponentGetFunc = std::vector<Attribute>(*)(const mono::Entity* entity, mono::SystemContext* context);
+
+using ReleaseCallback = std::function<void (uint32_t entity_id)>;
 
 namespace mono
 {
@@ -62,6 +65,9 @@ namespace mono
 
         virtual void ReleaseEntity(uint32_t entity_id) = 0;
         virtual void ReleaseAllEntities() = 0;
+
+        virtual uint32_t AddReleaseCallback(uint32_t entity_id, const ReleaseCallback& callback) = 0;
+        virtual void RemoveReleaseCallback(uint32_t entity_id, uint32_t callback_id) = 0;
 
         virtual const std::vector<SpawnEvent>& GetSpawnEvents() const = 0;
         virtual void Sync() = 0;
