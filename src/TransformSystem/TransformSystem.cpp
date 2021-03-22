@@ -93,7 +93,7 @@ void TransformSystem::ResetTransformComponent(uint32_t id)
     Component& component = m_transforms[id];
 
     math::Identity(component.transform);
-    component.bounding_box = math::Quad(-0.5f, -0.5f, 0.5f, 0.5f);
+    component.bounding_box = math::ZeroQuad;
     component.parent = no_parent;
     component.state = TransformState::NONE;
 }
