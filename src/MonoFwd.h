@@ -18,6 +18,7 @@ namespace mono
     class SystemContext;
     class EntitySystem;
     class ParticleSystem;
+    class PathSystem;
     class PhysicsSystem;
     class SpriteSystem;
     class TransformSystem;

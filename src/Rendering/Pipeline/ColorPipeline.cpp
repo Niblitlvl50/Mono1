@@ -216,5 +216,5 @@ void ColorPipeline::SetPointSize(float point_size)
 
 void ColorPipeline::SetLineWidth(float line_width)
 {
-    glLineWidth(line_width);
+    //glLineWidth(line_width);
 }

@@ -136,7 +136,7 @@ void RendererSokol::PrepareDraw()
     sg_begin_pass(m_offscreen_pass.pass_handle, &offscreen_pass_action);
 
     const double delta_time_s = double(m_delta_time_ms) / 1000.0;
-    simgui_new_frame(m_window_size.x, m_window_size.y, delta_time_s);
+    simgui_new_frame(m_drawable_size.x, m_drawable_size.y, delta_time_s);
 }
 
 void RendererSokol::EndDraw()
@@ -284,7 +284,7 @@ void RendererSokol::DrawPoints(const std::vector<math::Vector>& points, const mo
     sg_draw(0, points.size(), 1);
 }
 
-void RendererSokol::DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const
+void RendererSokol::DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float line_width) const
 {
     const std::vector<mono::Color::RGBA> colors(line_points.size(), color);
 
@@ -293,6 +293,7 @@ void RendererSokol::DrawLines(const std::vector<math::Vector>& line_points, cons
 
     ColorPipeline::Apply(m_color_lines_pipeline.get(), vertices.get(), color_buffer.get());
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    ColorPipeline::SetLineWidth(line_width);
 
     sg_draw(0, line_points.size(), 1);
 }
@@ -306,7 +307,7 @@ void RendererSokol::DrawPolyline(const std::vector<math::Vector>& line_points, c
 
     ColorPipeline::Apply(m_color_line_strip_pipeline.get(), vertices.get(), color_buffer.get());
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
-    //ColorPipeline::SetLineWidth(line_width);
+    ColorPipeline::SetLineWidth(line_width);
 
     sg_draw(0, line_points.size(), 1);
 }
@@ -467,7 +468,7 @@ void RendererSokol::DrawLines(
     ColorPipeline::Apply(m_color_lines_pipeline.get(), vertices, colors);
     ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
-    //ColorPipeline::SetLineWidth(10.0f);
+    ColorPipeline::SetLineWidth(1.0f);
 
     sg_draw(offset, count, 1);
 }
@@ -478,7 +479,7 @@ void RendererSokol::DrawLines(
     ColorPipeline::Apply(m_color_lines_indices_pipeline.get(), vertices, colors, indices);
     ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
-    //ColorPipeline::SetLineWidth(10.0f);
+    ColorPipeline::SetLineWidth(1.0f);
 
     sg_draw(offset, count, 1);
 }
@@ -489,7 +490,7 @@ void RendererSokol::DrawPolyline(
     ColorPipeline::Apply(m_color_line_strip_pipeline.get(), vertices, colors);
     ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
-    //ColorPipeline::SetLineWidth(10.0f);
+    ColorPipeline::SetLineWidth(1.0f);
 
     sg_draw(offset, count, 1);
 }
@@ -500,6 +501,7 @@ void RendererSokol::DrawPolyline(
     ColorPipeline::Apply(m_color_line_strip_indices_pipeline.get(), vertices, colors, indices);
     ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    ColorPipeline::SetLineWidth(1.0f);
 
     sg_draw(offset, count, 1);
 }
