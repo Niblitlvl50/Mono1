@@ -1,9 +1,11 @@
 
 #pragma once
 
+#include <cstdint>
+
 namespace mono
 {
-    enum class PathType
+    enum class PathType : uint32_t
     {
         REGULAR,
         BEZIER_QUADRATIC,

@@ -3,6 +3,7 @@
 
 #include "MonoFwd.h"
 #include "Math/MathFwd.h"
+#include "PathTypes.h"
 #include "IGameSystem.h"
 
 #include <vector>
@@ -11,6 +12,8 @@ namespace mono
 {
     struct PathComponent
     {
+        PathType type;
+        bool closed;
         std::vector<math::Vector> points;
     };
 

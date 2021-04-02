@@ -28,7 +28,7 @@ void PathSystem::ReleasePath(uint32_t entity_id)
 
 void PathSystem::SetPathData(uint32_t entity_id, const PathComponent& path_component)
 {
-    m_path_components[entity_id].points = path_component.points;
+    m_path_components[entity_id] = path_component;
 }
 
 uint32_t PathSystem::Id() const

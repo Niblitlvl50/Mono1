@@ -151,7 +151,7 @@ mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector
     config.thickness = options.line_width;
     config.flags = 0;
     config.u_mode = PAR_U_MODE_NORMALIZED_DISTANCE;
-    config.curves_max_flatness = 0.25;
+    config.curves_max_flatness = 0.1;
     config.streamlines_seed_spacing = 0.0f;
     config.streamlines_seed_viewport = {};
     config.miter_limit = 0.0f;
@@ -167,7 +167,21 @@ mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector
     spine_list.spine_lengths = spine_length;
     spine_list.closed = options.closed;
 
-    parsl_mesh* generated_mesh = parsl_mesh_from_lines(ctx, spine_list);
+    parsl_mesh* generated_mesh = nullptr;
+
+    switch(type)
+    {
+    case mono::PathType::REGULAR:
+        generated_mesh = parsl_mesh_from_lines(ctx, spine_list);
+        break;
+    case mono::PathType::BEZIER_QUADRATIC:
+        generated_mesh = parsl_mesh_from_curves_quadratic(ctx, spine_list);
+        break;
+    case mono::PathType::BEZIER_CUBIC:
+        generated_mesh = parsl_mesh_from_curves_cubic(ctx, spine_list);
+        break;
+    }
+
     const uint32_t num_indices = generated_mesh->num_triangles * 3;
 
     const std::vector<mono::Color::RGBA> colors(generated_mesh->num_vertices, options.color);
