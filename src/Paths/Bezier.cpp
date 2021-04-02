@@ -1,9 +1,9 @@
 
 #include "Bezier.h"
 
-mono::Curve mono::MakeCurve(CurveType type)
+mono::Curve mono::MakeCurve(PathType type)
 {
-    const int n_start = (type == CurveType::QUADRATIC) ? 3 : 4;
+    const int n_start = (type == PathType::BEZIER_QUADRATIC) ? 3 : 4;
     const int n_points = 1;
     const int initial_points = n_start + (n_points - 1) * 2;
 

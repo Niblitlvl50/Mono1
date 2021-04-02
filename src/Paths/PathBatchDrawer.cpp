@@ -1,10 +1,12 @@
 
 #include "PathBatchDrawer.h"
 #include "PathSystem.h"
-#include "TransformSystem/TransformSystem.h"
+#include "PathFactory.h"
 
+#include "TransformSystem/TransformSystem.h"
 #include "Rendering/Color.h"
 #include "Rendering/IRenderer.h"
+#include "Rendering/RenderBuffer/IRenderBuffer.h"
 
 #include "Math/Quad.h"
 
@@ -22,13 +24,29 @@ void PathBatchDrawer::Draw(mono::IRenderer& renderer) const
     if(!m_enabled)
         return;
 
-    const auto collect_paths = [this, &renderer](const mono::PathComponent& component, uint32_t index) {
-        const math::Matrix& transform = m_transform_system->GetWorld(index);
-        const auto scope = mono::MakeTransformScope(transform, &renderer);
-        renderer.DrawPolyline(component.points, mono::Color::RED, 1.0f);
+    struct DrawData
+    {
+        mono::PathDrawBuffer buffers;
+        math::Matrix world_transform;
+    };
+
+    std::vector<DrawData> draw_data;
+
+    const auto collect_paths = [this, &draw_data](const mono::PathComponent& component, uint32_t index) {
+
+        draw_data.push_back({
+            mono::BuildPathDrawBuffers(PathType::REGULAR, component.points, {0.1f, mono::Color::OFF_WHITE, true}),
+            m_transform_system->GetWorld(index),
+        });
     };
 
     m_path_system->ForEach(collect_paths);
+
+    for(const auto& data : draw_data)
+    {
+        const auto scope = mono::MakeTransformScope(data.world_transform, &renderer);
+        renderer.DrawTrianges(data.buffers.vertices.get(), data.buffers.colors.get(), data.buffers.indices.get(), 0, data.buffers.indices->Size());
+    }
 }
 
 math::Quad PathBatchDrawer::BoundingBox() const

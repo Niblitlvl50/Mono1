@@ -4,6 +4,8 @@
 #include "Math/Vector.h"
 #include "System/File.h"
 
+#include "Rendering/RenderBuffer/IRenderBuffer.h"
+
 #include "nlohmann/json.hpp"
 #include <stdlib.h>
 #include <cstring>
@@ -136,3 +138,53 @@ bool mono::SavePath(const char* path_file, const math::Vector& position, const s
     std::fwrite(serialized_path.data(), serialized_path.length(), sizeof(char), output_file.get());
     return true;
 }
+
+
+#define PAR_STREAMLINES_IMPLEMENTATION
+#include "par_streamlines/par_streamlines.h"
+#include "Rendering/RenderBuffer/BufferFactory.h"
+#include "Rendering/Color.h"
+
+mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector<math::Vector>& points, const PathOptions& options)
+{
+    parsl_config config;
+    config.thickness = options.line_width;
+    config.flags = 0;
+    config.u_mode = PAR_U_MODE_NORMALIZED_DISTANCE;
+    config.curves_max_flatness = 0.25;
+    config.streamlines_seed_spacing = 0.0f;
+    config.streamlines_seed_viewport = {};
+    config.miter_limit = 0.0f;
+
+    parsl_context* ctx = parsl_create_context(config);
+
+    uint16_t spine_length[] = { (uint16_t)points.size() };
+
+    parsl_spine_list spine_list;
+    spine_list.num_vertices = points.size();
+    spine_list.num_spines = 1;
+    spine_list.vertices = (parsl_position*)points.data();
+    spine_list.spine_lengths = spine_length;
+    spine_list.closed = options.closed;
+
+    parsl_mesh* generated_mesh = parsl_mesh_from_lines(ctx, spine_list);
+    const uint32_t num_indices = generated_mesh->num_triangles * 3;
+
+    const std::vector<mono::Color::RGBA> colors(generated_mesh->num_vertices, options.color);
+
+    std::vector<uint16_t> indices;
+    indices.resize(num_indices);
+
+    for(uint32_t index = 0; index < num_indices; ++index)
+        indices[index] = generated_mesh->triangle_indices[index];
+
+    mono::PathDrawBuffer buffers;
+    buffers.vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, generated_mesh->num_vertices, generated_mesh->positions);
+    buffers.colors = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, generated_mesh->num_vertices, colors.data());
+    buffers.indices = CreateElementBuffer(BufferType::STATIC, indices.size(), indices.data());
+
+    parsl_destroy_context(ctx);
+
+    return buffers;
+}
+

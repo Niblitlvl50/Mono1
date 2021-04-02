@@ -1,24 +1,19 @@
 
 #pragma once
 
+#include "PathTypes.h"
 #include "Math/Vector.h"
 #include <vector>
 
 namespace mono
 {
-    enum class CurveType
-    {
-        QUADRATIC,
-        CUBIC
-    };
-
     struct Curve
     {
-        CurveType type;
+        PathType type;
         std::vector<math::Vector> points;
     };
 
-    Curve MakeCurve(CurveType type);
+    Curve MakeCurve(PathType type);
 
     void AddPoint(Curve& curve, const math::Vector& new_point);
     void InsertPoint(Curve& curve, int point_index, const math::Vector& new_point);

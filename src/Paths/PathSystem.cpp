@@ -63,6 +63,6 @@ void PathSystem::Update(const mono::UpdateContext& update_context)
         }
 
         math::Quad& local_bb = m_transform_system->GetBoundingBox(index);
-        local_bb |= math::Quad(min, max);
+        local_bb = math::Quad(min, max);
     }
 }
