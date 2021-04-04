@@ -2,13 +2,10 @@
 #include "PathFactory.h"
 #include "IPath.h"
 #include "Math/Vector.h"
-#include "System/File.h"
+#include "Rendering/RenderBuffer/BufferFactory.h"
 
-#include "Rendering/RenderBuffer/IRenderBuffer.h"
-
-#include "nlohmann/json.hpp"
-#include <stdlib.h>
-#include <cstring>
+#define PAR_STREAMLINES_IMPLEMENTATION
+#include "par_streamlines/par_streamlines.h"
 
 namespace
 {
@@ -16,9 +13,8 @@ namespace
     {
     public:
 
-        PathImpl(const math::Vector& position, const std::vector<math::Vector>& coords)
-            : m_position(position),
-              m_points(coords),
+        PathImpl(const std::vector<math::Vector>& coords)
+            : m_points(coords),
               m_total_length(0.0f)
         {
             m_length_table.reserve(coords.size());
@@ -40,16 +36,6 @@ namespace
         float Length() const override
         {
             return m_total_length;
-        }
-
-        const math::Vector& GetGlobalPosition() const override
-        {
-            return m_position;
-        }
-
-        void SetGlobalPosition(const math::Vector& position) override
-        {
-            m_position = position;
         }
 
         const std::vector<math::Vector>& GetPathPoints() const override
@@ -88,7 +74,6 @@ namespace
             return pos;
         }
 
-        math::Vector m_position;
         const std::vector<math::Vector> m_points;
 
         float m_total_length;
@@ -96,60 +81,16 @@ namespace
     };
 }
 
-mono::IPathPtr mono::CreatePath(const char* path_file)
+mono::IPathPtr mono::CreatePath(const std::vector<math::Vector>& coords)
 {
-    file::FilePtr file = file::OpenAsciiFile(path_file);
-    if(!file)
-        return nullptr;
-
-    const std::vector<byte> file_data = file::FileRead(file);
-    const nlohmann::json& json = nlohmann::json::parse(file_data);
-    const std::vector<float>& points = json["path"];
-    const math::Vector position(json["x"], json["y"]);
-
-    std::vector<math::Vector> coords;
-    coords.resize(points.size() / 2);
-    std::memcpy(coords.data(), points.data(), sizeof(float) * points.size());
-    
-    return std::make_unique<PathImpl>(position, coords);
+    return std::make_unique<PathImpl>(coords);
 }
-
-mono::IPathPtr mono::CreatePath(const math::Vector& position, const std::vector<math::Vector>& coords)
-{
-    return std::make_unique<PathImpl>(position, coords);
-}
-
-bool mono::SavePath(const char* path_file, const math::Vector& position, const std::vector<math::Vector>& local_points)
-{
-    std::vector<float> float_points;
-    float_points.resize(local_points.size() * 2);
-    std::memcpy(float_points.data(), local_points.data(), sizeof(math::Vector) * local_points.size());
-
-    nlohmann::json json;
-    json["x"] = position.x;
-    json["y"] = position.y;
-    json["path"] = float_points;
-
-    const std::string& serialized_path = json.dump(4);
-    file::FilePtr output_file = file::CreateAsciiFile(path_file);
-    if(!output_file)
-        return false;
-
-    std::fwrite(serialized_path.data(), serialized_path.length(), sizeof(char), output_file.get());
-    return true;
-}
-
-
-#define PAR_STREAMLINES_IMPLEMENTATION
-#include "par_streamlines/par_streamlines.h"
-#include "Rendering/RenderBuffer/BufferFactory.h"
-#include "Rendering/Color.h"
 
 mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector<math::Vector>& points, const PathOptions& options)
 {
     parsl_config config;
-    config.thickness = options.line_width;
-    config.flags = 0;
+    config.thickness = options.width;
+    config.flags = PARSL_FLAG_ANNOTATIONS;
     config.u_mode = PAR_U_MODE_NORMALIZED_DISTANCE;
     config.curves_max_flatness = 0.1;
     config.streamlines_seed_spacing = 0.0f;
@@ -195,10 +136,10 @@ mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector
     mono::PathDrawBuffer buffers;
     buffers.vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, generated_mesh->num_vertices, generated_mesh->positions);
     buffers.colors = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, generated_mesh->num_vertices, colors.data());
+    buffers.anotations = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, generated_mesh->num_vertices, generated_mesh->annotations);
     buffers.indices = CreateElementBuffer(BufferType::STATIC, indices.size(), indices.data());
 
     parsl_destroy_context(ctx);
 
     return buffers;
 }
-

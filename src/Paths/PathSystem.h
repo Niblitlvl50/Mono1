@@ -13,6 +13,7 @@ namespace mono
     struct PathComponent
     {
         PathType type;
+        float width;
         bool closed;
         std::vector<math::Vector> points;
     };
@@ -27,6 +28,8 @@ namespace mono
         void ReleasePath(uint32_t entity_id);
         void SetPathData(uint32_t entity_id, const PathComponent& path_component);
 
+        const PathComponent* GetPath(uint32_t entity_id);
+
         uint32_t Id() const override;
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
@@ -40,6 +43,8 @@ namespace mono
                     callback(m_path_components[index], index);
             }
         }
+
+    private:
 
         mono::TransformSystem* m_transform_system;
         std::vector<PathComponent> m_path_components;

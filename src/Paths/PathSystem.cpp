@@ -2,7 +2,6 @@
 #include "PathSystem.h"
 #include "PathFactory.h"
 
-#include "Paths/IPath.h"
 #include "TransformSystem/TransformSystem.h"
 #include "Util/Hash.h"
 
@@ -29,6 +28,11 @@ void PathSystem::ReleasePath(uint32_t entity_id)
 void PathSystem::SetPathData(uint32_t entity_id, const PathComponent& path_component)
 {
     m_path_components[entity_id] = path_component;
+}
+
+const PathComponent* PathSystem::GetPath(uint32_t entity_id)
+{
+    return &m_path_components[entity_id];
 }
 
 uint32_t PathSystem::Id() const

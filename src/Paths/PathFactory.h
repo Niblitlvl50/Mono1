@@ -12,13 +12,11 @@
 
 namespace mono
 {
-    IPathPtr CreatePath(const char* path_file);
-    IPathPtr CreatePath(const math::Vector& position, const std::vector<math::Vector>& coords);
-    bool SavePath(const char* path_file, const math::Vector& position, const std::vector<math::Vector>& local_points);
+    IPathPtr CreatePath(const std::vector<math::Vector>& coords);
 
     struct PathOptions
     {
-        float line_width;
+        float width;
         mono::Color::RGBA color;
         bool closed;
     };
@@ -27,6 +25,7 @@ namespace mono
     {
         std::unique_ptr<IRenderBuffer> vertices;
         std::unique_ptr<IRenderBuffer> colors;
+        std::unique_ptr<IRenderBuffer> anotations;
         std::unique_ptr<IElementBuffer> indices;
     };
 
