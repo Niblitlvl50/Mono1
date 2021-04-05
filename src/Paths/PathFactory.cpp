@@ -2,6 +2,7 @@
 #include "PathFactory.h"
 #include "IPath.h"
 #include "Math/Vector.h"
+#include "Math/Matrix.h"
 #include "Rendering/RenderBuffer/BufferFactory.h"
 
 #define PAR_STREAMLINES_IMPLEMENTATION
@@ -85,6 +86,18 @@ mono::IPathPtr mono::CreatePath(const std::vector<math::Vector>& coords)
 {
     return std::make_unique<PathImpl>(coords);
 }
+
+mono::IPathPtr mono::CreatePath(const std::vector<math::Vector>& coords, const math::Matrix& transform)
+{
+    std::vector<math::Vector> world_points;
+    world_points.reserve(coords.size());
+
+    for(const math::Vector& local_point : coords)
+        world_points.push_back(math::Transform(transform, local_point));
+
+    return mono::CreatePath(world_points);
+}
+
 
 mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector<math::Vector>& points, const PathOptions& options)
 {

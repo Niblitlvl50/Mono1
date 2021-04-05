@@ -13,6 +13,7 @@
 namespace mono
 {
     IPathPtr CreatePath(const std::vector<math::Vector>& coords);
+    IPathPtr CreatePath(const std::vector<math::Vector>& coords, const math::Matrix& transform);
 
     struct PathOptions
     {
