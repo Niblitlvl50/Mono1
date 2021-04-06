@@ -61,6 +61,7 @@ namespace mono
         virtual void SetEntityProperties(uint32_t entity_id, uint32_t properties) = 0;
         virtual uint32_t GetEntityProperties(uint32_t entity_id) const = 0;
 
+        virtual void SetEntityName(uint32_t entity_id, const char* name) = 0;
         virtual const char* GetEntityName(uint32_t entity_id) const = 0;
 
         virtual void ReleaseEntity(uint32_t entity_id) = 0;

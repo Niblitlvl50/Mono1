@@ -149,6 +149,11 @@ uint32_t EntitySystem::GetEntityProperties(uint32_t entity_id) const
     return entity->properties;
 }
 
+void EntitySystem::SetEntityName(uint32_t entity_id, const char* name)
+{
+    SetName(entity_id, name);
+}
+
 const char* EntitySystem::GetEntityName(uint32_t entity_id) const
 {
     const std::string& name = GetName(entity_id);

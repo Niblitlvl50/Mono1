@@ -40,6 +40,7 @@ namespace mono
         void SetEntityProperties(uint32_t entity_id, uint32_t properties) override;
         uint32_t GetEntityProperties(uint32_t entity_id) const override;
 
+        void SetEntityName(uint32_t entity_id, const char* name) override;
         const char* GetEntityName(uint32_t entity_id) const override;
 
         void ReleaseEntity(uint32_t entity_id) override;
