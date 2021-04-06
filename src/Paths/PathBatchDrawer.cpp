@@ -34,6 +34,9 @@ void PathBatchDrawer::Draw(mono::IRenderer& renderer) const
 
     const auto collect_paths = [this, &draw_data](const mono::PathComponent& component, uint32_t index) {
 
+        if(component.points.empty())
+            return;
+
         draw_data.push_back({
             mono::BuildPathDrawBuffers(component.type, component.points, {component.width, mono::Color::OFF_WHITE, component.closed}),
             m_transform_system->GetWorld(index),
