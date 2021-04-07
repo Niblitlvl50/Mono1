@@ -13,7 +13,6 @@ namespace mono
     struct PathComponent
     {
         PathType type;
-        float width;
         bool closed;
         std::vector<math::Vector> points;
     };
