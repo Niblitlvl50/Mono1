@@ -30,7 +30,7 @@ void PathSystem::SetPathData(uint32_t entity_id, const PathComponent& path_compo
     m_path_components[entity_id] = path_component;
 }
 
-const PathComponent* PathSystem::GetPath(uint32_t entity_id)
+const PathComponent* PathSystem::GetPath(uint32_t entity_id) const
 {
     return &m_path_components[entity_id];
 }

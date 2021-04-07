@@ -28,7 +28,7 @@ namespace mono
         void ReleasePath(uint32_t entity_id);
         void SetPathData(uint32_t entity_id, const PathComponent& path_component);
 
-        const PathComponent* GetPath(uint32_t entity_id);
+        const PathComponent* GetPath(uint32_t entity_id) const;
 
         uint32_t Id() const override;
         const char* Name() const override;
