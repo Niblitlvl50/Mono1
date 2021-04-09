@@ -12,6 +12,8 @@ namespace mono
     public:
 
         static mono::IPipelinePtr MakePipeline();
+        static mono::IPipelinePtr MakeAnnotationPipeline();
+
         static void Apply(
             IPipeline* pipeline,
             const IRenderBuffer* position,

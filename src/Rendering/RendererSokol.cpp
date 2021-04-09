@@ -39,6 +39,7 @@ RendererSokol::RendererSokol()
 
     m_particle_pipeline = mono::ParticlePointPipeline::MakePipeline();
     m_texture_pipeline = mono::TexturePipeline::MakePipeline();
+    m_texture_annotation_pipeline = mono::TexturePipeline::MakeAnnotationPipeline();
     m_sprite_pipeline = mono::SpritePipeline::MakePipeline();
     m_fog_pipeline = mono::FogPipeline::MakePipeline();
     m_screen_pipeline = mono::ScreenPipeline::MakePipeline();
@@ -512,6 +513,18 @@ void RendererSokol::DrawTrianges(
     ColorPipeline::Apply(m_color_triangles_pipeline.get(), vertices, colors, indices);
     ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+
+    sg_draw(offset, count, 1);
+}
+
+void RendererSokol::DrawAnnotatedTrianges(
+    const IRenderBuffer* vertices, const IRenderBuffer* annotations, const IElementBuffer* indices, const ITexture* texture, uint32_t offset, uint32_t count) const
+{
+    TexturePipeline::Apply(m_texture_annotation_pipeline.get(), vertices, annotations, indices, texture);
+    //TexturePipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    TexturePipeline::SetIsAlpha(false);
+    TexturePipeline::SetShade(mono::Color::WHITE);
 
     sg_draw(offset, count, 1);
 }

@@ -7,6 +7,7 @@
 #include "IGameSystem.h"
 
 #include <vector>
+#include <functional>
 
 namespace mono
 {
@@ -16,6 +17,8 @@ namespace mono
         bool closed;
         std::vector<math::Vector> points;
     };
+
+    using PathUpdatedCallback = std::function<void (uint32_t)>;
 
     class PathSystem : public mono::IGameSystem
     {
@@ -32,6 +35,10 @@ namespace mono
         uint32_t Id() const override;
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
+        void Sync() override;
+
+        uint32_t RegisterDirtyCallback(const PathUpdatedCallback& callback);
+        void RemoveDirtyCallback(uint32_t id);
 
         template <typename T>
         inline void ForEach(T&& callback) const
@@ -48,5 +55,8 @@ namespace mono
         mono::TransformSystem* m_transform_system;
         std::vector<PathComponent> m_path_components;
         std::vector<bool> m_active_paths;
+
+        std::vector<uint32_t> m_dirty_components;
+        PathUpdatedCallback m_callbacks[8];
     };
 }

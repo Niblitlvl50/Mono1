@@ -28,6 +28,7 @@ void PathSystem::ReleasePath(uint32_t entity_id)
 void PathSystem::SetPathData(uint32_t entity_id, const PathComponent& path_component)
 {
     m_path_components[entity_id] = path_component;
+    m_dirty_components.push_back(entity_id);
 }
 
 const PathComponent* PathSystem::GetPath(uint32_t entity_id) const
@@ -69,4 +70,40 @@ void PathSystem::Update(const mono::UpdateContext& update_context)
         math::Quad& local_bb = m_transform_system->GetBoundingBox(index);
         local_bb = math::Quad(min, max);
     }
+}
+
+void PathSystem::Sync()
+{
+    for(uint32_t entity_id : m_dirty_components)
+    {
+        for(size_t index = 0; index < std::size(m_callbacks); ++index)
+        {
+            PathUpdatedCallback& callback = m_callbacks[index];
+            if(callback)
+                callback(entity_id);
+        }
+    }
+
+    m_dirty_components.clear();
+}
+
+uint32_t PathSystem::RegisterDirtyCallback(const PathUpdatedCallback& callback)
+{
+    const auto is_free = [](const PathUpdatedCallback& callback) {
+        return callback == nullptr;
+    };
+
+    auto it = std::find_if(std::begin(m_callbacks), std::end(m_callbacks), is_free);
+    if(it != std::end(m_callbacks))
+    {
+        (*it) = callback;
+        return std::distance(std::begin(m_callbacks), it);
+    }
+
+    return -1;
+}
+
+void PathSystem::RemoveDirtyCallback(uint32_t id)
+{
+    m_callbacks[id] = nullptr;
 }

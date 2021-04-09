@@ -99,6 +99,8 @@ namespace mono
 
         void DrawTrianges(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t offset, uint32_t count) const override;
+        void DrawAnnotatedTrianges(
+            const IRenderBuffer* vertices, const IRenderBuffer* annotations, const IElementBuffer* indices, const ITexture* texture, uint32_t offset, uint32_t count) const override;
 
         void SetClearColor(const mono::Color::RGBA& color) override;
 
@@ -149,6 +151,7 @@ namespace mono
         std::unique_ptr<IPipeline> m_color_triangles_pipeline;
         std::unique_ptr<IPipeline> m_particle_pipeline;
         std::unique_ptr<IPipeline> m_texture_pipeline;
+        std::unique_ptr<IPipeline> m_texture_annotation_pipeline;
         std::unique_ptr<IPipeline> m_sprite_pipeline;
         std::unique_ptr<IPipeline> m_fog_pipeline;
         std::unique_ptr<IPipeline> m_screen_pipeline;
