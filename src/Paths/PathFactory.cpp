@@ -101,6 +101,9 @@ mono::IPathPtr mono::CreatePath(const std::vector<math::Vector>& coords, const m
 
 mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector<math::Vector>& points, const PathOptions& options)
 {
+    if(points.empty())
+        return {};
+
     parsl_config config;
     config.thickness = options.width;
     config.flags = PARSL_FLAG_ANNOTATIONS;

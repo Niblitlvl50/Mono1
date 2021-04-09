@@ -14,6 +14,9 @@ using namespace mono;
 
 mono::ITexturePtr TextureFactoryImpl::CreateTexture(const char* texture_name) const
 {
+    if(strlen(texture_name) == 0)
+        return nullptr;
+
     const uint32_t texture_hash = mono::Hash(texture_name);
 
     mono::ITexturePtr texture = GetTextureFromCache(texture_hash);

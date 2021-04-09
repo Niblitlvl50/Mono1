@@ -48,6 +48,9 @@ void RoadBatchDrawer::Draw(mono::IRenderer& renderer) const
         if(it == m_cached_roads.end() || (it != m_cached_roads.end() && NeedsUpdate(it->second, component)))
             it = m_cached_roads.insert_or_assign(entity_id, CacheRoadData(entity_id, component)).first;
 
+        if(!it->second.texture || !it->second.buffers.vertices)
+            return;
+
         const math::Matrix& world_transform = m_transform_system->GetWorld(entity_id);
         const auto scope = mono::MakeTransformScope(world_transform, &renderer);
 
@@ -81,8 +84,8 @@ RoadBatchDrawer::CachedRoad RoadBatchDrawer::CacheRoadData(uint32_t entity_id, c
     CachedRoad cached_road;
     cached_road.dirty = false;
     cached_road.width = component.width;
-    cached_road.texture_name = component.texture;
-    cached_road.texture = mono::GetTextureFactory()->CreateTexture(component.texture.c_str());
+    cached_road.texture_name = component.texture_name;
+    cached_road.texture = mono::GetTextureFactory()->CreateTexture(component.texture_name.c_str());
     cached_road.buffers = mono::BuildPathDrawBuffers(path->type, path->points, path_options);
     
     return cached_road;
@@ -93,5 +96,5 @@ bool RoadBatchDrawer::NeedsUpdate(const CachedRoad& road, const RoadComponent& c
     return
         road.dirty ||
         road.width != component.width ||
-        road.texture_name != component.texture;
+        road.texture_name != component.texture_name;
 }

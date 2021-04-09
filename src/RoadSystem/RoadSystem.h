@@ -10,7 +10,7 @@ namespace mono
     struct RoadComponent
     {
         float width;
-        std::string texture;
+        std::string texture_name;
     };
 
     class RoadSystem : public mono::IGameSystem
