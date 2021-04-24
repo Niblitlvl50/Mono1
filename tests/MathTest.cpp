@@ -193,3 +193,18 @@ TEST(MathTest, AngleFromVector)
     const float west = math::AngleFromVector(math::Vector(-1.0f, 0.0f));
     EXPECT_FLOAT_EQ(-math::PI_2(), west);
 }
+
+TEST(MathTest, Scale01)
+{
+    const float result1 = math::Scale01(1.0f, 0.0f, 10.0f);
+    ASSERT_FLOAT_EQ(0.1f, result1);
+
+    const float result2 = math::Scale01(25, 0, 50);
+    ASSERT_FLOAT_EQ(0.5f, result2);
+
+    const float result3 = math::Scale01(-10, -10, 5);
+    ASSERT_FLOAT_EQ(0.0f, result3);
+
+    const float result4 = math::Scale01(0.1f, 1.0f, 0.0f);
+    ASSERT_FLOAT_EQ(0.9f, result4);
+}

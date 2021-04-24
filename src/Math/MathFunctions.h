@@ -55,7 +55,7 @@ namespace math
     template<typename T>
     inline float Scale01(T value, T min, T max)
     {
-        return (float(max) - float(min)) / float(value) - float(min);
+        return (float(value) - float(min)) / (float(max) - float(min));
     }
 
     constexpr float PI() {
