@@ -70,6 +70,7 @@ namespace mono
             const IRenderBuffer* texture_coordinates,
             const IElementBuffer* indices,
             const ITexture* texture,
+            bool blur,
             uint32_t count) override;
 
         void DrawParticlePoints(

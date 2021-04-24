@@ -4,6 +4,7 @@
 
 #include "SDL.h"
 #include "SDL_gamecontroller.h"
+#include "SDL_haptic.h"
 #include "SDL_keycode.h"
 #include "SDL_log.h"
 
@@ -26,6 +27,7 @@ namespace
 {
     constexpr int g_num_states = 2;
     System::ControllerState g_controller_states[g_num_states];
+    SDL_Haptic* g_controller_haptic[g_num_states];
 
     FILE* g_log_file = nullptr;
 
@@ -356,7 +358,7 @@ void System::Initialize(const InitializeContext& context)
         g_log_file = std::fopen(context.log_file, "w");
 
     // Init SDL video subsystem
-    const int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
+    const int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC);
     if(result != 0)
         throw std::runtime_error("System|Couldn't initialize libSDL" + std::string(SDL_GetError()));
 
@@ -555,10 +557,19 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 
                 SDL_GameController* controller = SDL_GameControllerOpen(id);
                 SDL_Joystick* joystick = SDL_GameControllerGetJoystick(controller);
-
                 g_controller_states[free_index].id = SDL_JoystickInstanceID(joystick);
 
                 Log("System|Controller connected (%s), index: %d, id: %d\n", SDL_GameControllerName(controller), free_index, g_controller_states[id].id);
+
+                SDL_Haptic* haptic_device = SDL_HapticOpenFromJoystick(joystick);
+                if(!haptic_device)
+                    Log("System|Controller, unable to open haptic device. [%s]\n", SDL_GetError());
+
+                const int result_code = SDL_HapticRumbleInit(haptic_device);
+                if(result_code != 0)
+                    Log("System[Controller, unable to initialize rumble. [%s]\n", SDL_GetError());
+
+                g_controller_haptic[free_index] = haptic_device;
 
                 handler->OnControllerAdded(free_index);
                 break;
@@ -585,6 +596,9 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 handler->OnControllerRemoved(controller_index);
                 g_controller_states[controller_index].id = -1;
+
+                SDL_HapticClose(g_controller_haptic[controller_index]);
+                g_controller_haptic[controller_index] = nullptr;
 
                 SDL_GameController* controller = SDL_GameControllerFromInstanceID(instance_id);
                 Log("System|Controller disconnected (%s), index: %d, id: %d\n",
@@ -832,4 +846,11 @@ int System::GetControllerId(ControllerId controller_id)
 {
     const int id = static_cast<int>(controller_id);
     return g_controller_states[id].id;
+}
+
+void System::PlayRumble(ControllerId controller_id, float strength, uint32_t duration_ms)
+{
+    SDL_Haptic* haptic = g_controller_haptic[static_cast<int>(controller_id)];
+    if(haptic)
+        SDL_HapticRumblePlay(haptic, strength, duration_ms);
 }

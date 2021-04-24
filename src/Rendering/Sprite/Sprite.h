@@ -30,6 +30,7 @@ namespace mono
         void SetAnimation(const char* name) override;
         void SetAnimation(int id, const SpriteAnimationCallback& callback) override;
         void SetAnimation(const char* name, const SpriteAnimationCallback& callback) override;
+        void SetAnimationPlaybackSpeed(float speed_scale) override;
         void SetAnimationPlayback(PlaybackMode mode) override;
         int GetActiveAnimation() const override;
         uint32_t GetAnimationLength(int animation_id) const override;
@@ -60,6 +61,7 @@ namespace mono
         bool m_active_animation_done;
         int m_active_frame;
         int m_active_frame_time;
+        float m_playback_speed;
         PlaybackMode m_playback_mode;
 
         uint32_t m_properties;

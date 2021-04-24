@@ -50,6 +50,7 @@ namespace mono
         virtual void SetAnimation(const char* animation_name, const SpriteAnimationCallback& callback) = 0;
 
         virtual void SetAnimationPlayback(PlaybackMode mode) = 0;
+        virtual void SetAnimationPlaybackSpeed(float speed_scale) = 0;
 
         //! Returns the current active animation
         virtual int GetActiveAnimation() const = 0;

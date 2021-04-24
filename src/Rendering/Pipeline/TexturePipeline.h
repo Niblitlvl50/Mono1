@@ -25,6 +25,7 @@ namespace mono
         static void SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model);
 
         static void SetIsAlpha(bool is_alpha_texture);
+        static void SetBlur(bool enable_blur);
         static void SetShade(const mono::Color::RGBA& color);
     };
 }

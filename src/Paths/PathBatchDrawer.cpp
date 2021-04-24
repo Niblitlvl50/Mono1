@@ -21,6 +21,8 @@ PathBatchDrawer::PathBatchDrawer(const mono::PathSystem* path_system, const mono
 
 void PathBatchDrawer::Draw(mono::IRenderer& renderer) const
 {
+    return;
+    
     if(!m_enabled)
         return;
 

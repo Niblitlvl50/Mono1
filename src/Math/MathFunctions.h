@@ -52,6 +52,12 @@ namespace math
         return std::floor(value / size) * size;
     }
 
+    template<typename T>
+    inline float Scale01(T value, T min, T max)
+    {
+        return (float(max) - float(min)) / float(value) - float(min);
+    }
+
     constexpr float PI() {
         return 3.14159265358979323846264338327950288f;
     }

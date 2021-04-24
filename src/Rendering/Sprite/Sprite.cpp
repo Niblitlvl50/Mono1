@@ -27,6 +27,7 @@ void Sprite::Init(const SpriteData* sprite_data, mono::ITexturePtr texture)
     m_active_animation_done = false;
     m_active_frame = 0;
     m_active_frame_time = 0;
+    m_playback_speed = 1.0f;
     m_playback_mode = PlaybackMode::PLAYING;
 
     m_properties = 0;
@@ -107,7 +108,7 @@ void Sprite::Update(const UpdateContext& update_context)
     if(active_animation.frames.empty())
         return;
 
-    m_active_frame_time += update_context.delta_ms;
+    m_active_frame_time += update_context.delta_ms * m_playback_speed;
 
     if(m_active_frame_time > active_animation.frame_duration)
     {
@@ -154,6 +155,11 @@ void Sprite::SetAnimation(int id, const SpriteAnimationCallback& callback)
     m_active_animation = id;
     m_callback = callback;
     RestartAnimation();
+}
+
+void Sprite::SetAnimationPlaybackSpeed(float speed_scale)
+{
+    m_playback_speed = speed_scale;
 }
 
 void Sprite::SetAnimationPlayback(PlaybackMode mode)

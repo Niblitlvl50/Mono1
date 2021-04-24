@@ -44,9 +44,9 @@ RendererSokol::RendererSokol()
     m_fog_pipeline = mono::FogPipeline::MakePipeline();
     m_screen_pipeline = mono::ScreenPipeline::MakePipeline();
 
-    const math::Vector vertices[] = { {-1.0f, -1.0f}, {-1.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, -1.0f} };
-    const math::Vector uv_coordinates[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f} };
-    const uint16_t indices[] = { 0, 1, 2, 0, 2, 3, };
+    constexpr math::Vector vertices[] = { {-1.0f, -1.0f}, {-1.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, -1.0f} };
+    constexpr math::Vector uv_coordinates[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f} };
+    constexpr uint16_t indices[] = { 0, 1, 2, 0, 2, 3, };
 
     m_screen_vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(vertices), vertices);
     m_screen_uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(uv_coordinates), uv_coordinates);
@@ -216,6 +216,7 @@ void RendererSokol::RenderText(
     TexturePipeline::Apply(m_texture_pipeline.get(), vertices, uv, indices, texture);
     TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
     TexturePipeline::SetIsAlpha(true);
+    TexturePipeline::SetBlur(false);
     TexturePipeline::SetShade(color);
 
     sg_draw(0, indices->Size(), 1);
@@ -425,6 +426,7 @@ void RendererSokol::DrawGeometry(
     const IRenderBuffer* texture_coordinates,
     const IElementBuffer* indices,
     const ITexture* texture,
+    bool blur,
     uint32_t count)
 {
     TexturePipeline::Apply(m_texture_pipeline.get(), vertices, texture_coordinates, indices, texture);
@@ -432,6 +434,7 @@ void RendererSokol::DrawGeometry(
     TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
     TexturePipeline::SetIsAlpha(false);
+    TexturePipeline::SetBlur(blur);
     TexturePipeline::SetShade(mono::Color::WHITE);
 
     sg_draw(0, count, 1);
@@ -524,6 +527,7 @@ void RendererSokol::DrawAnnotatedTrianges(
     //TexturePipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
     TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
     TexturePipeline::SetIsAlpha(false);
+    TexturePipeline::SetBlur(false);
     TexturePipeline::SetShade(mono::Color::WHITE);
 
     sg_draw(offset, count, 1);

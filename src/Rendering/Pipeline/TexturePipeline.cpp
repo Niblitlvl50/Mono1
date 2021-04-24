@@ -52,6 +52,7 @@ namespace
 
         uniform sampler2D sampler;
         uniform float is_alpha_texture;
+        uniform float enable_blur;
         uniform vec4 color_shade;
 
         in vec2 v_texture_coord;
@@ -59,7 +60,29 @@ namespace
 
         void main()
         {
-            vec4 sampled_color = texture(sampler, v_texture_coord);
+            vec4 sampled_color;
+            if(enable_blur == 0.0f)
+            {
+                sampled_color = texture(sampler, v_texture_coord);
+            }
+            else
+            {
+                vec2 size = 1.0 / textureSize(sampler, 0);
+
+                vec4 original_sample = texture(sampler, v_texture_coord);
+                vec4 sample1 = texture(sampler, v_texture_coord + vec2(size.x, 0.0));
+                vec4 sample2 = texture(sampler, v_texture_coord + vec2(-size.x, 0.0));
+                vec4 sample3 = texture(sampler, v_texture_coord + vec2(0.0, size.y));
+                vec4 sample4 = texture(sampler, v_texture_coord + vec2(0.0, -size.y));
+
+                vec4 sample5 = texture(sampler, v_texture_coord + size);
+                vec4 sample6 = texture(sampler, v_texture_coord + -size);
+                vec4 sample7 = texture(sampler, v_texture_coord + vec2(size.x, -size.y));
+                vec4 sample8 = texture(sampler, v_texture_coord + vec2(-size.x, size.y));
+
+                sampled_color = original_sample + (0.125 * (sample1 + sample2 + sample3 + sample4 + sample5 + sample6 + sample7 + sample8));
+            }
+
             if(is_alpha_texture != 0.0)
                 sampled_color = vec4(sampled_color.r);
 
@@ -69,8 +92,10 @@ namespace
 
     //constexpr int U_TIME_BLOCK = 0;
     constexpr int U_TRANSFORM_BLOCK = 0;
+
     constexpr int U_IS_ALPHA_BLOCK = 0;
-    constexpr int U_COLOR_SHADE_BLOCK = 1;
+    constexpr int U_ENABLE_BLUR_BLOCK = 1;
+    constexpr int U_COLOR_SHADE_BLOCK = 2;
 
     constexpr int ATTR_POSITION = 0;
     constexpr int ATTR_UV = 1;
@@ -118,6 +143,7 @@ namespace
 
         uniform sampler2D sampler;
         uniform float is_alpha_texture;
+        uniform float enable_blur;
         uniform vec4 color_shade;
 
         in vec4 v_annotation;
@@ -125,7 +151,18 @@ namespace
 
         void main()
         {
-            vec4 sampled_color = texture(sampler, v_annotation.yx);
+            vec2 uv = v_annotation.yx;
+                
+            vec4 sampled_color = texture(sampler, uv);
+            if(enable_blur != 0.0f)
+                sampled_color = vec4(1, 0, 0, 1);
+
+
+            if(uv.x < 0.1)
+                sampled_color.a *= smoothstep(0.0, 0.1, uv.x);
+            else if(uv.x > 0.9)
+                sampled_color.a *= 1.0 - smoothstep(0.9, 1.0, uv.x);
+
             if(is_alpha_texture != 0.0)
                 sampled_color = vec4(sampled_color.r);
 
@@ -169,6 +206,10 @@ mono::IPipelinePtr TexturePipeline::MakePipeline()
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].size = sizeof(float);
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].uniforms[0].name = "is_alpha_texture";
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
+
+    shader_desc.fs.uniform_blocks[U_ENABLE_BLUR_BLOCK].size = sizeof(float);
+    shader_desc.fs.uniform_blocks[U_ENABLE_BLUR_BLOCK].uniforms[0].name = "enable_blur";
+    shader_desc.fs.uniform_blocks[U_ENABLE_BLUR_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
 
     shader_desc.fs.uniform_blocks[U_COLOR_SHADE_BLOCK].size = sizeof(mono::Color::RGBA);
     shader_desc.fs.uniform_blocks[U_COLOR_SHADE_BLOCK].uniforms[0].name = "color_shade";
@@ -237,6 +278,10 @@ mono::IPipelinePtr TexturePipeline::MakeAnnotationPipeline()
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].size = sizeof(float);
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].uniforms[0].name = "is_alpha_texture";
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
+
+    shader_desc.fs.uniform_blocks[U_ENABLE_BLUR_BLOCK].size = sizeof(float);
+    shader_desc.fs.uniform_blocks[U_ENABLE_BLUR_BLOCK].uniforms[0].name = "enable_blur";
+    shader_desc.fs.uniform_blocks[U_ENABLE_BLUR_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
 
     shader_desc.fs.uniform_blocks[U_COLOR_SHADE_BLOCK].size = sizeof(mono::Color::RGBA);
     shader_desc.fs.uniform_blocks[U_COLOR_SHADE_BLOCK].uniforms[0].name = "color_shade";
@@ -329,6 +374,12 @@ void TexturePipeline::SetIsAlpha(bool is_alpha_texture)
 {
     const float magic_value = is_alpha_texture ? 1.0f : 0.0f;
     sg_apply_uniforms(SG_SHADERSTAGE_FS, U_IS_ALPHA_BLOCK, &magic_value, sizeof(float));
+}
+
+void TexturePipeline::SetBlur(bool enable_blur)
+{
+    const float magic_value = enable_blur ? 1.0f : 0.0f;
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_ENABLE_BLUR_BLOCK, &magic_value, sizeof(float));
 }
 
 void TexturePipeline::SetShade(const mono::Color::RGBA& color)

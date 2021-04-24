@@ -186,6 +186,8 @@ namespace System
     bool IsControllerActive(ControllerId controller_id);
     int GetControllerId(ControllerId controller_id);
 
+    void PlayRumble(ControllerId controller_id, float strength, uint32_t duration_ms);
+
     inline bool IsButtonDown(uint16_t button_state, ControllerButton button_bit)
     {
         return (button_state & button_bit);
