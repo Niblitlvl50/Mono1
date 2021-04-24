@@ -37,6 +37,8 @@ namespace mono
         bool SetComponentData(uint32_t entity_id, uint32_t component_hash, const std::vector<Attribute>& properties) override;
         std::vector<Attribute> GetComponentData(uint32_t entity_id, uint32_t component_hash) const override;
 
+        void SetEntityEnabled(uint32_t entity_id, bool enable) override;
+
         void SetEntityProperties(uint32_t entity_id, uint32_t properties) override;
         uint32_t GetEntityProperties(uint32_t entity_id) const override;
 
@@ -90,7 +92,6 @@ namespace mono
         const char* Name() const override;
         void Update(const UpdateContext& update_context) override;
 
-
     private:
 
         void DeferredRelease();
@@ -115,6 +116,7 @@ namespace mono
             ComponentCreateFunc create;
             ComponentReleaseFunc release;
             ComponentUpdateFunc update;
+            ComponentEnableFunc enable;
             ComponentGetFunc get;
         };
 

@@ -137,6 +137,22 @@ std::vector<Attribute> EntitySystem::GetComponentData(uint32_t entity_id, uint32
     return { };
 }
 
+void EntitySystem::SetEntityEnabled(uint32_t entity_id, bool enable)
+{
+    mono::Entity* entity = GetEntity(entity_id);
+    
+    for(uint32_t component_hash : entity->components)
+    {
+        const auto it = m_component_factories.find(component_hash);
+        if(it != m_component_factories.end())
+        {
+            ComponentEnableFunc enable_func = it->second.enable;
+            if(enable_func)
+                enable_func(entity, enable, m_system_context);
+        }
+    }
+}
+
 void EntitySystem::SetEntityProperties(uint32_t entity_id, uint32_t properties)
 {
     mono::Entity* entity = GetEntity(entity_id);
@@ -171,6 +187,7 @@ void EntitySystem::RegisterComponent(
         create_component,
         release_component,
         update_component,
+        nullptr,
         get_component
     };
 }
