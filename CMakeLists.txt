@@ -57,7 +57,7 @@ file(GLOB_RECURSE huffandpuff_source_files "third_party/huffandpuff/*.c" "third_
 add_library(huffandpuff STATIC ${huffandpuff_source_files})
 
 # imgui
-file(GLOB_RECURSE imgui_source_files "third_party/imgui/*.cpp" "third_party/imgui/*.h")
+file(GLOB imgui_source_files "third_party/imgui/*.cpp" "third_party/imgui/*.h")
 add_library(imgui STATIC ${imgui_source_files})
 
 # gtest
