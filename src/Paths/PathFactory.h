@@ -15,10 +15,17 @@ namespace mono
     IPathPtr CreatePath(const std::vector<math::Vector>& coords);
     IPathPtr CreatePath(const std::vector<math::Vector>& coords, const math::Matrix& transform);
 
+    enum class UVMode
+    {
+        DISTANCE,
+        NORMALIZED_DISTANCE
+    };
+
     struct PathOptions
     {
         float width;
         mono::Color::RGBA color;
+        UVMode uv_mode;
         bool closed;
     };
 

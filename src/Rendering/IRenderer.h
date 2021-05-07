@@ -86,7 +86,13 @@ namespace mono
         virtual void DrawTrianges(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t offset, uint32_t count) const = 0;
         virtual void DrawAnnotatedTrianges(
-            const IRenderBuffer* vertices, const IRenderBuffer* annotations, const IElementBuffer* indices, const ITexture* texture, uint32_t offset, uint32_t count) const = 0;
+            const IRenderBuffer* vertices,
+            const IRenderBuffer* annotations,
+            const IElementBuffer* indices,
+            const ITexture* texture,
+            const mono::Color::RGBA& shade,
+            uint32_t offset,
+            uint32_t count) const = 0;
 
         virtual void SetClearColor(const mono::Color::RGBA& color) = 0;
 

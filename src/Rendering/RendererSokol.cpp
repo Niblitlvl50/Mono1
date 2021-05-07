@@ -521,14 +521,20 @@ void RendererSokol::DrawTrianges(
 }
 
 void RendererSokol::DrawAnnotatedTrianges(
-    const IRenderBuffer* vertices, const IRenderBuffer* annotations, const IElementBuffer* indices, const ITexture* texture, uint32_t offset, uint32_t count) const
+    const IRenderBuffer* vertices,
+    const IRenderBuffer* annotations,
+    const IElementBuffer* indices,
+    const ITexture* texture,
+    const mono::Color::RGBA& shade,
+    uint32_t offset,
+    uint32_t count) const
 {
     TexturePipeline::Apply(m_texture_annotation_pipeline.get(), vertices, annotations, indices, texture);
     //TexturePipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
     TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
     TexturePipeline::SetIsAlpha(false);
     TexturePipeline::SetBlur(false);
-    TexturePipeline::SetShade(mono::Color::WHITE);
+    TexturePipeline::SetShade(shade);
 
     sg_draw(offset, count, 1);
 }

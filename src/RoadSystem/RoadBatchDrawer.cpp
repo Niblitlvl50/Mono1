@@ -60,6 +60,7 @@ void RoadBatchDrawer::Draw(mono::IRenderer& renderer) const
             road.buffers.anotations.get(),
             road.buffers.indices.get(),
             road.texture.get(),
+            mono::Color::WHITE,
             0,
             road.buffers.indices->Size());
     };
