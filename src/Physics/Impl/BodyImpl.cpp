@@ -113,13 +113,14 @@ void BodyImpl::RemoveCollisionHandler(mono::ICollisionHandler* handler)
     mono::remove(m_collision_handlers, handler);
 }
 
-mono::CollisionResolve BodyImpl::OnCollideWith(mono::IBody* body, const math::Vector& collision_point, uint32_t categories) 
+mono::CollisionResolve BodyImpl::OnCollideWith(
+    mono::IBody* body, const math::Vector& collision_point, const math::Vector& collision_normal, uint32_t categories) 
 {
     mono::CollisionResolve resolve_result = mono::CollisionResolve::NORMAL;
 
     for(mono::ICollisionHandler* handler : m_collision_handlers)
     {
-        const mono::CollisionResolve resolve = handler->OnCollideWith(body, collision_point, categories);
+        const mono::CollisionResolve resolve = handler->OnCollideWith(body, collision_point, collision_normal, categories);
         resolve_result = std::max(resolve_result, resolve);
     }
 

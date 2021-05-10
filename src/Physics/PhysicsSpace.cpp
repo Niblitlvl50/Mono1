@@ -279,13 +279,16 @@ bool PhysicsSpace::OnCollision(cpArbiter* arb)
         const cpVect point_a = cpArbiterGetPointA(arb, 0);
         const math::Vector collision_point(point_a.x, point_a.y);
 
-        if(is_shape_1_sensor)
-            return (first->OnCollideWith(second, collision_point, filter2.categories) != mono::CollisionResolve::IGNORE);
-        else if(is_shape_2_sensor)
-            return (second->OnCollideWith(first, collision_point, filter1.categories) != mono::CollisionResolve::IGNORE);
+        const cpVect normal_arb = cpArbiterGetNormal(arb);
+        const math::Vector collision_normal(normal_arb.x, normal_arb.y);
 
-        const mono::CollisionResolve resolve1 = first->OnCollideWith(second, collision_point, filter2.categories);
-        const mono::CollisionResolve resolve2 = second->OnCollideWith(first, collision_point, filter1.categories);
+        if(is_shape_1_sensor)
+            return (first->OnCollideWith(second, collision_point, collision_normal, filter2.categories) != mono::CollisionResolve::IGNORE);
+        else if(is_shape_2_sensor)
+            return (second->OnCollideWith(first, collision_point, collision_normal, filter1.categories) != mono::CollisionResolve::IGNORE);
+
+        const mono::CollisionResolve resolve1 = first->OnCollideWith(second, collision_point, collision_normal, filter2.categories);
+        const mono::CollisionResolve resolve2 = second->OnCollideWith(first, collision_point, collision_normal, filter1.categories);
         if(resolve1 == mono::CollisionResolve::IGNORE || resolve2 == mono::CollisionResolve::IGNORE)
             return false;
     }
