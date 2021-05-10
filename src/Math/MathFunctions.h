@@ -58,6 +58,12 @@ namespace math
         return (float(value) - float(min)) / (float(max) - float(min));
     }
 
+    template <typename T>
+    inline float Scale01Clamped(T value, T min, T max)
+    {
+        return std::clamp(Scale01(value, min, max), 0.0f, 1.0f);
+    }
+
     constexpr float PI() {
         return 3.14159265358979323846264338327950288f;
     }

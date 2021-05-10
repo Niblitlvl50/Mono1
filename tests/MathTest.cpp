@@ -207,4 +207,16 @@ TEST(MathTest, Scale01)
 
     const float result4 = math::Scale01(0.1f, 1.0f, 0.0f);
     ASSERT_FLOAT_EQ(0.9f, result4);
+
+    const float result5 = math::Scale01Clamped(20, 0, 10);
+    ASSERT_FLOAT_EQ(1.0f, result5);
+
+    const float result6 = math::Scale01(20, 0, 10);
+    ASSERT_FLOAT_EQ(2.0f, result6);
+
+    const float result7 = math::Scale01Clamped(20, 10, 0);
+    ASSERT_FLOAT_EQ(0.0f, result7);
+
+    const float result8 = math::Scale01(20, 10, 0);
+    ASSERT_FLOAT_EQ(-1.0f, result8);
 }

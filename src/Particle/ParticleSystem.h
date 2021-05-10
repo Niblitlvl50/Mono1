@@ -61,8 +61,8 @@ namespace mono
         std::vector<int> start_life;
         std::vector<int> life;
 
-        size_t pool_size;
-        size_t count_alive;
+        uint32_t pool_size;
+        uint32_t count_alive;
 
         ParticleUpdater update_function;
     };
@@ -77,7 +77,7 @@ namespace mono
     {
     public:
 
-        ParticleSystem(size_t count, size_t n_emitters);
+        ParticleSystem(uint32_t count, uint32_t n_emitters);
         ~ParticleSystem();
 
         uint32_t Id() const override;
@@ -85,7 +85,7 @@ namespace mono
         void Update(const mono::UpdateContext& update_context) override;
         void Sync() override;
 
-        ParticlePoolComponent* AllocatePool(uint32_t id, size_t pool_size, ParticleUpdater update_function);
+        ParticlePoolComponent* AllocatePool(uint32_t id, uint32_t pool_size, ParticleUpdater update_function);
         void ReleasePool(uint32_t id);
         ParticlePoolComponent* GetPool(uint32_t id);
 

@@ -103,21 +103,27 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
         const math::Matrix& world_transform = renderer.GetTransform() * sprite_transform.transform;
         auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
 
-        const auto it = m_shadow_buffers.find(sprite_transform.entity_id);
-        if(it != m_shadow_buffers.end())
+        mono::ISprite* sprite = sprite_transform.sprite;
+
+        const bool has_shadow = (sprite->GetProperties() & mono::SpriteProperty::SHADOW);
+        if(has_shadow)
         {
-            const SpriteShadowBuffers& shadow_buffers = it->second;
-            renderer.DrawTrianges(
-                shadow_buffers.vertices.get(),
-                shadow_buffers.colors.get(),
-                shadow_buffers.indices.get(),
-                0,
-                shadow_buffers.indices->Size());
+            const auto it = m_shadow_buffers.find(sprite_transform.entity_id);
+            if(it != m_shadow_buffers.end())
+            {
+                const SpriteShadowBuffers& shadow_buffers = it->second;
+                renderer.DrawTrianges(
+                    shadow_buffers.vertices.get(),
+                    shadow_buffers.colors.get(),
+                    shadow_buffers.indices.get(),
+                    0,
+                    shadow_buffers.indices->Size());
+            }
         }
 
-        const SpriteDrawBuffers& sprite_buffers = m_sprite_buffers[sprite_transform.sprite->GetSpriteHash()];
-        const int offset = sprite_transform.sprite->GetCurrentFrameIndex() * sprite_buffers.vertices_per_sprite;
-        mono::ITexture* texture = sprite_transform.sprite->GetTexture();
+        const SpriteDrawBuffers& sprite_buffers = m_sprite_buffers[sprite->GetSpriteHash()];
+        const int offset = sprite->GetCurrentFrameIndex() * sprite_buffers.vertices_per_sprite;
+        mono::ITexture* texture = sprite->GetTexture();
 
         renderer.DrawSprite(
             sprite_transform.sprite,

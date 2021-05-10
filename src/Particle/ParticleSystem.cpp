@@ -11,7 +11,7 @@ using namespace mono;
 
 namespace
 {
-    void Swap(ParticlePoolComponent& pool_component, size_t first, size_t second)
+    void Swap(ParticlePoolComponent& pool_component, uint32_t first, uint32_t second)
     {
         std::swap(pool_component.position[first],           pool_component.position[second]);
         std::swap(pool_component.velocity[first],           pool_component.velocity[second]);
@@ -24,7 +24,7 @@ namespace
         std::swap(pool_component.life[first],               pool_component.life[second]);
     }
 
-    void WakeParticle(ParticlePoolComponent& pool_component, size_t index)
+    void WakeParticle(ParticlePoolComponent& pool_component, uint32_t index)
     {
         if(pool_component.count_alive < pool_component.pool_size)
         {
@@ -42,7 +42,7 @@ namespace
     }
 }
 
-void mono::DefaultGenerator(const math::Vector& position, struct ParticlePoolComponent& pool, size_t index)
+void mono::DefaultGenerator(const math::Vector& position, struct ParticlePoolComponent& pool, uint32_t index)
 {
     const float x = mono::Random(-8.0f, 8.0f);
     const float y = mono::Random(-8.0f, 8.0f);
@@ -64,11 +64,11 @@ void mono::DefaultGenerator(const math::Vector& position, struct ParticlePoolCom
     pool.life[index] = 1000 + life;
 }
 
-void mono::DefaultUpdater(struct ParticlePoolComponent& pool, size_t count, uint32_t delta_ms)
+void mono::DefaultUpdater(struct ParticlePoolComponent& pool, uint32_t count, uint32_t delta_ms)
 {
     const float delta_seconds = float(delta_ms) / 1000.0f;
 
-    for(size_t index = 0; index < count; ++index)
+    for(uint32_t index = 0; index < count; ++index)
     {
         const float t = 1.0f - float(pool.life[index]) / float(pool.start_life[index]);
 
@@ -79,7 +79,7 @@ void mono::DefaultUpdater(struct ParticlePoolComponent& pool, size_t count, uint
 }
 
 
-ParticleSystem::ParticleSystem(size_t count, size_t n_emitters)
+ParticleSystem::ParticleSystem(uint32_t count, uint32_t n_emitters)
     : m_particle_pools(count)
     , m_particle_drawers(count)
     , m_active_pools(count, false)
@@ -104,7 +104,7 @@ const char* ParticleSystem::Name() const
 
 void ParticleSystem::Update(const mono::UpdateContext& update_context)
 {
-    for(size_t active_pool_index = 0; active_pool_index < m_active_pools.size(); ++active_pool_index)
+    for(uint32_t active_pool_index = 0; active_pool_index < m_active_pools.size(); ++active_pool_index)
     {
         const bool is_active = m_active_pools[active_pool_index];
         if(!is_active)
@@ -113,7 +113,7 @@ void ParticleSystem::Update(const mono::UpdateContext& update_context)
         ParticlePoolComponent& pool_component = m_particle_pools[active_pool_index];
         pool_component.update_function(pool_component, pool_component.count_alive, update_context.delta_ms);
 
-        for(size_t particle_index = 0; particle_index < pool_component.count_alive; ++particle_index)
+        for(uint32_t particle_index = 0; particle_index < pool_component.count_alive; ++particle_index)
         {
             int& life = pool_component.life[particle_index];
             life -= update_context.delta_ms;
@@ -151,33 +151,33 @@ void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePo
     const float delta_in_seconds = float(update_context.delta_ms) / 1000.0f;
     emitter->elapsed_time += delta_in_seconds;
 
-    size_t new_particles = 0;
+    uint32_t new_particles = 0;
     if(emitter->type == EmitterType::BURST || emitter->type == EmitterType::BURST_REMOVE_ON_FINISH)
     {
         new_particles = emitter->emit_rate * emitter->duration;
     }
     else
     {
-        new_particles = static_cast<size_t>(delta_in_seconds * (emitter->emit_rate + emitter->carry_over));
+        new_particles = static_cast<uint32_t>(delta_in_seconds * (emitter->emit_rate + emitter->carry_over));
         if(new_particles == 0)
             emitter->carry_over += emitter->emit_rate;
         else
             emitter->carry_over = 0.0f;
     }
 
-    const size_t start_index = particle_pool.count_alive;
-    const size_t end_index = std::min(start_index + new_particles, particle_pool.pool_size -1);
+    const uint32_t start_index = particle_pool.count_alive;
+    const uint32_t end_index = std::min(start_index + new_particles, particle_pool.pool_size -1);
 
-    for(size_t index = start_index; index < end_index; ++index)
+    for(uint32_t index = start_index; index < end_index; ++index)
         emitter->generator(emitter->position, particle_pool, index);
 
-    for(size_t index = start_index; index < end_index; ++index)
+    for(uint32_t index = start_index; index < end_index; ++index)
         WakeParticle(particle_pool, index);
 
     emitter->burst_emitted = true;
 }
 
-ParticlePoolComponent* ParticleSystem::AllocatePool(uint32_t id, size_t pool_size, ParticleUpdater update_function)
+ParticlePoolComponent* ParticleSystem::AllocatePool(uint32_t id, uint32_t pool_size, ParticleUpdater update_function)
 {
     assert(m_active_pools[id] == false);
 
