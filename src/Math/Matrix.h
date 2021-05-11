@@ -27,9 +27,11 @@ namespace math
     };
 
     Matrix CreateMatrixWithPosition(const math::Vector& position);
-    Matrix CreateMatrixWithPositionRotation(const math::Vector& position, float rotation_radians);
-    Matrix CreateMatrixWithScale(const math::Vector& scale);
     Matrix CreateMatrixFromZRotation(float radians);
+    Matrix CreateMatrixWithScale(const math::Vector& scale);
+
+    Matrix CreateMatrixWithPositionRotation(const math::Vector& position, float rotation_radians);
+    Matrix CreateMatrixWithPositionRotationScale(const math::Vector& position, float rotation_radians, const math::Vector& scale);
 
     void Identity(Matrix& matrix);
     void Translate(Matrix& matrix, const Vector& vector);

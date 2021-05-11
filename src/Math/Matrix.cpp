@@ -35,13 +35,6 @@ math::Matrix math::CreateMatrixWithPosition(const math::Vector& position)
     return matrix;
 }
 
-math::Matrix math::CreateMatrixWithPositionRotation(const math::Vector& position, float rotation_radians)
-{
-    math::Matrix matrix = CreateMatrixFromZRotation(rotation_radians);
-    math::Position(matrix, position);
-    return matrix;
-}
-
 math::Matrix math::CreateMatrixWithScale(const math::Vector& scale)
 {
     math::Matrix matrix;
@@ -60,6 +53,23 @@ math::Matrix math::CreateMatrixFromZRotation(float radians)
     matrix.data[1] = sine;
     matrix.data[4] = -sine;
     matrix.data[5] = cosine;
+
+    return matrix;
+}
+
+math::Matrix math::CreateMatrixWithPositionRotation(const math::Vector& position, float rotation_radians)
+{
+    math::Matrix matrix = CreateMatrixFromZRotation(rotation_radians);
+    math::Position(matrix, position);
+    return matrix;
+}
+
+math::Matrix math::CreateMatrixWithPositionRotationScale(const math::Vector& position, float rotation_radians, const math::Vector& scale)
+{
+    math::Matrix matrix;
+    math::Position(matrix, position);
+    math::ScaleXY(matrix, scale);
+    math::RotateZ(matrix, rotation_radians);
 
     return matrix;
 }

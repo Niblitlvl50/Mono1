@@ -90,6 +90,16 @@ void Sprite::SetProperties(uint32_t properties)
     m_properties = properties;
 }
 
+void Sprite::SetProperty(uint32_t property)
+{
+    m_properties |= property;
+}
+
+void Sprite::ClearProperty(uint32_t property)
+{
+    m_properties &= ~property;
+}
+
 void Sprite::Update(const UpdateContext& update_context)
 {
     m_flash_timer -= 1;
