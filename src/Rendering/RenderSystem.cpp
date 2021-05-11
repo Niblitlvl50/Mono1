@@ -31,6 +31,7 @@
 namespace
 {
     float g_pixels_per_meter = 1.0f;
+    const System::IWindow* g_window = nullptr;
     const mono::ISpriteFactory* g_sprite_factory = nullptr;
     const mono::ITextureFactory* g_texture_factory = nullptr;
 
@@ -99,6 +100,7 @@ void mono::InitializeRender(const RenderInitParams& init_params)
     glEnable(GL_LINE_SMOOTH);
 
     g_pixels_per_meter = init_params.pixels_per_meter;
+    g_window = init_params.window;
     g_sprite_factory = new SpriteFactoryImpl(init_params.pixels_per_meter);
     g_texture_factory = new TextureFactoryImpl();
 
@@ -138,6 +140,12 @@ void mono::ShutdownRender()
 float mono::PixelsPerMeter()
 {
     return g_pixels_per_meter;
+}
+
+float mono::GetWindowAspect()
+{
+    System::Size window_size = g_window->Size();
+    return float(window_size.width) / float(window_size.height);
 }
 
 void mono::LoadCustomTextureFactory(const ITextureFactory* texture_factory)
