@@ -55,9 +55,7 @@ void TextSystem::Update(const mono::UpdateContext& update_context)
         const math::Vector size = mono::MeasureString(text.font_id, text.text.c_str());
         
         math::Quad& bounding_box = m_transform_system->GetBoundingBox(index);
-        bounding_box |= math::Quad(math::ZeroVec, size);
-        //bounding_box.mA = math::ZeroVec;
-        //bounding_box.mB = size;
+        bounding_box = math::Quad(math::ZeroVec, size);
 
         m_text_dirty[index] = false;
     };
