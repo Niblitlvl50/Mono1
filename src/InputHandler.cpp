@@ -47,36 +47,36 @@ void InputHandler::OnTextInput(const char* text)
     m_event_handler->DispatchEvent(event);
 }
 
-void InputHandler::OnMouseDown(MouseButton button, int x, int y)
+void InputHandler::OnMouseDown(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super)
 {
-    float worldX = x;
-    float worldY = y;
-    m_screen_to_world_func(worldX, worldY);
-    const event::MouseDownEvent event(button, x, y, worldX, worldY);
+    float world_x = x;
+    float world_y = y;
+    m_screen_to_world_func(world_x, world_y);
+    const event::MouseDownEvent event(button, x, y, world_x, world_y, ctrl, shift, alt, super);
     m_event_handler->DispatchEvent(event);
 }
 
-void InputHandler::OnMouseUp(MouseButton button, int x, int y)
+void InputHandler::OnMouseUp(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super)
 {
-    float worldX = x;
-    float worldY = y;
-    m_screen_to_world_func(worldX, worldY);
-    const event::MouseUpEvent event(button, x, y, worldX, worldY);
+    float world_x = x;
+    float world_y = y;
+    m_screen_to_world_func(world_x, world_y);
+    const event::MouseUpEvent event(button, x, y, world_x, world_y, ctrl, shift, alt, super);
     m_event_handler->DispatchEvent(event);
 }
 
-void InputHandler::OnMouseMotion(int x, int y)
+void InputHandler::OnMouseMotion(int x, int y, bool ctrl, bool shift, bool alt, bool super)
 {
-    float worldX = x;
-    float worldY = y;
-    m_screen_to_world_func(worldX, worldY);
-    const event::MouseMotionEvent event(x, y, worldX, worldY);
+    float world_x = x;
+    float world_y = y;
+    m_screen_to_world_func(world_x, world_y);
+    const event::MouseMotionEvent event(x, y, world_x, world_y, ctrl, shift, alt, super);
     m_event_handler->DispatchEvent(event);
 }
 
-void InputHandler::OnMouseWheel(int x, int y)
+void InputHandler::OnMouseWheel(int x, int y, bool ctrl, bool shift, bool alt, bool super)
 {
-    const event::MouseWheelEvent event(x, y);
+    const event::MouseWheelEvent event(x, y, ctrl, shift, alt, super);
     m_event_handler->DispatchEvent(event);
 }
 

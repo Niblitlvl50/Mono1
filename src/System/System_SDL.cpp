@@ -471,6 +471,12 @@ void System::SetCursorVisibility(System::CursorVisibility state)
 
 void System::ProcessSystemEvents(System::IInputHandler* handler)
 {
+    const int modifier = SDL_GetModState();
+    const bool ctrl  = (modifier & KMOD_CTRL);
+    const bool shift = (modifier & KMOD_SHIFT);
+    const bool alt   = (modifier & KMOD_ALT);
+    const bool super = (modifier & KMOD_GUI);
+
     // Our SDL event placeholder.
     SDL_Event event;
 
@@ -484,18 +490,10 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
             case SDL_KEYUP:
             {
                 const Keycode keycode = KeycodeFromSDL(event.key.keysym.scancode);
-
-                const int modifier = SDL_GetModState();
-                const bool ctrl  = (modifier & KMOD_CTRL);
-                const bool shift = (modifier & KMOD_SHIFT);
-                const bool alt   = (modifier & KMOD_ALT);
-                const bool super = (modifier & KMOD_GUI);
-
                 if(event.type == SDL_KEYDOWN)
                     handler->OnKeyDown(keycode, ctrl, shift, alt, super);
                 else
                     handler->OnKeyUp(keycode, ctrl, shift, alt, super);
-
                 break;
             }
 
@@ -504,19 +502,17 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
             case SDL_MOUSEBUTTONUP:
             {
                 const MouseButton mouse_button = MouseButtonFromSDL(event.button.button);
-
                 if(event.type == SDL_MOUSEBUTTONDOWN)
-                    handler->OnMouseDown(mouse_button, event.button.x, event.button.y);
+                    handler->OnMouseDown(mouse_button, event.button.x, event.button.y, ctrl, shift, alt, super);
                 else
-                    handler->OnMouseUp(mouse_button, event.button.x, event.button.y);
-
+                    handler->OnMouseUp(mouse_button, event.button.x, event.button.y, ctrl, shift, alt, super);
                 break;
             }
             case SDL_MOUSEMOTION:
-                handler->OnMouseMotion(event.motion.x, event.motion.y);
+                handler->OnMouseMotion(event.motion.x, event.motion.y, ctrl, shift, alt, super);
                 break;
             case SDL_MOUSEWHEEL:
-                handler->OnMouseWheel(event.wheel.x, event.wheel.y);
+                handler->OnMouseWheel(event.wheel.x, event.wheel.y, ctrl, shift, alt, super);
                 break;
 
             // Touch

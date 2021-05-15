@@ -17,28 +17,28 @@ namespace mono
 
     private:
 
-        virtual void OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt, bool super);
-        virtual void OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool super);
-        virtual void OnTextInput(const char* text);
-        virtual void OnMouseDown(MouseButton button, int x, int y);
-        virtual void OnMouseUp(MouseButton button, int x, int y);
-        virtual void OnMouseMotion(int x, int y);
-        virtual void OnMouseWheel(int x, int y);
-        virtual void OnTouchDown(int64_t touchId, float x, float y, float dx, float dy);
-        virtual void OnTouchUp(int64_t touchId, float x, float y, float dx, float dy);
-        virtual void OnTouchMotion(int64_t touchId, float x, float y, float dx, float dy);
-        virtual void OnMultiGesture(float x, float y, float theta, float distance);
+        void OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt, bool super) override;
+        void OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool super) override;
+        void OnTextInput(const char* text) override;
+        void OnMouseDown(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super) override;
+        void OnMouseUp(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super) override;
+        void OnMouseMotion(int x, int y, bool ctrl, bool shift, bool alt, bool super) override;
+        void OnMouseWheel(int x, int y, bool ctrl, bool shift, bool alt, bool super) override;
+        void OnTouchDown(int64_t touchId, float x, float y, float dx, float dy) override;
+        void OnTouchUp(int64_t touchId, float x, float y, float dx, float dy) override;
+        void OnTouchMotion(int64_t touchId, float x, float y, float dx, float dy) override;
+        void OnMultiGesture(float x, float y, float theta, float distance) override;
 
-        virtual void OnControllerAdded(int controller_id);
-        virtual void OnControllerRemoved(int controller_id);
+        void OnControllerAdded(int controller_id) override;
+        void OnControllerRemoved(int controller_id) override;
 
-        virtual void OnAppTerminating();
-        virtual void OnEnterBackground();
-        virtual void OnEnterForeground();
-        virtual void OnQuit();
+        void OnAppTerminating() override;
+        void OnEnterBackground() override;
+        void OnEnterForeground() override;
+        void OnQuit() override;
 
-        virtual void OnSurfaceChanged(int width, int height);
-        virtual void OnActivated(bool gain);
+        void OnSurfaceChanged(int width, int height) override;
+        void OnActivated(bool gain) override;
 
         const ScreenToWorldFunc m_screen_to_world_func;
         EventHandler* m_event_handler;

@@ -38,6 +38,9 @@ namespace math
 
     bool operator == (const Quad& left, const Quad& right);
 
+    // Flip points if needed to make a quad that goes from less to more
+    void NormalizeQuad(math::Quad& quad);
+
     float Width(const Quad& quad);
     float Height(const Quad& quad);
 

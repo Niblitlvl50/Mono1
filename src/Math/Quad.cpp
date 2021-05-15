@@ -36,6 +36,15 @@ bool math::operator == (const math::Quad& left, const math::Quad& right)
     return left.mA == right.mA && left.mB == right.mB;
 }
 
+void math::NormalizeQuad(math::Quad& quad)
+{
+    if(quad.mA.x > quad.mB.x)
+        std::swap(quad.mA.x, quad.mB.x);
+
+    if(quad.mA.y > quad.mB.y)
+        std::swap(quad.mA.y, quad.mB.y);
+}
+
 float math::Width(const math::Quad& quad)
 {
     return std::fabs(quad.mB.x - quad.mA.x);

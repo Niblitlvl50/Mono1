@@ -89,10 +89,10 @@ namespace System
         virtual void OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt, bool super) = 0;
         virtual void OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool super) = 0;
 
-        virtual void OnMouseDown(MouseButton button, int x, int y) = 0;
-        virtual void OnMouseUp(MouseButton button, int x, int y) = 0;
-        virtual void OnMouseMotion(int x, int y) = 0;
-        virtual void OnMouseWheel(int x, int y) = 0;
+        virtual void OnMouseDown(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super) = 0;
+        virtual void OnMouseUp(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super) = 0;
+        virtual void OnMouseMotion(int x, int y, bool ctrl, bool shift, bool alt, bool super) = 0;
+        virtual void OnMouseWheel(int x, int y, bool ctrl, bool shift, bool alt, bool super) = 0;
 
         virtual void OnTouchDown(int64_t touchId, float x, float y, float dx, float dy) = 0;
         virtual void OnTouchUp(int64_t touchId, float x, float y, float dx, float dy) = 0;
