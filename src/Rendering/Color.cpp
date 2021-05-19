@@ -2,6 +2,11 @@
 #include "Color.h"
 #include <algorithm>
 
+mono::Color::RGBA mono::Color::MakeFromBytes(byte red, byte green, byte blue, byte alpha)
+{
+    return mono::Color::RGBA(float(red) / 255.0f, float(green) / 255.0f, float(blue) / 255.0f, float(alpha) / 255.0f);
+}
+
 mono::Color::RGBA mono::Color::ToRGBA(const mono::Color::HSL& hsl, float alpha)
 {
     mono::Color::RGBA rgb;
@@ -123,15 +128,15 @@ uint32_t mono::Color::ToHex(const mono::Color::RGBA& color)
     const uint8_t blue  = color.blue * 255.0f;
     const uint8_t alpha = color.alpha * 255.0f;
 
-    return (red | (green << 8) | (blue << 16) | (alpha << 24));
+    return (red << 24 | (green << 16) | (blue << 8) | (alpha << 0));
 }
 
 mono::Color::RGBA mono::Color::ToRGBA(uint32_t hex_color)
 {
-    const uint8_t red   = (hex_color >>  0) & 0xFF;
-    const uint8_t green = (hex_color >>  8) & 0xFF;
-    const uint8_t blue  = (hex_color >> 16) & 0xFF;
-    const uint8_t alpha = (hex_color >> 24) & 0xFF;
+    const uint8_t red   = (hex_color >> 24) & 0xFF;
+    const uint8_t green = (hex_color >> 16) & 0xFF;
+    const uint8_t blue  = (hex_color >>  8) & 0xFF;
+    const uint8_t alpha = (hex_color >>  0) & 0xFF;
 
     return mono::Color::RGBA(
         float(red) / float(255), float(green) / float(255), float(blue) / float(255), float(alpha) / float(255));

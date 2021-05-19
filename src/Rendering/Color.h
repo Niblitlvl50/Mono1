@@ -3,6 +3,8 @@
 
 #include <cstdint>
 
+using byte = unsigned char;
+
 namespace mono
 {
     namespace Color
@@ -47,6 +49,8 @@ namespace mono
             float saturation = 1.0f;
             float lightness = 0.5f;
         };
+
+        mono::Color::RGBA MakeFromBytes(byte red, byte green, byte blue, byte alpha = 255);
 
         //! Convert HSL to RGBA
         mono::Color::RGBA ToRGBA(const mono::Color::HSL& hsl, float alpha = 1.0f);

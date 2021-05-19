@@ -7,6 +7,7 @@
 #include "SDL_haptic.h"
 #include "SDL_keycode.h"
 #include "SDL_log.h"
+#include "SDL_clipboard.h"
 
 #include <stdexcept>
 #include <cstdio>
@@ -467,6 +468,20 @@ void System::SetCursorVisibility(System::CursorVisibility state)
 {
     const int sdl_state = (state == CursorVisibility::Shown) ? SDL_ENABLE : SDL_DISABLE;
     SDL_ShowCursor(sdl_state);
+}
+
+uint32_t System::GetClipboardText(char* output_buffer, uint32_t buffer_size)
+{
+    char* text = SDL_GetClipboardText();
+    if(!text)
+        return 0;
+    
+    const uint32_t length = std::strlen(text);
+    const uint32_t n_chars = std::min(length, buffer_size);
+    std::memcpy(output_buffer, text, n_chars);
+
+    SDL_free(text);
+    return n_chars;
 }
 
 void System::ProcessSystemEvents(System::IInputHandler* handler)

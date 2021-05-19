@@ -74,6 +74,14 @@ void StaticBackground::Load(const std::vector<math::Vector>& vertices, const cha
     m_index_buffer = mono::CreateElementBuffer(mono::BufferType::STATIC, std::size(indices), indices);
 }
 
+void StaticBackground::Clear()
+{
+    m_vertex_buffer = nullptr;
+    m_texture_buffer = nullptr;
+    m_index_buffer = nullptr;
+    m_texture = nullptr;
+}
+
 void StaticBackground::Draw(mono::IRenderer& renderer) const
 {
     if(m_texture)

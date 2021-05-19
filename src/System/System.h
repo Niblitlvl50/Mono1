@@ -170,6 +170,9 @@ namespace System
 
     void SetCursorVisibility(CursorVisibility visibility_state);
 
+    // Get the clipboard text, it will return how many chars it filled in the buffer.
+    uint32_t GetClipboardText(char* output_buffer, uint32_t buffer_size);
+
     // Process the system events, input and other events
     void ProcessSystemEvents(IInputHandler* handler);
     void ProcessControllerState();

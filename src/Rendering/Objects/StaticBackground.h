@@ -28,6 +28,8 @@ namespace mono
         void Load(const char* texture_filename, uint32_t texture_mode_flags);
         void Load(const std::vector<math::Vector>& vertices, const char* background_texture, uint32_t texture_mode_flags);
 
+        void Clear();
+
         void Draw(mono::IRenderer& renderer) const override;
         math::Quad BoundingBox() const override;
 

@@ -52,6 +52,13 @@ ImGuiInputHandler::ImGuiInputHandler(mono::EventHandler& event_handler)
     io.KeyMap[ImGuiKey_C] = System::KeycodeToNative(Keycode::C);
     io.KeyMap[ImGuiKey_V] = System::KeycodeToNative(Keycode::V);
     //io.KeyMap[ImGuiKey_Escape] = SDLK_ESCAPE;
+
+    io.GetClipboardTextFn = [](void* user_data) -> const char* {
+        static char text_buffer[1024];
+        const uint32_t n_chars = System::GetClipboardText(text_buffer, std::size(text_buffer));
+        text_buffer[n_chars] = '\0';
+        return text_buffer;
+    };
 }
 
 ImGuiInputHandler::~ImGuiInputHandler()
