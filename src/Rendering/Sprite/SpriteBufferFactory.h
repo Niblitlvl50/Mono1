@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "Math/MathFwd.h"
 #include "Rendering/RenderFwd.h"
 #include <memory>
 
@@ -24,5 +25,5 @@ namespace mono
     };
 
     SpriteDrawBuffers BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data);
-    SpriteShadowBuffers BuildSpriteShadowBuffers(const mono::ISprite* sprite);
+    SpriteShadowBuffers BuildSpriteShadowBuffers(const math::Vector& shadow_offset, float shadow_size);
 }

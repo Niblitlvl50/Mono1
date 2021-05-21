@@ -77,16 +77,14 @@ mono::SpriteDrawBuffers mono::BuildSpriteDrawBuffers(const mono::SpriteData* spr
     return buffers;
 }
 
-mono::SpriteShadowBuffers mono::BuildSpriteShadowBuffers(const ISprite* sprite)
+mono::SpriteShadowBuffers mono::BuildSpriteShadowBuffers(const math::Vector& shadow_offset, float shadow_size)
 {
-    const math::Vector& offset = sprite->GetShadowOffset();
-    const float shadow_size = sprite->GetShadowSize();
     const math::Vector size(shadow_size, shadow_size / 2.0f);
 
     const int segments = 8;
     std::vector<math::Vector> vertices;
     vertices.reserve(segments +1);
-    vertices.push_back(offset);
+    vertices.push_back(shadow_offset);
 
     const uint16_t n_indices = segments * 3;
     std::vector<uint16_t> indices;
@@ -97,8 +95,8 @@ mono::SpriteShadowBuffers mono::BuildSpriteShadowBuffers(const ISprite* sprite)
     for(int index = 0; index < segments; ++index)
     {
         const float radians = index * coef;
-        const float x = size.x * std::cos(radians) + offset.x;
-        const float y = size.y * std::sin(radians) + offset.y;
+        const float x = size.x * std::cos(radians) + shadow_offset.x;
+        const float y = size.y * std::sin(radians) + shadow_offset.y;
         vertices.emplace_back(x, y);
 
         indices.push_back(0);

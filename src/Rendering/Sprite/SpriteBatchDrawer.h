@@ -4,6 +4,7 @@
 #include "MonoFwd.h"
 #include "Rendering/IDrawable.h"
 #include "SpriteBufferFactory.h"
+#include "Math/Vector.h"
 
 #include <vector>
 #include <unordered_map>
@@ -31,6 +32,13 @@ namespace mono
 
         std::unique_ptr<mono::IElementBuffer> m_indices;
         mutable std::unordered_map<uint32_t, SpriteDrawBuffers> m_sprite_buffers;
+
+        struct ShadowData
+        {
+            math::Vector offset;
+            float size;
+        };
+        mutable std::unordered_map<uint32_t, ShadowData> m_shadow_data_cache;
         mutable std::unordered_map<uint32_t, SpriteShadowBuffers> m_shadow_buffers;
     };
 }

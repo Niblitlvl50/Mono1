@@ -76,9 +76,28 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
             const bool has_shadow = (sprite->GetProperties() & mono::SpriteProperty::SHADOW);
             if(has_shadow)
             {
+                const math::Vector& shadow_offset = sprite->GetShadowOffset();
+                const float shadow_size = sprite->GetShadowSize();
+
+                bool need_update = false;
+
                 auto shadow_it = m_shadow_buffers.find(id);
-                if(shadow_it == m_shadow_buffers.end())
-                    m_shadow_buffers[id] = BuildSpriteShadowBuffers(sprite);
+                if(shadow_it != m_shadow_buffers.end())
+                {
+                    auto shadow_cached_it = m_shadow_data_cache.find(id);
+                    need_update = 
+                        (shadow_cached_it->second.offset != shadow_offset) || (shadow_cached_it->second.size != shadow_size);
+                }
+                else
+                {
+                    need_update = true;
+                }
+
+                if(need_update)
+                {
+                    m_shadow_data_cache[id] = { shadow_offset, shadow_size };
+                    m_shadow_buffers[id] = BuildSpriteShadowBuffers(shadow_offset, shadow_size);
+                }
             }
 
             const math::Matrix& transform = m_transform_system->GetWorld(id);
