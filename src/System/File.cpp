@@ -10,7 +10,7 @@ namespace
         FILE* file = std::fopen(file_name, mode);
         if(!file)
         {
-            System::Log("file|Unable to open file: %s, with mode: %s\n", file_name, mode);
+            System::Log("file|Unable to open file: %s, with mode: %s.", file_name, mode);
             return file::FilePtr(nullptr, nullptr);
         }
 

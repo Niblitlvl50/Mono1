@@ -15,6 +15,7 @@
     #define SOKOL_ASSERT(c) if(!(c)) __builtin_trap();
 #endif
 
+#define SOKOL_TRACE_HOOKS
 #define SOKOL_GLCORE33
 #define SOKOL_GFX_IMPL
 #define SOKOL_DEBUG
@@ -111,16 +112,16 @@ void mono::InitializeRender(const RenderInitParams& init_params)
     //const GLubyte* extensions = glGetString(GL_EXTENSIONS);
 
     System::Log("Render\n"
-                "\tpixels per meter: %f\n", init_params.pixels_per_meter);
+                "\tpixels per meter: %f", init_params.pixels_per_meter);
     System::Log("OpenGL\n"
                 "\tvendor: %s\n"
                 "\trenderer: %s\n"
                 "\tversion: %s\n"
-                "\tglsl: %s\n", vendor, renderer, version, glslversion);
+                "\tglsl: %s", vendor, renderer, version, glslversion);
     System::Log("glad\n"
-                "\tversion: %d %d\n", GLVersion.major, GLVersion.minor);
+                "\tversion: %d %d", GLVersion.major, GLVersion.minor);
     System::Log("imgui\n"
-                "\tversion: %s\n", IMGUI_VERSION);
+                "\tversion: %s", IMGUI_VERSION);
 }
 
 void mono::ShutdownRender()

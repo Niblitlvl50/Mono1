@@ -25,7 +25,7 @@ void debug::PrintStacktrace(int skip_frames, int n_frames)
     const int frames = backtrace(callstack, n_frames);
     char** strs = backtrace_symbols(callstack, frames);
     for (int i = skip_frames; i < frames; ++i)
-        System::Log("%s\n", strs[i]);
+        System::Log("%s", strs[i]);
     
     free(strs);
 #endif

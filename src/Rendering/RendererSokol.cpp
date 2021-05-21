@@ -105,7 +105,7 @@ void RendererSokol::MakeOrUpdateOffscreenPass(RendererSokol::OffscreenPassData& 
 
     const sg_resource_state state = sg_query_pass_state(offscreen_pass.pass_handle);
     if(state != SG_RESOURCESTATE_VALID)
-        System::Log("Failed to create render pass.\n");
+        System::Log("Failed to create render pass.");
 }
 
 void RendererSokol::PrepareDraw()

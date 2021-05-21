@@ -1,7 +1,6 @@
 
 #include "SpriteBufferFactory.h"
 
-#include "Rendering/Color.h"
 #include "Rendering/Sprite/ISprite.h"
 #include "Rendering/RenderBuffer/BufferFactory.h"
 
@@ -79,44 +78,25 @@ mono::SpriteDrawBuffers mono::BuildSpriteDrawBuffers(const mono::SpriteData* spr
 
 mono::SpriteShadowBuffers mono::BuildSpriteShadowBuffers(const math::Vector& shadow_offset, float shadow_size)
 {
-    const math::Vector size(shadow_size, shadow_size / 2.0f);
+    const math::Vector size = { shadow_size, shadow_size / 2.0f };
 
-    const int segments = 8;
-    std::vector<math::Vector> vertices;
-    vertices.reserve(segments +1);
-    vertices.push_back(shadow_offset);
+    const math::Vector vertices[] = {
+        { -size.x, -size.y },
+        { -size.x,  size.y },
+        {  size.x,  size.y },
+        {  size.x, -size.y },
+    };
 
-    const uint16_t n_indices = segments * 3;
-    std::vector<uint16_t> indices;
-    indices.reserve(n_indices);
-
-    const float coef = 2.0f * math::PI() / float(segments);
-
-    for(int index = 0; index < segments; ++index)
-    {
-        const float radians = index * coef;
-        const float x = size.x * std::cos(radians) + shadow_offset.x;
-        const float y = size.y * std::sin(radians) + shadow_offset.y;
-        vertices.emplace_back(x, y);
-
-        indices.push_back(0);
-        indices.push_back(index +1);
-        indices.push_back(index +2);
-    }
-
-    indices.pop_back();
-    indices.pop_back();
-
-    indices.push_back(vertices.size() -1);
-    indices.push_back(1);
-
-    constexpr mono::Color::RGBA shadow_color(0.2f, 0.2f, 0.2f, 0.5f);
-    const std::vector<mono::Color::RGBA> colors(vertices.size(), shadow_color);
+    const math::Vector uvs[] = {
+        { 0.0f, 0.0f },
+        { 0.0f, 1.0f },
+        { 1.0f, 1.0f },
+        { 1.0f, 0.0f },
+    };
 
     SpriteShadowBuffers buffers;
-    buffers.vertices = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertices.size(), vertices.data());
-    buffers.colors = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data());
-    buffers.indices = mono::CreateElementBuffer(BufferType::STATIC, indices.size(), indices.data());
+    buffers.vertices = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(vertices), vertices);
+    buffers.uv = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(uvs), uvs);
 
     return buffers;
 }

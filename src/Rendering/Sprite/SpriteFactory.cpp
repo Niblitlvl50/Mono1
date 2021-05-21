@@ -144,7 +144,7 @@ const mono::SpriteData* SpriteFactoryImpl::GetSpriteDataForFile(const char* spri
         const bool file_exists = file::Exists(sprite_file);
         if(!file_exists)
         {
-            System::Log("spritefactory|Sprite file does not exist. [%s]\n", sprite_file);
+            System::Log("spritefactory|Sprite file does not exist. [%s]", sprite_file);
             return nullptr;
         }
 

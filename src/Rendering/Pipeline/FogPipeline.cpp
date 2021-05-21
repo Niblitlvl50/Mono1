@@ -111,7 +111,7 @@ mono::IPipelinePtr FogPipeline::MakePipeline()
 
     const sg_resource_state shader_state = sg_query_shader_state(shader_handle);
     if(shader_state != SG_RESOURCESTATE_VALID)
-        System::Log("Failed to create texture shader.\n");
+        System::Log("Failed to create texture shader.");
 
     sg_pipeline_desc pipeline_desc = {};
     pipeline_desc.primitive_type = SG_PRIMITIVETYPE_TRIANGLES;
@@ -130,7 +130,7 @@ mono::IPipelinePtr FogPipeline::MakePipeline()
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
     if(pipeline_state != SG_RESOURCESTATE_VALID)
-        System::Log("Failed to create texture pipeline.\n");
+        System::Log("Failed to create texture pipeline.");
 
     return std::make_unique<PipelineImpl>(pipeline_handle, shader_handle);
 }

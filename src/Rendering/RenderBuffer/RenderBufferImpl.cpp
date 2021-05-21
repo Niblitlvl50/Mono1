@@ -33,7 +33,7 @@ RenderBufferImpl::RenderBufferImpl(
 
     const sg_resource_state state = sg_query_buffer_state(m_handle);
     if(state != SG_RESOURCESTATE_VALID)
-        System::Log("Failed to create render buffer\n");
+        System::Log("Failed to create render buffer");
 }
 
 RenderBufferImpl::~RenderBufferImpl()
@@ -75,7 +75,7 @@ IndexBufferImpl::IndexBufferImpl(mono::BufferType buffer_type, uint32_t count, c
 
     const sg_resource_state state = sg_query_buffer_state(m_handle);
     if(state != SG_RESOURCESTATE_VALID)
-        System::Log("Failed to create index buffer\n");
+        System::Log("Failed to create index buffer");
 }
 
 IndexBufferImpl::~IndexBufferImpl()

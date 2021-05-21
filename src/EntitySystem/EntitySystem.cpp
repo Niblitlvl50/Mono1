@@ -86,8 +86,8 @@ bool EntitySystem::AddComponent(uint32_t entity_id, uint32_t component_hash)
         return success;
     }
 
-    const char* component_name = m_component_name_lookup(component_hash);
-    System::Log("EntitySystem|There is no component registered with hash '%ul', %s\n", component_hash, component_name);
+    //const char* component_name = m_component_name_lookup(component_hash);
+    //System::Log("EntitySystem|There is no component registered with hash '%ul', %s", component_hash, component_name);
     return false;
 }
 
@@ -103,7 +103,7 @@ bool EntitySystem::RemoveComponent(uint32_t entity_id, uint32_t component_hash)
     }
 
     const char* component_name = m_component_name_lookup(component_hash);
-    System::Log("EntitySystem|Unable to remove component with hash: %ul, %s\n", component_hash, component_name);
+    System::Log("EntitySystem|Unable to remove component with hash: %ul, %s", component_hash, component_name);
     return false;
 }
 
@@ -115,8 +115,8 @@ bool EntitySystem::SetComponentData(uint32_t entity_id, uint32_t component_hash,
     if(factory_it != m_component_factories.end())
         return factory_it->second.update(entity, properties, m_system_context);
 
-    const char* component_name = m_component_name_lookup(component_hash);
-    System::Log("EntitySystem|Unable to update component with hash: %ul, %s\n", component_hash, component_name);
+    //const char* component_name = m_component_name_lookup(component_hash);
+    //System::Log("EntitySystem|Unable to update component with hash: %ul, %s", component_hash, component_name);
     return false;
 }
 
@@ -133,7 +133,7 @@ std::vector<Attribute> EntitySystem::GetComponentData(uint32_t entity_id, uint32
     }
 
     const char* component_name = m_component_name_lookup(component_hash);
-    System::Log("EntitySystem|Unable to get component with hash: %ul, %s\n", component_hash, component_name);
+    System::Log("EntitySystem|Unable to get component with hash: %ul, %s", component_hash, component_name);
     return { };
 }
 

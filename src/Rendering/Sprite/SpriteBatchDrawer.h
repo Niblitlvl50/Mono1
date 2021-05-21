@@ -5,6 +5,7 @@
 #include "Rendering/IDrawable.h"
 #include "SpriteBufferFactory.h"
 #include "Math/Vector.h"
+#include "Rendering/Texture/ITextureFactory.h"
 
 #include <vector>
 #include <unordered_map>
@@ -30,7 +31,9 @@ namespace mono
         const mono::TransformSystem* m_transform_system;
         mono::SpriteSystem* m_sprite_system;
 
-        std::unique_ptr<mono::IElementBuffer> m_indices;
+        std::unique_ptr<mono::IElementBuffer> m_sprite_indices;
+        mono::ITexturePtr m_shadow_texture;
+
         mutable std::unordered_map<uint32_t, SpriteDrawBuffers> m_sprite_buffers;
 
         struct ShadowData

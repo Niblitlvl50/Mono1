@@ -366,8 +366,8 @@ void System::Initialize(const InitializeContext& context)
     SDL_version version;
     SDL_GetVersion(&version);
 
-    Log("System\n");
-    Log("\tSDL version: %u.%u.%u\n", version.major, version.minor, version.patch);
+    Log("System");
+    Log("\tSDL version: %u.%u.%u", version.major, version.minor, version.patch);
 
     char* base_path = SDL_GetBasePath();
 
@@ -389,7 +389,7 @@ void System::Initialize(const InitializeContext& context)
 #else
     getcwd(cwd_buffer, std::size(cwd_buffer));
 #endif
-    Log("\tresouce directory: %s\n", cwd_buffer);
+    Log("\tresouce directory: %s", cwd_buffer);
 
     SDL_free(base_path);
 }
@@ -418,6 +418,7 @@ void System::Log(const char* fmt, ...)
 
     //SDL_LogMessageV(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, fmt, va);
     std::vprintf(fmt, va);
+    std::printf("\n");
     va_end(va);
 }
 
@@ -560,7 +561,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 if(free_index == -1)
                 {
-                    Log("System|Unable to find free controller index\n");
+                    Log("System|Unable to find free controller index");
                     return;
                 }
 
@@ -570,15 +571,15 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 SDL_Joystick* joystick = SDL_GameControllerGetJoystick(controller);
                 g_controller_states[free_index].id = SDL_JoystickInstanceID(joystick);
 
-                Log("System|Controller connected (%s), index: %d, id: %d\n", SDL_GameControllerName(controller), free_index, g_controller_states[id].id);
+                Log("System|Controller connected (%s), index: %d, id: %d", SDL_GameControllerName(controller), free_index, g_controller_states[id].id);
 
                 SDL_Haptic* haptic_device = SDL_HapticOpenFromJoystick(joystick);
                 if(!haptic_device)
-                    Log("System|Controller, unable to open haptic device. [%s]\n", SDL_GetError());
+                    Log("System|Controller, unable to open haptic device. [%s]", SDL_GetError());
 
                 const int result_code = SDL_HapticRumbleInit(haptic_device);
                 if(result_code != 0)
-                    Log("System[Controller, unable to initialize rumble. [%s]\n", SDL_GetError());
+                    Log("System[Controller, unable to initialize rumble. [%s]", SDL_GetError());
 
                 g_controller_haptic[free_index] = haptic_device;
 
@@ -601,7 +602,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 if(controller_index == -1)
                 {
-                    Log("System|Unable to find controller with id: %d\n", instance_id);
+                    Log("System|Unable to find controller with id: %d", instance_id);
                     return;
                 }
 
@@ -612,7 +613,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 g_controller_haptic[controller_index] = nullptr;
 
                 SDL_GameController* controller = SDL_GameControllerFromInstanceID(instance_id);
-                Log("System|Controller disconnected (%s), index: %d, id: %d\n",
+                Log("System|Controller disconnected (%s), index: %d, id: %d",
                     SDL_GameControllerName(controller),
                     controller_index,
                     instance_id);

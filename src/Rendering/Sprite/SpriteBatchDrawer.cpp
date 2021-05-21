@@ -9,6 +9,7 @@
 #include "Rendering/IRenderer.h"
 #include "Rendering/RenderBuffer/BufferFactory.h"
 #include "Rendering/Sprite/ISpriteFactory.h"
+#include "Rendering/Texture/ITextureFactory.h"
 
 #include "TransformSystem/TransformSystem.h"
 #include "Math/Quad.h"
@@ -37,7 +38,8 @@ SpriteBatchDrawer::SpriteBatchDrawer(const mono::TransformSystem* transform_syst
     constexpr uint16_t indices[] = {
         0, 1, 2, 0, 2, 3
     };
-    m_indices = mono::CreateElementBuffer(mono::BufferType::STATIC, 6, indices);
+    m_sprite_indices = mono::CreateElementBuffer(mono::BufferType::STATIC, 6, indices);
+    m_shadow_texture = mono::GetTextureFactory()->CreateTexture("res/textures/roundshadow.png");
 }
 
 SpriteBatchDrawer::~SpriteBatchDrawer()
@@ -131,12 +133,13 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
             if(it != m_shadow_buffers.end())
             {
                 const SpriteShadowBuffers& shadow_buffers = it->second;
-                renderer.DrawTrianges(
+                renderer.DrawGeometry(
                     shadow_buffers.vertices.get(),
-                    shadow_buffers.colors.get(),
-                    shadow_buffers.indices.get(),
-                    0,
-                    shadow_buffers.indices->Size());
+                    shadow_buffers.uv.get(),
+                    m_sprite_indices.get(),
+                    m_shadow_texture.get(),
+                    false,
+                    m_sprite_indices->Size());
             }
         }
 
@@ -151,7 +154,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
             sprite_buffers.uv.get(),
             sprite_buffers.uv_flipped.get(),
             sprite_buffers.heights.get(),
-            m_indices.get(),
+            m_sprite_indices.get(),
             texture,
             offset);
     }

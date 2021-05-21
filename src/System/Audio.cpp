@@ -130,7 +130,7 @@ audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback 
         if(loaded_sound)
             return std::make_unique<SoundInstanceImpl>(g_context, loaded_sound, playback);
 
-        System::Log("Audio|Recreating '%s'\n", file_name);
+        System::Log("Audio|Recreating '%s'.", file_name);
     }
 
     // Custom deleter to actualy erase the file from the repository when the last reference goes out of scope.
@@ -144,7 +144,7 @@ audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback 
     loaded_sound->sound = cs_load_wav(file_name);
     if(loaded_sound->sound.channels[0] == nullptr)
     {
-        System::Log("Audio|Unable to load wav file '%s' ['%s']\n", cs_error_reason, file_name);
+        System::Log("Audio|Unable to load wav file '%s' ['%s'].", cs_error_reason, file_name);
         return CreateNullSound();
     }
 

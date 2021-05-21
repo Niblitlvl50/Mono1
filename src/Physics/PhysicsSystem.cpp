@@ -109,7 +109,7 @@ PhysicsSystem::PhysicsSystem(const PhysicsSystemInitParams& init_params, mono::T
         "\tbodies: %zu\n"
         "\tshapes: circle %zu, segment %zu, polygon %zu\n"
         "\tjoints: pivot %zu, gear %zu\n"
-        "\tsprings: damped %zu\n",
+        "\tsprings: damped %zu",
         cpVersionString,
         init_params.n_bodies,
         init_params.n_circle_shapes, init_params.n_segment_shapes, init_params.n_polygon_shapes,

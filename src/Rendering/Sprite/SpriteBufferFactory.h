@@ -20,8 +20,7 @@ namespace mono
     struct SpriteShadowBuffers
     {
         std::unique_ptr<IRenderBuffer> vertices;
-        std::unique_ptr<IRenderBuffer> colors;
-        std::unique_ptr<IElementBuffer> indices;
+        std::unique_ptr<IRenderBuffer> uv;
     };
 
     SpriteDrawBuffers BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data);

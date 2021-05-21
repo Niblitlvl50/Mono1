@@ -23,7 +23,7 @@ mono::ITexturePtr TextureFactoryImpl::CreateTexture(const char* texture_name) co
     if(texture)
         return texture;
 
-    System::Log("TextureFactory|Creating texture '%s'.\n", texture_name);
+    System::Log("TextureFactory|Creating texture '%s'.", texture_name);
     return CreateAndCacheTexture(texture_name, texture_hash);
 }
 
@@ -47,7 +47,7 @@ mono::ITexturePtr TextureFactoryImpl::CreateTextureFromData(const byte* data, in
         std::unique_ptr<unsigned char> image_data(stbi_load_from_memory(data, data_length, &width, &height, &components, 0));
         if(!image_data)
         {
-            System::Log("TextureFactory|Unable to load from data chunk\n");
+            System::Log("TextureFactory|Unable to load from data chunk.");
             throw std::runtime_error("Unable to load image!");
         }
 
@@ -87,7 +87,7 @@ mono::ITexturePtr TextureFactoryImpl::CreateAndCacheTexture(const char* source_f
     std::unique_ptr<unsigned char> image_data(stbi_load(source_file, &width, &height, &components, 0));
     if(!image_data)
     {
-        System::Log("TextureFactory|Unable to load '%s'\n", source_file);
+        System::Log("TextureFactory|Unable to load '%s'", source_file);
         throw std::runtime_error("Unable to load image!");
     }
 
@@ -110,7 +110,7 @@ mono::ITexturePtr TextureFactoryImpl::CreateAndCacheTexture(const unsigned char*
     std::unique_ptr<unsigned char> image_data(stbi_load_from_memory(data, data_length, &width, &height, &components, 0));
     if(!image_data)
     {
-        System::Log("TextureFactory|Unable to load from data chunk\n");
+        System::Log("TextureFactory|Unable to load from data chunk");
         throw std::runtime_error("Unable to load image!");
     }
 
