@@ -81,10 +81,10 @@ mono::SpriteShadowBuffers mono::BuildSpriteShadowBuffers(const math::Vector& sha
     const math::Vector size = { shadow_size, shadow_size / 2.0f };
 
     const math::Vector vertices[] = {
-        { -size.x, -size.y },
-        { -size.x,  size.y },
-        {  size.x,  size.y },
-        {  size.x, -size.y },
+        math::Vector(-size.x, -size.y) + shadow_offset,
+        math::Vector(-size.x,  size.y) + shadow_offset,
+        math::Vector( size.x,  size.y) + shadow_offset,
+        math::Vector( size.x, -size.y) + shadow_offset,
     };
 
     const math::Vector uvs[] = {
