@@ -124,8 +124,6 @@ void RendererSokol::PrepareDraw()
 
     m_model_stack.push(math::Matrix()); // Push identity
 
-    sg_apply_viewport(0, 0, m_drawable_size.x, m_drawable_size.y, false);
-
     MakeOrUpdateOffscreenPass(m_offscreen_pass);
 
     sg_pass_action offscreen_pass_action = {};
@@ -135,6 +133,7 @@ void RendererSokol::PrepareDraw()
     offscreen_pass_action.colors[0].val[2] = m_clear_color.blue;
     offscreen_pass_action.colors[0].val[3] = m_clear_color.alpha;
     sg_begin_pass(m_offscreen_pass.pass_handle, &offscreen_pass_action);
+    sg_apply_viewport(0, 0, m_drawable_size.x, m_drawable_size.y, false);
 
     const double delta_time_s = double(m_delta_time_ms) / 1000.0;
     simgui_new_frame(m_drawable_size.x, m_drawable_size.y, delta_time_s);
