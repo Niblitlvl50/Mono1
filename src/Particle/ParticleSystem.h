@@ -58,13 +58,35 @@ namespace mono
         std::vector<float> start_size;
         std::vector<float> end_size;
 
-        std::vector<int> start_life;
         std::vector<int> life;
+        std::vector<int> start_life;
 
         uint32_t pool_size;
         uint32_t count_alive;
 
         ParticleUpdater update_function;
+    };
+
+    struct ParticlePoolComponentView
+    {
+        math::Vector& position;
+        math::Vector& velocity;
+
+        float& rotation;
+        float& angular_velocity;
+
+        mono::Color::RGBA& color;
+        mono::Color::RGBA& start_color;
+        mono::Color::RGBA& end_color;
+
+        float& size;
+        float& start_size;
+        float& end_size;
+
+        int& life;
+        int& start_life;
+
+        float t;
     };
 
     struct ParticleSystemStats

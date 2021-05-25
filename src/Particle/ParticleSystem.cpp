@@ -42,26 +42,26 @@ namespace
     }
 }
 
-void mono::DefaultGenerator(const math::Vector& position, struct ParticlePoolComponent& pool, uint32_t index)
+void mono::DefaultGenerator(const math::Vector& position, ParticlePoolComponentView& particle_view)
 {
     const float x = mono::Random(-8.0f, 8.0f);
     const float y = mono::Random(-8.0f, 8.0f);
     const float life = mono::Random(0.0f, 500.0f);
 
-    pool.position[index] = position;
-    pool.velocity[index] = math::Vector(x, y);
-    pool.rotation[index] = 0.0f;
-    pool.angular_velocity[index] = 0.0f;
-    //pool.m_color[index];
-    pool.start_color[index] = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
-    pool.end_color[index] = mono::Color::RGBA(0.0f, 1.0f, 0.0f, 0.1f);
+    particle_view.position = position;
+    particle_view.velocity = math::Vector(x, y);
+    particle_view.rotation = 0.0f;
+    particle_view.angular_velocity = 0.0f;
+    particle_view.start_color = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
+    particle_view.end_color = mono::Color::RGBA(0.0f, 1.0f, 0.0f, 0.1f);
+    particle_view.color = particle_view.start_color;
 
-    pool.size[index] = 10.0f;
-    pool.start_size[index] = 10.0f;
-    pool.end_size[index] = 5.0f;
+    particle_view.size = 10.0f;
+    particle_view.start_size = 10.0f;
+    particle_view.end_size = 5.0f;
 
-    pool.start_life[index] = 1000 + life;
-    pool.life[index] = 1000 + life;
+    particle_view.start_life = 1000 + life;
+    particle_view.life = 1000 + life;
 }
 
 void mono::DefaultUpdater(struct ParticlePoolComponent& pool, uint32_t count, uint32_t delta_ms)
@@ -75,6 +75,7 @@ void mono::DefaultUpdater(struct ParticlePoolComponent& pool, uint32_t count, ui
         pool.position[index] += pool.velocity[index] * delta_seconds;
         pool.color[index] = mono::Color::Lerp(pool.start_color[index], pool.end_color[index], t);
         pool.size[index] = (1.0f - t) * pool.start_size[index] + t * pool.end_size[index];
+        pool.rotation[index] += pool.angular_velocity[index] * delta_seconds;
     }
 }
 
@@ -88,9 +89,7 @@ ParticleSystem::ParticleSystem(uint32_t count, uint32_t n_emitters)
 { }
 
 ParticleSystem::~ParticleSystem()
-{
-
-}
+{ }
 
 uint32_t ParticleSystem::Id() const
 {
@@ -169,7 +168,29 @@ void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePo
     const uint32_t end_index = std::min(start_index + new_particles, particle_pool.pool_size -1);
 
     for(uint32_t index = start_index; index < end_index; ++index)
-        emitter->generator(emitter->position, particle_pool, index);
+    {
+        ParticlePoolComponentView view = {
+            particle_pool.position[index],
+            particle_pool.velocity[index],
+
+            particle_pool.rotation[index],
+            particle_pool.angular_velocity[index],
+
+            particle_pool.color[index],
+            particle_pool.start_color[index],
+            particle_pool.end_color[index],
+
+            particle_pool.size[index],
+            particle_pool.start_size[index],
+            particle_pool.end_size[index],
+
+            particle_pool.life[index],
+            particle_pool.start_life[index],
+
+            1.0f
+        };
+        emitter->generator(emitter->position, view);
+    }
 
     for(uint32_t index = start_index; index < end_index; ++index)
         WakeParticle(particle_pool, index);
