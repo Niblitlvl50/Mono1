@@ -186,8 +186,6 @@ void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePo
 
             particle_pool.life[index],
             particle_pool.start_life[index],
-
-            1.0f
         };
         emitter->generator(emitter->position, view);
     }

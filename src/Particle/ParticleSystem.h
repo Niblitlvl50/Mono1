@@ -85,8 +85,6 @@ namespace mono
 
         int& life;
         int& start_life;
-
-        float t;
     };
 
     struct ParticleSystemStats
