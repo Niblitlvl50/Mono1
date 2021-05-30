@@ -18,8 +18,7 @@ namespace
         std::swap(pool_component.rotation[first],           pool_component.rotation[second]);
         std::swap(pool_component.angular_velocity[first],   pool_component.angular_velocity[second]);
         std::swap(pool_component.color[first],              pool_component.color[second]);
-        std::swap(pool_component.start_color[first],        pool_component.start_color[second]);
-        std::swap(pool_component.end_color[first],          pool_component.end_color[second]);
+        std::swap(pool_component.gradient[first],           pool_component.gradient[second]);
         std::swap(pool_component.start_life[first],         pool_component.start_life[second]);
         std::swap(pool_component.life[first],               pool_component.life[second]);
     }
@@ -52,9 +51,11 @@ void mono::DefaultGenerator(const math::Vector& position, ParticlePoolComponentV
     particle_view.velocity = math::Vector(x, y);
     particle_view.rotation = 0.0f;
     particle_view.angular_velocity = 0.0f;
-    particle_view.start_color = mono::Color::RGBA(1.0f, 0.0f, 0.0f, 1.0f);
-    particle_view.end_color = mono::Color::RGBA(0.0f, 1.0f, 0.0f, 0.1f);
-    particle_view.color = particle_view.start_color;
+
+    particle_view.gradient = mono::Color::MakeGradient<3>(
+        { 0.0f, 0.5f, 1.0f },
+        { mono::Color::RED, mono::Color::GREEN, mono::Color::BLUE }
+    );
 
     particle_view.size = 10.0f;
     particle_view.start_size = 10.0f;
@@ -73,7 +74,7 @@ void mono::DefaultUpdater(struct ParticlePoolComponent& pool, uint32_t count, ui
         const float t = 1.0f - float(pool.life[index]) / float(pool.start_life[index]);
 
         pool.position[index] += pool.velocity[index] * delta_seconds;
-        pool.color[index] = mono::Color::Lerp(pool.start_color[index], pool.end_color[index], t);
+        pool.color[index] = mono::Color::ColorFromGradient(pool.gradient[index], t);
         pool.size[index] = (1.0f - t) * pool.start_size[index] + t * pool.end_size[index];
         pool.rotation[index] += pool.angular_velocity[index] * delta_seconds;
     }
@@ -177,8 +178,7 @@ void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePo
             particle_pool.angular_velocity[index],
 
             particle_pool.color[index],
-            particle_pool.start_color[index],
-            particle_pool.end_color[index],
+            particle_pool.gradient[index],
 
             particle_pool.size[index],
             particle_pool.start_size[index],
@@ -207,8 +207,7 @@ ParticlePoolComponent* ParticleSystem::AllocatePool(uint32_t id, uint32_t pool_s
     particle_pool.rotation.resize(pool_size);
     particle_pool.angular_velocity.resize(pool_size);
     particle_pool.color.resize(pool_size);
-    particle_pool.start_color.resize(pool_size);
-    particle_pool.end_color.resize(pool_size);
+    particle_pool.gradient.resize(pool_size);
     particle_pool.size.resize(pool_size);
     particle_pool.start_size.resize(pool_size);
     particle_pool.end_size.resize(pool_size);

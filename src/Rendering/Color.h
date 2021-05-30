@@ -4,6 +4,7 @@
 #include "Math/MathFunctions.h"
 #include <cstdint>
 #include <algorithm>
+#include <initializer_list>
 
 using byte = unsigned char;
 
@@ -95,6 +96,16 @@ namespace mono
 
             const float gradient_t = math::Scale01(t_value, gradient.t[first_index], gradient.t[second_index]);
             return Lerp(gradient.color[first_index], gradient.color[second_index], gradient_t);
+        }
+
+        template <int T>
+        inline Gradient<T> MakeGradient(std::initializer_list<float> ts, std::initializer_list<Color::RGBA> colors)
+        {
+            Gradient<T> gradient;
+            std::memcpy(gradient.t, ts.begin(), sizeof(float) * ts.size());
+            std::memcpy(gradient.color, colors.begin(), sizeof(Color::RGBA) * colors.size());
+
+            return gradient;
         }
 
         constexpr mono::Color::RGBA WHITE       = mono::Color::RGBA(1.0f, 1.0f, 1.0f);
