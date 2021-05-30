@@ -1,7 +1,9 @@
 
 #pragma once
 
+#include "Math/MathFunctions.h"
 #include <cstdint>
+#include <algorithm>
 
 using byte = unsigned char;
 
@@ -50,6 +52,13 @@ namespace mono
             float lightness = 0.5f;
         };
 
+        template <int T>
+        struct Gradient
+        {
+            float t[T];
+            mono::Color::RGBA color[T];
+        };
+
         mono::Color::RGBA MakeFromBytes(byte red, byte green, byte blue, byte alpha = 255);
 
         //! Convert HSL to RGBA
@@ -63,6 +72,30 @@ namespace mono
 
         uint32_t ToHex(const mono::Color::RGBA& color);
         mono::Color::RGBA ToRGBA(uint32_t hex_color);
+
+        template <typename T>
+        inline mono::Color::RGBA ColorFromGradient(const T& gradient, float t_value)
+        {
+            int found_index = -1;
+
+            for(int index = 0; index < (int)std::size(gradient.t); ++index)
+            {
+                const float t_gradient = gradient.t[index];
+                if(t_gradient > t_value)
+                    break;
+
+                found_index = index;
+            }
+
+            const int max_index = int(std::size(gradient.t)) -1;
+            const int first_index = std::clamp(found_index, 0, max_index);
+            const int second_index = std::clamp(found_index + 1, 0, max_index);
+            if(first_index == second_index)
+                return gradient.color[first_index];
+
+            const float gradient_t = math::Scale01(t_value, gradient.t[first_index], gradient.t[second_index]);
+            return Lerp(gradient.color[first_index], gradient.color[second_index], gradient_t);
+        }
 
         constexpr mono::Color::RGBA WHITE       = mono::Color::RGBA(1.0f, 1.0f, 1.0f);
         constexpr mono::Color::RGBA OFF_WHITE   = mono::Color::RGBA(0.9f, 0.9f, 0.9f);
