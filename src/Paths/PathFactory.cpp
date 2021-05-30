@@ -107,11 +107,15 @@ mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector
     parsl_config config;
     config.thickness = options.width;
     config.flags = PARSL_FLAG_ANNOTATIONS;
-    config.u_mode = (options.uv_mode == UVMode::DISTANCE) ? PAR_U_MODE_DISTANCE : PAR_U_MODE_NORMALIZED_DISTANCE;
     config.curves_max_flatness = 0.1;
     config.streamlines_seed_spacing = 0.0f;
     config.streamlines_seed_viewport = {};
     config.miter_limit = 0.0f;
+
+    if(options.uv_mode & UVMode::DISTANCE)
+        config.u_mode = PAR_U_MODE_DISTANCE;
+    else if(options.uv_mode & UVMode::NORMALIZED_DISTANCE)
+        config.u_mode = PAR_U_MODE_NORMALIZED_DISTANCE;
 
     parsl_context* ctx = parsl_create_context(config);
 
@@ -137,6 +141,15 @@ mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector
     case mono::PathType::BEZIER_CUBIC:
         generated_mesh = parsl_mesh_from_curves_cubic(ctx, spine_list);
         break;
+    }
+
+    if(options.uv_mode & UVMode::NORMALIZED_WIDTH)
+    {
+        for(uint32_t index = 0; index < generated_mesh->num_vertices; ++index)
+        {
+            parsl_annotation& an = generated_mesh->annotations[index];
+            an.v_across_curve = std::clamp(an.v_across_curve, 0.0f, 1.0f);
+        }
     }
 
     const uint32_t num_indices = generated_mesh->num_triangles * 3;

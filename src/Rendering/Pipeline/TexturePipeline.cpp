@@ -157,7 +157,6 @@ namespace
             if(enable_blur != 0.0f)
                 sampled_color = vec4(1, 0, 0, 1);
 
-
             if(uv.x < 0.1)
                 sampled_color.a *= smoothstep(0.0, 0.1, uv.x);
             else if(uv.x > 0.9)

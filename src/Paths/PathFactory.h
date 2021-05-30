@@ -16,10 +16,14 @@ namespace mono
     IPathPtr CreatePath(const std::vector<math::Vector>& coords);
     IPathPtr CreatePath(const std::vector<math::Vector>& coords, const math::Matrix& transform);
 
-    enum class UVMode
+    enum UVMode
     {
-        DISTANCE,
-        NORMALIZED_DISTANCE
+        DISTANCE = 1,
+        NORMALIZED_DISTANCE = 2,
+        SIGNED_WIDTH = 4,
+        NORMALIZED_WIDTH = 8,
+
+        DEFAULT = DISTANCE | SIGNED_WIDTH,
     };
 
     struct PathOptions

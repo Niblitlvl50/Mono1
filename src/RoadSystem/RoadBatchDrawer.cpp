@@ -80,7 +80,7 @@ RoadBatchDrawer::CachedRoad RoadBatchDrawer::CacheRoadData(uint32_t entity_id, c
     mono::PathOptions path_options;
     path_options.width = component.width;
     path_options.color = mono::Color::OFF_WHITE;
-    path_options.uv_mode = mono::UVMode::DISTANCE;
+    path_options.uv_mode = mono::UVMode(mono::UVMode::DISTANCE | mono::UVMode::NORMALIZED_WIDTH);
     path_options.closed = false;
 
     CachedRoad cached_road;
