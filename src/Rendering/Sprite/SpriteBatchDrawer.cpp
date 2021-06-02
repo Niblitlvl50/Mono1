@@ -67,7 +67,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
         if(!sprite->GetTexture())
             return;
 
-        const math::Quad& world_bounds = m_transform_system->GetWorldBoundingBox(id);
+        math::Quad world_bounds = m_transform_system->GetWorldBoundingBox(id);
         if(renderer.Cull(world_bounds))
         {
             const uint32_t sprite_hash = sprite->GetSpriteHash();
@@ -103,6 +103,8 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
             }
 
             const math::Matrix& transform = m_transform_system->GetWorld(id);
+            const float sort_offset = m_sprite_system->GetSpriteSortOffset(id);
+            world_bounds.mA.y += sort_offset;
             sprites_to_draw.push_back({ id, transform, world_bounds, sprite, layer });
         }
     };

@@ -21,6 +21,7 @@ namespace mono
         bool random_start_frame = false;
         int animation_id = 0;
         int layer = 0;
+        float sort_offset = 0.0f;
         uint32_t properties = 0;
         math::Vector shadow_offset;
         float shadow_size;
@@ -44,6 +45,7 @@ namespace mono
         mono::Sprite* GetSprite(uint32_t sprite_id);
         int GetSpriteLayer(uint32_t sprite_id) const;
         void SetSpriteLayer(uint32_t sprite_id, int new_layer);
+        float GetSpriteSortOffset(uint32_t sprite_id) const;
         void SetSpriteEnabled(uint32_t sprite_id, bool enabled);
         void ForEachSprite(ForEachSpriteFunc func);
 
@@ -56,6 +58,7 @@ namespace mono
         mono::TransformSystem* m_transform_system;
         std::vector<mono::Sprite> m_sprites;
         std::vector<int> m_sprite_layers;
+        std::vector<float> m_sprite_sort_offsets;
         std::vector<bool> m_enabled;
         std::vector<bool> m_alive;
     };

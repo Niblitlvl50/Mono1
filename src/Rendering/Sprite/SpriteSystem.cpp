@@ -16,6 +16,7 @@ SpriteSystem::SpriteSystem(size_t n_sprites, mono::TransformSystem* transform_sy
 {
     m_sprites.resize(n_sprites);
     m_sprite_layers.resize(n_sprites, 0);
+    m_sprite_sort_offsets.resize(n_sprites, 0.0f);
     m_enabled.resize(n_sprites, true);
     m_alive.resize(n_sprites, false);
 }
@@ -70,6 +71,7 @@ void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& spr
     }
 
     m_sprite_layers[sprite_id] = sprite_args.layer;
+    m_sprite_sort_offsets[sprite_id] = sprite_args.sort_offset;
 }
 
 void SpriteSystem::ReleaseSprite(uint32_t sprite_id)
@@ -91,6 +93,11 @@ int SpriteSystem::GetSpriteLayer(uint32_t sprite_id) const
 void SpriteSystem::SetSpriteLayer(uint32_t sprite_id, int new_layer)
 {
     m_sprite_layers[sprite_id] = new_layer;
+}
+
+float SpriteSystem::GetSpriteSortOffset(uint32_t sprite_id) const
+{
+    return m_sprite_sort_offsets[sprite_id];
 }
 
 void SpriteSystem::SetSpriteEnabled(uint32_t sprite_id, bool enabled)
