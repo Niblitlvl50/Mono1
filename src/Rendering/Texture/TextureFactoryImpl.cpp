@@ -8,7 +8,7 @@
 #include <stdexcept>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image/stb_image.h"
+#include "stb/stb_image.h"
 
 using namespace mono;
 
