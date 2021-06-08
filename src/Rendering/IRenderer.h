@@ -106,6 +106,7 @@ namespace mono
         virtual void AddLight(const math::Vector& world_position, float radius, const mono::Color::RGBA& shade) = 0;
 
         virtual void SetClearColor(const mono::Color::RGBA& color) = 0;
+        virtual void SetAmbientShade(const mono::Color::RGBA& ambient_shade) = 0;
 
         virtual const math::Matrix& GetTransform() const = 0;
         virtual void PushNewTransform(const math::Matrix& transform) = 0;

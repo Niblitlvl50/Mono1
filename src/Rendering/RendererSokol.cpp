@@ -30,6 +30,7 @@ RendererSokol::RendererSokol()
     : m_offscreen_color_pass{}
     , m_offscreen_light_pass{}
     , m_clear_color(0.7f, 0.7f, 0.7f, 1.0f)
+    , m_ambient_shade(0.5f, 0.5f, 0.5f, 0.5f)
 {
     m_color_points_pipeline = mono::ColorPipeline::MakePointsPipeline();
     m_color_lines_pipeline = mono::ColorPipeline::MakeLinesPipeline();
@@ -113,68 +114,70 @@ void RendererSokol::MakeOrUpdateOffscreenPass(RendererSokol::OffscreenPassData& 
 
 void RendererSokol::DrawLights()
 {
-    if(m_lights.empty())
-        return;
+    const bool has_lights = (!m_lights.empty());
 
     sg_pass_action offscreen_light_pass_action = {};
     offscreen_light_pass_action.colors[0].action = SG_ACTION_CLEAR;
-    offscreen_light_pass_action.colors[0].val[0] = 0.5f;
-    offscreen_light_pass_action.colors[0].val[1] = 0.5f;
-    offscreen_light_pass_action.colors[0].val[2] = 0.5f;
-    offscreen_light_pass_action.colors[0].val[3] = 0.5f;
+
+    const mono::Color::RGBA ambient_color = has_lights ? m_ambient_shade : mono::Color::RGBA(1.0f, 1.0f, 1.0f, 0.0f);
+    std::memcpy(offscreen_light_pass_action.colors[0].val, &ambient_color, sizeof(mono::Color::RGBA));
+
     sg_begin_pass(m_offscreen_light_pass.pass_handle, &offscreen_light_pass_action);
 
-    const uint32_t n_light_vertices = m_lights.size() * 4;
-    const uint32_t n_light_indices = m_lights.size() * 3 * 2;
-
-    std::vector<math::Vector> vertex_data;
-    vertex_data.reserve(n_light_vertices);
-
-    std::vector<math::Vector> uv_data;
-    uv_data.reserve(n_light_vertices);
-
-    std::vector<mono::Color::RGBA> color_data;
-    color_data.reserve(n_light_vertices);
-
-    std::vector<uint16_t> index_data;
-    index_data.reserve(n_light_indices);
-
-    for(const LightData& light : m_lights)
+    if(has_lights)
     {
-        const uint32_t index_offset = vertex_data.size();
+        const uint32_t n_light_vertices = m_lights.size() * 4;
+        const uint32_t n_light_indices = m_lights.size() * 3 * 2;
 
-        vertex_data.push_back(light.position - math::Vector(-light.radius, -light.radius));
-        vertex_data.push_back(light.position - math::Vector(-light.radius,  light.radius));
-        vertex_data.push_back(light.position - math::Vector( light.radius,  light.radius));
-        vertex_data.push_back(light.position - math::Vector( light.radius, -light.radius));
+        std::vector<math::Vector> vertex_data;
+        vertex_data.reserve(n_light_vertices);
 
-        uv_data.push_back(math::Vector(0.0f, 0.0f));
-        uv_data.push_back(math::Vector(0.0f, 1.0f));
-        uv_data.push_back(math::Vector(1.0f, 1.0f));
-        uv_data.push_back(math::Vector(1.0f, 0.0f));
+        std::vector<math::Vector> uv_data;
+        uv_data.reserve(n_light_vertices);
 
-        color_data.push_back(light.shade);
-        color_data.push_back(light.shade);
-        color_data.push_back(light.shade);
-        color_data.push_back(light.shade);
+        std::vector<mono::Color::RGBA> color_data;
+        color_data.reserve(n_light_vertices);
 
-        index_data.push_back(index_offset + 0);
-        index_data.push_back(index_offset + 1);
-        index_data.push_back(index_offset + 2);
-        index_data.push_back(index_offset + 0);
-        index_data.push_back(index_offset + 2);
-        index_data.push_back(index_offset + 3);
+        std::vector<uint16_t> index_data;
+        index_data.reserve(n_light_indices);
+
+        for(const LightData& light : m_lights)
+        {
+            const uint32_t index_offset = vertex_data.size();
+
+            vertex_data.push_back(light.position - math::Vector(-light.radius, -light.radius));
+            vertex_data.push_back(light.position - math::Vector(-light.radius,  light.radius));
+            vertex_data.push_back(light.position - math::Vector( light.radius,  light.radius));
+            vertex_data.push_back(light.position - math::Vector( light.radius, -light.radius));
+
+            uv_data.push_back(math::Vector(0.0f, 0.0f));
+            uv_data.push_back(math::Vector(0.0f, 1.0f));
+            uv_data.push_back(math::Vector(1.0f, 1.0f));
+            uv_data.push_back(math::Vector(1.0f, 0.0f));
+
+            color_data.push_back(light.shade);
+            color_data.push_back(light.shade);
+            color_data.push_back(light.shade);
+            color_data.push_back(light.shade);
+
+            index_data.push_back(index_offset + 0);
+            index_data.push_back(index_offset + 1);
+            index_data.push_back(index_offset + 2);
+            index_data.push_back(index_offset + 0);
+            index_data.push_back(index_offset + 2);
+            index_data.push_back(index_offset + 3);
+        }
+
+        const auto vertex_buffer = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, n_light_vertices, vertex_data.data());
+        const auto uv_buffer = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, n_light_vertices, uv_data.data());
+        const auto color_buffer = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, n_light_vertices, color_data.data());
+        const auto index_buffer = mono::CreateElementBuffer(BufferType::STATIC, n_light_indices, index_data.data());
+
+        DrawGeometry(vertex_buffer.get(), uv_buffer.get(), color_buffer.get(), index_buffer.get(), m_light_mask_texture.get(), false, index_buffer->Size());
+        m_lights.clear();
     }
 
-    const auto vertex_buffer = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, n_light_vertices, vertex_data.data());
-    const auto uv_buffer = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, n_light_vertices, uv_data.data());
-    const auto color_buffer = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, n_light_vertices, color_data.data());
-    const auto index_buffer = mono::CreateElementBuffer(BufferType::STATIC, n_light_indices, index_data.data());
-
-    DrawGeometry(vertex_buffer.get(), uv_buffer.get(), color_buffer.get(), index_buffer.get(), m_light_mask_texture.get(), false, index_buffer->Size());
-
     sg_end_pass(); // End offscreen light render pass
-    m_lights.clear();
 }
 
 void RendererSokol::PrepareDraw()
@@ -639,6 +642,11 @@ void RendererSokol::AddLight(const math::Vector& world_position, float radius, c
 void RendererSokol::SetClearColor(const mono::Color::RGBA& color)
 {
     m_clear_color = color;
+}
+
+void RendererSokol::SetAmbientShade(const mono::Color::RGBA& ambient_shade)
+{
+    m_ambient_shade = ambient_shade;
 }
 
 const math::Matrix& RendererSokol::GetTransform() const
