@@ -27,7 +27,8 @@
 using namespace mono;
 
 RendererSokol::RendererSokol()
-    : m_offscreen_pass{}
+    : m_offscreen_color_pass{}
+    , m_offscreen_light_pass{}
     , m_clear_color(0.7f, 0.7f, 0.7f, 1.0f)
 {
     m_color_points_pipeline = mono::ColorPipeline::MakePointsPipeline();
@@ -40,6 +41,7 @@ RendererSokol::RendererSokol()
     m_particle_pipeline = mono::ParticlePointPipeline::MakePipeline();
     m_texture_pipeline = mono::TexturePipeline::MakePipeline();
     m_texture_annotation_pipeline = mono::TexturePipeline::MakeAnnotationPipeline();
+    m_texture_pipeline_color = mono::TexturePipeline::MakeVertexColorPipeline();
     m_sprite_pipeline = mono::SpritePipeline::MakePipeline();
     m_fog_pipeline = mono::FogPipeline::MakePipeline();
     m_screen_pipeline = mono::ScreenPipeline::MakePipeline();
@@ -51,11 +53,14 @@ RendererSokol::RendererSokol()
     m_screen_vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(vertices), vertices);
     m_screen_uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(uv_coordinates), uv_coordinates);
     m_screen_indices = CreateElementBuffer(BufferType::STATIC, std::size(indices), indices);
+
+    m_light_mask_texture = mono::GetTextureFactory()->CreateTexture("res/textures/light_mask_3.png");
 }
 
 RendererSokol::~RendererSokol()
 {
-    sg_destroy_pass(m_offscreen_pass.pass_handle);
+    sg_destroy_pass(m_offscreen_color_pass.pass_handle);
+    sg_destroy_pass(m_offscreen_light_pass.pass_handle);
 }
 
 void RendererSokol::SetWindowSize(const math::Vector& window_size)
@@ -85,9 +90,7 @@ void RendererSokol::MakeOrUpdateOffscreenPass(RendererSokol::OffscreenPassData& 
         return;
 
     if(offscreen_pass.pass_handle.id != 0)
-    {
         sg_destroy_pass(offscreen_pass.pass_handle);
-    }
 
     sg_image_desc offscreen_image_desc = {};
     offscreen_image_desc.render_target = true;
@@ -108,6 +111,72 @@ void RendererSokol::MakeOrUpdateOffscreenPass(RendererSokol::OffscreenPassData& 
         System::Log("Failed to create render pass.");
 }
 
+void RendererSokol::DrawLights()
+{
+    if(m_lights.empty())
+        return;
+
+    sg_pass_action offscreen_light_pass_action = {};
+    offscreen_light_pass_action.colors[0].action = SG_ACTION_CLEAR;
+    offscreen_light_pass_action.colors[0].val[0] = 0.5f;
+    offscreen_light_pass_action.colors[0].val[1] = 0.5f;
+    offscreen_light_pass_action.colors[0].val[2] = 0.5f;
+    offscreen_light_pass_action.colors[0].val[3] = 0.5f;
+    sg_begin_pass(m_offscreen_light_pass.pass_handle, &offscreen_light_pass_action);
+
+    const uint32_t n_light_vertices = m_lights.size() * 4;
+    const uint32_t n_light_indices = m_lights.size() * 3 * 2;
+
+    std::vector<math::Vector> vertex_data;
+    vertex_data.reserve(n_light_vertices);
+
+    std::vector<math::Vector> uv_data;
+    uv_data.reserve(n_light_vertices);
+
+    std::vector<mono::Color::RGBA> color_data;
+    color_data.reserve(n_light_vertices);
+
+    std::vector<uint16_t> index_data;
+    index_data.reserve(n_light_indices);
+
+    for(const LightData& light : m_lights)
+    {
+        const uint32_t index_offset = vertex_data.size();
+
+        vertex_data.push_back(light.position - math::Vector(-light.radius, -light.radius));
+        vertex_data.push_back(light.position - math::Vector(-light.radius,  light.radius));
+        vertex_data.push_back(light.position - math::Vector( light.radius,  light.radius));
+        vertex_data.push_back(light.position - math::Vector( light.radius, -light.radius));
+
+        uv_data.push_back(math::Vector(0.0f, 0.0f));
+        uv_data.push_back(math::Vector(0.0f, 1.0f));
+        uv_data.push_back(math::Vector(1.0f, 1.0f));
+        uv_data.push_back(math::Vector(1.0f, 0.0f));
+
+        color_data.push_back(light.shade);
+        color_data.push_back(light.shade);
+        color_data.push_back(light.shade);
+        color_data.push_back(light.shade);
+
+        index_data.push_back(index_offset + 0);
+        index_data.push_back(index_offset + 1);
+        index_data.push_back(index_offset + 2);
+        index_data.push_back(index_offset + 0);
+        index_data.push_back(index_offset + 2);
+        index_data.push_back(index_offset + 3);
+    }
+
+    const auto vertex_buffer = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, n_light_vertices, vertex_data.data());
+    const auto uv_buffer = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, n_light_vertices, uv_data.data());
+    const auto color_buffer = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, n_light_vertices, color_data.data());
+    const auto index_buffer = mono::CreateElementBuffer(BufferType::STATIC, n_light_indices, index_data.data());
+
+    DrawGeometry(vertex_buffer.get(), uv_buffer.get(), color_buffer.get(), index_buffer.get(), m_light_mask_texture.get(), false, index_buffer->Size());
+
+    sg_end_pass(); // End offscreen light render pass
+    m_lights.clear();
+}
+
 void RendererSokol::PrepareDraw()
 {
     m_projection_stack = {};
@@ -124,7 +193,8 @@ void RendererSokol::PrepareDraw()
 
     m_model_stack.push(math::Matrix()); // Push identity
 
-    MakeOrUpdateOffscreenPass(m_offscreen_pass);
+    MakeOrUpdateOffscreenPass(m_offscreen_color_pass);
+    MakeOrUpdateOffscreenPass(m_offscreen_light_pass);
 
     sg_pass_action offscreen_pass_action = {};
     offscreen_pass_action.colors[0].action = SG_ACTION_CLEAR;
@@ -132,7 +202,7 @@ void RendererSokol::PrepareDraw()
     offscreen_pass_action.colors[0].val[1] = m_clear_color.green;
     offscreen_pass_action.colors[0].val[2] = m_clear_color.blue;
     offscreen_pass_action.colors[0].val[3] = m_clear_color.alpha;
-    sg_begin_pass(m_offscreen_pass.pass_handle, &offscreen_pass_action);
+    sg_begin_pass(m_offscreen_color_pass.pass_handle, &offscreen_pass_action);
     sg_apply_viewport(0, 0, m_drawable_size.x, m_drawable_size.y, false);
 
     const double delta_time_s = double(m_delta_time_ms) / 1000.0;
@@ -141,11 +211,11 @@ void RendererSokol::PrepareDraw()
 
 void RendererSokol::EndDraw()
 {
-    simgui_render();
-    sg_end_pass(); // End offscreen render pass
-
+    sg_end_pass(); // End offscreen color render pass
     // Clear all the stuff once the frame has been drawn
     m_drawables.clear();
+
+    DrawLights();
 
     sg_pass_action default_pass_action = {};
     sg_begin_default_pass(default_pass_action, m_drawable_size.x, m_drawable_size.y);
@@ -155,10 +225,13 @@ void RendererSokol::EndDraw()
         m_screen_vertices.get(),
         m_screen_uv.get(),
         m_screen_indices.get(),
-        m_offscreen_pass.offscreen_texture.get());
+        m_offscreen_color_pass.offscreen_texture.get(),
+        m_offscreen_light_pass.offscreen_texture.get());
     ScreenPipeline::FadeCorners(false);
     ScreenPipeline::InvertColors(false);
     sg_draw(0, 6, 1);
+
+    simgui_render();
 
     sg_end_pass(); // End default pass
     sg_commit();
@@ -439,6 +512,26 @@ void RendererSokol::DrawGeometry(
     sg_draw(0, count, 1);
 }
 
+void RendererSokol::DrawGeometry(
+    const IRenderBuffer* vertices,
+    const IRenderBuffer* uv_coordinates,
+    const IRenderBuffer* vertex_colors,
+    const IElementBuffer* indices,
+    const ITexture* texture,
+    bool blur,
+    uint32_t count)
+{
+    TexturePipeline::Apply(m_texture_pipeline_color.get(), vertices, uv_coordinates, vertex_colors, indices, texture);
+    //TexturePipeline::SetTime(m_texture_pipeline.get(), float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+
+    TexturePipeline::SetIsAlpha(false);
+    TexturePipeline::SetBlur(blur);
+    //TexturePipeline::SetShade(mono::Color::WHITE);
+
+    sg_draw(0, count, 1);
+}
+
 void RendererSokol::DrawParticlePoints(
     const IRenderBuffer* position,
     const IRenderBuffer* rotation,
@@ -536,6 +629,11 @@ void RendererSokol::DrawAnnotatedTrianges(
     TexturePipeline::SetShade(shade);
 
     sg_draw(offset, count, 1);
+}
+
+void RendererSokol::AddLight(const math::Vector& world_position, float radius, const mono::Color::RGBA& shade)
+{
+    m_lights.push_back({ world_position, radius, shade });
 }
 
 void RendererSokol::SetClearColor(const mono::Color::RGBA& color)

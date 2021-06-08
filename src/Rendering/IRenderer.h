@@ -58,6 +58,15 @@ namespace mono
             bool blur,
             uint32_t count) = 0;
 
+        virtual void DrawGeometry(
+            const IRenderBuffer* vertices,
+            const IRenderBuffer* uv_coordinates,
+            const IRenderBuffer* vertex_colors,
+            const IElementBuffer* indices,
+            const ITexture* texture,
+            bool blur,
+            uint32_t count) = 0;
+
         virtual void DrawParticlePoints(
             const IRenderBuffer* position,
             const IRenderBuffer* rotation,
@@ -93,6 +102,8 @@ namespace mono
             const mono::Color::RGBA& shade,
             uint32_t offset,
             uint32_t count) const = 0;
+
+        virtual void AddLight(const math::Vector& world_position, float radius, const mono::Color::RGBA& shade) = 0;
 
         virtual void SetClearColor(const mono::Color::RGBA& color) = 0;
 

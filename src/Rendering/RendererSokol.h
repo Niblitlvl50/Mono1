@@ -73,6 +73,15 @@ namespace mono
             bool blur,
             uint32_t count) override;
 
+        void DrawGeometry(
+            const IRenderBuffer* vertices,
+            const IRenderBuffer* uv_coordinates,
+            const IRenderBuffer* vertex_colors,
+            const IElementBuffer* indices,
+            const ITexture* texture,
+            bool blur,
+            uint32_t count) override;
+
         void DrawParticlePoints(
             const IRenderBuffer* position,
             const IRenderBuffer* rotation,
@@ -109,6 +118,8 @@ namespace mono
             uint32_t offset,
             uint32_t count) const override;
 
+        void AddLight(const math::Vector& world_position, float radius, const mono::Color::RGBA& shade) override;
+
         void SetClearColor(const mono::Color::RGBA& color) override;
 
         const math::Matrix& GetTransform() const override;
@@ -134,9 +145,13 @@ namespace mono
             math::Vector image_size;
             mono::ITexturePtr offscreen_texture;
             sg_pass pass_handle;
-        } m_offscreen_pass;
+        };
+        OffscreenPassData m_offscreen_color_pass;
+        OffscreenPassData m_offscreen_light_pass;
 
         void MakeOrUpdateOffscreenPass(OffscreenPassData& offscreen_pass) const;
+        void DrawLights();
+
         void PrepareDraw();
         void EndDraw();
 
@@ -159,6 +174,7 @@ namespace mono
         std::unique_ptr<IPipeline> m_particle_pipeline;
         std::unique_ptr<IPipeline> m_texture_pipeline;
         std::unique_ptr<IPipeline> m_texture_annotation_pipeline;
+        std::unique_ptr<IPipeline> m_texture_pipeline_color;
         std::unique_ptr<IPipeline> m_sprite_pipeline;
         std::unique_ptr<IPipeline> m_fog_pipeline;
         std::unique_ptr<IPipeline> m_screen_pipeline;
@@ -167,9 +183,20 @@ namespace mono
         std::unique_ptr<IRenderBuffer> m_screen_uv;
         std::unique_ptr<IElementBuffer> m_screen_indices;
 
+        mono::ITexturePtr m_light_mask_texture;
+
         uint32_t m_delta_time_ms = 0;
         uint32_t m_timestamp = 0;
 
         std::vector<const IDrawable*> m_drawables;
+
+        struct LightData
+        {
+            math::Vector position;
+            float radius;
+            mono::Color::RGBA shade;
+        };
+
+        std::vector<LightData> m_lights;
     };
 }

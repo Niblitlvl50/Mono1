@@ -93,7 +93,6 @@ void mono::InitializeRender(const RenderInitParams& init_params)
 
     simgui_desc_t imgui_desc = {};
     imgui_desc.dpi_scale = 2.0f; // could be 2.0f for retina mac
-    imgui_desc.depth_format = SG_PIXELFORMAT_NONE;
     imgui_desc.ini_filename = init_params.imgui_ini;
     simgui_setup(&imgui_desc);
 

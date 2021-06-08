@@ -13,11 +13,20 @@ namespace mono
 
         static mono::IPipelinePtr MakePipeline();
         static mono::IPipelinePtr MakeAnnotationPipeline();
+        static mono::IPipelinePtr MakeVertexColorPipeline();
 
         static void Apply(
             IPipeline* pipeline,
             const IRenderBuffer* position,
             const IRenderBuffer* uv_coordinates,
+            const IElementBuffer* indices,
+            const ITexture* texture);
+
+        static void Apply(
+            IPipeline* pipeline,
+            const IRenderBuffer* position,
+            const IRenderBuffer* uv_coordinates,
+            const IRenderBuffer* vertex_colors,
             const IElementBuffer* indices,
             const ITexture* texture);
 
