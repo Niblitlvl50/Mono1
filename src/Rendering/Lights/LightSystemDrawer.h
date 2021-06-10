@@ -3,6 +3,7 @@
 
 #include "MonoFwd.h"
 #include "Rendering/IDrawable.h"
+#include <unordered_map>
 
 namespace mono
 {
@@ -17,5 +18,7 @@ namespace mono
 
         const LightSystem* m_light_system;
         const TransformSystem* m_transform_system;
+
+        mutable std::unordered_map<uint32_t, float> m_flicker_data;
     };
 }

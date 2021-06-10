@@ -114,17 +114,13 @@ void RendererSokol::MakeOrUpdateOffscreenPass(RendererSokol::OffscreenPassData& 
 
 void RendererSokol::DrawLights()
 {
-    const bool has_lights = (!m_lights.empty());
-
     sg_pass_action offscreen_light_pass_action = {};
     offscreen_light_pass_action.colors[0].action = SG_ACTION_CLEAR;
-
-    const mono::Color::RGBA ambient_color = has_lights ? m_ambient_shade : mono::Color::RGBA(1.0f, 1.0f, 1.0f, 0.0f);
-    std::memcpy(offscreen_light_pass_action.colors[0].val, &ambient_color, sizeof(mono::Color::RGBA));
+    std::memcpy(offscreen_light_pass_action.colors[0].val, &m_ambient_shade, sizeof(mono::Color::RGBA));
 
     sg_begin_pass(m_offscreen_light_pass.pass_handle, &offscreen_light_pass_action);
 
-    if(has_lights)
+    if(!m_lights.empty())
     {
         const uint32_t n_light_vertices = m_lights.size() * 4;
         const uint32_t n_light_indices = m_lights.size() * 3 * 2;

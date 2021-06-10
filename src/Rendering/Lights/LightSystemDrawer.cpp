@@ -7,6 +7,8 @@
 #include "Math/Quad.h"
 #include "Rendering/IRenderer.h"
 
+#include "Util/Noise.h"
+
 using namespace mono;
 
 LightSystemDrawer::LightSystemDrawer(const LightSystem* light_system, const TransformSystem* transform_system)
@@ -22,7 +24,22 @@ void LightSystemDrawer::Draw(mono::IRenderer& renderer) const
 
         const math::Quad light_bb = math::Quad(world_position, light.radius);
         if(renderer.Cull(light_bb))
-            renderer.AddLight(world_position, light.radius, light.shade);
+        {
+            float radius_flicker = 0.0f;
+
+            if(light.flicker)
+            {
+                auto pair = m_flicker_data.insert(std::make_pair(entity_id, 0.0f));
+                float& counter = pair.first->second;
+                counter += float(renderer.GetDeltaTimeMS()) / 1000.0f * 10.0f;
+
+                //const float noise = mono::Noise::PerlinFbm(world_position.x + counter, world_position.y);
+                const float noise = mono::Noise::Perlin(world_position.x + counter, world_position.y);
+                radius_flicker = light.radius * noise * 0.5f;
+            }
+
+            renderer.AddLight(world_position, light.radius + radius_flicker, light.shade);
+        }
     };
 
     m_light_system->ForEach(register_lights);

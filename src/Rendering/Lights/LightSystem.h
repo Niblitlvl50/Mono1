@@ -11,6 +11,7 @@ namespace mono
     {
         float radius;
         mono::Color::RGBA shade;
+        bool flicker;
     };
 
     class LightSystem : public mono::IGameSystem
