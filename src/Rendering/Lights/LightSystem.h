@@ -12,6 +12,8 @@ namespace mono
         float radius;
         mono::Color::RGBA shade;
         bool flicker;
+        float flicker_frequencey;
+        float flicker_percentage;
     };
 
     class LightSystem : public mono::IGameSystem
