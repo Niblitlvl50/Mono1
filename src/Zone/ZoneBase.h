@@ -30,6 +30,7 @@ namespace mono
         void RemoveDrawable(IDrawable* drawable) override;
 
         void SetDrawableLayer(const IDrawable* drawable, int new_layer) override;
+        void SetLastLightingLayer(int layer) override;
 
     protected:
 
@@ -42,5 +43,7 @@ namespace mono
 
         std::vector<mono::IUpdatable*> m_updatables_remove;
         std::vector<mono::IDrawable*> m_drawables_remove;
+
+        int m_last_lighting_layer = 0;
     };
 }

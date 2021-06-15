@@ -28,6 +28,8 @@ namespace mono
 
         virtual void SetDrawableLayer(const IDrawable* drawable, int new_layer) = 0;
 
+        virtual void SetLastLightingLayer(int layer) = 0;
+
         template <typename T>
         void AddUpdatableDrawable(T* object, int layer)
         {

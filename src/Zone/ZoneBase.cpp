@@ -54,10 +54,8 @@ void ZoneBase::Accept(IRenderer& renderer)
 {
     for(const auto& drawable_data : m_drawables)
     {
-        const int properties = drawable_data.drawable->DrawProperties();
-        const bool post_lighting_pass = (properties & DP_POST_LIGHTING);
-
-        mono::RenderPass render_pass = post_lighting_pass ? mono::RenderPass::POST_LIGHTING : mono::RenderPass::GENERAL;
+        const mono::RenderPass render_pass =
+            (drawable_data.layer > m_last_lighting_layer) ? mono::RenderPass::POST_LIGHTING : mono::RenderPass::GENERAL;
         renderer.AddDrawable(drawable_data.drawable, render_pass);
     }
 }
@@ -126,4 +124,9 @@ void ZoneBase::SetDrawableLayer(const mono::IDrawable* drawable, int new_layer)
         it->layer = new_layer;
         std::sort(m_drawables.begin(), m_drawables.end(), DrawableSortFunc);
     }
+}
+
+void ZoneBase::SetLastLightingLayer(int layer)
+{
+    m_last_lighting_layer = layer;
 }

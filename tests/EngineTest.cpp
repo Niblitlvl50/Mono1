@@ -100,6 +100,8 @@ namespace
         { }
         void SetDrawableLayer(const mono::IDrawable* drawable, int new_layer) override
         { }
+        void SetLastLightingLayer(int layer) override
+        { }
 
         bool mAcceptCalled = false;
         bool mOnLoadCalled = false;
