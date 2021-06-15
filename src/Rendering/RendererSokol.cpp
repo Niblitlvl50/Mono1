@@ -211,8 +211,6 @@ void RendererSokol::PrepareDraw()
 void RendererSokol::EndDraw()
 {
     sg_end_pass(); // End offscreen color render pass
-    // Clear all the stuff once the frame has been drawn
-    m_drawables.clear();
 
     DrawLights();
 
@@ -230,17 +228,28 @@ void RendererSokol::EndDraw()
     ScreenPipeline::InvertColors(false);
     sg_draw(0, 6, 1);
 
+    for(const IDrawable* drawable : m_drawables[RenderPass::POST_LIGHTING])
+    {
+        const bool visible = Cull(drawable->BoundingBox());
+        if(visible)
+            drawable->Draw(*this);
+    }
+
     simgui_render();
 
     sg_end_pass(); // End default pass
     sg_commit();
+
+    // Clear all the stuff once the frame has been drawn
+    for(uint32_t index = 0; index < RenderPass::N_RENDER_PASS; ++index)
+        m_drawables[index].clear();
 }
 
 void RendererSokol::DrawFrame()
 {
     PrepareDraw();
 
-    for(const IDrawable* drawable : m_drawables)
+    for(const IDrawable* drawable : m_drawables[RenderPass::GENERAL])
     {
         const bool visible = Cull(drawable->BoundingBox());
         if(visible)
@@ -250,9 +259,9 @@ void RendererSokol::DrawFrame()
     EndDraw();
 }
 
-void RendererSokol::AddDrawable(const IDrawable* drawable)
+void RendererSokol::AddDrawable(const IDrawable* drawable, RenderPass render_pass)
 {
-    m_drawables.push_back(drawable);
+    m_drawables[render_pass].push_back(drawable);
 }
 
 void RendererSokol::RenderText(

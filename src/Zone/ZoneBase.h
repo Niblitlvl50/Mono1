@@ -8,6 +8,12 @@
 
 namespace mono
 {
+    struct DrawableData
+    {
+        mono::IDrawable* drawable;
+        int layer;
+    };
+
     class ZoneBase : public IZone
     {
     public:
@@ -32,7 +38,7 @@ namespace mono
         void DoDeferredDelete();
 
         std::vector<mono::IUpdatable*> m_updatables;
-        std::vector<std::pair<int, mono::IDrawable*>> m_drawables;
+        std::vector<DrawableData> m_drawables;
 
         std::vector<mono::IUpdatable*> m_updatables_remove;
         std::vector<mono::IDrawable*> m_drawables_remove;

@@ -17,6 +17,9 @@ void LightSystem::Allocate(uint32_t light_id)
     LightComponent& light = m_lights[light_id];
     light.radius = 1.0f;
     light.shade = mono::Color::WHITE;
+    light.flicker = false;
+    light.flicker_frequencey = 1.0f;
+    light.flicker_percentage = 0.5f;
 }
 
 bool LightSystem::IsAllocated(uint32_t light_id)

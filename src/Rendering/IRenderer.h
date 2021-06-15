@@ -11,12 +11,19 @@
 
 namespace mono
 {
+    enum RenderPass
+    {
+        GENERAL,
+        POST_LIGHTING,
+        N_RENDER_PASS
+    };
+
     class IRenderer
     {
     public:
 
         virtual ~IRenderer() = default;
-        virtual void AddDrawable(const IDrawable* drawable) = 0;
+        virtual void AddDrawable(const IDrawable* drawable, RenderPass render_pass = RenderPass::GENERAL) = 0;
 
         virtual void RenderText(
             int font_id,

@@ -78,6 +78,7 @@ void mono::InitializeRender(const RenderInitParams& init_params)
 
     sg_desc desc = {};
     desc.buffer_pool_size = 1024;
+    desc.context.depth_format = SG_PIXELFORMAT_NONE;
     sg_setup(&desc);
 
     sg_trace_hooks trace_hooks = {};

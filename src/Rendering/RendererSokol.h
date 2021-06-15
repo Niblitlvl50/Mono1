@@ -31,7 +31,7 @@ namespace mono
 
         void DrawFrame();
 
-        void AddDrawable(const IDrawable* drawable) override;
+        void AddDrawable(const IDrawable* drawable, RenderPass render_pass) override;
 
         void RenderText(
             int font_id,
@@ -190,7 +190,7 @@ namespace mono
         uint32_t m_delta_time_ms = 0;
         uint32_t m_timestamp = 0;
 
-        std::vector<const IDrawable*> m_drawables;
+        std::vector<const IDrawable*> m_drawables[RenderPass::N_RENDER_PASS];
 
         struct LightData
         {

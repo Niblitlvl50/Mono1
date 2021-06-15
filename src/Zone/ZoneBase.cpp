@@ -16,10 +16,9 @@ using namespace mono;
 
 namespace
 {
-    bool DrawableSortFunc(
-        const std::pair<int, const mono::IDrawable*>& first, const std::pair<int, const mono::IDrawable*>& second)
+    bool DrawableSortFunc(const DrawableData& first, const DrawableData& second)
     {
-        return first.first < second.first;
+        return first.layer < second.layer;
     }
 }
 
@@ -30,13 +29,13 @@ ZoneBase::~ZoneBase()
     std::set<mono::IDrawable*> deleted_drawables;
     std::set<mono::IUpdatable*> deleted_updatables;
 
-    for(std::pair<int, mono::IDrawable*>& drawable_pair : m_drawables)
+    for(DrawableData& drawable_data : m_drawables)
     {
-        const bool not_deleted = (deleted_drawables.find(drawable_pair.second) == deleted_drawables.end());
+        const bool not_deleted = (deleted_drawables.find(drawable_data.drawable) == deleted_drawables.end());
         if(not_deleted)
         {
-            delete drawable_pair.second;
-            deleted_drawables.insert(drawable_pair.second);
+            delete drawable_data.drawable;
+            deleted_drawables.insert(drawable_data.drawable);
         }
     }
 
@@ -53,8 +52,14 @@ ZoneBase::~ZoneBase()
 
 void ZoneBase::Accept(IRenderer& renderer)
 {
-    for(const auto& pair : m_drawables)
-        renderer.AddDrawable(pair.second);
+    for(const auto& drawable_data : m_drawables)
+    {
+        const int properties = drawable_data.drawable->DrawProperties();
+        const bool post_lighting_pass = (properties & DP_POST_LIGHTING);
+
+        mono::RenderPass render_pass = post_lighting_pass ? mono::RenderPass::POST_LIGHTING : mono::RenderPass::GENERAL;
+        renderer.AddDrawable(drawable_data.drawable, render_pass);
+    }
 }
 
 void ZoneBase::Accept(mono::IUpdater& updater)
@@ -72,8 +77,8 @@ void ZoneBase::DoDeferredDelete()
     };
     mono::remove_if(m_updatables, remove_updatable_func);
 
-    const auto remove_drawable_func = [this](const std::pair<int, mono::IDrawable*>& drawable_pair) {
-        return std::find(m_drawables_remove.begin(), m_drawables_remove.end(), drawable_pair.second) != m_drawables_remove.end();
+    const auto remove_drawable_func = [this](const DrawableData& drawable_data) {
+        return std::find(m_drawables_remove.begin(), m_drawables_remove.end(), drawable_data.drawable) != m_drawables_remove.end();
     };
     mono::remove_if(m_drawables, remove_drawable_func);
 
@@ -93,7 +98,11 @@ void ZoneBase::RemoveUpdatable(IUpdatable* updatable)
 
 void ZoneBase::AddDrawable(mono::IDrawable* drawable, int layer)
 {
-    m_drawables.push_back(std::make_pair(layer, drawable));
+    DrawableData drawable_data;
+    drawable_data.drawable = drawable;
+    drawable_data.layer = layer;
+
+    m_drawables.push_back(drawable_data);
 
     // Keep the drawable vector sorted so that we draw everything
     // in the correct order according to layers
@@ -107,14 +116,14 @@ void ZoneBase::RemoveDrawable(mono::IDrawable* drawable)
 
 void ZoneBase::SetDrawableLayer(const mono::IDrawable* drawable, int new_layer)
 {
-    const auto func = [drawable](const std::pair<int, const mono::IDrawable*>& pair) {
-        return pair.second == drawable;
+    const auto func = [drawable](const DrawableData& drawable_data) {
+        return drawable_data.drawable == drawable;
     };
 
     auto it = std::find_if(m_drawables.begin(), m_drawables.end(), func);
     if(it != m_drawables.end())
     {
-        it->first = new_layer;
+        it->layer = new_layer;
         std::sort(m_drawables.begin(), m_drawables.end(), DrawableSortFunc);
     }
 }
