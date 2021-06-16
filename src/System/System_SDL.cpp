@@ -26,9 +26,8 @@
 
 namespace
 {
-    constexpr int g_num_states = 2;
-    System::ControllerState g_controller_states[g_num_states];
-    SDL_Haptic* g_controller_haptic[g_num_states];
+    System::ControllerState g_controller_states[System::ControllerId::N_Controllers];
+    SDL_Haptic* g_controller_haptic[System::ControllerId::N_Controllers];
 
     FILE* g_log_file = nullptr;
 
@@ -352,7 +351,7 @@ void System::Initialize(const InitializeContext& context)
 {
     std::memset(g_controller_states, 0, sizeof(g_controller_states));
 
-    for(int index = 0; index < g_num_states; ++index)
+    for(int index = 0; index < ControllerId::N_Controllers; ++index)
         g_controller_states[index].id = -1;
 
     if(context.log_file)
@@ -550,7 +549,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
             {
                 int free_index = -1;
 
-                for(int index = 0; index < g_num_states; ++index)
+                for(int index = 0; index < ControllerId::N_Controllers; ++index)
                 {
                     if(g_controller_states[index].id == -1)
                     {
@@ -591,7 +590,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 const int instance_id = event.cdevice.which;
                 int controller_index = -1;
 
-                for(int index = 0; index < g_num_states; ++index)
+                for(int index = 0; index < ControllerId::N_Controllers; ++index)
                 {
                     if(g_controller_states[index].id == instance_id)
                     {
@@ -769,7 +768,7 @@ void System::ProcessControllerState()
     constexpr float dead_zone = 0.08f;
     const float max_value = float(std::numeric_limits<Sint16>::max());
 
-    for(int index = 0; index < g_num_states; ++index)
+    for(int index = 0; index < ControllerId::N_Controllers; ++index)
     {
         ControllerState& state = g_controller_states[index];
         if(state.id == -1)

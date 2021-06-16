@@ -179,10 +179,13 @@ namespace System
 
     int KeycodeToNative(Keycode key);
 
-    enum class ControllerId : int
+    enum ControllerId
     {
         Primary,
-        Secondary
+        Secondary,
+        Third,
+        Fourth,
+        N_Controllers
     };
 
     const ControllerState& GetController(ControllerId controller_id);
