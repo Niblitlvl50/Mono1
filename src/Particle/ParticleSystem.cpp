@@ -258,6 +258,8 @@ ParticleEmitterComponent* ParticleSystem::AttachEmitter(
     uint32_t pool_id, const math::Vector& position, float duration, float emit_rate, EmitterType emitter_type, ParticleGenerator generator)
 {
     ParticleEmitterComponent* emitter = m_particle_emitters.GetPoolData();
+    if(!emitter)
+        return nullptr;
 
     emitter->position = position;
     emitter->duration = duration;
