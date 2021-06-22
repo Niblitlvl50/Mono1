@@ -57,7 +57,8 @@ namespace mono
     public:
 
         PhysicsDebugDrawer(
-            const bool& enabled,
+            const bool& enabled_drawing,
+            const bool& enabled_interaction,
             const uint32_t& debug_components,
             mono::PhysicsSystem* physics_system,
             mono::EventHandler* event_handler);
@@ -74,7 +75,8 @@ namespace mono
         mono::EventResult OnKeyUp(const event::KeyUpEvent& event);
 
     private:
-        const bool& m_enabled;
+        const bool& m_enabled_drawing;
+        const bool& m_enabled_interaction;
         const uint32_t& m_debug_components;
 
         mono::PhysicsSystem* m_physics_system;

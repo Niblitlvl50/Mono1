@@ -36,6 +36,7 @@ struct PhysicsSystem::Impl
         , segment_shape_pool(init_params.n_segment_shapes)
         , poly_shape_pool(init_params.n_polygon_shapes)
         , pivot_joint_pool(init_params.n_pivot_joints)
+        , slide_joint_pool(init_params.n_slide_joints)
         , gear_joint_pool(init_params.n_gear_joints)
         , damped_spring_pool(init_params.n_damped_springs)
         , shapes(init_params.n_circle_shapes + init_params.n_segment_shapes + init_params.n_polygon_shapes)
@@ -58,6 +59,16 @@ struct PhysicsSystem::Impl
         poly_shape_pool.ReleasePoolData((cpPolyShape*)shape);
     }
 
+    void ReleasePivotJoint(cpConstraint* constraint)
+    {
+        pivot_joint_pool.ReleasePoolData((cpPivotJoint*)constraint);
+    }
+
+    void ReleaseSlideJoint(cpConstraint* constraint)
+    {
+        slide_joint_pool.ReleasePoolData((cpSlideJoint*)constraint);
+    }
+
     void ReleaseSpring(cpConstraint* constraint)
     {
         damped_spring_pool.ReleasePoolData((cpDampedSpring*)constraint);
@@ -70,6 +81,7 @@ struct PhysicsSystem::Impl
     mono::ObjectPool<cpPolyShape> poly_shape_pool;
 
     mono::ObjectPool<cpPivotJoint> pivot_joint_pool;
+    mono::ObjectPool<cpSlideJoint> slide_joint_pool;
     mono::ObjectPool<cpGearJoint> gear_joint_pool;
     mono::ObjectPool<cpDampedSpring> damped_spring_pool;
 
@@ -119,25 +131,28 @@ PhysicsSystem::PhysicsSystem(const PhysicsSystemInitParams& init_params, mono::T
 
 PhysicsSystem::~PhysicsSystem()
 {
-    for(size_t index = 0; index < m_impl->body_pool.Size(); ++index)
+    for(uint32_t index = 0; index < m_impl->body_pool.Size(); ++index)
         cpBodyDestroy(&m_impl->body_pool.Data()[index]);
 
-    for(size_t index = 0; index < m_impl->circle_shape_pool.Size(); ++index)
+    for(uint32_t index = 0; index < m_impl->circle_shape_pool.Size(); ++index)
         cpShapeDestroy((cpShape*)&m_impl->circle_shape_pool.Data()[index]);
 
-    for(size_t index = 0; index < m_impl->segment_shape_pool.Size(); ++index)
+    for(uint32_t index = 0; index < m_impl->segment_shape_pool.Size(); ++index)
         cpShapeDestroy((cpShape*)&m_impl->segment_shape_pool.Data()[index]);
 
-    for(size_t index = 0; index < m_impl->poly_shape_pool.Size(); ++index)
+    for(uint32_t index = 0; index < m_impl->poly_shape_pool.Size(); ++index)
         cpShapeDestroy((cpShape*)&m_impl->poly_shape_pool.Data()[index]);
 
-    for(size_t index = 0; index < m_impl->pivot_joint_pool.Size(); ++index)
+    for(uint32_t index = 0; index < m_impl->pivot_joint_pool.Size(); ++index)
         cpConstraintDestroy((cpConstraint*)&m_impl->pivot_joint_pool.Data()[index]);
 
-    for(size_t index = 0; index < m_impl->gear_joint_pool.Size(); ++index)
+    for(uint32_t index = 0; index < m_impl->slide_joint_pool.Size(); ++index)
+        cpConstraintDestroy((cpConstraint*)&m_impl->slide_joint_pool.Data()[index]);
+
+    for(uint32_t index = 0; index < m_impl->gear_joint_pool.Size(); ++index)
         cpConstraintDestroy((cpConstraint*)&m_impl->gear_joint_pool.Data()[index]);
 
-    for(size_t index = 0; index < m_impl->damped_spring_pool.Size(); ++index)
+    for(uint32_t index = 0; index < m_impl->damped_spring_pool.Size(); ++index)
         cpConstraintDestroy((cpConstraint*)&m_impl->damped_spring_pool.Data()[index]);
 }
 
@@ -393,6 +408,28 @@ void PhysicsSystem::ReleaseKinematicBody(mono::IBody* body)
     m_impl->space.Remove(body);
     cpBodyFree(body->Handle());
     delete body;
+}
+
+mono::IConstraint* PhysicsSystem::CreateSlideJoint(
+    IBody* first, IBody* second, const math::Vector& anchor_first, const math::Vector& anchor_second, float min_length, float max_length)
+{
+    cpSlideJoint* slide_joint_data = m_impl->slide_joint_pool.GetPoolData();
+    cpSlideJointInit(
+        slide_joint_data,
+        first->Handle(),
+        second->Handle(),
+        cpv(anchor_first.x, anchor_first.y),
+        cpv(anchor_second.x, anchor_second.y),
+        min_length,
+        max_length);
+
+    cm::ConstraintImpl* constraint_impl = m_impl->constraints.GetPoolData();
+    constraint_impl->SetHandle((cpConstraint*)slide_joint_data);
+
+    m_impl->m_constraint_release_funcs[constraint_impl] = &PhysicsSystem::Impl::ReleaseSlideJoint;
+    m_impl->space.Add(constraint_impl);
+
+    return constraint_impl;
 }
 
 mono::IConstraint* PhysicsSystem::CreateSpring(IBody* first, IBody* second, float rest_length, float stiffness, float damping)

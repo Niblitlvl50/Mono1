@@ -17,15 +17,16 @@ namespace mono
 
     struct PhysicsSystemInitParams
     {
-        size_t n_bodies = 100;
+        uint32_t n_bodies = 100;
 
-        size_t n_circle_shapes = 100;
-        size_t n_segment_shapes = 100;
-        size_t n_polygon_shapes = 100;
+        uint32_t n_circle_shapes = 100;
+        uint32_t n_segment_shapes = 100;
+        uint32_t n_polygon_shapes = 100;
 
-        size_t n_pivot_joints = 100;
-        size_t n_gear_joints = 100;
-        size_t n_damped_springs = 100;
+        uint32_t n_pivot_joints = 100;
+        uint32_t n_slide_joints = 100;
+        uint32_t n_gear_joints = 100;
+        uint32_t n_damped_springs = 100;
     };
 
     struct BodyComponent
@@ -146,6 +147,8 @@ namespace mono
         mono::IBody* CreateKinematicBody();
         void ReleaseKinematicBody(mono::IBody* body);
 
+        mono::IConstraint* CreateSlideJoint(
+            IBody* first, IBody* second, const math::Vector& anchor_first, const math::Vector& anchor_second, float min_length, float max_length);
         mono::IConstraint* CreateSpring(IBody* first, IBody* second, float rest_length, float stiffness, float damping);
         void ReleaseConstraint(mono::IConstraint* constraint);
 

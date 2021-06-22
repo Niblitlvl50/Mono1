@@ -134,10 +134,12 @@ static_assert(uint32_t(CP_SPACE_DEBUG_DRAW_CONSTRAINTS) == mono::PhysicsDebugCom
 static_assert(uint32_t(CP_SPACE_DEBUG_DRAW_COLLISION_POINTS) == mono::PhysicsDebugComponents::DRAW_COLLISION_POINTS);
 
 PhysicsDebugDrawer::PhysicsDebugDrawer(
-    const bool& enabled,
+    const bool& enabled_drawing,
+    const bool& enabled_interaction,
     const uint32_t& debug_components,
     mono::PhysicsSystem* physics_system, mono::EventHandler* event_handler)
-    : m_enabled(enabled)
+    : m_enabled_drawing(enabled_drawing)
+    , m_enabled_interaction(enabled_interaction)
     , m_debug_components(debug_components)
     , m_physics_system(physics_system)
     , m_event_handler(event_handler)
@@ -175,7 +177,7 @@ PhysicsDebugDrawer::~PhysicsDebugDrawer()
 
 void PhysicsDebugDrawer::Draw(mono::IRenderer& renderer) const
 {
-    if(!m_enabled)
+    if(!m_enabled_drawing)
         return;
 
     DebugDrawCollection debug_collection;
@@ -245,11 +247,10 @@ math::Quad PhysicsDebugDrawer::BoundingBox() const
 
 mono::EventResult PhysicsDebugDrawer::OnMouseDown(const event::MouseDownEvent& event)
 {
-    m_mouse_down = true;
-
-    if(!m_enabled)
+    if(!m_enabled_interaction)
         return mono::EventResult::PASS_ON;
 
+    m_mouse_down = true;
     m_mouse_down_position = math::Vector(event.world_x, event.world_y);
     return mono::EventResult::HANDLED;
 }
@@ -258,7 +259,7 @@ mono::EventResult PhysicsDebugDrawer::OnMouseUp(const event::MouseUpEvent& event
 {
     m_mouse_down = false;
 
-    if(!m_enabled)
+    if(!m_enabled_interaction)
         return mono::EventResult::PASS_ON;
 
     m_found_positions.clear();
