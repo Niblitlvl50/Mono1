@@ -7,9 +7,10 @@ namespace mono
 {
     struct UpdateContext
     {
+        uint32_t timestamp;
         uint32_t frame_count;
         uint32_t delta_ms;
-        uint32_t timestamp;
+        float delta_s;
     };
 
     class IUpdatable

@@ -75,7 +75,7 @@ int Engine::Run(IZone* zone)
     };
 
     InputHandler input_handler(screen_to_world_func, m_event_handler);
-    UpdateContext update_context = { 0, 0, 0 };
+    UpdateContext update_context = { 0, 0, 0, 0.0f };
     Updater updater;
 
     zone->OnLoad(m_camera, &renderer);
@@ -120,6 +120,7 @@ int Engine::Run(IZone* zone)
         {
             update_context.frame_count++;
             update_context.delta_ms = delta_ms;
+            update_context.delta_s = float(delta_ms) / 1000.0f;
 
             renderer.SetDeltaAndTimestamp(update_context.delta_ms, update_context.timestamp);
 
