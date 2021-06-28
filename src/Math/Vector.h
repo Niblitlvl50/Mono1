@@ -40,10 +40,15 @@ namespace math
 
     void Normalize(Vector& vector);
     math::Vector Normalized(const math::Vector& vector);
+
     float Length(const Vector& vector);
     float LengthSquared(const Vector& vector);
-    float Dot(const Vector& first, const Vector& second);
 
+    float Dot(const Vector& first, const Vector& second);
+    float Cross(const Vector& first, const Vector& second);
+
+    math::Vector Perpendicular(const Vector& vector);
+    float DistanceBetween(const Vector& left, const Vector& right);
     bool IsPrettyMuchEquals(const Vector& left, const Vector& right, float tolerance = FLT_EPSILON);
 
     // Just a convineince vector declared to zero.

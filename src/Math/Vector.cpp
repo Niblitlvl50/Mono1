@@ -105,6 +105,21 @@ float math::Dot(const math::Vector& first, const math::Vector& second)
    return (first.x * second.x) + (first.y * second.y);
 }
 
+float math::Cross(const math::Vector& first, const math::Vector& second)
+{
+    return (first.x * second.y) - (first.y * second.x);
+}
+
+math::Vector math::Perpendicular(const math::Vector& vector)
+{
+    return math::Vector(vector.y, -vector.x);
+}
+
+float math::DistanceBetween(const math::Vector& left, const math::Vector& right)
+{
+    return math::Length(left - right);
+}
+
 bool math::IsPrettyMuchEquals(const math::Vector& left, const math::Vector& right, float tolerance)
 {
     return
