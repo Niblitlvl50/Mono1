@@ -87,6 +87,12 @@ void BodyImpl::ApplyLocalImpulse(const math::Vector& impulse, const math::Vector
     cpBodyApplyImpulseAtLocalPoint(m_body_handle, cpv(impulse.x, impulse.y), cpv(offset.x, offset.y));
 }
 
+math::Vector BodyImpl::GetForce() const
+{
+    const cpVect& force = cpBodyGetForce(m_body_handle);
+    return math::Vector(force.x, force.y);
+}
+
 void BodyImpl::SetVelocity(const math::Vector& velocity) 
 {
     cpBodySetVelocity(m_body_handle, cpv(velocity.x, velocity.y));

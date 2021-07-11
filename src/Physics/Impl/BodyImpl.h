@@ -27,6 +27,7 @@ namespace cm
         void ApplyLocalForce(const math::Vector& force, const math::Vector& offset) override;
         void ApplyImpulse(const math::Vector& impulse, const math::Vector& offset) override;
         void ApplyLocalImpulse(const math::Vector& impulse, const math::Vector& offset) override;
+        math::Vector GetForce() const override;
         void SetVelocity(const math::Vector& velocity) override;
         math::Vector GetVelocity() const override;
         void ResetForces() override;

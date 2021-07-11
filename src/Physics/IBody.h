@@ -95,6 +95,8 @@ namespace mono
         //! @param offset From where to apply it
         virtual void ApplyLocalImpulse(const math::Vector& impulse, const math::Vector& offset) = 0;
 
+        virtual math::Vector GetForce() const = 0;
+
         //! Sets a velocity to the body
         //! @param velocity A velocity vector
         virtual void SetVelocity(const math::Vector& velocity) = 0;
