@@ -3,7 +3,7 @@
 #include "PathFactory.h"
 
 #include "TransformSystem/TransformSystem.h"
-#include "Util/Hash.h"
+#include "System/Hash.h"
 
 using namespace mono;
 
@@ -38,7 +38,7 @@ const PathComponent* PathSystem::GetPath(uint32_t entity_id) const
 
 uint32_t PathSystem::Id() const
 {
-    return mono::Hash(Name());
+    return hash::Hash(Name());
 }
 
 const char* PathSystem::Name() const

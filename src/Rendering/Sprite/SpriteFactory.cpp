@@ -22,7 +22,7 @@
 #include "Math/Serialize.h"
 #include "System/File.h"
 #include "System/System.h"
-#include "Util/Hash.h"
+#include "System/Hash.h"
 
 #include <unordered_map>
 #include <string>
@@ -109,7 +109,7 @@ mono::ISpritePtr SpriteFactoryImpl::CreateSprite(const char* sprite_file) const
 
 mono::ISpritePtr SpriteFactoryImpl::CreateSpriteFromRaw(const char* sprite_raw) const
 {
-    const uint32_t sprite_raw_hash = mono::Hash(sprite_raw);
+    const uint32_t sprite_raw_hash = hash::Hash(sprite_raw);
 
     auto it = m_sprite_data_cache.find(sprite_raw_hash);
     if(it == m_sprite_data_cache.end())
@@ -136,7 +136,7 @@ bool SpriteFactoryImpl::CreateSprite(mono::Sprite& sprite, const char* sprite_fi
 
 const mono::SpriteData* SpriteFactoryImpl::GetSpriteDataForFile(const char* sprite_file) const
 {
-    const uint32_t sprite_filename_hash = mono::Hash(sprite_file);
+    const uint32_t sprite_filename_hash = hash::Hash(sprite_file);
 
     auto it = m_sprite_data_cache.find(sprite_filename_hash);
     if(it == m_sprite_data_cache.end())

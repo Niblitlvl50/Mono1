@@ -4,7 +4,7 @@
 #include <cstring>
 #include <cstdint>
 
-namespace mono
+namespace hash
 {
     //
     // This is the "FNV-1a alternate algorithm", taken from here: http://isthe.com/chongo/tech/comp/fnv/

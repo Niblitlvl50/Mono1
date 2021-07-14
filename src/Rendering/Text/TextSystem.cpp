@@ -7,7 +7,7 @@
 #include "Math/Matrix.h"
 
 #include "TransformSystem/TransformSystem.h"
-#include "Util/Hash.h"
+#include "System/Hash.h"
 
 using namespace mono;
 
@@ -38,7 +38,7 @@ void TextSystem::SetTextData(uint32_t id, const mono::TextComponent& text_data)
 
 uint32_t TextSystem::Id() const
 {
-    return mono::Hash(Name());
+    return hash::Hash(Name());
 }
 
 const char* TextSystem::Name() const

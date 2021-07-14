@@ -1,7 +1,7 @@
 
 #include "TextureFactoryImpl.h"
 #include "Texture.h"
-#include "Util/Hash.h"
+#include "System/Hash.h"
 #include "System/System.h"
 
 #include <cstdio>
@@ -17,7 +17,7 @@ mono::ITexturePtr TextureFactoryImpl::CreateTexture(const char* texture_name) co
     if(strlen(texture_name) == 0)
         return nullptr;
 
-    const uint32_t texture_hash = mono::Hash(texture_name);
+    const uint32_t texture_hash = hash::Hash(texture_name);
 
     mono::ITexturePtr texture = GetTextureFromCache(texture_hash);
     if(texture)
@@ -31,7 +31,7 @@ mono::ITexturePtr TextureFactoryImpl::CreateTextureFromData(const byte* data, in
 {
     if(cache_name)
     {
-        const uint32_t texture_hash = mono::Hash(cache_name);
+        const uint32_t texture_hash = hash::Hash(cache_name);
 
         mono::ITexturePtr texture = GetTextureFromCache(texture_hash);
         if(texture)

@@ -1,7 +1,7 @@
 
 #include "EntitySystem.h"
 
-#include "Util/Hash.h"
+#include "System/Hash.h"
 #include "SystemContext.h"
 #include "System/System.h"
 #include "Util/Algorithm.h"
@@ -51,7 +51,7 @@ mono::Entity EntitySystem::CreateEntity(const char* name, const std::vector<uint
 
 mono::Entity EntitySystem::CreateEntity(const char* entity_file)
 {
-    const uint32_t entity_hash = mono::Hash(entity_file);
+    const uint32_t entity_hash = hash::Hash(entity_file);
     const auto it = m_cached_entities.find(entity_hash);
     if(it == m_cached_entities.end())
         m_cached_entities[entity_hash] = m_load_func(entity_file);
@@ -64,7 +64,7 @@ mono::Entity EntitySystem::CreateEntity(const char* entity_file)
 
     for(const ComponentData& component : entity_data.entity_components)
     {
-        const uint32_t component_hash = mono::Hash(component.name.c_str());
+        const uint32_t component_hash = hash::Hash(component.name.c_str());
         if(AddComponent(new_entity->id, component_hash))
             SetComponentData(new_entity->id, component_hash, component.properties);
     }
@@ -352,7 +352,7 @@ uint32_t EntitySystem::FindEntityByName(const char* name) const
 
 uint32_t EntitySystem::Id() const
 {
-    return mono::Hash(Name());
+    return hash::Hash(Name());
 }
 
 const char* EntitySystem::Name() const

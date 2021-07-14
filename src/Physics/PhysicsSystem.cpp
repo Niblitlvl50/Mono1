@@ -2,7 +2,7 @@
 #include "PhysicsSystem.h"
 #include "TransformSystem/TransformSystem.h"
 #include "PhysicsSpace.h"
-#include "Util/Hash.h"
+#include "System/Hash.h"
 
 #include "Impl/BodyImpl.h"
 #include "Impl/ShapeImpl.h"
@@ -318,7 +318,7 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const PolyComponent& pol
 
 uint32_t PhysicsSystem::Id() const
 {
-    return mono::Hash(Name());
+    return hash::Hash(Name());
 }
 
 const char* PhysicsSystem::Name() const

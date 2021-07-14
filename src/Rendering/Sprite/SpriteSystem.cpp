@@ -4,7 +4,7 @@
 #include "SpriteFactory.h"
 #include "Rendering/RenderSystem.h"
 #include "TransformSystem/TransformSystem.h"
-#include "Util/Hash.h"
+#include "System/Hash.h"
 #include "Util/Random.h"
 
 #include <cassert>
@@ -107,7 +107,7 @@ void SpriteSystem::SetSpriteEnabled(uint32_t sprite_id, bool enabled)
 
 uint32_t SpriteSystem::Id() const
 {
-    return mono::Hash(Name());
+    return hash::Hash(Name());
 }
 
 const char* SpriteSystem::Name() const

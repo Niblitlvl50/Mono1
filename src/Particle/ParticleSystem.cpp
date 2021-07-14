@@ -1,7 +1,7 @@
 
 #include "ParticleSystem.h"
 #include "Rendering/RenderBuffer/IRenderBuffer.h"
-#include "Util/Hash.h"
+#include "System/Hash.h"
 #include "Util/Algorithm.h"
 #include "Util/Random.h"
 
@@ -94,7 +94,7 @@ ParticleSystem::~ParticleSystem()
 
 uint32_t ParticleSystem::Id() const
 {
-    return mono::Hash(Name());
+    return hash::Hash(Name());
 }
 
 const char* ParticleSystem::Name() const

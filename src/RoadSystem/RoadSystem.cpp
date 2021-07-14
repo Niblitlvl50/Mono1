@@ -1,6 +1,6 @@
 
 #include "RoadSystem.h"
-#include "Util/Hash.h"
+#include "System/Hash.h"
 
 using namespace mono;
 
@@ -28,7 +28,7 @@ void RoadSystem::SetData(uint32_t entity_id, const RoadComponent& component)
 
 uint32_t RoadSystem::Id() const
 {
-    return mono::Hash(Name());
+    return hash::Hash(Name());
 }
 
 const char* RoadSystem::Name() const

@@ -1,6 +1,6 @@
 
 #include "Audio.h"
-#include "Util/Hash.h"
+#include "System/Hash.h"
 #include "System/System.h"
 
 #include <cstdint>
@@ -122,7 +122,7 @@ void audio::Shutdown()
 
 audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback playback)
 {
-    const uint32_t sound_hash = mono::Hash(file_name);
+    const uint32_t sound_hash = hash::Hash(file_name);
     auto it = g_sound_repository.find(sound_hash);
     if(it != g_sound_repository.end())
     {

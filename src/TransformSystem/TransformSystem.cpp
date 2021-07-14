@@ -1,6 +1,6 @@
 
 #include "TransformSystem.h"
-#include "Util/Hash.h"
+#include "System/Hash.h"
 #include <limits>
 #include <cstdint>
 
@@ -100,7 +100,7 @@ void TransformSystem::ResetTransformComponent(uint32_t id)
 
 uint32_t TransformSystem::Id() const
 {
-    return mono::Hash(Name());
+    return hash::Hash(Name());
 }
 
 const char* TransformSystem::Name() const

@@ -52,12 +52,15 @@ endif(APPLE)
 # glad
 add_library(glad STATIC "third_party/glad/glad_gl_33/glad.c")
 
+# uuid4
+add_library(uuid4 STATIC "third_party/uuid4/src/uuid4.c")
+
 # huffandpuff
-file(GLOB_RECURSE huffandpuff_source_files "third_party/huffandpuff/*.c" "third_party/huffandpuff/*.h")
+file(GLOB_RECURSE huffandpuff_source_files "third_party/huffandpuff/*.c")
 add_library(huffandpuff STATIC ${huffandpuff_source_files})
 
 # imgui
-file(GLOB imgui_source_files "third_party/imgui/*.cpp" "third_party/imgui/*.h")
+file(GLOB imgui_source_files "third_party/imgui/*.cpp")
 add_library(imgui STATIC ${imgui_source_files})
 
 # gtest
@@ -69,10 +72,10 @@ if(NOT MSVC)
 endif()
 
 # Mono
-file(GLOB_RECURSE engine_source_files "src/*.cpp" "src/*.h")
+file(GLOB_RECURSE engine_source_files "src/*.cpp")
 add_library(mono STATIC ${engine_source_files})
 add_dependencies(mono huffandpuff imgui chipmunk_static)
-target_link_libraries(mono glad huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} OpenGL::GL ${AUDIOTOOLBOX})
+target_link_libraries(mono glad uuid4 huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} OpenGL::GL ${AUDIOTOOLBOX})
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "tests/*.cpp")

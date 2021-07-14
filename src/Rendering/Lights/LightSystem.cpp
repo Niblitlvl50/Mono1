@@ -1,6 +1,6 @@
 
 #include "LightSystem.h"
-#include "Util/Hash.h"
+#include "System/Hash.h"
 
 using namespace mono;
 
@@ -39,7 +39,7 @@ void LightSystem::Release(uint32_t light_id)
 
 uint32_t LightSystem::Id() const
 {
-    return mono::Hash(Name());
+    return hash::Hash(Name());
 }
 
 const char* LightSystem::Name() const
