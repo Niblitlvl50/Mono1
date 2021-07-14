@@ -29,6 +29,7 @@ namespace mono
     struct EntityData
     {
         std::string entity_name;
+        uint32_t entity_uuid;
         uint32_t entity_properties;
         std::vector<ComponentData> entity_components;
     };
@@ -45,6 +46,7 @@ namespace mono
 
         virtual ~IEntityManager() = default;
         virtual mono::Entity CreateEntity(const char* name, const std::vector<uint32_t>& components) = 0;
+        virtual mono::Entity CreateEntity(const char* name, uint32_t uuid_hash, const std::vector<uint32_t>& components) = 0;
         virtual mono::Entity CreateEntity(const char* entity_file) = 0;
 
         virtual bool AddComponent(uint32_t entity_id, uint32_t component_hash) = 0;
@@ -67,6 +69,9 @@ namespace mono
 
         virtual void SetEntityName(uint32_t entity_id, const char* name) = 0;
         virtual const char* GetEntityName(uint32_t entity_id) const = 0;
+
+        virtual uint32_t GetEntityUuid(uint32_t entity_id) const = 0;
+        virtual uint32_t GetEntityIdFromUuid(uint32_t uuid) const = 0;
 
         virtual void ReleaseEntity(uint32_t entity_id) = 0;
         virtual void ReleaseAllEntities() = 0;

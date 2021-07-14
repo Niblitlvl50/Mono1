@@ -1,9 +1,10 @@
 
 #include "EntitySystem.h"
+#include "SystemContext.h"
 
 #include "System/Hash.h"
-#include "SystemContext.h"
 #include "System/System.h"
+#include "System/Uuid.h"
 #include "Util/Algorithm.h"
 
 #include <algorithm>
@@ -25,6 +26,7 @@ EntitySystem::EntitySystem(
     , m_ignore_releases(false)
 {
     m_entities.resize(n_entities);
+    m_entity_uuids.resize(n_entities, 0);
     m_free_indices.resize(n_entities);
     m_debug_names.resize(n_entities);
     m_release_callbacks.resize(n_entities);
@@ -40,8 +42,15 @@ EntitySystem::~EntitySystem()
 
 mono::Entity EntitySystem::CreateEntity(const char* name, const std::vector<uint32_t>& components)
 {
+    return CreateEntity(name, uuid::Uuid4Hashed(), components);
+}
+
+mono::Entity EntitySystem::CreateEntity(const char* name, uint32_t uuid_hash, const std::vector<uint32_t>& components)
+{
     mono::Entity* new_entity = AllocateEntity();
+    m_entity_uuids[new_entity->id] = uuid_hash;
     SetName(new_entity->id, name);
+
     for(uint32_t component : components)
         AddComponent(new_entity->id, component);
 
@@ -59,6 +68,7 @@ mono::Entity EntitySystem::CreateEntity(const char* entity_file)
     const EntityData& entity_data = m_cached_entities[entity_hash];
 
     mono::Entity* new_entity = AllocateEntity();
+    m_entity_uuids[new_entity->id] = entity_data.entity_uuid;
     SetName(new_entity->id, entity_data.entity_name);
     new_entity->properties = entity_data.entity_properties;
 
@@ -174,6 +184,21 @@ const char* EntitySystem::GetEntityName(uint32_t entity_id) const
 {
     const std::string& name = GetName(entity_id);
     return name.c_str();
+}
+
+uint32_t EntitySystem::GetEntityUuid(uint32_t entity_id) const
+{
+    return m_entity_uuids[entity_id];
+}
+
+uint32_t EntitySystem::GetEntityIdFromUuid(uint32_t uuid) const
+{
+    const auto find_id = [uuid](uint32_t other_uuid) {
+        return uuid == other_uuid;
+    };
+
+    const auto it = std::find_if(m_entity_uuids.begin(), m_entity_uuids.end(), find_id);
+    return std::distance(m_entity_uuids.begin(), it);
 }
 
 void EntitySystem::RegisterComponent(

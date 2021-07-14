@@ -30,6 +30,7 @@ namespace mono
         ~EntitySystem();
 
         mono::Entity CreateEntity(const char* name, const std::vector<uint32_t>& components) override;
+        mono::Entity CreateEntity(const char* name, uint32_t uuid_hash, const std::vector<uint32_t>& components) override;
         mono::Entity CreateEntity(const char* entity_file) override;
 
         bool AddComponent(uint32_t entity_id, uint32_t component_hash) override;
@@ -44,6 +45,9 @@ namespace mono
 
         void SetEntityName(uint32_t entity_id, const char* name) override;
         const char* GetEntityName(uint32_t entity_id) const override;
+
+        uint32_t GetEntityUuid(uint32_t entity_id) const override;
+        uint32_t GetEntityIdFromUuid(uint32_t uuid) const override;
 
         void ReleaseEntity(uint32_t entity_id) override;
         void ReleaseAllEntities() override;
@@ -101,6 +105,7 @@ namespace mono
         ComponentNameLookupFunc m_component_name_lookup;
 
         std::vector<Entity> m_entities;
+        std::vector<uint32_t> m_entity_uuids;
         std::vector<uint32_t> m_free_indices;
         std::vector<std::string> m_debug_names;
 
