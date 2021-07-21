@@ -12,6 +12,7 @@ uint32_t uuid::Uuid4Hashed()
         static const int init_result = []{
             return uuid4_init();
         }();
+        (void)init_result;
         assert(init_result == UUID4_ESUCCESS);
     }
 
