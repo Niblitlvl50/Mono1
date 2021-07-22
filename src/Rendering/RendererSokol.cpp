@@ -334,7 +334,7 @@ void RendererSokol::DrawSprite(
         sprite_properties & mono::SpriteProperty::FLIP_VERTICAL);
     SpritePipeline::SetWindSway(sprite_properties & mono::SpriteProperty::WIND_SWAY);
     SpritePipeline::SetShade(sprite->GetShade());
-    SpritePipeline::SetFlashSprite(sprite_properties & mono::SpriteProperty::FLASH);
+    SpritePipeline::SetFlashSprite(sprite->ShouldFlashSprite());
 
     sg_draw(0, 6, 1);
 }

@@ -24,6 +24,8 @@ namespace mono
         math::Vector GetPosition() const override;
         math::Vector GetTargetPosition() const override;
 
+        void SetPositionOffset(const math::Vector& offset) override;
+
         void SetWindowSize(const math::Vector& window_size) override;
         const math::Vector& GetWindowSize() const override;
         math::Vector ScreenToWorld(const math::Vector& screen_pos) const override;
@@ -32,6 +34,7 @@ namespace mono
 
         math::Vector m_position;
         math::Vector m_target_position;
+        math::Vector m_position_offset;
 
         math::Vector m_viewport_size;
         math::Vector m_target_viewport_size;

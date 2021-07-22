@@ -20,6 +20,8 @@ namespace mono
         virtual math::Vector GetPosition() const = 0;
         virtual math::Vector GetTargetPosition() const = 0;
 
+        virtual void SetPositionOffset(const math::Vector& offset) = 0;
+
         virtual void SetWindowSize(const math::Vector& window_size) = 0;
         virtual const math::Vector& GetWindowSize() const = 0;
         
