@@ -24,5 +24,5 @@ namespace mono
     };
 
     SpriteDrawBuffers BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data);
-    SpriteShadowBuffers BuildSpriteShadowBuffers(const math::Vector& shadow_offset, float shadow_size);
+    SpriteShadowBuffers BuildSpriteShadowBuffers(const math::Vector& shadow_offset, float shadow_radius);
 }

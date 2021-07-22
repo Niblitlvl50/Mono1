@@ -25,6 +25,11 @@ namespace math
             , mB(center + math::Vector(radius, radius))
         { }
 
+        Quad(const Vector& center, float width, float height)
+            : mA(center - math::Vector(width / 2.0f, height / 2.0f))
+            , mB(center + math::Vector(width / 2.0f, height / 2.0f))
+        { }
+
         Vector mA;
         Vector mB;
     };

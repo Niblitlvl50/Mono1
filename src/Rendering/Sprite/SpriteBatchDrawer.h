@@ -39,7 +39,7 @@ namespace mono
         struct ShadowData
         {
             math::Vector offset;
-            float size;
+            float radius;
         };
         mutable std::unordered_map<uint32_t, ShadowData> m_shadow_data_cache;
         mutable std::unordered_map<uint32_t, SpriteShadowBuffers> m_shadow_buffers;

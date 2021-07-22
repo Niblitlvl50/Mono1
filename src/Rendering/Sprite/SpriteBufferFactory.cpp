@@ -76,9 +76,9 @@ mono::SpriteDrawBuffers mono::BuildSpriteDrawBuffers(const mono::SpriteData* spr
     return buffers;
 }
 
-mono::SpriteShadowBuffers mono::BuildSpriteShadowBuffers(const math::Vector& shadow_offset, float shadow_size)
+mono::SpriteShadowBuffers mono::BuildSpriteShadowBuffers(const math::Vector& shadow_offset, float shadow_radius)
 {
-    const math::Vector size = { shadow_size, shadow_size / 2.0f };
+    const math::Vector size = { shadow_radius, shadow_radius / 2.0f };
 
     const math::Vector vertices[] = {
         math::Vector(-size.x, -size.y) + shadow_offset,

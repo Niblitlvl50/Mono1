@@ -29,6 +29,13 @@ namespace
         mono::ISprite* sprite;
         int layer;
     };
+
+    struct ShadowDrawData
+    {
+        uint32_t entity_id;
+        math::Matrix transform;
+        mono::ISprite* sprite;
+    };
 }
 
 SpriteBatchDrawer::SpriteBatchDrawer(const mono::TransformSystem* transform_system, mono::SpriteSystem* sprite_system)
@@ -60,14 +67,19 @@ void SpriteBatchDrawer::PreloadSpriteData(const std::vector<std::string>& sprite
 void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 {
     std::vector<SpriteTransformPair> sprites_to_draw;
-    sprites_to_draw.reserve(128);
+    std::vector<ShadowDrawData> shadows_to_draw;
 
-    const auto collect_sprites = [this, &renderer, &sprites_to_draw](mono::ISprite* sprite, int layer, uint32_t id)
+    sprites_to_draw.reserve(128);
+    shadows_to_draw.reserve(128);
+
+    const auto collect_sprites = [&, this](mono::ISprite* sprite, int layer, uint32_t id)
     {
         if(!sprite->GetTexture())
             return;
 
-        math::Quad world_bounds = m_transform_system->GetWorldBoundingBox(id);
+        const math::Matrix& transform = m_transform_system->GetWorld(id);
+        const math::Quad world_bounds = m_transform_system->GetWorldBoundingBox(id);
+
         if(renderer.Cull(world_bounds))
         {
             const uint32_t sprite_hash = sprite->GetSpriteHash();
@@ -75,12 +87,23 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
             if(it == m_sprite_buffers.end())
                 m_sprite_buffers[sprite_hash] = BuildSpriteDrawBuffers(sprite->GetSpriteData());
 
-            const bool has_shadow = (sprite->GetProperties() & mono::SpriteProperty::SHADOW);
-            if(has_shadow)
-            {
-                const math::Vector& shadow_offset = sprite->GetShadowOffset();
-                const float shadow_size = sprite->GetShadowSize();
+            const float sort_offset = m_sprite_system->GetSpriteSortOffset(id);
+            math::Quad world_bounds_offseted = world_bounds;
+            world_bounds_offseted.mA.y += sort_offset;
 
+            sprites_to_draw.push_back({ id, transform, world_bounds_offseted, sprite, layer });
+        }
+
+        const bool has_shadow = (sprite->GetProperties() & mono::SpriteProperty::SHADOW);
+        if(has_shadow)
+        {
+            const math::Vector& shadow_offset = sprite->GetShadowOffset();
+            const float shadow_radius = sprite->GetShadowSize();
+            const math::Quad shadow_bb = math::Quad(math::Center(world_bounds) + shadow_offset, shadow_radius * 2.0f, shadow_radius);
+
+            const bool is_shadow_visible = renderer.Cull(shadow_bb);
+            if(is_shadow_visible)
+            {
                 bool need_update = false;
 
                 auto shadow_it = m_shadow_buffers.find(id);
@@ -88,7 +111,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
                 {
                     auto shadow_cached_it = m_shadow_data_cache.find(id);
                     need_update = 
-                        (shadow_cached_it->second.offset != shadow_offset) || (shadow_cached_it->second.size != shadow_size);
+                        (shadow_cached_it->second.offset != shadow_offset) || (shadow_cached_it->second.radius != shadow_radius);
                 }
                 else
                 {
@@ -97,15 +120,12 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 
                 if(need_update)
                 {
-                    m_shadow_data_cache[id] = { shadow_offset, shadow_size };
-                    m_shadow_buffers[id] = BuildSpriteShadowBuffers(shadow_offset, shadow_size);
+                    m_shadow_data_cache[id] = { shadow_offset, shadow_radius };
+                    m_shadow_buffers[id] = BuildSpriteShadowBuffers(shadow_offset, shadow_radius);
                 }
-            }
 
-            const math::Matrix& transform = m_transform_system->GetWorld(id);
-            const float sort_offset = m_sprite_system->GetSpriteSortOffset(id);
-            world_bounds.mA.y += sort_offset;
-            sprites_to_draw.push_back({ id, transform, world_bounds, sprite, layer });
+                shadows_to_draw.push_back({ id, transform, sprite });
+            }
         }
     };
 
@@ -121,29 +141,31 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 
     std::sort(sprites_to_draw.begin(), sprites_to_draw.end(), sort_on_y_and_layer);
 
+    for(const ShadowDrawData& shadow_draw : shadows_to_draw)
+    {
+        const math::Matrix& world_transform = renderer.GetTransform() * shadow_draw.transform;
+        auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
+
+        const auto it = m_shadow_buffers.find(shadow_draw.entity_id);
+        if(it != m_shadow_buffers.end())
+        {
+            const SpriteShadowBuffers& shadow_buffers = it->second;
+            renderer.DrawGeometry(
+                shadow_buffers.vertices.get(),
+                shadow_buffers.uv.get(),
+                m_sprite_indices.get(),
+                m_shadow_texture.get(),
+                false,
+                m_sprite_indices->Size());
+        }
+    }
+
     for(const SpriteTransformPair& sprite_transform : sprites_to_draw)
     {
         const math::Matrix& world_transform = renderer.GetTransform() * sprite_transform.transform;
         auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
 
         mono::ISprite* sprite = sprite_transform.sprite;
-
-        const bool has_shadow = (sprite->GetProperties() & mono::SpriteProperty::SHADOW);
-        if(has_shadow)
-        {
-            const auto it = m_shadow_buffers.find(sprite_transform.entity_id);
-            if(it != m_shadow_buffers.end())
-            {
-                const SpriteShadowBuffers& shadow_buffers = it->second;
-                renderer.DrawGeometry(
-                    shadow_buffers.vertices.get(),
-                    shadow_buffers.uv.get(),
-                    m_sprite_indices.get(),
-                    m_shadow_texture.get(),
-                    false,
-                    m_sprite_indices->Size());
-            }
-        }
 
         const SpriteDrawBuffers& sprite_buffers = m_sprite_buffers[sprite->GetSpriteHash()];
         const int offset = sprite->GetCurrentFrameIndex() * sprite_buffers.vertices_per_sprite;
