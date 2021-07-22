@@ -287,11 +287,13 @@ namespace
     {
     public:
 
-        Timer(uint32_t ms, bool repeatingTimer, System::timer_callback_t callback, void* data)
-            : m_ms(ms),
-              m_repeatingTimer(repeatingTimer),
-              m_callback(callback),
-              m_data(data)
+        Timer(uint32_t ms, uint32_t properties, System::timer_callback_t callback, void* data)
+            : m_ms(ms)
+            , m_properties(properties)
+            , m_callback(callback)
+            , m_data(data)
+            , m_timer_id(-1)
+            , m_started(false)
         {
             Start();
         }
@@ -321,28 +323,34 @@ namespace
                 return interval;
             };
 
-            m_timerId = SDL_AddTimer(m_ms, callback_func, this);
+            m_timer_id = SDL_AddTimer(m_ms, callback_func, this);
             m_started = true;
         }
         void Stop() override
         {
             if(m_started)
-                SDL_RemoveTimer(m_timerId);
+            {
+                SDL_RemoveTimer(m_timer_id);
+                m_started = false;
+
+                if(m_properties & System::TimerProperties::AUTO_DELETE)
+                    delete this;
+            }
         }
         void DoCallback()
         {
             m_callback(m_data);
-            if(!m_repeatingTimer)
+            if(m_properties & System::TimerProperties::ONE_SHOT)
                 Stop();
         }
 
         const uint32_t m_ms;
-        const bool m_repeatingTimer;
+        const uint32_t m_properties;
         const System::timer_callback_t m_callback;
         void* m_data;
 
-        SDL_TimerID m_timerId = -1;
-        bool m_started = false;
+        SDL_TimerID m_timer_id;
+        bool m_started;
     };
 }
 
@@ -446,9 +454,9 @@ void System::Sleep(uint32_t ms)
     SDL_Delay(ms);
 }
 
-System::ITimer* System::CreateTimer(uint32_t ms, bool one_shot, System::timer_callback_t callback, void* data)
+System::ITimer* System::CreateTimer(uint32_t ms, uint32_t properties, System::timer_callback_t callback, void* data)
 {
-    return new Timer(ms, !one_shot, callback, data);
+    return new Timer(ms, properties, callback, data);
 }
 
 System::Size System::GetCurrentWindowSize()

@@ -144,8 +144,15 @@ namespace System
 
     void Sleep(uint32_t ms);
 
-    // The caller is responsible for deleting the pointer
-    ITimer* CreateTimer(uint32_t ms, bool one_shot, timer_callback_t callback, void* context);
+    enum TimerProperties
+    {
+        TP_NONE = 0,
+        ONE_SHOT = ENUM_BIT(0),
+        AUTO_DELETE = ENUM_BIT(1)
+    };
+
+    // The caller is responsible for deleting the pointer, unless the properties is set to AUTO_DELETE.
+    ITimer* CreateTimer(uint32_t ms, uint32_t properties, timer_callback_t callback, void* context);
 
     // Gets the devices window size
     Size GetCurrentWindowSize();
