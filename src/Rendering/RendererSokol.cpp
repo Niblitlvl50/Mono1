@@ -29,8 +29,8 @@ using namespace mono;
 RendererSokol::RendererSokol()
     : m_offscreen_color_pass{}
     , m_offscreen_light_pass{}
-    , m_clear_color(0.7f, 0.7f, 0.7f, 1.0f)
-    , m_ambient_shade(0.5f, 0.5f, 0.5f, 0.5f)
+    , m_clear_color(0.7f, 0.7f, 0.7f)
+    , m_ambient_shade(1.0f, 1.0f, 1.0f)
 {
     m_color_points_pipeline = mono::ColorPipeline::MakePointsPipeline();
     m_color_lines_pipeline = mono::ColorPipeline::MakeLinesPipeline();
@@ -55,7 +55,9 @@ RendererSokol::RendererSokol()
     m_screen_uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(uv_coordinates), uv_coordinates);
     m_screen_indices = CreateElementBuffer(BufferType::STATIC, std::size(indices), indices);
 
-    m_light_mask_texture = mono::GetTextureFactory()->CreateTexture("res/textures/light_mask_3.png");
+    const char* light_mask_texture = mono::LightMaskTexture();
+    if(light_mask_texture)
+        m_light_mask_texture = mono::GetTextureFactory()->CreateTexture(light_mask_texture);
 }
 
 RendererSokol::~RendererSokol()
@@ -120,7 +122,7 @@ void RendererSokol::DrawLights()
 
     sg_begin_pass(m_offscreen_light_pass.pass_handle, &offscreen_light_pass_action);
 
-    if(!m_lights.empty())
+    if(m_light_mask_texture && !m_lights.empty())
     {
         const uint32_t n_light_vertices = m_lights.size() * 4;
         const uint32_t n_light_indices = m_lights.size() * 3 * 2;
@@ -170,10 +172,10 @@ void RendererSokol::DrawLights()
         const auto index_buffer = mono::CreateElementBuffer(BufferType::STATIC, n_light_indices, index_data.data());
 
         DrawGeometry(vertex_buffer.get(), uv_buffer.get(), color_buffer.get(), index_buffer.get(), m_light_mask_texture.get(), false, index_buffer->Size());
-        m_lights.clear();
     }
 
     sg_end_pass(); // End offscreen light render pass
+    m_lights.clear();
 }
 
 void RendererSokol::PrepareDraw()

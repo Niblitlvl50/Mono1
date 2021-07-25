@@ -46,7 +46,10 @@ SpriteBatchDrawer::SpriteBatchDrawer(const mono::TransformSystem* transform_syst
         0, 1, 2, 0, 2, 3
     };
     m_sprite_indices = mono::CreateElementBuffer(mono::BufferType::STATIC, 6, indices);
-    m_shadow_texture = mono::GetTextureFactory()->CreateTexture("res/textures/roundshadow.png");
+
+    const char* sprite_shadow_texture = mono::SpriteShadowTexture();
+    if(sprite_shadow_texture)
+        m_shadow_texture = mono::GetTextureFactory()->CreateTexture(sprite_shadow_texture);
 }
 
 SpriteBatchDrawer::~SpriteBatchDrawer()
@@ -62,6 +65,11 @@ void SpriteBatchDrawer::PreloadSpriteData(const std::vector<std::string>& sprite
 
         m_sprite_buffers[sprite_data->hash] = BuildSpriteDrawBuffers(sprite_data);
     }
+}
+
+void SpriteBatchDrawer::ReloadSpriteData(uint32_t sprite_hash)
+{
+    m_sprite_buffers.erase(sprite_hash);
 }
 
 void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
@@ -141,22 +149,25 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 
     std::sort(sprites_to_draw.begin(), sprites_to_draw.end(), sort_on_y_and_layer);
 
-    for(const ShadowDrawData& shadow_draw : shadows_to_draw)
+    if(m_shadow_texture)
     {
-        const math::Matrix& world_transform = renderer.GetTransform() * shadow_draw.transform;
-        auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
-
-        const auto it = m_shadow_buffers.find(shadow_draw.entity_id);
-        if(it != m_shadow_buffers.end())
+        for(const ShadowDrawData& shadow_draw : shadows_to_draw)
         {
-            const SpriteShadowBuffers& shadow_buffers = it->second;
-            renderer.DrawGeometry(
-                shadow_buffers.vertices.get(),
-                shadow_buffers.uv.get(),
-                m_sprite_indices.get(),
-                m_shadow_texture.get(),
-                false,
-                m_sprite_indices->Size());
+            const math::Matrix& world_transform = renderer.GetTransform() * shadow_draw.transform;
+            auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
+
+            const auto it = m_shadow_buffers.find(shadow_draw.entity_id);
+            if(it != m_shadow_buffers.end())
+            {
+                const SpriteShadowBuffers& shadow_buffers = it->second;
+                renderer.DrawGeometry(
+                    shadow_buffers.vertices.get(),
+                    shadow_buffers.uv.get(),
+                    m_sprite_indices.get(),
+                    m_shadow_texture.get(),
+                    false,
+                    m_sprite_indices->Size());
+            }
         }
     }
 

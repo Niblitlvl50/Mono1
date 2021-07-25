@@ -14,6 +14,7 @@ namespace mono
     struct TextDefinition;
     struct SpriteData;
     struct SpriteDrawBuffers;
+    class SpriteBatchDrawer;
 
     namespace Color
     {

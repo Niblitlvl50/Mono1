@@ -22,6 +22,7 @@ namespace mono
         ~SpriteBatchDrawer();
 
         void PreloadSpriteData(const std::vector<std::string>& sprite_files);
+        void ReloadSpriteData(uint32_t sprite_hash);
 
     private:
 
