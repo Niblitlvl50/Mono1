@@ -23,7 +23,6 @@ EntitySystem::EntitySystem(
     : m_system_context(system_context)
     , m_load_func(load_func)
     , m_component_name_lookup(component_lookup)
-    , m_ignore_releases(false)
 {
     m_entities.resize(n_entities);
     m_entity_uuids.resize(n_entities, 0);
@@ -219,24 +218,46 @@ void EntitySystem::RegisterComponent(
 
 void EntitySystem::ReleaseEntity(uint32_t entity_id)
 {
-    if(m_ignore_releases)
-        return;
-
     m_entities_to_release.insert(entity_id);
     m_spawn_events.push_back({ false, entity_id });
 }
 
-void EntitySystem::ReleaseAllEntities()
+void EntitySystem::PushEntityStackRecord(const char* debug_name)
 {
-    const auto collect_active_entities = [this](Entity& entity) {
-        ReleaseEntity(entity.id);
-    };
+    EntityStackRecord record;
+    record.debug_name = debug_name;
 
+    const auto collect_active_entities = [&](Entity& entity) {
+        record.allocated_entities.push_back(entity.id);
+    };
     ForEachEntity(collect_active_entities);
 
-    m_ignore_releases = true;
-    Sync();
-    m_ignore_releases = false;
+    m_entity_allocation_stack.push_back(record);
+}
+
+void EntitySystem::PopEntityStackRecord()
+{
+    std::vector<uint32_t> allocated_entities;
+
+    const auto collect_active_entities = [&](Entity& entity) {
+        allocated_entities.push_back(entity.id);
+    };
+    ForEachEntity(collect_active_entities);
+
+    const EntityStackRecord record = m_entity_allocation_stack.back();
+
+    std::vector<uint32_t> diff_result;
+    std::set_difference(
+        allocated_entities.begin(),
+        allocated_entities.end(),
+        record.allocated_entities.begin(),
+        record.allocated_entities.end(),
+        std::back_inserter(diff_result));
+
+    for(uint32_t id : diff_result)
+        ReleaseEntity(id);
+
+    m_entity_allocation_stack.pop_back();
 }
 
 uint32_t EntitySystem::AddReleaseCallback(uint32_t entity_id, const ReleaseCallback& callback)

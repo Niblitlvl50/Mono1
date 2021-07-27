@@ -15,11 +15,11 @@ namespace mono
 
         ~SystemContext()
         {
-            for(auto it = m_systems.rbegin(), end = m_systems.rend(); it != end; ++it)
-                delete (*it);
+            //for(auto it = m_systems.rbegin(), end = m_systems.rend(); it != end; ++it)
+            //    delete (*it);
 
-            //for(IGameSystem* system : m_systems)
-            //    delete system;
+            for(IGameSystem* system : m_systems)
+                delete system;
 
             m_systems.clear();
         }

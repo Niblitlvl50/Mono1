@@ -50,7 +50,10 @@ namespace mono
         uint32_t GetEntityIdFromUuid(uint32_t uuid) const override;
 
         void ReleaseEntity(uint32_t entity_id) override;
-        void ReleaseAllEntities() override;
+
+        void PushEntityStackRecord(const char* debug_name) override;
+        void PopEntityStackRecord() override;
+
 
         uint32_t AddReleaseCallback(uint32_t entity_id, const ReleaseCallback& callback) override;
         void RemoveReleaseCallback(uint32_t entity_id, uint32_t callback_id) override;
@@ -112,7 +115,6 @@ namespace mono
         using ReleaseCallbacks = std::array<ReleaseCallback, 8>;
         std::vector<ReleaseCallbacks> m_release_callbacks;
 
-        bool m_ignore_releases;
         std::unordered_set<uint32_t> m_entities_to_release;
         std::unordered_map<uint32_t, EntityData> m_cached_entities;
 
@@ -127,5 +129,12 @@ namespace mono
 
         std::unordered_map<uint32_t, ComponentFuncs> m_component_factories;
         std::vector<SpawnEvent> m_spawn_events;
+
+        struct EntityStackRecord
+        {
+            const char* debug_name;
+            std::vector<uint32_t> allocated_entities;
+        };
+        std::vector<EntityStackRecord> m_entity_allocation_stack;
     };
 }
