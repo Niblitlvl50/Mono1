@@ -318,6 +318,8 @@ void EntitySystem::DeferredRelease()
 
 Entity* EntitySystem::AllocateEntity()
 {
+    assert(!m_free_indices.empty());
+
     const uint32_t entity_id = m_free_indices.back();
     m_free_indices.pop_back();
 
