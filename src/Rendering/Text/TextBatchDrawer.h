@@ -4,13 +4,13 @@
 #include "MonoFwd.h"
 #include "Rendering/IDrawable.h"
 #include "Rendering/RenderFwd.h"
+#include "Rendering/Text/TextSystem.h"
 
 #include <vector>
 #include <unordered_map>
 
 namespace mono
 {
-    struct TextComponent;
     struct TextDrawBuffers;
 
     class TextBatchDrawer : public mono::IDrawable
