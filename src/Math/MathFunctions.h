@@ -5,6 +5,7 @@
 #include <vector>
 #include <cfloat>
 #include <cmath>
+#include <algorithm>
 
 namespace math
 {    

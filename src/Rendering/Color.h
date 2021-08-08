@@ -3,6 +3,7 @@
 
 #include "Math/MathFunctions.h"
 #include <cstdint>
+#include <cstring>
 #include <algorithm>
 #include <initializer_list>
 
