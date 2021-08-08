@@ -6,6 +6,8 @@
 #include "Rendering/RenderFwd.h"
 #include "Rendering/Texture/ITextureFactory.h"
 
+#include <vector>
+
 #define ENUM_BIT(n) (1 << (n))
 
 namespace mono
