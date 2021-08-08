@@ -13,14 +13,6 @@
 
 using namespace mono;
 
-struct RoadBatchDrawer::CachedRoad
-{
-    bool dirty;
-    float width;
-    std::string texture_name;
-    mono::ITexturePtr texture;
-    mono::PathDrawBuffer buffers;
-};
 
 RoadBatchDrawer::RoadBatchDrawer(const RoadSystem* road_system, mono::PathSystem* path_system, const mono::TransformSystem* transform_system)
     : m_road_system(road_system)
