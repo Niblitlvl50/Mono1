@@ -132,8 +132,8 @@ bool math::LineIntersectsPolygon(const math::Vector& start, const math::Vector& 
         const math::Vector& v1 = points[point_index];
         const math::Vector& v2 = points[(point_index + 1) % points.size()];
 
-        const bool intersects = LineIntersectsLine(start, end, v1, v2);
-        if(intersects)
+        const math::LineIntersectionResult result = LineIntersectsLine(start, end, v1, v2);
+        if(result.intersects)
             return true;
     }
 
@@ -193,11 +193,10 @@ float math::NormalizeAngle(float radians)
     return radians;
 }
 
-bool math::LineIntersectsLine(
+math::LineIntersectionResult math::LineIntersectsLine(
     const math::Vector& start_first, const math::Vector& end_first,
     const math::Vector& start_second, const math::Vector& end_second)
 {
-//inline bool lines_intersect_2d(Vector2 const& p0, Vector2 const& p1, Vector2 const& p2, Vector2 const& p3, Vector2* i const = 0) {
     const math::Vector& s1 = end_first - start_first;
     const math::Vector& s2 = end_second - start_second;
 
@@ -208,14 +207,11 @@ bool math::LineIntersectsLine(
     const float s = (-s1.y * u.x + s1.x * u.y) * ip;
     const float t = ( s2.x * u.y - s2.y * u.x) * ip;
 
-    if(s >= 0.0f && s <= 1.0f && t >= 0.0f && t <= 1.0f)
-    {
-//        if(i)
-//            *i = p0 + (s1 * t);
-        return true;
-    }
+    LineIntersectionResult result;
+    result.intersects = (s >= 0.0f && s <= 1.0f && t >= 0.0f && t <= 1.0f);
+    result.intersection_point = start_first + (s1 * t);
 
-    return false;
+    return result;
 }
 
 bool math::IsPrettyMuchEquals(float left, float right, float tolerance)

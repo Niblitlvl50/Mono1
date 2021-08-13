@@ -2,6 +2,8 @@
 #pragma once
 
 #include "MathFwd.h"
+#include "Vector.h"
+
 #include <vector>
 #include <cfloat>
 #include <cmath>
@@ -42,7 +44,12 @@ namespace math
     math::Vector MapVectorInQuad(const math::Vector& point, const math::Quad& quad);
     math::Vector ClosestPointOnLine(const math::Vector& start, const math::Vector& end, const math::Vector& point);
 
-    bool LineIntersectsLine(
+    struct LineIntersectionResult
+    {
+        bool intersects;
+        math::Vector intersection_point;
+    };
+    LineIntersectionResult LineIntersectsLine(
         const math::Vector& start_first, const math::Vector& end_first,
         const math::Vector& start_second, const math::Vector& end_second);
 
