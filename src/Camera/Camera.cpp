@@ -54,6 +54,11 @@ math::Vector Camera::GetViewportSize() const
     return m_viewport_size;
 }
 
+math::Vector Camera::GetTargetViewportSize() const
+{
+    return m_target_viewport_size;
+}
+
 math::Quad Camera::GetViewport() const
 {
     math::Quad viewport;
