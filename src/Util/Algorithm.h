@@ -38,4 +38,12 @@ namespace mono
         const auto it = std::find(collection.begin(), collection.end(), thing);
         return it != collection.end();
     }
+
+    template<class ForwardIt, class T, class Compare>
+    std::pair<ForwardIt,ForwardIt> equal_range(ForwardIt first, ForwardIt last, const T& value, Compare comp)
+    {
+        return std::make_pair(
+            std::lower_bound(first, last, value, comp),
+            std::upper_bound(first, last, value, comp));
+    }
 }
