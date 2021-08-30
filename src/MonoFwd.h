@@ -24,4 +24,6 @@ namespace mono
     class SpriteSystem;
     class TransformSystem;
     class TextSystem;
+
+    struct UpdateContext;
 }
