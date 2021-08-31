@@ -370,6 +370,9 @@ void RendererSokol::DrawPoints(const std::vector<math::Vector>& points, const mo
 
 void RendererSokol::DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float line_width) const
 {
+    if(line_points.empty())
+        return;
+
     const std::vector<mono::Color::RGBA> colors(line_points.size(), color);
 
     auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, line_points.size(), line_points.data());
@@ -384,6 +387,9 @@ void RendererSokol::DrawLines(const std::vector<math::Vector>& line_points, cons
 
 void RendererSokol::DrawPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float line_width) const
 {
+    if(line_points.empty())
+        return;
+
     const std::vector<mono::Color::RGBA> colors(line_points.size(), color);
 
     auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, line_points.size(), line_points.data());
