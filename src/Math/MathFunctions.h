@@ -22,9 +22,25 @@ namespace math
 
     LinePointResult PointOnLine(const math::Vector& line_start, const math::Vector& line_end, const math::Vector& point);
 
+    struct PointOnLineResult
+    {
+        math::Vector point;
+        float t;
+    };
+    PointOnLineResult ClosestPointOnLine(const math::Vector& start, const math::Vector& end, const math::Vector& point);
+
+    struct LineIntersectionResult
+    {
+        bool intersects;
+        math::Vector intersection_point;
+    };
+    LineIntersectionResult LineIntersectsLine(
+        const math::Vector& start_first, const math::Vector& end_first, const math::Vector& start_second, const math::Vector& end_second);
+
     bool QuadOverlaps(const math::Quad& left, const math::Quad& right);
     void ResizeQuad(math::Quad& quad, float value, float aspect = 1.0f);
     math::Quad ResizeQuad(const math::Quad& quad, float value, float aspect = 1.0f);
+    math::Vector MapVectorInQuad(const math::Vector& point, const math::Quad& quad);
 
     // Return angle in radians
     float AngleBetweenPoints(const math::Vector& first, const math::Vector& second);
@@ -37,21 +53,7 @@ namespace math
     math::Vector CentroidOfPolygon(const std::vector<math::Vector>& points);
     bool PointInsidePolygon(const math::Vector& point, const std::vector<math::Vector>& polygon);
     bool LineIntersectsPolygon(const math::Vector& start, const math::Vector& end, const std::vector<math::Vector>& polygon);
-
-    // Check if a polygon is clockwise oriented or not
     bool IsPolygonClockwise(const std::vector<math::Vector>& points);
-
-    math::Vector MapVectorInQuad(const math::Vector& point, const math::Quad& quad);
-    math::Vector ClosestPointOnLine(const math::Vector& start, const math::Vector& end, const math::Vector& point);
-
-    struct LineIntersectionResult
-    {
-        bool intersects;
-        math::Vector intersection_point;
-    };
-    LineIntersectionResult LineIntersectsLine(
-        const math::Vector& start_first, const math::Vector& end_first,
-        const math::Vector& start_second, const math::Vector& end_second);
 
     bool IsPrettyMuchEquals(float left, float right, float tolerance = FLT_EPSILON);
 

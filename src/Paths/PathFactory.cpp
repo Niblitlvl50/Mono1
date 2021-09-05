@@ -3,6 +3,7 @@
 #include "IPath.h"
 #include "Math/Vector.h"
 #include "Math/Matrix.h"
+#include "Math/MathFunctions.h"
 #include "Rendering/RenderBuffer/BufferFactory.h"
 
 #define PAR_STREAMLINES_IMPLEMENTATION
@@ -15,10 +16,11 @@ namespace
     public:
 
         PathImpl(const std::vector<math::Vector>& coords)
-            : m_points(coords),
-              m_total_length(0.0f)
+            : m_points(coords)
         {
             m_length_table.reserve(coords.size());
+
+            float m_total_length = 0.0f;
 
             for(int index = 0; index < static_cast<int>(coords.size()); ++index)
             {
@@ -36,7 +38,7 @@ namespace
 
         float Length() const override
         {
-            return m_total_length;
+            return m_length_table.empty() ? 0.0f : m_length_table.back();
         }
 
         const std::vector<math::Vector>& GetPathPoints() const override
@@ -75,9 +77,40 @@ namespace
             return pos;
         }
 
-        const std::vector<math::Vector> m_points;
+        float GetLengthFromPosition(const math::Vector& position) const override
+        {
+            if(m_points.empty())
+                return 0.0f;
 
-        float m_total_length;
+            math::Vector best_point;
+            uint32_t first_index = -1;
+            float shortest_distance = math::INF;
+
+            for(uint32_t index = 0; index < m_points.size() - 1; ++index)
+            {
+                const math::PointOnLineResult result = math::ClosestPointOnLine(m_points[index], m_points[index +1], position);
+                if(result.t < 0.0f || result.t > 1.0f)
+                    continue; // Not on line
+
+                const float distance = math::DistanceBetween(result.point, position);
+                if(distance < shortest_distance)
+                {
+                    best_point = result.point;
+                    shortest_distance = distance;
+                    first_index = index;
+                }
+            }
+
+            if(shortest_distance == math::INF)
+                return 0.0f;
+    
+            const float distance_to_first = m_length_table[first_index];
+            const float distance_to_point = math::DistanceBetween(m_points[first_index], best_point);
+
+            return distance_to_first + distance_to_point;
+        }
+
+        const std::vector<math::Vector> m_points;
         std::vector<float> m_length_table;
     };
 }

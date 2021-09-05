@@ -30,6 +30,41 @@ math::LinePointResult math::PointOnLine(const math::Vector& line_start, const ma
         return LinePointResult::ON_LINE;
 }
 
+math::PointOnLineResult math::ClosestPointOnLine(const math::Vector& start, const math::Vector& end, const math::Vector& point)
+{
+    PointOnLineResult result;
+    result.point = start;
+    result.t = 0.0f;
+
+    const float length = math::LengthSquared(start - end);
+    if(length == 0.0f)
+        return result;
+
+    // Consider the line extending the segment, parameterized as v + t (w - v).
+    // We find projection of point p onto the line. 
+    // It falls where t = [(p-v) . (w-v)] / |w-v|^2
+    result.t = math::Dot((point - start), (end - start)) / length;
+
+    if(result.t <= 0.0f)
+    {
+        // Beyond the 'v' end of the segment
+        result.point = start;
+    }
+    else if(result.t >= 1.0f)
+    {
+        // Beyond the 'w' end of the segment
+        result.point = end;
+    }
+    else
+    {
+        // Projection falls on the segment
+        const math::Vector& projection = start + (end - start) * result.t;
+        result.point = projection;
+    }
+
+    return result;
+}
+
 bool math::QuadOverlaps(const math::Quad& left, const math::Quad& right)
 {
     const Vector& left1 = left.mA;
@@ -162,27 +197,6 @@ math::Vector math::MapVectorInQuad(const math::Vector& point, const math::Quad& 
 
     // We need to flip the y axis
     return math::Vector(temp.x / size.x, (size.y - temp.y) / size.y);
-}
-
-math::Vector math::ClosestPointOnLine(const math::Vector& start, const math::Vector& end, const math::Vector& point)
-{
-    const float length = math::LengthSquared(start - end);
-    if(length == 0.0f)
-        return start;
-
-    // Consider the line extending the segment, parameterized as v + t (w - v).
-    // We find projection of point p onto the line. 
-    // It falls where t = [(p-v) . (w-v)] / |w-v|^2
-    const float t = math::Dot((point - start), (end - start)) / length;
-
-    if(t <= 0.0f)
-        return start; // Beyond the 'v' end of the segment
-    else if(t >= 1.0f)
-        return end;   // Beyond the 'w' end of the segment
-
-    // Projection falls on the segment
-    const math::Vector& projection = start + (end - start) * t;
-    return projection;
 }
 
 float math::NormalizeAngle(float radians)
