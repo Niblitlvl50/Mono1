@@ -16,6 +16,7 @@ void LightSystem::Allocate(uint32_t light_id)
 
     LightComponent& light = m_lights[light_id];
     light.radius = 1.0f;
+    light.offset = math::ZeroVec;
     light.shade = mono::Color::WHITE;
     light.flicker = false;
     light.flicker_frequencey = 1.0f;

@@ -20,7 +20,7 @@ void LightSystemDrawer::Draw(mono::IRenderer& renderer) const
 {
     const auto register_lights = [this, &renderer](const LightComponent& light, uint32_t entity_id) {
         const math::Matrix& world_transform = m_transform_system->GetWorld(entity_id);
-        const math::Vector world_position = math::GetPosition(world_transform);
+        const math::Vector world_position = math::GetPosition(world_transform) + light.offset;
 
         const math::Quad light_bb = math::Quad(world_position, light.radius);
         if(renderer.Cull(light_bb))

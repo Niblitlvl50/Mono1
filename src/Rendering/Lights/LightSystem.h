@@ -2,6 +2,7 @@
 #pragma once
 
 #include "IGameSystem.h"
+#include "Math/Vector.h"
 #include "Rendering/Color.h"
 #include <vector>
 
@@ -10,6 +11,7 @@ namespace mono
     struct LightComponent
     {
         float radius;
+        math::Vector offset;
         mono::Color::RGBA shade;
         bool flicker;
         float flicker_frequencey;
