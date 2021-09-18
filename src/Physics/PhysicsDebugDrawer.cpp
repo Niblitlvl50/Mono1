@@ -271,23 +271,23 @@ mono::EventResult PhysicsDebugDrawer::OnMouseUp(const event::MouseUpEvent& event
     const bool same_point = math::IsPrettyMuchEquals(m_mouse_up_position, m_mouse_down_position);
     if(same_point)
     {
-        const mono::IBody* found_body = physics_space->QueryNearest(m_mouse_up_position, 10.0f, -1);
-        if(found_body)
-            m_found_positions.push_back(found_body->GetPosition());
+        const mono::QueryResult query_result = physics_space->QueryNearest(m_mouse_up_position, 10.0f, -1);
+        if(query_result.body)
+            m_found_positions.push_back(query_result.body->GetPosition());
     }
     else if(m_shift_down)
     {
         const math::Quad world_bb(m_mouse_down_position, m_mouse_up_position);
-        const std::vector<mono::IBody*> found_bodies = physics_space->QueryBox(world_bb, -1);
-        for(mono::IBody* body : found_bodies)
-            m_found_positions.push_back(body->GetPosition());
+        const std::vector<mono::QueryResult> found_bodies = physics_space->QueryBox(world_bb, -1);
+        for(const mono::QueryResult& query_result : found_bodies)
+            m_found_positions.push_back(query_result.body->GetPosition());
     }
     else
     {
-        const std::vector<mono::IBody*> found_bodies
+        const std::vector<mono::QueryResult> found_bodies
             = physics_space->QueryAllInLIne(m_mouse_down_position, m_mouse_up_position, 1.0f, -1);
-        for(mono::IBody* body : found_bodies)
-            m_found_positions.push_back(body->GetPosition());
+        for(const mono::QueryResult& query_result : found_bodies)
+            m_found_positions.push_back(query_result.body->GetPosition());
     }
 
     return mono::EventResult::HANDLED;

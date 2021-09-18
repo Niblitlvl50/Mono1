@@ -19,6 +19,12 @@ namespace mono
 {
     using QueryFilter = const std::function<bool (uint32_t entity_id, const math::Vector& point)>;
 
+    struct QueryResult
+    {
+        mono::IBody* body;
+        uint32_t collision_category;
+    };
+
     class PhysicsSpace
     {
     public:
@@ -40,13 +46,13 @@ namespace mono
         void Remove(IShape* shape);
         void Remove(IConstraint* constraint);
         
-        IBody* QueryFirst(const math::Vector& start, const math::Vector& end, uint32_t category);
-        IBody* QueryNearest(const math::Vector& point, float max_distance, uint32_t category);
-        IBody* QueryNearest(const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func);
+        QueryResult QueryFirst(const math::Vector& start, const math::Vector& end, uint32_t category);
+        QueryResult QueryNearest(const math::Vector& point, float max_distance, uint32_t category);
+        QueryResult QueryNearest(const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func);
 
-        std::vector<IBody*> QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category);
-        std::vector<IBody*> QueryBox(const math::Quad& world_bb, uint32_t category);
-        std::vector<IBody*> QueryRadius(const math::Vector& position, float radius, uint32_t category);
+        std::vector<QueryResult> QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category);
+        std::vector<QueryResult> QueryBox(const math::Quad& world_bb, uint32_t category);
+        std::vector<QueryResult> QueryRadius(const math::Vector& position, float radius, uint32_t category);
 
         IBody* GetStaticBody();
 

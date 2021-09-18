@@ -96,49 +96,74 @@ void PhysicsSpace::Remove(IConstraint* constraint)
     cpSpaceRemoveConstraint(m_space, constraint->Handle());
 }
 
-mono::IBody* PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vector& end, uint32_t category)
+QueryResult PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vector& end, uint32_t category)
 {
+    QueryResult result = {};
+
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
     const cpShape* shape = cpSpaceSegmentQueryFirst(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 1, shape_filter, nullptr);
     if(!shape)
-        return nullptr;
+        return result;
 
     const cpBody* body = cpShapeGetBody(shape);
     const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(body));
-    return m_physics_system->GetBody(body_id);
+    result.body = m_physics_system->GetBody(body_id);
+
+    const cpShapeFilter filter = cpShapeGetFilter(shape);
+    result.collision_category = filter.categories;
+
+    return result;
 }
 
-std::vector<IBody*> PhysicsSpace::QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category)
+std::vector<QueryResult> PhysicsSpace::QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category)
 {
-    std::vector<cpBody*> found_bodies;
+    struct QueryData
+    {
+        PhysicsSystem* physics_system;
+        std::vector<QueryResult> found_bodies;
+    };
+
+    QueryData query_data;
+    query_data.physics_system = m_physics_system;
 
     const cpSpaceSegmentQueryFunc query_func = [](cpShape* shape, cpVect point, cpVect normal, cpFloat alpha, void* data) {
-        std::vector<cpBody*>* found_bodies = (std::vector<cpBody*>*)data;
-        found_bodies->push_back(cpShapeGetBody(shape));
+
+        const cpBody* body = cpShapeGetBody(shape);
+        const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(body));
+        const cpShapeFilter filter = cpShapeGetFilter(shape);
+
+        QueryData* query_data = (QueryData*)data;
+ 
+        const QueryResult query_result = { query_data->physics_system->GetBody(body_id), filter.categories };
+        query_data->found_bodies.push_back(query_result);
     };
 
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
-    cpSpaceSegmentQuery(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 0.1f, shape_filter, query_func, &found_bodies);
+    cpSpaceSegmentQuery(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 0.1f, shape_filter, query_func, &query_data);
 
-    std::vector<IBody*> bodies;
-    bodies.reserve(found_bodies.size());
-
-    for(const cpBody* cpbody : found_bodies)
-    {
-        const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(cpbody));
-        bodies.push_back(m_physics_system->GetBody(body_id));
-    }
-
-    return bodies;
+    return query_data.found_bodies;
 }
 
-std::vector<IBody*> PhysicsSpace::QueryBox(const math::Quad& world_bb, uint32_t category)
+std::vector<QueryResult> PhysicsSpace::QueryBox(const math::Quad& world_bb, uint32_t category)
 {
-    std::vector<cpBody*> found_bodies;
+    struct QueryData
+    {
+        PhysicsSystem* physics_system;
+        std::vector<QueryResult> found_bodies;
+    };
+
+    QueryData query_data;
+    query_data.physics_system = m_physics_system;
 
     const cpSpaceBBQueryFunc query_func = [](cpShape* shape, void* data) {
-        std::vector<cpBody*>* found_bodies = (std::vector<cpBody*>*)data;
-        found_bodies->push_back(cpShapeGetBody(shape));
+        const cpBody* body = cpShapeGetBody(shape);
+        const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(body));
+        const cpShapeFilter filter = cpShapeGetFilter(shape);
+
+        QueryData* query_data = (QueryData*)data;
+
+        const QueryResult query_result = { query_data->physics_system->GetBody(body_id), filter.categories };
+        query_data->found_bodies.push_back(query_result);
     };
 
     const float left = std::min(world_bb.mA.x, world_bb.mB.x);
@@ -148,18 +173,9 @@ std::vector<IBody*> PhysicsSpace::QueryBox(const math::Quad& world_bb, uint32_t 
 
     const cpBB bounding_box = cpBBNew(left, bottom, right, top);
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
-    cpSpaceBBQuery(m_space, bounding_box, shape_filter, query_func, &found_bodies);
+    cpSpaceBBQuery(m_space, bounding_box, shape_filter, query_func, &query_data);
 
-    std::vector<IBody*> bodies;
-    bodies.reserve(found_bodies.size());
-
-    for(const cpBody* cpbody : found_bodies)
-    {
-        const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(cpbody));
-        bodies.push_back(m_physics_system->GetBody(body_id));
-    }
-
-    return bodies;
+    return query_data.found_bodies;
 
 /*
 /// Rectangle Query callback function type.
@@ -170,7 +186,7 @@ CP_EXPORT void cpSpaceBBQuery(cpSpace *space, cpBB bb, cpShapeFilter filter, cpS
 */
 }
 
-std::vector<IBody*> PhysicsSpace::QueryRadius(const math::Vector& position, float radius, uint32_t category)
+std::vector<QueryResult> PhysicsSpace::QueryRadius(const math::Vector& position, float radius, uint32_t category)
 {
     cpCircleShape circle_shape;
     cpCircleShapeInit(&circle_shape, cpSpaceGetStaticBody(m_space), radius, cpv(position.x, position.y));
@@ -178,52 +194,63 @@ std::vector<IBody*> PhysicsSpace::QueryRadius(const math::Vector& position, floa
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
     cpShapeSetFilter((cpShape*)&circle_shape, shape_filter);
 
-    const cpSpaceShapeQueryFunc query_func = [](cpShape* shape, cpContactPointSet* points, void* data) {
-        std::vector<cpBody*>* found_bodies = (std::vector<cpBody*>*)data;
-        found_bodies->push_back(cpShapeGetBody(shape));
+
+    struct QueryData
+    {
+        PhysicsSystem* physics_system;
+        std::vector<QueryResult> found_bodies;
     };
 
-    std::vector<cpBody*> found_bodies;
-    const bool result = cpSpaceShapeQuery(m_space, (cpShape*)&circle_shape, query_func, &found_bodies);
-    if(!result)
-        return { };
+    QueryData query_data;
+    query_data.physics_system = m_physics_system;
 
-    std::vector<IBody*> bodies;
-    bodies.reserve(found_bodies.size());
+    const cpSpaceShapeQueryFunc query_func = [](cpShape* shape, cpContactPointSet* points, void* data) {
+        const cpBody* body = cpShapeGetBody(shape);
+        const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(body));
+        const cpShapeFilter filter = cpShapeGetFilter(shape);
 
-    for(const cpBody* cpbody : found_bodies)
-    {
-        const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(cpbody));
-        bodies.push_back(m_physics_system->GetBody(body_id));
-    }
+        QueryData* query_data = (QueryData*)data;
+        const QueryResult query_result = { query_data->physics_system->GetBody(body_id), filter.categories };
+        query_data->found_bodies.push_back(query_result);
+    };
 
-    return bodies;
+    cpSpaceShapeQuery(m_space, (cpShape*)&circle_shape, query_func, &query_data);
+
+    return query_data.found_bodies;
 }
 
-IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category)
+QueryResult PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category)
 {
+    QueryResult result = {};
+
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
 
     cpPointQueryInfo info;
     const cpShape* shape = cpSpacePointQueryNearest(m_space, cpv(point.x, point.y), max_distance, shape_filter, &info);
     if(!shape)
-        return nullptr;
+        return result;
 
     const cpBody* cpbody = cpShapeGetBody(shape);
     const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(cpbody));
-    return m_physics_system->GetBody(body_id);
+    result.body = m_physics_system->GetBody(body_id);
+    
+    const cpShapeFilter filter = cpShapeGetFilter(shape);
+    result.collision_category = filter.categories;
+
+    return result;
 }
 
-IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func)
+QueryResult PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func)
 {
     struct UserData
     {
         QueryFilter filter_func;
         float distance;
         const cpBody* cp_body;
+        const cpShape* cp_shape;
     };
 
-    UserData user_data = { filter_func, math::INF, nullptr };
+    UserData user_data = { filter_func, math::INF, nullptr, nullptr };
 
     const auto callback = [](cpShape* shape, cpVect point, cpFloat distance, cpVect gradient, void* data) {
         UserData* user_data = (UserData*)data;
@@ -240,16 +267,23 @@ IBody* PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance,
 
         user_data->distance = distance;
         user_data->cp_body = body;
+        user_data->cp_shape = shape;
     };
 
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
     cpSpacePointQuery(m_space, cpv(point.x, point.y), max_distance, shape_filter, callback, &user_data);
 
-    if(!user_data.cp_body)
-        return nullptr;
+    QueryResult result = {};
+    if(user_data.cp_body)
+    {
+        const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(user_data.cp_body));
+        result.body = m_physics_system->GetBody(body_id);
 
-    const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(user_data.cp_body));
-    return m_physics_system->GetBody(body_id);
+        const cpShapeFilter filter = cpShapeGetFilter(user_data.cp_shape);
+        result.collision_category = filter.categories;
+    }
+
+    return result;
 }
 
 bool PhysicsSpace::OnCollision(cpArbiter* arb)
