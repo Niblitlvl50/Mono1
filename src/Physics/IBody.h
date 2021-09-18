@@ -58,6 +58,9 @@ namespace mono
         //! Gets the angle in radians
         //! @return float Angle
         virtual float GetAngle() const = 0;
+
+        virtual void SetPreventRotation(bool prevent_rotation) = 0;
+        virtual bool PreventRotation() const = 0;
         
         //! Sets the moment(inertia)
         //! @param moment Moment

@@ -19,6 +19,8 @@ namespace cm
         float GetMass() const override;
         void SetAngle(float angle) override;
         float GetAngle() const override;
+        void SetPreventRotation(bool prevent_rotation) override;
+        bool PreventRotation() const override;
         void SetMoment(float moment) override;
         float GetMoment() const override;
         void SetPosition(const math::Vector& position) override;
@@ -43,6 +45,7 @@ namespace cm
         
     private:
         cpBody* m_body_handle;
+        bool m_prevent_rotation;
         std::vector<mono::ICollisionHandler*> m_collision_handlers;
     };
 }

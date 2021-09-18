@@ -9,6 +9,7 @@ using namespace cm;
 
 BodyImpl::BodyImpl(cpBody* body)
     : m_body_handle(body)
+    , m_prevent_rotation(false)
 { }
 
 void BodyImpl::SetType(mono::BodyType type)
@@ -46,9 +47,20 @@ float BodyImpl::GetAngle() const
     return cpBodyGetAngle(m_body_handle);
 }
 
-void BodyImpl::SetMoment(float moment) 
+void BodyImpl::SetPreventRotation(bool prevent_rotation)
 {
-    cpBodySetMoment(m_body_handle, moment);
+    m_prevent_rotation = prevent_rotation;
+}
+
+bool BodyImpl::PreventRotation() const
+{
+    return m_prevent_rotation;
+}
+
+void BodyImpl::SetMoment(float moment)
+{
+    const float new_moment = m_prevent_rotation ? math::INF : moment;
+    cpBodySetMoment(m_body_handle, new_moment);
 }
 
 float BodyImpl::GetMoment() const 
