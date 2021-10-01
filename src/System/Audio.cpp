@@ -145,6 +145,8 @@ audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback 
     };
 
     std::shared_ptr<SoundData> loaded_sound(new SoundData, deleter);
+    loaded_sound->sound.channels[0] = nullptr;
+    loaded_sound->sound.channels[1] = nullptr;
 
     const bool is_wave = file::IsExtension(file_name, "wav");
     if(is_wave)

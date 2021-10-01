@@ -76,7 +76,10 @@ bool file::IsExtension(const char* file_name, const char* extension)
     const std::string_view filename_view(file_name);
     const size_t dot_pos = filename_view.find_last_of('.');
     if(dot_pos != std::string_view::npos)
-        return (filename_view.substr(dot_pos) == extension);
+    {
+        const std::string_view extension_view = filename_view.substr(dot_pos +1);
+        return extension_view == extension;
+    }
 
     return false;
 }
