@@ -184,6 +184,16 @@ namespace System
     void ProcessSystemEvents(IInputHandler* handler);
     void ProcessControllerState();
 
+    struct ModifierState
+    {
+        bool ctrl;
+        bool shift;
+        bool alt;
+        bool super;
+    };
+    
+    ModifierState GetModifierState();
+
     int KeycodeToNative(Keycode key);
 
     enum ControllerId

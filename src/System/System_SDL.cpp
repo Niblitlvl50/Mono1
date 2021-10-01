@@ -494,11 +494,11 @@ uint32_t System::GetClipboardText(char* output_buffer, uint32_t buffer_size)
 
 void System::ProcessSystemEvents(System::IInputHandler* handler)
 {
-    const int modifier = SDL_GetModState();
-    const bool ctrl  = (modifier & KMOD_CTRL);
-    const bool shift = (modifier & KMOD_SHIFT);
-    const bool alt   = (modifier & KMOD_ALT);
-    const bool super = (modifier & KMOD_GUI);
+    const ModifierState modifier_state = GetModifierState();
+    const bool ctrl = modifier_state.ctrl;
+    const bool shift = modifier_state.shift;
+    const bool alt = modifier_state.alt;
+    const bool super = modifier_state.super;
 
     // Our SDL event placeholder.
     SDL_Event event;
@@ -663,6 +663,19 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
     }
 
     ProcessControllerState();
+}
+
+System::ModifierState System::GetModifierState()
+{
+    const int modifier = SDL_GetModState();
+ 
+    ModifierState state;
+    state.ctrl  = (modifier & KMOD_CTRL);
+    state.shift = (modifier & KMOD_SHIFT);
+    state.alt   = (modifier & KMOD_ALT);
+    state.super = (modifier & KMOD_GUI);
+
+    return state;
 }
 
 int System::KeycodeToNative(Keycode key)
