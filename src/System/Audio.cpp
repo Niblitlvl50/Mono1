@@ -2,10 +2,12 @@
 #include "Audio.h"
 #include "System/Hash.h"
 #include "System/System.h"
+#include "System/File.h"
 
 #include <cstdint>
 #include <unordered_map>
 #include <stdexcept>
+#include <string_view>
 
 
 #ifdef _WIN32
@@ -18,6 +20,7 @@
     #define CUTE_SOUND_IMPLEMENTATION
 #endif
 
+#include "stb/stb_vorbis.c"
 #include "cute_headers/cute_sound.h"
 
 
@@ -115,6 +118,7 @@ void audio::Initialize()
 
 void audio::Shutdown()
 {
+    StopAllSounds();
     g_sound_repository.clear();
     cs_shutdown_context(g_context);
     g_context = nullptr;
@@ -141,7 +145,19 @@ audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback 
     };
 
     std::shared_ptr<SoundData> loaded_sound(new SoundData, deleter);
-    loaded_sound->sound = cs_load_wav(file_name);
+
+    const bool is_wave = file::IsExtension(file_name, "wav");
+    if(is_wave)
+    {
+        loaded_sound->sound = cs_load_wav(file_name);
+    }
+    else
+    {
+        const bool is_ogg = file::IsExtension(file_name, "ogg");
+        if(is_ogg)
+            loaded_sound->sound = cs_load_ogg(file_name);
+    }
+
     if(loaded_sound->sound.channels[0] == nullptr)
     {
         System::Log("Audio|Unable to load wav file '%s' ['%s'].", cs_error_reason, file_name);

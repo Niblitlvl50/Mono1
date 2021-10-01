@@ -32,4 +32,5 @@ namespace file
     std::vector<byte> FileRead(const FilePtr& file);
 
     bool Exists(const char* file_name);
+    bool IsExtension(const char* file_name, const char* extension);
 }
