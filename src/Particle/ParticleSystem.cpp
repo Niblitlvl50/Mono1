@@ -40,6 +40,27 @@ namespace
 
         return (emitter_component.duration > 0.0f && emitter_component.elapsed_time > emitter_component.duration);
     }
+
+    mono::ParticlePoolComponentView MakeViewFromPool(mono::ParticlePoolComponent& particle_pool, uint32_t index)
+    {
+        return {
+            particle_pool.position[index],
+            particle_pool.velocity[index],
+
+            particle_pool.rotation[index],
+            particle_pool.angular_velocity[index],
+
+            particle_pool.color[index],
+            particle_pool.gradient[index],
+
+            particle_pool.size[index],
+            particle_pool.start_size[index],
+            particle_pool.end_size[index],
+
+            particle_pool.life[index],
+            particle_pool.start_life[index],
+        };
+    }
 }
 
 void mono::DefaultGenerator(const math::Vector& position, ParticlePoolComponentView& particle_view)
@@ -66,19 +87,14 @@ void mono::DefaultGenerator(const math::Vector& position, ParticlePoolComponentV
     particle_view.life = 1000 + life;
 }
 
-void mono::DefaultUpdater(struct ParticlePoolComponent& pool, uint32_t count, uint32_t delta_ms)
+void mono::DefaultUpdater(ParticlePoolComponentView& component_view, float delta_s)
 {
-    const float delta_seconds = float(delta_ms) / 1000.0f;
+    const float t = 1.0f - float(component_view.life) / float(component_view.start_life);
 
-    for(uint32_t index = 0; index < count; ++index)
-    {
-        const float t = 1.0f - float(pool.life[index]) / float(pool.start_life[index]);
-
-        pool.position[index] += pool.velocity[index] * delta_seconds;
-        pool.color[index] = mono::Color::ColorFromGradient(pool.gradient[index], t);
-        pool.size[index] = (1.0f - t) * pool.start_size[index] + t * pool.end_size[index];
-        pool.rotation[index] += pool.angular_velocity[index] * delta_seconds;
-    }
+    component_view.position += component_view.velocity * delta_s;
+    component_view.color = mono::Color::ColorFromGradient(component_view.gradient, t);
+    component_view.size = (1.0f - t) * component_view.start_size + t * component_view.end_size;
+    component_view.rotation += component_view.angular_velocity * delta_s;
 }
 
 
@@ -112,7 +128,12 @@ void ParticleSystem::Update(const mono::UpdateContext& update_context)
             continue;
 
         ParticlePoolComponent& pool_component = m_particle_pools[active_pool_index];
-        pool_component.update_function(pool_component, pool_component.count_alive, update_context.delta_ms);
+
+        for(uint32_t index = 0; index < pool_component.count_alive; ++index)
+        {
+            ParticlePoolComponentView view = MakeViewFromPool(pool_component, index);
+            pool_component.update_function(view, update_context.delta_s);
+        }
 
         for(uint32_t particle_index = 0; particle_index < pool_component.count_alive; ++particle_index)
         {
@@ -170,23 +191,7 @@ void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePo
 
     for(uint32_t index = start_index; index < end_index; ++index)
     {
-        ParticlePoolComponentView view = {
-            particle_pool.position[index],
-            particle_pool.velocity[index],
-
-            particle_pool.rotation[index],
-            particle_pool.angular_velocity[index],
-
-            particle_pool.color[index],
-            particle_pool.gradient[index],
-
-            particle_pool.size[index],
-            particle_pool.start_size[index],
-            particle_pool.end_size[index],
-
-            particle_pool.life[index],
-            particle_pool.start_life[index],
-        };
+        ParticlePoolComponentView view = MakeViewFromPool(particle_pool, index);
         emitter->generator(emitter->position, view);
     }
 
