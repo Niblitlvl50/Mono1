@@ -129,6 +129,10 @@ void ParticleSystem::Update(const mono::UpdateContext& update_context)
 
         ParticlePoolComponent& pool_component = m_particle_pools[active_pool_index];
 
+        std::vector<ParticleEmitterComponent*>& pool_emitters = m_particle_pools_emitters[active_pool_index];
+        for(ParticleEmitterComponent* emitter : pool_emitters)
+            UpdateEmitter(emitter, pool_component, active_pool_index, update_context);
+
         for(uint32_t index = 0; index < pool_component.count_alive; ++index)
         {
             ParticlePoolComponentView view = MakeViewFromPool(pool_component, index);
@@ -146,10 +150,6 @@ void ParticleSystem::Update(const mono::UpdateContext& update_context)
                 Swap(pool_component, particle_index, pool_component.count_alive);
             }
         }
-
-        std::vector<ParticleEmitterComponent*>& pool_emitters = m_particle_pools_emitters[active_pool_index];
-        for(ParticleEmitterComponent* emitter : pool_emitters)
-            UpdateEmitter(emitter, pool_component, active_pool_index, update_context);
     }
 }
 
