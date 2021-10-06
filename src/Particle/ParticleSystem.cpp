@@ -21,6 +21,7 @@ namespace
         std::swap(pool_component.gradient[first],           pool_component.gradient[second]);
         std::swap(pool_component.start_life[first],         pool_component.start_life[second]);
         std::swap(pool_component.life[first],               pool_component.life[second]);
+        std::swap(pool_component.size[first],               pool_component.size[second]);
     }
 
     void WakeParticle(ParticlePoolComponent& pool_component, uint32_t index)
@@ -148,8 +149,7 @@ void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePo
         return;
     }
 
-    const float delta_in_seconds = float(update_context.delta_ms) / 1000.0f;
-    emitter->elapsed_time += delta_in_seconds;
+    emitter->elapsed_time += update_context.delta_s;
 
     uint32_t new_particles = 0;
     if(emitter->type == EmitterType::BURST || emitter->type == EmitterType::BURST_REMOVE_ON_FINISH)
@@ -158,7 +158,7 @@ void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePo
     }
     else
     {
-        new_particles = static_cast<uint32_t>(delta_in_seconds * (emitter->emit_rate + emitter->carry_over));
+        new_particles = static_cast<uint32_t>(update_context.delta_s * (emitter->emit_rate + emitter->carry_over));
         if(new_particles == 0)
             emitter->carry_over += emitter->emit_rate;
         else
