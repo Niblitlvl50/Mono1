@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <numeric>
 
 namespace mono
 {
@@ -39,11 +40,73 @@ namespace mono
         return it != collection.end();
     }
 
-    template<class ForwardIt, class T, class Compare>
-    std::pair<ForwardIt,ForwardIt> equal_range(ForwardIt first, ForwardIt last, const T& value, Compare comp)
+    template<typename ForwardIt, typename T, typename Compare>
+    inline std::pair<ForwardIt, ForwardIt> equal_range(ForwardIt first, ForwardIt last, const T& value, Compare comp)
     {
         return std::make_pair(
             std::lower_bound(first, last, value, comp),
             std::upper_bound(first, last, value, comp));
+    }
+
+
+    template <typename ForwardIt, typename Compare>
+    inline std::vector<std::size_t> sort_permutation(ForwardIt begin, ForwardIt end, const Compare& compare)
+    {
+        std::vector<std::size_t> p(std::distance(begin, end));
+        std::iota(p.begin(), p.end(), 0);
+
+        std::sort(p.begin(), p.end(), [&](std::size_t i, std::size_t j) {
+            return compare(*(begin + i), *(begin + j));
+        });
+
+        return p;
+    }
+
+    template <typename T>
+    inline std::vector<T> apply_permutation(const std::vector<std::size_t>& p, const std::vector<T>& vec)
+    {
+        std::vector<T> sorted_vec(vec.size());
+        std::transform(p.begin(), p.end(), sorted_vec.begin(), [&](std::size_t i) {
+            return vec[i];
+        });
+
+        if(p.size() < vec.size())
+        {
+            const size_t offset = p.size();
+            std::copy(vec.begin() + offset, vec.end(), sorted_vec.begin() + offset);
+        }
+
+        return sorted_vec;
+    }
+
+    template <typename T>
+    inline void apply_permutation_in_place(const std::vector<std::size_t>& p, std::vector<T>& vec)
+    {
+        std::vector<bool> done(vec.size(), false);
+
+        for (std::size_t i = 0; i < vec.size(); ++i)
+        {
+            if (done[i])
+                continue;
+            done[i] = true;
+
+            std::size_t prev_j = i;
+            std::size_t j = p[i];
+
+            while (i != j)
+            {
+                std::swap(vec[prev_j], vec[j]);
+                done[j] = true;
+                prev_j = j;
+                j = p[j];
+            }
+        }
+    }
+
+    template <typename T1, typename ... T>
+    inline void apply_permutation_in_place(const std::vector<std::size_t>& p, std::vector<T1>& first, std::vector<T>&... args)
+    {
+        apply_permutation_in_place(p, first);
+        apply_permutation_in_place(p, args...);
     }
 }
