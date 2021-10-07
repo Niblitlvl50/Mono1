@@ -173,7 +173,8 @@ namespace mono
         std::unique_ptr<IPipeline> m_color_line_strip_pipeline;
         std::unique_ptr<IPipeline> m_color_line_strip_indices_pipeline;
         std::unique_ptr<IPipeline> m_color_triangles_pipeline;
-        std::unique_ptr<IPipeline> m_particle_pipeline;
+        std::unique_ptr<IPipeline> m_particle_pipeline_one;
+        std::unique_ptr<IPipeline> m_particle_pipeline_sa;
         std::unique_ptr<IPipeline> m_texture_pipeline;
         std::unique_ptr<IPipeline> m_texture_annotation_pipeline;
         std::unique_ptr<IPipeline> m_texture_pipeline_color;

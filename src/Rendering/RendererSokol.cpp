@@ -39,7 +39,9 @@ RendererSokol::RendererSokol()
     m_color_line_strip_indices_pipeline = mono::ColorPipeline::MakeLineStripIndicesPipeline();
     m_color_triangles_pipeline = mono::ColorPipeline::MakeTrianglesPipeline();
 
-    m_particle_pipeline = mono::ParticlePointPipeline::MakePipeline();
+    m_particle_pipeline_one = mono::ParticlePointPipeline::MakePipeline(mono::BlendMode::ONE);
+    m_particle_pipeline_sa = mono::ParticlePointPipeline::MakePipeline(mono::BlendMode::SOURCE_ALPHA);
+
     m_texture_pipeline = mono::TexturePipeline::MakePipeline();
     m_texture_annotation_pipeline = mono::TexturePipeline::MakeAnnotationPipeline();
     m_texture_pipeline_color = mono::TexturePipeline::MakeVertexColorPipeline();
@@ -557,7 +559,8 @@ void RendererSokol::DrawParticlePoints(
     BlendMode blend_mode,
     uint32_t count)
 {
-    ParticlePointPipeline::Apply(m_particle_pipeline.get(), position, rotation, color, point_size, texture);
+    mono::IPipeline* pipeline = (blend_mode == mono::BlendMode::ONE) ? m_particle_pipeline_one.get() : m_particle_pipeline_sa.get();
+    ParticlePointPipeline::Apply(pipeline, position, rotation, color, point_size, texture);
     //ParticlePointPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
     ParticlePointPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 

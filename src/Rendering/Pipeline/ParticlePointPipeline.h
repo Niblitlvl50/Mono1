@@ -4,6 +4,7 @@
 #include "Math/MathFwd.h"
 #include "Rendering/RenderFwd.h"
 #include "Rendering/Pipeline/IPipeline.h"
+#include "Rendering/BlendMode.h"
 
 namespace mono
 {
@@ -11,7 +12,7 @@ namespace mono
     {
     public:
 
-        static mono::IPipelinePtr MakePipeline();
+        static mono::IPipelinePtr MakePipeline(mono::BlendMode blend_mode);
         static void Apply(
             IPipeline* pipeline,
             const IRenderBuffer* position,

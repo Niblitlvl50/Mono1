@@ -81,7 +81,7 @@ namespace
 
 using namespace mono;
 
-mono::IPipelinePtr ParticlePointPipeline::MakePipeline()
+mono::IPipelinePtr ParticlePointPipeline::MakePipeline(mono::BlendMode blend_mode)
 {
     sg_shader_desc shader_desc = {};
     shader_desc.vs.source = vertex_source;
@@ -138,8 +138,12 @@ mono::IPipelinePtr ParticlePointPipeline::MakePipeline()
 
     pipeline_desc.blend.enabled = true;
     pipeline_desc.blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
-    pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-    //pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE;
+
+    if(blend_mode == mono::BlendMode::ONE)
+        pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE;
+    else
+        pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+
     pipeline_desc.blend.depth_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
