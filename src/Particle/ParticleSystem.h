@@ -51,7 +51,7 @@ namespace mono
         std::vector<float> angular_velocity;
 
         std::vector<Color::RGBA> color;
-        std::vector<Color::Gradient<3>> gradient;
+        std::vector<Color::Gradient<4>> gradient;
 
         std::vector<float> size;
         std::vector<float> start_size;
@@ -75,7 +75,7 @@ namespace mono
         float& angular_velocity;
 
         mono::Color::RGBA& color;
-        mono::Color::Gradient<3>& gradient;
+        mono::Color::Gradient<4>& gradient;
 
         float& size;
         float& start_size;

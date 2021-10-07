@@ -74,9 +74,9 @@ void mono::DefaultGenerator(const math::Vector& position, ParticlePoolComponentV
     particle_view.rotation = 0.0f;
     particle_view.angular_velocity = 0.0f;
 
-    particle_view.gradient = mono::Color::MakeGradient<3>(
-        { 0.0f, 0.5f, 1.0f },
-        { mono::Color::RED, mono::Color::GREEN, mono::Color::BLUE }
+    particle_view.gradient = mono::Color::MakeGradient<4>(
+        { 0.0f, 0.25f, 0.5f, 1.0f },
+        { mono::Color::RED, mono::Color::GREEN, mono::Color::BLUE, mono::Color::WHITE }
     );
 
     particle_view.size = 10.0f;
@@ -139,15 +139,15 @@ void ParticleSystem::Update(const mono::UpdateContext& update_context)
             pool_component.update_function(view, update_context.delta_s);
         }
 
-        for(uint32_t particle_index = 0; particle_index < pool_component.count_alive; ++particle_index)
+        for(uint32_t index = 0; index < pool_component.count_alive; ++index)
         {
-            int& life = pool_component.life[particle_index];
+            int& life = pool_component.life[index];
             life -= update_context.delta_ms;
 
             if(life <= 0 && pool_component.count_alive > 0)
             {
                 --pool_component.count_alive;
-                Swap(pool_component, particle_index, pool_component.count_alive);
+                Swap(pool_component, index, pool_component.count_alive);
             }
         }
     }
