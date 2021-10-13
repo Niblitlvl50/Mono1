@@ -33,6 +33,11 @@ math::Matrix TransformSystem::GetWorld(uint32_t id) const
     return transform;
 }
 
+math::Vector TransformSystem::GetWorldPosition(uint32_t id) const
+{
+    return math::GetPosition(GetWorld(id));
+}
+
 const math::Matrix& TransformSystem::GetTransform(uint32_t id) const
 {
     return m_transforms[id].transform;

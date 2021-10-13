@@ -30,6 +30,8 @@ namespace mono
         TransformSystem(size_t n_components);
 
         math::Matrix GetWorld(uint32_t id) const;
+        math::Vector GetWorldPosition(uint32_t id) const;
+
         const math::Matrix& GetTransform(uint32_t id) const;
         math::Matrix& GetTransform(uint32_t id);
         void SetTransform(uint32_t id, const math::Matrix& new_transform);
