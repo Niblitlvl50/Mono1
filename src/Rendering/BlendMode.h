@@ -3,7 +3,7 @@
 
 namespace mono
 {
-    enum class BlendMode
+    enum class BlendMode : int
     {
         SOURCE_ALPHA,
         ONE

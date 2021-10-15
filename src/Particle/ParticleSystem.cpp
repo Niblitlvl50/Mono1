@@ -1,6 +1,8 @@
 
 #include "ParticleSystem.h"
 #include "Rendering/RenderBuffer/IRenderBuffer.h"
+#include "Rendering/Texture/ITextureFactory.h"
+#include "Rendering/RenderSystem.h"
 #include "System/Hash.h"
 #include "Util/Algorithm.h"
 #include "Util/Random.h"
@@ -65,8 +67,8 @@ namespace
 
 void mono::DefaultGenerator(const math::Vector& position, ParticlePoolComponentView& particle_view)
 {
-    const float x = mono::Random(-8.0f, 8.0f);
-    const float y = mono::Random(-8.0f, 8.0f);
+    const float x = mono::Random(-2.0f, 2.0f);
+    const float y = mono::Random(0.5f, 4.0f);
     const float life = mono::Random(0.0f, 500.0f);
 
     particle_view.position = position;
@@ -80,8 +82,8 @@ void mono::DefaultGenerator(const math::Vector& position, ParticlePoolComponentV
     );
 
     particle_view.size = 10.0f;
-    particle_view.start_size = 10.0f;
-    particle_view.end_size = 5.0f;
+    particle_view.start_size = 32.0f;
+    particle_view.end_size = 24.0f;
 
     particle_view.start_life = 1000 + life;
     particle_view.life = 1000 + life;
@@ -201,6 +203,11 @@ void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePo
     emitter->burst_emitted = true;
 }
 
+ParticlePoolComponent* ParticleSystem::AllocatePool(uint32_t id)
+{
+    return AllocatePool(id, 10, DefaultUpdater);
+}
+
 ParticlePoolComponent* ParticleSystem::AllocatePool(uint32_t id, uint32_t pool_size, ParticleUpdater update_function)
 {
     assert(m_active_pools[id] == false);
@@ -242,6 +249,31 @@ void ParticleSystem::ReleasePool(uint32_t id)
     draw_component.texture = nullptr;
 
     m_active_pools[id] = false;
+}
+
+void ParticleSystem::SetPoolData(uint32_t id, uint32_t pool_size, const char* texture_file, mono::BlendMode blend_mode, ParticleUpdater update_function)
+{
+    ParticlePoolComponent& particle_pool = m_particle_pools[id];
+
+    particle_pool.position.resize(pool_size);
+    particle_pool.velocity.resize(pool_size);
+    particle_pool.rotation.resize(pool_size);
+    particle_pool.angular_velocity.resize(pool_size);
+    particle_pool.color.resize(pool_size);
+    particle_pool.gradient.resize(pool_size);
+    particle_pool.size.resize(pool_size);
+    particle_pool.start_size.resize(pool_size);
+    particle_pool.end_size.resize(pool_size);
+    particle_pool.start_life.resize(pool_size);
+    particle_pool.life.resize(pool_size);
+
+    particle_pool.pool_size = pool_size;
+    particle_pool.count_alive = 0;
+    particle_pool.update_function = update_function;
+
+    ParticleDrawerComponent& draw_component = m_particle_drawers[id];
+    draw_component.texture = mono::GetTextureFactory()->CreateTexture(texture_file);
+    draw_component.blend_mode = blend_mode;
 }
 
 ParticlePoolComponent* ParticleSystem::GetPool(uint32_t id)
@@ -288,7 +320,19 @@ void ParticleSystem::ReleaseEmitter(uint32_t pool_id, ParticleEmitterComponent* 
 
 void ParticleSystem::SetEmitterPosition(ParticleEmitterComponent* emitter, const math::Vector& position)
 {
+    emitter->position = position;
+}
 
+void ParticleSystem::RestartEmitter(ParticleEmitterComponent* emitter)
+{
+    emitter->elapsed_time = 0.0f;
+    emitter->carry_over = 0.0f;
+    emitter->burst_emitted = false;
+}
+
+const std::vector<ParticleEmitterComponent*>& ParticleSystem::GetAttachedEmitters(uint32_t pool_id) const
+{
+    return m_particle_pools_emitters[pool_id];
 }
 
 ParticleSystemStats ParticleSystem::GetStats() const

@@ -4,14 +4,16 @@
 #include "Rendering/IRenderer.h"
 #include "Rendering/RenderBuffer/IRenderBuffer.h"
 #include "Rendering/RenderBuffer/BufferFactory.h"
+#include "TransformSystem/TransformSystem.h"
 #include "Math/Quad.h"
 
 #include <iterator>
 
 using namespace mono;
 
-ParticleSystemDrawer::ParticleSystemDrawer(const mono::ParticleSystem* particle_system)
+ParticleSystemDrawer::ParticleSystemDrawer(const mono::ParticleSystem* particle_system, const mono::TransformSystem* transform_system)
     : m_particle_system(particle_system)
+    , m_transform_system(transform_system)
 { }
 
 ParticleSystemDrawer::~ParticleSystemDrawer()
@@ -44,6 +46,9 @@ void ParticleSystemDrawer::Draw(mono::IRenderer& renderer) const
         it->second.rotation_buffer->UpdateData(pool.rotation.data(), 0, pool.count_alive);
         it->second.color_buffer->UpdateData(pool.color.data(), 0, pool.count_alive);
         it->second.point_size_buffer->UpdateData(pool.size.data(), 0, pool.count_alive);
+
+        const math::Matrix& world_transform = m_transform_system->GetWorld(pool_index);
+        const auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
 
         renderer.DrawParticlePoints(
             it->second.position_buffer.get(),

@@ -21,7 +21,7 @@ namespace mono
         mono::BlendMode blend_mode;
     };
 
-    enum class EmitterType
+    enum class EmitterType : int
     {
         CONTINOUS,
         BURST,
@@ -32,14 +32,14 @@ namespace mono
     {
         math::Vector position;
         float duration;
-        float elapsed_time;
-        float carry_over;
-
         float emit_rate;
-        bool burst_emitted;
-
         EmitterType type;
         ParticleGenerator generator;
+
+        // Internal data
+        float elapsed_time;
+        float carry_over;
+        bool burst_emitted;
     };
 
     struct ParticlePoolComponent
@@ -103,8 +103,10 @@ namespace mono
         void Update(const mono::UpdateContext& update_context) override;
         void Sync() override;
 
+        ParticlePoolComponent* AllocatePool(uint32_t id);
         ParticlePoolComponent* AllocatePool(uint32_t id, uint32_t pool_size, ParticleUpdater update_function);
         void ReleasePool(uint32_t id);
+        void SetPoolData(uint32_t id, uint32_t pool_size, const char* texture_file, mono::BlendMode blend_mode, ParticleUpdater update_function);
         ParticlePoolComponent* GetPool(uint32_t id);
 
         void SetPoolDrawData(uint32_t pool_id, mono::ITexturePtr texture, mono::BlendMode blend_mode);
@@ -122,6 +124,8 @@ namespace mono
         
         void ReleaseEmitter(uint32_t pool_id, ParticleEmitterComponent* emitter);
         void SetEmitterPosition(ParticleEmitterComponent* emitter, const math::Vector& position);
+        void RestartEmitter(ParticleEmitterComponent* emitter);
+        const std::vector<ParticleEmitterComponent*>& GetAttachedEmitters(uint32_t pool_id) const;
 
         template<typename T>
         void ForEach(T&& callable) const
