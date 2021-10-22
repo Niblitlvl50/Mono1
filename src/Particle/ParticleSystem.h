@@ -8,6 +8,7 @@
 #include "Rendering/RenderFwd.h"
 #include "Rendering/Texture/ITextureFactory.h"
 #include "Math/Vector.h"
+#include "Math/Interval.h"
 #include "Util/ObjectPool.h"
 
 #include <vector>
@@ -26,6 +27,28 @@ namespace mono
         CONTINOUS,
         BURST,
         BURST_REMOVE_ON_FINISH
+    };
+
+    constexpr const char* emitter_type_strings[] = {
+        "Continous",
+        "Burst",
+        "Burst, Remove on Finish",
+    };
+
+    inline const char* EmitterTypeToString(EmitterType emitter_type)
+    {
+        return emitter_type_strings[static_cast<int>(emitter_type)];
+    }
+
+    struct ParticleGeneratorProperties
+    {
+        math::Vector emit_area;
+        math::Interval x_velocity_interval;
+        math::Interval y_velocity_interval;
+        math::Interval angular_velocity_interval;
+        mono::Color::Gradient<4> color_gradient;
+        math::Interval life_interval;
+        math::Interval size_interval;
     };
 
     struct ParticleEmitterComponent
@@ -121,9 +144,17 @@ namespace mono
             float emit_rate,
             EmitterType emitter_type,
             ParticleGenerator generator);
-        
+
+        ParticleEmitterComponent* AttachAreaEmitter(
+            uint32_t pool_id,
+            float duration_seconds,
+            float emit_rate,
+            EmitterType emitter_type,
+            const ParticleGeneratorProperties& generator_properties);
+
         void ReleaseEmitter(uint32_t pool_id, ParticleEmitterComponent* emitter);
         void SetEmitterPosition(ParticleEmitterComponent* emitter, const math::Vector& position);
+        void SetGeneratorProperties(ParticleEmitterComponent* emitter, const ParticleGeneratorProperties& generator_properties);
         void RestartEmitter(ParticleEmitterComponent* emitter);
         const std::vector<ParticleEmitterComponent*>& GetAttachedEmitters(uint32_t pool_id) const;
 

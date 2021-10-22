@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "Math/Interval.h"
 #include "Math/Quad.h"
 #include "Math/Vector.h"
 #include "nlohmann/json.hpp"
@@ -33,5 +34,17 @@ namespace math
         quad.mA.y = json["y1"].get<float>();
         quad.mB.x = json["x2"].get<float>();
         quad.mB.y = json["y2"].get<float>();
+    }
+
+    // Interval
+    inline void to_json(nlohmann::json& j, const math::Interval& interval)
+    {
+        j = nlohmann::json{ {"min", interval.min}, {"max", interval.max} };
+    }
+
+    inline void from_json(const nlohmann::json& json, math::Interval& interval)
+    {
+        interval.min = json["min"].get<float>();
+        interval.max = json["max"].get<float>();
     }
 }

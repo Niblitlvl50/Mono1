@@ -9,4 +9,5 @@ namespace math
     struct Quad;
     struct Point;
     struct Matrix;
+    struct Interval;
 }

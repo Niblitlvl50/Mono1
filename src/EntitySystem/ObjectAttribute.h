@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "Math/Interval.h"
 #include "Math/Vector.h"
 #include "Rendering/Color.h"
 
@@ -18,7 +19,8 @@ using Variant = std::variant<
     math::Vector,
     mono::Color::RGBA,
     std::string,
-    std::vector<math::Vector>>;
+    std::vector<math::Vector>,
+    math::Interval>;
 
 struct Attribute
 {
@@ -39,7 +41,8 @@ enum VariantTypeIndex
     POINT,
     COLOR,
     STRING,
-    POLYGON
+    POLYGON,
+    INTERVAL
 };
 
 static_assert(std::is_same_v<bool,                      std::variant_alternative_t<VariantTypeIndex::BOOL, Variant>>);
@@ -50,3 +53,4 @@ static_assert(std::is_same_v<math::Vector,              std::variant_alternative
 static_assert(std::is_same_v<mono::Color::RGBA,         std::variant_alternative_t<VariantTypeIndex::COLOR, Variant>>);
 static_assert(std::is_same_v<std::string,               std::variant_alternative_t<VariantTypeIndex::STRING, Variant>>);
 static_assert(std::is_same_v<std::vector<math::Vector>, std::variant_alternative_t<VariantTypeIndex::POLYGON, Variant>>);
+static_assert(std::is_same_v<math::Interval,            std::variant_alternative_t<VariantTypeIndex::INTERVAL, Variant>>);

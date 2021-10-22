@@ -312,6 +312,14 @@ ParticleEmitterComponent* ParticleSystem::AttachEmitter(
     return emitter;
 }
 
+ParticleEmitterComponent* ParticleSystem::AttachAreaEmitter(
+    uint32_t pool_id, float duration_seconds, float emit_rate, EmitterType emitter_type, const ParticleGeneratorProperties& generator_properties)
+{
+    ParticleEmitterComponent* emitter_component = AttachEmitter(pool_id, math::ZeroVec, duration_seconds, emit_rate, emitter_type, DefaultGenerator);
+    SetGeneratorProperties(emitter_component, generator_properties);
+    return emitter_component;
+}
+
 void ParticleSystem::ReleaseEmitter(uint32_t pool_id, ParticleEmitterComponent* emitter)
 {
     m_particle_emitters.ReleasePoolData(emitter);
@@ -321,6 +329,35 @@ void ParticleSystem::ReleaseEmitter(uint32_t pool_id, ParticleEmitterComponent* 
 void ParticleSystem::SetEmitterPosition(ParticleEmitterComponent* emitter, const math::Vector& position)
 {
     emitter->position = position;
+}
+
+void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, const ParticleGeneratorProperties& generator_properties)
+{
+    const ParticleGenerator generator = [generator_properties](const math::Vector& position, ParticlePoolComponentView& component_view) {
+
+        const math::Vector half_area = generator_properties.emit_area / 2.0f;
+        const math::Vector offset = math::Vector(
+            mono::Random(-half_area.x, half_area.x),
+            mono::Random(-half_area.y, half_area.y)
+        );
+
+        component_view.position         = position + offset;
+        component_view.velocity         = math::Vector(
+            mono::Random(generator_properties.x_velocity_interval.min, generator_properties.x_velocity_interval.max),
+            mono::Random(generator_properties.y_velocity_interval.min, generator_properties.y_velocity_interval.max)
+        );
+        component_view.rotation         = 0.0f;
+        component_view.angular_velocity = mono::Random(generator_properties.angular_velocity_interval.min, generator_properties.angular_velocity_interval.max);
+        component_view.color            = generator_properties.color_gradient.color[0];
+        component_view.gradient         = generator_properties.color_gradient;
+        component_view.size             = 0.0f;
+        component_view.start_size       = generator_properties.size_interval.min;
+        component_view.end_size         = generator_properties.size_interval.max;
+        component_view.life             = mono::Random(generator_properties.life_interval.min, generator_properties.life_interval.max);
+        component_view.start_life       = component_view.life;
+    };
+
+    emitter->generator = generator;
 }
 
 void ParticleSystem::RestartEmitter(ParticleEmitterComponent* emitter)
