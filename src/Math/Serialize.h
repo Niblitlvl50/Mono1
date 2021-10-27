@@ -47,4 +47,16 @@ namespace math
         interval.min = json["min"].get<float>();
         interval.max = json["max"].get<float>();
     }
+
+    // ValueSpread
+    inline void to_json(nlohmann::json& j, const math::ValueSpread& value_spread)
+    {
+        j = nlohmann::json{ {"value", value_spread.value}, {"spread", value_spread.spread} };
+    }
+
+    inline void from_json(const nlohmann::json& json, math::ValueSpread& value_spread)
+    {
+        value_spread.value = json["value"].get<float>();
+        value_spread.spread = json["spread"].get<math::Interval>();
+    }
 }

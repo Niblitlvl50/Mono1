@@ -48,7 +48,8 @@ namespace mono
         math::Interval angular_velocity_interval;
         mono::Color::Gradient<4> color_gradient;
         math::Interval life_interval;
-        math::Interval size_interval;
+        math::ValueSpread start_size_spread;
+        math::ValueSpread end_size_spread;
     };
 
     struct ParticleEmitterComponent
@@ -87,6 +88,7 @@ namespace mono
         uint32_t count_alive;
 
         ParticleUpdater update_function;
+        float particle_damping;
     };
 
     struct ParticlePoolComponentView
@@ -129,7 +131,13 @@ namespace mono
         ParticlePoolComponent* AllocatePool(uint32_t id);
         ParticlePoolComponent* AllocatePool(uint32_t id, uint32_t pool_size, ParticleUpdater update_function);
         void ReleasePool(uint32_t id);
-        void SetPoolData(uint32_t id, uint32_t pool_size, const char* texture_file, mono::BlendMode blend_mode, ParticleUpdater update_function);
+        void SetPoolData(
+            uint32_t id,
+            uint32_t pool_size,
+            const char* texture_file,
+            mono::BlendMode blend_mode,
+            float particle_damping,
+            ParticleUpdater update_function);
         ParticlePoolComponent* GetPool(uint32_t id);
 
         void SetPoolDrawData(uint32_t pool_id, mono::ITexturePtr texture, mono::BlendMode blend_mode);

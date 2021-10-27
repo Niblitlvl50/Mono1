@@ -19,4 +19,11 @@ namespace math
 
     float Interpolate(const Interval& interval, float t);
     float Size(const Interval& interval);
+
+
+    struct ValueSpread
+    {
+        float value;
+        Interval spread;
+    };
 }

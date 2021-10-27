@@ -137,6 +137,9 @@ void ParticleSystem::Update(const mono::UpdateContext& update_context)
 
         for(uint32_t index = 0; index < pool_component.count_alive; ++index)
         {
+            math::Vector& velocity = pool_component.velocity[index];
+            velocity *= (1.0f - pool_component.particle_damping);
+
             ParticlePoolComponentView view = MakeViewFromPool(pool_component, index);
             pool_component.update_function(view, update_context.delta_s);
         }
@@ -229,6 +232,7 @@ ParticlePoolComponent* ParticleSystem::AllocatePool(uint32_t id, uint32_t pool_s
     particle_pool.pool_size = pool_size;
     particle_pool.count_alive = 0;
     particle_pool.update_function = update_function;
+    particle_pool.particle_damping = 0.0f;
 
     m_active_pools[id] = true;
 
@@ -251,7 +255,8 @@ void ParticleSystem::ReleasePool(uint32_t id)
     m_active_pools[id] = false;
 }
 
-void ParticleSystem::SetPoolData(uint32_t id, uint32_t pool_size, const char* texture_file, mono::BlendMode blend_mode, ParticleUpdater update_function)
+void ParticleSystem::SetPoolData(
+    uint32_t id, uint32_t pool_size, const char* texture_file, mono::BlendMode blend_mode, float particle_damping, ParticleUpdater update_function)
 {
     ParticlePoolComponent& particle_pool = m_particle_pools[id];
 
@@ -270,6 +275,7 @@ void ParticleSystem::SetPoolData(uint32_t id, uint32_t pool_size, const char* te
     particle_pool.pool_size = pool_size;
     particle_pool.count_alive = 0;
     particle_pool.update_function = update_function;
+    particle_pool.particle_damping = particle_damping;
 
     ParticleDrawerComponent& draw_component = m_particle_drawers[id];
     draw_component.texture = mono::GetTextureFactory()->CreateTexture(texture_file);
@@ -351,8 +357,10 @@ void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, c
         component_view.angular_velocity = mono::Random(generator_properties.angular_velocity_interval.min, generator_properties.angular_velocity_interval.max);
         component_view.color            = generator_properties.color_gradient.color[0];
         component_view.gradient         = generator_properties.color_gradient;
-        component_view.start_size       = generator_properties.size_interval.min;
-        component_view.end_size         = generator_properties.size_interval.max;
+        component_view.start_size       = generator_properties.start_size_spread.value
+            + mono::Random(generator_properties.start_size_spread.spread.min, generator_properties.start_size_spread.spread.max);
+        component_view.end_size         = generator_properties.end_size_spread.value
+            + mono::Random(generator_properties.end_size_spread.spread.min, generator_properties.end_size_spread.spread.max);
         component_view.size             = component_view.start_size;
         component_view.life             = mono::Random(generator_properties.life_interval.min, generator_properties.life_interval.max);
         component_view.start_life       = component_view.life;

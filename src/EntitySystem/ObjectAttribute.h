@@ -21,6 +21,7 @@ using Variant = std::variant<
     std::string,
     std::vector<math::Vector>,
     math::Interval,
+    math::ValueSpread,
     mono::Color::Gradient<4>>;
 
 struct Attribute
@@ -44,6 +45,7 @@ enum VariantTypeIndex
     STRING,
     POLYGON,
     INTERVAL,
+    VALUE_SPREAD,
     GRADIENT_4
 };
 
@@ -56,4 +58,5 @@ static_assert(std::is_same_v<mono::Color::RGBA,         std::variant_alternative
 static_assert(std::is_same_v<std::string,               std::variant_alternative_t<VariantTypeIndex::STRING, Variant>>);
 static_assert(std::is_same_v<std::vector<math::Vector>, std::variant_alternative_t<VariantTypeIndex::POLYGON, Variant>>);
 static_assert(std::is_same_v<math::Interval,            std::variant_alternative_t<VariantTypeIndex::INTERVAL, Variant>>);
+static_assert(std::is_same_v<math::ValueSpread,         std::variant_alternative_t<VariantTypeIndex::VALUE_SPREAD, Variant>>);
 static_assert(std::is_same_v<mono::Color::Gradient<4>,  std::variant_alternative_t<VariantTypeIndex::GRADIENT_4, Variant>>);
