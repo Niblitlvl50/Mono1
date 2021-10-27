@@ -43,8 +43,8 @@ namespace mono
     struct ParticleGeneratorProperties
     {
         math::Vector emit_area;
-        math::Interval x_velocity_interval;
-        math::Interval y_velocity_interval;
+        math::Interval direction_interval;
+        math::Interval magnitude_interval;
         math::Interval angular_velocity_interval;
         mono::Color::Gradient<4> color_gradient;
         math::Interval life_interval;
@@ -80,8 +80,8 @@ namespace mono
         std::vector<float> start_size;
         std::vector<float> end_size;
 
-        std::vector<int> life;
-        std::vector<int> start_life;
+        std::vector<float> life;
+        std::vector<float> start_life;
 
         uint32_t pool_size;
         uint32_t count_alive;
@@ -104,8 +104,8 @@ namespace mono
         float& start_size;
         float& end_size;
 
-        int& life;
-        int& start_life;
+        float& life;
+        float& start_life;
     };
 
     struct ParticleSystemStats

@@ -69,7 +69,7 @@ void mono::DefaultGenerator(const math::Vector& position, ParticlePoolComponentV
 {
     const float x = mono::Random(-2.0f, 2.0f);
     const float y = mono::Random(0.5f, 4.0f);
-    const float life = mono::Random(0.0f, 500.0f);
+    const float life = mono::Random(0.0f, 0.5f);
 
     particle_view.position = position;
     particle_view.velocity = math::Vector(x, y);
@@ -81,12 +81,12 @@ void mono::DefaultGenerator(const math::Vector& position, ParticlePoolComponentV
         { mono::Color::RED, mono::Color::GREEN, mono::Color::BLUE, mono::Color::WHITE }
     );
 
-    particle_view.size = 10.0f;
+    particle_view.size = 32.0f;
     particle_view.start_size = 32.0f;
     particle_view.end_size = 24.0f;
 
-    particle_view.start_life = 1000 + life;
-    particle_view.life = 1000 + life;
+    particle_view.start_life = 1.0f + life;
+    particle_view.life = 1.0f + life;
 }
 
 void mono::DefaultUpdater(ParticlePoolComponentView& component_view, float delta_s)
@@ -143,8 +143,8 @@ void ParticleSystem::Update(const mono::UpdateContext& update_context)
 
         for(uint32_t index = 0; index < pool_component.count_alive; ++index)
         {
-            int& life = pool_component.life[index];
-            life -= update_context.delta_ms;
+            float& life = pool_component.life[index];
+            life -= update_context.delta_s;
 
             if(life <= 0 && pool_component.count_alive > 0)
             {
@@ -341,18 +341,19 @@ void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, c
             mono::Random(-half_area.y, half_area.y)
         );
 
+        const float direction_variation = mono::Random(generator_properties.direction_interval.min, generator_properties.direction_interval.max);
+        const float magnitude_variation = mono::Random(generator_properties.magnitude_interval.min, generator_properties.magnitude_interval.max);
+        const math::Vector& velocity = math::VectorFromAngle(direction_variation) * magnitude_variation;
+
         component_view.position         = position + offset;
-        component_view.velocity         = math::Vector(
-            mono::Random(generator_properties.x_velocity_interval.min, generator_properties.x_velocity_interval.max),
-            mono::Random(generator_properties.y_velocity_interval.min, generator_properties.y_velocity_interval.max)
-        );
+        component_view.velocity         = velocity;
         component_view.rotation         = 0.0f;
         component_view.angular_velocity = mono::Random(generator_properties.angular_velocity_interval.min, generator_properties.angular_velocity_interval.max);
         component_view.color            = generator_properties.color_gradient.color[0];
         component_view.gradient         = generator_properties.color_gradient;
-        component_view.size             = 0.0f;
         component_view.start_size       = generator_properties.size_interval.min;
         component_view.end_size         = generator_properties.size_interval.max;
+        component_view.size             = component_view.start_size;
         component_view.life             = mono::Random(generator_properties.life_interval.min, generator_properties.life_interval.max);
         component_view.start_life       = component_view.life;
     };
