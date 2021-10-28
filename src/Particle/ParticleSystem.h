@@ -50,7 +50,7 @@ namespace mono
     struct ParticleGeneratorProperties
     {
         math::Vector emit_area;
-        math::Interval direction_interval;
+        math::Interval direction_degrees_interval;
         math::Interval magnitude_interval;
         math::Interval angular_velocity_interval;
         mono::Color::Gradient<4> color_gradient;
