@@ -47,8 +47,8 @@ void ParticleSystemDrawer::Draw(mono::IRenderer& renderer) const
         it->second.color_buffer->UpdateData(pool.color.data(), 0, pool.count_alive);
         it->second.point_size_buffer->UpdateData(pool.size.data(), 0, pool.count_alive);
 
-        const math::Matrix& world_transform = m_transform_system->GetWorld(pool_index);
-        const auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
+        const math::Matrix& transform = (drawer.transform_space == ParticleTransformSpace::LOCAL) ? m_transform_system->GetWorld(pool_index) : math::Matrix();
+        const auto transform_scope = mono::MakeTransformScope(transform, &renderer);
 
         renderer.DrawParticlePoints(
             it->second.position_buffer.get(),

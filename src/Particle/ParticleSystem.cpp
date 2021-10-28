@@ -256,7 +256,7 @@ void ParticleSystem::ReleasePool(uint32_t id)
 }
 
 void ParticleSystem::SetPoolData(
-    uint32_t id, uint32_t pool_size, const char* texture_file, mono::BlendMode blend_mode, float particle_damping, ParticleUpdater update_function)
+    uint32_t id, uint32_t pool_size, const char* texture_file, mono::BlendMode blend_mode, ParticleTransformSpace transform_space, float particle_damping, ParticleUpdater update_function)
 {
     ParticlePoolComponent& particle_pool = m_particle_pools[id];
 
@@ -277,9 +277,8 @@ void ParticleSystem::SetPoolData(
     particle_pool.update_function = update_function;
     particle_pool.particle_damping = particle_damping;
 
-    ParticleDrawerComponent& draw_component = m_particle_drawers[id];
-    draw_component.texture = mono::GetTextureFactory()->CreateTexture(texture_file);
-    draw_component.blend_mode = blend_mode;
+    mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture(texture_file);
+    SetPoolDrawData(id, texture, blend_mode, transform_space);
 }
 
 ParticlePoolComponent* ParticleSystem::GetPool(uint32_t id)
@@ -290,11 +289,12 @@ ParticlePoolComponent* ParticleSystem::GetPool(uint32_t id)
     return &particle_pool;
 }
 
-void ParticleSystem::SetPoolDrawData(uint32_t pool_id, mono::ITexturePtr texture, mono::BlendMode blend_mode)
+void ParticleSystem::SetPoolDrawData(uint32_t pool_id, mono::ITexturePtr texture, mono::BlendMode blend_mode, ParticleTransformSpace transform_space)
 {
     ParticleDrawerComponent& draw_component = m_particle_drawers[pool_id];
     draw_component.texture = texture;
     draw_component.blend_mode = blend_mode;
+    draw_component.transform_space = transform_space;
 }
 
 ParticleEmitterComponent* ParticleSystem::AttachEmitter(

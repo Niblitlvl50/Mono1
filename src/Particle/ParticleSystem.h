@@ -16,10 +16,17 @@
 
 namespace mono
 {
+    enum class ParticleTransformSpace
+    {
+        WORLD,
+        LOCAL
+    };
+
     struct ParticleDrawerComponent
     {
         mono::ITexturePtr texture;
         mono::BlendMode blend_mode;
+        ParticleTransformSpace transform_space;
     };
 
     enum class EmitterType : int
@@ -136,11 +143,12 @@ namespace mono
             uint32_t pool_size,
             const char* texture_file,
             mono::BlendMode blend_mode,
+            ParticleTransformSpace transform_space,
             float particle_damping,
             ParticleUpdater update_function);
         ParticlePoolComponent* GetPool(uint32_t id);
 
-        void SetPoolDrawData(uint32_t pool_id, mono::ITexturePtr texture, mono::BlendMode blend_mode);
+        void SetPoolDrawData(uint32_t pool_id, mono::ITexturePtr texture, mono::BlendMode blend_mode, ParticleTransformSpace transform_space);
 
         // duration in seconds, negative value means infinite
         // emit_rate is n particles per second
