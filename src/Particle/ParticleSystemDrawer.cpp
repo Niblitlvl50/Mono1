@@ -39,7 +39,7 @@ void ParticleSystemDrawer::Draw(mono::IRenderer& renderer) const
             it = m_render_data.insert(std::make_pair(pool_index, std::move(new_render_data))).first;
         }
 
-        if(pool.count_alive == 0)
+        if(pool.count_alive == 0 || drawer.texture == nullptr)
             return;
 
         it->second.position_buffer->UpdateData(pool.position.data(), 0, pool.count_alive);
