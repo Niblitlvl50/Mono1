@@ -20,6 +20,11 @@ StaticBackground::StaticBackground(const char* texture_filename, uint32_t textur
     Load(texture_filename, texture_mode_flags);
 }
 
+StaticBackground::StaticBackground(const math::Vector& size, const char* texture_filename, uint32_t texture_mode_flags)
+{
+    Load(size, texture_filename, texture_mode_flags);
+}
+
 StaticBackground::StaticBackground(const std::vector<math::Vector>& vertices, const char* texture_filename, uint32_t texture_mode_flags)
 {
     Load(vertices, texture_filename, texture_mode_flags);
@@ -34,6 +39,20 @@ void StaticBackground::Load(const char* texture_filename, uint32_t texture_mode_
         math::TopLeft(background_bb),
         math::TopRight(background_bb),
         math::BottomRight(background_bb)
+    };
+
+    Load(vertices, texture_filename, texture_mode_flags);
+}
+
+void StaticBackground::Load(const math::Vector& size, const char* texture_filename, uint32_t texture_mode_flags)
+{
+    const math::Vector half_size = size / 2.0f;
+
+    const std::vector<math::Vector> vertices = {
+        -half_size,
+        { -half_size.x, half_size.y },
+        half_size,
+        { half_size.x, -half_size.y }
     };
 
     Load(vertices, texture_filename, texture_mode_flags);

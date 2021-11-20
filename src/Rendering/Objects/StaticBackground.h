@@ -25,9 +25,11 @@ namespace mono
 
         StaticBackground();
         StaticBackground(const char* texture_filename, uint32_t texture_mode_flags);
+        StaticBackground(const math::Vector& size, const char* texture_filename, uint32_t texture_mode_flags);
         StaticBackground(const std::vector<math::Vector>& vertices, const char* texture_filename, uint32_t texture_mode_flags);
 
         void Load(const char* texture_filename, uint32_t texture_mode_flags);
+        void Load(const math::Vector& size, const char* texture_filename, uint32_t texture_mode_flags);
         void Load(const std::vector<math::Vector>& vertices, const char* background_texture, uint32_t texture_mode_flags);
 
         void Clear();
