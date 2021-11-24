@@ -66,7 +66,7 @@ namespace
             coord = (coord - 0.5) * mat2(cos_factor, sin_factor, -sin_factor, cos_factor);
             coord += 0.5;
 
-            frag_color = texture(sampler, coord).r * color;
+            frag_color = texture(sampler, coord) * color;
         }
     )";
 
