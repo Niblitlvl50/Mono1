@@ -20,6 +20,7 @@ namespace mono
         math::Vector GetTargetViewportSize() const override;
         math::Quad GetViewport() const override;
 
+        void Move(const math::Vector& delta) override;
         void SetPosition(const math::Vector& position) override;
         void SetTargetPosition(const math::Vector& target_position) override;
         math::Vector GetPosition() const override;

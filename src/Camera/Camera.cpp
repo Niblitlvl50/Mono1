@@ -66,6 +66,11 @@ math::Quad Camera::GetViewport() const
     return viewport;
 }
 
+void Camera::Move(const math::Vector& delta)
+{
+    m_target_position += delta;
+}
+
 void Camera::SetPosition(const math::Vector& position)
 {
     m_position = position;
