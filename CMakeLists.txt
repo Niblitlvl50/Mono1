@@ -31,6 +31,10 @@ set(BUILD_DEMOS OFF CACHE BOOL "Build chipmunk demo application" FORCE)
 set(LIB_INSTALL_DIR ${LIBRARY_OUTPUT_PATH})
 add_subdirectory("third_party/Chipmunk2D")
 
+# SDL
+add_subdirectory("third_party/SDL")
+include_directories(AFTER "${SDL2_SOURCE_DIR}/include")
+
 include_directories("src")
 include_directories(SYSTEM "third_party")
 include_directories(SYSTEM ${chipmunk_SOURCE_DIR}/include)
@@ -39,11 +43,6 @@ find_package(OpenGL REQUIRED)
 if(OPENGL_FOUND)
     include_directories(SYSTEM ${OPENGL_INCLUDE_DIR})
 endif(OPENGL_FOUND)
-
-find_package(SDL2 REQUIRED)
-if(SDL2_FOUND)
-    include_directories(SYSTEM ${SDL2_INCLUDE_DIR})
-endif(SDL2_FOUND)
 
 if(APPLE)
     find_library(AUDIOTOOLBOX AudioToolbox)
@@ -75,7 +74,7 @@ endif()
 file(GLOB_RECURSE engine_source_files "src/*.cpp")
 add_library(mono STATIC ${engine_source_files})
 add_dependencies(mono huffandpuff imgui chipmunk_static)
-target_link_libraries(mono glad uuid4 huffandpuff imgui chipmunk_static ${SDL2_LIBRARY} OpenGL::GL ${AUDIOTOOLBOX})
+target_link_libraries(mono glad uuid4 huffandpuff imgui chipmunk_static SDL2-static OpenGL::GL ${AUDIOTOOLBOX})
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "tests/*.cpp")
