@@ -7,7 +7,6 @@
 #include "System/System.h"
 
 #include "sokol/sokol_gfx.h"
-#include "glad/glad_gl_33/glad.h"
 
 namespace
 {
