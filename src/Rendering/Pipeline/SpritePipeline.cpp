@@ -147,7 +147,7 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
     shader_desc.fs.source = fragment_source;
 
     shader_desc.fs.images[0].name = "sampler";
-    shader_desc.fs.images[0].type = SG_IMAGETYPE_2D;
+    shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
     shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
 
     shader_desc.fs.uniform_blocks[U_FS_COLOR_SHADE_BLOCK].size = sizeof(mono::Color::RGBA);
@@ -185,12 +185,13 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
     pipeline_desc.layout.attrs[ATTR_HEIGHT].buffer_index = ATTR_HEIGHT;
 
     //pipeline_desc.rasterizer.face_winding = SG_FACEWINDING_CCW;
-    pipeline_desc.blend.enabled = true;
-    pipeline_desc.blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
-    pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-    pipeline_desc.blend.src_factor_alpha = SG_BLENDFACTOR_SRC_ALPHA;
-    pipeline_desc.blend.dst_factor_alpha = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-    pipeline_desc.blend.depth_format = SG_PIXELFORMAT_NONE;
+    pipeline_desc.colors[0].blend.enabled = true;
+    pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
+    pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+    pipeline_desc.colors[0].blend.src_factor_alpha = SG_BLENDFACTOR_SRC_ALPHA;
+    pipeline_desc.colors[0].blend.dst_factor_alpha = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+
+    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -243,7 +244,7 @@ void SpritePipeline::SetTime(float total_time_s, float delta_time_s)
     time_block.total_time = total_time_s;
     time_block.delta_time = delta_time_s;
 
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_TIME_BLOCK, &time_block, sizeof(TimeBlock));
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_TIME_BLOCK, { &time_block, sizeof(TimeBlock) });
 }
 
 void SpritePipeline::SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model)
@@ -259,7 +260,7 @@ void SpritePipeline::SetTransforms(const math::Matrix& projection, const math::M
     transform_block.view = view;
     transform_block.model = model;
 
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_TRANSFORM_BLOCK, &transform_block, sizeof(TransformBlock));
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_TRANSFORM_BLOCK, { &transform_block, sizeof(TransformBlock) });
 }
 
 void SpritePipeline::SetFlipSprite(bool flip_horizontal, bool flip_vertical)
@@ -273,22 +274,22 @@ void SpritePipeline::SetFlipSprite(bool flip_horizontal, bool flip_vertical)
     flip_sprite_block.flip_horizontal = flip_horizontal ? 1.0f : 0.0f;
     flip_sprite_block.flip_vertical = flip_vertical ? 1.0f : 0.0f;
 
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_FLIP_SPRITE_BLOCK, &flip_sprite_block, sizeof(FlipInputBlock));
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_FLIP_SPRITE_BLOCK, { &flip_sprite_block, sizeof(FlipInputBlock) });
 }
 
 void SpritePipeline::SetWindSway(bool enable_wind)
 {
     const float value = enable_wind ? 1.0f : 0.0f;
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_WIND_SWAY_BLOCK, &value, sizeof(float));
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_WIND_SWAY_BLOCK, { &value, sizeof(float) });
 }
 
 void SpritePipeline::SetShade(const mono::Color::RGBA& color)
 {
-    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FS_COLOR_SHADE_BLOCK, &color, sizeof(mono::Color::RGBA));
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FS_COLOR_SHADE_BLOCK, { &color, sizeof(mono::Color::RGBA) });
 }
 
 void SpritePipeline::SetFlashSprite(bool flash)
 {
     const float value = flash ? 1.0f : 0.0f;
-    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FS_FLASH_BLOCK, &value, sizeof(float));
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FS_FLASH_BLOCK, { &value, sizeof(float) });
 }

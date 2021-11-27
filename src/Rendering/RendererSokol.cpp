@@ -120,7 +120,11 @@ void RendererSokol::DrawLights()
 {
     sg_pass_action offscreen_light_pass_action = {};
     offscreen_light_pass_action.colors[0].action = SG_ACTION_CLEAR;
-    std::memcpy(offscreen_light_pass_action.colors[0].val, &m_ambient_shade, sizeof(mono::Color::RGBA));
+
+    offscreen_light_pass_action.colors[0].value.r = m_ambient_shade.red;
+    offscreen_light_pass_action.colors[0].value.g = m_ambient_shade.green;
+    offscreen_light_pass_action.colors[0].value.b = m_ambient_shade.blue;
+    offscreen_light_pass_action.colors[0].value.a = m_ambient_shade.alpha;
 
     sg_begin_pass(m_offscreen_light_pass.pass_handle, &offscreen_light_pass_action);
 
@@ -201,10 +205,10 @@ void RendererSokol::PrepareDraw()
 
     sg_pass_action offscreen_pass_action = {};
     offscreen_pass_action.colors[0].action = SG_ACTION_CLEAR;
-    offscreen_pass_action.colors[0].val[0] = m_clear_color.red;
-    offscreen_pass_action.colors[0].val[1] = m_clear_color.green;
-    offscreen_pass_action.colors[0].val[2] = m_clear_color.blue;
-    offscreen_pass_action.colors[0].val[3] = m_clear_color.alpha;
+    offscreen_pass_action.colors[0].value.r = m_clear_color.red;
+    offscreen_pass_action.colors[0].value.g = m_clear_color.green;
+    offscreen_pass_action.colors[0].value.b = m_clear_color.blue;
+    offscreen_pass_action.colors[0].value.a = m_clear_color.alpha;
     sg_begin_pass(m_offscreen_color_pass.pass_handle, &offscreen_pass_action);
     sg_apply_viewport(0, 0, m_drawable_size.x, m_drawable_size.y, false);
 

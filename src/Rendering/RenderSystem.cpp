@@ -8,7 +8,6 @@
 
 #include "System/System.h"
 
-#include "glad/glad_gl_33/glad.h"
 #include "imgui/imgui.h"
 
 #ifdef __APPLE__
@@ -75,10 +74,6 @@ namespace
 
 void mono::InitializeRender(const RenderInitParams& init_params)
 {
-    const int load_gl_result = gladLoadGLLoader(System::GetProcLoader());
-    if(load_gl_result == 0)
-        throw std::runtime_error("RenderSystem|Unble to initialize OpenGL functions.");
-
     sg_desc desc = {};
     desc.buffer_pool_size = 2048;
     desc.context.depth_format = SG_PIXELFORMAT_NONE;
@@ -124,8 +119,6 @@ void mono::InitializeRender(const RenderInitParams& init_params)
                 "\trenderer: %s\n"
                 "\tversion: %s\n"
                 "\tglsl: %s", vendor, renderer, version, glslversion);
-    System::Log("glad\n"
-                "\tversion: %d %d", GLVersion.major, GLVersion.minor);
     System::Log("imgui\n"
                 "\tversion: %s", IMGUI_VERSION);
 }

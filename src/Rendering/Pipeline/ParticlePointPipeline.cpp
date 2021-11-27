@@ -104,7 +104,7 @@ mono::IPipelinePtr ParticlePointPipeline::MakePipeline(mono::BlendMode blend_mod
 
     shader_desc.fs.source = fragment_source;
     shader_desc.fs.images[0].name = "sampler";
-    shader_desc.fs.images[0].type = SG_IMAGETYPE_2D;
+    shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
     shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
     
     shader_desc.attrs[ATTR_POSITION].name = "vertex_position";
@@ -136,15 +136,13 @@ mono::IPipelinePtr ParticlePointPipeline::MakePipeline(mono::BlendMode blend_mod
 
     //pipeline_desc.rasterizer.face_winding = SG_FACEWINDING_CCW;
 
-    pipeline_desc.blend.enabled = true;
-    pipeline_desc.blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
+    pipeline_desc.colors[0].blend.enabled = true;
+    pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
 
-    if(blend_mode == mono::BlendMode::ONE)
-        pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE;
-    else
-        pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+    const sg_blend_factor blend_factor = (blend_mode == mono::BlendMode::ONE) ? SG_BLENDFACTOR_ONE : SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+    pipeline_desc.colors[0].blend.dst_factor_rgb = blend_factor;
 
-    pipeline_desc.blend.depth_format = SG_PIXELFORMAT_NONE;
+    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -204,5 +202,5 @@ void ParticlePointPipeline::SetTransforms(const math::Matrix& projection, const 
     transform_block.view = view;
     transform_block.model = model;
 
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TRANSFORM_BLOCK, &transform_block, sizeof(TransformBlock));
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TRANSFORM_BLOCK, { &transform_block, sizeof(TransformBlock) });
 }

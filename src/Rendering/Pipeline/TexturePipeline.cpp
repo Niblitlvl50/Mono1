@@ -283,7 +283,7 @@ mono::IPipelinePtr TexturePipeline::MakePipeline()
     shader_desc.fs.source = fragment_source;
 
     shader_desc.fs.images[0].name = "sampler";
-    shader_desc.fs.images[0].type = SG_IMAGETYPE_2D;
+    shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
     shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
 
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].size = sizeof(float);
@@ -316,10 +316,11 @@ mono::IPipelinePtr TexturePipeline::MakePipeline()
     pipeline_desc.layout.attrs[ATTR_UV].buffer_index = ATTR_UV;
 
     //pipeline_desc.rasterizer.face_winding = SG_FACEWINDING_CCW;
-    pipeline_desc.blend.enabled = true;
-    pipeline_desc.blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
-    pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-    pipeline_desc.blend.depth_format = SG_PIXELFORMAT_NONE;
+    pipeline_desc.colors[0].blend.enabled = true;
+    pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
+    pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+
+    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -355,7 +356,7 @@ mono::IPipelinePtr TexturePipeline::MakeAnnotationPipeline()
     shader_desc.fs.source = fragment_source_annotation;
 
     shader_desc.fs.images[0].name = "sampler";
-    shader_desc.fs.images[0].type = SG_IMAGETYPE_2D;
+    shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
     shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
 
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].size = sizeof(float);
@@ -388,10 +389,11 @@ mono::IPipelinePtr TexturePipeline::MakeAnnotationPipeline()
     pipeline_desc.layout.attrs[ATTR_ANNOTATION].buffer_index = ATTR_ANNOTATION;
 
     //pipeline_desc.rasterizer.face_winding = SG_FACEWINDING_CCW;
-    pipeline_desc.blend.enabled = true;
-    pipeline_desc.blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
-    pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-    pipeline_desc.blend.depth_format = SG_PIXELFORMAT_NONE;
+    pipeline_desc.colors[0].blend.enabled = true;
+    pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
+    pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+
+    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -428,7 +430,7 @@ mono::IPipelinePtr TexturePipeline::MakeVertexColorPipeline()
     shader_desc.fs.source = fragment_source_color;
 
     shader_desc.fs.images[0].name = "sampler";
-    shader_desc.fs.images[0].type = SG_IMAGETYPE_2D;
+    shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
     shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
 
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].size = sizeof(float);
@@ -464,10 +466,11 @@ mono::IPipelinePtr TexturePipeline::MakeVertexColorPipeline()
     pipeline_desc.layout.attrs[ATTR_COLOR].buffer_index = ATTR_COLOR;
 
     //pipeline_desc.rasterizer.face_winding = SG_FACEWINDING_CCW;
-    pipeline_desc.blend.enabled = true;
-    pipeline_desc.blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
-    pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-    pipeline_desc.blend.depth_format = SG_PIXELFORMAT_NONE;
+    pipeline_desc.colors[0].blend.enabled = true;
+    pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
+    pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+
+    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -547,22 +550,22 @@ void TexturePipeline::SetTransforms(const math::Matrix& projection, const math::
     transform_block.view = view;
     transform_block.model = model;
 
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TRANSFORM_BLOCK, &transform_block, sizeof(TransformBlock));
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TRANSFORM_BLOCK, { &transform_block, sizeof(TransformBlock) });
 }
 
 void TexturePipeline::SetIsAlpha(bool is_alpha_texture)
 {
     const float magic_value = is_alpha_texture ? 1.0f : 0.0f;
-    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_IS_ALPHA_BLOCK, &magic_value, sizeof(float));
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_IS_ALPHA_BLOCK, { &magic_value, sizeof(float) });
 }
 
 void TexturePipeline::SetBlur(bool enable_blur)
 {
     const float magic_value = enable_blur ? 1.0f : 0.0f;
-    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_ENABLE_BLUR_BLOCK, &magic_value, sizeof(float));
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_ENABLE_BLUR_BLOCK, { &magic_value, sizeof(float) });
 }
 
 void TexturePipeline::SetShade(const mono::Color::RGBA& color)
 {
-    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_COLOR_SHADE_BLOCK, &color, sizeof(mono::Color::RGBA));
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_COLOR_SHADE_BLOCK, { &color, sizeof(mono::Color::RGBA) });
 }

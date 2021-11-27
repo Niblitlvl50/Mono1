@@ -100,7 +100,7 @@ mono::IPipelinePtr FogPipeline::MakePipeline()
     shader_desc.fs.source = fragment_source;
 
     shader_desc.fs.images[0].name = "sampler";
-    shader_desc.fs.images[0].type = SG_IMAGETYPE_2D;
+    shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
     shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
 
     shader_desc.fs.uniform_blocks[U_COLOR_SHADE_BLOCK].size = sizeof(mono::Color::RGBA);
@@ -122,10 +122,11 @@ mono::IPipelinePtr FogPipeline::MakePipeline()
     pipeline_desc.layout.attrs[ATTR_POSITION].buffer_index = ATTR_POSITION;
 
     //pipeline_desc.rasterizer.face_winding = SG_FACEWINDING_CCW;
-    pipeline_desc.blend.enabled = true;
-    pipeline_desc.blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
-    pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-    pipeline_desc.blend.depth_format = SG_PIXELFORMAT_NONE;
+    pipeline_desc.colors[0].blend.enabled = true;
+    pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
+    pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+
+    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -163,7 +164,7 @@ void FogPipeline::SetTime(float total_time_s, float delta_time_s)
     time_block.total_time = total_time_s;
     time_block.delta_time = delta_time_s;
 
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TIME_BLOCK, &time_block, sizeof(TimeBlock));
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TIME_BLOCK, { &time_block, sizeof(TimeBlock) });
 }
 
 void FogPipeline::SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model)
@@ -179,10 +180,10 @@ void FogPipeline::SetTransforms(const math::Matrix& projection, const math::Matr
     transform_block.view = view;
     transform_block.model = model;
 
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TRANSFORM_BLOCK, &transform_block, sizeof(TransformBlock));
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TRANSFORM_BLOCK, { &transform_block, sizeof(TransformBlock) });
 }
 
 void FogPipeline::SetShade(const mono::Color::RGBA& color)
 {
-    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_COLOR_SHADE_BLOCK, &color, sizeof(mono::Color::RGBA));
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_COLOR_SHADE_BLOCK, { &color, sizeof(mono::Color::RGBA) });
 }

@@ -22,8 +22,8 @@ TextureImpl::TextureImpl(
     image_desc.width = width;
     image_desc.height = height;
     image_desc.pixel_format = data_format;
-    image_desc.content.subimage[0][0].ptr = image_data;
-    image_desc.content.subimage[0][0].size = width * height * color_components * sizeof(unsigned char);
+    image_desc.data.subimage[0][0].ptr = image_data;
+    image_desc.data.subimage[0][0].size = width * height * color_components * sizeof(unsigned char);
 
     m_handle = sg_make_image(&image_desc);
 

@@ -109,10 +109,11 @@ namespace
         pipeline_desc.layout.attrs[ATTR_COLOR].format = SG_VERTEXFORMAT_FLOAT4;
         pipeline_desc.layout.attrs[ATTR_COLOR].buffer_index = ATTR_COLOR;
 
-        pipeline_desc.blend.enabled = true;
-        pipeline_desc.blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
-        pipeline_desc.blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-        pipeline_desc.blend.depth_format = SG_PIXELFORMAT_NONE;
+        pipeline_desc.colors[0].blend.enabled = true;
+        pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
+        pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+
+        pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
         sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
         const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -206,12 +207,12 @@ void ColorPipeline::SetTransforms(const math::Matrix& projection, const math::Ma
     transform_block.view = view;
     transform_block.model = model;
 
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TRANSFORM_BLOCK, &transform_block, sizeof(TransformBlock));
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TRANSFORM_BLOCK, { &transform_block, sizeof(TransformBlock) });
 }
 
 void ColorPipeline::SetPointSize(float point_size)
 {
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_POINT_SIZE_BLOCK, &point_size, sizeof(float));
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_POINT_SIZE_BLOCK, { &point_size, sizeof(float) });
 }
 
 void ColorPipeline::SetLineWidth(float line_width)

@@ -89,10 +89,10 @@ mono::IPipelinePtr ScreenPipeline::MakePipeline()
     shader_desc.fs.source = fragment_source;
 
     shader_desc.fs.images[0].name = "sampler";
-    shader_desc.fs.images[0].type = SG_IMAGETYPE_2D;
+    shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
     shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
     shader_desc.fs.images[1].name = "sampler_light";
-    shader_desc.fs.images[1].type = SG_IMAGETYPE_2D;
+    shader_desc.fs.images[1].image_type = SG_IMAGETYPE_2D;
     shader_desc.fs.images[1].sampler_type = SG_SAMPLERTYPE_FLOAT;
 
     shader_desc.fs.uniform_blocks[U_FADE_CORNERS_BLOCK].size = sizeof(float);
@@ -152,12 +152,12 @@ void ScreenPipeline::Apply(
 void ScreenPipeline::FadeCorners(bool enable)
 {
     const float magic_value = enable ? 1.0f : 0.0f;
-    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FADE_CORNERS_BLOCK, &magic_value, sizeof(float));
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FADE_CORNERS_BLOCK, { &magic_value, sizeof(float) });
 }
 
 void ScreenPipeline::InvertColors(bool enable)
 {
     const float magic_value = enable ? 1.0f : 0.0f;
-    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_INVERT_COLORS_BLOCK, &magic_value, sizeof(float));
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_INVERT_COLORS_BLOCK, { &magic_value, sizeof(float) });
 }
 
