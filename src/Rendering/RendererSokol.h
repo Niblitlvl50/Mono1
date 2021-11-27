@@ -27,7 +27,7 @@ namespace mono
         void SetWindowSize(const math::Vector& window_size);
         void SetDrawableSize(const math::Vector& drawable_size);
         void SetViewport(const math::Quad& viewport);
-        void SetDeltaAndTimestamp(uint32_t delta_ms, uint32_t timestamp);
+        void SetDeltaAndTimestamp(uint32_t delta_ms, float delta_s, uint32_t timestamp);
 
         void DrawFrame();
 
@@ -189,6 +189,7 @@ namespace mono
         mono::ITexturePtr m_light_mask_texture;
 
         uint32_t m_delta_time_ms = 0;
+        float m_delta_time_s = 0.0f;
         uint32_t m_timestamp = 0;
 
         std::vector<const IDrawable*> m_drawables[RenderPass::N_RENDER_PASS];

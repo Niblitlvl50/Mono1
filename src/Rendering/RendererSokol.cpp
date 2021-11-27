@@ -83,9 +83,10 @@ void RendererSokol::SetViewport(const math::Quad& viewport)
     m_viewport = viewport;
 }
 
-void RendererSokol::SetDeltaAndTimestamp(uint32_t delta_ms, uint32_t timestamp)
+void RendererSokol::SetDeltaAndTimestamp(uint32_t delta_ms, float delta_s, uint32_t timestamp)
 {
     m_delta_time_ms = delta_ms;
+    m_delta_time_s = delta_s;
     m_timestamp = timestamp;
 }
 
@@ -212,8 +213,7 @@ void RendererSokol::PrepareDraw()
     sg_begin_pass(m_offscreen_color_pass.pass_handle, &offscreen_pass_action);
     sg_apply_viewport(0, 0, m_drawable_size.x, m_drawable_size.y, false);
 
-    const double delta_time_s = double(m_delta_time_ms) / 1000.0;
-    simgui_new_frame(m_drawable_size.x, m_drawable_size.y, delta_time_s);
+    simgui_new_frame(m_drawable_size.x, m_drawable_size.y, m_delta_time_s);
 }
 
 void RendererSokol::EndDraw()

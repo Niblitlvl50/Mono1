@@ -95,7 +95,7 @@ int Engine::Run(IZone* zone)
         }
 
         const uint32_t before_time = System::GetMilliseconds();
-        const uint32_t delta_ms = (before_time - last_time) * m_time_scale;
+        const uint32_t delta_ms = std::clamp(uint32_t((before_time - last_time) * m_time_scale), 1u, std::numeric_limits<uint32_t>::max());
         update_context.timestamp += delta_ms;
 
         const System::Size& size = m_window->Size();
@@ -122,7 +122,7 @@ int Engine::Run(IZone* zone)
             update_context.delta_ms = delta_ms;
             update_context.delta_s = float(delta_ms) / 1000.0f;
 
-            renderer.SetDeltaAndTimestamp(update_context.delta_ms, update_context.timestamp);
+            renderer.SetDeltaAndTimestamp(update_context.delta_ms, update_context.delta_s, update_context.timestamp);
 
             m_window->MakeCurrent();
             m_system_context->Update(update_context);
