@@ -140,7 +140,7 @@ mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector
     parsl_config config;
     config.thickness = options.width;
     config.flags = PARSL_FLAG_ANNOTATIONS;
-    config.curves_max_flatness = 0.1;
+    config.curves_max_flatness = 0.1f;
     config.streamlines_seed_spacing = 0.0f;
     config.streamlines_seed_viewport = {};
     config.miter_limit = 0.0f;

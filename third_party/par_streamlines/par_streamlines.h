@@ -106,15 +106,15 @@ typedef struct parsl_context_s parsl_context;
 // Client function that moves a streamline particle by a single time step.
 typedef void (*parsl_advection_callback)(parsl_position* point, void* userdata);
 
-parsl_context* parsl_create_context(parsl_config config);
+extern parsl_context* parsl_create_context(parsl_config config);
 
-void parsl_destroy_context(parsl_context* ctx);
+extern void parsl_destroy_context(parsl_context* ctx);
 
 // Low-level function that simply generates two triangles for each line segment.
-parsl_mesh* parsl_mesh_from_lines(parsl_context* ctx, parsl_spine_list spines);
+extern parsl_mesh* parsl_mesh_from_lines(parsl_context* ctx, parsl_spine_list spines);
 
 // High-level function that can be used to visualize a vector field.
-parsl_mesh* parsl_mesh_from_streamlines(parsl_context* context,
+extern parsl_mesh* parsl_mesh_from_streamlines(parsl_context* context,
     parsl_advection_callback advect, uint32_t first_tick, uint32_t num_ticks,
     void* userdata);
 
@@ -131,7 +131,7 @@ parsl_mesh* parsl_mesh_from_streamlines(parsl_context* context,
 // number of piecewise curves.
 //
 // Each spine is equivalent to an SVG path that looks like M C S S S.
-parsl_mesh* parsl_mesh_from_curves_cubic(parsl_context* context,
+extern parsl_mesh* parsl_mesh_from_curves_cubic(parsl_context* context,
     parsl_spine_list spines);
 
 // High-level function that tessellates a series of curves into triangles,
@@ -145,7 +145,7 @@ parsl_mesh* parsl_mesh_from_curves_cubic(parsl_context* context,
 // number of piecewise curves.
 //
 // Each spine is equivalent to an SVG path that looks like M Q M Q M Q.
-parsl_mesh* parsl_mesh_from_curves_quadratic(parsl_context* context,
+extern parsl_mesh* parsl_mesh_from_curves_quadratic(parsl_context* context,
     parsl_spine_list spines);
 
 #ifdef __cplusplus
