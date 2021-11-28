@@ -14,11 +14,12 @@
     #define _CRT_SECURE_NO_WARNINGS 1
 #endif
 
-#ifdef __linux__
-    #define CUTE_SOUND_FORCE_SDL
-#else
-    #define CUTE_SOUND_IMPLEMENTATION
-#endif
+// #ifdef __linux__
+//     #define CUTE_SOUND_FORCE_SDL
+// #else
+// #endif
+
+#define CUTE_SOUND_IMPLEMENTATION
 
 //#include "stb/stb_vorbis.c"
 #include "cute_headers/cute_sound.h"

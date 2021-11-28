@@ -95,9 +95,6 @@ void mono::InitializeRender(const RenderInitParams& init_params)
     imgui_desc.ini_filename = init_params.imgui_ini;
     simgui_setup(&imgui_desc);
 
-    //glEnable(GL_POINT_SMOOTH);
-    glEnable(GL_LINE_SMOOTH);
-
     g_pixels_per_meter = init_params.pixels_per_meter;
     g_light_mask_texture = init_params.light_mask_texture;
     g_sprite_shadow_texture = init_params.sprite_shadow_texture;
@@ -106,19 +103,21 @@ void mono::InitializeRender(const RenderInitParams& init_params)
     g_sprite_factory = new SpriteFactoryImpl(init_params.pixels_per_meter);
     g_texture_factory = new TextureFactoryImpl();
 
-    const GLubyte* vendor = glGetString(GL_VENDOR);
-    const GLubyte* renderer = glGetString(GL_RENDERER);
-    const GLubyte* version = glGetString(GL_VERSION);
-    const GLubyte* glslversion = glGetString(GL_SHADING_LANGUAGE_VERSION);
-    //const GLubyte* extensions = glGetString(GL_EXTENSIONS);
+    // glEnable(GL_POINT_SMOOTH);
+    // glEnable(GL_LINE_SMOOTH);
+    // const GLubyte* vendor = glGetString(GL_VENDOR);
+    // const GLubyte* renderer = glGetString(GL_RENDERER);
+    // const GLubyte* version = glGetString(GL_VERSION);
+    // const GLubyte* glslversion = glGetString(GL_SHADING_LANGUAGE_VERSION);
+    // const GLubyte* extensions = glGetString(GL_EXTENSIONS);
 
     System::Log("Render\n"
                 "\tpixels per meter: %f", init_params.pixels_per_meter);
-    System::Log("OpenGL\n"
-                "\tvendor: %s\n"
-                "\trenderer: %s\n"
-                "\tversion: %s\n"
-                "\tglsl: %s", vendor, renderer, version, glslversion);
+    // System::Log("OpenGL\n"
+    //             "\tvendor: %s\n"
+    //             "\trenderer: %s\n"
+    //             "\tversion: %s\n"
+    //             "\tglsl: %s", vendor, renderer, version, glslversion);
     System::Log("imgui\n"
                 "\tversion: %s", IMGUI_VERSION);
 }
