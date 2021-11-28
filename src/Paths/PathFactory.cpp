@@ -6,7 +6,6 @@
 #include "Math/MathFunctions.h"
 #include "Rendering/RenderBuffer/BufferFactory.h"
 
-#define PAR_STREAMLINES_IMPLEMENTATION
 #include "par_streamlines/par_streamlines.h"
 
 namespace

@@ -55,6 +55,9 @@ add_library(uuid4 STATIC "third_party/uuid4/src/uuid4.c")
 file(GLOB_RECURSE huffandpuff_source_files "third_party/huffandpuff/*.c")
 add_library(huffandpuff STATIC ${huffandpuff_source_files})
 
+# par_streamlines
+add_library(par_streamlines STATIC "third_party/par_streamlines/par_streamlines_impl.c")
+
 # imgui
 file(GLOB imgui_source_files "third_party/imgui/*.cpp")
 add_library(imgui STATIC ${imgui_source_files})
@@ -71,7 +74,7 @@ endif()
 file(GLOB_RECURSE engine_source_files "src/*.cpp")
 add_library(mono STATIC ${engine_source_files})
 add_dependencies(mono huffandpuff imgui chipmunk_static)
-target_link_libraries(mono uuid4 huffandpuff imgui chipmunk_static SDL2-static OpenGL::GL ${AUDIOTOOLBOX})
+target_link_libraries(mono uuid4 huffandpuff par_streamlines imgui chipmunk_static SDL2-static OpenGL::GL ${AUDIOTOOLBOX})
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "tests/*.cpp")
