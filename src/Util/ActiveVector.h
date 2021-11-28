@@ -28,7 +28,7 @@ namespace mono
 
         T* Get(uint32_t index)
         {
-            assert(m_active(index));
+            assert(m_active(index) == true);
             return &m_types[index];
         }
 
