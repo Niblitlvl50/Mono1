@@ -34,7 +34,7 @@ jobs:
       with:
         submodules: 'recursive'
 
-    - name: Install OpenGL, Linux
+    - name: Linux Setup (OpenGL, ASound2)
       if: runner.os == 'Linux'
       run: sudo apt-get install libgl1-mesa-dev libasound2-dev
 

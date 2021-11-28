@@ -834,7 +834,7 @@ parsl_mesh* parsl_mesh_from_curves_cubic(parsl_context* context,
         uint32_t spine_length = source_spines.spine_lengths[spine];
         uint32_t num_piecewise = 1 + (spine_length - 4) / 2;
 
-        __attribute__((unused))
+        // __attribute__((unused))
         parsl_position* target_spine_start = ptarget;
 
         // First piecewise curve.
@@ -864,7 +864,7 @@ parsl_mesh* parsl_mesh_from_curves_cubic(parsl_context* context,
             ptarget += num_written_points;
         }
 
-        __attribute__((unused))
+        // __attribute__((unused))
         uint32_t num_written = ptarget - target_spine_start;
         assert(num_written == (uint32_t) target_spines->spine_lengths[spine]);
     }
@@ -980,7 +980,7 @@ parsl_mesh* parsl_mesh_from_curves_quadratic(parsl_context* context,
         uint32_t spine_length = source_spines.spine_lengths[spine];
         uint32_t num_piecewise = 1 + (spine_length - 3) / 2;
 
-        __attribute__((unused))
+        // __attribute__((unused))
         parsl_position* target_spine_start = ptarget;
 
         // First piecewise curve.
@@ -1006,7 +1006,7 @@ parsl_mesh* parsl_mesh_from_curves_quadratic(parsl_context* context,
             ptarget += num_written_points;
         }
 
-        __attribute__((unused))
+        // __attribute__((unused))
         uint32_t num_written = ptarget - target_spine_start;
         assert(num_written == (uint32_t) target_spines->spine_lengths[spine]);
     }
