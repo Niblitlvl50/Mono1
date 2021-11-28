@@ -18,7 +18,7 @@ TEST(Algorithm, sort_permutation)
         printf("%s\n", name);
 }
 
-TEST(Algorithm, apply_permutation_in_place_variadic)
+TEST(Algorithm, DISABLED_apply_permutation_in_place_variadic)
 {
     int values[] = { 1, 2, 0, 5, 4, 3 };
 
