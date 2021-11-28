@@ -38,19 +38,6 @@ jobs:
       if: runner.os == 'Linux'
       run: sudo apt-get install libgl1-mesa-dev
 
-    - name: Install SDL2, Linux, macOS
-      if: runner.os == 'Linux' || runner.os == 'macOS'
-      run: |
-        wget https://www.libsdl.org/release/SDL2-2.0.10.tar.gz -O sdl2.tar.gz
-        tar xzf sdl2.tar.gz
-        pushd SDL2-2.0.10 && ./configure && make && sudo make install && popd
-
-    - name: Install SDL2, Windows
-      if: runner.os == 'Windows'
-      run: |
-        curl.exe --output sdl2.zip --url https://www.libsdl.org/release/SDL2-devel-2.0.10-VC.zip
-        7z x sdl2.zip
-
     - name: Create Build Environment
       # Some projects don't allow in-source building, so create a separate build directory
       # We'll use this as our working directory for all subsequent commands
@@ -61,8 +48,7 @@ jobs:
       # access regardless of the host operating system
       shell: bash
       working-directory: ${{github.workspace}}/build
-      env:
-        SDL2DIR: ${{github.workspace}}/SDL2-2.0.10/
+
       # Note the current convention is to use the -S and -B options here to specify source 
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
