@@ -11,6 +11,7 @@
 
 
 #ifdef _WIN32
+    #include <Windows.h>
     #define _CRT_SECURE_NO_WARNINGS 1
 #endif
 
@@ -112,7 +113,15 @@ void audio::Initialize()
     constexpr int buffered_samples = 8192; // number of samples internal buffers can hold at once
     constexpr int num_elements_in_playing_pool = 8; // pooled memory array size for playing sounds
 
-    g_context = cs_make_context(nullptr, frequency, buffered_samples, num_elements_in_playing_pool, nullptr);
+    void* hwnd_on_windows = nullptr;
+
+#ifdef _WIN32
+    hwnd_on_windows = GetForegroundWindow();
+    if(!hwnd_on_windows)
+        hwnd_on_windows = GetDesktopWindow();
+#endif
+
+    g_context = cs_make_context(hwnd_on_windows, frequency, buffered_samples, num_elements_in_playing_pool, nullptr);
     if(!g_context)
         throw std::runtime_error("Audio|Unable to initialize Audio lib.");
 }

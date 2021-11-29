@@ -15,6 +15,7 @@
 #include <cstring>
 #include <cmath>
 #include <limits>
+#include <algorithm>
 
 #ifdef _WIN32
 #include <direct.h>
@@ -352,6 +353,30 @@ namespace
         SDL_TimerID m_timer_id;
         bool m_started;
     };
+
+    void ChangeDirectory(const char* working_directory)
+    {
+#ifdef _WIN32
+        const int chdir_result = _chdir(working_directory);
+#else
+        const int chdir_result = chdir(working_directory);
+#endif
+
+        (void)chdir_result;
+    }
+
+    std::string GetWorkingDirectory()
+    {
+        char cwd_buffer[1024] = { 0 };
+
+#ifdef _WIN32
+        _getcwd(cwd_buffer, std::size(cwd_buffer));
+#else
+        getcwd(cwd_buffer, std::size(cwd_buffer));
+#endif
+
+        return cwd_buffer;
+    }
 }
 
 
@@ -376,29 +401,13 @@ void System::Initialize(const InitializeContext& context)
     Log("System");
     Log("\tSDL version: %u.%u.%u", version.major, version.minor, version.patch);
 
-    char* base_path = SDL_GetBasePath();
-
     const char* working_directory = context.working_directory;
-    if(working_directory == nullptr)
-        working_directory = base_path;
-
-#ifdef _WIN32
-    const int chdir_result = _chdir(working_directory);
-#else
-    const int chdir_result = chdir(working_directory);
-#endif
-    if(chdir_result != 0)
-        throw std::runtime_error("System|Unable to set resource directory");
-
-    char cwd_buffer[1024] = { 0 };
-#ifdef _WIN32
-    _getcwd(cwd_buffer, std::size(cwd_buffer));
-#else
-    getcwd(cwd_buffer, std::size(cwd_buffer));
-#endif
-    Log("\tresouce directory: %s", cwd_buffer);
-
-    SDL_free(base_path);
+    if(working_directory)
+    {
+        ChangeDirectory(working_directory);
+        const std::string set_working_dir = GetWorkingDirectory();
+        Log("\tresouce directory: %s", set_working_dir.c_str());
+    }
 }
 
 void System::Shutdown()
@@ -447,6 +456,17 @@ uint64_t System::GetPerformanceFrequency()
 System::ProcLoadFunc System::GetProcLoader()
 {
     return SDL_GL_GetProcAddress;
+}
+
+void System::GetApplicationPath(char* buffer, uint32_t buffer_size)
+{
+    char* base_path = SDL_GetBasePath();
+
+    const uint32_t str_length = std::strlen(base_path);
+    const uint32_t adjusted_buffer_size = std::min(str_length, buffer_size);
+    std::strncpy(buffer, base_path, adjusted_buffer_size);
+
+    SDL_free(base_path);
 }
 
 void System::Sleep(uint32_t ms)
