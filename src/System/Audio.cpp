@@ -123,7 +123,10 @@ void audio::Initialize()
 
     g_context = cs_make_context(hwnd_on_windows, frequency, buffered_samples, num_elements_in_playing_pool, nullptr);
     if(!g_context)
-        throw std::runtime_error("Audio|Unable to initialize Audio lib.");
+    {
+        System::Log("Audio|Failed to initialize audio context! [%s]", cs_error_reason);
+        return; // Let it crash later since g_context is nullptr
+    }
 }
 
 void audio::Shutdown()
