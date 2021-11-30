@@ -93,7 +93,7 @@ void mono::InitializeRender(const RenderInitParams& init_params)
     simgui_desc_t imgui_desc = {};
 #ifdef __APPLE__
     imgui_desc.dpi_scale = 2.0f; // could be 2.0f for retina mac
-#elif
+#else
     imgi_desc.dpi_scale = 1.0f;
 #endif
     imgui_desc.ini_filename = init_params.imgui_ini;
