@@ -361,20 +361,17 @@ namespace
 #else
         const int chdir_result = chdir(working_directory);
 #endif
-
         (void)chdir_result;
     }
 
     std::string GetWorkingDirectory()
     {
         char cwd_buffer[1024] = { 0 };
-
 #ifdef _WIN32
         _getcwd(cwd_buffer, std::size(cwd_buffer));
 #else
         getcwd(cwd_buffer, std::size(cwd_buffer));
 #endif
-
         return cwd_buffer;
     }
 }
@@ -428,11 +425,11 @@ void System::Log(const char* fmt, ...)
         va_list file_log_args;
         va_copy(file_log_args, va);
         std::vfprintf(g_log_file, fmt, file_log_args);
+        std::fprintf(g_log_file, "\n");
         std::fflush(g_log_file);
         va_end(file_log_args);
     }
 
-    //SDL_LogMessageV(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, fmt, va);
     std::vprintf(fmt, va);
     std::printf("\n");
     va_end(va);
