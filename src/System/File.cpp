@@ -63,7 +63,9 @@ std::vector<byte> file::FileRead(const file::FilePtr& file)
 bool file::Exists(const char* file_name)
 {
 #ifdef _WIN32
-    return false;
+    struct _stat sb;
+    const int result = _stat(file_name, &sb);
+    return (result != ENOENT);
 #else
     struct stat sb;
     const int result = stat(file_name, &sb);
