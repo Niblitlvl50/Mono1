@@ -28,6 +28,8 @@ namespace file
     //! \return Size of the file
     long FileSize(const FilePtr& file);
 
+    uint32_t FileSize(const char* file_name);
+
     //! Read the file into a buffer
     std::vector<byte> FileRead(const FilePtr& file);
 

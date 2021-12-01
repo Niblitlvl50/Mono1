@@ -2,7 +2,9 @@
 #include "File.h"
 #include "System.h"
 #include <cstdio>
+#include <cassert>
 #include <string_view>
+#include <filesystem>
 
 namespace
 {
@@ -42,10 +44,15 @@ file::FilePtr file::CreateAsciiFile(const char* file_name)
 long file::FileSize(const FilePtr& file)
 {
     std::fseek(file.get(), 0, SEEK_END);
-	const long size = std::ftell(file.get());
+    const long size = std::ftell(file.get());
     std::rewind(file.get());
     
     return size;
+}
+
+uint32_t file::FileSize(const char* file_name)
+{
+    return std::filesystem::file_size(file_name);
 }
 
 std::vector<byte> file::FileRead(const file::FilePtr& file)
@@ -54,23 +61,17 @@ std::vector<byte> file::FileRead(const file::FilePtr& file)
 
     std::vector<byte> bytes;
     bytes.resize(file_size, 0);
-    std::fread(bytes.data(), 1, file_size, file.get());
+
+    const long n_read = std::fread(bytes.data(), 1, file_size, file.get());
+    if(n_read != file_size)
+        System::Log("file|Bytes read not same as file size.");
+
     return bytes;
 }
 
-#include <sys/stat.h>
-
 bool file::Exists(const char* file_name)
 {
-#ifdef _WIN32
-    struct _stat sb;
-    const int result = _stat(file_name, &sb);
-    return (result != ENOENT);
-#else
-    struct stat sb;
-    const int result = stat(file_name, &sb);
-    return (result == 0 && S_ISREG(sb.st_mode));
-#endif
+    return std::filesystem::exists(file_name);
 }
 
 bool file::IsExtension(const char* file_name, const char* extension)
