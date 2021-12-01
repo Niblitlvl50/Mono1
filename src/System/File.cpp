@@ -55,6 +55,19 @@ uint32_t file::FileSize(const char* file_name)
     return std::filesystem::file_size(file_name);
 }
 
+std::vector<byte> file::FileReadAll(const char* file_name)
+{
+    const uint32_t file_size = FileSize(file_name);
+    std::vector<byte> bytes(file_size, 0);
+
+    file::FilePtr file = OpenAsciiFile(file_name);
+    const long n_read = std::fread(bytes.data(), 1, file_size, file.get());
+    if(n_read != file_size)
+        System::Log("file|Bytes read not same as file size.");
+
+    return bytes;
+}
+
 std::vector<byte> file::FileRead(const file::FilePtr& file)
 {
     const long file_size = file::FileSize(file);

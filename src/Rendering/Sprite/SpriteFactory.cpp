@@ -148,11 +148,7 @@ const mono::SpriteData* SpriteFactoryImpl::GetSpriteDataForFile(const char* spri
             return nullptr;
         }
 
-        file::FilePtr file = file::OpenAsciiFile(sprite_file);
-        if(!file)
-            return nullptr;
-
-        std::vector<byte> file_data = file::FileRead(file);
+        std::vector<byte> file_data = file::FileReadAll(sprite_file);
         file_data.push_back('\0');
 
         mono::SpriteData sprite_data = LoadSpriteData((const char*)file_data.data(), m_pixels_per_meter, sprite_filename_hash);

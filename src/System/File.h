@@ -30,6 +30,8 @@ namespace file
 
     uint32_t FileSize(const char* file_name);
 
+    std::vector<byte> FileReadAll(const char* file_name);
+    
     //! Read the file into a buffer
     std::vector<byte> FileRead(const FilePtr& file);
 
