@@ -118,10 +118,10 @@ PhysicsSystem::PhysicsSystem(const PhysicsSystemInitParams& init_params, mono::T
     System::Log(
         "Physics\n"
         "\tchipmunk version: %s\n"
-        "\tbodies: %zu\n"
-        "\tshapes: circle %zu, segment %zu, polygon %zu\n"
-        "\tjoints: pivot %zu, gear %zu\n"
-        "\tsprings: damped %zu",
+        "\tbodies: %u\n"
+        "\tshapes: circle %u, segment %u, polygon %u\n"
+        "\tjoints: pivot %u, gear %u\n"
+        "\tsprings: damped %u",
         cpVersionString,
         init_params.n_bodies,
         init_params.n_circle_shapes, init_params.n_segment_shapes, init_params.n_polygon_shapes,
