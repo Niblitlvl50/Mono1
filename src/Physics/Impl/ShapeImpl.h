@@ -22,6 +22,8 @@ namespace cm
         bool IsSensor() const override;
         void SetCollisionFilter(uint32_t category, uint32_t mask) override;
         void SetCollisionMask(uint32_t mask) override;
+        void SetCollisionBit(uint32_t collision_category) override;
+        void ClearCollisionBit(uint32_t collision_category) override;
 
         cpShape* Handle() override;
 

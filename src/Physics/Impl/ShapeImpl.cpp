@@ -64,6 +64,20 @@ void ShapeImpl::SetCollisionMask(uint32_t mask)
     cpShapeSetFilter(m_shape, filter);
 }
 
+void ShapeImpl::SetCollisionBit(uint32_t collision_category)
+{
+    cpShapeFilter filter = cpShapeGetFilter(m_shape);
+    filter.mask |= collision_category;
+    cpShapeSetFilter(m_shape, filter);
+}
+
+void ShapeImpl::ClearCollisionBit(uint32_t collision_category)
+{
+    cpShapeFilter filter = cpShapeGetFilter(m_shape);
+    filter.mask &= ~collision_category;
+    cpShapeSetFilter(m_shape, filter);
+}
+
 cpShape* ShapeImpl::Handle() 
 {
     return m_shape;

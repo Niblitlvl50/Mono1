@@ -31,6 +31,9 @@ namespace mono
         virtual void SetCollisionFilter(uint32_t category, uint32_t mask) = 0;
         virtual void SetCollisionMask(uint32_t mask) = 0;
 
+        virtual void SetCollisionBit(uint32_t collision_category) = 0;
+        virtual void ClearCollisionBit(uint32_t collision_category) = 0;
+
         //! Native chipmunk handle
         virtual cpShape* Handle() = 0;
     };
