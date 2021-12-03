@@ -303,6 +303,8 @@ void EntitySystem::DeferredRelease()
     for(uint32_t entity_id : local_entities_to_release)
     {
         mono::Entity* entity = GetEntity(entity_id);
+        std::reverse(entity->components.begin(), entity->components.end()); // We should release the components in reverse.
+
         for(uint32_t component_hash : entity->components)
         {
             const auto factory_it = m_component_factories.find(component_hash);
