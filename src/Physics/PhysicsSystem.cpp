@@ -451,11 +451,12 @@ mono::IConstraint* PhysicsSystem::CreateSpring(IBody* first, IBody* second, floa
 
 void PhysicsSystem::ReleaseConstraint(mono::IConstraint* constraint)
 {
+    m_impl->space.Remove(constraint);
+
     Impl::ReleaseConstraintFunc release_func = m_impl->m_constraint_release_funcs[constraint];
     (*m_impl.*release_func)(constraint->Handle());
     m_impl->m_constraint_release_funcs.erase(constraint);
 
-    m_impl->space.Remove(constraint);
     m_impl->constraints.ReleasePoolData((cm::ConstraintImpl*)constraint);
 }
 
