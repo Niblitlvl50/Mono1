@@ -114,11 +114,15 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
 {
     sg_shader_desc shader_desc = {};
     shader_desc.vs.source = vertex_source;
-    shader_desc.attrs[ATTR_POSITION].name = "vertex_position";
-    shader_desc.attrs[ATTR_POSITION_OFFSET].name = "vertex_offset";
-    shader_desc.attrs[ATTR_UV].name = "uv";
-    shader_desc.attrs[ATTR_UV_FLIPPED].name = "uv_flipped";
-    shader_desc.attrs[ATTR_HEIGHT].name = "vertex_height";
+    
+    //
+    // This caused the shader to not work under windows, disabled for now. Apparently its needed for OpenGL ES2 or something.
+    //
+    // shader_desc.attrs[ATTR_POSITION].name = "vertex_position";
+    // shader_desc.attrs[ATTR_POSITION_OFFSET].name = "vertex_offset";
+    // shader_desc.attrs[ATTR_UV].name = "uv";
+    // shader_desc.attrs[ATTR_UV_FLIPPED].name = "uv_flipped";
+    // shader_desc.attrs[ATTR_HEIGHT].name = "vertex_height";
 
     shader_desc.vs.uniform_blocks[U_VS_TIME_BLOCK].size = sizeof(float) * 2;
     shader_desc.vs.uniform_blocks[U_VS_TIME_BLOCK].uniforms[0].name = "time_input.total_time";
