@@ -173,6 +173,9 @@ mono::IBody* PhysicsSystem::AllocateBody(uint32_t id, const BodyComponent& body_
 
 void PhysicsSystem::ReleaseBody(uint32_t body_id)
 {
+    cm::BodyImpl& body = m_impl->bodies[body_id];
+    body.ClearCollisionHandlers();
+
     std::vector<cm::ShapeImpl*>& body_shapes = m_impl->bodies_shapes[body_id];
     for(cm::ShapeImpl* shape : body_shapes)
     {
@@ -184,9 +187,6 @@ void PhysicsSystem::ReleaseBody(uint32_t body_id)
         m_impl->shapes.ReleasePoolData(shape);
     }
     body_shapes.clear();
-
-    cm::BodyImpl& body = m_impl->bodies[body_id];
-    body.ClearCollisionHandlers();
 
     m_impl->space.Remove(&body);
     m_impl->active_bodies[body_id] = false;
