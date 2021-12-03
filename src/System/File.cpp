@@ -61,9 +61,9 @@ std::vector<byte> file::FileReadAll(const char* file_name)
     std::vector<byte> bytes(file_size, 0);
 
     file::FilePtr file = OpenAsciiFile(file_name);
-    const long n_read = std::fread(bytes.data(), 1, file_size, file.get());
-    if(n_read != file_size)
-        System::Log("file|Bytes read not same as file size.");
+    const long n_read = std::fread(bytes.data(), sizeof(byte), file_size, file.get());
+    assert(n_read <= file_size);
+    bytes.resize(n_read);
 
     return bytes;
 }
@@ -71,13 +71,11 @@ std::vector<byte> file::FileReadAll(const char* file_name)
 std::vector<byte> file::FileRead(const file::FilePtr& file)
 {
     const long file_size = file::FileSize(file);
-
-    std::vector<byte> bytes;
-    bytes.resize(file_size, 0);
+    std::vector<byte> bytes(file_size, 0);
 
     const long n_read = std::fread(bytes.data(), 1, file_size, file.get());
-    if(n_read != file_size)
-        System::Log("file|Bytes read not same as file size.");
+    assert(n_read <= file_size);
+    bytes.resize(n_read);
 
     return bytes;
 }
