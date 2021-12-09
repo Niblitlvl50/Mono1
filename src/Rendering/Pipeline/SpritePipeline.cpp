@@ -39,11 +39,11 @@ namespace
         uniform FlipSpriteInput flip_input;
         uniform float wind_sway_enabled;
 
-        layout (location = 0) in vec2 vertex_position;
-        layout (location = 1) in vec2 vertex_offset;
-        layout (location = 2) in vec2 uv;
-        layout (location = 3) in vec2 uv_flipped;
-        layout (location = 4) in float vertex_height;
+        layout (location = 0) in vec2 a_vertex_position;
+        layout (location = 1) in vec2 a_vertex_offset;
+        layout (location = 2) in vec2 a_uv;
+        layout (location = 3) in vec2 a_uv_flipped;
+        layout (location = 4) in float a_vertex_height;
 
         out vec2 v_texture_coord;
 
@@ -54,20 +54,20 @@ namespace
             {
                 // Use world x as noise parameter to make some difference.
                 float noise = abs(noise1(transform_input.model[3][0]));
-                wind_sway_offset.x = sin(time_input.total_time * noise * 3.0) * (vertex_height * 0.025);
+                wind_sway_offset.x = sin(time_input.total_time * noise * 3.0) * (a_vertex_height * 0.025);
             }
 
             gl_Position =
                 transform_input.projection *
                 transform_input.view *
                 transform_input.model *
-                vec4(vertex_position + vertex_offset + wind_sway_offset, 0.0, 1.0);
+                vec4(a_vertex_position + a_vertex_offset + wind_sway_offset, 0.0, 1.0);
 
-            vec2 local_texture_coord = uv;
+            vec2 local_texture_coord = a_uv;
             if(flip_input.flip_vertical != 0.0)
-                local_texture_coord.y = uv_flipped.y;
+                local_texture_coord.y = a_uv_flipped.y;
             if(flip_input.flip_horizontal != 0.0)
-                local_texture_coord.x = uv_flipped.x;
+                local_texture_coord.x = a_uv_flipped.x;
             v_texture_coord = local_texture_coord;
         }
     )";
@@ -118,11 +118,11 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
     //
     // This caused the shader to not work under windows, disabled for now. Apparently its needed for OpenGL ES2 or something.
     //
-    // shader_desc.attrs[ATTR_POSITION].name = "vertex_position";
-    // shader_desc.attrs[ATTR_POSITION_OFFSET].name = "vertex_offset";
-    // shader_desc.attrs[ATTR_UV].name = "uv";
-    // shader_desc.attrs[ATTR_UV_FLIPPED].name = "uv_flipped";
-    // shader_desc.attrs[ATTR_HEIGHT].name = "vertex_height";
+    // shader_desc.attrs[ATTR_POSITION].name = "a_vertex_position";
+    // shader_desc.attrs[ATTR_POSITION_OFFSET].name = "a_vertex_offset";
+    // shader_desc.attrs[ATTR_UV].name = "a_uv";
+    // shader_desc.attrs[ATTR_UV_FLIPPED].name = "a_uv_flipped";
+    // shader_desc.attrs[ATTR_HEIGHT].name = "a_vertex_height";
 
     shader_desc.vs.uniform_blocks[U_VS_TIME_BLOCK].size = sizeof(float) * 2;
     shader_desc.vs.uniform_blocks[U_VS_TIME_BLOCK].uniforms[0].name = "time_input.total_time";
