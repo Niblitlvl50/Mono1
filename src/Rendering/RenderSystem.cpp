@@ -109,19 +109,19 @@ void mono::InitializeRender(const RenderInitParams& init_params)
 
     // glEnable(GL_POINT_SMOOTH);
     // glEnable(GL_LINE_SMOOTH);
-    const GLubyte* vendor = glGetString(GL_VENDOR);
-    const GLubyte* renderer = glGetString(GL_RENDERER);
-    const GLubyte* version = glGetString(GL_VERSION);
-    const GLubyte* glslversion = glGetString(GL_SHADING_LANGUAGE_VERSION);
+    // const GLubyte* vendor = glGetString(GL_VENDOR);
+    // const GLubyte* renderer = glGetString(GL_RENDERER);
+    // const GLubyte* version = glGetString(GL_VERSION);
+    // const GLubyte* glslversion = glGetString(GL_SHADING_LANGUAGE_VERSION);
     //const GLubyte* extensions = glGetString(GL_EXTENSIONS);
 
     System::Log("Render\n"
                 "\tpixels per meter: %f", init_params.pixels_per_meter);
-    System::Log("OpenGL\n"
-                "\tvendor: %s\n"
-                "\trenderer: %s\n"
-                "\tversion: %s\n"
-                "\tglsl: %s", vendor, renderer, version, glslversion);
+    //System::Log("OpenGL\n"
+    //            "\tvendor: %s\n"
+    //            "\trenderer: %s\n"
+    //            "\tversion: %s\n"
+    //            "\tglsl: %s", vendor, renderer, version, glslversion);
     System::Log("imgui\n"
                 "\tversion: %s", IMGUI_VERSION);
 }
