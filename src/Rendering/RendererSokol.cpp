@@ -31,6 +31,7 @@ RendererSokol::RendererSokol()
     , m_offscreen_light_pass{}
     , m_clear_color(0.7f, 0.7f, 0.7f)
     , m_ambient_shade(1.0f, 1.0f, 1.0f)
+    , m_screen_fade_alpha(1.0f)
 {
     m_color_points_pipeline = mono::ColorPipeline::MakePointsPipeline();
     m_color_lines_pipeline = mono::ColorPipeline::MakeLinesPipeline();
@@ -234,6 +235,8 @@ void RendererSokol::EndDraw()
         m_offscreen_light_pass.offscreen_texture.get());
     ScreenPipeline::FadeCorners(false);
     ScreenPipeline::InvertColors(false);
+    ScreenPipeline::FadeScreenAlpha(m_screen_fade_alpha);
+
     sg_draw(0, 6, 1);
 
     for(const IDrawable* drawable : m_drawables[RenderPass::POST_LIGHTING])
@@ -667,6 +670,11 @@ void RendererSokol::SetClearColor(const mono::Color::RGBA& color)
 void RendererSokol::SetAmbientShade(const mono::Color::RGBA& ambient_shade)
 {
     m_ambient_shade = ambient_shade;
+}
+
+void RendererSokol::SetScreenFadeAlpha(float alpha)
+{
+    m_screen_fade_alpha = alpha;
 }
 
 const math::Matrix& RendererSokol::GetTransform() const

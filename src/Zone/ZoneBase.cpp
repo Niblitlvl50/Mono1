@@ -52,7 +52,7 @@ ZoneBase::~ZoneBase()
 
 void ZoneBase::Accept(IRenderer& renderer)
 {
-    for(const auto& drawable_data : m_drawables)
+    for(const DrawableData& drawable_data : m_drawables)
     {
         const mono::RenderPass render_pass =
             (drawable_data.layer > m_last_lighting_layer) ? mono::RenderPass::POST_LIGHTING : mono::RenderPass::GENERAL;

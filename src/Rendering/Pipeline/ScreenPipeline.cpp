@@ -34,6 +34,7 @@ namespace
         uniform sampler2D sampler_light;
         uniform float fade_corners;
         uniform float invert_colors;
+        uniform float fade_alpha;
 
         in vec2 v_texture_coord;
         in vec2 v_vertex_coord;
@@ -60,12 +61,14 @@ namespace
                 }
             }
 
-            frag_color = color;
+            frag_color = color * fade_alpha;
 
             if(invert_colors != 0.0)
             {
                 // Invert colors
-                frag_color = vec4(vec3(1.0 - texture(sampler, v_texture_coord)), 1.0);
+                frag_color = 1.0 - frag_color;
+                // frag_color = vec4(vec3(1.0 - frag_color), 1.0f);
+                // frag_color = vec4(vec3(1.0 - texture(sampler, v_texture_coord)), 1.0);
             }
         }
     )";
@@ -75,6 +78,7 @@ namespace
 
     constexpr int U_FADE_CORNERS_BLOCK = 0;
     constexpr int U_INVERT_COLORS_BLOCK = 1;
+    constexpr int U_FADE_ALPHA_BLOCK = 2;
 }
 
 using namespace mono;
@@ -102,6 +106,10 @@ mono::IPipelinePtr ScreenPipeline::MakePipeline()
     shader_desc.fs.uniform_blocks[U_INVERT_COLORS_BLOCK].size = sizeof(float);
     shader_desc.fs.uniform_blocks[U_INVERT_COLORS_BLOCK].uniforms[0].name = "invert_colors";
     shader_desc.fs.uniform_blocks[U_INVERT_COLORS_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
+
+    shader_desc.fs.uniform_blocks[U_FADE_ALPHA_BLOCK].size = sizeof(float);
+    shader_desc.fs.uniform_blocks[U_FADE_ALPHA_BLOCK].uniforms[0].name = "fade_alpha";
+    shader_desc.fs.uniform_blocks[U_FADE_ALPHA_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
 
     sg_shader shader_handle = sg_make_shader(&shader_desc);
 
@@ -161,3 +169,7 @@ void ScreenPipeline::InvertColors(bool enable)
     sg_apply_uniforms(SG_SHADERSTAGE_FS, U_INVERT_COLORS_BLOCK, { &magic_value, sizeof(float) });
 }
 
+void ScreenPipeline::FadeScreenAlpha(float alpha)
+{
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FADE_ALPHA_BLOCK, { &alpha, sizeof(float) });
+}

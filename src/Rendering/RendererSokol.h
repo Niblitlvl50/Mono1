@@ -123,6 +123,8 @@ namespace mono
         void SetClearColor(const mono::Color::RGBA& color) override;
         void SetAmbientShade(const mono::Color::RGBA& ambient_shade) override;
 
+        void SetScreenFadeAlpha(float alpha) override;
+
         const math::Matrix& GetTransform() const override;
         void PushNewTransform(const math::Matrix& transform) override;
         void PopTransform() override;
@@ -162,6 +164,7 @@ namespace mono
 
         mono::Color::RGBA m_clear_color;
         mono::Color::RGBA m_ambient_shade;
+        float m_screen_fade_alpha;
 
         std::stack<math::Matrix> m_projection_stack;
         std::stack<math::Matrix> m_model_stack;
