@@ -674,7 +674,7 @@ void RendererSokol::SetAmbientShade(const mono::Color::RGBA& ambient_shade)
 
 void RendererSokol::SetScreenFadeAlpha(float alpha)
 {
-    m_screen_fade_alpha = alpha;
+    m_screen_fade_alpha = std::clamp(alpha, 0.0f, 1.0f);
 }
 
 const math::Matrix& RendererSokol::GetTransform() const
