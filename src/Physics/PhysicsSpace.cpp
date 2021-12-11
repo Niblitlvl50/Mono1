@@ -7,6 +7,7 @@
 #include "Physics/PhysicsSystem.h"
 #include "Math/Vector.h"
 #include "Math/Quad.h"
+#include "System/System.h"
 
 #include "chipmunk/chipmunk.h"
 #include "chipmunk/chipmunk_private.h"
@@ -72,8 +73,17 @@ void PhysicsSpace::Add(IBody* body)
 
 void PhysicsSpace::Remove(IBody* body)
 {
-    if(body->GetType() != mono::BodyType::STATIC)
-        cpSpaceRemoveBody(m_space, body->Handle());
+    const bool contains_body = cpSpaceContainsBody(m_space, body->Handle());
+    if(contains_body)
+    {
+        if(body->GetType() != mono::BodyType::STATIC)
+            cpSpaceRemoveBody(m_space, body->Handle());
+    }
+    else
+    {
+        const uint32_t body_id = PhysicsSystem::GetIdFromBody(body);
+        System::Log("physics|Trying to remove body that's not added to the space. [%u]", body_id);
+    }
 }
 
 void PhysicsSpace::Add(IShape* shape)
