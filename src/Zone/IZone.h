@@ -26,7 +26,7 @@ namespace mono
         virtual void AddUpdatable(mono::IUpdatable* updatable) = 0;
         virtual void RemoveUpdatable(mono::IUpdatable* updatable) = 0;
 
-        virtual void SetDrawableLayer(const IDrawable* drawable, int new_layer) = 0;
+        virtual void SetDrawableLayer(const mono::IDrawable* drawable, int new_layer) = 0;
 
         virtual void SetLastLightingLayer(int layer) = 0;
 
