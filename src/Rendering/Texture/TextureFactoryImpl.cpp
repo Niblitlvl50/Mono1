@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "System/Hash.h"
 #include "System/System.h"
+#include "System/File.h"
 
 #include <cstdio>
 #include <stdexcept>
@@ -18,7 +19,6 @@ mono::ITexturePtr TextureFactoryImpl::CreateTexture(const char* texture_name) co
         return nullptr;
 
     const uint32_t texture_hash = hash::Hash(texture_name);
-
     mono::ITexturePtr texture = GetTextureFromCache(texture_hash);
     if(texture)
         return texture;
@@ -32,7 +32,6 @@ mono::ITexturePtr TextureFactoryImpl::CreateTextureFromData(const byte* data, in
     if(cache_name)
     {
         const uint32_t texture_hash = hash::Hash(cache_name);
-
         mono::ITexturePtr texture = GetTextureFromCache(texture_hash);
         if(texture)
             return texture;
@@ -44,15 +43,19 @@ mono::ITexturePtr TextureFactoryImpl::CreateTextureFromData(const byte* data, in
         int width;
         int height;
         int components;
-        std::unique_ptr<unsigned char> image_data(stbi_load_from_memory(data, data_length, &width, &height, &components, 0));
-        if(!image_data)
+        stbi_uc* loaded_image_data = stbi_load_from_memory(data, data_length, &width, &height, &components, 0);
+        if(!loaded_image_data)
         {
             System::Log("TextureFactory|Unable to load from data chunk.");
             throw std::runtime_error("Unable to load image!");
         }
 
-        return std::make_shared<mono::TextureImpl>(width, height, components, image_data.get());
-    }}
+        ITexturePtr texture = std::make_shared<mono::TextureImpl>(width, height, components, loaded_image_data);
+        stbi_image_free(loaded_image_data);
+
+        return texture;
+    }
+}
 
 mono::ITexturePtr TextureFactoryImpl::CreateTexture(const byte* data, int width, int height, int color_components) const
 {
@@ -81,34 +84,17 @@ mono::ITexturePtr TextureFactoryImpl::GetTextureFromCache(uint32_t texture_hash)
 
 mono::ITexturePtr TextureFactoryImpl::CreateAndCacheTexture(const char* source_file, uint32_t texture_hash) const
 {
-    int width;
-    int height;
-    int components;
-    std::unique_ptr<unsigned char> image_data(stbi_load(source_file, &width, &height, &components, 0));
-    if(!image_data)
-    {
-        System::Log("TextureFactory|Unable to load '%s'", source_file);
-        throw std::runtime_error("Unable to load image!");
-    }
-
-    const auto deleter = [this, texture_hash](mono::ITexture* ptr) {
-        m_texture_storage.erase(texture_hash);
-        delete ptr;
-    };
-
-    mono::ITexturePtr texture(new mono::TextureImpl(width, height, components, image_data.get()), deleter);
-    m_texture_storage[texture_hash] = texture;
-
-    return texture;
+    const std::vector<byte>& source_file_data = file::FileReadAll(source_file);
+    return CreateAndCacheTexture(source_file_data.data(), source_file_data.size(), texture_hash);
 }
 
-mono::ITexturePtr TextureFactoryImpl::CreateAndCacheTexture(const unsigned char* data, int data_length, uint32_t texture_hash) const
+mono::ITexturePtr TextureFactoryImpl::CreateAndCacheTexture(const byte* data, int data_length, uint32_t texture_hash) const
 {
     int width;
     int height;
     int components;
-    std::unique_ptr<unsigned char> image_data(stbi_load_from_memory(data, data_length, &width, &height, &components, 0));
-    if(!image_data)
+    stbi_uc* loaded_image_data = stbi_load_from_memory(data, data_length, &width, &height, &components, 0);
+    if(!loaded_image_data)
     {
         System::Log("TextureFactory|Unable to load from data chunk");
         throw std::runtime_error("Unable to load image!");
@@ -119,9 +105,10 @@ mono::ITexturePtr TextureFactoryImpl::CreateAndCacheTexture(const unsigned char*
         delete ptr;
     };
 
-    mono::ITexturePtr texture(new mono::TextureImpl(width, height, components, image_data.get()), deleter);
+    mono::ITexturePtr texture(new mono::TextureImpl(width, height, components, loaded_image_data), deleter);
     m_texture_storage[texture_hash] = texture;
+
+    stbi_image_free(loaded_image_data);
 
     return texture;
 }
-
