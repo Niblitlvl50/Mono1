@@ -3,8 +3,9 @@
 
 #include "MonoFwd.h"
 #include "Rendering/IDrawable.h"
-#include <unordered_map>
 
+#include <cstdint>
+#include <unordered_map>
 namespace mono
 {
     class LightSystemDrawer : public mono::IDrawable
