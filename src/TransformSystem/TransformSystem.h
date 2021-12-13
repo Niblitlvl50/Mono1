@@ -4,8 +4,9 @@
 #include "IGameSystem.h"
 #include "Math/Matrix.h"
 #include "Math/Quad.h"
-#include <vector>
 
+#include <cstddef>
+#include <vector>
 namespace mono
 {
     enum class TransformState : uint8_t
