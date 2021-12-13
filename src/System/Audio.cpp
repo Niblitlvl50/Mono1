@@ -150,9 +150,7 @@ audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback 
         System::Log("Audio|Recreating '%s'.", file_name);
     }
 
-    // Custom deleter to actualy erase the file from the repository when the last reference goes out of scope.
-    const auto deleter = [sound_hash](SoundData* ptr) {
-        g_sound_repository.erase(sound_hash);
+    const auto deleter = [](SoundData* ptr) {
         cs_free_sound(&ptr->sound);
         delete ptr;
     };
