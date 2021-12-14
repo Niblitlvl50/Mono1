@@ -20,6 +20,7 @@
 // #else
 // #endif
 
+//#define CUTE_SOUND_FORCE_SDL
 #define CUTE_SOUND_IMPLEMENTATION
 
 //#include "stb/stb_vorbis.c"
@@ -31,16 +32,10 @@ namespace
     class NullSound : public audio::ISound
     {
     public:
-        void Play() override
-        { }
-        void Pause() override
-        { }
-        void Stop() override
-        { }
-        bool IsPlaying() const override
-        {
-            return false;
-        }
+        void Play() override { }
+        void Pause() override { }
+        void Stop() override { }
+        bool IsPlaying() const override { return false; }
     };
 
     struct SoundData
@@ -52,14 +47,14 @@ namespace
     {
     public:
         
-        SoundInstanceImpl(
-            cs_context_t* context, std::shared_ptr<SoundData> data, audio::SoundPlayback playback)
+        SoundInstanceImpl(cs_context_t* context, std::shared_ptr<SoundData> data, audio::SoundPlayback playback)
             : m_context(context)
             , m_sound_data(data)
-            , m_playback(playback)
-            , m_sound_def(cs_make_def(&m_sound_data->sound))
             , m_playing_sound(nullptr)
-        { }
+        {
+            m_sound_def = cs_make_def(&m_sound_data->sound);
+            m_sound_def.looped = (playback == audio::SoundPlayback::LOOPING);
+        }
 
         ~SoundInstanceImpl()
         {
@@ -68,9 +63,10 @@ namespace
 
         void Play() override
         {
-            m_playing_sound = cs_play_sound(m_context, m_sound_def);
-            if(IsPlaying())
-                cs_loop_sound(m_playing_sound, m_playback == audio::SoundPlayback::LOOPING);
+            if(IsPlaying() && m_playing_sound->paused != 0)
+                m_playing_sound->paused = 0;
+            else
+                m_playing_sound = cs_play_sound(m_context, m_sound_def);
         }
 
         void Pause() override
@@ -97,10 +93,8 @@ namespace
 
         cs_context_t* m_context;
         std::shared_ptr<SoundData> m_sound_data;
-        audio::SoundPlayback m_playback;
-
-        cs_play_sound_def_t m_sound_def;
         cs_playing_sound_t* m_playing_sound;
+        cs_play_sound_def_t m_sound_def;
     };
 
     std::unordered_map<uint32_t, std::shared_ptr<SoundData>> g_sound_repository;
@@ -127,6 +121,9 @@ void audio::Initialize()
         System::Log("Audio|Failed to initialize audio context! [%s]", cs_error_reason);
         return; // Let it crash later since g_context is nullptr
     }
+
+    cs_thread_sleep_delay(g_context, 5);
+    cs_spawn_mix_thread(g_context);
 }
 
 void audio::Shutdown()
@@ -143,7 +140,7 @@ audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback 
     auto it = g_sound_repository.find(sound_hash);
     if(it != g_sound_repository.end())
     {
-        auto loaded_sound = it->second; //.lock();
+        auto loaded_sound = it->second;
         if(loaded_sound)
             return std::make_unique<SoundInstanceImpl>(g_context, loaded_sound, playback);
 
@@ -191,8 +188,8 @@ audio::ISoundPtr audio::CreateNullSound()
 
 void audio::MixSounds()
 {
-    if(g_context)
-        cs_mix(g_context);
+//    if(g_context)
+//        cs_mix(g_context);
 }
 
 void audio::StopAllSounds()

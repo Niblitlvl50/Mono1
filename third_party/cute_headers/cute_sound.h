@@ -627,7 +627,7 @@ cs_plugin_id_t cs_add_plugin(cs_context_t* ctx, const cs_plugin_interface_t* plu
 
 #elif CUTE_SOUND_PLATFORM == CUTE_SOUND_SDL
 
-	#include <SDL2/SDL.h>
+	#include <SDL.h>
 	#ifndef _WIN32
 		#include <alloca.h>
 	#endif
@@ -1478,7 +1478,7 @@ static void* cs_ctx_thread(void* udata)
 
 	while (ctx->running)
 	{
-        printf("Entering mix...\n");
+		//printf("Entering mix...\n");
 		cs_mix(ctx);
 		if (ctx->sleep_milliseconds) cs_sleep(ctx->sleep_milliseconds);
 		else pthread_yield_np();
