@@ -84,7 +84,8 @@ mono::ITexturePtr TextureFactoryImpl::GetTextureFromCache(uint32_t texture_hash)
 
 mono::ITexturePtr TextureFactoryImpl::CreateAndCacheTexture(const char* source_file, uint32_t texture_hash) const
 {
-    const std::vector<byte>& source_file_data = file::FileReadAll(source_file);
+    //const std::vector<byte>& source_file_data = file::FileReadAll(source_file);
+    const std::vector<byte>& source_file_data = file::FileReadAllBinary(source_file);
     return CreateAndCacheTexture(source_file_data.data(), source_file_data.size(), texture_hash);
 }
 

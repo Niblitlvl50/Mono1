@@ -68,6 +68,19 @@ std::vector<byte> file::FileReadAll(const char* file_name)
     return bytes;
 }
 
+std::vector<byte> file::FileReadAllBinary(const char* file_name)
+{
+    const uint32_t file_size = FileSize(file_name);
+    std::vector<byte> bytes(file_size, 0);
+
+    file::FilePtr file = OpenBinaryFile(file_name);
+    const long n_read = std::fread(bytes.data(), sizeof(byte), file_size, file.get());
+    assert(n_read <= file_size);
+    bytes.resize(n_read);
+
+    return bytes;
+}
+
 std::vector<byte> file::FileRead(const file::FilePtr& file)
 {
     const long file_size = file::FileSize(file);
