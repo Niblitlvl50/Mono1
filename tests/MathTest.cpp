@@ -184,14 +184,14 @@ TEST(MathTest, AngleFromVector)
     const float north = math::AngleFromVector(math::Vector(0.0f, 1.0f));
     EXPECT_FLOAT_EQ(0.0f, north);
 
-    const float east = math::AngleFromVector(math::Vector(1.0f, 0.0f));
-    EXPECT_FLOAT_EQ(math::PI_2(), east);
+    const float west = math::AngleFromVector(math::Vector(-1.0f, 0.0f));
+    EXPECT_FLOAT_EQ(math::PI_2(), west);
 
     const float south = math::AngleFromVector(math::Vector(0.0f, -1.0f));
     EXPECT_FLOAT_EQ(math::PI(), south);
 
-    const float west = math::AngleFromVector(math::Vector(-1.0f, 0.0f));
-    EXPECT_FLOAT_EQ(-math::PI_2(), west);
+    const float east = math::AngleFromVector(math::Vector(1.0f, 0.0f));
+    EXPECT_FLOAT_EQ(-math::PI_2(), east);
 }
 
 TEST(MathTest, Scale01)
