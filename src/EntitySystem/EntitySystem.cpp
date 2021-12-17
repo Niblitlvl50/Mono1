@@ -233,6 +233,10 @@ void EntitySystem::PushEntityStackRecord(const char* debug_name)
     ForEachEntity(collect_active_entities);
 
     m_entity_allocation_stack.push_back(record);
+
+    System::Log("entitysystem|Found '%u' previously active entities when pushing stack record '%s'", record.allocated_entities.size(), debug_name);
+    for(uint32_t id : record.allocated_entities)
+        System::Log("\t[%u] %s", id, GetEntityName(id));
 }
 
 void EntitySystem::PopEntityStackRecord()
@@ -258,6 +262,8 @@ void EntitySystem::PopEntityStackRecord()
         ReleaseEntity(id);
 
     m_entity_allocation_stack.pop_back();
+
+    System::Log("entitysystem|Found '%u' that needs to be cleaned up, '%u' that stays. '%s'", diff_result.size(), record.allocated_entities.size(), record.debug_name);
 }
 
 uint32_t EntitySystem::AddReleaseCallback(uint32_t entity_id, const ReleaseCallback& callback)
@@ -310,9 +316,20 @@ void EntitySystem::DeferredRelease()
             const auto factory_it = m_component_factories.find(component_hash);
             if(factory_it != m_component_factories.end())
                 factory_it->second.release(entity, m_system_context);
+            else
+                System::Log("entitysystem|Found component hash but no release function. Hash: %u", component_hash);
         }
 
         ReleaseEntity2(entity_id);
+    }
+
+    if(!m_entities_to_release.empty())
+    {
+        System::Log("entitysystem|Additional entities to release after a deferred release. %u", m_entities_to_release.size());
+        for(uint32_t id : m_entities_to_release)
+            System::Log("\t[%u] %s", id, GetEntityName(id));
+    
+        DeferredRelease();
     }
 }
 
@@ -327,6 +344,7 @@ Entity* EntitySystem::AllocateEntity()
 
     Entity& entity = m_entities[entity_id];
     assert(entity.id == INVALID_ID);
+    assert(entity.components.empty());
 
     entity.id = entity_id;
     entity.name = m_debug_names[entity_id].c_str();
