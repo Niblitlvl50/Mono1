@@ -20,6 +20,8 @@ namespace mono
 
         T* Set(uint32_t index, T&& data)
         {
+            assert(m_active[index] == false);
+
             m_active[index] = true;
             m_types[index] = std::move(data);
 
@@ -28,7 +30,7 @@ namespace mono
 
         T* Get(uint32_t index)
         {
-            //assert(m_active(index) == true);
+            assert(m_active[index] == true);
             return &m_types[index];
         }
 
