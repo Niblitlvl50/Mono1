@@ -22,7 +22,7 @@ namespace
     }
 }
 
-ZoneBase::~ZoneBase()
+int ZoneBase::OnUnload()
 {
     DoDeferredDelete();
 
@@ -48,6 +48,8 @@ ZoneBase::~ZoneBase()
             deleted_updatables.insert(updatable);
         }
     }
+
+    return 0;
 }
 
 void ZoneBase::Accept(IRenderer& renderer)

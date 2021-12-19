@@ -36,6 +36,7 @@ namespace mono
 
         void Release(uint32_t index)
         {
+            assert(m_active[index] == true);
             m_active[index] = false;
         }
 

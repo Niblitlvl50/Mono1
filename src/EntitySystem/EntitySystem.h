@@ -70,10 +70,10 @@ namespace mono
 
 
 
-        Entity* AllocateEntity();
+        Entity* AllocateEntity(const char* name);
         void ReleaseEntity2(uint32_t entity_id);
         Entity* GetEntity(uint32_t entity_id);
-        const Entity* GetEntity(uint32_t entity_id) const;
+        const Entity* GetEntity(uint32_t entity_id) const override;
 
         void SetProperty(Entity entity, uint32_t property);
         bool HasProperty(Entity entity, uint32_t property) const;
@@ -136,5 +136,6 @@ namespace mono
             std::vector<uint32_t> allocated_entities;
         };
         std::vector<EntityStackRecord> m_entity_allocation_stack;
+        bool m_full_release_on_next_sync;
     };
 }

@@ -72,6 +72,17 @@ namespace mono
                 func(m_transforms[index], index);
         }
 
+        template <typename T>
+        inline void ForEachComponentBreak(T&& func) const
+        {
+            for(uint32_t index = 0; index < m_transforms.size(); ++index)
+            {
+                const bool break_loop = func(m_transforms[index], index);
+                if(break_loop)
+                    return;
+            }
+        }
+
     private:
 
         std::vector<Component> m_transforms;

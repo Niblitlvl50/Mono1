@@ -23,6 +23,7 @@ EntitySystem::EntitySystem(
     : m_system_context(system_context)
     , m_load_func(load_func)
     , m_component_name_lookup(component_lookup)
+    , m_full_release_on_next_sync(false)
 {
     m_entities.resize(n_entities);
     m_entity_uuids.resize(n_entities, 0);
@@ -46,9 +47,8 @@ mono::Entity EntitySystem::CreateEntity(const char* name, const std::vector<uint
 
 mono::Entity EntitySystem::CreateEntity(const char* name, uint32_t uuid_hash, const std::vector<uint32_t>& components)
 {
-    mono::Entity* new_entity = AllocateEntity();
+    mono::Entity* new_entity = AllocateEntity(name);
     m_entity_uuids[new_entity->id] = uuid_hash;
-    SetName(new_entity->id, name);
 
     for(uint32_t component : components)
         AddComponent(new_entity->id, component);
@@ -66,9 +66,8 @@ mono::Entity EntitySystem::CreateEntity(const char* entity_file)
 
     const EntityData& entity_data = m_cached_entities[entity_hash];
 
-    mono::Entity* new_entity = AllocateEntity();
+    mono::Entity* new_entity = AllocateEntity(entity_data.entity_name.c_str());
     m_entity_uuids[new_entity->id] = entity_data.entity_uuid;
-    SetName(new_entity->id, entity_data.entity_name);
     new_entity->properties = entity_data.entity_properties;
 
     for(const ComponentData& component : entity_data.entity_components)
@@ -91,7 +90,17 @@ bool EntitySystem::AddComponent(uint32_t entity_id, uint32_t component_hash)
     {
         const bool success = factory_it->second.create(entity, m_system_context);
         if(success)
+        {
+            /*
+            const bool duplicated_component = mono::contains(entity->components, component_hash);
+            if(duplicated_component)
+            {
+                const char* component_name = m_component_name_lookup(component_hash);
+                System::Log("EntitySystem|Adding a duplicated component '%s' to entity '[%u] %s'", component_name, entity_id, entity->name);
+            }
+            */
             entity->components.push_back(component_hash);
+        }
         return success;
     }
 
@@ -258,12 +267,16 @@ void EntitySystem::PopEntityStackRecord()
         record.allocated_entities.end(),
         std::back_inserter(diff_result));
 
+    System::Log("entitysystem|Found '%u' that needs to be cleaned up, '%u' that stays. '%s'", diff_result.size(), record.allocated_entities.size(), record.debug_name);
+
     for(uint32_t id : diff_result)
+    {
+        System::Log("\t[%u] %s", id, GetEntityName(id));
         ReleaseEntity(id);
+    }
 
     m_entity_allocation_stack.pop_back();
-
-    System::Log("entitysystem|Found '%u' that needs to be cleaned up, '%u' that stays. '%s'", diff_result.size(), record.allocated_entities.size(), record.debug_name);
+    m_full_release_on_next_sync = true;
 }
 
 uint32_t EntitySystem::AddReleaseCallback(uint32_t entity_id, const ReleaseCallback& callback)
@@ -329,13 +342,17 @@ void EntitySystem::DeferredRelease()
         for(uint32_t id : m_entities_to_release)
             System::Log("\t[%u] %s", id, GetEntityName(id));
     
-        DeferredRelease();
+        if(m_full_release_on_next_sync)
+        {
+            m_entities_to_release.clear();
+            m_full_release_on_next_sync = false;
+        }
     }
 }
 
 
 
-Entity* EntitySystem::AllocateEntity()
+Entity* EntitySystem::AllocateEntity(const char* name)
 {
     assert(!m_free_indices.empty());
 
@@ -345,6 +362,9 @@ Entity* EntitySystem::AllocateEntity()
     Entity& entity = m_entities[entity_id];
     assert(entity.id == INVALID_ID);
     assert(entity.components.empty());
+    assert(m_debug_names[entity_id].empty());
+
+    m_debug_names[entity_id] = name;
 
     entity.id = entity_id;
     entity.name = m_debug_names[entity_id].c_str();

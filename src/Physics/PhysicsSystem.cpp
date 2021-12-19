@@ -179,11 +179,12 @@ void PhysicsSystem::ReleaseBody(uint32_t body_id)
     std::vector<cm::ShapeImpl*>& body_shapes = m_impl->bodies_shapes[body_id];
     for(cm::ShapeImpl* shape : body_shapes)
     {
+        m_impl->space.Remove(shape);
+
         Impl::ReleaseShapeFunc release_func = m_impl->m_shape_release_funcs[shape];
         (*m_impl.*release_func)(shape->Handle());
         m_impl->m_shape_release_funcs.erase(shape);
 
-        m_impl->space.Remove(shape);
         m_impl->shapes.ReleasePoolData(shape);
     }
     body_shapes.clear();

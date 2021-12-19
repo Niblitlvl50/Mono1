@@ -18,8 +18,6 @@ namespace mono
     {
     public:
 
-        ~ZoneBase();
-
         void PostUpdate() override
         { }
 
@@ -34,6 +32,7 @@ namespace mono
 
     protected:
 
+        int OnUnload() override;
         void Accept(IRenderer& renderer) override;
         void Accept(mono::IUpdater& updater) override;
         void DoDeferredDelete();
