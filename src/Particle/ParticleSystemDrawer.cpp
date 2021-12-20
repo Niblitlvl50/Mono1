@@ -28,7 +28,7 @@ void ParticleSystemDrawer::Draw(mono::IRenderer& renderer) const
         active_particles.push_back(pool_index);
 
         auto it = m_render_data.find(pool_index);
-        if(it == m_render_data.end())
+        if(it == m_render_data.end() || it->second.position_buffer->Size() < pool.pool_size)
         {
             InternalRenderData new_render_data;
             new_render_data.position_buffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 2, pool.pool_size, nullptr);
@@ -36,7 +36,7 @@ void ParticleSystemDrawer::Draw(mono::IRenderer& renderer) const
             new_render_data.color_buffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 4, pool.pool_size, nullptr);
             new_render_data.point_size_buffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 1, pool.pool_size, nullptr);
 
-            it = m_render_data.insert(std::make_pair(pool_index, std::move(new_render_data))).first;
+            it = m_render_data.insert_or_assign(pool_index, std::move(new_render_data)).first;
         }
 
         if(pool.count_alive == 0 || drawer.texture == nullptr)
