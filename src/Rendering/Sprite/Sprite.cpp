@@ -127,13 +127,13 @@ void Sprite::Update(const UpdateContext& update_context)
         const bool is_last_frame = (m_active_frame == int(active_animation.frames.size() - 1));
         if(is_last_frame)
         {
-            if(m_callback)
-                m_callback();
-
             if(active_animation.looping)
                 m_active_frame = 0;
             else
                 m_active_animation_done = true;
+
+            if(m_callback)
+                m_callback();
         }
         else
         {
