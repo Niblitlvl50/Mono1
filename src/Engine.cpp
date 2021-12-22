@@ -142,10 +142,22 @@ int Engine::Run(IZone* zone)
             m_system_context->Sync();
         }
 
+        const uint32_t after_time = System::GetMilliseconds();
+        const uint32_t delta_time = after_time - before_time;
+
+        // 60 fps
+        const float sleep_time = (1.0f / 60.0f) - (float(delta_time) / 1000.0f);
+        //printf("sleep_tiem: %f | %f | %u\n", sleep_time, (float(delta_time) / 1000.0f), uint32_t(sleep_time * 1000.0f));
+
         last_time = before_time;
 
+        if(sleep_time > 0.0f)
+        {
+            System::Sleep(uint32_t(sleep_time * 1000.0f));
+        }
+
         // Sleep for a millisecond, this highly reduces fps
-        System::Sleep(1);
+        //System::Sleep(1);
     }
 
     // Unload the zone and sync the game systems, this is mostly to clean up entities.
