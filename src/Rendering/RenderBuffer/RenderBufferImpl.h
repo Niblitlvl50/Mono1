@@ -28,9 +28,9 @@ namespace mono
     {
     public:
 
-        IndexBufferImpl(mono::BufferType buffer_type, uint32_t count, const void* data_ptr);
+        IndexBufferImpl(mono::BufferType buffer_type, uint32_t count, const uint16_t* data_ptr);
         ~IndexBufferImpl();
-        void UpdateData(const void* data, uint32_t offset, uint32_t count) override;
+        void UpdateData(const uint16_t* data, uint32_t offset, uint32_t count) override;
         uint32_t Size() const override;
         uint32_t Id() const override;
 

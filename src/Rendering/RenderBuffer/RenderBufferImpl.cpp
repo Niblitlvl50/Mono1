@@ -64,7 +64,7 @@ uint32_t RenderBufferImpl::Id() const
 }
 
 
-IndexBufferImpl::IndexBufferImpl(mono::BufferType buffer_type, uint32_t count, const void* data_ptr)
+IndexBufferImpl::IndexBufferImpl(mono::BufferType buffer_type, uint32_t count, const uint16_t* data_ptr)
     : m_count(count)
 {
     sg_buffer_desc buffer_desc = {};
@@ -85,7 +85,7 @@ IndexBufferImpl::~IndexBufferImpl()
     sg_destroy_buffer(m_handle);
 }
 
-void IndexBufferImpl::UpdateData(const void* data_ptr, uint32_t offset, uint32_t count)
+void IndexBufferImpl::UpdateData(const uint16_t* data_ptr, uint32_t offset, uint32_t count)
 {
     sg_update_buffer(m_handle, { data_ptr, CalculateByteSize(mono::BufferData::INT_16, 1, count) });
 }
