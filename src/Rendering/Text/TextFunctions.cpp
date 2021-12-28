@@ -16,8 +16,11 @@
 
 namespace
 {
-    constexpr int g_base = 32;
-    constexpr int g_n_chars = 224;
+    constexpr int g_extended_ascii_table_size = 256;
+    constexpr int g_ascii_printable_char_offset = 32;
+
+    constexpr int g_base = g_ascii_printable_char_offset;
+    constexpr int g_n_chars = g_extended_ascii_table_size - g_ascii_printable_char_offset;
 
     struct CharData
     {
@@ -120,7 +123,9 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
     for(uint32_t index = 0; index < text_length; ++index)
     {
         const char text_char = text[index];
-        const uint32_t char_index = static_cast<uint32_t>(text_char);
+        uint32_t char_index = static_cast<uint32_t>(text_char);
+        if(char_index < g_ascii_printable_char_offset || char_index > g_n_chars)
+            char_index = 35;
 
         // For the correct char we need to add base to the index.
         const uint32_t offset_index = char_index - g_base;
@@ -167,7 +172,9 @@ math::Vector mono::MeasureString(int font_id, const char* text)
     for(uint32_t index = 0; index < text_length; ++index)
     {
         const char text_char = text[index];
-        const uint32_t char_index = static_cast<uint32_t>(text_char);
+        uint32_t char_index = static_cast<uint32_t>(text_char);
+        if(char_index < g_ascii_printable_char_offset || char_index > g_n_chars)
+            char_index = 35;
 
         // For the correct char we need to add base to the index.
         const uint32_t offset_index = char_index - g_base;
