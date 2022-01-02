@@ -3,6 +3,8 @@
 #include "SpriteProperties.h"
 #include "Rendering/Texture/ITexture.h"
 
+#include "System/System.h"
+
 #include <stdexcept>
 #include <cassert>
 #include <cstring>
@@ -263,6 +265,7 @@ int Sprite::GetAnimationIdFromName(const char* animation_name) const
     if(it != m_sprite_data->animations.end())
         return std::distance(m_sprite_data->animations.begin(), it);
 
+    System::Log("sprite|Unable to find animation with name '%s'", animation_name);
     return -1;
 }
 
