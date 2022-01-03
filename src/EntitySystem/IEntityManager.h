@@ -16,10 +16,11 @@ using ComponentUpdateFunc = bool(*)(mono::Entity* entity, const std::vector<Attr
 using ComponentEnableFunc = void(*)(mono::Entity* entity, bool enabled, mono::SystemContext* context);
 using ComponentGetFunc = std::vector<Attribute>(*)(const mono::Entity* entity, mono::SystemContext* context);
 
-using ReleaseCallback = std::function<void (uint32_t entity_id)>;
 
 namespace mono
 {
+    using ReleaseCallback = std::function<void (uint32_t entity_id)>;
+    
     struct ComponentData
     {
         std::string name;

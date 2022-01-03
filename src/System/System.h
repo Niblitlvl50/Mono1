@@ -62,7 +62,9 @@ namespace System
         LEFT            = ENUM_BIT(13),
         RIGHT           = ENUM_BIT(14),
 
-        UNUSED          = ENUM_BIT(15)
+        UNUSED          = ENUM_BIT(15),
+
+        ABXY            = A | B | X | Y
     };
 
     class IWindow
