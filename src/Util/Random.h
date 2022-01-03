@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include <cstdint>
+
 namespace mono
 {
     //! Generates a random float between min and max
@@ -13,4 +15,26 @@ namespace mono
     {
         return (RandomInt() < percentage);
     }
+
+    class UniformRandomBitGenerator
+    {
+    public:
+
+        using result_type = uint32_t;
+
+        static constexpr result_type min()
+        {
+            return 0;
+        }
+
+        static constexpr result_type max()
+        {
+            return 100;
+        }
+
+        result_type operator()()
+        {
+            return RandomInt(min(), max());
+        }
+    };
 }
