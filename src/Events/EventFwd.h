@@ -19,5 +19,6 @@ namespace event
     struct TimeScaleEvent;
     struct ControllerAddedEvent;
     struct ControllerRemovedEvent;
+    struct ControllerButtonDownEvent;
 }
 

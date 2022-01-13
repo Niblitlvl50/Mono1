@@ -20,4 +20,15 @@ namespace event
 
         const int controller_id;
     };
+    
+    struct ControllerButtonDownEvent
+    {
+        ControllerButtonDownEvent(int controller_id, System::ControllerButton button)
+            : controller_id(controller_id)
+            , button(button)
+        { }
+
+        const int controller_id;
+        const System::ControllerButton button;
+    };
 }

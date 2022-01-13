@@ -23,4 +23,5 @@ namespace event
     using TimeScaleEventFunc = std::function<mono::EventResult (const TimeScaleEvent&)>;
     using ControllerAddedFunc = std::function<mono::EventResult (const ControllerAddedEvent&)>;
     using ControllerRemovedFunc = std::function<mono::EventResult (const ControllerRemovedEvent&)>;
+    using ControllerButtonDownFunc = std::function<mono::EventResult (const ControllerButtonDownEvent&)>;
 }

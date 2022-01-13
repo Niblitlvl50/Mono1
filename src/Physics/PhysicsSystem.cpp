@@ -329,6 +329,9 @@ const char* PhysicsSystem::Name() const
 
 void PhysicsSystem::Update(const UpdateContext& update_context)
 {
+    if(update_context.paused)
+        return;
+
     for(size_t index = 0; index < m_impl->active_bodies.size(); ++index)
     {
         const bool is_active = m_impl->active_bodies[index];

@@ -11,6 +11,7 @@ namespace mono
         uint32_t frame_count;
         uint32_t delta_ms;
         float delta_s;
+        bool paused;
     };
 
     class IUpdatable
@@ -19,5 +20,6 @@ namespace mono
     
         virtual ~IUpdatable() = default;
         virtual void Update(const mono::UpdateContext& update_context) = 0;
+        virtual bool UpdateInPause() const { return false; }
     };
 }

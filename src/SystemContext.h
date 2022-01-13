@@ -53,14 +53,22 @@ namespace mono
 
         inline void Update(const UpdateContext& update_context)
         {
+            const bool paused = update_context.paused;
+
             for(IGameSystem* game_system : m_systems)
-                game_system->Update(update_context);
+            {
+                if(!paused || (paused && game_system->UpdateInPause()))
+                    game_system->Update(update_context);
+            }
         }
 
-        inline void Sync()
+        inline void Sync(bool paused = false)
         {
             for(IGameSystem* game_system : m_systems)
-                game_system->Sync();
+            {
+                if(!paused || (paused && game_system->UpdateInPause()))
+                    game_system->Sync();
+            }
         }
 
     private:

@@ -116,6 +116,12 @@ void InputHandler::OnControllerRemoved(int controller_id)
     m_event_handler->DispatchEvent(event);
 }
 
+void InputHandler::OnControllerButtonDown(int controller_id, System::ControllerButton button)
+{
+    const event::ControllerButtonDownEvent event(controller_id, button);
+    m_event_handler->DispatchEvent(event);
+}
+
 void InputHandler::OnAppTerminating()
 {
     constexpr event::ApplicationEvent event(event::ApplicationState::TERMINATING);

@@ -75,7 +75,7 @@ int Engine::Run(IZone* zone)
     };
 
     InputHandler input_handler(screen_to_world_func, m_event_handler);
-    UpdateContext update_context = { 0, 0, 0, 0.0f };
+    UpdateContext update_context = { 0, 0, 0, 0.0f, false };
     Updater updater;
 
     zone->OnLoad(m_camera, &renderer);
@@ -114,13 +114,14 @@ int Engine::Run(IZone* zone)
         // Handle input events
         System::ProcessSystemEvents(&input_handler);
 
-        audio::MixSounds();
-
-        if(!m_pause)
+        if(!m_suspended)
         {
+            audio::MixSounds();
+
             update_context.frame_count++;
             update_context.delta_ms = delta_ms;
             update_context.delta_s = float(delta_ms) / 1000.0f;
+            update_context.paused = m_pause;
 
             renderer.SetDeltaAndTimestamp(update_context.delta_ms, update_context.delta_s, update_context.timestamp);
 
@@ -139,7 +140,7 @@ int Engine::Run(IZone* zone)
             m_window->SwapBuffers();
 
             zone->PostUpdate();
-            m_system_context->Sync();
+            m_system_context->Sync(m_pause);
         }
 
         /*
@@ -172,6 +173,7 @@ int Engine::Run(IZone* zone)
     // to reuse the engine for another zone.
     m_quit = false;
     m_pause = false;
+    m_suspended = false;
     m_update_last_time = false;
     m_time_scale = 1.0f;
 
@@ -181,7 +183,7 @@ int Engine::Run(IZone* zone)
 mono::EventResult Engine::OnPause(const event::PauseEvent& event)
 {
     m_pause = event.pause;
-    return mono::EventResult::HANDLED;
+    return mono::EventResult::PASS_ON;
 }
 
 mono::EventResult Engine::OnQuit(const event::QuitEvent&)
@@ -194,11 +196,11 @@ mono::EventResult Engine::OnApplication(const event::ApplicationEvent& event)
 {
     if(event.state == event::ApplicationState::ENTER_BACKGROUND)
     {
-        m_pause = true;
+        m_suspended = true;
     }
     else if(event.state == event::ApplicationState::ENTER_FOREGROUND)
     {
-        m_pause = false;
+        m_suspended = false;
         m_update_last_time = true;
     }
 

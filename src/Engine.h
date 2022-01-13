@@ -38,6 +38,7 @@ namespace mono
 
         bool m_pause = false;
         bool m_quit = false;
+        bool m_suspended = false;
         bool m_update_last_time = false;
         float m_time_scale = 1.0f;
 

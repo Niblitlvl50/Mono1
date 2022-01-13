@@ -101,8 +101,9 @@ namespace System
         virtual void OnTouchMotion(int64_t touchId, float x, float y, float dx, float dy) = 0;
         virtual void OnMultiGesture(float x, float y, float theta, float distance) = 0;
 
-        virtual void OnControllerAdded(int id) = 0;
-        virtual void OnControllerRemoved(int id) = 0;
+        virtual void OnControllerAdded(int controller_id) = 0;
+        virtual void OnControllerRemoved(int controller_id) = 0;
+        virtual void OnControllerButtonDown(int controller_id, System::ControllerButton button) = 0;
 
         virtual void OnTextInput(const char* text) = 0;
 

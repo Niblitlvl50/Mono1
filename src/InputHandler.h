@@ -31,6 +31,7 @@ namespace mono
 
         void OnControllerAdded(int controller_id) override;
         void OnControllerRemoved(int controller_id) override;
+        void OnControllerButtonDown(int controller_id, System::ControllerButton button) override;
 
         void OnAppTerminating() override;
         void OnEnterBackground() override;

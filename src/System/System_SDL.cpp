@@ -254,6 +254,45 @@ namespace
         return MouseButton::NONE;
     }
 
+    System::ControllerButton ControllerButtonFromSDL(Uint8 sdl_controller_button)
+    {
+        switch(sdl_controller_button)
+        {
+        case SDL_CONTROLLER_BUTTON_A:
+            return System::ControllerButton::A;
+        case SDL_CONTROLLER_BUTTON_B:
+            return System::ControllerButton::B;
+        case SDL_CONTROLLER_BUTTON_X:
+            return System::ControllerButton::X;
+        case SDL_CONTROLLER_BUTTON_Y:
+            return System::ControllerButton::Y;
+        case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
+            return System::ControllerButton::LEFT_SHOULDER;
+        case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+            return System::ControllerButton::RIGHT_SHOULDER;
+        case SDL_CONTROLLER_BUTTON_LEFTSTICK:
+            return System::ControllerButton::LEFT_STICK;
+        case SDL_CONTROLLER_BUTTON_RIGHTSTICK:
+            return System::ControllerButton::RIGHT_STICK;
+        case SDL_CONTROLLER_BUTTON_BACK:
+            return System::ControllerButton::BACK;
+        case SDL_CONTROLLER_BUTTON_GUIDE:
+            return System::ControllerButton::GUIDE;
+        case SDL_CONTROLLER_BUTTON_START:
+            return System::ControllerButton::START;
+        case SDL_CONTROLLER_BUTTON_DPAD_UP:
+            return System::ControllerButton::UP;
+        case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+            return System::ControllerButton::DOWN;
+        case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+            return System::ControllerButton::LEFT;
+        case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+            return System::ControllerButton::RIGHT;
+        }
+
+        return System::ControllerButton(0);
+    }
+
     void HandleWindowEvent(const SDL_WindowEvent& event, System::IInputHandler* handler)
     {
         switch(event.event)
@@ -650,6 +689,31 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                     instance_id);
                 SDL_GameControllerClose(controller);
 
+                break;
+            }
+
+            case SDL_CONTROLLERBUTTONDOWN:
+            {
+                const int instance_id = event.cbutton.which;
+                int controller_index = -1;
+
+                for(int index = 0; index < ControllerId::N_Controllers; ++index)
+                {
+                    if(g_controller_states[index].id == instance_id)
+                    {
+                        controller_index = index;
+                        break;
+                    }
+                }
+
+                if(controller_index == -1)
+                {
+                    Log("System|Unable to find controller with id: %d", instance_id);
+                    break;
+                }
+
+                const System::ControllerButton controller_button = ControllerButtonFromSDL(event.cbutton.button);
+                handler->OnControllerButtonDown(controller_index, controller_button);
                 break;
             }
 
