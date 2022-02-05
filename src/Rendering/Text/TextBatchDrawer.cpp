@@ -28,44 +28,38 @@ void TextBatchDrawer::Draw(mono::IRenderer& renderer) const
 {
     const auto draw_texts_func = [this, &renderer](mono::TextComponent& text, uint32_t index) {
         
+        if(text.text.empty())
+            return;
+
         const math::Quad world_bb = m_transform_system->GetWorldBoundingBox(index);
-        if(renderer.Cull(world_bb))
+        if(!renderer.Cull(world_bb))
+            return;
+
+        const math::Matrix& world_transform = m_transform_system->GetWorld(index);
+        const TextDrawBuffers* render_buffers = UpdateDrawBuffers(text, index);
+        const ITexturePtr texture = mono::GetFontTexture(text.font_id);
+
+        if(text.draw_shadow)
         {
-            const math::Matrix& world_transform = m_transform_system->GetWorld(index);
-            auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
+            math::Matrix shadow_world_transform = world_transform;
+            math::Translate(shadow_world_transform, text.shadow_offset);
 
-            const TextDrawBuffers* render_buffers = UpdateDrawBuffers(text, index);
-            const ITexturePtr texture = mono::GetFontTexture(text.font_id);
-
-            if(text.text.empty())
-                return;
-
-            if(text.draw_shadow)
-            {
-                math::Matrix shadow_world_transform = world_transform;
-                const math::Vector shadow_offset(0.1f, -0.05f);
-                math::Translate(shadow_world_transform, shadow_offset);
-
-                auto shadow_transform_scope = mono::MakeTransformScope(shadow_world_transform, &renderer);
-
-                mono::Color::HSL hsl_color = mono::Color::ToHSL(text.tint);
-                hsl_color.lightness -= 0.3f;
-
-                renderer.RenderText(
-                    render_buffers->vertices.get(),
-                    render_buffers->uv.get(),
-                    render_buffers->indices.get(),
-                    texture.get(),
-                    mono::Color::ToRGBA(hsl_color, text.tint.alpha));
-            }
-
+            auto shadow_transform_scope = mono::MakeTransformScope(shadow_world_transform, &renderer);
             renderer.RenderText(
                 render_buffers->vertices.get(),
                 render_buffers->uv.get(),
                 render_buffers->indices.get(),
                 texture.get(),
-                text.tint);
+                text.shadow_color);
         }
+
+        auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
+        renderer.RenderText(
+            render_buffers->vertices.get(),
+            render_buffers->uv.get(),
+            render_buffers->indices.get(),
+            texture.get(),
+            text.tint);
     };
 
     m_text_system->ForEach(draw_texts_func);

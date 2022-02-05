@@ -18,6 +18,8 @@ namespace mono
         mono::Color::RGBA tint;
         mono::FontCentering center_flags;
         bool draw_shadow;
+        math::Vector shadow_offset;
+        mono::Color::RGBA shadow_color;
     };
 
     class TextSystem : public mono::IGameSystem
