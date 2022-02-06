@@ -49,6 +49,7 @@ namespace mono
             uint32_t buffer_offset) const = 0;
 
         virtual void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float point_size) const = 0;
+        virtual void DrawPoints(const std::vector<math::Vector>& points, const std::vector<mono::Color::RGBA>& colors, float point_size) const = 0;
         virtual void DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;
         virtual void DrawPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;
         virtual void DrawClosedPolyline(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const = 0;

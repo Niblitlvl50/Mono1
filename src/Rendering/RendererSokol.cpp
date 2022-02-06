@@ -366,6 +366,13 @@ void RendererSokol::DrawPoints(const std::vector<math::Vector>& points, const mo
         return;
 
     const std::vector<mono::Color::RGBA> colors(points.size(), color);
+    DrawPoints(points, colors, point_size);
+}
+
+void RendererSokol::DrawPoints(const std::vector<math::Vector>& points, const std::vector<mono::Color::RGBA>& colors, float point_size) const
+{
+    if(points.empty())
+        return;
 
     auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, points.size(), points.data());
     auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data());
