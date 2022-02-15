@@ -9,7 +9,7 @@ mono::TextDrawBuffers mono::BuildTextDrawBuffers(int font_id, const char* text, 
 
     TextDrawBuffers buffers;
     buffers.vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.vertices.size(), def.vertices.data());
-    buffers.uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.texcoords.size(), def.texcoords.data());
+    buffers.uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.uv_coords.size(), def.uv_coords.data());
     buffers.indices = CreateElementBuffer(BufferType::STATIC, def.indices.size(), def.indices.data());
 
     return buffers;

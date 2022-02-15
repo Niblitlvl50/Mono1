@@ -291,7 +291,7 @@ void RendererSokol::RenderText(
     const TextDefinition& def = mono::GenerateVertexDataFromString(font_id, text, center_flags);
 
     auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.vertices.size(), def.vertices.data());
-    auto uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.texcoords.size(), def.texcoords.data());
+    auto uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.uv_coords.size(), def.uv_coords.data());
     auto indices = CreateElementBuffer(BufferType::STATIC, def.indices.size(), def.indices.data());
 
     RenderText(vertices.get(), uv.get(), indices.get(), texture.get(), color);

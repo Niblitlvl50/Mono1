@@ -24,16 +24,16 @@ namespace
 
     struct CharData
     {
-        float xadvance;
-        float xoffset;
-        float yoffset;
+        float x_advance;
+        float x_offset;
+        float y_offset;
         float width;
         float height;
         
-        float texCoordX0;
-        float texCoordY0;
-        float texCoordX1;
-        float texCoordY1;
+        float uv_x0;
+        float uv_y0;
+        float uv_x1;
+        float uv_y1;
     };
 
     struct FontData
@@ -57,8 +57,8 @@ void mono::LoadFontRaw(int font_id, const unsigned char* data_bytes, int data_si
 {
     constexpr int width = 512;
     constexpr int height = 512;
-    constexpr float texCoordXMulti = 1.0f / width;
-    constexpr float texCoordYMulti = 1.0f / height;
+    constexpr float uv_x_multi = 1.0f / width;
+    constexpr float uv_y_multi = 1.0f / height;
 
     byte bitmap_data[width * height];
     stbtt_bakedchar char_data[g_n_chars];
@@ -77,13 +77,13 @@ void mono::LoadFontRaw(int font_id, const unsigned char* data_bytes, int data_si
         CharData& data = font_data.chars[index];
         data.width = (baked_char.x1 - baked_char.x0) * scale;
         data.height = (baked_char.y1 - baked_char.y0) * scale;
-        data.xadvance = baked_char.xadvance * scale;
-        data.xoffset = baked_char.xoff * scale;
-        data.yoffset = (baked_char.yoff * scale) + data.height;
-        data.texCoordX0 = baked_char.x0 * texCoordXMulti;
-        data.texCoordY0 = baked_char.y1 * texCoordYMulti;
-        data.texCoordX1 = baked_char.x1 * texCoordXMulti;
-        data.texCoordY1 = baked_char.y0 * texCoordYMulti;
+        data.x_advance = baked_char.xadvance * scale;
+        data.x_offset = baked_char.xoff * scale;
+        data.y_offset = (baked_char.yoff * scale) + data.height;
+        data.uv_x0 = baked_char.x0 * uv_x_multi;
+        data.uv_y0 = baked_char.y1 * uv_y_multi;
+        data.uv_x1 = baked_char.x1 * uv_x_multi;
+        data.uv_y1 = baked_char.y0 * uv_y_multi;
     }
 
     g_fonts.insert(std::make_pair(font_id, font_data));
@@ -105,7 +105,7 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
 
     mono::TextDefinition text_def;
     text_def.vertices.reserve(text_length * 4);
-    text_def.texcoords.reserve(text_length * 4);
+    text_def.uv_coords.reserve(text_length * 4);
     text_def.indices.reserve(text_length * 6);
 
     math::Vector current_position = math::ZeroVec;
@@ -131,8 +131,8 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
         const uint32_t offset_index = char_index - g_base;
         const CharData& data = font_data.chars[offset_index];
 
-        const float x0 = current_position.x + data.xoffset;
-        const float y0 = current_position.y - data.yoffset;
+        const float x0 = current_position.x + data.x_offset;
+        const float y0 = current_position.y - data.y_offset;
         const float x1 = x0 + data.width;
         const float y1 = y0 + data.height;
 
@@ -141,10 +141,10 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
         text_def.vertices.emplace_back(x1, y1);
         text_def.vertices.emplace_back(x1, y0);
 
-        text_def.texcoords.emplace_back(data.texCoordX0, data.texCoordY0);
-        text_def.texcoords.emplace_back(data.texCoordX0, data.texCoordY1);
-        text_def.texcoords.emplace_back(data.texCoordX1, data.texCoordY1);
-        text_def.texcoords.emplace_back(data.texCoordX1, data.texCoordY0);
+        text_def.uv_coords.emplace_back(data.uv_x0, data.uv_y0);
+        text_def.uv_coords.emplace_back(data.uv_x0, data.uv_y1);
+        text_def.uv_coords.emplace_back(data.uv_x1, data.uv_y1);
+        text_def.uv_coords.emplace_back(data.uv_x1, data.uv_y0);
 
         const uint16_t indices_base = index * 4;
 
@@ -156,7 +156,7 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
         text_def.indices.push_back(indices_base + 2);
         text_def.indices.push_back(indices_base + 3);
 
-        current_position.x += data.xadvance;
+        current_position.x += data.x_advance;
     }
 
     return text_def;
@@ -183,7 +183,7 @@ math::Vector mono::MeasureString(int font_id, const char* text)
         if(index == text_length -1)
             size.x += data.width;
         else
-            size.x += data.xadvance;
+            size.x += data.x_advance;
         size.y = std::max(data.height, size.y);
     }
 

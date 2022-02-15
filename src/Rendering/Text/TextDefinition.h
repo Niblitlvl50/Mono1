@@ -11,7 +11,7 @@ namespace mono
     struct TextDefinition
     {
         std::vector<math::Vector> vertices;
-        std::vector<math::Vector> texcoords;
+        std::vector<math::Vector> uv_coords;
         std::vector<uint16_t> indices;
     };
 }
