@@ -243,9 +243,9 @@ void EntitySystem::PushEntityStackRecord(const char* debug_name)
 
     m_entity_allocation_stack.push_back(record);
 
-    System::Log("entitysystem|Found '%u' previously active entities when pushing stack record '%s'", record.allocated_entities.size(), debug_name);
-    for(uint32_t id : record.allocated_entities)
-        System::Log("\t[%u] %s", id, GetEntityName(id));
+//    System::Log("entitysystem|Found '%u' previously active entities when pushing stack record '%s'", record.allocated_entities.size(), debug_name);
+//    for(uint32_t id : record.allocated_entities)
+//        System::Log("\t[%u] %s", id, GetEntityName(id));
 }
 
 void EntitySystem::PopEntityStackRecord()
@@ -267,11 +267,11 @@ void EntitySystem::PopEntityStackRecord()
         record.allocated_entities.end(),
         std::back_inserter(diff_result));
 
-    System::Log("entitysystem|Found '%u' that needs to be cleaned up, '%u' that stays. '%s'", diff_result.size(), record.allocated_entities.size(), record.debug_name);
+    //System::Log("entitysystem|Found '%u' that needs to be cleaned up, '%u' that stays. '%s'", diff_result.size(), record.allocated_entities.size(), record.debug_name);
 
     for(uint32_t id : diff_result)
     {
-        System::Log("\t[%u] %s", id, GetEntityName(id));
+        //System::Log("\t[%u] %s", id, GetEntityName(id));
         ReleaseEntity(id);
     }
 
@@ -338,9 +338,9 @@ void EntitySystem::DeferredRelease()
 
     if(!m_entities_to_release.empty())
     {
-        System::Log("entitysystem|Additional entities to release after a deferred release. %u", m_entities_to_release.size());
-        for(uint32_t id : m_entities_to_release)
-            System::Log("\t[%u] %s", id, GetEntityName(id));
+        //System::Log("entitysystem|Additional entities to release after a deferred release. %u", m_entities_to_release.size());
+        //for(uint32_t id : m_entities_to_release)
+        //    System::Log("\t[%u] %s", id, GetEntityName(id));
     
         if(m_full_release_on_next_sync)
         {
