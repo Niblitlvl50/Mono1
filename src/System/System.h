@@ -35,17 +35,12 @@ namespace System
         uint16_t button_state;
     };
 
-    //
-    //         Y
-    //       X   B
-    //         A
-    //
     enum ControllerButton
     {
-        A               = ENUM_BIT(0),
-        B               = ENUM_BIT(1),
-        X               = ENUM_BIT(2),
-        Y               = ENUM_BIT(3),
+        FACE_BOTTOM     = ENUM_BIT(0),
+        FACE_RIGHT      = ENUM_BIT(1),
+        FACE_LEFT       = ENUM_BIT(2),
+        FACE_TOP        = ENUM_BIT(3),
 
         LEFT_SHOULDER   = ENUM_BIT(4),
         RIGHT_SHOULDER  = ENUM_BIT(5),
@@ -64,7 +59,7 @@ namespace System
 
         UNUSED          = ENUM_BIT(15),
 
-        ABXY            = A | B | X | Y
+        FACE_ANY        = FACE_BOTTOM | FACE_RIGHT | FACE_LEFT | FACE_TOP
     };
 
     class IWindow

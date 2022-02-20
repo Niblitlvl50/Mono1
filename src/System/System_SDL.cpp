@@ -259,13 +259,13 @@ namespace
         switch(sdl_controller_button)
         {
         case SDL_CONTROLLER_BUTTON_A:
-            return System::ControllerButton::A;
+            return System::ControllerButton::FACE_BOTTOM;
         case SDL_CONTROLLER_BUTTON_B:
-            return System::ControllerButton::B;
+            return System::ControllerButton::FACE_RIGHT;
         case SDL_CONTROLLER_BUTTON_X:
-            return System::ControllerButton::X;
+            return System::ControllerButton::FACE_LEFT;
         case SDL_CONTROLLER_BUTTON_Y:
-            return System::ControllerButton::Y;
+            return System::ControllerButton::FACE_TOP;
         case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
             return System::ControllerButton::LEFT_SHOULDER;
         case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
@@ -890,13 +890,13 @@ void System::ProcessControllerState()
         SDL_GameController* handle = SDL_GameControllerFromInstanceID(state.id);
 
         if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_A))
-            state.button_state |= ControllerButton::A;
+            state.button_state |= ControllerButton::FACE_BOTTOM;
         if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_B))
-            state.button_state |= ControllerButton::B;
+            state.button_state |= ControllerButton::FACE_RIGHT;
         if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_X))
-            state.button_state |= ControllerButton::X;
+            state.button_state |= ControllerButton::FACE_LEFT;
         if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_Y))
-            state.button_state |= ControllerButton::Y;
+            state.button_state |= ControllerButton::FACE_TOP;
 
         if(SDL_GameControllerGetButton(handle, SDL_CONTROLLER_BUTTON_LEFTSHOULDER))
             state.button_state |= ControllerButton::LEFT_SHOULDER;
