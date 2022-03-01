@@ -188,7 +188,7 @@ TEST(MathTest, AngleFromVector)
     EXPECT_FLOAT_EQ(math::PI_2(), west);
 
     const float south = math::AngleFromVector(math::Vector(0.0f, -1.0f));
-    EXPECT_FLOAT_EQ(math::PI(), south);
+    EXPECT_FLOAT_EQ(math::PI(), std::abs(south));
 
     const float east = math::AngleFromVector(math::Vector(1.0f, 0.0f));
     EXPECT_FLOAT_EQ(-math::PI_2(), east);
