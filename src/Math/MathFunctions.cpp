@@ -82,14 +82,14 @@ bool math::QuadOverlaps(const math::Quad& left, const math::Quad& right)
 
 void math::ResizeQuad(math::Quad& quad, float value, float aspect)
 {
-    const float resizeX = value * aspect;
-    const float resizeY = value;
+    const float resize_x = value * aspect;
+    const float resize_y = value;
     
-    quad.mA.x -= (resizeX * 0.5f);
-    quad.mA.y -= (resizeY * 0.5f);
+    quad.mA.x -= resize_x;
+    quad.mA.y -= resize_y;
 
-    quad.mB.x += resizeX;
-    quad.mB.y += resizeY;
+    quad.mB.x += resize_x;
+    quad.mB.y += resize_y;
 }
 
 math::Quad math::ResizeQuad(const math::Quad& quad, float value, float aspect)
@@ -111,7 +111,7 @@ math::Vector math::VectorFromAngle(float radians)
 
 float math::AngleFromVector(const math::Vector& normal)
 {
-    return atan2f(-normal.x, normal.y);
+    return std::atan2f(-normal.x, normal.y);
 }
 
 math::Vector math::CentroidOfPolygon(const std::vector<math::Vector>& points)
@@ -201,7 +201,7 @@ math::Vector math::MapVectorInQuad(const math::Vector& point, const math::Quad& 
 
 float math::NormalizeAngle(float radians)
 {
-    radians = fmod(radians, math::PI() * 2.0f);
+    radians = std::fmod(radians, math::PI() * 2.0f);
     if(radians < 0.0f)
         radians += math::PI() * 2.0f;
     return radians;
@@ -230,5 +230,5 @@ math::LineIntersectionResult math::LineIntersectsLine(
 
 bool math::IsPrettyMuchEquals(float left, float right, float tolerance)
 {
-    return fabs(left - right) <= tolerance;
+    return std::fabs(left - right) <= tolerance;
 }
