@@ -359,6 +359,11 @@ void PhysicsSpace::OnSeparation(cpArbiter* arb)
     }
 }
 
+void PhysicsSpace::UpdateBodyShapes(IBody* body)
+{
+    cpSpaceReindexShapesForBody(m_space, body->Handle());
+}
+
 IBody* PhysicsSpace::GetStaticBody()
 {
     return m_static_body.get();

@@ -345,6 +345,9 @@ void PhysicsSystem::Update(const UpdateContext& update_context)
             mono::IBody& body = m_impl->bodies[index];
             body.SetPosition(math::GetPosition(transform));
             body.SetAngle(math::GetZRotation(transform));
+
+            if(body.GetType() == BodyType::STATIC)
+                GetSpace()->UpdateBodyShapes(&body);
         }
     }
 
@@ -356,11 +359,10 @@ void PhysicsSystem::Update(const UpdateContext& update_context)
         if(!is_active)
             continue;
 
-        mono::IBody& body = m_impl->bodies[index];
+        const mono::IBody& body = m_impl->bodies[index];
 
         math::Matrix& transform = m_transform_system->GetTransform(index);
         transform = math::CreateMatrixWithPositionRotation(body.GetPosition(), body.GetAngle());
-
         m_transform_system->SetTransformState(index, TransformState::PHYSICS);
     }
 }

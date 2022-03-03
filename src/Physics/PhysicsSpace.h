@@ -54,6 +54,7 @@ namespace mono
         std::vector<QueryResult> QueryBox(const math::Quad& world_bb, uint32_t category);
         std::vector<QueryResult> QueryRadius(const math::Vector& position, float radius, uint32_t category);
 
+        void UpdateBodyShapes(IBody* body);
         IBody* GetStaticBody();
 
         cpSpace* Handle();
