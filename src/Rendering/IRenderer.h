@@ -115,6 +115,7 @@ namespace mono
 
         virtual void SetClearColor(const mono::Color::RGBA& color) = 0;
         virtual void SetAmbientShade(const mono::Color::RGBA& ambient_shade) = 0;
+        virtual void ToggleLighting() = 0;
 
         virtual void SetScreenFadeAlpha(float alpha) = 0;
 

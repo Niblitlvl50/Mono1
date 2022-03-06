@@ -21,6 +21,7 @@ namespace mono
 
         static void FadeCorners(bool enable);
         static void InvertColors(bool enable);
+        static void EnableLighting(bool enable);
         static void FadeScreenAlpha(float alpha);
     };
 }

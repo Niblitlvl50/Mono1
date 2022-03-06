@@ -32,6 +32,7 @@ RendererSokol::RendererSokol()
     , m_clear_color(0.7f, 0.7f, 0.7f)
     , m_ambient_shade(1.0f, 1.0f, 1.0f)
     , m_screen_fade_alpha(1.0f)
+    , m_lighting_enabled(true)
 {
     m_color_points_pipeline = mono::ColorPipeline::MakePointsPipeline();
     m_color_lines_pipeline = mono::ColorPipeline::MakeLinesPipeline();
@@ -214,7 +215,17 @@ void RendererSokol::PrepareDraw()
     sg_begin_pass(m_offscreen_color_pass.pass_handle, &offscreen_pass_action);
     sg_apply_viewport(0, 0, m_drawable_size.x, m_drawable_size.y, false);
 
-    simgui_new_frame(m_drawable_size.x, m_drawable_size.y, m_delta_time_s);
+    simgui_frame_desc_t imgui_frame_desc;
+    imgui_frame_desc.width = m_drawable_size.x;
+    imgui_frame_desc.height = m_drawable_size.y;
+    imgui_frame_desc.delta_time = m_delta_time_s;
+#ifdef __APPLE__
+    imgui_frame_desc.dpi_scale = 2.0f; // could be 2.0f for retina mac
+#else
+    imgui_frame_desc.dpi_scale = 1.0f;
+#endif
+
+    simgui_new_frame(imgui_frame_desc);
 }
 
 void RendererSokol::EndDraw()
@@ -235,6 +246,7 @@ void RendererSokol::EndDraw()
         m_offscreen_light_pass.offscreen_texture.get());
     ScreenPipeline::FadeCorners(false);
     ScreenPipeline::InvertColors(false);
+    ScreenPipeline::EnableLighting(m_lighting_enabled);
     ScreenPipeline::FadeScreenAlpha(m_screen_fade_alpha);
 
     sg_draw(0, 6, 1);
@@ -677,6 +689,11 @@ void RendererSokol::SetClearColor(const mono::Color::RGBA& color)
 void RendererSokol::SetAmbientShade(const mono::Color::RGBA& ambient_shade)
 {
     m_ambient_shade = ambient_shade;
+}
+
+void RendererSokol::ToggleLighting()
+{
+    m_lighting_enabled = !m_lighting_enabled;
 }
 
 void RendererSokol::SetScreenFadeAlpha(float alpha)

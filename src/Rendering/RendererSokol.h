@@ -123,6 +123,7 @@ namespace mono
 
         void SetClearColor(const mono::Color::RGBA& color) override;
         void SetAmbientShade(const mono::Color::RGBA& ambient_shade) override;
+        void ToggleLighting() override;
 
         void SetScreenFadeAlpha(float alpha) override;
 
@@ -206,5 +207,6 @@ namespace mono
         };
 
         std::vector<LightData> m_lights;
+        bool m_lighting_enabled;
     };
 }

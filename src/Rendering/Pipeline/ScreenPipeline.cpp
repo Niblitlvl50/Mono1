@@ -32,8 +32,9 @@ namespace
 
         uniform sampler2D sampler;
         uniform sampler2D sampler_light;
-        uniform float fade_corners;
-        uniform float invert_colors;
+        uniform int fade_corners;
+        uniform int invert_colors;
+        uniform int lighting_enabled;
         uniform float fade_alpha;
 
         in vec2 v_texture_coord;
@@ -43,10 +44,14 @@ namespace
         void main()
         {
             vec4 scene_color = texture(sampler, v_texture_coord);
-            vec4 lights = texture(sampler_light, v_texture_coord);
+
+            vec4 lights = vec4(1.0);
+            if(lighting_enabled != 0)
+                lights = texture(sampler_light, v_texture_coord);
+
             vec4 color = scene_color * lights;
 
-            if(fade_corners != 0.0)
+            if(fade_corners != 0)
             {
                 float unit_length = length(vec2(1.0, 1.0));
                 float length = length(v_vertex_coord);
@@ -63,7 +68,7 @@ namespace
 
             frag_color = color * fade_alpha;
 
-            if(invert_colors != 0.0)
+            if(invert_colors != 0)
             {
                 // Invert colors
                 frag_color = 1.0 - frag_color;
@@ -78,7 +83,8 @@ namespace
 
     constexpr int U_FADE_CORNERS_BLOCK = 0;
     constexpr int U_INVERT_COLORS_BLOCK = 1;
-    constexpr int U_FADE_ALPHA_BLOCK = 2;
+    constexpr int U_ENABLE_LIGHTING_BLOCK = 2;
+    constexpr int U_FADE_ALPHA_BLOCK = 3;
 }
 
 using namespace mono;
@@ -99,13 +105,17 @@ mono::IPipelinePtr ScreenPipeline::MakePipeline()
     shader_desc.fs.images[1].image_type = SG_IMAGETYPE_2D;
     shader_desc.fs.images[1].sampler_type = SG_SAMPLERTYPE_FLOAT;
 
-    shader_desc.fs.uniform_blocks[U_FADE_CORNERS_BLOCK].size = sizeof(float);
+    shader_desc.fs.uniform_blocks[U_FADE_CORNERS_BLOCK].size = sizeof(int);
     shader_desc.fs.uniform_blocks[U_FADE_CORNERS_BLOCK].uniforms[0].name = "fade_corners";
-    shader_desc.fs.uniform_blocks[U_FADE_CORNERS_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
+    shader_desc.fs.uniform_blocks[U_FADE_CORNERS_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_INT;
 
-    shader_desc.fs.uniform_blocks[U_INVERT_COLORS_BLOCK].size = sizeof(float);
+    shader_desc.fs.uniform_blocks[U_INVERT_COLORS_BLOCK].size = sizeof(int);
     shader_desc.fs.uniform_blocks[U_INVERT_COLORS_BLOCK].uniforms[0].name = "invert_colors";
-    shader_desc.fs.uniform_blocks[U_INVERT_COLORS_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
+    shader_desc.fs.uniform_blocks[U_INVERT_COLORS_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_INT;
+
+    shader_desc.fs.uniform_blocks[U_ENABLE_LIGHTING_BLOCK].size = sizeof(int);
+    shader_desc.fs.uniform_blocks[U_ENABLE_LIGHTING_BLOCK].uniforms[0].name = "lighting_enabled";
+    shader_desc.fs.uniform_blocks[U_ENABLE_LIGHTING_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_INT;
 
     shader_desc.fs.uniform_blocks[U_FADE_ALPHA_BLOCK].size = sizeof(float);
     shader_desc.fs.uniform_blocks[U_FADE_ALPHA_BLOCK].uniforms[0].name = "fade_alpha";
@@ -159,14 +169,20 @@ void ScreenPipeline::Apply(
 
 void ScreenPipeline::FadeCorners(bool enable)
 {
-    const float magic_value = enable ? 1.0f : 0.0f;
-    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FADE_CORNERS_BLOCK, { &magic_value, sizeof(float) });
+    const int int_value = enable ? 1 : 0;
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FADE_CORNERS_BLOCK, { &int_value, sizeof(int) });
 }
 
 void ScreenPipeline::InvertColors(bool enable)
 {
-    const float magic_value = enable ? 1.0f : 0.0f;
-    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_INVERT_COLORS_BLOCK, { &magic_value, sizeof(float) });
+    const int int_value = enable ? 1 : 0;
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_INVERT_COLORS_BLOCK, { &int_value, sizeof(int) });
+}
+
+void ScreenPipeline::EnableLighting(bool enable)
+{
+    const int int_value = enable ? 1 : 0;
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_ENABLE_LIGHTING_BLOCK, { &int_value, sizeof(int) });
 }
 
 void ScreenPipeline::FadeScreenAlpha(float alpha)
