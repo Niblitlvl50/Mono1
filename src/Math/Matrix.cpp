@@ -372,13 +372,10 @@ void math::Transform(const Matrix& matrix, math::Vector& vector)
 
 void math::Transform(const Matrix& matrix, math::Quad& quad)
 {
-    const float width = math::Width(quad);
-    const float height = math::Height(quad);
-
-    math::Vector bottom_left = quad.mA;
-    math::Vector bottom_right = quad.mA + math::Vector(width, 0.0f);
-    math::Vector top_left = quad.mA + math::Vector(0.0f, height);
-    math::Vector top_right = quad.mB;
+    math::Vector bottom_left = math::BottomLeft(quad);
+    math::Vector bottom_right = math::BottomRight(quad);
+    math::Vector top_left = math::TopLeft(quad);
+    math::Vector top_right = math::TopRight(quad);
 
     math::Transform(matrix, bottom_left);
     math::Transform(matrix, bottom_right);

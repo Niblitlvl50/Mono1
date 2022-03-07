@@ -198,7 +198,7 @@ void RendererSokol::PrepareDraw()
     m_projection_stack.push(math::Ortho(0.0f, viewport_width, 0.0f, viewport_width / ratio, -10.0f, 10.0f));
 
     math::Matrix view_transform;
-    math::Translate(view_transform, -m_viewport.mA);
+    math::Translate(view_transform, -m_viewport.bottom_left);
     m_view_stack.push(view_transform);
 
     m_model_stack.push(math::Matrix()); // Push identity

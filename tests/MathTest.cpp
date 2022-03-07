@@ -7,8 +7,8 @@
 
 TEST(MathTest, QuadZero)
 {
-    EXPECT_EQ(math::ZeroQuad.mA, math::ZeroVec);
-    EXPECT_EQ(math::ZeroQuad.mB, math::ZeroVec);
+    EXPECT_EQ(math::ZeroQuad.bottom_left, math::ZeroVec);
+    EXPECT_EQ(math::ZeroQuad.top_right, math::ZeroVec);
 }
 
 TEST(MathTest, QuadOverlap)
@@ -56,39 +56,39 @@ TEST(MathTest, QuadOperator)
     
     first |= second;
     
-    EXPECT_FLOAT_EQ(-1.0f, first.mA.x);
-    EXPECT_FLOAT_EQ(-1.0f, first.mA.y);
-    EXPECT_FLOAT_EQ(6.0f, first.mB.x);
-    EXPECT_FLOAT_EQ(6.0f, first.mB.y);
+    EXPECT_FLOAT_EQ(-1.0f, first.bottom_left.x);
+    EXPECT_FLOAT_EQ(-1.0f, first.bottom_left.y);
+    EXPECT_FLOAT_EQ(6.0f, first.top_right.x);
+    EXPECT_FLOAT_EQ(6.0f, first.top_right.y);
     
     math::Quad third(0.0f, -1.0f, 5.0f, 6.0f);
     const math::Quad fourth(-2.0f, -3.0f, 10.0f, 11.0f);
     
     third |= fourth;
     
-    EXPECT_FLOAT_EQ(-2.0f, third.mA.x);
-    EXPECT_FLOAT_EQ(-3.0f, third.mA.y);
-    EXPECT_FLOAT_EQ(10.0f, third.mB.x);
-    EXPECT_FLOAT_EQ(11.0f, third.mB.y);
+    EXPECT_FLOAT_EQ(-2.0f, third.bottom_left.x);
+    EXPECT_FLOAT_EQ(-3.0f, third.bottom_left.y);
+    EXPECT_FLOAT_EQ(10.0f, third.top_right.x);
+    EXPECT_FLOAT_EQ(11.0f, third.top_right.y);
     
     math::Quad fifth(-1.0f, -1.0f, 2.0f, 1.0f);
     const math::Quad sixth(1.0f, 1.0f, 2.0f, 2.0f);
     
     fifth |= sixth;
     
-    EXPECT_FLOAT_EQ(-1.0f, fifth.mA.x);
-    EXPECT_FLOAT_EQ(-1.0f, fifth.mA.y);
-    EXPECT_FLOAT_EQ(2.0f, fifth.mB.x);
-    EXPECT_FLOAT_EQ(2.0f, fifth.mB.y);
+    EXPECT_FLOAT_EQ(-1.0f, fifth.bottom_left.x);
+    EXPECT_FLOAT_EQ(-1.0f, fifth.bottom_left.y);
+    EXPECT_FLOAT_EQ(2.0f, fifth.top_right.x);
+    EXPECT_FLOAT_EQ(2.0f, fifth.top_right.y);
     
     
     const math::Quad seventh(-1.0f, 3.0f, 5.0f, 2.0f);
     const math::Quad result = seventh * 3.0f;
     
-    EXPECT_FLOAT_EQ(-3.0f, result.mA.x);
-    EXPECT_FLOAT_EQ(9.0f, result.mA.y);
-    EXPECT_FLOAT_EQ(15.0f, result.mB.x);
-    EXPECT_FLOAT_EQ(6.0f, result.mB.y);
+    EXPECT_FLOAT_EQ(-3.0f, result.bottom_left.x);
+    EXPECT_FLOAT_EQ(9.0f, result.bottom_left.y);
+    EXPECT_FLOAT_EQ(15.0f, result.top_right.x);
+    EXPECT_FLOAT_EQ(6.0f, result.top_right.y);
 }
 
 TEST(MathTest, QuadOperator_second)
@@ -105,10 +105,10 @@ TEST(MathTest, QuadOperator_second)
     second |= right;
     second |= left;
     
-    EXPECT_FLOAT_EQ(first.mA.x, second.mA.x);
-    EXPECT_FLOAT_EQ(first.mA.y, second.mA.y);
-    EXPECT_FLOAT_EQ(first.mB.x, second.mB.x);
-    EXPECT_FLOAT_EQ(first.mB.y, second.mB.y);
+    EXPECT_FLOAT_EQ(first.bottom_left.x, second.bottom_left.x);
+    EXPECT_FLOAT_EQ(first.bottom_left.y, second.bottom_left.y);
+    EXPECT_FLOAT_EQ(first.top_right.x, second.top_right.x);
+    EXPECT_FLOAT_EQ(first.top_right.y, second.top_right.y);
 }
 
 TEST(MathTest, VectorOperator)

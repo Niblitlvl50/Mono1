@@ -131,8 +131,8 @@ void SpriteSystem::Update(const UpdateContext& update_context)
 
                 math::Quad& bounding_box = m_transform_system->GetBoundingBox(index);
                 //bounding_box |= math::Quad(-half_sprite_size, half_sprite_size);
-                bounding_box.mA = -half_sprite_size;
-                bounding_box.mB = half_sprite_size;
+                bounding_box.bottom_left = -half_sprite_size;
+                bounding_box.top_right = half_sprite_size;
             }
         }
     }

@@ -176,10 +176,10 @@ std::vector<QueryResult> PhysicsSpace::QueryBox(const math::Quad& world_bb, uint
         query_data->found_bodies.push_back(query_result);
     };
 
-    const float left = std::min(world_bb.mA.x, world_bb.mB.x);
-    const float bottom = std::min(world_bb.mA.y, world_bb.mB.y);
-    const float right = std::max(world_bb.mA.x, world_bb.mB.x);
-    const float top = std::max(world_bb.mA.y, world_bb.mB.y);
+    const float left = std::min(math::Left(world_bb), math::Right(world_bb));
+    const float bottom = std::min(math::Bottom(world_bb), math::Top(world_bb));
+    const float right = std::max(math::Left(world_bb), math::Right(world_bb));
+    const float top = std::max(math::Bottom(world_bb), math::Top(world_bb));
 
     const cpBB bounding_box = cpBBNew(left, bottom, right, top);
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);

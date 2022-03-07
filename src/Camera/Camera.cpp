@@ -59,11 +59,13 @@ math::Vector Camera::GetTargetViewportSize() const
 
 math::Quad Camera::GetViewport() const
 {
-    math::Quad viewport;
-    viewport.mA = m_position - (m_viewport_size / 2.0f) + m_position_offset;
-    viewport.mB = m_viewport_size;
+    const math::Vector half_viewport_size = (m_viewport_size / 2.0f);
 
-    return viewport;
+    math::Quad viewport;
+    viewport.bottom_left = m_position - half_viewport_size;
+    viewport.top_right = m_position + half_viewport_size;
+
+    return viewport + m_position_offset;
 }
 
 void Camera::Move(const math::Vector& delta)
@@ -109,18 +111,21 @@ const math::Vector& Camera::GetWindowSize() const
 
 math::Vector Camera::ScreenToWorld(const math::Vector& screen_pos) const
 {
-    const float ratio = m_window_size.x / m_window_size.y;
+    const float window_ratio = m_window_size.x / m_window_size.y;
 
-    math::Quad viewport = GetViewport();
-    viewport.mB.y = viewport.mB.x / ratio;
+    const math::Quad viewport = GetViewport();
+    const math::Vector center = math::Center(viewport);
+    const float half_new_height = math::Width(viewport) / window_ratio / 2.0f;
 
-    const math::Vector& scale = viewport.mB / m_window_size;
-    
-    const float screenX = screen_pos.x;
-    const float screenY = m_window_size.y - screen_pos.y;
-    
-    const float tempx = screenX * scale.x;
-    const float tempy = screenY * scale.y;
-    
-    return math::Vector(tempx + viewport.mA.x, tempy + viewport.mA.y);
+    math::Quad new_viewport = viewport;
+    new_viewport.top_right.y = center.y + half_new_height;
+    new_viewport.bottom_left.y = center.y - half_new_height;
+
+    const math::Vector viewport_size = math::Size(new_viewport);
+    const math::Vector scale = viewport_size / m_window_size;
+
+    const float screen_x = screen_pos.x;
+    const float screen_y = m_window_size.y - screen_pos.y;
+
+    return viewport.bottom_left + (math::Vector(screen_x, screen_y) * scale);
 }

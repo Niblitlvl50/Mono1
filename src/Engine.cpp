@@ -108,8 +108,7 @@ int Engine::Run(IZone* zone)
         renderer.SetDrawableSize(drawable_size_vec);
 
         const math::Quad& viewport = m_camera->GetViewport();
-        const math::Quad camera_quad(viewport.mA, viewport.mA + viewport.mB);
-        renderer.SetViewport(camera_quad);
+        renderer.SetViewport(viewport);
 
         // Handle input events
         System::ProcessSystemEvents(&input_handler);

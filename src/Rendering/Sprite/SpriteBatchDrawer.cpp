@@ -97,7 +97,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 
             const float sort_offset = m_sprite_system->GetSpriteSortOffset(id);
             math::Quad world_bounds_offseted = world_bounds;
-            world_bounds_offseted.mA.y += sort_offset;
+            world_bounds_offseted.bottom_left.y += sort_offset;
 
             sprites_to_draw.push_back({ id, transform, world_bounds_offseted, sprite, layer });
         }

@@ -51,7 +51,7 @@ void StaticTerrainBlock::AddPolygon(const PolygonData& polygon)
     for(const math::Vector& vertex : polygon.vertices)
         bounding_box |= vertex;
 
-    const math::Vector& repeate = (bounding_box.mB - bounding_box.mA) / 2.0f;
+    const math::Vector& repeate = math::Size(bounding_box) / 2.0f;
         
     for(const math::Vector& vertex : polygon.vertices)
         texture_coordinates.push_back(math::MapVectorInQuad(vertex, bounding_box) * repeate);

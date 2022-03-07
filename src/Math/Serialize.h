@@ -24,16 +24,16 @@ namespace math
     inline void to_json(nlohmann::json& j, const math::Quad& quad)
     {
         j = nlohmann::json{
-            {"x1", quad.mA.x}, {"y1", quad.mA.y},
-            {"x2", quad.mB.x}, {"y2", quad.mB.y} };
+            {"x1", quad.bottom_left.x}, {"y1", quad.bottom_left.y},
+            {"x2", quad.top_right.x},   {"y2", quad.top_right.y} };
     }
 
     inline void from_json(const nlohmann::json& json, math::Quad& quad)
     {
-        quad.mA.x = json["x1"].get<float>();
-        quad.mA.y = json["y1"].get<float>();
-        quad.mB.x = json["x2"].get<float>();
-        quad.mB.y = json["y2"].get<float>();
+        quad.bottom_left.x = json["x1"].get<float>();
+        quad.bottom_left.y = json["y1"].get<float>();
+        quad.top_right.x = json["x2"].get<float>();
+        quad.top_right.y = json["y2"].get<float>();
     }
 
     // Interval

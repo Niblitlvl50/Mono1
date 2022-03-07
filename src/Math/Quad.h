@@ -10,32 +10,33 @@ namespace math
         constexpr Quad()
         { }
 
-        constexpr Quad(float x, float y, float w, float h)
-            : mA(x, y),
-              mB(w, h)
+        constexpr Quad(float bottom_left_x, float bottom_left_y, float top_right_x, float top_right_y)
+            : bottom_left(bottom_left_x, bottom_left_y)
+            , top_right(top_right_x, top_right_y)
         { }
 
         constexpr Quad(const Vector& a, const Vector& b)
-            : mA(a),
-              mB(b)
+            : bottom_left(a)
+            , top_right(b)
         { }
 
         Quad(const Vector& center, float radius)
-            : mA(center - math::Vector(radius, radius))
-            , mB(center + math::Vector(radius, radius))
+            : bottom_left(center - math::Vector(radius, radius))
+            , top_right(center + math::Vector(radius, radius))
         { }
 
         Quad(const Vector& center, float width, float height)
-            : mA(center - math::Vector(width / 2.0f, height / 2.0f))
-            , mB(center + math::Vector(width / 2.0f, height / 2.0f))
+            : bottom_left(center - math::Vector(width / 2.0f, height / 2.0f))
+            , top_right(center + math::Vector(width / 2.0f, height / 2.0f))
         { }
 
-        Vector mA;
-        Vector mB;
+        Vector bottom_left;
+        Vector top_right;
     };
     
     Quad operator * (const Quad& left, float value);
     Quad operator * (const Quad& left, const Vector& right);
+    Quad operator + (const Quad& quad, const Vector& offset);
     
     //!
     //! Be aware that this only checks for max/min values.
@@ -53,6 +54,7 @@ namespace math
 
     float Width(const Quad& quad);
     float Height(const Quad& quad);
+    math::Vector Size(const Quad& quad);
 
     float Left(const math::Quad& quad);
     float Right(const math::Quad& quad);

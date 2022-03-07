@@ -8,10 +8,10 @@
 
 bool math::PointInsideQuad(const math::Vector& point, const math::Quad& quad)
 {
-    if(point.x > quad.mA.x &&
-       point.x < quad.mB.x &&
-       point.y > quad.mA.y &&
-       point.y < quad.mB.y)
+    if(point.x > quad.bottom_left.x &&
+       point.x < quad.top_right.x &&
+       point.y > quad.bottom_left.y &&
+       point.y < quad.top_right.y)
         return true;
     
     return false;
@@ -67,11 +67,11 @@ math::PointOnLineResult math::ClosestPointOnLine(const math::Vector& start, cons
 
 bool math::QuadOverlaps(const math::Quad& left, const math::Quad& right)
 {
-    const Vector& left1 = left.mA;
-    const Vector& left2 = left.mB;
+    const Vector& left1 = left.bottom_left;
+    const Vector& left2 = left.top_right;
     
-    const Vector& right1 = right.mA;
-    const Vector& right2 = right.mB;
+    const Vector& right1 = right.bottom_left;
+    const Vector& right2 = right.top_right;
     
     if( left1.x < right2.x && left2.x > right1.x &&
         left1.y < right2.y && left2.y > right1.y )
@@ -85,11 +85,11 @@ void math::ResizeQuad(math::Quad& quad, float value, float aspect)
     const float resize_x = value * aspect;
     const float resize_y = value;
     
-    quad.mA.x -= resize_x;
-    quad.mA.y -= resize_y;
+    quad.bottom_left.x -= resize_x;
+    quad.bottom_left.y -= resize_y;
 
-    quad.mB.x += resize_x;
-    quad.mB.y += resize_y;
+    quad.top_right.x += resize_x;
+    quad.top_right.y += resize_y;
 }
 
 math::Quad math::ResizeQuad(const math::Quad& quad, float value, float aspect)
@@ -192,8 +192,8 @@ bool math::IsPolygonClockwise(const std::vector<math::Vector>& points)
 
 math::Vector math::MapVectorInQuad(const math::Vector& point, const math::Quad& quad)
 {
-    const math::Vector& temp = point - quad.mA;
-    const math::Vector& size = quad.mB - quad.mA;
+    const math::Vector& temp = point - quad.bottom_left;
+    const math::Vector& size = math::Size(quad);
 
     // We need to flip the y axis
     return math::Vector(temp.x / size.x, (size.y - temp.y) / size.y);
