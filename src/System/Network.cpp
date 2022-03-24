@@ -91,9 +91,10 @@ namespace
             const int size = static_cast<int>(data.size());
             const int receive_result = zed_net_udp_socket_receive(&m_handle, &sender, data.data(), size);
             if(receive_result < 0)
+            {
                 System::Log("network|%s", zed_net_get_error());
-
-            if(out_sender)
+            }
+            else if(out_sender)
             {
                 out_sender->host = sender.host;
                 out_sender->port = sender.port;
