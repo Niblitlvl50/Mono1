@@ -7,6 +7,7 @@ using namespace mono;
 LightSystem::LightSystem(uint32_t n_lights)
 {
     m_alive.resize(n_lights, false);
+    m_enabled.resize(n_lights, true);
     m_lights.resize(n_lights);
 }
 
@@ -36,6 +37,11 @@ void LightSystem::SetData(uint32_t light_id, const LightComponent& component_dat
 void LightSystem::Release(uint32_t light_id)
 {
     m_alive[light_id] = false;
+}
+
+void LightSystem::SetLightEnabled(uint32_t light_id, bool enabled)
+{
+    m_enabled[light_id] = enabled;
 }
 
 uint32_t LightSystem::Id() const
