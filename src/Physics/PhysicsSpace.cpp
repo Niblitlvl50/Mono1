@@ -110,14 +110,17 @@ QueryResult PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vect
 {
     QueryResult result = {};
 
+    cpSegmentQueryInfo query_info;
+
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
-    const cpShape* shape = cpSpaceSegmentQueryFirst(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 1, shape_filter, nullptr);
+    const cpShape* shape = cpSpaceSegmentQueryFirst(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 1, shape_filter, &query_info);
     if(!shape)
         return result;
 
     const cpBody* body = cpShapeGetBody(shape);
     const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(body));
     result.body = m_physics_system->GetBody(body_id);
+    result.point = math::Vector(query_info.point.x, query_info.point.y);
 
     const cpShapeFilter filter = cpShapeGetFilter(shape);
     result.collision_category = filter.categories;
@@ -144,7 +147,7 @@ std::vector<QueryResult> PhysicsSpace::QueryAllInLIne(const math::Vector& start,
 
         QueryData* query_data = (QueryData*)data;
  
-        const QueryResult query_result = { query_data->physics_system->GetBody(body_id), filter.categories };
+        const QueryResult query_result = { query_data->physics_system->GetBody(body_id), math::Vector(point.x, point.y), filter.categories };
         query_data->found_bodies.push_back(query_result);
     };
 
@@ -169,10 +172,15 @@ std::vector<QueryResult> PhysicsSpace::QueryBox(const math::Quad& world_bb, uint
         const cpBody* body = cpShapeGetBody(shape);
         const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(body));
         const cpShapeFilter filter = cpShapeGetFilter(shape);
-
+        const cpVect body_position = cpBodyGetPosition(body);
+        
         QueryData* query_data = (QueryData*)data;
 
-        const QueryResult query_result = { query_data->physics_system->GetBody(body_id), filter.categories };
+        const QueryResult query_result = {
+            query_data->physics_system->GetBody(body_id),
+            math::Vector(body_position.x, body_position.y),
+            filter.categories
+        };
         query_data->found_bodies.push_back(query_result);
     };
 
@@ -218,9 +226,14 @@ std::vector<QueryResult> PhysicsSpace::QueryRadius(const math::Vector& position,
         const cpBody* body = cpShapeGetBody(shape);
         const uint32_t body_id = reinterpret_cast<uint64_t>(cpBodyGetUserData(body));
         const cpShapeFilter filter = cpShapeGetFilter(shape);
+        const cpVect body_position = cpBodyGetPosition(body);
 
         QueryData* query_data = (QueryData*)data;
-        const QueryResult query_result = { query_data->physics_system->GetBody(body_id), filter.categories };
+        const QueryResult query_result = {
+            query_data->physics_system->GetBody(body_id),
+            math::Vector(body_position.x, body_position.y),
+            filter.categories
+        };
         query_data->found_bodies.push_back(query_result);
     };
 

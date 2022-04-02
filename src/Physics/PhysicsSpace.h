@@ -3,6 +3,7 @@
 
 #include "PhysicsFwd.h"
 #include "Math/MathFwd.h"
+#include "Math/Vector.h"
 
 #include <functional>
 #include <memory>
@@ -22,6 +23,7 @@ namespace mono
     struct QueryResult
     {
         mono::IBody* body;
+        math::Vector point;
         uint32_t collision_category;
     };
 
