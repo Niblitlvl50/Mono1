@@ -113,7 +113,7 @@ QueryResult PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vect
     cpSegmentQueryInfo query_info;
 
     const cpShapeFilter shape_filter = cpShapeFilterNew(CP_NO_GROUP, CP_ALL_CATEGORIES, category);
-    const cpShape* shape = cpSpaceSegmentQueryFirst(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 1, shape_filter, &query_info);
+    const cpShape* shape = cpSpaceSegmentQueryFirst(m_space, cpv(start.x, start.y), cpv(end.x, end.y), 0.0f, shape_filter, &query_info);
     if(!shape)
         return result;
 
