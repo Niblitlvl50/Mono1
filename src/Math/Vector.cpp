@@ -110,6 +110,15 @@ float math::Cross(const math::Vector& first, const math::Vector& second)
     return (first.x * second.y) - (first.y * second.x);
 }
 
+math::Vector math::Rotate(const math::Vector& vector, float radians)
+{
+    math::Vector output;
+    output.x = (vector.x * std::cos(radians)) - (vector.y * std::sin(radians));
+    output.y = (vector.x * std::sin(radians)) + (vector.y * std::cos(radians));
+
+    return output;
+}
+
 math::Vector math::Perpendicular(const math::Vector& vector)
 {
     return math::Vector(vector.y, -vector.x);

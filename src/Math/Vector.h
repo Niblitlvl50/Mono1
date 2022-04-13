@@ -47,6 +47,8 @@ namespace math
     float Dot(const Vector& first, const Vector& second);
     float Cross(const Vector& first, const Vector& second);
 
+    Vector Rotate(const Vector& vector, float radians);
+
     math::Vector Perpendicular(const Vector& vector);
     float DistanceBetween(const Vector& left, const Vector& right);
     bool IsPrettyMuchEquals(const Vector& left, const Vector& right, float tolerance = FLT_EPSILON);
