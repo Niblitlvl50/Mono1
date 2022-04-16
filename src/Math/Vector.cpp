@@ -110,13 +110,20 @@ float math::Cross(const math::Vector& first, const math::Vector& second)
     return (first.x * second.y) - (first.y * second.x);
 }
 
-math::Vector math::Rotate(const math::Vector& vector, float radians)
+math::Vector math::RotateAround(const math::Vector& origin, const math::Vector& target, float radians)
 {
-    math::Vector output;
-    output.x = (vector.x * std::cos(radians)) - (vector.y * std::sin(radians));
-    output.y = (vector.x * std::sin(radians)) + (vector.y * std::cos(radians));
+    const math::Vector delta = target - origin;
 
-    return output;
+    math::Vector output;
+    output.x = (delta.x * std::cos(radians)) - (delta.y * std::sin(radians));
+    output.y = (delta.x * std::sin(radians)) + (delta.y * std::cos(radians));
+
+    return output + origin;
+}
+
+math::Vector math::RotateAroundZero(const math::Vector& vector, float radians)
+{
+    return RotateAround(math::ZeroVec, vector, radians);
 }
 
 math::Vector math::Perpendicular(const math::Vector& vector)

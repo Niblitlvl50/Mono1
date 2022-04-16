@@ -194,6 +194,13 @@ TEST(MathTest, AngleFromVector)
     EXPECT_FLOAT_EQ(-math::PI_2(), east);
 }
 
+TEST(MathTest, VectorRotate)
+{
+    math::Vector test = math::RotateAroundZero(math::Vector(0.0f, 1.0f), math::ToRadians(90));
+    EXPECT_NEAR(-1.0f, test.x, 0.0000001f);
+    EXPECT_NEAR(0.0f, test.y, 0.0000001f);
+}
+
 TEST(MathTest, Scale01)
 {
     const float result1 = math::Scale01(1.0f, 0.0f, 10.0f);
