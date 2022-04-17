@@ -142,3 +142,5 @@ bool math::IsPrettyMuchEquals(const math::Vector& left, const math::Vector& righ
         IsPrettyMuchEquals(left.x, right.x, tolerance) &&
         IsPrettyMuchEquals(left.y, right.y, tolerance);
 }
+
+const math::Vector math::InfVec(math::INF, math::INF);

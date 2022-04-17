@@ -54,7 +54,7 @@ namespace math
     float DistanceBetween(const Vector& left, const Vector& right);
     bool IsPrettyMuchEquals(const Vector& left, const Vector& right, float tolerance = FLT_EPSILON);
 
-    // Just a convineince vector declared to zero.
     constexpr Vector ZeroVec = Vector();
+    extern const Vector InfVec;
 }
 
