@@ -119,7 +119,8 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
                 {
                     auto shadow_cached_it = m_shadow_data_cache.find(id);
                     need_update = 
-                        (shadow_cached_it->second.offset != shadow_offset) || (shadow_cached_it->second.radius != shadow_radius);
+                        (shadow_cached_it->second.offset != shadow_offset) ||
+                        (shadow_cached_it->second.radius != shadow_radius);
                 }
                 else
                 {
