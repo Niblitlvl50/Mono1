@@ -11,7 +11,7 @@
 
 using namespace mono;
 
-SpriteSystem::SpriteSystem(size_t n_sprites, mono::TransformSystem* transform_system)
+SpriteSystem::SpriteSystem(uint32_t n_sprites, mono::TransformSystem* transform_system)
     : m_transform_system(transform_system)
 {
     m_sprites.resize(n_sprites);
@@ -21,15 +21,14 @@ SpriteSystem::SpriteSystem(size_t n_sprites, mono::TransformSystem* transform_sy
     m_alive.resize(n_sprites, false);
 }
 
-SpriteSystem::~SpriteSystem()
-{ }
-
 mono::Sprite* SpriteSystem::AllocateSprite(uint32_t sprite_id)
 {
     assert(!m_alive[sprite_id]);
     m_alive[sprite_id] = true;
     m_sprite_layers[sprite_id] = 0;
     m_enabled[sprite_id] = true;
+
+    m_sprites_need_update.push_back(sprite_id);
 
     return &m_sprites[sprite_id];
 }
@@ -72,6 +71,8 @@ void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& spr
 
     m_sprite_layers[sprite_id] = sprite_args.layer;
     m_sprite_sort_offsets[sprite_id] = sprite_args.sort_offset;
+
+    m_sprites_need_update.push_back(sprite_id);
 }
 
 void SpriteSystem::ReleaseSprite(uint32_t sprite_id)
@@ -119,28 +120,41 @@ void SpriteSystem::Update(const UpdateContext& update_context)
 {
     for(size_t index = 0; index < m_sprites.size(); ++index)
     {
-        if(m_alive[index] && m_enabled[index])
+        if(!m_alive[index] || !m_enabled[index])
+            continue;
+
+        mono::Sprite& sprite = m_sprites[index];
+        sprite.Update(update_context);
+    }
+
+    for(uint32_t sprite_id : m_sprites_need_update)
+    {
+        const mono::Sprite& sprite = m_sprites[sprite_id];
+
+        math::Vector frame_size;
+
+        for(const mono::SpriteFrame& frame : sprite.GetSpriteData()->frames)
         {
-            mono::Sprite& sprite = m_sprites[index];
-            sprite.Update(update_context);
+            frame_size.x = std::max(frame_size.x, frame.size.x);
+            frame_size.y = std::max(frame_size.y, frame.size.y);
+        }
 
-            const mono::SpriteFrame sprite_frame = sprite.GetCurrentFrame();
-            if(sprite_frame.size.x != 0.0f && sprite_frame.size.y != 0.0f)
-            {
-                const math::Vector& half_sprite_size = sprite_frame.size / 2.0f;
+        if(frame_size.x != 0.0f && frame_size.y != 0.0f)
+        {
+            const math::Vector& half_sprite_size = frame_size / 2.0f;
 
-                math::Quad& bounding_box = m_transform_system->GetBoundingBox(index);
-                //bounding_box |= math::Quad(-half_sprite_size, half_sprite_size);
-                bounding_box.bottom_left = -half_sprite_size;
-                bounding_box.top_right = half_sprite_size;
-            }
+            math::Quad& bounding_box = m_transform_system->GetBoundingBox(sprite_id);
+            bounding_box.bottom_left = -half_sprite_size;
+            bounding_box.top_right = half_sprite_size;
         }
     }
+
+    m_sprites_need_update.clear();
 }
 
-void SpriteSystem::ForEachSprite(ForEachSpriteFunc func)
+void SpriteSystem::ForEachSprite(const ForEachSpriteFunc& func)
 {
-    for(size_t index = 0; index < m_sprites.size(); ++index)
+    for(uint32_t index = 0; index < m_sprites.size(); ++index)
     {
         if(m_alive[index] && m_enabled[index])
             func(&m_sprites[index], m_sprite_layers[index], index);

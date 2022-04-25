@@ -33,8 +33,7 @@ namespace mono
     {
     public:
 
-        SpriteSystem(size_t n_sprites, mono::TransformSystem* transform_system);
-        ~SpriteSystem();
+        SpriteSystem(uint32_t n_sprites, mono::TransformSystem* transform_system);
 
         mono::Sprite* AllocateSprite(uint32_t sprite_id);
         mono::ISprite* AllocateSprite(uint32_t sprite_id, const SpriteComponents& sprite_args);
@@ -47,7 +46,7 @@ namespace mono
         void SetSpriteLayer(uint32_t sprite_id, int new_layer);
         float GetSpriteSortOffset(uint32_t sprite_id) const;
         void SetSpriteEnabled(uint32_t sprite_id, bool enabled);
-        void ForEachSprite(ForEachSpriteFunc func);
+        void ForEachSprite(const ForEachSpriteFunc& func);
 
         uint32_t Id() const override;
         const char* Name() const override;
@@ -61,5 +60,7 @@ namespace mono
         std::vector<float> m_sprite_sort_offsets;
         std::vector<bool> m_enabled;
         std::vector<bool> m_alive;
+
+        std::vector<uint32_t> m_sprites_need_update;
     };
 }
