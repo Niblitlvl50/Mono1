@@ -130,10 +130,14 @@ void SpriteSystem::Update(const UpdateContext& update_context)
     for(uint32_t sprite_id : m_sprites_need_update)
     {
         const mono::Sprite& sprite = m_sprites[sprite_id];
+        const mono::SpriteData* sprite_data = sprite.GetSpriteData();
+
+        if(!sprite_data)
+            continue;
 
         math::Vector frame_size;
 
-        for(const mono::SpriteFrame& frame : sprite.GetSpriteData()->frames)
+        for(const mono::SpriteFrame& frame : sprite_data->frames)
         {
             frame_size.x = std::max(frame_size.x, frame.size.x);
             frame_size.y = std::max(frame_size.y, frame.size.y);
