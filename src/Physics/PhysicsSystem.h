@@ -134,6 +134,7 @@ namespace mono
 
         mono::IBody* AllocateBody(uint32_t body_id, const BodyComponent& body_params);
         void ReleaseBody(uint32_t body_id);
+        bool IsAllocated(uint32_t body_id) const;
         mono::IBody* GetBody(uint32_t body_id);
 
         mono::IShape* AddShape(uint32_t body_id, const CircleComponent& circle_params);

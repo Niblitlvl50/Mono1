@@ -59,6 +59,7 @@ namespace mono
         PhysicsDebugDrawer(
             const bool& enabled_drawing,
             const bool& enabled_interaction,
+            const bool& enabled_body_introspection,
             const uint32_t& debug_components,
             mono::PhysicsSystem* physics_system,
             mono::EventHandler* event_handler);
@@ -66,6 +67,8 @@ namespace mono
 
         void Draw(mono::IRenderer& renderer) const override;
         math::Quad BoundingBox() const override;
+
+        void DrawBodyIntrospection(mono::IRenderer& renderer) const;
 
         mono::EventResult OnMouseDown(const event::MouseDownEvent& event);
         mono::EventResult OnMouseUp(const event::MouseUpEvent& event);
@@ -77,6 +80,7 @@ namespace mono
     private:
         const bool& m_enabled_drawing;
         const bool& m_enabled_interaction;
+        const bool& m_enabled_body_introspection;
         const uint32_t& m_debug_components;
 
         mono::PhysicsSystem* m_physics_system;
@@ -97,5 +101,7 @@ namespace mono
 
         bool m_mouse_down;
         bool m_shift_down;
+
+        mutable int m_body_id;
     };
 }

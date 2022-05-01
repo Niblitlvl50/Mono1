@@ -193,6 +193,14 @@ void PhysicsSystem::ReleaseBody(uint32_t body_id)
     m_impl->active_bodies[body_id] = false;
 }
 
+bool PhysicsSystem::IsAllocated(uint32_t body_id) const
+{
+    if(body_id >= m_impl->body_pool.Size())
+        return false;
+
+    return m_impl->active_bodies[body_id];
+}
+
 mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const CircleComponent& params)
 {
     const cpVect offset = cpv(params.offset.x, params.offset.y);

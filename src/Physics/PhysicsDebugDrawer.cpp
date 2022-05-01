@@ -13,6 +13,8 @@
 #include "Events/KeyEvent.h"
 
 #include "chipmunk/chipmunk.h"
+#include "chipmunk/chipmunk_structs.h"
+#include "imgui/imgui.h"
 
 using namespace mono;
 
@@ -136,15 +138,19 @@ static_assert(uint32_t(CP_SPACE_DEBUG_DRAW_COLLISION_POINTS) == mono::PhysicsDeb
 PhysicsDebugDrawer::PhysicsDebugDrawer(
     const bool& enabled_drawing,
     const bool& enabled_interaction,
+    const bool& enabled_body_introspection,
     const uint32_t& debug_components,
-    mono::PhysicsSystem* physics_system, mono::EventHandler* event_handler)
+    mono::PhysicsSystem* physics_system,
+    mono::EventHandler* event_handler)
     : m_enabled_drawing(enabled_drawing)
     , m_enabled_interaction(enabled_interaction)
+    , m_enabled_body_introspection(enabled_body_introspection)
     , m_debug_components(debug_components)
     , m_physics_system(physics_system)
     , m_event_handler(event_handler)
     , m_mouse_down(false)
     , m_shift_down(false)
+    , m_body_id(0)
 {
     using namespace std::placeholders;
 
@@ -177,6 +183,9 @@ PhysicsDebugDrawer::~PhysicsDebugDrawer()
 
 void PhysicsDebugDrawer::Draw(mono::IRenderer& renderer) const
 {
+    if(m_enabled_body_introspection)
+        DrawBodyIntrospection(renderer);
+
     if(!m_enabled_drawing)
         return;
 
@@ -243,6 +252,63 @@ void PhysicsDebugDrawer::Draw(mono::IRenderer& renderer) const
 math::Quad PhysicsDebugDrawer::BoundingBox() const
 {
     return math::InfQuad;
+}
+
+void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
+{
+    const bool window_open = ImGui::Begin("Body Introspection");
+    if(!window_open)
+        return;
+
+    ImGui::Text("HElloasdasd");
+    ImGui::InputInt("Body Id", &m_body_id);
+
+    const bool valid_body_id = m_physics_system->IsAllocated(m_body_id);
+    if(valid_body_id)
+    {
+        mono::IBody* body = m_physics_system->GetBody(m_body_id);
+        cpBody* native_handle = body->Handle();
+
+        ImGui::Columns(11, "body_data");
+        ImGui::Separator();
+        ImGui::Text("Mass"); ImGui::NextColumn();
+        ImGui::Text("Mass_I"); ImGui::NextColumn();
+        ImGui::Text("Inertia"); ImGui::NextColumn();
+        ImGui::Text("Inertia_I"); ImGui::NextColumn();
+        ImGui::Text("COG"); ImGui::NextColumn();
+        ImGui::Text("Position"); ImGui::NextColumn();
+        ImGui::Text("Velocity"); ImGui::NextColumn();
+        ImGui::Text("Force"); ImGui::NextColumn();
+        ImGui::Text("Angle"); ImGui::NextColumn();
+        ImGui::Text("Angular V"); ImGui::NextColumn();
+        ImGui::Text("Torque"); ImGui::NextColumn();
+        ImGui::Separator();
+
+        ImGui::Text("%f", native_handle->m); ImGui::NextColumn();
+        ImGui::Text("%f", native_handle->m_inv); ImGui::NextColumn();
+        ImGui::Text("%f", native_handle->i); ImGui::NextColumn();
+        ImGui::Text("%f", native_handle->i_inv); ImGui::NextColumn();
+        ImGui::Text("%.2f, %.2f", native_handle->cog.x, native_handle->cog.y); ImGui::NextColumn();
+        ImGui::Text("%.2f, %.2f", native_handle->p.x, native_handle->p.y); ImGui::NextColumn();
+        ImGui::Text("%.2f, %.2f", native_handle->v.x, native_handle->v.y); ImGui::NextColumn();
+        ImGui::Text("%.2f, %.2f", native_handle->f.x, native_handle->f.y); ImGui::NextColumn();
+        ImGui::Text("%f", native_handle->a); ImGui::NextColumn();
+        ImGui::Text("%f", native_handle->w); ImGui::NextColumn();
+        ImGui::Text("%f", native_handle->t); ImGui::NextColumn();
+
+        //ImGui::SetColumnWidth(0, 60);
+        //ImGui::SetColumnWidth(1, 60);
+        //ImGui::SetColumnWidth(2, 100);
+        //ImGui::SetColumnWidth(4, 200);
+        //ImGui::SetColumnWidth(5, 170);
+
+    }
+    else
+    {
+        ImGui::TextDisabled("Invalid body id...");
+    }
+
+    ImGui::End();
 }
 
 mono::EventResult PhysicsDebugDrawer::OnMouseDown(const event::MouseDownEvent& event)
