@@ -2,6 +2,7 @@
 #include "PhysicsDebugDrawer.h"
 #include "PhysicsSystem.h"
 #include "PhysicsSpace.h"
+#include "IShape.h"
 #include "Math/Quad.h"
 #include "Rendering/Color.h"
 #include "Rendering/IRenderer.h"
@@ -256,52 +257,101 @@ math::Quad PhysicsDebugDrawer::BoundingBox() const
 
 void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
 {
+    ImGui::SetNextWindowSize(ImVec2(1000, 200));
     const bool window_open = ImGui::Begin("Body Introspection");
     if(!window_open)
         return;
 
-    ImGui::Text("HElloasdasd");
     ImGui::InputInt("Body Id", &m_body_id);
+    ImGui::Separator();
+    ImGui::Spacing();
 
     const bool valid_body_id = m_physics_system->IsAllocated(m_body_id);
     if(valid_body_id)
     {
-        mono::IBody* body = m_physics_system->GetBody(m_body_id);
+        const mono::IBody* body = m_physics_system->GetBody(m_body_id);
+        const mono::BodyType body_type = body->GetType();
+
+        const char* type_string = nullptr;
+
+        if(body_type == mono::BodyType::DYNAMIC)
+            type_string = "Dynamic";
+        else if(body_type == mono::BodyType::KINEMATIC)
+            type_string = "Kinematic";
+        else if(body_type == mono::BodyType::STATIC)
+            type_string = "Static";
+
         cpBody* native_handle = body->Handle();
 
-        ImGui::Columns(11, "body_data");
+        ImGui::TextDisabled("BODY");
+
+        const bool table_success = ImGui::BeginTable("body_table", 12, ImGuiTableFlags_BordersInnerV);
+        if(table_success)
+        {
+            ImGui::TableSetupColumn("Type");
+            ImGui::TableSetupColumn("Mass");
+            ImGui::TableSetupColumn("Mass_I");
+            ImGui::TableSetupColumn("Inertia");
+            ImGui::TableSetupColumn("Inertia_I");
+            ImGui::TableSetupColumn("COG");
+            ImGui::TableSetupColumn("Position");
+            ImGui::TableSetupColumn("Velocity");
+            ImGui::TableSetupColumn("Force");
+            ImGui::TableSetupColumn("Angle");
+            ImGui::TableSetupColumn("Angular V");
+            ImGui::TableSetupColumn("Torque");
+            ImGui::TableHeadersRow();
+
+            ImGui::TableNextRow();
+
+            ImGui::TableNextColumn(); ImGui::Text("%s", type_string);
+            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->m);
+            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->m_inv);
+            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->i);
+            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->i_inv);
+            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->cog.x, native_handle->cog.y);
+            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->p.x, native_handle->p.y);
+            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->v.x, native_handle->v.y);
+            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->f.x, native_handle->f.y);
+            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->a);
+            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->w);
+            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->t);
+
+            ImGui::EndTable();
+
+        }
+
+        ImGui::Spacing();
         ImGui::Separator();
-        ImGui::Text("Mass"); ImGui::NextColumn();
-        ImGui::Text("Mass_I"); ImGui::NextColumn();
-        ImGui::Text("Inertia"); ImGui::NextColumn();
-        ImGui::Text("Inertia_I"); ImGui::NextColumn();
-        ImGui::Text("COG"); ImGui::NextColumn();
-        ImGui::Text("Position"); ImGui::NextColumn();
-        ImGui::Text("Velocity"); ImGui::NextColumn();
-        ImGui::Text("Force"); ImGui::NextColumn();
-        ImGui::Text("Angle"); ImGui::NextColumn();
-        ImGui::Text("Angular V"); ImGui::NextColumn();
-        ImGui::Text("Torque"); ImGui::NextColumn();
+        ImGui::Spacing();
+
+        ImGui::TextDisabled("SHAPES");
+
+        const bool shapes_table_success = ImGui::BeginTable("shapes_table", 3, ImGuiTableFlags_BordersInnerV);
+        if(shapes_table_success)
+        {
+            ImGui::TableSetupColumn("Sensor");
+            ImGui::TableSetupColumn("E");
+            ImGui::TableSetupColumn("U");
+            ImGui::TableHeadersRow();
+
+            const std::vector<mono::IShape*>& shapes = m_physics_system->GetShapesAttachedToBody(m_body_id);
+            for(size_t index = 0; index < shapes.size(); ++index)
+            {
+                const mono::IShape* shape = shapes[index];
+                const cpShape* native_handle = shape->Handle();
+
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn(); ImGui::Text("%s", native_handle->sensor ? "Yes" : "No");
+                ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->e);
+                ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->u);
+            }
+
+            ImGui::EndTable();
+        }
+
+        ImGui::Spacing();
         ImGui::Separator();
-
-        ImGui::Text("%f", native_handle->m); ImGui::NextColumn();
-        ImGui::Text("%f", native_handle->m_inv); ImGui::NextColumn();
-        ImGui::Text("%f", native_handle->i); ImGui::NextColumn();
-        ImGui::Text("%f", native_handle->i_inv); ImGui::NextColumn();
-        ImGui::Text("%.2f, %.2f", native_handle->cog.x, native_handle->cog.y); ImGui::NextColumn();
-        ImGui::Text("%.2f, %.2f", native_handle->p.x, native_handle->p.y); ImGui::NextColumn();
-        ImGui::Text("%.2f, %.2f", native_handle->v.x, native_handle->v.y); ImGui::NextColumn();
-        ImGui::Text("%.2f, %.2f", native_handle->f.x, native_handle->f.y); ImGui::NextColumn();
-        ImGui::Text("%f", native_handle->a); ImGui::NextColumn();
-        ImGui::Text("%f", native_handle->w); ImGui::NextColumn();
-        ImGui::Text("%f", native_handle->t); ImGui::NextColumn();
-
-        //ImGui::SetColumnWidth(0, 60);
-        //ImGui::SetColumnWidth(1, 60);
-        //ImGui::SetColumnWidth(2, 100);
-        //ImGui::SetColumnWidth(4, 200);
-        //ImGui::SetColumnWidth(5, 170);
-
     }
     else
     {

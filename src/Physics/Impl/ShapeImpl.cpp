@@ -78,7 +78,7 @@ void ShapeImpl::ClearCollisionBit(uint32_t collision_category)
     cpShapeSetFilter(m_shape, filter);
 }
 
-cpShape* ShapeImpl::Handle() 
+cpShape* ShapeImpl::Handle() const
 {
     return m_shape;
 }

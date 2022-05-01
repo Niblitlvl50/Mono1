@@ -35,6 +35,6 @@ namespace mono
         virtual void ClearCollisionBit(uint32_t collision_category) = 0;
 
         //! Native chipmunk handle
-        virtual cpShape* Handle() = 0;
+        virtual cpShape* Handle() const = 0;
     };
 }

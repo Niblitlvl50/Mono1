@@ -25,7 +25,7 @@ namespace cm
         void SetCollisionBit(uint32_t collision_category) override;
         void ClearCollisionBit(uint32_t collision_category) override;
 
-        cpShape* Handle() override;
+        cpShape* Handle() const override;
 
     private:
         
