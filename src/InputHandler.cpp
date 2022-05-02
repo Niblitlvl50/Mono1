@@ -3,7 +3,6 @@
 #include "EventHandler/EventHandler.h"
 
 #include "Events/QuitEvent.h"
-#include "Events/PauseEvent.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/SurfaceChangedEvent.h"
 #include "Events/ActivatedEvent.h"

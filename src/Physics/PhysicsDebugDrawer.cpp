@@ -311,7 +311,7 @@ void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
             ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->i_inv);
             ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->cog.x, native_handle->cog.y);
             ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->p.x, native_handle->p.y);
-            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->v.x, native_handle->v.y);
+            ImGui::TableNextColumn(); ImGui::Text("%.2f (%.2f, %.2f)", cpvlength(native_handle->v), native_handle->v.x, native_handle->v.y);
             ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->f.x, native_handle->f.y);
             ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->a);
             ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->w);
