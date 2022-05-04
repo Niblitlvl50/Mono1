@@ -257,7 +257,7 @@ math::Quad PhysicsDebugDrawer::BoundingBox() const
 
 void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
 {
-    ImGui::SetNextWindowSize(ImVec2(1000, 200));
+    ImGui::SetNextWindowSize(ImVec2(1100, 200));
     const bool window_open = ImGui::Begin("Body Introspection");
     if(!window_open)
         return;
@@ -285,7 +285,7 @@ void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
 
         ImGui::TextDisabled("BODY");
 
-        const bool table_success = ImGui::BeginTable("body_table", 12, ImGuiTableFlags_BordersInnerV);
+        const bool table_success = ImGui::BeginTable("body_table", 13, ImGuiTableFlags_BordersInnerV);
         if(table_success)
         {
             ImGui::TableSetupColumn("Type");
@@ -300,6 +300,7 @@ void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
             ImGui::TableSetupColumn("Angle");
             ImGui::TableSetupColumn("Angular V");
             ImGui::TableSetupColumn("Torque");
+            ImGui::TableSetupColumn("Velocity Bias");
             ImGui::TableHeadersRow();
 
             ImGui::TableNextRow();
@@ -316,9 +317,9 @@ void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
             ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->a);
             ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->w);
             ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->t);
+            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->v_bias.x, native_handle->v_bias.y);
 
             ImGui::EndTable();
-
         }
 
         ImGui::Spacing();
@@ -331,8 +332,8 @@ void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
         if(shapes_table_success)
         {
             ImGui::TableSetupColumn("Sensor");
-            ImGui::TableSetupColumn("E");
-            ImGui::TableSetupColumn("U");
+            ImGui::TableSetupColumn("Mass");
+            ImGui::TableSetupColumn("Inertia");
             ImGui::TableHeadersRow();
 
             const std::vector<mono::IShape*>& shapes = m_physics_system->GetShapesAttachedToBody(m_body_id);
@@ -343,8 +344,8 @@ void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
 
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn(); ImGui::Text("%s", native_handle->sensor ? "Yes" : "No");
-                ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->e);
-                ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->u);
+                ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->massInfo.m);
+                ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->massInfo.i);
             }
 
             ImGui::EndTable();
