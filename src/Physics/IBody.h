@@ -17,6 +17,12 @@ namespace mono
         STATIC
     };
 
+    constexpr const char* g_body_types[] = {
+        "Dynamic",
+        "Kinetic",
+        "Static"
+    };
+
     enum class CollisionResolve
     {
         NORMAL,

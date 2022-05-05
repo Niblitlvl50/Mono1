@@ -172,6 +172,7 @@ namespace mono
         void SetEmitterPosition(ParticleEmitterComponent* emitter, const math::Vector& position);
         void SetGeneratorProperties(ParticleEmitterComponent* emitter, const ParticleGeneratorProperties& generator_properties);
         void RestartEmitter(ParticleEmitterComponent* emitter);
+        bool IsEmitterFinished(const ParticleEmitterComponent* emitter) const;
         const std::vector<ParticleEmitterComponent*>& GetAttachedEmitters(uint32_t pool_id) const;
 
         template<typename T>

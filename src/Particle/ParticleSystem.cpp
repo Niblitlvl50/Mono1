@@ -35,14 +35,6 @@ namespace
         }
     }
 
-    bool IsDone(const ParticleEmitterComponent& emitter_component)
-    {
-        if(emitter_component.type == mono::EmitterType::BURST || emitter_component.type == mono::EmitterType::BURST_REMOVE_ON_FINISH)
-            return emitter_component.burst_emitted;
-
-        return (emitter_component.duration > 0.0f && emitter_component.elapsed_time > emitter_component.duration);
-    }
-
     mono::ParticlePoolComponentView MakeViewFromPool(mono::ParticlePoolComponent& particle_pool, uint32_t index)
     {
         return {
@@ -168,7 +160,7 @@ void ParticleSystem::Sync()
 
 void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePoolComponent& particle_pool, uint32_t pool_id, const mono::UpdateContext& update_context)
 {
-    if(IsDone(*emitter))
+    if(IsEmitterFinished(emitter))
     {
         if(emitter->type == EmitterType::BURST_REMOVE_ON_FINISH)
             m_deferred_release_emitter.push_back({pool_id, emitter});
@@ -374,6 +366,15 @@ void ParticleSystem::RestartEmitter(ParticleEmitterComponent* emitter)
     emitter->elapsed_time = 0.0f;
     emitter->carry_over = 0.0f;
     emitter->burst_emitted = false;
+}
+
+bool ParticleSystem::IsEmitterFinished(const ParticleEmitterComponent* emitter) const
+{
+    const bool is_burst = (emitter->type == EmitterType::BURST || emitter->type == EmitterType::BURST_REMOVE_ON_FINISH);
+    if(is_burst && emitter->burst_emitted)
+        return true;
+
+    return (emitter->duration > 0.0f && emitter->elapsed_time >= emitter->duration);
 }
 
 const std::vector<ParticleEmitterComponent*>& ParticleSystem::GetAttachedEmitters(uint32_t pool_id) const
