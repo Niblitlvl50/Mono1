@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "MonoFwd.h"
 #include "Events/EventFwd.h"
 #include "EventHandler/EventToken.h"
 
@@ -12,9 +13,6 @@
 
 namespace mono
 {
-    class PhysicsSystem;
-    class EventHandler;
-
     enum PhysicsDebugComponents
     {
         NONE = 0,
