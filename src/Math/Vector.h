@@ -45,6 +45,9 @@ namespace math
     float LengthSquared(const Vector& vector);
 
     float Dot(const Vector& first, const Vector& second);
+
+    // Cross 2d vector will give a positive or negative value depending on
+    // which side of the vector it is. 
     float Cross(const Vector& first, const Vector& second);
 
     Vector RotateAround(const Vector& origin, const Vector& target, float radians);
