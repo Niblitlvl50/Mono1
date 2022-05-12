@@ -23,7 +23,7 @@
 //#define CUTE_SOUND_FORCE_SDL
 #define CUTE_SOUND_IMPLEMENTATION
 
-//#include "stb/stb_vorbis.c"
+#include "stb/stb_vorbis.c"
 #include "cute_headers/cute_sound.h"
 
 
@@ -158,21 +158,13 @@ audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback 
 
     const bool is_wave = file::IsExtension(file_name, "wav");
     if(is_wave)
-    {
         loaded_sound->sound = cs_load_wav(file_name);
-    }
-    else
-    {
-        System::Log("Audio|Ogg Vorgis is disabled for now...");
-
-        //const bool is_ogg = file::IsExtension(file_name, "ogg");
-        //if(is_ogg)
-        //    loaded_sound->sound = cs_load_ogg(file_name);
-    }
+    else if(file::IsExtension(file_name, "ogg"))
+        loaded_sound->sound = cs_load_ogg(file_name);
 
     if(loaded_sound->sound.channels[0] == nullptr)
     {
-        System::Log("Audio|Unable to load wav file '%s' ['%s'].", cs_error_reason, file_name);
+        System::Log("Audio|Unable to load audio file '%s' ['%s'].", cs_error_reason, file_name);
         return CreateNullSound();
     }
 
