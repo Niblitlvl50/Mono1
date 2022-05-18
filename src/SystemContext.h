@@ -71,6 +71,12 @@ namespace mono
             }
         }
 
+        inline void Reset()
+        {
+            for(IGameSystem* game_system : m_systems)
+                game_system->Reset();
+        }
+
     private:
         std::vector<IGameSystem*> m_systems;
     };

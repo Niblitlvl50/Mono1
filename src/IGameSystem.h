@@ -15,5 +15,6 @@ namespace mono
         virtual const char* Name() const = 0;
         virtual void Destroy() { }
         virtual void Sync() { }
+        virtual void Reset() { }
     };
 }
