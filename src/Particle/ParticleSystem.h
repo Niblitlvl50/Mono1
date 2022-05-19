@@ -16,11 +16,21 @@
 
 namespace mono
 {
-    enum class ParticleTransformSpace
+    enum class ParticleTransformSpace : int
     {
         WORLD,
         LOCAL
     };
+
+    constexpr const char* particle_transform_space_strings[] = {
+        "World",
+        "Local",
+    };
+
+    inline const char* ParticleTransformSpaceToString(ParticleTransformSpace transform_space)
+    {
+        return particle_transform_space_strings[static_cast<int>(transform_space)];
+    }
 
     struct ParticleDrawerComponent
     {

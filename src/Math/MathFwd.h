@@ -10,4 +10,5 @@ namespace math
     struct Point;
     struct Matrix;
     struct Interval;
+    struct ValueSpread;
 }

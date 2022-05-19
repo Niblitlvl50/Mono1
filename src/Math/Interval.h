@@ -14,7 +14,7 @@ namespace math
         { }
 
         float min = 0.0f;
-        float max = 1.0f;
+        float max = 0.0f;
     };
 
     float Interpolate(const Interval& interval, float t);
