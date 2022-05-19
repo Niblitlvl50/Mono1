@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "MonoFwd.h"
 #include "ParticleFwd.h"
 #include "IGameSystem.h"
 #include "Rendering/BlendMode.h"
@@ -137,7 +138,7 @@ namespace mono
     {
     public:
 
-        ParticleSystem(uint32_t count, uint32_t n_emitters);
+        ParticleSystem(uint32_t count, uint32_t n_emitters, const mono::TransformSystem* transform_system);
         ~ParticleSystem();
 
         uint32_t Id() const override;
@@ -201,7 +202,13 @@ namespace mono
     private:
 
         void UpdateEmitter(
-            ParticleEmitterComponent* emitter, ParticlePoolComponent& particle_pool, uint32_t pool_id, const mono::UpdateContext& update_context);
+            uint32_t index,
+            ParticleEmitterComponent* emitter,
+            ParticlePoolComponent& particle_pool,
+            ParticleTransformSpace transform_space,
+            const mono::UpdateContext& update_context);
+
+        const mono::TransformSystem* m_transform_system;
 
         std::vector<ParticlePoolComponent> m_particle_pools;
         std::vector<ParticleDrawerComponent> m_particle_drawers;

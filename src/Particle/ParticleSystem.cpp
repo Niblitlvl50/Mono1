@@ -4,6 +4,7 @@
 #include "Rendering/Texture/ITextureFactory.h"
 #include "Rendering/RenderSystem.h"
 #include "System/Hash.h"
+#include "TransformSystem/TransformSystem.h"
 #include "Util/Algorithm.h"
 #include "Util/Random.h"
 
@@ -92,8 +93,9 @@ void mono::DefaultUpdater(ParticlePoolComponentView& component_view, float delta
 }
 
 
-ParticleSystem::ParticleSystem(uint32_t count, uint32_t n_emitters)
-    : m_particle_pools(count)
+ParticleSystem::ParticleSystem(uint32_t count, uint32_t n_emitters, const mono::TransformSystem* transform_system)
+    : m_transform_system(transform_system)
+    , m_particle_pools(count)
     , m_particle_drawers(count)
     , m_active_pools(count, false)
     , m_particle_emitters(n_emitters)
@@ -122,10 +124,22 @@ void ParticleSystem::Update(const mono::UpdateContext& update_context)
             continue;
 
         ParticlePoolComponent& pool_component = m_particle_pools[active_pool_index];
+        const ParticleDrawerComponent& drawer_component = m_particle_drawers[active_pool_index];
 
         std::vector<ParticleEmitterComponent*>& pool_emitters = m_particle_pools_emitters[active_pool_index];
         for(ParticleEmitterComponent* emitter : pool_emitters)
-            UpdateEmitter(emitter, pool_component, active_pool_index, update_context);
+        {
+            const bool emitter_finished = IsEmitterFinished(emitter);
+            if(emitter_finished)
+            {
+                if(emitter->type == EmitterType::BURST_REMOVE_ON_FINISH)
+                    m_deferred_release_emitter.push_back({active_pool_index, emitter});
+            }
+            else
+            {
+                UpdateEmitter(active_pool_index, emitter, pool_component, drawer_component.transform_space, update_context);
+            }
+        }
 
         for(uint32_t index = 0; index < pool_component.count_alive; ++index)
         {
@@ -158,14 +172,16 @@ void ParticleSystem::Sync()
     m_deferred_release_emitter.clear();
 }
 
-void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePoolComponent& particle_pool, uint32_t pool_id, const mono::UpdateContext& update_context)
+void ParticleSystem::UpdateEmitter(
+    uint32_t index,
+    ParticleEmitterComponent* emitter,
+    ParticlePoolComponent& particle_pool,
+    ParticleTransformSpace transform_space,
+    const mono::UpdateContext& update_context)
 {
-    if(IsEmitterFinished(emitter))
-    {
-        if(emitter->type == EmitterType::BURST_REMOVE_ON_FINISH)
-            m_deferred_release_emitter.push_back({pool_id, emitter});
-        return;
-    }
+    const math::Vector world_position = m_transform_system->GetWorldPosition(index);
+    const math::Vector emitter_position =
+        (transform_space == ParticleTransformSpace::LOCAL) ? emitter->position : world_position;
 
     emitter->elapsed_time += update_context.delta_s;
 
@@ -189,7 +205,7 @@ void ParticleSystem::UpdateEmitter(ParticleEmitterComponent* emitter, ParticlePo
     for(uint32_t index = start_index; index < end_index; ++index)
     {
         ParticlePoolComponentView view = MakeViewFromPool(particle_pool, index);
-        emitter->generator(emitter->position, view);
+        emitter->generator(emitter_position, view);
     }
 
     for(uint32_t index = start_index; index < end_index; ++index)
