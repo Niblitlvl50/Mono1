@@ -281,7 +281,7 @@ void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
         else if(body_type == mono::BodyType::STATIC)
             type_string = "Static";
 
-        cpBody* native_handle = body->Handle();
+        cpBody* body_native_handle = body->Handle();
 
         ImGui::TextDisabled("BODY");
 
@@ -306,18 +306,18 @@ void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
             ImGui::TableNextRow();
 
             ImGui::TableNextColumn(); ImGui::Text("%s", type_string);
-            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->m);
-            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->m_inv);
-            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->i);
-            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->i_inv);
-            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->cog.x, native_handle->cog.y);
-            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->p.x, native_handle->p.y);
-            ImGui::TableNextColumn(); ImGui::Text("%.2f (%.2f, %.2f)", cpvlength(native_handle->v), native_handle->v.x, native_handle->v.y);
-            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->f.x, native_handle->f.y);
-            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->a);
-            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->w);
-            ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->t);
-            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", native_handle->v_bias.x, native_handle->v_bias.y);
+            ImGui::TableNextColumn(); ImGui::Text("%f", body_native_handle->m);
+            ImGui::TableNextColumn(); ImGui::Text("%f", body_native_handle->m_inv);
+            ImGui::TableNextColumn(); ImGui::Text("%f", body_native_handle->i);
+            ImGui::TableNextColumn(); ImGui::Text("%f", body_native_handle->i_inv);
+            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", body_native_handle->cog.x, body_native_handle->cog.y);
+            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", body_native_handle->p.x, body_native_handle->p.y);
+            ImGui::TableNextColumn(); ImGui::Text("%.2f (%.2f, %.2f)", cpvlength(body_native_handle->v), body_native_handle->v.x, body_native_handle->v.y);
+            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", body_native_handle->f.x, body_native_handle->f.y);
+            ImGui::TableNextColumn(); ImGui::Text("%f", body_native_handle->a);
+            ImGui::TableNextColumn(); ImGui::Text("%f", body_native_handle->w);
+            ImGui::TableNextColumn(); ImGui::Text("%f", body_native_handle->t);
+            ImGui::TableNextColumn(); ImGui::Text("%.2f, %.2f", body_native_handle->v_bias.x, body_native_handle->v_bias.y);
 
             ImGui::EndTable();
         }
@@ -340,12 +340,12 @@ void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
             for(size_t index = 0; index < shapes.size(); ++index)
             {
                 const mono::IShape* shape = shapes[index];
-                const cpShape* native_handle = shape->Handle();
+                const cpShape* shape_native_handle = shape->Handle();
 
                 ImGui::TableNextRow();
-                ImGui::TableNextColumn(); ImGui::Text("%s", native_handle->sensor ? "Yes" : "No");
-                ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->massInfo.m);
-                ImGui::TableNextColumn(); ImGui::Text("%f", native_handle->massInfo.i);
+                ImGui::TableNextColumn(); ImGui::Text("%s", shape_native_handle->sensor ? "Yes" : "No");
+                ImGui::TableNextColumn(); ImGui::Text("%f", shape_native_handle->massInfo.m);
+                ImGui::TableNextColumn(); ImGui::Text("%f", shape_native_handle->massInfo.i);
             }
 
             ImGui::EndTable();
