@@ -116,6 +116,14 @@ float math::AngleFromVector(const math::Vector& normal)
 
 math::Vector math::CentroidOfPolygon(const std::vector<math::Vector>& points)
 {
+    // Special cases for 0, 1 and 2 points, not technically a polygon but whatever.
+    if(points.empty())
+        return math::ZeroVec;
+    else if(points.size() == 1)
+        return points.front();
+    else if(points.size() == 2)
+        return (points[0] + ((points[1] - points[0]) / 2.0f));
+
     math::Vector centroid;
     float area = 0.0f;
 
