@@ -145,8 +145,8 @@ namespace System
 
     enum TimerProperties
     {
-        TP_NONE = 0,
-        ONE_SHOT = ENUM_BIT(0),
+        TP_NONE     = 0,
+        ONE_SHOT    = ENUM_BIT(0),
         AUTO_DELETE = ENUM_BIT(1)
     };
 
@@ -158,10 +158,10 @@ namespace System
 
     enum WindowOptions
     {
-        NONE = 0,
-        FULLSCREEN = 1,
-        DISABLE_VSYNC = 2,
-        BORDERLESS = 4,
+        NONE            = 0,
+        FULLSCREEN      = ENUM_BIT(0),
+        DISABLE_VSYNC   = ENUM_BIT(1),
+        BORDERLESS      = ENUM_BIT(2),
     };
 
     // Creates a opengl window

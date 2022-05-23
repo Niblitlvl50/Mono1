@@ -120,5 +120,7 @@ namespace mono
         constexpr mono::Color::RGBA BLUE        = mono::Color::RGBA(0.0f, 0.0f, 1.0f);
         constexpr mono::Color::RGBA MAGENTA     = mono::Color::RGBA(1.0f, 0.0f, 1.0f);
         constexpr mono::Color::RGBA CYAN        = mono::Color::RGBA(0.0f, 1.0f, 1.0f);
+        constexpr mono::Color::RGBA YELLOW      = mono::Color::RGBA(1.0f, 1.0f, 0.0f);
+        constexpr mono::Color::RGBA SUNFLOWER   = mono::Color::RGBA(1.0f, 0.85f, 0.01f);
     }
 }
