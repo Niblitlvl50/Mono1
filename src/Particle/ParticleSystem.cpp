@@ -173,13 +173,13 @@ void ParticleSystem::Sync()
 }
 
 void ParticleSystem::UpdateEmitter(
-    uint32_t index,
+    uint32_t entity_id,
     ParticleEmitterComponent* emitter,
     ParticlePoolComponent& particle_pool,
     ParticleTransformSpace transform_space,
     const mono::UpdateContext& update_context)
 {
-    const math::Vector world_position = m_transform_system->GetWorldPosition(index);
+    const math::Vector world_position = m_transform_system->GetWorldPosition(entity_id);
     const math::Vector emitter_position =
         (transform_space == ParticleTransformSpace::LOCAL) ? emitter->position : world_position;
 

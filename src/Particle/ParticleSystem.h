@@ -202,7 +202,7 @@ namespace mono
     private:
 
         void UpdateEmitter(
-            uint32_t index,
+            uint32_t entity_id,
             ParticleEmitterComponent* emitter,
             ParticlePoolComponent& particle_pool,
             ParticleTransformSpace transform_space,
