@@ -53,16 +53,15 @@ namespace
 
             if(fade_corners != 0)
             {
-                float unit_length = length(vec2(1.0, 1.0));
-                float length = length(v_vertex_coord);
-                float length_diff = unit_length - length;
-
-                float alpha = 1.0;
-                if(length > 1.0)
+                float vertex_length = length(v_vertex_coord);
+                if(vertex_length >= 1.0)
                 {
+                    float unit_length = length(vec2(1.0, 1.0));
+                    float length_diff = unit_length - vertex_length;
                     float range = unit_length - 1.0;
-                    alpha = length_diff / range;
-                    color = mix(vec4(0.0, 0.0, 0.0, 1.0), color, vec4(alpha));
+                    float alpha = length_diff / range;
+
+                    color = mix(vec4(0.0, 0.0, 0.0, 0.0), color, alpha);
                 }
             }
 
