@@ -102,17 +102,16 @@ int Engine::Run(IZone* zone)
         const uint32_t delta_ms = std::clamp(uint32_t((before_time - last_time) * m_time_scale), 1u, std::numeric_limits<uint32_t>::max());
         update_context.timestamp += delta_ms;
 
-        const System::Size& size = m_window->Size();
+        const System::Size size = m_window->Size();
+        const System::Size drawable_size = m_window->DrawableSize();
         const math::Vector window_size(size.width, size.height);
+
         m_camera->SetWindowSize(window_size);
 
-        const System::Size drawable_size = m_window->DrawableSize();
-        const math::Vector drawable_size_vec(drawable_size.width, drawable_size.height);
         renderer.SetWindowSize(window_size);
-        renderer.SetDrawableSize(drawable_size_vec);
-
-        const math::Quad& viewport = m_camera->GetViewport();
-        renderer.SetViewport(viewport);
+        renderer.SetDrawableSize(math::Vector(drawable_size.width, drawable_size.height));
+        renderer.SetViewport(m_camera->GetViewport());
+        renderer.SetFullscreen(m_window->Options() & System::WindowOptions::FULLSCREEN);
 
         // Handle input events
         System::ProcessSystemEvents(&input_handler);

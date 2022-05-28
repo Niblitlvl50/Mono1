@@ -27,6 +27,7 @@ namespace mono
         void SetWindowSize(const math::Vector& window_size);
         void SetDrawableSize(const math::Vector& drawable_size);
         void SetViewport(const math::Quad& viewport);
+        void SetFullscreen(bool is_fullscreen);
         void SetDeltaAndTimestamp(uint32_t delta_ms, float delta_s, uint32_t timestamp);
 
         void DrawFrame();
@@ -163,6 +164,7 @@ namespace mono
         math::Vector m_window_size;
         math::Vector m_drawable_size;
         math::Quad m_viewport;
+        bool m_is_fullscreen;
 
         mono::Color::RGBA m_clear_color;
         mono::Color::RGBA m_ambient_shade;
