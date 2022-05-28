@@ -26,7 +26,7 @@ namespace
     {
     public:
         MocWindow(mono::EventHandler& handler)
-            : mHandler(handler)
+            : m_event_handler(handler)
         {
             m_position.x = 0;
             m_position.y = 0;
@@ -41,12 +41,12 @@ namespace
         { }
         void SwapBuffers() const override
         {
-            mSwapBuffersCalled = true;
-            mHandler.DispatchEvent(event::QuitEvent());
+            m_swap_buffers_called = true;
+            m_event_handler.DispatchEvent(event::QuitEvent());
         }
         void MakeCurrent() override
         {
-            mMakeCurrentCalled = true;
+            m_make_current_called = true;
         }
         System::Position Position() const override
         {
@@ -60,13 +60,17 @@ namespace
         {
             return m_size;
         }
+        System::WindowOptions Options() const override
+        {
+            return System::WindowOptions(0);
+        }
 
-        mono::EventHandler& mHandler;
+        mono::EventHandler& m_event_handler;
         System::Position m_position;
         System::Size m_size;
 
-        bool mMakeCurrentCalled = false;
-        mutable bool mSwapBuffersCalled = false;
+        bool m_make_current_called = false;
+        mutable bool m_swap_buffers_called = false;
     };
 
     struct MocZone : mono::IZone
@@ -75,17 +79,17 @@ namespace
         { }
         void Accept(mono::IRenderer& renderer) override
         {
-            mAcceptCalled = true;
+            m_accept_called = true;
         }
         void Accept(mono::IUpdater& updater) override
         { }
         void OnLoad(mono::ICamera* camera, mono::IRenderer* renderer) override
         {
-            mOnLoadCalled = true;
+            m_on_load_called = true;
         }
         int OnUnload() override
         {
-            mOnUnloadCalled = true;
+            m_on_unload_called = true;
             return 0;
         }
         void PostUpdate() override
@@ -103,9 +107,9 @@ namespace
         void SetLastLightingLayer(int layer) override
         { }
 
-        bool mAcceptCalled = false;
-        bool mOnLoadCalled = false;
-        bool mOnUnloadCalled = false;
+        bool m_accept_called = false;
+        bool m_on_load_called = false;
+        bool m_on_unload_called = false;
     };
 
     class NullTexture : public mono::ITexture
@@ -167,11 +171,11 @@ TEST(EngineTest, DISABLED_Basic)
         EXPECT_NO_THROW(engine.Run(&zone));
     }
 
-    EXPECT_TRUE(window.mMakeCurrentCalled);
-    EXPECT_TRUE(window.mSwapBuffersCalled);
+    EXPECT_TRUE(window.m_make_current_called);
+    EXPECT_TRUE(window.m_swap_buffers_called);
 
-    EXPECT_TRUE(zone.mAcceptCalled);
-    EXPECT_TRUE(zone.mOnLoadCalled);
-    EXPECT_TRUE(zone.mOnUnloadCalled);
+    EXPECT_TRUE(zone.m_accept_called);
+    EXPECT_TRUE(zone.m_on_load_called);
+    EXPECT_TRUE(zone.m_on_unload_called);
 }
 

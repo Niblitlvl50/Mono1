@@ -42,6 +42,7 @@ namespace
     public:
 
         SDLWindow(const char* title, int x, int y, int width, int height, System::WindowOptions options)
+            : m_window_options(options)
         {
             // Request opengl 2.1 context.
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -57,6 +58,7 @@ namespace
                 SDL_WINDOW_OPENGL |
                 SDL_WINDOW_RESIZABLE |
                 SDL_WINDOW_ALLOW_HIGHDPI |
+                (options & System::WindowOptions::FULLSCREEN ? SDL_WINDOW_FULLSCREEN : 0) |
                 (options & System::WindowOptions::BORDERLESS ? SDL_WINDOW_BORDERLESS : 0);
 
             // Create our window centered and with the given resolution
@@ -129,6 +131,12 @@ namespace
             return size;
         }
 
+        System::WindowOptions Options() const override
+        {
+            return m_window_options;
+        }
+
+        System::WindowOptions m_window_options;
         SDL_Window* m_window = nullptr;
         void* m_context = nullptr;
     };

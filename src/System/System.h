@@ -62,6 +62,14 @@ namespace System
         FACE_ANY        = FACE_BOTTOM | FACE_RIGHT | FACE_LEFT | FACE_TOP
     };
 
+    enum WindowOptions
+    {
+        NONE            = 0,
+        FULLSCREEN      = ENUM_BIT(0),
+        DISABLE_VSYNC   = ENUM_BIT(1),
+        BORDERLESS      = ENUM_BIT(2),
+    };
+
     class IWindow
     {
     public:
@@ -75,6 +83,7 @@ namespace System
         virtual System::Position Position() const = 0;
         virtual System::Size Size() const = 0;
         virtual System::Size DrawableSize() const = 0;
+        virtual System::WindowOptions Options() const = 0;
     };
 
     class IInputHandler
@@ -155,14 +164,6 @@ namespace System
 
     // Gets the devices window size
     Size GetCurrentWindowSize();
-
-    enum WindowOptions
-    {
-        NONE            = 0,
-        FULLSCREEN      = ENUM_BIT(0),
-        DISABLE_VSYNC   = ENUM_BIT(1),
-        BORDERLESS      = ENUM_BIT(2),
-    };
 
     // Creates a opengl window
     // The caller is responsible for deleting the pointer
