@@ -252,7 +252,7 @@ void RendererSokol::EndDraw()
         m_screen_indices.get(),
         m_offscreen_color_pass.offscreen_texture.get(),
         m_offscreen_light_pass.offscreen_texture.get());
-    ScreenPipeline::FadeCorners(true);
+    ScreenPipeline::FadeCorners(false);
     ScreenPipeline::InvertColors(false);
     ScreenPipeline::EnableLighting(m_lighting_enabled);
     ScreenPipeline::FadeScreenAlpha(m_screen_fade_alpha);

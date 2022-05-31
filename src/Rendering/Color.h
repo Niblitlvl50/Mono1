@@ -62,6 +62,7 @@ namespace mono
         };
 
         mono::Color::RGBA MakeFromBytes(byte red, byte green, byte blue, byte alpha = 255);
+        mono::Color::RGBA MakeWithAlpha(const mono::Color::RGBA& color, float alpha);
 
         //! Convert HSL to RGBA
         mono::Color::RGBA ToRGBA(const mono::Color::HSL& hsl, float alpha = 1.0f);

@@ -7,6 +7,11 @@ mono::Color::RGBA mono::Color::MakeFromBytes(byte red, byte green, byte blue, by
     return mono::Color::RGBA(float(red) / 255.0f, float(green) / 255.0f, float(blue) / 255.0f, float(alpha) / 255.0f);
 }
 
+mono::Color::RGBA mono::Color::MakeWithAlpha(const mono::Color::RGBA& color, float alpha)
+{
+    return mono::Color::RGBA(color.red, color.green, color.blue, alpha);
+}
+
 mono::Color::RGBA mono::Color::ToRGBA(const mono::Color::HSL& hsl, float alpha)
 {
     mono::Color::RGBA rgb;
