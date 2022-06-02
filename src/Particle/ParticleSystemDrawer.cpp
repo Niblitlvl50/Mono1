@@ -11,9 +11,11 @@
 
 using namespace mono;
 
-ParticleSystemDrawer::ParticleSystemDrawer(const mono::ParticleSystem* particle_system, const mono::TransformSystem* transform_system)
+ParticleSystemDrawer::ParticleSystemDrawer(
+    const mono::ParticleSystem* particle_system, const mono::TransformSystem* transform_system, mono::ParticleDrawLayer draw_layer)
     : m_particle_system(particle_system)
     , m_transform_system(transform_system)
+    , m_draw_layer(draw_layer)
 { }
 
 ParticleSystemDrawer::~ParticleSystemDrawer()
@@ -25,6 +27,9 @@ void ParticleSystemDrawer::Draw(mono::IRenderer& renderer) const
 
     const auto callback = [this, &renderer, &active_particles](uint32_t pool_index, const ParticlePoolComponent& pool, const ParticleDrawerComponent& drawer)
     {
+        if(drawer.draw_layer != m_draw_layer)
+            return;
+
         active_particles.push_back(pool_index);
 
         auto it = m_render_data.find(pool_index);

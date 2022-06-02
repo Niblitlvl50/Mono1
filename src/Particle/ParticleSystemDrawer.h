@@ -2,6 +2,7 @@
 #pragma once
 
 #include "MonoFwd.h"
+#include "ParticleSystemTypes.h"
 #include "Rendering/IDrawable.h"
 #include "Rendering/RenderFwd.h"
 
@@ -16,7 +17,10 @@ namespace mono
     {
     public:
 
-        ParticleSystemDrawer(const mono::ParticleSystem* particle_system, const mono::TransformSystem* transform_system);
+        ParticleSystemDrawer(
+            const mono::ParticleSystem* particle_system,
+            const mono::TransformSystem* transform_system,
+            mono::ParticleDrawLayer draw_layer);
         ~ParticleSystemDrawer();
 
         void Draw(mono::IRenderer& renderer) const override;
@@ -34,6 +38,7 @@ namespace mono
 
         const mono::ParticleSystem* m_particle_system;
         const mono::TransformSystem* m_transform_system;
+        const mono::ParticleDrawLayer m_draw_layer;
         mutable std::unordered_map<uint32_t, InternalRenderData> m_render_data;
         mutable std::vector<uint32_t> m_last_active_particles;
     };

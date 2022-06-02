@@ -3,6 +3,7 @@
 
 #include "MonoFwd.h"
 #include "ParticleFwd.h"
+#include "ParticleSystemTypes.h"
 #include "IGameSystem.h"
 #include "Rendering/BlendMode.h"
 #include "Rendering/Color.h"
@@ -17,46 +18,13 @@
 
 namespace mono
 {
-    enum class ParticleTransformSpace : int
-    {
-        WORLD,
-        LOCAL
-    };
-
-    constexpr const char* particle_transform_space_strings[] = {
-        "World",
-        "Local",
-    };
-
-    inline const char* ParticleTransformSpaceToString(ParticleTransformSpace transform_space)
-    {
-        return particle_transform_space_strings[static_cast<int>(transform_space)];
-    }
-
     struct ParticleDrawerComponent
     {
         mono::ITexturePtr texture;
         mono::BlendMode blend_mode;
+        ParticleDrawLayer draw_layer;
         ParticleTransformSpace transform_space;
     };
-
-    enum class EmitterType : int
-    {
-        CONTINOUS,
-        BURST,
-        BURST_REMOVE_ON_FINISH
-    };
-
-    constexpr const char* emitter_type_strings[] = {
-        "Continous",
-        "Burst",
-        "Burst, Remove on Finish",
-    };
-
-    inline const char* EmitterTypeToString(EmitterType emitter_type)
-    {
-        return emitter_type_strings[static_cast<int>(emitter_type)];
-    }
 
     struct ParticleGeneratorProperties
     {
@@ -154,12 +122,18 @@ namespace mono
             uint32_t pool_size,
             const char* texture_file,
             mono::BlendMode blend_mode,
+            ParticleDrawLayer draw_layer,
             ParticleTransformSpace transform_space,
             float particle_damping,
             ParticleUpdater update_function);
         ParticlePoolComponent* GetPool(uint32_t id);
 
-        void SetPoolDrawData(uint32_t pool_id, mono::ITexturePtr texture, mono::BlendMode blend_mode, ParticleTransformSpace transform_space);
+        void SetPoolDrawData(
+            uint32_t pool_id,
+            mono::ITexturePtr texture,
+            mono::BlendMode blend_mode,
+            ParticleDrawLayer draw_layer,
+            ParticleTransformSpace transform_space);
 
         // duration in seconds, negative value means infinite
         // emit_rate is n particles per second
