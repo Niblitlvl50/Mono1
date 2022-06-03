@@ -5,6 +5,7 @@ namespace math
 {
     //
     // http://gizma.com/easing/
+    // https://easings.net
     // A bunch of easing functions for movement.
     //
     // b: start value
