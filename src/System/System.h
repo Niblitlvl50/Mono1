@@ -149,6 +149,7 @@ namespace System
     using ProcLoadFunc = void* (*)(const char* name);
     ProcLoadFunc GetProcLoader();
     void GetApplicationPath(char* buffer, uint32_t buffer_size);
+    void GetUserPath(char* buffer, uint32_t buffer_size);
 
     void Sleep(uint32_t ms);
 

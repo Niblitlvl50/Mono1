@@ -522,6 +522,17 @@ void System::GetApplicationPath(char* buffer, uint32_t buffer_size)
     SDL_free(base_path);
 }
 
+void System::GetUserPath(char* buffer, uint32_t buffer_size)
+{
+    char* user_path = SDL_GetPrefPath("hello", "game");
+
+    const uint32_t str_length = std::strlen(user_path);
+    const uint32_t adjusted_buffer_size = std::min(str_length, buffer_size);
+    std::strncpy(buffer, user_path, adjusted_buffer_size);
+
+    SDL_free(user_path);
+}
+
 void System::Sleep(uint32_t ms)
 {
     SDL_Delay(ms);
