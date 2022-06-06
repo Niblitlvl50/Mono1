@@ -1,4 +1,8 @@
 
+//
+// https://theorangeduck.com/page/spring-roll-call#critical
+//
+
 #pragma once
 
 #include "Math/Vector.h"
@@ -18,6 +22,17 @@ namespace math
     inline float fast_negexp(float x)
     {
         return 1.0f / (1.0f + x + 0.48f * x * x + 0.235f * x * x * x);
+    }
+
+    inline void simple_spring_damper_implicit(float& x, float& v, float x_goal, float halflife, float dt)
+    {
+        float y = halflife_to_damping(halflife) / 2.0f;	
+        float j0 = x - x_goal;
+        float j1 = v + j0 * y;
+        float eydt = fast_negexp(y * dt);
+
+        x = eydt * (j0 + j1 * dt) + x_goal;
+        v = eydt * (v - j1 * y * dt);
     }
 
     inline void critical_spring_damper_implicit(float& x, float& v, float x_goal, float v_goal, float halflife, float dt)

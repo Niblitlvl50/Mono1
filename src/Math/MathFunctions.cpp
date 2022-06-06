@@ -101,7 +101,9 @@ math::Quad math::ResizeQuad(const math::Quad& quad, float value, float aspect)
 
 float math::AngleBetweenPoints(const math::Vector& first, const math::Vector& second)
 {
-    return std::atan2(second.y - first.y, second.x - first.x);
+    const float dot = first.x * second.x + first.y * second.y;
+    const float det = first.x * second.y - first.y * second.x;
+    return std::atan2(det, dot);
 }
 
 math::Vector math::VectorFromAngle(float radians)

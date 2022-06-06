@@ -194,6 +194,21 @@ TEST(MathTest, AngleFromVector)
     EXPECT_FLOAT_EQ(-math::PI_2(), east);
 }
 
+TEST(MathTest, AngleBetweenPoints)
+{
+    const float angle1 = math::AngleBetweenPoints(math::Vector(0.0f, 1.0f), math::Vector(1.0f, 0.0f));
+    EXPECT_FLOAT_EQ(-math::PI_2(), angle1);
+}
+
+TEST(MathTest, VectorToAndFromAngle)
+{
+    const float pi_2 = math::PI_2();
+    const math::Vector& pi_2_vector = math::VectorFromAngle(pi_2);
+    const float back_to_pi_2 = math::AngleFromVector(pi_2_vector);
+
+    EXPECT_FLOAT_EQ(pi_2, back_to_pi_2);
+}
+
 TEST(MathTest, VectorRotate)
 {
     math::Vector test = math::RotateAroundZero(math::Vector(0.0f, 1.0f), math::ToRadians(90));
