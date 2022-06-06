@@ -31,6 +31,7 @@ namespace
     SDL_Haptic* g_controller_haptic[System::ControllerId::N_Controllers];
 
     FILE* g_log_file = nullptr;
+    char* g_user_path = nullptr; 
 
     enum PredefinedUserEventCode
     {
@@ -451,8 +452,13 @@ void System::Initialize(const InitializeContext& context)
     SDL_version version;
     SDL_GetVersion(&version);
 
+    const char* org = context.organization ? context.organization : "Unknown Organization";
+    const char* app = context.application ? context.application : "Unknown Application";
+    g_user_path = SDL_GetPrefPath(org, app);
+
     Log("System");
     Log("\tSDL version: %u.%u.%u", version.major, version.minor, version.patch);
+    Log("\tuser directory: %s", g_user_path);
 
     const char* working_directory = context.working_directory;
     if(working_directory)
@@ -467,6 +473,9 @@ void System::Shutdown()
 {
     if(g_log_file)
         std::fclose(g_log_file);
+
+    if(g_user_path)
+        SDL_free(g_user_path);
 
     SDL_Quit();
 }
@@ -522,15 +531,9 @@ void System::GetApplicationPath(char* buffer, uint32_t buffer_size)
     SDL_free(base_path);
 }
 
-void System::GetUserPath(char* buffer, uint32_t buffer_size)
+const char* System::GetUserPath()
 {
-    char* user_path = SDL_GetPrefPath("hello", "game");
-
-    const uint32_t str_length = std::strlen(user_path);
-    const uint32_t adjusted_buffer_size = std::min(str_length, buffer_size);
-    std::strncpy(buffer, user_path, adjusted_buffer_size);
-
-    SDL_free(user_path);
+    return g_user_path;
 }
 
 void System::Sleep(uint32_t ms)
