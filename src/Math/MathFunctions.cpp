@@ -212,8 +212,10 @@ math::Vector math::MapVectorInQuad(const math::Vector& point, const math::Quad& 
 float math::NormalizeAngle(float radians)
 {
     radians = std::fmod(radians, math::PI() * 2.0f);
-    if(radians < 0.0f)
+    if(radians < -math::PI())
         radians += math::PI() * 2.0f;
+    else if(radians > math::PI())
+        radians -= math::PI() * 2.0f;
     return radians;
 }
 
