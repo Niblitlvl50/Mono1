@@ -488,12 +488,18 @@ mono::PhysicsSystemStats PhysicsSystem::GetStats() const
     stats.constraints = m_impl->constraints.Used();
     
     stats.circle_shapes = m_impl->circle_shape_pool.Used();
+    stats.circle_shapes_max = m_impl->circle_shape_pool.Size();
     stats.segment_shapes = m_impl->segment_shape_pool.Used();
+    stats.segment_shapes_max = m_impl->segment_shape_pool.Size();
     stats.polygon_shapes = m_impl->poly_shape_pool.Used();
+    stats.polygon_shapes_max = m_impl->poly_shape_pool.Size();
     
     stats.pivot_joints = m_impl->pivot_joint_pool.Used();
+    stats.pivot_joints_max = m_impl->pivot_joint_pool.Size();
     stats.gear_joints = m_impl->gear_joint_pool.Used();
+    stats.gear_joints_max = m_impl->gear_joint_pool.Size();
     stats.damped_springs = m_impl->damped_spring_pool.Used();
+    stats.damped_springs_max = m_impl->damped_spring_pool.Size();
 
     return stats;
 }

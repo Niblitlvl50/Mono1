@@ -111,12 +111,22 @@ namespace mono
         uint32_t constraints;
 
         uint32_t circle_shapes;
+        uint32_t circle_shapes_max;
+
         uint32_t segment_shapes;
+        uint32_t segment_shapes_max;
+
         uint32_t polygon_shapes;
+        uint32_t polygon_shapes_max;
 
         uint32_t pivot_joints;
+        uint32_t pivot_joints_max;
+
         uint32_t gear_joints;
+        uint32_t gear_joints_max;
+
         uint32_t damped_springs;
+        uint32_t damped_springs_max;
     };
 
     class TransformSystem;
