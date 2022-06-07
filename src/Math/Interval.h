@@ -23,6 +23,16 @@ namespace math
 
     struct ValueSpread
     {
+        ValueSpread()
+            : value(0.0f)
+            , spread(0.0f, 0.0f)
+        { }
+
+        ValueSpread(float value, float min, float max)
+            : value(value)
+            , spread(min, max)
+        { }
+
         float value;
         Interval spread;
     };
