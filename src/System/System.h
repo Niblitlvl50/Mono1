@@ -64,10 +64,11 @@ namespace System
 
     enum WindowOptions
     {
-        NONE            = 0,
-        FULLSCREEN      = ENUM_BIT(0),
-        DISABLE_VSYNC   = ENUM_BIT(1),
-        BORDERLESS      = ENUM_BIT(2),
+        NONE                = 0,
+        FULLSCREEN          = ENUM_BIT(0),
+        FULLSCREEN_DESKTOP  = ENUM_BIT(1),
+        DISABLE_VSYNC       = ENUM_BIT(2),
+        BORDERLESS          = ENUM_BIT(3),
     };
 
     class IWindow

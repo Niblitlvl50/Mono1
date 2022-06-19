@@ -104,21 +104,19 @@ void mono::InitializeRender(const RenderInitParams& init_params)
 
     // glEnable(GL_POINT_SMOOTH);
     // glEnable(GL_LINE_SMOOTH);
-    // const GLubyte* vendor = glGetString(GL_VENDOR);
-    // const GLubyte* renderer = glGetString(GL_RENDERER);
-    // const GLubyte* version = glGetString(GL_VERSION);
-    // const GLubyte* glslversion = glGetString(GL_SHADING_LANGUAGE_VERSION);
-    //const GLubyte* extensions = glGetString(GL_EXTENSIONS);
+
+    const System::Size window_size = g_window->Size();
+    const System::Size drawable_size = g_window->DrawableSize();
 
     System::Log("Render\n"
                 "\tpixels per meter: %f", init_params.pixels_per_meter);
-    //System::Log("OpenGL\n"
-    //            "\tvendor: %s\n"
-    //            "\trenderer: %s\n"
-    //            "\tversion: %s\n"
-    //            "\tglsl: %s", vendor, renderer, version, glslversion);
     System::Log("imgui\n"
                 "\tversion: %s", IMGUI_VERSION);
+    System::Log("Game Window\n"
+                "\twindow size w: %d h: %d\n"
+                "\tdrawable size w: %d h: %d",
+                window_size.width, window_size.height,
+                drawable_size.width, drawable_size.height);
 }
 
 void mono::ShutdownRender()

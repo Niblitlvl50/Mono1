@@ -45,7 +45,6 @@ namespace
         SDLWindow(const char* title, int x, int y, int width, int height, System::WindowOptions options)
             : m_window_options(options)
         {
-            // Request opengl 2.1 context.
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
             SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -60,6 +59,7 @@ namespace
                 SDL_WINDOW_RESIZABLE |
                 SDL_WINDOW_ALLOW_HIGHDPI |
                 (options & System::WindowOptions::FULLSCREEN ? SDL_WINDOW_FULLSCREEN : 0) |
+                (options & System::WindowOptions::FULLSCREEN_DESKTOP ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) |
                 (options & System::WindowOptions::BORDERLESS ? SDL_WINDOW_BORDERLESS : 0);
 
             // Create our window centered and with the given resolution
@@ -466,6 +466,21 @@ void System::Initialize(const InitializeContext& context)
         ChangeDirectory(working_directory);
         const std::string set_working_dir = GetWorkingDirectory();
         Log("\tresouce directory: %s", set_working_dir.c_str());
+    }
+
+    Log("Desktop Display Modes");
+    for(int index = 0; index < SDL_GetNumVideoDisplays(); ++index)
+    {
+        SDL_DisplayMode display_mode;
+        const int result = SDL_GetDesktopDisplayMode(index, &display_mode);
+        if(result == 0)
+        {
+            Log("\tw: %d h: %d bpp: %u hz: %d",
+                display_mode.w,
+                display_mode.h,
+                SDL_BITSPERPIXEL(display_mode.format),
+                display_mode.refresh_rate);
+        }
     }
 }
 
