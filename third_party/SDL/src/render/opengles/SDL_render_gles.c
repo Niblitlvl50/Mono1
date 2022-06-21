@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2021 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -603,7 +603,7 @@ GLES_QueueDrawLines(SDL_Renderer * renderer, SDL_RenderCommand *cmd, const SDL_F
 
 static int
 GLES_QueueGeometry(SDL_Renderer *renderer, SDL_RenderCommand *cmd, SDL_Texture *texture,
-        const float *xy, int xy_stride, const int *color, int color_stride, const float *uv, int uv_stride,
+        const float *xy, int xy_stride, const SDL_Color *color, int color_stride, const float *uv, int uv_stride,
         int num_vertices, const void *indices, int num_indices, int size_indices,
         float scale_x, float scale_y)
 {
@@ -796,8 +796,8 @@ GLES_RunCommandQueue(SDL_Renderer * renderer, SDL_RenderCommand *cmd, void *vert
 
             case SDL_RENDERCMD_SETVIEWPORT: {
                 SDL_Rect *viewport = &data->drawstate.viewport;
-                if (SDL_memcmp(viewport, &cmd->data.viewport.rect, sizeof (SDL_Rect)) != 0) {
-                    SDL_memcpy(viewport, &cmd->data.viewport.rect, sizeof (SDL_Rect));
+                if (SDL_memcmp(viewport, &cmd->data.viewport.rect, sizeof(cmd->data.viewport.rect)) != 0) {
+                    SDL_copyp(viewport, &cmd->data.viewport.rect);
                     data->drawstate.viewport_dirty = SDL_TRUE;
                 }
                 break;
@@ -809,8 +809,8 @@ GLES_RunCommandQueue(SDL_Renderer * renderer, SDL_RenderCommand *cmd, void *vert
                     data->drawstate.cliprect_enabled = cmd->data.cliprect.enabled;
                     data->drawstate.cliprect_enabled_dirty = SDL_TRUE;
                 }
-                if (SDL_memcmp(&data->drawstate.cliprect, rect, sizeof (SDL_Rect)) != 0) {
-                    SDL_memcpy(&data->drawstate.cliprect, rect, sizeof (SDL_Rect));
+                if (SDL_memcmp(&data->drawstate.cliprect, rect, sizeof(*rect)) != 0) {
+                    SDL_copyp(&data->drawstate.cliprect, rect);
                     data->drawstate.cliprect_dirty = SDL_TRUE;
                 }
                 break;

@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2021 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -320,17 +320,22 @@ static VOID _wmChar(WINDATA *pWinData, MPARAM mp1, MPARAM mp2)
     }
 
     if ((ulFlags & KC_CHAR) != 0) {
-        CHAR    acUTF8[4];
-        LONG    lRC = StrUTF8(1, acUTF8, sizeof(acUTF8), (PSZ)&ulCharCode, 1);
-
-        SDL_SendKeyboardText((lRC > 0)? acUTF8 : (PSZ)&ulCharCode);
+#if defined(HAVE_ICONV) && defined(HAVE_ICONV_H)
+        char *utf8 = SDL_iconv_string("UTF-8", "", (char *)&ulCharCode, 1);
+        SDL_SendKeyboardText((utf8 && *utf8) ? utf8 : (char *)&ulCharCode);
+        SDL_free(utf8);
+#else
+        char utf8[4];
+        int rc = StrUTF8(1, utf8, sizeof(utf8), (char *)&ulCharCode, 1);
+        SDL_SendKeyboardText((rc > 0) ? utf8 : (char *) &ulCharCode);
+#endif
     }
 }
 
 static VOID _wmMove(WINDATA *pWinData)
 {
     SDL_DisplayMode *pSDLDisplayMode = _getDisplayModeForSDLWindow(pWinData->window);
-    POINTL  pointl = { 0 };
+    POINTL  pointl = { 0,0 };
     RECTL   rectl;
 
     WinQueryWindowRect(pWinData->hwnd, &rectl);
@@ -389,7 +394,7 @@ static MRESULT _wmDrop(WINDATA *pWinData, PDRAGINFO pDragInfo)
 {
     ULONG       ulIdx;
     PDRAGITEM   pDragItem;
-    CHAR        acFName[_MAX_PATH];
+    CHAR        acFName[CCHMAXPATH];
     PCHAR       pcFName;
 
     if (!DrgAccessDraginfo(pDragInfo))
@@ -1132,8 +1137,8 @@ static SDL_bool OS2_GetWindowWMInfo(_THIS, SDL_Window * window,
         return SDL_TRUE;
     }
 
-    SDL_SetError("Application not compiled with SDL %u.%u",
-                 SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
+    SDL_SetError("Application not compiled with SDL %u",
+                 SDL_MAJOR_VERSION);
     return SDL_FALSE;
 }
 
@@ -1214,7 +1219,7 @@ static int OS2_SetWindowShape(SDL_WindowShaper *shaper, SDL_Surface *shape,
 {
     SDL_ShapeTree *pShapeTree;
     WINDATA       *pWinData;
-    SHAPERECTS     stShapeRects = { 0 };
+    SHAPERECTS     stShapeRects;
     HPS            hps;
 
     debug_os2("Enter");
@@ -1230,6 +1235,7 @@ static int OS2_SetWindowShape(SDL_WindowShaper *shaper, SDL_Surface *shape,
     pShapeTree = SDL_CalculateShapeTree(*shape_mode, shape);
     shaper->driverdata = pShapeTree;
 
+    SDL_zero(stShapeRects);
     stShapeRects.ulWinHeight = shaper->window->h;
     SDL_TraverseShapeTree(pShapeTree, &_combineRectRegions, &stShapeRects);
 
@@ -1396,18 +1402,19 @@ static char *OS2_GetClipboardText(_THIS)
 static SDL_bool OS2_HasClipboardText(_THIS)
 {
     SDL_VideoData *pVData = (SDL_VideoData *)_this->driverdata;
-    SDL_bool   fClipboard;
+    PSZ pszClipboard;
+    SDL_bool  result;
 
     if (!WinOpenClipbrd(pVData->hab)) {
         debug_os2("WinOpenClipbrd() failed");
         return SDL_FALSE;
     }
 
-    fClipboard = ((PSZ)WinQueryClipbrdData(pVData->hab, CF_TEXT) != NULL)?
-                   SDL_TRUE : SDL_FALSE;
+    pszClipboard = (PSZ)WinQueryClipbrdData(pVData->hab, CF_TEXT);
+    result = (pszClipboard && *pszClipboard) ? SDL_TRUE : SDL_FALSE;
     WinCloseClipbrd(pVData->hab);
 
-    return fClipboard;
+    return result;
 }
 
 
@@ -1565,7 +1572,7 @@ static void OS2_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
     SDL_DisplayMode mode;
 
     debug_os2("Enter");
-    SDL_memcpy(&mode, &display->current_mode, sizeof(SDL_DisplayMode));
+    SDL_copyp(&mode, &display->current_mode);
     mode.driverdata = (MODEDATA *) SDL_malloc(sizeof(MODEDATA));
     if (!mode.driverdata) return; /* yikes.. */
     SDL_memcpy(mode.driverdata, display->current_mode.driverdata, sizeof(MODEDATA));
