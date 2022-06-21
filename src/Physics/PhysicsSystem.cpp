@@ -359,7 +359,7 @@ void PhysicsSystem::Update(const UpdateContext& update_context)
         }
     }
 
-    m_impl->space.Tick(update_context.delta_ms);
+    m_impl->space.Tick(update_context.delta_s);
 
     for(size_t index = 0; index < m_impl->active_bodies.size(); ++index)
     {

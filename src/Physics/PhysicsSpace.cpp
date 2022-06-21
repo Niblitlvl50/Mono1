@@ -50,9 +50,9 @@ PhysicsSpace::~PhysicsSpace()
     cpSpaceDestroy(m_space);
 }
 
-void PhysicsSpace::Tick(uint32_t delta_ms)
+void PhysicsSpace::Tick(float delta_s)
 {
-    cpSpaceStep(m_space, float(delta_ms) / 1000.0f);
+    cpSpaceStep(m_space, delta_s);
 }
 
 void PhysicsSpace::SetGravity(const math::Vector& gravity)

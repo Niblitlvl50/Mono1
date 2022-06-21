@@ -35,7 +35,7 @@ namespace mono
         PhysicsSpace(PhysicsSystem* physics_system, const math::Vector& gravity, float damping);
         ~PhysicsSpace();
 
-        void Tick(uint32_t delta);
+        void Tick(float delta_s);
 
         void SetGravity(const math::Vector& gravity);
         void SetDamping(float damping);
