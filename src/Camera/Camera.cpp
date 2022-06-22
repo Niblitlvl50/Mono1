@@ -2,9 +2,16 @@
 #include "Camera.h"
 #include "Math/Vector.h"
 #include "Math/MathFunctions.h"
-#include "Math/EasingFunctions.h"
+#include "Math/CriticalDampedSpring.h"
+//#include "Math/EasingFunctions.h"
 
 #include <cmath>
+
+namespace tweak_values
+{
+    constexpr float zoom_halflife = 0.1f;
+    constexpr float move_halflife = 0.1f;
+}
 
 using namespace mono;
 
@@ -15,6 +22,7 @@ Camera::Camera()
 
 void Camera::Update(const UpdateContext& update_context)
 {
+/*
     constexpr float camera_speed_zoom = 2.5f;
     constexpr float camera_speed_translation = 5.0f;
 
@@ -27,13 +35,29 @@ void Camera::Update(const UpdateContext& update_context)
         m_viewport_size.x += delta * aspect;
         m_viewport_size.y += delta;
     }
-
     const bool is_position_equal = math::IsPrettyMuchEquals(m_target_position, m_position);
     if(!is_position_equal)
     {
         const math::Vector delta = (m_target_position - m_position) * camera_speed_translation * update_context.delta_s;
         m_position += delta;
     }
+*/
+
+    math::critical_spring_damper(
+        m_viewport_size,
+        m_zoom_velocity,
+        m_target_viewport_size,
+        math::ZeroVec,
+        tweak_values::zoom_halflife,
+        update_context.delta_s);
+
+    math::critical_spring_damper(
+        m_position,
+        m_move_velocity,
+        m_target_position,
+        math::ZeroVec,
+        tweak_values::move_halflife,
+        update_context.delta_s);
 }
 
 void Camera::SetViewportSize(const math::Vector& size)

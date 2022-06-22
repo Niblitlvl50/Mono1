@@ -475,7 +475,8 @@ void System::Initialize(const InitializeContext& context)
         const int result = SDL_GetDesktopDisplayMode(index, &display_mode);
         if(result == 0)
         {
-            Log("\tw: %d h: %d bpp: %u hz: %d",
+            Log("\tdisplay: %d w: %d h: %d bpp: %u hz: %d",
+                index,
                 display_mode.w,
                 display_mode.h,
                 SDL_BITSPERPIXEL(display_mode.format),

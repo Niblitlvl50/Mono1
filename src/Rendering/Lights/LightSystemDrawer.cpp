@@ -31,7 +31,7 @@ void LightSystemDrawer::Draw(mono::IRenderer& renderer) const
             {
                 auto pair = m_flicker_data.insert(std::make_pair(entity_id, 0.0f)); // Initialize with zero, or get what's in there already.
                 float& counter = pair.first->second;
-                counter += float(renderer.GetDeltaTimeMS()) / 1000.0f * light.flicker_frequencey;
+                counter += renderer.GetDeltaTime() * light.flicker_frequencey;
 
                 const float noise = mono::Noise::Perlin(world_position.x + counter, world_position.y);
                 radius_flicker = light.radius * noise * light.flicker_percentage;

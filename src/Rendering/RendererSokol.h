@@ -140,6 +140,7 @@ namespace mono
         const math::Quad& GetViewport() const override;
         bool Cull(const math::Quad& world_bb) const override;
 
+        float GetDeltaTime() const override;
         uint32_t GetDeltaTimeMS() const override;
         uint32_t GetTimestamp() const override;
 

@@ -349,7 +349,7 @@ void RendererSokol::DrawSprite(
         texture,
         buffer_offset);
 
-    SpritePipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    SpritePipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
     SpritePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
     const uint32_t sprite_properties = sprite->GetProperties();
@@ -367,7 +367,7 @@ void RendererSokol::DrawSprite(
 void RendererSokol::DrawFog(const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture)
 {
     FogPipeline::Apply(m_fog_pipeline.get(), vertices, indices, texture);
-    FogPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    FogPipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
     FogPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
     FogPipeline::SetShade(mono::Color::WHITE);
 
@@ -548,7 +548,7 @@ void RendererSokol::DrawGeometry(
     uint32_t count)
 {
     TexturePipeline::Apply(m_texture_pipeline.get(), vertices, texture_coordinates, indices, texture);
-    //TexturePipeline::SetTime(m_texture_pipeline.get(), float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    //TexturePipeline::SetTime(m_texture_pipeline.get(), float(m_timestamp) / 1000.0f, m_delta_time_s);
     TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
     TexturePipeline::SetIsAlpha(false);
@@ -568,7 +568,7 @@ void RendererSokol::DrawGeometry(
     uint32_t count)
 {
     TexturePipeline::Apply(m_texture_pipeline_color.get(), vertices, uv_coordinates, vertex_colors, indices, texture);
-    //TexturePipeline::SetTime(m_texture_pipeline.get(), float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    //TexturePipeline::SetTime(m_texture_pipeline.get(), float(m_timestamp) / 1000.0f, m_delta_time_s);
     TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
     TexturePipeline::SetIsAlpha(false);
@@ -589,7 +589,7 @@ void RendererSokol::DrawParticlePoints(
 {
     mono::IPipeline* pipeline = (blend_mode == mono::BlendMode::ONE) ? m_particle_pipeline_one.get() : m_particle_pipeline_sa.get();
     ParticlePointPipeline::Apply(pipeline, position, rotation, color, point_size, texture);
-    //ParticlePointPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    //ParticlePointPipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
     ParticlePointPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
     sg_draw(0, count, 1);
@@ -609,7 +609,7 @@ void RendererSokol::DrawLines(
     const IRenderBuffer* vertices, const IRenderBuffer* colors, uint32_t offset, uint32_t count)
 {
     ColorPipeline::Apply(m_color_lines_pipeline.get(), vertices, colors);
-    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
     ColorPipeline::SetLineWidth(1.0f);
 
@@ -620,7 +620,7 @@ void RendererSokol::DrawLines(
     const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t offset, uint32_t count)
 {
     ColorPipeline::Apply(m_color_lines_indices_pipeline.get(), vertices, colors, indices);
-    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
     ColorPipeline::SetLineWidth(1.0f);
 
@@ -631,7 +631,7 @@ void RendererSokol::DrawPolyline(
     const IRenderBuffer* vertices, const IRenderBuffer* colors, uint32_t offset, uint32_t count)
 {
     ColorPipeline::Apply(m_color_line_strip_pipeline.get(), vertices, colors);
-    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
     ColorPipeline::SetLineWidth(1.0f);
 
@@ -642,7 +642,7 @@ void RendererSokol::DrawPolyline(
     const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t offset, uint32_t count)
 {
     ColorPipeline::Apply(m_color_line_strip_indices_pipeline.get(), vertices, colors, indices);
-    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
     ColorPipeline::SetLineWidth(1.0f);
 
@@ -653,7 +653,7 @@ void RendererSokol::DrawTrianges(
     const IRenderBuffer* vertices, const IRenderBuffer* colors, const IElementBuffer* indices, uint32_t offset, uint32_t count) const
 {
     ColorPipeline::Apply(m_color_triangles_pipeline.get(), vertices, colors, indices);
-    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    ColorPipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
     sg_draw(offset, count, 1);
@@ -669,7 +669,7 @@ void RendererSokol::DrawAnnotatedTrianges(
     uint32_t count) const
 {
     TexturePipeline::Apply(m_texture_annotation_pipeline.get(), vertices, annotations, indices, texture);
-    //TexturePipeline::SetTime(float(m_timestamp) / 1000.0f, float(m_delta_time_ms) / 1000.0f);
+    //TexturePipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
     TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
     TexturePipeline::SetIsAlpha(false);
     TexturePipeline::SetBlur(false);
@@ -746,6 +746,11 @@ const math::Quad& RendererSokol::GetViewport() const
 bool RendererSokol::Cull(const math::Quad& world_bb) const
 {
     return math::QuadOverlaps(m_viewport, world_bb);
+}
+
+float RendererSokol::GetDeltaTime() const
+{
+    return m_delta_time_s;
 }
 
 uint32_t RendererSokol::GetDeltaTimeMS() const

@@ -42,5 +42,8 @@ namespace mono
         math::Vector m_target_viewport_size;
 
         math::Vector m_window_size;
+
+        math::Vector m_zoom_velocity;
+        math::Vector m_move_velocity;
     };
 }
