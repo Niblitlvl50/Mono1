@@ -29,7 +29,6 @@ using namespace mono;
 RendererSokol::RendererSokol()
     : m_offscreen_color_pass{}
     , m_offscreen_light_pass{}
-    , m_is_fullscreen(false)
     , m_clear_color(0.7f, 0.7f, 0.7f)
     , m_ambient_shade(1.0f, 1.0f, 1.0f)
     , m_screen_fade_alpha(1.0f)
@@ -84,11 +83,6 @@ void RendererSokol::SetDrawableSize(const math::Vector& drawable_size)
 void RendererSokol::SetViewport(const math::Quad& viewport)
 {
     m_viewport = viewport;
-}
-
-void RendererSokol::SetFullscreen(bool is_fullscreen)
-{
-    m_is_fullscreen = is_fullscreen;
 }
 
 void RendererSokol::SetDeltaAndTimestamp(uint32_t delta_ms, float delta_s, uint32_t timestamp)
@@ -227,7 +221,7 @@ void RendererSokol::PrepareDraw()
     imgui_frame_desc.delta_time = m_delta_time_s;
 
 #ifdef __APPLE__
-    imgui_frame_desc.dpi_scale = m_is_fullscreen ? 1.0f : 2.0f; // could be 2.0f for retina mac
+    imgui_frame_desc.dpi_scale = std::round(m_drawable_size.x / m_window_size.x);
     //imgui_frame_desc.dpi_scale = 2.0f; // could be 2.0f for retina mac
 #else
     imgui_frame_desc.dpi_scale = 1.0f;

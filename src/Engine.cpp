@@ -111,7 +111,6 @@ int Engine::Run(IZone* zone)
         renderer.SetWindowSize(window_size);
         renderer.SetDrawableSize(math::Vector(drawable_size.width, drawable_size.height));
         renderer.SetViewport(m_camera->GetViewport());
-        renderer.SetFullscreen(m_window->Options() & System::WindowOptions::FULLSCREEN);
 
         // Handle input events
         System::ProcessSystemEvents(&input_handler);
