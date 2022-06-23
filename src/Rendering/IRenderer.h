@@ -133,7 +133,6 @@ namespace mono
         virtual bool Cull(const math::Quad& world_bb) const = 0;
 
         virtual float GetDeltaTime() const = 0;
-        virtual uint32_t GetDeltaTimeMS() const = 0;
         virtual uint32_t GetTimestamp() const = 0;
     };
 

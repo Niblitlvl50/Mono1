@@ -27,7 +27,7 @@ namespace mono
         void SetWindowSize(const math::Vector& window_size);
         void SetDrawableSize(const math::Vector& drawable_size);
         void SetViewport(const math::Quad& viewport);
-        void SetDeltaAndTimestamp(uint32_t delta_ms, float delta_s, uint32_t timestamp);
+        void SetDeltaAndTimestamp(float delta_s, uint32_t timestamp);
 
         void DrawFrame();
 
@@ -141,7 +141,6 @@ namespace mono
         bool Cull(const math::Quad& world_bb) const override;
 
         float GetDeltaTime() const override;
-        uint32_t GetDeltaTimeMS() const override;
         uint32_t GetTimestamp() const override;
 
     private:
@@ -194,7 +193,6 @@ namespace mono
 
         mono::ITexturePtr m_light_mask_texture;
 
-        uint32_t m_delta_time_ms = 0;
         float m_delta_time_s = 0.0f;
         uint32_t m_timestamp = 0;
 

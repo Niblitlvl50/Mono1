@@ -124,7 +124,7 @@ int Engine::Run(IZone* zone)
             update_context.delta_s = float(delta_ms) / 1000.0f;
             update_context.paused = m_pause;
 
-            renderer.SetDeltaAndTimestamp(update_context.delta_ms, update_context.delta_s, update_context.timestamp);
+            renderer.SetDeltaAndTimestamp(update_context.delta_s, update_context.timestamp);
 
             m_window->MakeCurrent();
             m_system_context->Update(update_context);

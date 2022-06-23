@@ -85,9 +85,8 @@ void RendererSokol::SetViewport(const math::Quad& viewport)
     m_viewport = viewport;
 }
 
-void RendererSokol::SetDeltaAndTimestamp(uint32_t delta_ms, float delta_s, uint32_t timestamp)
+void RendererSokol::SetDeltaAndTimestamp(float delta_s, uint32_t timestamp)
 {
-    m_delta_time_ms = delta_ms;
     m_delta_time_s = delta_s;
     m_timestamp = timestamp;
 }
@@ -751,11 +750,6 @@ bool RendererSokol::Cull(const math::Quad& world_bb) const
 float RendererSokol::GetDeltaTime() const
 {
     return m_delta_time_s;
-}
-
-uint32_t RendererSokol::GetDeltaTimeMS() const
-{
-    return m_delta_time_ms;
 }
 
 uint32_t RendererSokol::GetTimestamp() const
