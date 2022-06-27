@@ -20,6 +20,7 @@ namespace audio
         virtual void Pause() = 0;
         virtual void Stop() = 0;
         virtual bool IsPlaying() const = 0;
+        virtual void SetVolume(float volume) = 0;
     };
 
     using ISoundPtr = std::unique_ptr<ISound>;

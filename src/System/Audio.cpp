@@ -36,6 +36,7 @@ namespace
         void Pause() override { }
         void Stop() override { }
         bool IsPlaying() const override { return false; }
+        void SetVolume(float volume) override { }
     };
 
     struct SoundData
@@ -89,6 +90,18 @@ namespace
             if(m_playing_sound)
                 return cs_is_active(m_playing_sound) != 0;
             return false;
+        }
+
+        void SetVolume(float volume) override
+        {
+            m_sound_def.volume_left = volume;
+            m_sound_def.volume_right = volume;
+
+            if(IsPlaying())
+            {
+                m_playing_sound->volume0 = volume;
+                m_playing_sound->volume1 = volume;
+            }
         }
 
         cs_context_t* m_context;
