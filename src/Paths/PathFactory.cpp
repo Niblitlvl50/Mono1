@@ -125,7 +125,7 @@ mono::IPathPtr mono::CreatePath(const std::vector<math::Vector>& coords, const m
     world_points.reserve(coords.size());
 
     for(const math::Vector& local_point : coords)
-        world_points.push_back(math::Transform(transform, local_point));
+        world_points.push_back(math::Transformed(transform, local_point));
 
     return mono::CreatePath(world_points);
 }

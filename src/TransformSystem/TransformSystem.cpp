@@ -55,7 +55,7 @@ void TransformSystem::SetTransform(uint32_t id, const math::Matrix& new_transfor
 
 math::Quad TransformSystem::GetWorldBoundingBox(uint32_t id) const
 {
-    return math::Transform(GetWorld(id), GetBoundingBox(id));
+    return math::Transformed(GetWorld(id), GetBoundingBox(id));
 }
 
 const math::Quad& TransformSystem::GetBoundingBox(uint32_t id) const

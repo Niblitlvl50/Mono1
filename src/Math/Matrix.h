@@ -50,8 +50,8 @@ namespace math
 
     void Transform(const Matrix& matrix, math::Vector& vector);
     void Transform(const Matrix& matrix, math::Quad& quad);
-    math::Vector Transform(const Matrix& matrix, const math::Vector& vector);
-    math::Quad Transform(const Matrix& matrix, const math::Quad& quad);
+    math::Vector Transformed(const Matrix& matrix, const math::Vector& vector);
+    math::Quad Transformed(const Matrix& matrix, const math::Quad& quad);
 
     void operator *= (Matrix& left, const Matrix& right);
     math::Matrix operator * (const math::Matrix& left, const math::Matrix& right);

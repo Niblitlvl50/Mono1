@@ -119,8 +119,8 @@ TEST(MatrixTest, VerifyInverse)
     const math::Matrix& inverse = math::Inverse(matrix);
 
     constexpr math::Vector point1(0.0f, 0.0f);
-    const math::Vector& transformed1 = math::Transform(matrix, point1);
-    const math::Vector& transformed_inverse1 = math::Transform(inverse, transformed1);
+    const math::Vector& transformed1 = math::Transformed(matrix, point1);
+    const math::Vector& transformed_inverse1 = math::Transformed(inverse, transformed1);
 
     EXPECT_FLOAT_EQ(transformed1.x, 10.0f);
     EXPECT_FLOAT_EQ(transformed1.y, 7.0f);

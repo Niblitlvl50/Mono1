@@ -390,14 +390,14 @@ void math::Transform(const Matrix& matrix, math::Quad& quad)
     quad |= top_right;
 }
 
-math::Vector math::Transform(const Matrix& matrix, const math::Vector& vector)
+math::Vector math::Transformed(const Matrix& matrix, const math::Vector& vector)
 {
     math::Vector out_vector = vector;
     math::Transform(matrix, out_vector);
     return out_vector;
 }
 
-math::Quad math::Transform(const Matrix& matrix, const math::Quad& quad)
+math::Quad math::Transformed(const Matrix& matrix, const math::Quad& quad)
 {
     math::Quad out_quad = quad;
     math::Transform(matrix, out_quad);
