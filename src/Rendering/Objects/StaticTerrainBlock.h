@@ -11,29 +11,23 @@
 struct TerrainDrawData
 {
     mono::ITexturePtr texture;
-    size_t offset;
-    size_t count;
-};
-
-struct PolygonData
-{
-    std::string texture_name;
-    std::vector<math::Vector> vertices;
+    uint32_t offset;
+    uint32_t count;
 };
 
 class StaticTerrainBlock : public mono::IDrawable
 {
 public:
 
-    StaticTerrainBlock(size_t vertex_count, size_t polygon_count);
+    StaticTerrainBlock(uint32_t vertex_count, uint32_t polygon_count);
 
-    void AddPolygon(const PolygonData& polygon);
+    void AddPolygon(const std::vector<math::Vector>& vertices, const std::string& texture_name);
     void Draw(mono::IRenderer& renderer) const override;
     math::Quad BoundingBox() const override;
 
 private:
 
-    unsigned int m_index;
+    uint32_t m_index;
 
     std::unique_ptr<mono::IRenderBuffer> m_vertex_buffer;
     std::unique_ptr<mono::IRenderBuffer> m_texture_buffer;
@@ -45,5 +39,5 @@ private:
 
     std::vector<TerrainDrawData> m_draw_data;
 
-    size_t m_vertices;
+    uint32_t m_vertices;
 };

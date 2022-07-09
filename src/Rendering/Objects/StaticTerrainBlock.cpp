@@ -11,7 +11,7 @@
 
 #include "Rendering/Color.h"
 
-StaticTerrainBlock::StaticTerrainBlock(size_t vertex_count, size_t polygon_count)
+StaticTerrainBlock::StaticTerrainBlock(uint32_t vertex_count, uint32_t polygon_count)
     : m_index(0)
 {
     m_draw_data.reserve(polygon_count);
@@ -23,9 +23,9 @@ StaticTerrainBlock::StaticTerrainBlock(size_t vertex_count, size_t polygon_count
     const std::vector<float> temp_buffer(vertex_count * 4, 0.0f);
     m_color_buffer->UpdateData(temp_buffer.data(), 0, vertex_count * 4);
 
-    const size_t vertex_elements = (vertex_count + 2) * 2 * 2;
-    const size_t color_elements = (vertex_count + 2) * 4 * 2;
-    const size_t index_elements = vertex_elements * 3;
+    const uint32_t vertex_elements = (vertex_count + 2) * 2 * 2;
+    const uint32_t color_elements = (vertex_count + 2) * 4 * 2;
+    const uint32_t index_elements = vertex_elements * 3;
     m_vertex_buffer_2 = mono::CreateRenderBuffer(mono::BufferType::DYNAMIC, mono::BufferData::FLOAT, 2, vertex_elements, nullptr);
     m_color_buffer_2 = mono::CreateRenderBuffer(mono::BufferType::DYNAMIC, mono::BufferData::FLOAT, 4, color_elements, nullptr);
 
@@ -35,35 +35,35 @@ StaticTerrainBlock::StaticTerrainBlock(size_t vertex_count, size_t polygon_count
     m_color_buffer_2->UpdateData(temp_buffer2.data(), 0, temp_buffer2.size());
 }
 
-void StaticTerrainBlock::AddPolygon(const PolygonData& polygon)
+void StaticTerrainBlock::AddPolygon(const std::vector<math::Vector>& vertices, const std::string& texture_name)
 {
     TerrainDrawData draw_data;
     draw_data.offset = m_index;
-    draw_data.count = polygon.vertices.size();
-    draw_data.texture = mono::GetTextureFactory()->CreateTexture(polygon.texture_name.c_str());
+    draw_data.count = vertices.size();
+    draw_data.texture = mono::GetTextureFactory()->CreateTexture(texture_name.c_str());
 
     m_draw_data.emplace_back(draw_data);
 
     std::vector<math::Vector> texture_coordinates;
-    texture_coordinates.reserve(polygon.vertices.size());
+    texture_coordinates.reserve(vertices.size());
 
     math::Quad bounding_box = math::Quad(math::INF, math::INF, -math::INF, -math::INF);
-    for(const math::Vector& vertex : polygon.vertices)
+    for(const math::Vector& vertex : vertices)
         bounding_box |= vertex;
 
     const math::Vector& repeate = math::Size(bounding_box) / 2.0f;
         
-    for(const math::Vector& vertex : polygon.vertices)
+    for(const math::Vector& vertex : vertices)
         texture_coordinates.push_back(math::MapVectorInQuad(vertex, bounding_box) * repeate);
 
-    m_vertex_buffer->UpdateData(polygon.vertices.data(), draw_data.offset * 2, draw_data.count * 2);
+    m_vertex_buffer->UpdateData(vertices.data(), draw_data.offset * 2, draw_data.count * 2);
     m_texture_buffer->UpdateData(texture_coordinates.data(), draw_data.offset * 2, draw_data.count * 2);
 
     m_index += draw_data.count;
 
-    std::vector<math::Vector> new_vertices; // = polygon.vertices;
+    std::vector<math::Vector> new_vertices; // = vertices;
 
-    for(const math::Vector& vertex : polygon.vertices)
+    for(const math::Vector& vertex : vertices)
     {
         new_vertices.push_back(vertex);
         new_vertices.push_back(vertex + math::Vector(0.0f, -10.0f));

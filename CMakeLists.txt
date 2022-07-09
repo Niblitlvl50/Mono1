@@ -53,6 +53,10 @@ endif(APPLE)
 # uuid4
 add_library(uuid4 STATIC "third_party/uuid4/src/uuid4.c")
 
+# delaunay
+file(GLOB_RECURSE delaunay_source_files "third_party/delaunay/*.c")
+add_library(delaunay STATIC ${delaunay_source_files})
+
 # huffandpuff
 file(GLOB_RECURSE huffandpuff_source_files "third_party/huffandpuff/*.c")
 add_library(huffandpuff STATIC ${huffandpuff_source_files})
@@ -75,8 +79,8 @@ endif()
 # Mono
 file(GLOB_RECURSE engine_source_files "src/*.cpp")
 add_library(mono STATIC ${engine_source_files})
-add_dependencies(mono huffandpuff imgui chipmunk_static)
-target_link_libraries(mono uuid4 huffandpuff par_streamlines imgui chipmunk_static SDL2-static OpenGL::GL ${AUDIOTOOLBOX})
+add_dependencies(mono delaunay huffandpuff imgui chipmunk_static)
+target_link_libraries(mono uuid4 delaunay huffandpuff par_streamlines imgui chipmunk_static SDL2-static OpenGL::GL ${AUDIOTOOLBOX})
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "tests/*.cpp")

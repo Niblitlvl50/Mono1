@@ -74,7 +74,9 @@ void StaticBackground::Load(const std::vector<math::Vector>& vertices, const cha
         const float pixels_per_meter = mono::PixelsPerMeter();
         const float background_width = math::Width(bounding_box);
         const float background_height = math::Height(bounding_box);
-        repeate = math::Vector(background_width / m_texture->Width(), background_height / m_texture->Height()) * pixels_per_meter;
+        repeate = math::Vector(
+            background_width / m_texture->Width(),
+            background_height / m_texture->Height()) * pixels_per_meter;
     }
 
     std::vector<math::Vector> uv_coordinates;
