@@ -10,3 +10,8 @@ float math::Size(const Interval& interval)
 {
     return interval.max - interval.min;
 }
+
+bool math::Validate(const Interval& interval)
+{
+    return (interval.min <= interval.max);
+}

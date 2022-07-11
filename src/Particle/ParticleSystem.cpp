@@ -356,6 +356,16 @@ void ParticleSystem::SetEmitterPosition(ParticleEmitterComponent* emitter, const
 
 void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, const ParticleGeneratorProperties& generator_properties)
 {
+    const bool valid_data =
+        Validate(generator_properties.direction_degrees_interval) &&
+        Validate(generator_properties.magnitude_interval) &&
+        Validate(generator_properties.angular_velocity_interval) &&
+        Validate(generator_properties.life_interval) &&
+        Validate(generator_properties.start_size_spread) &&
+        Validate(generator_properties.end_size_spread);
+
+    assert(valid_data);
+
     const ParticleGenerator generator = [generator_properties](const math::Vector& position, ParticlePoolComponentView& component_view) {
 
         const math::Vector half_area = generator_properties.emit_area / 2.0f;

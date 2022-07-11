@@ -19,6 +19,7 @@ namespace math
 
     float Interpolate(const Interval& interval, float t);
     float Size(const Interval& interval);
+    bool Validate(const Interval& interval);
 
 
     struct ValueSpread
@@ -36,4 +37,9 @@ namespace math
         float value;
         Interval spread;
     };
+
+    inline bool Validate(const ValueSpread& value_spread)
+    {
+        return Validate(value_spread.spread);
+    }
 }
