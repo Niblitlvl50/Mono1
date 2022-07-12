@@ -21,6 +21,8 @@ TextureImpl::TextureImpl(
     sg_image_desc image_desc = {};
     image_desc.width = width;
     image_desc.height = height;
+    //image_desc.wrap_u = SG_WRAP_CLAMP_TO_EDGE;
+    //image_desc.wrap_v = SG_WRAP_CLAMP_TO_EDGE;
     image_desc.pixel_format = data_format;
     image_desc.data.subimage[0][0].ptr = image_data;
     image_desc.data.subimage[0][0].size = width * height * color_components * sizeof(unsigned char);

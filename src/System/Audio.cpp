@@ -27,6 +27,9 @@
 #include "cute_headers/cute_sound.h"
 
 
+#define MINIAUDIO_IMPLEMENTATION
+#include "miniaudio/miniaudio.h"
+
 namespace
 {
     class NullSound : public audio::ISound
