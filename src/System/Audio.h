@@ -32,6 +32,4 @@ namespace audio
     audio::ISoundPtr CreateNullSound();
 
     void MixSounds();
-    void StopAllSounds();
-    void ClearLoadedSounds();
 }
