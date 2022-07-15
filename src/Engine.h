@@ -35,14 +35,12 @@ namespace mono
         mono::EventResult OnApplication(const event::ApplicationEvent& event);
         mono::EventResult OnActivated(const event::ActivatedEvent& event);
         mono::EventResult OnTimeScale(const event::TimeScaleEvent& event);
-        mono::EventResult OnMouseMotion(const event::MouseMotionEvent& event);
 
         bool m_pause = false;
         bool m_quit = false;
         bool m_suspended = false;
         bool m_update_last_time = false;
         float m_time_scale = 1.0f;
-        float m_time_since_mouse_move_s = 0.0f;
 
         System::IWindow* m_window;
         ICamera* m_camera;
@@ -54,6 +52,5 @@ namespace mono
         EventToken<event::ApplicationEvent> m_application_token;
         EventToken<event::ActivatedEvent> m_activated_token;
         EventToken<event::TimeScaleEvent> m_time_scale_token;
-        EventToken<event::MouseMotionEvent> m_mouse_motion_token;
     };
 }

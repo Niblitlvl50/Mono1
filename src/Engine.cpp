@@ -26,7 +26,6 @@
 #include "Events/SurfaceChangedEvent.h"
 #include "Events/ActivatedEvent.h"
 #include "Events/TimeScaleEvent.h"
-#include "Events/MouseEvent.h"
 
 #include "Rendering/RendererSokol.h"
 
@@ -48,14 +47,12 @@ Engine::Engine(System::IWindow* window, ICamera* camera, SystemContext* system_c
     const event::ApplicationEventFunc app_func = std::bind(&Engine::OnApplication, this, _1);
     const event::ActivatedEventFunc activated_func = std::bind(&Engine::OnActivated, this, _1);
     const event::TimeScaleEventFunc time_scale_func = std::bind(&Engine::OnTimeScale, this, _1);
-    const event::MouseMotionEventFunc mouse_motion_func = std::bind(&Engine::OnMouseMotion, this, _1);
 
     m_pause_token = m_event_handler->AddListener(pause_func);
     m_quit_token = m_event_handler->AddListener(quit_func);
     m_application_token = m_event_handler->AddListener(app_func);
     m_activated_token = m_event_handler->AddListener(activated_func);
     m_time_scale_token = m_event_handler->AddListener(time_scale_func);
-    m_mouse_motion_token = m_event_handler->AddListener(mouse_motion_func);
 }
 
 Engine::~Engine()
@@ -65,7 +62,6 @@ Engine::~Engine()
     m_event_handler->RemoveListener(m_application_token);
     m_event_handler->RemoveListener(m_activated_token);
     m_event_handler->RemoveListener(m_time_scale_token);
-    m_event_handler->RemoveListener(m_mouse_motion_token);
 }
 
 int Engine::Run(IZone* zone)
@@ -162,10 +158,6 @@ int Engine::Run(IZone* zone)
 
         last_time = before_time;
 
-        m_time_since_mouse_move_s += update_context.delta_s;
-        if(m_time_since_mouse_move_s > 2.0f)
-            System::SetCursorVisibility(System::CursorVisibility::Hidden);
-
         // Sleep for a millisecond, this highly reduces fps
         System::Sleep(1);
     }
@@ -221,12 +213,5 @@ mono::EventResult Engine::OnActivated(const event::ActivatedEvent& event)
 mono::EventResult Engine::OnTimeScale(const event::TimeScaleEvent& event)
 {
     m_time_scale = event.time_scale;
-    return mono::EventResult::PASS_ON;
-}
-
-mono::EventResult Engine::OnMouseMotion(const event::MouseMotionEvent& event)
-{
-    m_time_since_mouse_move_s = 0.0f;
-    System::SetCursorVisibility(System::CursorVisibility::Shown);
     return mono::EventResult::PASS_ON;
 }

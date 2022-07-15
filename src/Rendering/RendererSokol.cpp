@@ -21,6 +21,8 @@
 
 #include "Text/TextFunctions.h"
 
+#include "imgui/imgui.h"
+
 #define SOKOL_IMGUI_NO_SOKOL_APP
 #include "sokol/sokol_imgui.h"
 
@@ -263,6 +265,11 @@ void RendererSokol::EndDraw()
 
     sg_end_pass(); // End default pass
     sg_commit();
+
+    const ImDrawData* imgui_draw_data = ImGui::GetDrawData();
+    const System::CursorVisibility visibility_state =
+        (imgui_draw_data->CmdListsCount == 0) ? System::CursorVisibility::Hidden : System::CursorVisibility::Shown;
+    System::SetCursorVisibility(visibility_state);
 
     // Clear all the stuff once the frame has been drawn
     for(uint32_t index = 0; index < RenderPass::N_RENDER_PASS; ++index)
