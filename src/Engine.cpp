@@ -164,7 +164,7 @@ int Engine::Run(IZone* zone)
 
     // Unload the zone and sync the game systems, this is mostly to clean up entities.
     const int exit_code = zone->OnUnload();
-    m_system_context->Sync();
+    m_system_context->Reset();
 
     // Reset the quit, pause and m_update_last_time flag for when you want
     // to reuse the engine for another zone.
