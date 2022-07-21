@@ -138,17 +138,25 @@ math::Vector math::CentroidOfPolygon(const std::vector<math::Vector>& points)
         centroid.y += (first.y + second.y) * partial_area;
     };
 
-
     for(size_t point_index = 0; point_index < points.size() -1; ++point_index)
-        func(points.at(point_index), points.at(point_index +1));
+        func(points[point_index], points[point_index +1]);
 
     func(points.back(), points.front());
 
-    area *= 0.5;
-    centroid.x /= (6.0 * area);
-    centroid.y /= (6.0 * area);
+    // This is a fix for when input is a degenerate triangle.
+    const bool is_area_zero = math::IsPrettyMuchEquals(area, 0.0f);
+    if(is_area_zero)
+    {
+        return points.front();
+    }
+    else
+    {
+        area *= 0.5;
+        centroid.x /= (6.0 * area);
+        centroid.y /= (6.0 * area);
 
-    return centroid;
+        return centroid;
+    }
 }
 
 bool math::PointInsidePolygon(const math::Vector& point, const std::vector<math::Vector>& polygon)
