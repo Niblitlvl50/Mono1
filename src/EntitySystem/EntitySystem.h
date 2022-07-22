@@ -60,6 +60,7 @@ namespace mono
 
         const std::vector<SpawnEvent>& GetSpawnEvents() const override;
         void Sync() override;
+        void Reset() override;
 
         void RegisterComponent(
             uint32_t component_hash,

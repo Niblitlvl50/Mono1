@@ -314,6 +314,11 @@ void EntitySystem::Sync()
     m_spawn_events.clear();
 }
 
+void EntitySystem::Reset()
+{
+    Sync();
+}
+
 void EntitySystem::DeferredRelease()
 {
     std::unordered_set<uint32_t> local_entities_to_release = m_entities_to_release;
