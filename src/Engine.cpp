@@ -78,6 +78,7 @@ int Engine::Run(IZone* zone)
     UpdateContext update_context = { 0, 0, 0, 0.0f, false };
     Updater updater;
 
+    m_system_context->BeginSystems();
     zone->OnLoad(m_camera, &renderer);
 
     uint32_t last_time = System::GetMilliseconds();
@@ -137,7 +138,7 @@ int Engine::Run(IZone* zone)
             m_window->SwapBuffers();
 
             zone->PostUpdate();
-            m_system_context->Sync(m_pause);
+            m_system_context->SyncSystems(m_pause);
         }
 
         /*
@@ -164,7 +165,7 @@ int Engine::Run(IZone* zone)
 
     // Unload the zone and sync the game systems, this is mostly to clean up entities.
     const int exit_code = zone->OnUnload();
-    m_system_context->Reset();
+    m_system_context->ResetSystems();
 
     // Reset the quit, pause and m_update_last_time flag for when you want
     // to reuse the engine for another zone.

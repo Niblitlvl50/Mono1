@@ -32,12 +32,6 @@ namespace mono
             return new_system;
         }
 
-        inline void DestroySystems()
-        {
-            for(IGameSystem* system : m_systems)
-                system->Destroy();
-        }
-
         template <typename T>
         inline T* GetSystem()
         {
@@ -62,7 +56,13 @@ namespace mono
             }
         }
 
-        inline void Sync(bool paused = false)
+        inline void BeginSystems()
+        {
+            for(IGameSystem* system : m_systems)
+                system->Begin();
+        }
+
+        inline void SyncSystems(bool paused = false)
         {
             for(IGameSystem* game_system : m_systems)
             {
@@ -71,10 +71,16 @@ namespace mono
             }
         }
 
-        inline void Reset()
+        inline void ResetSystems()
         {
             for(IGameSystem* game_system : m_systems)
                 game_system->Reset();
+        }
+
+        inline void DestroySystems()
+        {
+            for(IGameSystem* system : m_systems)
+                system->Destroy();
         }
 
     private:

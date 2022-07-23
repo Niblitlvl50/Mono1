@@ -11,10 +11,20 @@ namespace mono
     public:
 
         virtual ~IGameSystem() = default;
+
         virtual uint32_t Id() const = 0;
         virtual const char* Name() const = 0;
-        virtual void Destroy() { }
+
+        // Once before a zone begins.
+        virtual void Begin() { }
+
+        // End of each frame.
         virtual void Sync() { }
+
+        // Once after a zone is finished.
         virtual void Reset() { }
+
+        // Before the destructor is called.
+        virtual void Destroy() { }
     };
 }
