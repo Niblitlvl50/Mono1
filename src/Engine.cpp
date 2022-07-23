@@ -78,8 +78,8 @@ int Engine::Run(IZone* zone)
     UpdateContext update_context = { 0, 0, 0, 0.0f, false };
     Updater updater;
 
-    m_system_context->BeginSystems();
     zone->OnLoad(m_camera, &renderer);
+    m_system_context->BeginSystems();
 
     uint32_t last_time = System::GetMilliseconds();
 

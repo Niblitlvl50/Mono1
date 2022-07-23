@@ -85,6 +85,5 @@ namespace mono
         virtual void RemoveReleaseCallback(uint32_t entity_id, uint32_t callback_id) = 0;
 
         virtual const std::vector<SpawnEvent>& GetSpawnEvents() const = 0;
-        virtual void Sync() = 0;
     };
 }
