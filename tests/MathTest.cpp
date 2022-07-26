@@ -198,6 +198,9 @@ TEST(MathTest, AngleBetweenPoints)
 {
     const float angle1 = math::AngleBetweenPoints(math::Vector(0.0f, 1.0f), math::Vector(1.0f, 0.0f));
     EXPECT_FLOAT_EQ(-math::PI_2(), angle1);
+
+    const float angle2 = math::AngleBetweenPointsSimple(math::Vector(5.0f, 5.0f), math::Vector(5.0f, 6.0f));
+    EXPECT_FLOAT_EQ(math::PI_2(), angle2);
 }
 
 TEST(MathTest, VectorToAndFromAngle)

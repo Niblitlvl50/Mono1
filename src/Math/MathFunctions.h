@@ -43,6 +43,7 @@ namespace math
     math::Vector MapVectorInQuad(const math::Vector& point, const math::Quad& quad);
 
     // Return angle in radians
+    float AngleBetweenPointsSimple(const math::Vector& first, const math::Vector& second);
     float AngleBetweenPoints(const math::Vector& first, const math::Vector& second);
 
     math::Vector VectorFromAngle(float radians);
