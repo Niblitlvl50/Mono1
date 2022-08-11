@@ -550,6 +550,7 @@ void RendererSokol::DrawGeometry(
     const IRenderBuffer* texture_coordinates,
     const IElementBuffer* indices,
     const ITexture* texture,
+    const mono::Color::RGBA& shade,
     bool blur,
     uint32_t count)
 {
@@ -559,7 +560,7 @@ void RendererSokol::DrawGeometry(
 
     TexturePipeline::SetIsAlpha(false);
     TexturePipeline::SetBlur(blur);
-    TexturePipeline::SetShade(mono::Color::WHITE);
+    TexturePipeline::SetShade(shade);
 
     sg_draw(0, count, 1);
 }

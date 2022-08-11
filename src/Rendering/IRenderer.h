@@ -63,6 +63,7 @@ namespace mono
             const IRenderBuffer* texture_coordinates,
             const IElementBuffer* indices,
             const ITexture* texture,
+            const mono::Color::RGBA& shade,
             bool blur,
             uint32_t count) = 0;
 

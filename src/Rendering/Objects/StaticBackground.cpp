@@ -8,6 +8,7 @@
 #include "Rendering/IRenderer.h"
 #include "Rendering/Texture/ITexture.h"
 #include "Rendering/Texture/ITextureFactory.h"
+#include "Rendering/Color.h"
 
 using namespace mono;
 
@@ -108,7 +109,14 @@ void StaticBackground::Draw(mono::IRenderer& renderer) const
     if(m_texture)
     {
         const bool blur = (m_mode & TextureModeFlags::BLUR);
-        renderer.DrawGeometry(m_vertex_buffer.get(), m_texture_buffer.get(), m_index_buffer.get(), m_texture.get(), blur, 6);
+        renderer.DrawGeometry(
+            m_vertex_buffer.get(),
+            m_texture_buffer.get(),
+            m_index_buffer.get(),
+            m_texture.get(),
+            mono::Color::WHITE,
+            blur,
+            6);
     }
 }
 

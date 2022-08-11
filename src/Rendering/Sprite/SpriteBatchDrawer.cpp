@@ -166,6 +166,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
                     shadow_buffers.uv.get(),
                     m_sprite_indices.get(),
                     m_shadow_texture.get(),
+                    mono::Color::WHITE,
                     false,
                     m_sprite_indices->Size());
             }
