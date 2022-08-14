@@ -73,14 +73,20 @@ namespace mono
 
         inline void ResetSystems()
         {
-            for(IGameSystem* game_system : m_systems)
-                game_system->Reset();
+            for(auto it = m_systems.rbegin(), end = m_systems.rend(); it != end; ++it)
+                (*it)->Reset();
+
+            //for(IGameSystem* game_system : m_systems)
+            //    game_system->Reset();
         }
 
         inline void DestroySystems()
         {
-            for(IGameSystem* system : m_systems)
-                system->Destroy();
+            for(auto it = m_systems.rbegin(), end = m_systems.rend(); it != end; ++it)
+                (*it)->Destroy();
+
+            //for(IGameSystem* system : m_systems)
+            //    system->Destroy();
         }
 
     private:
