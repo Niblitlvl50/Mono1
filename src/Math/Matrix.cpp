@@ -42,6 +42,11 @@ math::Matrix math::CreateMatrixWithScale(const math::Vector& scale)
     return matrix;
 }
 
+math::Matrix math::CreateMatrixWithScale(float x, float y)
+{
+    return CreateMatrixWithScale(math::Vector(x, y));
+}
+
 math::Matrix math::CreateMatrixFromZRotation(float radians)
 {
     math::Matrix matrix;
