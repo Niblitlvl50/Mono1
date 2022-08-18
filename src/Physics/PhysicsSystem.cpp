@@ -175,6 +175,7 @@ void PhysicsSystem::ReleaseBody(uint32_t body_id)
 {
     cm::BodyImpl& body = m_impl->bodies[body_id];
     body.ClearCollisionHandlers();
+    body.ResetForces();
 
     std::vector<cm::ShapeImpl*>& body_shapes = m_impl->bodies_shapes[body_id];
     for(cm::ShapeImpl* shape : body_shapes)
