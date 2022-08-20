@@ -23,6 +23,7 @@
 #include "Events/PauseEvent.h"
 #include "Events/QuitEvent.h"
 #include "Events/ApplicationEvent.h"
+#include "Events/ScreenEvent.h"
 #include "Events/SurfaceChangedEvent.h"
 #include "Events/TimeScaleEvent.h"
 
@@ -44,11 +45,13 @@ Engine::Engine(System::IWindow* window, ICamera* camera, SystemContext* system_c
     const event::PauseEventFunc pause_func = std::bind(&Engine::OnPause, this, _1);
     const event::QuitEventFunc quit_func = std::bind(&Engine::OnQuit, this, _1);
     const event::ApplicationEventFunc app_func = std::bind(&Engine::OnApplication, this, _1);
+    const event::ScreenEventFunc screen_func = std::bind(&Engine::OnScreenEvent, this, _1);
     const event::TimeScaleEventFunc time_scale_func = std::bind(&Engine::OnTimeScale, this, _1);
 
     m_pause_token = m_event_handler->AddListener(pause_func);
     m_quit_token = m_event_handler->AddListener(quit_func);
     m_application_token = m_event_handler->AddListener(app_func);
+    m_screen_token = m_event_handler->AddListener(screen_func);
     m_time_scale_token = m_event_handler->AddListener(time_scale_func);
 }
 
@@ -57,6 +60,7 @@ Engine::~Engine()
     m_event_handler->RemoveListener(m_pause_token);
     m_event_handler->RemoveListener(m_quit_token);
     m_event_handler->RemoveListener(m_application_token);
+    m_event_handler->RemoveListener(m_screen_token);
     m_event_handler->RemoveListener(m_time_scale_token);
 }
 
@@ -196,6 +200,24 @@ mono::EventResult Engine::OnApplication(const event::ApplicationEvent& event)
     {
         m_suspended = false;
         m_update_last_time = true;
+    }
+
+    return mono::EventResult::PASS_ON;
+}
+
+mono::EventResult Engine::OnScreenEvent(const event::ScreenEvent& event)
+{
+    switch(event.screen_mode)
+    {
+    case event::ScreenMode::WINDOWED:
+        m_window->SetWindowed();
+        break;
+    case event::ScreenMode::FULLSCREEN:
+        m_window->SetFullscreen(System::FullscreenMode::FULLSCREEN);
+        break;
+    case event::ScreenMode::FULLSCREEN_DESKTOP:
+        m_window->SetFullscreen(System::FullscreenMode::WINDOWED);
+        break;
     }
 
     return mono::EventResult::PASS_ON;

@@ -37,6 +37,10 @@ namespace
         { }
         void Minimize() override
         { }
+        void SetWindowed() override
+        { }
+        void SetFullscreen(System::FullscreenMode fullscreen_mode) override
+        { }
         void RestoreSize() override
         { }
         void SwapBuffers() const override

@@ -71,6 +71,12 @@ namespace System
         BORDERLESS          = ENUM_BIT(3),
     };
 
+    enum class FullscreenMode
+    {
+        FULLSCREEN,
+        WINDOWED
+    };
+
     class IWindow
     {
     public:
@@ -78,6 +84,8 @@ namespace System
         virtual ~IWindow() = default;
         virtual void Maximize() = 0;
         virtual void Minimize() = 0;
+        virtual void SetWindowed() = 0;
+        virtual void SetFullscreen(FullscreenMode fullscreen_mode) = 0;
         virtual void RestoreSize() = 0;
         virtual void SwapBuffers() const = 0;
         virtual void MakeCurrent() = 0;

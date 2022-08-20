@@ -7,6 +7,7 @@ namespace event
     struct QuitEvent;
     struct ApplicationEvent;
     struct SurfaceChangedEvent;
+    struct ScreenEvent;
     struct ActivatedEvent;
     struct KeyDownEvent;
     struct KeyUpEvent;

@@ -11,6 +11,7 @@ namespace event
     using QuitEventFunc = std::function<mono::EventResult (const QuitEvent&)>;
     using ApplicationEventFunc = std::function<mono::EventResult (const ApplicationEvent&)>;
     using SurfaceChangedEventFunc = std::function<mono::EventResult (const SurfaceChangedEvent&)>;
+    using ScreenEventFunc = std::function<mono::EventResult (const ScreenEvent&)>;
     using ActivatedEventFunc = std::function<mono::EventResult (const ActivatedEvent&)>;
     using KeyDownEventFunc = std::function<mono::EventResult (const KeyDownEvent&)>;
     using KeyUpEventFunc = std::function<mono::EventResult (const KeyUpEvent&)>;

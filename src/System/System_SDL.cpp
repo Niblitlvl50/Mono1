@@ -100,6 +100,16 @@ namespace
         {
             SDL_MinimizeWindow(m_window);
         }
+        void SetWindowed()
+        {
+            SDL_SetWindowFullscreen(m_window, 0);
+        }
+        void SetFullscreen(System::FullscreenMode fullscreen_mode) override
+        {
+            const Uint32 flags =
+                (fullscreen_mode == System::FullscreenMode::FULLSCREEN) ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
+            SDL_SetWindowFullscreen(m_window, flags);
+        }
         void RestoreSize() override
         {
             SDL_RestoreWindow(m_window);
