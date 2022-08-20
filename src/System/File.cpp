@@ -1,8 +1,9 @@
 
 #include "File.h"
 #include "System.h"
+#include "Debug.h"
+
 #include <cstdio>
-#include <cassert>
 #include <string_view>
 #include <filesystem>
 
@@ -62,7 +63,7 @@ std::vector<byte> file::FileReadAll(const char* file_name)
 
     file::FilePtr file = OpenAsciiFile(file_name);
     const long n_read = std::fread(bytes.data(), sizeof(byte), file_size, file.get());
-    assert(n_read <= file_size);
+    MONO_ASSERT(n_read <= file_size);
     bytes.resize(n_read);
 
     return bytes;
@@ -75,7 +76,7 @@ std::vector<byte> file::FileReadAllBinary(const char* file_name)
 
     file::FilePtr file = OpenBinaryFile(file_name);
     const long n_read = std::fread(bytes.data(), sizeof(byte), file_size, file.get());
-    assert(n_read <= file_size);
+    MONO_ASSERT(n_read <= file_size);
     bytes.resize(n_read);
 
     return bytes;
@@ -87,7 +88,7 @@ std::vector<byte> file::FileRead(const file::FilePtr& file)
     std::vector<byte> bytes(file_size, 0);
 
     const long n_read = std::fread(bytes.data(), 1, file_size, file.get());
-    assert(n_read <= file_size);
+    MONO_ASSERT(n_read <= file_size);
     bytes.resize(n_read);
 
     return bytes;

@@ -5,13 +5,13 @@
 #include "System/Hash.h"
 #include "System/System.h"
 #include "System/Uuid.h"
+#include "System/Debug.h"
 #include "Util/Algorithm.h"
 
 #include <algorithm>
 #include <vector>
 #include <iterator>
 #include <numeric>
-#include <cassert>
 
 using namespace mono;
 
@@ -293,7 +293,7 @@ uint32_t EntitySystem::AddReleaseCallback(uint32_t entity_id, const ReleaseCallb
         }
     }
 
-    assert(callback_id != std::numeric_limits<uint32_t>::max());
+    MONO_ASSERT(callback_id != std::numeric_limits<uint32_t>::max());
     m_release_callbacks[entity_id][callback_id] = callback;
     return callback_id;
 }
@@ -359,15 +359,15 @@ void EntitySystem::DeferredRelease()
 
 Entity* EntitySystem::AllocateEntity(const char* name)
 {
-    assert(!m_free_indices.empty());
+    MONO_ASSERT(!m_free_indices.empty());
 
     const uint32_t entity_id = m_free_indices.back();
     m_free_indices.pop_back();
 
     Entity& entity = m_entities[entity_id];
-    assert(entity.id == INVALID_ID);
-    assert(entity.components.empty());
-    assert(m_debug_names[entity_id].empty());
+    MONO_ASSERT(entity.id == INVALID_ID);
+    MONO_ASSERT(entity.components.empty());
+    MONO_ASSERT(m_debug_names[entity_id].empty());
 
     m_debug_names[entity_id] = name;
 

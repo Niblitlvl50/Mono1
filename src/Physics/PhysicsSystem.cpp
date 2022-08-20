@@ -11,6 +11,7 @@
 #include "Math/MathFunctions.h"
 #include "Util/ObjectPool.h"
 #include "System/System.h"
+#include "System/Debug.h"
 
 #include "chipmunk/chipmunk.h"
 #include "chipmunk/chipmunk_private.h"
@@ -20,7 +21,6 @@
 #include <numeric>
 #include <cstdio>
 #include <unordered_map>
-#include <cassert>
 
 using namespace mono;
 
@@ -208,7 +208,7 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const CircleComponent& p
 
     mono::IBody& body = m_impl->bodies[body_id];
     cpCircleShape* shape_data = m_impl->circle_shape_pool.GetPoolData();
-    assert(shape_data != nullptr);
+    MONO_ASSERT(shape_data != nullptr);
 
     cpCircleShapeInit(shape_data, body.Handle(), params.radius, offset);
 
@@ -240,7 +240,7 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const BoxComponent& box_
 {
     mono::IBody& body = m_impl->bodies[body_id];
     cpPolyShape* shape_data = m_impl->poly_shape_pool.GetPoolData();
-    assert(shape_data != nullptr);
+    MONO_ASSERT(shape_data != nullptr);
 
     const float hw = box_params.size.x / 2.0f;
     const float hh = box_params.size.y / 2.0f;
@@ -271,7 +271,7 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const SegmentComponent& 
 
     mono::IBody& body = m_impl->bodies[body_id];
     cpSegmentShape* shape_data = m_impl->segment_shape_pool.GetPoolData();
-    assert(shape_data != nullptr);
+    MONO_ASSERT(shape_data != nullptr);
 
     cpSegmentShapeInit(shape_data, body.Handle(), start, end, segment_params.radius);
 
@@ -306,7 +306,7 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const PolyComponent& pol
 
     mono::IBody& body = m_impl->bodies[body_id];
     cpPolyShape* shape_data = m_impl->poly_shape_pool.GetPoolData();
-    assert(shape_data != nullptr);
+    MONO_ASSERT(shape_data != nullptr);
 
     cpPolyShapeInitRaw(shape_data, body.Handle(), (int)vects.size(), vects.data(), 0.1f);
 

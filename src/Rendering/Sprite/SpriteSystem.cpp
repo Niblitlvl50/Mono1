@@ -5,9 +5,9 @@
 #include "Rendering/RenderSystem.h"
 #include "TransformSystem/TransformSystem.h"
 #include "System/Hash.h"
+#include "System/Debug.h"
 #include "Util/Random.h"
 
-#include <cassert>
 
 using namespace mono;
 
@@ -23,7 +23,7 @@ SpriteSystem::SpriteSystem(uint32_t n_sprites, mono::TransformSystem* transform_
 
 mono::Sprite* SpriteSystem::AllocateSprite(uint32_t sprite_id)
 {
-    assert(!m_alive[sprite_id]);
+    MONO_ASSERT(!m_alive[sprite_id]);
     m_alive[sprite_id] = true;
     m_sprite_layers[sprite_id] = 0;
     m_enabled[sprite_id] = true;
@@ -47,7 +47,7 @@ bool SpriteSystem::IsAllocated(uint32_t sprite_id)
 
 void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& sprite_args)
 {
-    assert(m_alive[sprite_id]);
+    MONO_ASSERT(m_alive[sprite_id]);
 
     mono::Sprite& sprite = m_sprites[sprite_id];
     mono::GetSpriteFactory()->CreateSprite(sprite, sprite_args.sprite_file);

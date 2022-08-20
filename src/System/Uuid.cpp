@@ -1,10 +1,9 @@
 
 #include "Uuid.h"
 #include "System/Hash.h"
+#include "System/Debug.h"
 
 #include "uuid4/src/uuid4.h"
-
-#include <cassert>
 
 uint32_t uuid::Uuid4Hashed()
 {
@@ -13,7 +12,7 @@ uint32_t uuid::Uuid4Hashed()
             return uuid4_init();
         }();
         (void)init_result;
-        assert(init_result == UUID4_ESUCCESS);
+        MONO_ASSERT(init_result == UUID4_ESUCCESS);
     }
 
     char uuid_string[UUID4_LEN];

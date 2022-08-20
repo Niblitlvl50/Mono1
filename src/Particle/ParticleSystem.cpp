@@ -4,11 +4,11 @@
 #include "Rendering/Texture/ITextureFactory.h"
 #include "Rendering/RenderSystem.h"
 #include "System/Hash.h"
+#include "System/Debug.h"
 #include "TransformSystem/TransformSystem.h"
 #include "Util/Algorithm.h"
 #include "Util/Random.h"
 
-#include <cassert>
 
 using namespace mono;
 
@@ -221,7 +221,7 @@ ParticlePoolComponent* ParticleSystem::AllocatePool(uint32_t id)
 
 ParticlePoolComponent* ParticleSystem::AllocatePool(uint32_t id, uint32_t pool_size, ParticleUpdater update_function)
 {
-    assert(m_active_pools[id] == false);
+    MONO_ASSERT(m_active_pools[id] == false);
 
     ParticlePoolComponent& particle_pool = m_particle_pools[id];
 
@@ -249,7 +249,7 @@ ParticlePoolComponent* ParticleSystem::AllocatePool(uint32_t id, uint32_t pool_s
 
 void ParticleSystem::ReleasePool(uint32_t id)
 {
-    assert(m_active_pools[id]);
+    MONO_ASSERT(m_active_pools[id]);
 
     std::vector<ParticleEmitterComponent*>& attached_emitters = m_particle_pools_emitters[id];
     for(ParticleEmitterComponent* emitter : attached_emitters)
@@ -298,7 +298,7 @@ void ParticleSystem::SetPoolData(
 
 ParticlePoolComponent* ParticleSystem::GetPool(uint32_t id)
 {
-    assert(m_active_pools[id]);
+    MONO_ASSERT(m_active_pools[id]);
 
     ParticlePoolComponent& particle_pool = m_particle_pools[id];
     return &particle_pool;
@@ -364,7 +364,7 @@ void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, c
         Validate(generator_properties.start_size_spread) &&
         Validate(generator_properties.end_size_spread);
 
-    assert(valid_data);
+    MONO_ASSERT(valid_data);
 
     const ParticleGenerator generator = [generator_properties](const math::Vector& position, ParticlePoolComponentView& component_view) {
 

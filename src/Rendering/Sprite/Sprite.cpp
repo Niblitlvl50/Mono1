@@ -4,9 +4,9 @@
 #include "Rendering/Texture/ITexture.h"
 
 #include "System/System.h"
+#include "System/Debug.h"
 
 #include <stdexcept>
-#include <cassert>
 #include <cstring>
 
 using namespace mono;
@@ -162,7 +162,7 @@ void Sprite::SetAnimation(const char* animation_name, const SpriteAnimationCallb
 
 void Sprite::SetAnimation(int id, const SpriteAnimationCallback& callback)
 {
-    assert(id < static_cast<int>(m_sprite_data->animations.size()));
+    MONO_ASSERT(id < static_cast<int>(m_sprite_data->animations.size()));
 
     m_active_animation = id;
     m_callback = callback;

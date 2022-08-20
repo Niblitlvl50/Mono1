@@ -1,8 +1,9 @@
 
 #pragma once
 
+#include "System/Debug.h"
+
 #include <vector>
-#include <cassert>
 #include <cstdint>
 
 namespace mono
@@ -20,7 +21,7 @@ namespace mono
 
         T* Set(uint32_t index, T&& data)
         {
-            assert(m_active[index] == false);
+            MONO_ASSERT(m_active[index] == false);
 
             m_active[index] = true;
             m_types[index] = std::move(data);
@@ -30,13 +31,13 @@ namespace mono
 
         T* Get(uint32_t index)
         {
-            assert(m_active[index] == true);
+            MONO_ASSERT(m_active[index] == true);
             return &m_types[index];
         }
 
         void Release(uint32_t index)
         {
-            assert(m_active[index] == true);
+            MONO_ASSERT(m_active[index] == true);
             m_active[index] = false;
         }
 
