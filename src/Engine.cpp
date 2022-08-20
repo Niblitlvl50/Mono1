@@ -24,7 +24,6 @@
 #include "Events/QuitEvent.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/SurfaceChangedEvent.h"
-#include "Events/ActivatedEvent.h"
 #include "Events/TimeScaleEvent.h"
 
 #include "Rendering/RendererSokol.h"
@@ -45,13 +44,11 @@ Engine::Engine(System::IWindow* window, ICamera* camera, SystemContext* system_c
     const event::PauseEventFunc pause_func = std::bind(&Engine::OnPause, this, _1);
     const event::QuitEventFunc quit_func = std::bind(&Engine::OnQuit, this, _1);
     const event::ApplicationEventFunc app_func = std::bind(&Engine::OnApplication, this, _1);
-    const event::ActivatedEventFunc activated_func = std::bind(&Engine::OnActivated, this, _1);
     const event::TimeScaleEventFunc time_scale_func = std::bind(&Engine::OnTimeScale, this, _1);
 
     m_pause_token = m_event_handler->AddListener(pause_func);
     m_quit_token = m_event_handler->AddListener(quit_func);
     m_application_token = m_event_handler->AddListener(app_func);
-    m_activated_token = m_event_handler->AddListener(activated_func);
     m_time_scale_token = m_event_handler->AddListener(time_scale_func);
 }
 
@@ -60,7 +57,6 @@ Engine::~Engine()
     m_event_handler->RemoveListener(m_pause_token);
     m_event_handler->RemoveListener(m_quit_token);
     m_event_handler->RemoveListener(m_application_token);
-    m_event_handler->RemoveListener(m_activated_token);
     m_event_handler->RemoveListener(m_time_scale_token);
 }
 
@@ -202,12 +198,6 @@ mono::EventResult Engine::OnApplication(const event::ApplicationEvent& event)
         m_update_last_time = true;
     }
 
-    return mono::EventResult::PASS_ON;
-}
-
-mono::EventResult Engine::OnActivated(const event::ActivatedEvent& event)
-{
-    //m_window->Activated(event.gain);
     return mono::EventResult::PASS_ON;
 }
 
