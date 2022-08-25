@@ -30,3 +30,15 @@ void debug::PrintStacktrace(int skip_frames, int n_frames)
     free(strs);
 #endif
 }
+
+void debug::LogAssert(const char* condition, const char* message, const char* file, int line)
+{
+    if(message)
+    {
+        System::Log("[%s(%d)] Assert! Condition: '%s' Message: '%s'.", file, line, condition, message);
+    }
+    else
+    {
+        System::Log("[%s(%d)] Assert! Condition: '%s'.", file, line, condition);
+    }
+}

@@ -7,12 +7,11 @@
 #include "Rendering/Texture/TextureFactoryImpl.h"
 
 #include "System/System.h"
+#include "System/Debug.h"
 
 #include "imgui/imgui.h"
 
-#ifdef __APPLE__
-    #define SOKOL_ASSERT(c) if(!(c)) __builtin_trap();
-#endif
+#define SOKOL_ASSERT(c) MONO_ASSERT(c)
 
 #define SOKOL_TRACE_HOOKS
 #define SOKOL_GLCORE33
@@ -40,35 +39,35 @@ namespace
 
     void fail_buffer(sg_buffer buf_id, void* user_data)
     {
-        System::Log("RenderSystem|fail_buffer.");
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_buffer.");
     }
     void fail_image(sg_image img_id, void* user_data)
     {
-        System::Log("RenderSystem|fail_image.");
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_image.");
     }
     void fail_shader(sg_shader shd_id, void* user_data)
     {
-        System::Log("RenderSystem|fail_shader.");
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_shader.");
     }
     void fail_pipeline(sg_pipeline pip_id, void* user_data)
     {
-        System::Log("RenderSystem|fail_pipeline.");
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_pipeline.");
     }
     void fail_pass(sg_pass pass_id, void* user_data)
     {
-        System::Log("RenderSystem|fail_pass.");
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_pass.");
     }
     void err_pass_invalid(void* user_data)
     {
-        System::Log("RenderSystem|err_pass_invalid.");
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_pass_invalid.");
     }
     void err_draw_invalid(void* user_data)
     {
-        System::Log("RenderSystem|err_draw_invalid.");
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_draw_invalid.");
     }
     void err_bindings_invalid(void* user_data)
     {
-        System::Log("RenderSystem|err_bindings_invalid.");
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_bindings_invalid.");
     }
 }
 
