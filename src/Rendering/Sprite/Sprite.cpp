@@ -163,6 +163,7 @@ void Sprite::SetAnimation(const char* animation_name, const SpriteAnimationCallb
 void Sprite::SetAnimation(int id, const SpriteAnimationCallback& callback)
 {
     MONO_ASSERT(id < static_cast<int>(m_sprite_data->animations.size()));
+    MONO_ASSERT(id >= 0);
 
     m_active_animation = id;
     m_callback = callback;
