@@ -92,14 +92,14 @@ namespace
 
         struct FlipSpriteInput
         {
-            float flip_horizontal;
-            float flip_vertical;
+            int flip_horizontal;
+            int flip_vertical;
         };
 
         uniform TimeInput time_input;
         uniform TransformInput transform_input;
         uniform FlipSpriteInput flip_input;
-        uniform float wind_sway_enabled;
+        uniform int wind_sway_enabled;
 
         layout (location = 0) in vec2 a_vertex_position;
         layout (location = 1) in vec2 a_vertex_offset;
@@ -112,7 +112,7 @@ namespace
         void main()
         {
             vec2 wind_sway_offset = vec2(0.0, 0.0);
-            if(wind_sway_enabled != 0.0)
+            if(wind_sway_enabled != 0)
             {
                 // Use world x as noise parameter to make some difference.
                 //float noise = abs(noise3(transform_input.model[3].xyz).x);
@@ -121,17 +121,23 @@ namespace
                 wind_sway_offset.x = sin(time_input.total_time * noise * 3.0) * (a_vertex_height * 0.025);
             }
 
+            vec2 vertex_offset = a_vertex_offset;
+            if(flip_input.flip_horizontal != 0)
+                vertex_offset *= vec2(-1.0, 1.0);
+
             gl_Position =
                 transform_input.projection *
                 transform_input.view *
                 transform_input.model *
-                vec4(a_vertex_position + a_vertex_offset + wind_sway_offset, 0.0, 1.0);
+                vec4(a_vertex_position + vertex_offset + wind_sway_offset, 0.0, 1.0);
 
             vec2 local_texture_coord = a_uv;
-            if(flip_input.flip_vertical != 0.0)
+            if(flip_input.flip_vertical != 0)
                 local_texture_coord.y = a_uv_flipped.y;
-            if(flip_input.flip_horizontal != 0.0)
+
+            if(flip_input.flip_horizontal != 0)
                 local_texture_coord.x = a_uv_flipped.x;
+
             v_texture_coord = local_texture_coord;
         }
     )";
@@ -141,7 +147,7 @@ namespace
 
         uniform sampler2D sampler;
         uniform vec4 color_shade;
-        uniform float flash_sprite;
+        uniform int flash_sprite;
 
         in vec2 v_texture_coord;
         out vec4 frag_color;
@@ -149,7 +155,7 @@ namespace
         void main()
         {
             vec4 color = texture(sampler, v_texture_coord) * color_shade;
-            if(flash_sprite != 0.0)
+            if(flash_sprite != 0)
                 color.rgb = vec3(1.0);
 
             frag_color = color;
@@ -202,15 +208,15 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
     shader_desc.vs.uniform_blocks[U_VS_TRANSFORM_BLOCK].uniforms[2].name = "transform_input.model";
     shader_desc.vs.uniform_blocks[U_VS_TRANSFORM_BLOCK].uniforms[2].type = SG_UNIFORMTYPE_MAT4;
 
-    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].size = sizeof(float) * 2;
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].size = sizeof(int) * 2;
     shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[0].name = "flip_input.flip_horizontal";
-    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_INT;
     shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].name = "flip_input.flip_vertical";
-    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_FLOAT;
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_INT;
 
-    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].size = sizeof(float);
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].size = sizeof(int);
     shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].name = "wind_sway_enabled";
-    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_INT;
 
     shader_desc.fs.source = fragment_source;
 
@@ -222,9 +228,9 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
     shader_desc.fs.uniform_blocks[U_FS_COLOR_SHADE_BLOCK].uniforms[0].name = "color_shade";
     shader_desc.fs.uniform_blocks[U_FS_COLOR_SHADE_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT4;
 
-    shader_desc.fs.uniform_blocks[U_FS_FLASH_BLOCK].size = sizeof(float);
+    shader_desc.fs.uniform_blocks[U_FS_FLASH_BLOCK].size = sizeof(int);
     shader_desc.fs.uniform_blocks[U_FS_FLASH_BLOCK].uniforms[0].name = "flash_sprite";
-    shader_desc.fs.uniform_blocks[U_FS_FLASH_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
+    shader_desc.fs.uniform_blocks[U_FS_FLASH_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_INT;
 
     sg_shader shader_handle = sg_make_shader(&shader_desc);
 
@@ -335,20 +341,20 @@ void SpritePipeline::SetFlipSprite(bool flip_horizontal, bool flip_vertical)
 {
     struct FlipInputBlock
     {
-        float flip_horizontal;
-        float flip_vertical;
+        int flip_horizontal;
+        int flip_vertical;
     } flip_sprite_block;
 
-    flip_sprite_block.flip_horizontal = flip_horizontal ? 1.0f : 0.0f;
-    flip_sprite_block.flip_vertical = flip_vertical ? 1.0f : 0.0f;
+    flip_sprite_block.flip_horizontal = flip_horizontal ? 1 : 0;
+    flip_sprite_block.flip_vertical = flip_vertical ? 1 : 0;
 
     sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_FLIP_SPRITE_BLOCK, { &flip_sprite_block, sizeof(FlipInputBlock) });
 }
 
 void SpritePipeline::SetWindSway(bool enable_wind)
 {
-    const float value = enable_wind ? 1.0f : 0.0f;
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_WIND_SWAY_BLOCK, { &value, sizeof(float) });
+    const int value = enable_wind ? 1 : 0;
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_WIND_SWAY_BLOCK, { &value, sizeof(int) });
 }
 
 void SpritePipeline::SetShade(const mono::Color::RGBA& color)
@@ -358,6 +364,6 @@ void SpritePipeline::SetShade(const mono::Color::RGBA& color)
 
 void SpritePipeline::SetFlashSprite(bool flash)
 {
-    const float value = flash ? 1.0f : 0.0f;
-    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FS_FLASH_BLOCK, { &value, sizeof(float) });
+    const int value = flash ? 1 : 0;
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FS_FLASH_BLOCK, { &value, sizeof(int) });
 }
