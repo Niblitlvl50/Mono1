@@ -341,14 +341,11 @@ void VITA_JoystickQuit(void)
 {
 }
 
-SDL_JoystickGUID VITA_JoystickGetDeviceGUID( int device_index )
+SDL_JoystickGUID VITA_JoystickGetDeviceGUID(int device_index)
 {
-    SDL_JoystickGUID guid;
-    /* the GUID is just the first 16 chars of the name for now */
-    const char *name = VITA_JoystickGetDeviceName( device_index );
-    SDL_zero( guid );
-    SDL_memcpy( &guid, name, SDL_min( sizeof(guid), SDL_strlen( name ) ) );
-    return guid;
+    /* the GUID is just the name for now */
+    const char *name = VITA_JoystickGetDeviceName(device_index);
+    return SDL_CreateJoystickGUIDForName(name);
 }
 
 static int
@@ -398,6 +395,12 @@ VITA_JoystickSetSensorsEnabled(SDL_Joystick *joystick, SDL_bool enabled)
     return SDL_Unsupported();
 }
 
+static SDL_bool
+VITA_JoystickGetGamepadMapping(int device_index, SDL_GamepadMapping *out)
+{
+    return SDL_FALSE;
+}
+
 SDL_JoystickDriver SDL_VITA_JoystickDriver =
 {
     VITA_JoystickInit,
@@ -423,6 +426,7 @@ SDL_JoystickDriver SDL_VITA_JoystickDriver =
     VITA_JoystickUpdate,
     VITA_JoystickClose,
     VITA_JoystickQuit,
+    VITA_JoystickGetGamepadMapping,
 };
 
 #endif /* SDL_JOYSTICK_VITA */

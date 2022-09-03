@@ -55,7 +55,7 @@ Cocoa_DeleteDevice(SDL_VideoDevice * device)
 }}
 
 static SDL_VideoDevice *
-Cocoa_CreateDevice(int devindex)
+Cocoa_CreateDevice(void)
 { @autoreleasepool
 {
     SDL_VideoDevice *device;
@@ -100,6 +100,7 @@ Cocoa_CreateDevice(int devindex)
     device->SetWindowMinimumSize = Cocoa_SetWindowMinimumSize;
     device->SetWindowMaximumSize = Cocoa_SetWindowMaximumSize;
     device->SetWindowOpacity = Cocoa_SetWindowOpacity;
+    device->GetWindowSizeInPixels = Cocoa_GetWindowSizeInPixels;
     device->ShowWindow = Cocoa_ShowWindow;
     device->HideWindow = Cocoa_HideWindow;
     device->RaiseWindow = Cocoa_RaiseWindow;
@@ -133,7 +134,6 @@ Cocoa_CreateDevice(int devindex)
     device->GL_UnloadLibrary = Cocoa_GL_UnloadLibrary;
     device->GL_CreateContext = Cocoa_GL_CreateContext;
     device->GL_MakeCurrent = Cocoa_GL_MakeCurrent;
-    device->GL_GetDrawableSize = Cocoa_GL_GetDrawableSize;
     device->GL_SetSwapInterval = Cocoa_GL_SetSwapInterval;
     device->GL_GetSwapInterval = Cocoa_GL_GetSwapInterval;
     device->GL_SwapWindow = Cocoa_GL_SwapWindow;
@@ -197,6 +197,7 @@ Cocoa_VideoInit(_THIS)
     }
 
     data.allow_spaces = SDL_GetHintBoolean(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES, SDL_TRUE);
+    data.trackpad_is_touch_only = SDL_GetHintBoolean(SDL_HINT_TRACKPAD_IS_TOUCH_ONLY, SDL_FALSE);
 
     data.swaplock = SDL_CreateMutex();
     if (!data.swaplock) {

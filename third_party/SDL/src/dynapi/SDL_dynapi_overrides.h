@@ -875,3 +875,14 @@
 #define SDL_HasLASX SDL_HasLASX_REAL
 #define SDL_RenderGetD3D12Device SDL_RenderGetD3D12Device_REAL
 #define SDL_utf8strnlen SDL_utf8strnlen_REAL
+#define SDL_GDKGetTaskQueue SDL_GDKGetTaskQueue_REAL
+#define SDL_GDKRunApp SDL_GDKRunApp_REAL
+#define SDL_GetOriginalMemoryFunctions SDL_GetOriginalMemoryFunctions_REAL
+#define SDL_ResetKeyboard SDL_ResetKeyboard_REAL
+#define SDL_GetDefaultAudioInfo SDL_GetDefaultAudioInfo_REAL
+#define SDL_GetPointDisplayIndex SDL_GetPointDisplayIndex_REAL
+#define SDL_GetRectDisplayIndex SDL_GetRectDisplayIndex_REAL
+#define SDL_ResetHint SDL_ResetHint_REAL
+#define SDL_crc16 SDL_crc16_REAL
+#define SDL_GetWindowSizeInPixels SDL_GetWindowSizeInPixels_REAL
+#define SDL_GetJoystickGUIDInfo SDL_GetJoystickGUIDInfo_REAL

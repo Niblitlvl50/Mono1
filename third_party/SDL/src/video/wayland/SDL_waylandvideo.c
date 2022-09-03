@@ -174,7 +174,7 @@ Wayland_DeleteDevice(SDL_VideoDevice *device)
 }
 
 static SDL_VideoDevice *
-Wayland_CreateDevice(int devindex)
+Wayland_CreateDevice(void)
 {
     SDL_VideoDevice *device;
     SDL_VideoData *data;
@@ -230,7 +230,6 @@ Wayland_CreateDevice(int devindex)
     device->GL_SwapWindow = Wayland_GLES_SwapWindow;
     device->GL_GetSwapInterval = Wayland_GLES_GetSwapInterval;
     device->GL_SetSwapInterval = Wayland_GLES_SetSwapInterval;
-    device->GL_GetDrawableSize = Wayland_GLES_GetDrawableSize;
     device->GL_MakeCurrent = Wayland_GLES_MakeCurrent;
     device->GL_CreateContext = Wayland_GLES_CreateContext;
     device->GL_LoadLibrary = Wayland_GLES_LoadLibrary;
@@ -257,6 +256,7 @@ Wayland_CreateDevice(int devindex)
     device->SetWindowMaximumSize = Wayland_SetWindowMaximumSize;
     device->SetWindowModalFor = Wayland_SetWindowModalFor;
     device->SetWindowTitle = Wayland_SetWindowTitle;
+    device->GetWindowSizeInPixels = Wayland_GetWindowSizeInPixels;
     device->DestroyWindow = Wayland_DestroyWindow;
     device->SetWindowHitTest = Wayland_SetWindowHitTest;
     device->FlashWindow = Wayland_FlashWindow;
@@ -274,12 +274,12 @@ Wayland_CreateDevice(int devindex)
     device->Vulkan_UnloadLibrary = Wayland_Vulkan_UnloadLibrary;
     device->Vulkan_GetInstanceExtensions = Wayland_Vulkan_GetInstanceExtensions;
     device->Vulkan_CreateSurface = Wayland_Vulkan_CreateSurface;
-    device->Vulkan_GetDrawableSize = Wayland_Vulkan_GetDrawableSize;
 #endif
 
     device->free = Wayland_DeleteDevice;
 
-    device->disable_display_mode_switching = SDL_TRUE;
+    device->quirk_flags = VIDEO_DEVICE_QUIRK_DISABLE_DISPLAY_MODE_SWITCHING |
+                          VIDEO_DEVICE_QUIRK_DISABLE_UNSET_FULLSCREEN_ON_MINIMIZE;
 
     return device;
 }
@@ -736,7 +736,7 @@ Wayland_add_display(SDL_VideoData *d, uint32_t id)
 }
 
 static void
-Wayland_free_display(uint32_t id)
+Wayland_free_display(SDL_VideoData *d, uint32_t id)
 {
     int num_displays = SDL_GetNumVideoDisplays();
     SDL_VideoDisplay *display;
@@ -747,6 +747,19 @@ Wayland_free_display(uint32_t id)
         display = SDL_GetDisplay(i);
         data = (SDL_WaylandOutputData *) display->driverdata;
         if (data->registry_id == id) {
+            if (d->output_list != NULL) {
+                SDL_WaylandOutputData *node = d->output_list;
+                if (node == data) {
+                    d->output_list = node->next;
+                } else {
+                    while (node->next != data && node->next != NULL) {
+                        node = node->next;
+                    }
+                    if (node->next != NULL) {
+                        node->next = node->next->next;
+                    }
+                }
+            }
             SDL_DelVideoDisplay(i);
             if (data->xdg_output) {
                 zxdg_output_v1_destroy(data->xdg_output);
@@ -886,8 +899,9 @@ display_handle_global(void *data, struct wl_registry *registry, uint32_t id,
 static void
 display_remove_global(void *data, struct wl_registry *registry, uint32_t id)
 {
+    SDL_VideoData *d = data;
     /* We don't get an interface, just an ID, so assume it's a wl_output :shrug: */
-    Wayland_free_display(id);
+    Wayland_free_display(d, id);
 }
 
 static const struct wl_registry_listener registry_listener = {

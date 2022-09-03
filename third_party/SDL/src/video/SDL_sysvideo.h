@@ -149,6 +149,12 @@ struct SDL_SysWMinfo;
 /* Define the SDL video driver structure */
 #define _THIS   SDL_VideoDevice *_this
 
+/* Video device flags */
+typedef enum {
+    VIDEO_DEVICE_QUIRK_DISABLE_DISPLAY_MODE_SWITCHING       = 0x01,
+    VIDEO_DEVICE_QUIRK_DISABLE_UNSET_FULLSCREEN_ON_MINIMIZE = 0x02,
+} DeviceQuirkFlags;
+
 struct SDL_VideoDevice
 {
     /* * * */
@@ -221,6 +227,7 @@ struct SDL_VideoDevice
     void (*SetWindowMinimumSize) (_THIS, SDL_Window * window);
     void (*SetWindowMaximumSize) (_THIS, SDL_Window * window);
     int (*GetWindowBordersSize) (_THIS, SDL_Window * window, int *top, int *left, int *bottom, int *right);
+    void (*GetWindowSizeInPixels)(_THIS, SDL_Window *window, int *w, int *h);
     int (*SetWindowOpacity) (_THIS, SDL_Window * window, float opacity);
     int (*SetWindowModalFor) (_THIS, SDL_Window * modal_window, SDL_Window * parent_window);
     int (*SetWindowInputFocus) (_THIS, SDL_Window * window);
@@ -307,7 +314,7 @@ struct SDL_VideoDevice
     /* Text input */
     void (*StartTextInput) (_THIS);
     void (*StopTextInput) (_THIS);
-    void (*SetTextInputRect) (_THIS, SDL_Rect *rect);
+    void (*SetTextInputRect) (_THIS, const SDL_Rect *rect);
     void (*ClearComposition) (_THIS);
     SDL_bool (*IsTextInputShown) (_THIS);
 
@@ -347,7 +354,7 @@ struct SDL_VideoDevice
     Uint32 next_object_id;
     char *clipboard_text;
     SDL_bool setting_display_mode;
-    SDL_bool disable_display_mode_switching;
+    Uint32 quirk_flags;
 
     /* * * */
     /* Data used by the GL drivers */
@@ -368,6 +375,7 @@ struct SDL_VideoDevice
         int stereo;
         int multisamplebuffers;
         int multisamplesamples;
+        int floatbuffers;
         int accelerated;
         int major_version;
         int minor_version;
@@ -432,7 +440,7 @@ typedef struct VideoBootStrap
 {
     const char *name;
     const char *desc;
-    SDL_VideoDevice *(*create) (int devindex);
+    SDL_VideoDevice *(*create) (void);
 } VideoBootStrap;
 
 /* Not all of these are available in a given build. Use #ifdefs, etc. */
@@ -445,6 +453,7 @@ extern VideoBootStrap HAIKU_bootstrap;
 extern VideoBootStrap PND_bootstrap;
 extern VideoBootStrap UIKIT_bootstrap;
 extern VideoBootStrap Android_bootstrap;
+extern VideoBootStrap PS2_bootstrap;
 extern VideoBootStrap PSP_bootstrap;
 extern VideoBootStrap VITA_bootstrap;
 extern VideoBootStrap RISCOS_bootstrap;
@@ -452,6 +461,7 @@ extern VideoBootStrap RPI_bootstrap;
 extern VideoBootStrap KMSDRM_bootstrap;
 extern VideoBootStrap KMSDRM_LEGACY_bootstrap;
 extern VideoBootStrap DUMMY_bootstrap;
+extern VideoBootStrap DUMMY_evdev_bootstrap;
 extern VideoBootStrap Wayland_bootstrap;
 extern VideoBootStrap NACL_bootstrap;
 extern VideoBootStrap VIVANTE_bootstrap;
@@ -502,6 +512,8 @@ extern SDL_bool SDL_ShouldAllowTopmost(void);
 extern float SDL_ComputeDiagonalDPI(int hpix, int vpix, float hinches, float vinches);
 
 extern void SDL_ToggleDragAndDropSupport(void);
+
+extern int SDL_GetPointDisplayIndex(const SDL_Point * point);
 
 #endif /* SDL_sysvideo_h_ */
 

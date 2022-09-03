@@ -31,8 +31,10 @@
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/CGLRenderers.h>
 
+#include "SDL_hints.h"
 #include "SDL_loadso.h"
 #include "SDL_opengl.h"
+#include "../../SDL_hints_c.h"
 
 #define DEFAULT_OPENGL  "/System/Library/Frameworks/OpenGL.framework/Libraries/libGL.dylib"
 
@@ -41,6 +43,14 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #endif
+
+static SDL_bool SDL_opengl_async_dispatch = SDL_FALSE;
+
+static void SDLCALL
+SDL_OpenGLAsyncDispatchChanged(void *userdata, const char *name, const char *oldValue, const char *hint)
+{
+    SDL_opengl_async_dispatch = SDL_GetStringBoolean(hint, SDL_FALSE);
+}
 
 @implementation SDLOpenGLContext : NSOpenGLContext
 
@@ -52,6 +62,8 @@
         SDL_AtomicSet(&self->dirty, 0);
         self->window = NULL;
     }
+
+    SDL_AddHintCallback(SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH, SDL_OpenGLAsyncDispatchChanged, NULL);
     return self;
 }
 
@@ -135,8 +147,17 @@
     if ([NSThread isMainThread]) {
         [super update];
     } else {
-        dispatch_async(dispatch_get_main_queue(), ^{ [super update]; });
+        if (SDL_opengl_async_dispatch) {
+            dispatch_async(dispatch_get_main_queue(), ^{ [super update]; });
+        } else {
+            dispatch_sync(dispatch_get_main_queue(), ^{ [super update]; });
+        }
     }
+}
+
+- (void)dealloc
+{
+    SDL_DelHintCallback(SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH, SDL_OpenGLAsyncDispatchChanged, NULL);
 }
 
 @end
@@ -189,6 +210,7 @@ Cocoa_GL_CreateContext(_THIS, SDL_Window * window)
     const char *glversion;
     int glversion_major;
     int glversion_minor;
+    NSOpenGLPixelFormatAttribute profile;
 
     if (_this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES) {
 #if SDL_VIDEO_OPENGL_EGL
@@ -216,7 +238,7 @@ Cocoa_GL_CreateContext(_THIS, SDL_Window * window)
 
     attr[i++] = NSOpenGLPFAAllowOfflineRenderers;
 
-    NSOpenGLPixelFormatAttribute profile = NSOpenGLProfileVersionLegacy;
+    profile = NSOpenGLProfileVersionLegacy;
     if (_this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_CORE) {
         profile = NSOpenGLProfileVersion3_2Core;
     }
@@ -259,6 +281,9 @@ Cocoa_GL_CreateContext(_THIS, SDL_Window * window)
         attr[i++] = NSOpenGLPFASamples;
         attr[i++] = _this->gl_config.multisamplesamples;
         attr[i++] = NSOpenGLPFANoRecovery;
+    }
+    if (_this->gl_config.floatbuffers) {
+        attr[i++] = NSOpenGLPFAColorFloat;
     }
 
     if (_this->gl_config.accelerated >= 0) {
@@ -358,28 +383,6 @@ Cocoa_GL_MakeCurrent(_THIS, SDL_Window * window, SDL_GLContext context)
     }
 
     return 0;
-}}
-
-void
-Cocoa_GL_GetDrawableSize(_THIS, SDL_Window * window, int * w, int * h)
-{ @autoreleasepool
-{
-    SDL_WindowData *windata = (__bridge SDL_WindowData *) window->driverdata;
-    NSView *contentView = windata.sdlContentView;
-    NSRect viewport = [contentView bounds];
-
-    if (window->flags & SDL_WINDOW_ALLOW_HIGHDPI) {
-        /* This gives us the correct viewport for a Retina-enabled view. */
-        viewport = [contentView convertRectToBacking:viewport];
-    }
-
-    if (w) {
-        *w = viewport.size.width;
-    }
-
-    if (h) {
-        *h = viewport.size.height;
-    }
 }}
 
 int

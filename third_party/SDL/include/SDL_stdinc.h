@@ -259,7 +259,7 @@ typedef uint64_t Uint64;
 #ifndef SDL_PRIs64
 #ifdef PRIs64
 #define SDL_PRIs64 PRIs64
-#elif defined(__WIN32__)
+#elif defined(__WIN32__) || defined(__GDK__)
 #define SDL_PRIs64 "I64d"
 #elif defined(__LINUX__) && defined(__LP64__)
 #define SDL_PRIs64 "ld"
@@ -270,7 +270,7 @@ typedef uint64_t Uint64;
 #ifndef SDL_PRIu64
 #ifdef PRIu64
 #define SDL_PRIu64 PRIu64
-#elif defined(__WIN32__)
+#elif defined(__WIN32__) || defined(__GDK__)
 #define SDL_PRIu64 "I64u"
 #elif defined(__LINUX__) && defined(__LP64__)
 #define SDL_PRIu64 "lu"
@@ -281,7 +281,7 @@ typedef uint64_t Uint64;
 #ifndef SDL_PRIx64
 #ifdef PRIx64
 #define SDL_PRIx64 PRIx64
-#elif defined(__WIN32__)
+#elif defined(__WIN32__) || defined(__GDK__)
 #define SDL_PRIx64 "I64x"
 #elif defined(__LINUX__) && defined(__LP64__)
 #define SDL_PRIx64 "lx"
@@ -292,7 +292,7 @@ typedef uint64_t Uint64;
 #ifndef SDL_PRIX64
 #ifdef PRIX64
 #define SDL_PRIX64 PRIX64
-#elif defined(__WIN32__)
+#elif defined(__WIN32__) || defined(__GDK__)
 #define SDL_PRIX64 "I64X"
 #elif defined(__LINUX__) && defined(__LP64__)
 #define SDL_PRIX64 "lX"
@@ -373,14 +373,22 @@ typedef uint64_t Uint64;
 #endif
 #endif /* SDL_DISABLE_ANALYZE_MACROS */
 
-#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L)
-#define SDL_COMPILE_TIME_ASSERT(name, x) _Static_assert(x, #x)
-#elif defined(__cplusplus) && (__cplusplus >= 201103L)
+#ifndef SDL_COMPILE_TIME_ASSERT
+#if defined(__cplusplus)
+#if (__cplusplus >= 201103L)
 #define SDL_COMPILE_TIME_ASSERT(name, x)  static_assert(x, #x)
-#else /* universal, but may trigger -Wunused-local-typedefs */
+#endif
+#elif defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L)
+#define SDL_COMPILE_TIME_ASSERT(name, x) _Static_assert(x, #x)
+#endif
+#endif /* !SDL_COMPILE_TIME_ASSERT */
+
+#ifndef SDL_COMPILE_TIME_ASSERT
+/* universal, but may trigger -Wunused-local-typedefs */
 #define SDL_COMPILE_TIME_ASSERT(name, x)               \
        typedef int SDL_compile_time_assert_ ## name[(x) * 2 - 1]
 #endif
+
 /** \cond */
 #ifndef DOXYGEN_SHOULD_IGNORE_THIS
 SDL_COMPILE_TIME_ASSERT(uint8, sizeof(Uint8) == 1);
@@ -439,6 +447,16 @@ typedef void *(SDLCALL *SDL_realloc_func)(void *mem, size_t size);
 typedef void (SDLCALL *SDL_free_func)(void *mem);
 
 /**
+ * Get the original set of SDL memory functions
+ *
+ * \since This function is available since SDL 2.24.0.
+ */
+extern DECLSPEC void SDLCALL SDL_GetOriginalMemoryFunctions(SDL_malloc_func *malloc_func,
+                                                            SDL_calloc_func *calloc_func,
+                                                            SDL_realloc_func *realloc_func,
+                                                            SDL_free_func *free_func);
+
+/**
  * Get the current set of SDL memory functions
  *
  * \since This function is available since SDL 2.0.7.
@@ -493,6 +511,7 @@ extern DECLSPEC int SDLCALL SDL_isgraph(int x);
 extern DECLSPEC int SDLCALL SDL_toupper(int x);
 extern DECLSPEC int SDLCALL SDL_tolower(int x);
 
+extern DECLSPEC Uint16 SDLCALL SDL_crc16(Uint16 crc, const void *data, size_t len);
 extern DECLSPEC Uint32 SDLCALL SDL_crc32(Uint32 crc, const void *data, size_t len);
 
 extern DECLSPEC void *SDLCALL SDL_memset(SDL_OUT_BYTECAP(len) void *dst, int c, size_t len);

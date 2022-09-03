@@ -114,6 +114,9 @@ static const SDL_RenderDriver *render_drivers[] = {
 #if SDL_VIDEO_RENDER_DIRECTFB
     &DirectFB_RenderDriver,
 #endif
+#if SDL_VIDEO_RENDER_PS2 && !SDL_RENDER_DISABLED
+    &PS2_RenderDriver,
+#endif
 #if SDL_VIDEO_RENDER_PSP
     &PSP_RenderDriver,
 #endif
@@ -652,7 +655,7 @@ QueueCmdGeometry(SDL_Renderer *renderer, SDL_Texture *texture,
     return retval;
 }
 
-static int UpdateLogicalSize(SDL_Renderer *renderer);
+static int UpdateLogicalSize(SDL_Renderer *renderer, SDL_bool flush_viewport_cmd);
 
 int
 SDL_GetNumRenderDrivers(void)
@@ -702,16 +705,11 @@ SDL_RendererEventWatch(void *userdata, SDL_Event *event)
             }
 
             /* In addition to size changes, we also want to do this block for
-             * moves as well, for two reasons:
-             *
-             * 1. The window could be moved to a new display, which has a new
-             *    DPI and therefore a new window/drawable ratio
-             * 2. For whatever reason, the viewport can get messed up during
-             *    window movement (this has been observed on macOS), so this is
-             *    also a good opportunity to force viewport updates
+             * window display changes as well! If the new display has a new DPI,
+             * we need to update the viewport for the new window/drawable ratio.
              */
             if (event->window.event == SDL_WINDOWEVENT_SIZE_CHANGED ||
-                event->window.event == SDL_WINDOWEVENT_MOVED) {
+                event->window.event == SDL_WINDOWEVENT_DISPLAY_CHANGED) {
                 /* Make sure we're operating on the default render target */
                 SDL_Texture *saved_target = SDL_GetRenderTarget(renderer);
                 if (saved_target) {
@@ -730,7 +728,14 @@ SDL_RendererEventWatch(void *userdata, SDL_Event *event)
                 }
 
                 if (renderer->logical_w) {
-                    UpdateLogicalSize(renderer);
+#if defined(__ANDROID__)
+                    /* Don't immediatly flush because the app may be in
+                     * background, and the egl context shouldn't be used. */
+                    SDL_bool flush_viewport_cmd = SDL_FALSE;
+#else
+                    SDL_bool flush_viewport_cmd = SDL_TRUE;
+#endif
+                    UpdateLogicalSize(renderer, flush_viewport_cmd);
                 } else {
                     /* Window was resized, reset viewport */
                     int w, h;
@@ -746,7 +751,12 @@ SDL_RendererEventWatch(void *userdata, SDL_Event *event)
                     renderer->viewport.w = (double)w;
                     renderer->viewport.h = (double)h;
                     QueueCmdSetViewport(renderer);
+#if defined(__ANDROID__)
+                    /* Don't immediatly flush because the app may be in
+                     * background, and the egl context shouldn't be used. */
+#else
                     FlushRenderCommandsIfNotBatching(renderer);
+#endif
                 }
 
                 if (saved_target) {
@@ -2272,7 +2282,7 @@ SDL_GetRenderTarget(SDL_Renderer *renderer)
 }
 
 static int
-UpdateLogicalSize(SDL_Renderer *renderer)
+UpdateLogicalSize(SDL_Renderer *renderer, SDL_bool flush_viewport_cmd)
 {
     int w = 1, h = 1;
     float want_aspect;
@@ -2329,12 +2339,12 @@ UpdateLogicalSize(SDL_Renderer *renderer)
         viewport.x = (w - viewport.w) / 2;
         viewport.h = (int)SDL_floor(renderer->logical_h * scale);
         viewport.y = (h - viewport.h) / 2;
-
-        SDL_RenderSetViewport(renderer, &viewport);
     } else if (SDL_fabs(want_aspect-real_aspect) < 0.0001) {
         /* The aspect ratios are the same, just scale appropriately */
         scale = (float)w / renderer->logical_w;
-        SDL_RenderSetViewport(renderer, NULL);
+
+        SDL_zero(viewport);
+        SDL_GetRendererOutputSize(renderer, &viewport.w, &viewport.h);
     } else if (want_aspect > real_aspect) {
         if (scale_policy == 1) {
             /* We want a wider aspect ratio than is available - 
@@ -2346,7 +2356,6 @@ UpdateLogicalSize(SDL_Renderer *renderer)
             viewport.h = h;
             viewport.w = (int)SDL_floor(renderer->logical_w * scale);
             viewport.x = (w - viewport.w) / 2;
-            SDL_RenderSetViewport(renderer, &viewport);
         } else {
             /* We want a wider aspect ratio than is available - letterbox it */
             scale = (float)w / renderer->logical_w;
@@ -2354,7 +2363,6 @@ UpdateLogicalSize(SDL_Renderer *renderer)
             viewport.w = w;
             viewport.h = (int)SDL_floor(renderer->logical_h * scale);
             viewport.y = (h - viewport.h) / 2;
-            SDL_RenderSetViewport(renderer, &viewport);
         }
     } else {
         if (scale_policy == 1) {
@@ -2367,7 +2375,6 @@ UpdateLogicalSize(SDL_Renderer *renderer)
             viewport.w = w;
             viewport.h = (int)SDL_floor(renderer->logical_h * scale);
             viewport.y = (h - viewport.h) / 2;
-            SDL_RenderSetViewport(renderer, &viewport);
         } else {
             /* We want a narrower aspect ratio than is available - use side-bars */
              scale = (float)h / renderer->logical_h;
@@ -2375,8 +2382,17 @@ UpdateLogicalSize(SDL_Renderer *renderer)
              viewport.h = h;
              viewport.w = (int)SDL_floor(renderer->logical_w * scale);
              viewport.x = (w - viewport.w) / 2;
-             SDL_RenderSetViewport(renderer, &viewport);
         }
+    }
+
+    /* Set the new viewport */
+    renderer->viewport.x = (double)viewport.x * renderer->scale.x;
+    renderer->viewport.y = (double)viewport.y * renderer->scale.y;
+    renderer->viewport.w = (double)viewport.w * renderer->scale.x;
+    renderer->viewport.h = (double)viewport.h * renderer->scale.y;
+    QueueCmdSetViewport(renderer);
+    if (flush_viewport_cmd) {
+        FlushRenderCommandsIfNotBatching(renderer);
     }
 
     /* Set the new scale */
@@ -2402,7 +2418,7 @@ SDL_RenderSetLogicalSize(SDL_Renderer * renderer, int w, int h)
     renderer->logical_w = w;
     renderer->logical_h = h;
 
-    return UpdateLogicalSize(renderer);
+    return UpdateLogicalSize(renderer, SDL_TRUE);
 }
 
 void
@@ -2425,7 +2441,7 @@ SDL_RenderSetIntegerScale(SDL_Renderer * renderer, SDL_bool enable)
 
     renderer->integer_scale = enable;
 
-    return UpdateLogicalSize(renderer);
+    return UpdateLogicalSize(renderer, SDL_TRUE);
 }
 
 SDL_bool
@@ -2965,8 +2981,8 @@ RenderDrawLinesWithRectsF(SDL_Renderer * renderer,
                 frect->x += scale_x;
             }
         } else {
-            retval += RenderDrawLineBresenham(renderer, (int)points[i].x, (int)points[i].y,
-                                                        (int)points[i+1].x, (int)points[i+1].y, draw_last);
+            retval += RenderDrawLineBresenham(renderer, (int)SDL_roundf(points[i].x), (int)SDL_roundf(points[i].y),
+                                                        (int)SDL_roundf(points[i+1].x), (int)SDL_roundf(points[i+1].y), draw_last);
         }
         drew_line = SDL_TRUE;
     }

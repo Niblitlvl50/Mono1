@@ -12,8 +12,8 @@ orig_CFLAGS="$CFLAGS"
 dnl Set various version strings - taken gratefully from the GTk sources
 # See docs/release_checklist.md
 SDL_MAJOR_VERSION=2
-SDL_MINOR_VERSION=23
-SDL_MICRO_VERSION=1
+SDL_MINOR_VERSION=25
+SDL_MICRO_VERSION=0
 SDL_VERSION=$SDL_MAJOR_VERSION.$SDL_MINOR_VERSION.$SDL_MICRO_VERSION
 
 SDL_BINARY_AGE=`expr $SDL_MINOR_VERSION \* 100 + $SDL_MICRO_VERSION`
@@ -58,12 +58,20 @@ dnl Detect the canonical build and host environments
 dnl AC_CANONICAL_HOST
 
 dnl Check for tools
+AC_PROG_AWK
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_EGREP
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 PKG_PROG_PKG_CONFIG
+
+if [ test -z "$AWK" ]; then
+    AC_MSG_ERROR([*** awk not found, aborting])
+fi
+
+AC_CHECK_PROGS([SORT], [gsort sort], [false])
+AS_IF([! "$SORT" -V </dev/null >/dev/null], [AC_MSG_ERROR([GNU sort(1) is required])])
 
 dnl 64-bit file offsets if possible unless --disable-largefile is specified
 AC_SYS_LARGEFILE
@@ -181,15 +189,7 @@ find_lib()
         host_lib_path="/usr/$base_libdir /usr/local/$base_libdir"
     fi
     for path in $env_lib_path $gcc_bin_path $gcc_lib_path $host_lib_path; do
-        lib=[`ls -- $path/$1 2>/dev/null | sed -e '/\.so\..*\./d' -e 's,.*/,,' | sort | tail -1`]
-        if test x$lib != x; then
-            echo $lib
-            return
-        fi
-    done
-    # Try again, this time allowing more than one version digit after the .so
-    for path in $env_lib_path $gcc_bin_path $gcc_lib_path $host_lib_path; do
-        lib=[`ls -- $path/$1 2>/dev/null | sed -e 's,.*/,,' | sort | tail -1`]
+        lib=[`ls -- $path/$1 2>/dev/null | sed 's,.*/,,' | "$SORT" -V -r | $AWK 'BEGIN{FS="."}{ print NF, $0 }' | "$SORT" -n -s | sed 's,[0-9]* ,,' | head -1`]
         if test x$lib != x; then
             echo $lib
             return
@@ -227,9 +227,8 @@ case "$enable_assertions" in
         ;;
 esac
 
-AC_DEFINE_UNQUOTED([SDL_BUILD_MAJOR_VERSION], $SDL_MAJOR_VERSION, [ ])
-AC_DEFINE_UNQUOTED([SDL_BUILD_MINOR_VERSION], $SDL_MINOR_VERSION, [ ])
-AC_DEFINE_UNQUOTED([SDL_BUILD_MICRO_VERSION], $SDL_MICRO_VERSION, [ ])
+dnl For use in static assertions
+EXTRA_CFLAGS="$EXTRA_CFLAGS -DSDL_BUILD_MAJOR_VERSION=$SDL_MAJOR_VERSION -DSDL_BUILD_MINOR_VERSION=$SDL_MINOR_VERSION -DSDL_BUILD_MICRO_VERSION=$SDL_MICRO_VERSION"
 
 dnl See whether we can use gcc style dependency tracking
 AC_ARG_ENABLE(dependency-tracking,
@@ -526,9 +525,11 @@ if test x$enable_filesystem != xyes; then
 else
     SUMMARY_modules="${SUMMARY_modules} filesystem"
 fi
-AC_ARG_ENABLE(threads,
-[AS_HELP_STRING([--enable-threads], [Enable the threading subsystem [default=yes]])],
-              , enable_threads=yes)
+# Many subsystems depend on threads, so leave them enabled by default
+#AC_ARG_ENABLE(threads,
+#[AS_HELP_STRING([--enable-threads], [Enable the threading subsystem [default=yes]])],
+#              , enable_threads=yes)
+enable_threads=yes
 if test x$enable_threads != xyes; then
     AC_DEFINE(SDL_THREADS_DISABLED, 1, [ ])
 else
@@ -2841,7 +2842,7 @@ CheckInotify()
 {
     save_LIBS="$LIBS"
     case "$host" in
-     *-*-freebsd*) LIBS="$LIBS -linotify"
+     *-*-freebsd*|*-*dragonfly*) LIBS="$LIBS -linotify"
       ;;
     esac
     AC_CHECK_HEADERS(sys/inotify.h, [have_inotify_inotify_h_hdr=yes])
@@ -2850,7 +2851,7 @@ CheckInotify()
     if test x$have_inotify_inotify_h_hdr = xyes -a x$have_inotify = xyes; then
         AC_DEFINE(HAVE_INOTIFY, 1, [ ])
         case "$host" in
-            *-*-freebsd*)
+            *-*-freebsd*|*-*-dragonfly*)
                 EXTRA_LDFLAGS="$EXTRA_LDFLAGS -linotify"
                 ;;
         esac
@@ -3580,6 +3581,7 @@ CheckHIDAPI()
 
         if test x$hidapi_support = xyes; then
             if test x$have_libusb_h = xyes; then
+                AC_DEFINE(HAVE_LIBUSB)
                 EXTRA_CFLAGS="$EXTRA_CFLAGS $LIBUSB_CFLAGS"
                 if test x$require_hidapi_libusb = xyes; then
                     EXTRA_LDFLAGS="$EXTRA_LDFLAGS $LIBUSB_LIBS"
@@ -3954,6 +3956,7 @@ case "$host" in
         # Set up other core UNIX files
         SOURCES="$SOURCES $srcdir/src/core/linux/SDL_evdev_capabilities.c"
         SOURCES="$SOURCES $srcdir/src/core/linux/SDL_threadprio.c"
+        SOURCES="$SOURCES $srcdir/src/core/linux/SDL_sandbox.c"
         SOURCES="$SOURCES $srcdir/src/core/unix/*.c"
         ;;
     *-*-cygwin* | *-*-mingw*)
@@ -4777,14 +4780,10 @@ fi
 SDL_STATIC_LIBS="$EXTRA_LDFLAGS"
 
 dnl Calculate the location of the prefix, relative to the cmake folder
-eval pkg_prefix=$prefix
-eval pkg_cmakedir=$libdir/cmake/SDL2
-cmake_prefix_relpath="$(echo -n "$pkg_cmakedir" | sed -E "s#^$pkg_prefix##" | sed -E "s#[A-Za-z0-9_ .-]+#..#g" )"
-AC_SUBST([cmake_prefix_relpath])
-
 dnl Calculate the location of the prefix, relative to bindir
-eval pkg_bindir=$bindir
-bin_prefix_relpath="$(echo -n "pkg_bindir" | sed -E "s#^$pkg_prefix##" | sed -E "s#[A-Za-z0-9_ .-]+#..#g" )"
+pkg_cmakedir='$libdir/cmake/SDL2'
+AX_COMPUTE_RELATIVE_PATHS([pkg_cmakedir:prefix:cmake_prefix_relpath bindir:prefix:bin_prefix_relpath])
+AC_SUBST([cmake_prefix_relpath])
 AC_SUBST([bin_prefix_relpath])
 
 dnl Expand the cflags and libraries needed by apps using SDL

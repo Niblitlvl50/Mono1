@@ -1,20 +1,21 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(SDL2 C)
-include(CTest)
+cmake_minimum_required(VERSION 3.0)
+project(SDL2_test)
+
+if(NOT TARGET SDL2::SDL2-static)
+    find_package(SDL2 2.0.23 REQUIRED COMPONENTS SDL2-static SDL2test)
+endif()
+
+enable_testing()
 
 if(SDL_INSTALL_TESTS)
     include(GNUInstallDirs)
 endif()
 
-# Global settings for all of the test targets
-# FIXME: is this wrong?
-remove_definitions(-DUSING_GENERATED_CONFIG_H)
-
 if(PSP)
     link_libraries(
-        SDL2main
-        SDL2_test
-        SDL2-static
+        SDL2::SDL2main
+        SDL2::SDL2test
+        SDL2::SDL2-static
         GL
         pspvram
         pspvfpu
@@ -26,14 +27,29 @@ if(PSP)
         psphprm
         psppower
     )
+elseif(PS2)
+link_libraries(
+        SDL2main
+        SDL2_test
+        SDL2-static
+        patches
+        gskit
+        dmakit
+        ps2_drivers
+)
 else()
-    link_libraries(SDL2_test SDL2-static)
+    link_libraries(SDL2::SDL2test SDL2::SDL2-static)
 endif()
 
 if(WINDOWS)
     # mingw32 must come before SDL2main to link successfully
     if(MINGW OR CYGWIN)
         link_libraries(mingw32)
+    endif()
+
+    # CET support was added in VS 16.7
+    if(MSVC_VERSION GREATER 1926 AND NOT CMAKE_GENERATOR_PLATFORM MATCHES ARM)
+        link_libraries(-CETCOMPAT)
     endif()
 
     # FIXME: Parent directory CMakeLists.txt only sets these for mingw/cygwin,
@@ -87,7 +103,6 @@ add_executable(testgesture testgesture.c)
 add_executable(testgl2 testgl2.c)
 add_executable(testgles testgles.c)
 add_executable(testgles2 testgles2.c)
-add_executable(testguid testguid.c)
 add_executable(testhaptic testhaptic.c)
 add_executable(testhotplug testhotplug.c)
 add_executable(testrumble testrumble.c)
@@ -108,7 +123,7 @@ if(APPLE)
                               testutils.c)
 elseif(WINDOWS)
     add_executable(testnative testnative.c testnativew32.c testutils.c)
-elseif(SDL_X11)
+elseif(HAVE_X11)
     add_executable(testnative testnative.c testnativex11.c testutils.c)
     target_link_libraries(testnative X11)
 endif()
@@ -169,7 +184,6 @@ SET(ALL_TESTS
     testgl2
     testgles
     testgles2
-    testguid
     testhaptic
     testhittesting
     testhotplug
@@ -218,7 +232,6 @@ set(NONINTERACTIVE
     testatomic
     testerror
     testfilesystem
-    testguid
     testlocale
     testplatform
     testpower
@@ -307,7 +320,7 @@ else()
         teststreaming
         testviewport
     )
-    if(WINDOWS OR APPLE OR SDL_X11)
+    if(WINDOWS OR APPLE OR HAVE_X11)
         list(APPEND NEEDS_RESOURCES testnative)
     endif()
 endif()
@@ -328,7 +341,6 @@ if(PSP)
         testfilesystem
         testgeometry
         testgl2
-        testguid
         testhittesting
         testiconv
         testintersections

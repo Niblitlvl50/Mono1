@@ -432,6 +432,9 @@
     <ClInclude Include="..\..\src\core\windows\SDL_hid.h">
       <Filter>core\windows</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\core\windows\SDL_immdevice.h">
+      <Filter>core\windows</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\core\windows\SDL_windows.h">
       <Filter>core\windows</Filter>
     </ClInclude>
@@ -469,9 +472,6 @@
       <Filter>events</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\events\SDL_mouse_c.h">
-      <Filter>events</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\events\SDL_sysevents.h">
       <Filter>events</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\events\SDL_touch_c.h">
@@ -845,6 +845,7 @@
     <ClCompile Include="..\..\src\SDL_guid.c" />
     <ClCompile Include="..\..\src\SDL_hints.c" />
     <ClCompile Include="..\..\src\SDL_list.c" />
+    <ClCompile Include="..\..\src\SDL_utils.c" />
     <ClCompile Include="..\..\src\audio\SDL_audio.c">
       <Filter>audio</Filter>
     </ClCompile>
@@ -870,6 +871,9 @@
       <Filter>atomic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\core\windows\SDL_hid.c">
+      <Filter>core\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\windows\SDL_immdevice.c">
       <Filter>core\windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\core\windows\SDL_windows.c">
@@ -1043,13 +1047,16 @@
     <ClCompile Include="..\..\src\joystick\dummy\SDL_sysjoystick.c">
       <Filter>joystick\dummy</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_xboxone.c">
+    <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_combined.c">
       <Filter>joystick\hidapi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_gamecube.c">
       <Filter>joystick\hidapi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_luna.c">
+      <Filter>joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_ps3.c">
       <Filter>joystick\hidapi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_ps4.c">
@@ -1061,16 +1068,25 @@
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_rumble.c">
       <Filter>joystick\hidapi</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_shield.c">
+      <Filter>joystick\hidapi</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_stadia.c">
       <Filter>joystick\hidapi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_switch.c">
       <Filter>joystick\hidapi</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_wii.c">
+      <Filter>joystick\hidapi</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_xbox360.c">
       <Filter>joystick\hidapi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_xbox360w.c">
+      <Filter>joystick\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_xboxone.c">
       <Filter>joystick\hidapi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapijoystick.c">
@@ -1234,6 +1250,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\thread\generic\SDL_syscond.c">
       <Filter>thread\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stdlib\SDL_crc16.c">
+      <Filter>stdlib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\stdlib\SDL_crc32.c">
       <Filter>stdlib</Filter>

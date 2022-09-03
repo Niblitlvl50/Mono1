@@ -672,7 +672,7 @@ done:
     return result;
 }
 
-#ifdef __WIN32__
+#if defined(__WIN32__) || defined(__WINGDK__)
 
 static DXGI_MODE_ROTATION
 D3D11_GetCurrentRotation()
@@ -681,7 +681,7 @@ D3D11_GetCurrentRotation()
     return DXGI_MODE_ROTATION_IDENTITY;
 }
 
-#endif /* __WIN32__ */
+#endif /* defined(__WIN32__) || defined(__WINGDK__) */
 
 static BOOL
 D3D11_IsDisplayRotated90Degrees(DXGI_MODE_ROTATION rotation)
@@ -827,7 +827,7 @@ D3D11_CreateSwapChain(SDL_Renderer * renderer, int w, int h)
         goto done;
 #endif
     } else {
-#ifdef __WIN32__
+#if defined(__WIN32__) || defined(__WINGDK__)
         SDL_SysWMinfo windowinfo;
         SDL_VERSION(&windowinfo.version);
         SDL_GetWindowWMInfo(renderer->window, &windowinfo);
@@ -849,7 +849,7 @@ D3D11_CreateSwapChain(SDL_Renderer * renderer, int w, int h)
 #else
         SDL_SetError(__FUNCTION__", Unable to find something to attach a swap chain to");
         goto done;
-#endif  /* ifdef __WIN32__ / else */
+#endif  /* defined(__WIN32__) || defined(__WINGDK__) / else */
     }
     data->swapEffect = swapChainDesc.SwapEffect;
 
@@ -916,7 +916,7 @@ D3D11_CreateWindowSizeDependentResources(SDL_Renderer * renderer)
 #if defined(__WINRT__)
     SDL_GetWindowSize(renderer->window, &w, &h);
 #else
-    WIN_GetDrawableSize(renderer->window, &w, &h);
+    SDL_GetWindowSizeInPixels(renderer->window, &w, &h);
 #endif
     data->rotation = D3D11_GetCurrentRotation();
     /* SDL_Log("%s: windowSize={%d,%d}, orientation=%d\n", __FUNCTION__, w, h, (int)data->rotation); */
@@ -1062,7 +1062,7 @@ D3D11_WindowEvent(SDL_Renderer * renderer, const SDL_WindowEvent *event)
 static int
 D3D11_GetOutputSize(SDL_Renderer * renderer, int *w, int *h)
 {
-    WIN_GetDrawableSize(renderer->window, w, h);
+    SDL_GetWindowSizeInPixels(renderer->window, w, h);
     return 0;
 }
 #endif
@@ -2473,7 +2473,7 @@ SDL_RenderDriver D3D11_RenderDriver = {
 
 #endif /* SDL_VIDEO_RENDER_D3D11 && !SDL_RENDER_DISABLED */
 
-#ifdef __WIN32__
+#if defined(__WIN32__) || defined(__WINGDK__)
 /* This function needs to always exist on Windows, for the Dynamic API. */
 ID3D11Device *
 SDL_RenderGetD3D11Device(SDL_Renderer * renderer)
@@ -2497,6 +2497,6 @@ SDL_RenderGetD3D11Device(SDL_Renderer * renderer)
 
     return device;
 }
-#endif /* __WIN32__ */
+#endif /* defined(__WIN32__) || defined(__WINGDK__) */
 
 /* vi: set ts=4 sw=4 expandtab: */
