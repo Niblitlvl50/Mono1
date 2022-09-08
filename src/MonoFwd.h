@@ -8,7 +8,6 @@ namespace mono
     class IUpdater;
     class IZone;
     class IPath;
-    class ISound;
 
     class EventHandler;
 
