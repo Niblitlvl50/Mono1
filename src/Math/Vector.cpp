@@ -136,6 +136,11 @@ float math::DistanceBetween(const math::Vector& left, const math::Vector& right)
     return math::Length(left - right);
 }
 
+float math::DistanceBetweenSquared(const math::Vector& left, const math::Vector& right)
+{
+    return math::LengthSquared(left - right);
+}
+
 bool math::IsPrettyMuchEquals(const math::Vector& left, const math::Vector& right, float tolerance)
 {
     return

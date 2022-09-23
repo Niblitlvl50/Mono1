@@ -55,6 +55,7 @@ namespace math
 
     math::Vector Perpendicular(const Vector& vector);
     float DistanceBetween(const Vector& left, const Vector& right);
+    float DistanceBetweenSquared(const Vector& left, const Vector& right);
     bool IsPrettyMuchEquals(const Vector& left, const Vector& right, float tolerance = FLT_EPSILON);
 
     constexpr Vector ZeroVec = Vector();
