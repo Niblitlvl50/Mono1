@@ -160,7 +160,6 @@ mono::IBody* PhysicsSystem::AllocateBody(uint32_t id, const BodyComponent& body_
 {
     cm::BodyImpl& new_body = m_impl->bodies[id];
 
-    cpBodySetType(new_body.Handle(), CP_BODY_TYPE_DYNAMIC);
     cpBodyInit(new_body.Handle(), body_params.mass, body_params.inertia);
     cpBodySetType(new_body.Handle(), static_cast<cpBodyType>(body_params.type));
     cpBodySetUserData(new_body.Handle(), reinterpret_cast<void*>(id));
@@ -174,6 +173,11 @@ mono::IBody* PhysicsSystem::AllocateBody(uint32_t id, const BodyComponent& body_
 void PhysicsSystem::ReleaseBody(uint32_t body_id)
 {
     cm::BodyImpl& body = m_impl->bodies[body_id];
+
+    // Dynamic is the default type, and needs to be reset to that so the cpBodyInit works
+    // as expected when this body is reused again. 
+    cpBodySetType(body.Handle(), CP_BODY_TYPE_DYNAMIC);
+
     body.ClearCollisionHandlers();
     body.ResetForces();
 
