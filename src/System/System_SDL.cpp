@@ -100,7 +100,7 @@ namespace
         {
             SDL_MinimizeWindow(m_window);
         }
-        void SetWindowed()
+        void SetWindowed() override
         {
             SDL_SetWindowFullscreen(m_window, 0);
         }
@@ -301,6 +301,8 @@ namespace
             return System::ControllerButton::GUIDE;
         case SDL_CONTROLLER_BUTTON_START:
             return System::ControllerButton::START;
+        case SDL_CONTROLLER_BUTTON_TOUCHPAD:
+            return System::ControllerButton::TOUCHPAD;
         case SDL_CONTROLLER_BUTTON_DPAD_UP:
             return System::ControllerButton::UP;
         case SDL_CONTROLLER_BUTTON_DPAD_DOWN:

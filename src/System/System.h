@@ -51,13 +51,12 @@ namespace System
         BACK            = ENUM_BIT(8),
         GUIDE           = ENUM_BIT(9),
         START           = ENUM_BIT(10),
+        TOUCHPAD        = ENUM_BIT(11),
 
-        UP              = ENUM_BIT(11),
-        DOWN            = ENUM_BIT(12),
-        LEFT            = ENUM_BIT(13),
-        RIGHT           = ENUM_BIT(14),
-
-        UNUSED          = ENUM_BIT(15),
+        UP              = ENUM_BIT(12),
+        DOWN            = ENUM_BIT(13),
+        LEFT            = ENUM_BIT(14),
+        RIGHT           = ENUM_BIT(15),
 
         FACE_ANY        = FACE_BOTTOM | FACE_RIGHT | FACE_LEFT | FACE_TOP
     };
