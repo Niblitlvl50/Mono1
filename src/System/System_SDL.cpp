@@ -8,6 +8,7 @@
 #include "SDL_keycode.h"
 #include "SDL_log.h"
 #include "SDL_clipboard.h"
+#include "SDL_log.h"
 
 #include <stdexcept>
 #include <cstdio>
@@ -464,13 +465,8 @@ void System::Initialize(const InitializeContext& context)
     SDL_version version;
     SDL_GetVersion(&version);
 
-    const char* org = context.organization ? context.organization : "Unknown Organization";
-    const char* app = context.application ? context.application : "Unknown Application";
-    g_user_path = SDL_GetPrefPath(org, app);
-
     Log("System");
     Log("\tSDL version: %u.%u.%u", version.major, version.minor, version.patch);
-    Log("\tuser directory: %s", g_user_path);
 
     const char* working_directory = context.working_directory;
     if(working_directory)
@@ -523,8 +519,11 @@ void System::Log(const char* fmt, ...)
         va_end(file_log_args);
     }
 
-    std::vprintf(fmt, va);
-    std::printf("\n");
+    //std::vprintf(fmt, va);
+    //std::printf("\n");
+
+    SDL_LogMessageV(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, fmt, va);
+
     va_end(va);
 }
 
@@ -557,6 +556,12 @@ void System::GetApplicationPath(char* buffer, uint32_t buffer_size)
     std::strncpy(buffer, base_path, adjusted_buffer_size);
 
     SDL_free(base_path);
+}
+
+void System::InitializeUserPath(const char* organization, const char* application)
+{
+    g_user_path = SDL_GetPrefPath(organization, application);
+    Log("user directory: %s", g_user_path);
 }
 
 const char* System::GetUserPath()
