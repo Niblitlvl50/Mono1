@@ -1,6 +1,11 @@
 
 #pragma once
 
+namespace System
+{
+    class IWindow;
+}
+
 namespace mono
 {
     class ICamera;

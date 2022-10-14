@@ -13,11 +13,6 @@
 #include "Events/EventFwd.h"
 #include "EventHandler/EventToken.h"
 
-namespace System
-{
-    class IWindow;
-};
-
 namespace mono
 {
     class Engine
