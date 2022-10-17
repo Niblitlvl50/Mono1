@@ -79,6 +79,10 @@ namespace math
         return 3.14159265358979323846264338327950288f;
     }
 
+    constexpr float TAU() {
+        return PI() * 2.0f;
+    }
+
     constexpr float PI_2() {
         return PI() / 2.0f;
     }
