@@ -205,6 +205,8 @@ namespace System
     
     ModifierState GetModifierState();
 
+    bool IsKeyDown(Keycode key);
+
     int KeycodeToNative(Keycode key);
 
     enum ControllerId

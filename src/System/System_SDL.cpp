@@ -823,6 +823,13 @@ System::ModifierState System::GetModifierState()
     return state;
 }
 
+bool System::IsKeyDown(Keycode key)
+{
+    const int native_scancode = KeycodeToNative(key);
+    const Uint8* keyboard_state_array = SDL_GetKeyboardState(nullptr);
+    return keyboard_state_array[native_scancode];
+}
+
 int System::KeycodeToNative(Keycode key)
 {
     switch(key)
