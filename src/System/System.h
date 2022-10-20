@@ -100,13 +100,13 @@ namespace System
 
         virtual ~IInputHandler() = default;
 
-        virtual void OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt, bool super) = 0;
-        virtual void OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool super) = 0;
+        virtual void OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp) = 0;
+        virtual void OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp) = 0;
 
-        virtual void OnMouseDown(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super) = 0;
-        virtual void OnMouseUp(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super) = 0;
-        virtual void OnMouseMotion(int x, int y, bool ctrl, bool shift, bool alt, bool super) = 0;
-        virtual void OnMouseWheel(int x, int y, bool ctrl, bool shift, bool alt, bool super) = 0;
+        virtual void OnMouseDown(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp) = 0;
+        virtual void OnMouseUp(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp) = 0;
+        virtual void OnMouseMotion(int x, int y, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp) = 0;
+        virtual void OnMouseWheel(int x, int y, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp) = 0;
 
         virtual void OnTouchDown(int64_t touchId, float x, float y, float dx, float dy) = 0;
         virtual void OnTouchUp(int64_t touchId, float x, float y, float dx, float dy) = 0;
@@ -115,7 +115,7 @@ namespace System
 
         virtual void OnControllerAdded(int controller_id) = 0;
         virtual void OnControllerRemoved(int controller_id) = 0;
-        virtual void OnControllerButtonDown(int controller_id, System::ControllerButton button) = 0;
+        virtual void OnControllerButtonDown(int controller_id, System::ControllerButton button, uint32_t timestamp) = 0;
 
         virtual void OnTextInput(const char* text) = 0;
 

@@ -22,13 +22,13 @@ InputHandler::InputHandler(const ScreenToWorldFunc& screen_to_world_func, EventH
     , m_event_handler(event_handler)
 { }
 
-void InputHandler::OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt, bool super)
+void InputHandler::OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp)
 {
-    const event::KeyDownEvent event(key, ctrl, shift, alt, super);
+    const event::KeyDownEvent event(key, ctrl, shift, alt, super, timestamp);
     m_event_handler->DispatchEvent(event);
 }
 
-void InputHandler::OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool super)
+void InputHandler::OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp)
 {
     if(key == Keycode::ESCAPE)
     {
@@ -36,7 +36,7 @@ void InputHandler::OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool su
         return;
     }
 
-    const event::KeyUpEvent event(key, ctrl, shift, alt, super);
+    const event::KeyUpEvent event(key, ctrl, shift, alt, super, timestamp);
     m_event_handler->DispatchEvent(event);
 }
 
@@ -46,36 +46,36 @@ void InputHandler::OnTextInput(const char* text)
     m_event_handler->DispatchEvent(event);
 }
 
-void InputHandler::OnMouseDown(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super)
+void InputHandler::OnMouseDown(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp)
 {
     float world_x = x;
     float world_y = y;
     m_screen_to_world_func(world_x, world_y);
-    const event::MouseDownEvent event(button, x, y, world_x, world_y, ctrl, shift, alt, super);
+    const event::MouseDownEvent event(button, x, y, world_x, world_y, ctrl, shift, alt, super, timestamp);
     m_event_handler->DispatchEvent(event);
 }
 
-void InputHandler::OnMouseUp(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super)
+void InputHandler::OnMouseUp(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp)
 {
     float world_x = x;
     float world_y = y;
     m_screen_to_world_func(world_x, world_y);
-    const event::MouseUpEvent event(button, x, y, world_x, world_y, ctrl, shift, alt, super);
+    const event::MouseUpEvent event(button, x, y, world_x, world_y, ctrl, shift, alt, super, timestamp);
     m_event_handler->DispatchEvent(event);
 }
 
-void InputHandler::OnMouseMotion(int x, int y, bool ctrl, bool shift, bool alt, bool super)
+void InputHandler::OnMouseMotion(int x, int y, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp)
 {
     float world_x = x;
     float world_y = y;
     m_screen_to_world_func(world_x, world_y);
-    const event::MouseMotionEvent event(x, y, world_x, world_y, ctrl, shift, alt, super);
+    const event::MouseMotionEvent event(x, y, world_x, world_y, ctrl, shift, alt, super, timestamp);
     m_event_handler->DispatchEvent(event);
 }
 
-void InputHandler::OnMouseWheel(int x, int y, bool ctrl, bool shift, bool alt, bool super)
+void InputHandler::OnMouseWheel(int x, int y, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp)
 {
-    const event::MouseWheelEvent event(x, y, ctrl, shift, alt, super);
+    const event::MouseWheelEvent event(x, y, ctrl, shift, alt, super, timestamp);
     m_event_handler->DispatchEvent(event);
 }
 
@@ -115,9 +115,9 @@ void InputHandler::OnControllerRemoved(int controller_id)
     m_event_handler->DispatchEvent(event);
 }
 
-void InputHandler::OnControllerButtonDown(int controller_id, System::ControllerButton button)
+void InputHandler::OnControllerButtonDown(int controller_id, System::ControllerButton button, uint32_t timestamp)
 {
-    const event::ControllerButtonDownEvent event(controller_id, button);
+    const event::ControllerButtonDownEvent event(controller_id, button, timestamp);
     m_event_handler->DispatchEvent(event);
 }
 

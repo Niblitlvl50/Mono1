@@ -23,12 +23,14 @@ namespace event
     
     struct ControllerButtonDownEvent
     {
-        ControllerButtonDownEvent(int controller_id, System::ControllerButton button)
+        ControllerButtonDownEvent(int controller_id, System::ControllerButton button, uint32_t timestamp)
             : controller_id(controller_id)
             , button(button)
+            , timestamp(timestamp)
         { }
 
         const int controller_id;
         const System::ControllerButton button;
+        const uint32_t timestamp;
     };
 }

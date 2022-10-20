@@ -17,13 +17,13 @@ namespace mono
 
     private:
 
-        void OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt, bool super) override;
-        void OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool super) override;
+        void OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp) override;
+        void OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp) override;
         void OnTextInput(const char* text) override;
-        void OnMouseDown(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super) override;
-        void OnMouseUp(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super) override;
-        void OnMouseMotion(int x, int y, bool ctrl, bool shift, bool alt, bool super) override;
-        void OnMouseWheel(int x, int y, bool ctrl, bool shift, bool alt, bool super) override;
+        void OnMouseDown(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp) override;
+        void OnMouseUp(MouseButton button, int x, int y, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp) override;
+        void OnMouseMotion(int x, int y, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp) override;
+        void OnMouseWheel(int x, int y, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp) override;
         void OnTouchDown(int64_t touchId, float x, float y, float dx, float dy) override;
         void OnTouchUp(int64_t touchId, float x, float y, float dx, float dy) override;
         void OnTouchMotion(int64_t touchId, float x, float y, float dx, float dy) override;
@@ -31,7 +31,7 @@ namespace mono
 
         void OnControllerAdded(int controller_id) override;
         void OnControllerRemoved(int controller_id) override;
-        void OnControllerButtonDown(int controller_id, System::ControllerButton button) override;
+        void OnControllerButtonDown(int controller_id, System::ControllerButton button, uint32_t timestamp) override;
 
         void OnAppTerminating() override;
         void OnEnterBackground() override;

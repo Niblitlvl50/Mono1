@@ -634,9 +634,9 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
             {
                 const Keycode keycode = KeycodeFromSDL(event.key.keysym.scancode);
                 if(event.type == SDL_KEYDOWN)
-                    handler->OnKeyDown(keycode, ctrl, shift, alt, super);
+                    handler->OnKeyDown(keycode, ctrl, shift, alt, super, event.key.timestamp);
                 else
-                    handler->OnKeyUp(keycode, ctrl, shift, alt, super);
+                    handler->OnKeyUp(keycode, ctrl, shift, alt, super, event.key.timestamp);
                 break;
             }
 
@@ -646,16 +646,16 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
             {
                 const MouseButton mouse_button = MouseButtonFromSDL(event.button.button);
                 if(event.type == SDL_MOUSEBUTTONDOWN)
-                    handler->OnMouseDown(mouse_button, event.button.x, event.button.y, ctrl, shift, alt, super);
+                    handler->OnMouseDown(mouse_button, event.button.x, event.button.y, ctrl, shift, alt, super, event.button.timestamp);
                 else
-                    handler->OnMouseUp(mouse_button, event.button.x, event.button.y, ctrl, shift, alt, super);
+                    handler->OnMouseUp(mouse_button, event.button.x, event.button.y, ctrl, shift, alt, super, event.button.timestamp);
                 break;
             }
             case SDL_MOUSEMOTION:
-                handler->OnMouseMotion(event.motion.x, event.motion.y, ctrl, shift, alt, super);
+                handler->OnMouseMotion(event.motion.x, event.motion.y, ctrl, shift, alt, super, event.motion.timestamp);
                 break;
             case SDL_MOUSEWHEEL:
-                handler->OnMouseWheel(event.wheel.x, event.wheel.y, ctrl, shift, alt, super);
+                handler->OnMouseWheel(event.wheel.x, event.wheel.y, ctrl, shift, alt, super, event.wheel.timestamp);
                 break;
 
             // Touch
@@ -770,7 +770,7 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 }
 
                 const System::ControllerButton controller_button = ControllerButtonFromSDL(event.cbutton.button);
-                handler->OnControllerButtonDown(controller_index, controller_button);
+                handler->OnControllerButtonDown(controller_index, controller_button, event.cbutton.timestamp);
                 break;
             }
 
