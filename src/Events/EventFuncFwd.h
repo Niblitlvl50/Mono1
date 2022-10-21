@@ -25,4 +25,5 @@ namespace event
     using ControllerAddedFunc = std::function<mono::EventResult (const ControllerAddedEvent&)>;
     using ControllerRemovedFunc = std::function<mono::EventResult (const ControllerRemovedEvent&)>;
     using ControllerButtonDownFunc = std::function<mono::EventResult (const ControllerButtonDownEvent&)>;
+    using ControllerAxisFunc = std::function<mono::EventResult (const ControllerAxisEvent&)>;
 }

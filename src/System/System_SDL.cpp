@@ -317,6 +317,27 @@ namespace
         return System::ControllerButton(0);
     }
 
+    System::ControllerAxis ControllerAxisFromSDL(Uint8 sdl_controller_axis)
+    {
+        switch(sdl_controller_axis)
+        {
+        case SDL_CONTROLLER_AXIS_LEFTX:
+            return System::ControllerAxis::LEFTX;
+        case SDL_CONTROLLER_AXIS_LEFTY:
+            return System::ControllerAxis::LEFTY;
+        case SDL_CONTROLLER_AXIS_RIGHTX:
+            return System::ControllerAxis::RIGHTX;
+        case SDL_CONTROLLER_AXIS_RIGHTY:
+            return System::ControllerAxis::RIGHTY;
+        case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
+            return System::ControllerAxis::TRIGGERLEFT;
+        case SDL_CONTROLLER_AXIS_TRIGGERRIGHT:
+            return System::ControllerAxis::TRIGGERRIGHT;
+        }
+
+        return System::ControllerAxis(0);
+    }
+
     void HandleWindowEvent(const SDL_WindowEvent& event, System::IInputHandler* handler)
     {
         switch(event.event)
@@ -749,6 +770,38 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
                 break;
             }
 
+            case SDL_CONTROLLERAXISMOTION:
+            {
+                const int instance_id = event.caxis.which;
+                int controller_index = -1;
+
+                for(int index = 0; index < ControllerId::N_Controllers; ++index)
+                {
+                    if(g_controller_states[index].id == instance_id)
+                    {
+                        controller_index = index;
+                        break;
+                    }
+                }
+
+                if(controller_index == -1)
+                {
+                    Log("System|Unable to find controller with id: %d", instance_id);
+                    break;
+                }
+
+                constexpr float dead_zone = 0.08f;
+                constexpr float max_value = float(std::numeric_limits<Sint16>::max());
+
+                const System::ControllerAxis controller_axis = ControllerAxisFromSDL(event.caxis.axis);
+                const float axis_value = float(event.caxis.value) / max_value;
+
+                if(axis_value > dead_zone)
+                    handler->OnControllerAxis(controller_index, controller_axis, axis_value, event.caxis.timestamp);
+
+                break;
+            }
+
             case SDL_CONTROLLERBUTTONDOWN:
             {
                 const int instance_id = event.cbutton.which;
@@ -943,7 +996,7 @@ void System::ProcessControllerState()
     SDL_GameControllerUpdate();
     
     constexpr float dead_zone = 0.08f;
-    const float max_value = float(std::numeric_limits<Sint16>::max());
+    constexpr float max_value = float(std::numeric_limits<Sint16>::max());
 
     for(int index = 0; index < ControllerId::N_Controllers; ++index)
     {

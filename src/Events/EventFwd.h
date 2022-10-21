@@ -21,5 +21,6 @@ namespace event
     struct ControllerAddedEvent;
     struct ControllerRemovedEvent;
     struct ControllerButtonDownEvent;
+    struct ControllerAxisEvent;
 }
 

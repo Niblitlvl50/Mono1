@@ -33,4 +33,19 @@ namespace event
         const System::ControllerButton button;
         const uint32_t timestamp;
     };
+
+    struct ControllerAxisEvent
+    {
+        ControllerAxisEvent(int controller_id, System::ControllerAxis axis, float value, uint32_t timestamp)
+            : controller_id(controller_id)
+            , axis(axis)
+            , value(value)
+            , timestamp(timestamp)
+        { }
+
+        const int controller_id;
+        const System::ControllerAxis axis;
+        const float value;
+        const uint32_t timestamp;
+    };
 }

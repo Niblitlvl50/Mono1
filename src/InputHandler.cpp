@@ -121,6 +121,12 @@ void InputHandler::OnControllerButtonDown(int controller_id, System::ControllerB
     m_event_handler->DispatchEvent(event);
 }
 
+void InputHandler::OnControllerAxis(int controller_id, System::ControllerAxis axis, float value, uint32_t timestamp)
+{
+    const event::ControllerAxisEvent event(controller_id, axis, value, timestamp);
+    m_event_handler->DispatchEvent(event);
+}
+
 void InputHandler::OnAppTerminating()
 {
     constexpr event::ApplicationEvent event(event::ApplicationState::TERMINATING);

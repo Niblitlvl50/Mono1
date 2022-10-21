@@ -61,6 +61,18 @@ namespace System
         FACE_ANY        = FACE_BOTTOM | FACE_RIGHT | FACE_LEFT | FACE_TOP
     };
 
+    enum class ControllerAxis
+    {
+        LEFTX,
+        LEFTY,
+
+        RIGHTX,
+        RIGHTY,
+
+        TRIGGERLEFT,
+        TRIGGERRIGHT
+    };
+
     enum WindowOptions
     {
         NONE                = 0,
@@ -116,6 +128,7 @@ namespace System
         virtual void OnControllerAdded(int controller_id) = 0;
         virtual void OnControllerRemoved(int controller_id) = 0;
         virtual void OnControllerButtonDown(int controller_id, System::ControllerButton button, uint32_t timestamp) = 0;
+        virtual void OnControllerAxis(int controller_id, System::ControllerAxis axis, float value, uint32_t timestamp) = 0;
 
         virtual void OnTextInput(const char* text) = 0;
 
