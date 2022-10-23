@@ -20,6 +20,7 @@
 
 #include "EventHandler/EventHandler.h"
 #include "Events/EventFuncFwd.h"
+#include "Events/KeyEvent.h"
 #include "Events/PauseEvent.h"
 #include "Events/QuitEvent.h"
 #include "Events/ApplicationEvent.h"
@@ -42,12 +43,14 @@ Engine::Engine(System::IWindow* window, ICamera* camera, SystemContext* system_c
 {
     using namespace std::placeholders;
 
+    const event::KeyDownEventFunc key_down_func = std::bind(&Engine::OnKeyDown, this, _1);
     const event::PauseEventFunc pause_func = std::bind(&Engine::OnPause, this, _1);
     const event::QuitEventFunc quit_func = std::bind(&Engine::OnQuit, this, _1);
     const event::ApplicationEventFunc app_func = std::bind(&Engine::OnApplication, this, _1);
     const event::ScreenEventFunc screen_func = std::bind(&Engine::OnScreenEvent, this, _1);
     const event::TimeScaleEventFunc time_scale_func = std::bind(&Engine::OnTimeScale, this, _1);
 
+    m_key_down_token = m_event_handler->AddListener(key_down_func);
     m_pause_token = m_event_handler->AddListener(pause_func);
     m_quit_token = m_event_handler->AddListener(quit_func);
     m_application_token = m_event_handler->AddListener(app_func);
@@ -57,6 +60,7 @@ Engine::Engine(System::IWindow* window, ICamera* camera, SystemContext* system_c
 
 Engine::~Engine()
 {
+    m_event_handler->RemoveListener(m_key_down_token);
     m_event_handler->RemoveListener(m_pause_token);
     m_event_handler->RemoveListener(m_quit_token);
     m_event_handler->RemoveListener(m_application_token);
@@ -176,6 +180,22 @@ int Engine::Run(IZone* zone)
     m_time_scale = 1.0f;
 
     return exit_code;
+}
+
+mono::EventResult Engine::OnKeyDown(const event::KeyDownEvent& event)
+{
+    const bool toggle_fullscreen = (event.key == Keycode::ENTER && event.alt);
+    if(toggle_fullscreen)
+    {
+        if(m_fullscreen)
+            m_window->SetWindowed();
+        else
+            m_window->SetFullscreen(System::FullscreenMode::WINDOWED);
+
+        m_fullscreen = !m_fullscreen;
+    }
+
+    return toggle_fullscreen ? mono::EventResult::HANDLED : mono::EventResult::PASS_ON;
 }
 
 mono::EventResult Engine::OnPause(const event::PauseEvent& event)

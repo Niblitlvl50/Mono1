@@ -64,10 +64,6 @@ namespace
         {
             return m_size;
         }
-        System::WindowOptions Options() const override
-        {
-            return System::WindowOptions(0);
-        }
 
         mono::EventHandler& m_event_handler;
         System::Position m_position;

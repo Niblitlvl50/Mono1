@@ -103,7 +103,6 @@ namespace System
         virtual System::Position Position() const = 0;
         virtual System::Size Size() const = 0;
         virtual System::Size DrawableSize() const = 0;
-        virtual System::WindowOptions Options() const = 0;
     };
 
     class IInputHandler

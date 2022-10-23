@@ -44,7 +44,6 @@ namespace
     public:
 
         SDLWindow(const char* title, int x, int y, int width, int height, System::WindowOptions options)
-            : m_window_options(options)
         {
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
             SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
@@ -143,12 +142,6 @@ namespace
             return size;
         }
 
-        System::WindowOptions Options() const override
-        {
-            return m_window_options;
-        }
-
-        System::WindowOptions m_window_options;
         SDL_Window* m_window = nullptr;
         void* m_context = nullptr;
     };

@@ -25,12 +25,14 @@ namespace mono
 
     private:
 
+        mono::EventResult OnKeyDown(const event::KeyDownEvent& event);
         mono::EventResult OnPause(const event::PauseEvent& event);
         mono::EventResult OnQuit(const event::QuitEvent& event);
         mono::EventResult OnApplication(const event::ApplicationEvent& event);
         mono::EventResult OnScreenEvent(const event::ScreenEvent& event);
         mono::EventResult OnTimeScale(const event::TimeScaleEvent& event);
 
+        bool m_fullscreen = false;
         bool m_pause = false;
         bool m_quit = false;
         bool m_suspended = false;
@@ -42,6 +44,7 @@ namespace mono
         SystemContext* m_system_context;
         EventHandler* m_event_handler;
 
+        EventToken<event::KeyDownEvent> m_key_down_token;
         EventToken<event::PauseEvent> m_pause_token;
         EventToken<event::QuitEvent> m_quit_token;
         EventToken<event::ApplicationEvent> m_application_token;
