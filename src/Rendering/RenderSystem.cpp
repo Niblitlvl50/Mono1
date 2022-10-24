@@ -57,6 +57,31 @@ namespace
     {
         MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_pass.");
     }
+
+    void err_buffer_pool_exhausted(void* user_date)
+    {
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_buffer_pool_exhausted.");
+    }
+    void err_image_pool_exhausted(void* user_data)
+    {
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_image_pool_exhausted.");
+    }
+    void err_shader_pool_exhausted(void* user_data)
+    {
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_shader_pool_exhausted.");
+    }
+    void err_pipeline_pool_exhausted(void* user_data)
+    {
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_pipeline_pool_exhausted.");
+    }
+    void err_pass_pool_exhausted(void* user_data)
+    {
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_pass_pool_exhausted.");
+    }
+    void err_context_mismatch(void* user_data)
+    {
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_context_mismatch.");
+    }
     void err_pass_invalid(void* user_data)
     {
         MONO_ASSERT_MESSAGE(false, "RenderSystem|err_pass_invalid.");
@@ -84,6 +109,13 @@ void mono::InitializeRender(const RenderInitParams& init_params)
     trace_hooks.fail_pass = fail_pass;
     trace_hooks.fail_pipeline = fail_pipeline;
     trace_hooks.fail_shader = fail_shader;
+
+    trace_hooks.err_buffer_pool_exhausted = err_buffer_pool_exhausted;
+    trace_hooks.err_image_pool_exhausted = err_image_pool_exhausted;
+    trace_hooks.err_shader_pool_exhausted = err_shader_pool_exhausted;
+    trace_hooks.err_pipeline_pool_exhausted = err_pipeline_pool_exhausted;
+    trace_hooks.err_pass_pool_exhausted = err_pass_pool_exhausted;
+    trace_hooks.err_context_mismatch = err_context_mismatch;
     trace_hooks.err_pass_invalid = err_pass_invalid;
     trace_hooks.err_draw_invalid = err_draw_invalid;
     trace_hooks.err_bindings_invalid = err_bindings_invalid;
