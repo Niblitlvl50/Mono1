@@ -9,6 +9,7 @@ using namespace cm;
 
 BodyImpl::BodyImpl(cpBody* body)
     : m_body_handle(body)
+    , m_auto_calculate_moment(true)
     , m_prevent_rotation(false)
 { }
 
@@ -66,6 +67,16 @@ void BodyImpl::SetMoment(float moment)
 float BodyImpl::GetMoment() const 
 {
     return cpBodyGetMoment(m_body_handle);
+}
+
+void BodyImpl::SetAutoCalculateMoment(bool calculate_moment)
+{
+    m_auto_calculate_moment = calculate_moment;
+}
+
+bool BodyImpl::AutoCalculateMoment() const
+{
+    return m_auto_calculate_moment;
 }
 
 void BodyImpl::SetPosition(const math::Vector& position) 

@@ -23,6 +23,8 @@ namespace cm
         bool PreventRotation() const override;
         void SetMoment(float moment) override;
         float GetMoment() const override;
+        void SetAutoCalculateMoment(bool calculate_moment) override;
+        bool AutoCalculateMoment() const override;
         void SetPosition(const math::Vector& position) override;
         math::Vector GetPosition() const override;
         void ApplyForce(const math::Vector& force, const math::Vector& offset) override;
@@ -45,6 +47,7 @@ namespace cm
         
     private:
         cpBody* m_body_handle;
+        bool m_auto_calculate_moment;
         bool m_prevent_rotation;
         std::vector<mono::ICollisionHandler*> m_collision_handlers;
     };

@@ -229,14 +229,15 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const CircleComponent& p
     std::vector<cm::ShapeImpl*>& shapes_for_body = m_impl->bodies_shapes[body_id];
     shapes_for_body.push_back(shape_impl);
 
-    float inertia = 0.0f;
-    for(const cm::ShapeImpl* shape : shapes_for_body)
-        inertia += shape->GetInertiaValue();
-
-    body.SetMoment(inertia);
+    if(body.AutoCalculateMoment())
+    {
+        float inertia = 0.0f;
+        for(const cm::ShapeImpl* shape : shapes_for_body)
+            inertia += shape->GetInertiaValue();
+        body.SetMoment(inertia);
+    }
 
     m_impl->space.Add(shape_impl);
-
     return shape_impl;
 }
 
@@ -262,9 +263,18 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const BoxComponent& box_
 
     m_impl->m_shape_release_funcs[shape_impl] = &PhysicsSystem::Impl::ReleasePolyShape;
 
-    m_impl->bodies_shapes[body_id].push_back(shape_impl);
-    m_impl->space.Add(shape_impl);
+    std::vector<cm::ShapeImpl*>& shapes_for_body = m_impl->bodies_shapes[body_id];
+    shapes_for_body.push_back(shape_impl);
 
+    if(body.AutoCalculateMoment())
+    {
+        float inertia = 0.0f;
+        for(const cm::ShapeImpl* shape : shapes_for_body)
+            inertia += shape->GetInertiaValue();
+        body.SetMoment(inertia);
+    }
+
+    m_impl->space.Add(shape_impl);
     return shape_impl;
 }
 
@@ -289,9 +299,18 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const SegmentComponent& 
 
     m_impl->m_shape_release_funcs[shape_impl] = &PhysicsSystem::Impl::ReleaseSegmentShape;
 
-    m_impl->bodies_shapes[body_id].push_back(shape_impl);
-    m_impl->space.Add(shape_impl);
+    std::vector<cm::ShapeImpl*>& shapes_for_body = m_impl->bodies_shapes[body_id];
+    shapes_for_body.push_back(shape_impl);
 
+    if(body.AutoCalculateMoment())
+    {
+        float inertia = 0.0f;
+        for(const cm::ShapeImpl* shape : shapes_for_body)
+            inertia += shape->GetInertiaValue();
+        body.SetMoment(inertia);
+    }
+
+    m_impl->space.Add(shape_impl);
     return shape_impl;
 }
 
@@ -324,9 +343,18 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const PolyComponent& pol
 
     m_impl->m_shape_release_funcs[shape_impl] = &PhysicsSystem::Impl::ReleasePolyShape;
 
-    m_impl->bodies_shapes[body_id].push_back(shape_impl);
-    m_impl->space.Add(shape_impl);
+    std::vector<cm::ShapeImpl*>& shapes_for_body = m_impl->bodies_shapes[body_id];
+    shapes_for_body.push_back(shape_impl);
 
+    if(body.AutoCalculateMoment())
+    {
+        float inertia = 0.0f;
+        for(const cm::ShapeImpl* shape : shapes_for_body)
+            inertia += shape->GetInertiaValue();
+        body.SetMoment(inertia);
+    }
+
+    m_impl->space.Add(shape_impl);
     return shape_impl;
 }
 

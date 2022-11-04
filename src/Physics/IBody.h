@@ -75,7 +75,10 @@ namespace mono
         //! Gets the moment(inertia) of the body
         //! @return float moment
         virtual float GetMoment() const = 0;
-        
+
+        virtual void SetAutoCalculateMoment(bool calculate_moment) = 0;
+        virtual bool AutoCalculateMoment() const = 0;
+
         //! Set the position of the body
         //! @param position A new position
         virtual void SetPosition(const math::Vector& position) = 0;
