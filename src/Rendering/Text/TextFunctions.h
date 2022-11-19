@@ -21,6 +21,7 @@ namespace mono
     //! Get the loaded font texture, might be nullptr if no texture is loaded.
     ITexturePtr GetFontTexture(int font_id);
 
+    math::Vector TextOffsetFromFontCentering(const math::Vector& text_size, FontCentering center_flags);
     TextDefinition GenerateVertexDataFromString(int font_id, const char* text, FontCentering center_flags);
     math::Vector MeasureString(int font_id, const char* text);
 }
