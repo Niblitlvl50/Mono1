@@ -9,7 +9,7 @@
 
 #include "Engine.h"
 #include "SystemContext.h"
-#include "InputHandler.h"
+#include "Input/InputHandler.h"
 #include "Updater.h"
 
 #include "Camera/ICamera.h"
