@@ -24,10 +24,10 @@ namespace mono
     public:
 
         virtual ~IMouseInput() = default;
-        virtual InputResult Move(const event::MouseMotionEvent& event) = 0;
-        virtual InputResult ButtonDown(const event::MouseDownEvent& event) = 0;
-        virtual InputResult ButtonUp(const event::MouseUpEvent& event) = 0;
-        virtual InputResult Wheel(const event::MouseWheelEvent& event) = 0;
+        virtual mono::InputResult Move(const event::MouseMotionEvent& event) { return mono::InputResult::Pass; };
+        virtual mono::InputResult ButtonDown(const event::MouseDownEvent& event) { return mono::InputResult::Pass; };
+        virtual mono::InputResult ButtonUp(const event::MouseUpEvent& event) { return mono::InputResult::Pass; };
+        virtual mono::InputResult Wheel(const event::MouseWheelEvent& event) { return mono::InputResult::Pass; };
     };
 
     class IControllerInput
@@ -35,8 +35,8 @@ namespace mono
     public:
 
         virtual ~IControllerInput() = default;
-        virtual InputResult ButtonDown(const event::ControllerButtonDownEvent& event) = 0;
-        virtual InputResult Axis(const event::ControllerAxisEvent& event) = 0;
+        virtual mono::InputResult ButtonDown(const event::ControllerButtonDownEvent& event) { return mono::InputResult::Pass; };
+        virtual mono::InputResult Axis(const event::ControllerAxisEvent& event) { return mono::InputResult::Pass; };
     };
 
     class IKeyboardInput
@@ -44,8 +44,8 @@ namespace mono
     public:
 
         virtual ~IKeyboardInput() = default;
-        virtual InputResult KeyDown(const event::KeyDownEvent& event) = 0;
-        virtual InputResult KeyUp(const event::KeyUpEvent& event) = 0;
+        virtual mono::InputResult KeyDown(const event::KeyDownEvent& event) { return mono::InputResult::Pass; };
+        virtual mono::InputResult KeyUp(const event::KeyUpEvent& event) { return mono::InputResult::Pass; };
     };
 
 
