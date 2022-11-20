@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "System/System.h"
+
 namespace event
 {
     struct ControllerAddedEvent
