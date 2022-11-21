@@ -16,6 +16,7 @@ void FpsCounter::operator ++ (int)
     {
         m_time = current_time;
         m_fps = (uint32_t)std::floor(float(m_frames) / 1.0f);
+        m_delta = float(delta) / float(m_frames) / 1000.0f;
         m_frames = 0;
     }
 }
@@ -30,4 +31,7 @@ uint32_t FpsCounter::Frames() const
     return m_total_frames;
 }
 
-
+float FpsCounter::Delta() const
+{
+    return m_delta;
+}
