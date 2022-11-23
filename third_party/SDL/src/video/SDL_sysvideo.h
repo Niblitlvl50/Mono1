@@ -275,6 +275,7 @@ struct SDL_VideoDevice
       SDL_GLContext(*GL_CreateContext) (_THIS, SDL_Window * window);
     int (*GL_MakeCurrent) (_THIS, SDL_Window * window, SDL_GLContext context);
     void (*GL_GetDrawableSize) (_THIS, SDL_Window * window, int *w, int *h);
+    SDL_EGLSurface (*GL_GetEGLSurface) (_THIS, SDL_Window * window);
     int (*GL_SetSwapInterval) (_THIS, int interval);
     int (*GL_GetSwapInterval) (_THIS);
     int (*GL_SwapWindow) (_THIS, SDL_Window * window);
@@ -328,6 +329,9 @@ struct SDL_VideoDevice
     int (*SetClipboardText) (_THIS, const char *text);
     char * (*GetClipboardText) (_THIS);
     SDL_bool (*HasClipboardText) (_THIS);
+    int (*SetPrimarySelectionText) (_THIS, const char *text);
+    char * (*GetPrimarySelectionText) (_THIS);
+    SDL_bool (*HasPrimarySelectionText) (_THIS);
 
     /* MessageBox */
     int (*ShowMessageBox) (_THIS, const SDL_MessageBoxData *messageboxdata, int *buttonid);
@@ -353,6 +357,7 @@ struct SDL_VideoDevice
     Uint8 window_magic;
     Uint32 next_object_id;
     char *clipboard_text;
+    char *primary_selection_text;
     SDL_bool setting_display_mode;
     Uint32 quirk_flags;
 
@@ -387,10 +392,15 @@ struct SDL_VideoDevice
         int framebuffer_srgb_capable;
         int no_error;
         int retained_backing;
+        int egl_platform;
         int driver_loaded;
         char driver_path[256];
         void *dll_handle;
     } gl_config;
+
+    SDL_EGLAttribArrayCallback egl_platformattrib_callback;
+    SDL_EGLIntArrayCallback egl_surfaceattrib_callback;
+    SDL_EGLIntArrayCallback egl_contextattrib_callback;
 
     /* * * */
     /* Cache current GL context; don't call the OS when it hasn't changed. */
@@ -422,11 +432,11 @@ struct SDL_VideoDevice
     /* Data private to this driver */
     void *driverdata;
     struct SDL_GLDriverData *gl_data;
-    
+
 #if SDL_VIDEO_OPENGL_EGL
     struct SDL_EGL_VideoData *egl_data;
 #endif
-    
+
 #if SDL_VIDEO_OPENGL_ES || SDL_VIDEO_OPENGL_ES2
     struct SDL_PrivateGLESData *gles_data;
 #endif
@@ -446,7 +456,6 @@ typedef struct VideoBootStrap
 /* Not all of these are available in a given build. Use #ifdefs, etc. */
 extern VideoBootStrap COCOA_bootstrap;
 extern VideoBootStrap X11_bootstrap;
-extern VideoBootStrap DirectFB_bootstrap;
 extern VideoBootStrap WINDOWS_bootstrap;
 extern VideoBootStrap WINRT_bootstrap;
 extern VideoBootStrap HAIKU_bootstrap;
@@ -457,20 +466,17 @@ extern VideoBootStrap PS2_bootstrap;
 extern VideoBootStrap PSP_bootstrap;
 extern VideoBootStrap VITA_bootstrap;
 extern VideoBootStrap RISCOS_bootstrap;
+extern VideoBootStrap N3DS_bootstrap;
 extern VideoBootStrap RPI_bootstrap;
 extern VideoBootStrap KMSDRM_bootstrap;
 extern VideoBootStrap KMSDRM_LEGACY_bootstrap;
 extern VideoBootStrap DUMMY_bootstrap;
 extern VideoBootStrap DUMMY_evdev_bootstrap;
 extern VideoBootStrap Wayland_bootstrap;
-extern VideoBootStrap NACL_bootstrap;
 extern VideoBootStrap VIVANTE_bootstrap;
 extern VideoBootStrap Emscripten_bootstrap;
-extern VideoBootStrap QNX_bootstrap;
 extern VideoBootStrap OFFSCREEN_bootstrap;
 extern VideoBootStrap NGAGE_bootstrap;
-extern VideoBootStrap OS2DIVE_bootstrap;
-extern VideoBootStrap OS2VMAN_bootstrap;
 
 /* Use SDL_OnVideoThread() sparingly, to avoid regressions in use cases that currently happen to work */
 extern SDL_bool SDL_OnVideoThread(void);
@@ -514,6 +520,8 @@ extern float SDL_ComputeDiagonalDPI(int hpix, int vpix, float hinches, float vin
 extern void SDL_ToggleDragAndDropSupport(void);
 
 extern int SDL_GetPointDisplayIndex(const SDL_Point * point);
+
+extern int SDL_GL_SwapWindowWithResult(SDL_Window * window);
 
 #endif /* SDL_sysvideo_h_ */
 

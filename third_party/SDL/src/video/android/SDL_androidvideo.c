@@ -50,7 +50,7 @@ static void Android_VideoQuit(_THIS);
 int Android_GetDisplayDPI(_THIS, SDL_VideoDisplay *display, float *ddpi, float *hdpi, float *vdpi);
 
 #include "../SDL_egl_c.h"
-#define Android_GLES_GetProcAddress SDL_EGL_GetProcAddress
+#define Android_GLES_GetProcAddress SDL_EGL_GetProcAddressInternal
 #define Android_GLES_UnloadLibrary SDL_EGL_UnloadLibrary
 #define Android_GLES_SetSwapInterval SDL_EGL_SetSwapInterval
 #define Android_GLES_GetSwapInterval SDL_EGL_GetSwapInterval
@@ -249,6 +249,9 @@ Uint32 format_to_pixelFormat(int format) {
         pf = SDL_PIXELFORMAT_RGBA5551;
     } else if (format == 7) {
         pf = SDL_PIXELFORMAT_RGBA4444;
+    } else if (format == 0x115) {
+        /* HAL_PIXEL_FORMAT_BGR_565 */
+        pf = SDL_PIXELFORMAT_RGB565;
     } else {
         pf = SDL_PIXELFORMAT_UNKNOWN;
     }

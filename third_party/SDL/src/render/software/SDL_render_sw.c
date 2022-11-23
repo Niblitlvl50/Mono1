@@ -733,7 +733,7 @@ SW_RunCommandQueue(SDL_Renderer * renderer, SDL_RenderCommand *cmd, void *vertic
                 SetDrawState(surface, &drawstate);
 
                 /* Apply viewport */
-                if (drawstate.viewport->x || drawstate.viewport->y) {
+                if (drawstate.viewport != NULL && (drawstate.viewport->x || drawstate.viewport->y)) {
                     int i;
                     for (i = 0; i < count; i++) {
                         verts[i].x += drawstate.viewport->x;
@@ -760,7 +760,7 @@ SW_RunCommandQueue(SDL_Renderer * renderer, SDL_RenderCommand *cmd, void *vertic
                 SetDrawState(surface, &drawstate);
 
                 /* Apply viewport */
-                if (drawstate.viewport->x || drawstate.viewport->y) {
+                if (drawstate.viewport != NULL && (drawstate.viewport->x || drawstate.viewport->y)) {
                     int i;
                     for (i = 0; i < count; i++) {
                         verts[i].x += drawstate.viewport->x;
@@ -787,7 +787,7 @@ SW_RunCommandQueue(SDL_Renderer * renderer, SDL_RenderCommand *cmd, void *vertic
                 SetDrawState(surface, &drawstate);
 
                 /* Apply viewport */
-                if (drawstate.viewport->x || drawstate.viewport->y) {
+                if (drawstate.viewport != NULL && (drawstate.viewport->x || drawstate.viewport->y)) {
                     int i;
                     for (i = 0; i < count; i++) {
                         verts[i].x += drawstate.viewport->x;
@@ -815,7 +815,7 @@ SW_RunCommandQueue(SDL_Renderer * renderer, SDL_RenderCommand *cmd, void *vertic
                 PrepTextureForCopy(cmd);
 
                 /* Apply viewport */
-                if (drawstate.viewport->x || drawstate.viewport->y) {
+                if (drawstate.viewport != NULL && (drawstate.viewport->x || drawstate.viewport->y)) {
                     dstrect->x += drawstate.viewport->x;
                     dstrect->y += drawstate.viewport->y;
                 }
@@ -873,7 +873,7 @@ SW_RunCommandQueue(SDL_Renderer * renderer, SDL_RenderCommand *cmd, void *vertic
                 PrepTextureForCopy(cmd);
 
                 /* Apply viewport */
-                if (drawstate.viewport->x || drawstate.viewport->y) {
+                if (drawstate.viewport != NULL && (drawstate.viewport->x || drawstate.viewport->y)) {
                     copydata->dstrect.x += drawstate.viewport->x;
                     copydata->dstrect.y += drawstate.viewport->y;
                 }
@@ -901,7 +901,7 @@ SW_RunCommandQueue(SDL_Renderer * renderer, SDL_RenderCommand *cmd, void *vertic
                     PrepTextureForCopy(cmd);
 
                     /* Apply viewport */
-                    if (drawstate.viewport->x || drawstate.viewport->y) {
+                    if (drawstate.viewport != NULL && (drawstate.viewport->x || drawstate.viewport->y)) {
                         SDL_Point vp;
                         vp.x = drawstate.viewport->x;
                         vp.y = drawstate.viewport->y;
@@ -924,7 +924,7 @@ SW_RunCommandQueue(SDL_Renderer * renderer, SDL_RenderCommand *cmd, void *vertic
                     GeometryFillData *ptr = (GeometryFillData *) verts;
 
                     /* Apply viewport */
-                    if (drawstate.viewport->x || drawstate.viewport->y) {
+                    if (drawstate.viewport != NULL && (drawstate.viewport->x || drawstate.viewport->y)) {
                         SDL_Point vp;
                         vp.x = drawstate.viewport->x;
                         vp.y = drawstate.viewport->y;
@@ -983,14 +983,15 @@ SW_RenderReadPixels(SDL_Renderer * renderer, const SDL_Rect * rect,
                              format, pixels, pitch);
 }
 
-static void
+static int
 SW_RenderPresent(SDL_Renderer * renderer)
 {
     SDL_Window *window = renderer->window;
 
-    if (window) {
-        SDL_UpdateWindowSurface(window);
+    if (!window) {
+        return -1;
     }
+    return SDL_UpdateWindowSurface(window);
 }
 
 static void
@@ -1008,6 +1009,100 @@ SW_DestroyRenderer(SDL_Renderer * renderer)
 
     SDL_free(data);
     SDL_free(renderer);
+}
+
+static void
+SW_SelectBestFormats(SDL_Renderer *renderer, Uint32 format)
+{
+    /* Prefer the format used by the framebuffer by default. */
+    renderer->info.texture_formats[renderer->info.num_texture_formats++] = format;
+
+    switch (format) {
+    case SDL_PIXELFORMAT_XRGB4444:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_ARGB4444;
+        break;
+    case SDL_PIXELFORMAT_XBGR4444:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_ABGR4444;
+        break;
+    case SDL_PIXELFORMAT_ARGB4444:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_XRGB4444;
+        break;
+    case SDL_PIXELFORMAT_ABGR4444:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_XBGR4444;
+        break;
+
+    case SDL_PIXELFORMAT_XRGB1555:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_ARGB1555;
+        break;
+    case SDL_PIXELFORMAT_XBGR1555:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_ABGR1555;
+        break;
+    case SDL_PIXELFORMAT_ARGB1555:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_XRGB1555;
+        break;
+    case SDL_PIXELFORMAT_ABGR1555:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_XBGR1555;
+        break;
+
+    case SDL_PIXELFORMAT_XRGB8888:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_ARGB8888;
+        break;
+    case SDL_PIXELFORMAT_RGBX8888:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_RGBA8888;
+        break;
+    case SDL_PIXELFORMAT_XBGR8888:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_ABGR8888;
+        break;
+    case SDL_PIXELFORMAT_BGRX8888:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_BGRA8888;
+        break;
+    case SDL_PIXELFORMAT_ARGB8888:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_XRGB8888;
+        break;
+    case SDL_PIXELFORMAT_RGBA8888:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_RGBX8888;
+        break;
+    case SDL_PIXELFORMAT_ABGR8888:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_XBGR8888;
+        break;
+    case SDL_PIXELFORMAT_BGRA8888:
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_BGRX8888;
+        break;
+    }
+
+    /* Ensure that we always have a SDL_PACKEDLAYOUT_8888 format. Having a matching component order increases the
+     * chances of getting a fast path for blitting.
+     */
+    if (SDL_ISPIXELFORMAT_PACKED(format)) {
+        if (SDL_PIXELLAYOUT(format) != SDL_PACKEDLAYOUT_8888) {
+            switch (SDL_PIXELORDER(format)) {
+            case SDL_PACKEDORDER_BGRX:
+            case SDL_PACKEDORDER_BGRA:
+                renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_BGRX8888;
+                renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_BGRA8888;
+                break;
+            case SDL_PACKEDORDER_RGBX:
+            case SDL_PACKEDORDER_RGBA:
+                renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_RGBX8888;
+                renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_RGBA8888;
+                break;
+            case SDL_PACKEDORDER_XBGR:
+            case SDL_PACKEDORDER_ABGR:
+                renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_XBGR8888;
+                renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_ABGR8888;
+                break;
+            case SDL_PACKEDORDER_XRGB:
+            case SDL_PACKEDORDER_ARGB:
+            default:
+                renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_XRGB8888;
+                renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_ARGB8888;
+                break;
+            }
+        }
+    } else {
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_XRGB8888;
+        renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_ARGB8888;
+    }
 }
 
 SDL_Renderer *
@@ -1060,6 +1155,8 @@ SW_CreateRendererForSurface(SDL_Surface * surface)
     renderer->info = SW_RenderDriver.info;
     renderer->driverdata = data;
 
+    SW_SelectBestFormats(renderer, surface->format->format);
+
     SW_ActivateRenderer(renderer);
 
     return renderer;
@@ -1102,16 +1199,10 @@ SDL_RenderDriver SW_RenderDriver = {
     {
      "software",
      SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE,
-     8,
+     0,
      {
-      SDL_PIXELFORMAT_ARGB8888,
-      SDL_PIXELFORMAT_ABGR8888,
-      SDL_PIXELFORMAT_RGBA8888,
-      SDL_PIXELFORMAT_BGRA8888,
-      SDL_PIXELFORMAT_RGB888,
-      SDL_PIXELFORMAT_BGR888,
-      SDL_PIXELFORMAT_RGB565,
-      SDL_PIXELFORMAT_RGB555
+      /* formats filled in later */
+      SDL_PIXELFORMAT_UNKNOWN
      },
      0,
      0}

@@ -28,7 +28,7 @@ endif()
 
 # SDL
 add_subdirectory("third_party/SDL")
-include_directories(AFTER "${SDL2_SOURCE_DIR}/include")
+include_directories(AFTER "${SDL3_SOURCE_DIR}/include")
 
 # Chipmunk2D
 set(BUILD_SHARED OFF CACHE BOOL "Build and install the shared library" FORCE)
@@ -80,7 +80,7 @@ endif()
 file(GLOB_RECURSE engine_source_files "src/*.cpp")
 add_library(mono STATIC ${engine_source_files})
 add_dependencies(mono delaunay huffandpuff imgui chipmunk_static)
-target_link_libraries(mono uuid4 delaunay huffandpuff par_streamlines imgui chipmunk_static SDL2-static OpenGL::GL ${AUDIOTOOLBOX})
+target_link_libraries(mono uuid4 delaunay huffandpuff par_streamlines imgui chipmunk_static SDL3-static OpenGL::GL ${AUDIOTOOLBOX})
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "tests/*.cpp")

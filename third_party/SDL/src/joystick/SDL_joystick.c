@@ -87,9 +87,6 @@ static SDL_JoystickDriver *SDL_joystick_drivers[] = {
 #ifdef SDL_JOYSTICK_USBHID  /* !!! FIXME: "USBHID" is a generic name, and doubly-confusing with HIDAPI next to it. This is the *BSD interface, rename this. */
     &SDL_BSD_JoystickDriver,
 #endif
-#ifdef SDL_JOYSTICK_OS2
-    &SDL_OS2_JoystickDriver,
-#endif
 #ifdef SDL_JOYSTICK_PS2
     &SDL_PS2_JoystickDriver,
 #endif
@@ -101,6 +98,9 @@ static SDL_JoystickDriver *SDL_joystick_drivers[] = {
 #endif
 #ifdef SDL_JOYSTICK_VITA
     &SDL_VITA_JoystickDriver,
+#endif
+#ifdef SDL_JOYSTICK_N3DS
+    &SDL_N3DS_JoystickDriver
 #endif
 #if defined(SDL_JOYSTICK_DUMMY) || defined(SDL_JOYSTICK_DISABLED)
     &SDL_DUMMY_JoystickDriver
@@ -165,10 +165,16 @@ SDL_UnlockJoysticks(void)
     }
 }
 
+SDL_bool
+SDL_JoysticksLocked(void)
+{
+    return (SDL_joysticks_locked > 0) ? SDL_TRUE : SDL_FALSE;
+}
+
 void
 SDL_AssertJoysticksLocked(void)
 {
-    SDL_assert(SDL_joysticks_locked > 0);
+    SDL_assert(SDL_JoysticksLocked());
 }
 
 /*
@@ -573,14 +579,14 @@ SDL_JoystickOpen(int device_index)
     joystick->next = SDL_joysticks;
     SDL_joysticks = joystick;
 
-    SDL_UnlockJoysticks();
-
     /* send initial battery event */
     initial_power_level = joystick->epowerlevel;
     joystick->epowerlevel = SDL_JOYSTICK_POWER_UNKNOWN;
     SDL_PrivateJoystickBatteryLevel(joystick, initial_power_level);
 
     driver->Update(joystick);
+
+    SDL_UnlockJoysticks();
 
     return joystick;
 }
@@ -604,7 +610,12 @@ int
 SDL_JoystickAttachVirtualEx(const SDL_VirtualJoystickDesc *desc)
 {
 #if SDL_JOYSTICK_VIRTUAL
-    return SDL_JoystickAttachVirtualInner(desc);
+    int result;
+
+    SDL_LockJoysticks();
+    result = SDL_JoystickAttachVirtualInner(desc);
+    SDL_UnlockJoysticks();
+    return result;
 #else
     return SDL_SetError("SDL not built with virtual-joystick support");
 #endif
@@ -991,6 +1002,10 @@ SDL_JoystickRumble(SDL_Joystick *joystick, Uint16 low_frequency_rumble, Uint16 h
         result = 0;
     } else {
         result = joystick->driver->Rumble(joystick, low_frequency_rumble, high_frequency_rumble);
+        joystick->rumble_resend = SDL_GetTicks() + SDL_RUMBLE_RESEND_MS;
+        if (!joystick->rumble_resend) {
+            joystick->rumble_resend = 1;
+        }
     }
 
     if (result == 0) {
@@ -1004,6 +1019,7 @@ SDL_JoystickRumble(SDL_Joystick *joystick, Uint16 low_frequency_rumble, Uint16 h
             }
         } else {
             joystick->rumble_expiration = 0;
+            joystick->rumble_resend = 0;
         }
     }
     SDL_UnlockJoysticks();
@@ -1413,7 +1429,7 @@ static void UpdateEventsForDeviceRemoval(int device_index, Uint32 type)
     SDL_small_free(events, isstack);
 }
 
-static void
+void
 SDL_PrivateJoystickForceRecentering(SDL_Joystick *joystick)
 {
     int i, j;
@@ -1516,7 +1532,8 @@ SDL_PrivateJoystickAxis(SDL_Joystick *joystick, Uint8 axis, Sint16 value)
     if (!info->sent_initial_value) {
         /* Make sure we don't send motion until there's real activity on this axis */
         const int MAX_ALLOWED_JITTER = SDL_JOYSTICK_AXIS_MAX / 80;  /* ShanWan PS3 controller needed 96 */
-        if (SDL_abs(value - info->value) <= MAX_ALLOWED_JITTER) {
+        if (SDL_abs(value - info->value) <= MAX_ALLOWED_JITTER &&
+            !SDL_IsJoystickVirtual(joystick->guid)) {
             return 0;
         }
         info->sent_initial_value = SDL_TRUE;
@@ -1698,6 +1715,7 @@ void
 SDL_JoystickUpdate(void)
 {
     int i;
+    Uint32 now;
     SDL_Joystick *joystick;
 
     if (!SDL_WasInit(SDL_INIT_JOYSTICK)) {
@@ -1720,13 +1738,24 @@ SDL_JoystickUpdate(void)
             }
         }
 
+        now = SDL_GetTicks();
         if (joystick->rumble_expiration &&
-            SDL_TICKS_PASSED(SDL_GetTicks(), joystick->rumble_expiration)) {
+            SDL_TICKS_PASSED(now, joystick->rumble_expiration)) {
             SDL_JoystickRumble(joystick, 0, 0, 0);
+            joystick->rumble_resend = 0;
+        }
+
+        if (joystick->rumble_resend &&
+            SDL_TICKS_PASSED(now, joystick->rumble_resend)) {
+            joystick->driver->Rumble(joystick, joystick->low_frequency_rumble, joystick->high_frequency_rumble);
+            joystick->rumble_resend = now + SDL_RUMBLE_RESEND_MS;
+            if (joystick->rumble_resend == 0) {
+                joystick->rumble_resend = 1;
+            }
         }
 
         if (joystick->trigger_rumble_expiration &&
-            SDL_TICKS_PASSED(SDL_GetTicks(), joystick->trigger_rumble_expiration)) {
+            SDL_TICKS_PASSED(now, joystick->trigger_rumble_expiration)) {
             SDL_JoystickRumbleTriggers(joystick, 0, 0, 0);
         }
     }
@@ -1766,7 +1795,7 @@ SDL_JoystickEventState(int state)
         break;
     default:
         for (i = 0; i < SDL_arraysize(event_list); ++i) {
-            SDL_EventState(event_list[i], state);
+            (void)SDL_EventState(event_list[i], state);
         }
         break;
     }
@@ -1858,10 +1887,15 @@ SDL_CreateJoystickName(Uint16 vendor, Uint16 product, const char *vendor_name, c
         const char *prefix;
         const char *replacement;
     } replacements[] = {
+        { "ASTRO Gaming", "ASTRO" },
+        { "Bensussen Deutsch & Associates,Inc.(BDA)", "BDA" },
         { "NVIDIA Corporation ", "" },
         { "Performance Designed Products", "PDP" },
         { "HORI CO.,LTD.", "HORI" },
         { "HORI CO.,LTD", "HORI" },
+        { "Mad Catz Inc.", "Mad Catz" },
+        { "QANBA USA, LLC", "Qanba" },
+        { "QANBA USA,LLC", "Qanba" },
         { "Unknown ", "" },
     };
     const char *custom_name;
@@ -1964,14 +1998,20 @@ SDL_CreateJoystickName(Uint16 vendor, Uint16 product, const char *vendor_name, c
         }
     }
 
-    /* Remove duplicate manufacturer or product in the name */
+    /* Remove duplicate manufacturer or product in the name
+     * e.g. Razer Razer Raiju Tournament Edition Wired
+     */
     for (i = 1; i < (len - 1); ++i) {
         int matchlen = PrefixMatch(name, &name[i]);
-        if (matchlen > 0 && name[matchlen-1] == ' ') {
-            SDL_memmove(name, name+matchlen, len-matchlen+1);
-            break;
-        } else if (matchlen > 0 && name[matchlen] == ' ') {
-            SDL_memmove(name, name+matchlen+1, len-matchlen);
+        while (matchlen > 0) {
+            if (name[matchlen] == ' ') {
+                SDL_memmove(name, name + matchlen + 1, len - matchlen);
+                break;
+            }
+            --matchlen;
+        }
+        if (matchlen > 0) {
+            /* We matched the manufacturer's name and removed it */
             break;
         }
     }
@@ -2101,7 +2141,9 @@ SDL_GetJoystickGameControllerTypeFromVIDPID(Uint16 vendor, Uint16 product, const
     } else if (vendor == USB_VENDOR_NINTENDO && product == USB_PRODUCT_NINTENDO_SWITCH_JOYCON_PAIR) {
         type = SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_JOYCON_PAIR;
 
-    } else if (vendor == USB_VENDOR_NVIDIA && product == USB_PRODUCT_NVIDIA_SHIELD_CONTROLLER) {
+    } else if (vendor == USB_VENDOR_NVIDIA &&
+               (product == USB_PRODUCT_NVIDIA_SHIELD_CONTROLLER_V103 ||
+                product == USB_PRODUCT_NVIDIA_SHIELD_CONTROLLER_V104)) {
         type = SDL_CONTROLLER_TYPE_NVIDIA_SHIELD;
 
     } else {
@@ -2162,6 +2204,11 @@ SDL_GetJoystickGameControllerTypeFromGUID(SDL_JoystickGUID guid, const char *nam
         if (SDL_IsJoystickVirtual(guid)) {
             return SDL_CONTROLLER_TYPE_VIRTUAL;
         }
+#ifdef SDL_JOYSTICK_HIDAPI
+        if (SDL_IsJoystickHIDAPI(guid)) {
+            return HIDAPI_GetGameControllerTypeFromGUID(guid);
+        }
+#endif /* SDL_JOYSTICK_HIDAPI */
     }
     return type;
 }
@@ -2206,6 +2253,11 @@ SDL_IsJoystickXboxSeriesX(Uint16 vendor_id, Uint16 product_id)
         if ((product_id >= 0x2001 && product_id <= 0x201a) ||
             product_id == USB_PRODUCT_XBOX_SERIES_X_POWERA_FUSION_PRO2 ||
             product_id == USB_PRODUCT_XBOX_SERIES_X_POWERA_SPECTRA) {
+            return SDL_TRUE;
+        }
+    }
+    if (vendor_id == USB_VENDOR_HORI) {
+        if (product_id == USB_PRODUCT_HORI_FIGHTING_COMMANDER_OCTA_SERIES_X) {
             return SDL_TRUE;
         }
     }
@@ -2423,6 +2475,9 @@ static SDL_bool SDL_IsJoystickProductFlightStick(Uint32 vidpid)
         MAKE_VIDPID(0x044f, 0x0402),    /* HOTAS Warthog Joystick */
         MAKE_VIDPID(0x0738, 0x2221),    /* Saitek Pro Flight X-56 Rhino Stick */
         MAKE_VIDPID(0x044f, 0xb10a),    /* ThrustMaster, Inc. T.16000M Joystick */
+        MAKE_VIDPID(0x046d, 0xc215),    /* Logitech Extreme 3D */
+        MAKE_VIDPID(0x231d, 0x0126),    /* Gunfighter Mk.III ‘Space Combat Edition’ (right) */
+        MAKE_VIDPID(0x231d, 0x0127),    /* Gunfighter Mk.III ‘Space Combat Edition’ (left) */
     };
     int i;
 
@@ -2509,44 +2564,17 @@ static SDL_JoystickType SDL_GetJoystickGUIDType(SDL_JoystickGUID guid)
         return SDL_JOYSTICK_TYPE_THROTTLE;
     }
 
+#ifdef SDL_JOYSTICK_HIDAPI
+    if (SDL_IsJoystickHIDAPI(guid)) {
+        return HIDAPI_GetJoystickTypeFromGUID(guid);
+    }
+#endif /* SDL_JOYSTICK_HIDAPI */
+
     if (GuessControllerType(vendor, product) != k_eControllerType_UnknownNonSteamController) {
         return SDL_JOYSTICK_TYPE_GAMECONTROLLER;
     }
 
     return SDL_JOYSTICK_TYPE_UNKNOWN;
-}
-
-static SDL_bool SDL_IsPS4RemapperRunning(void)
-{
-#if defined(__WIN32__) || defined(__WINGDK__)
-    const char *mapper_processes[] = {
-        "DS4Windows.exe",
-        "InputMapper.exe",
-    };
-    int i;
-    PROCESSENTRY32 pe32;
-    SDL_bool found = SDL_FALSE;
-
-    /* Take a snapshot of all processes in the system */
-    HANDLE hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-    if (hProcessSnap != INVALID_HANDLE_VALUE) {
-        pe32.dwSize = sizeof(PROCESSENTRY32);
-        if (Process32First(hProcessSnap, &pe32)) {
-            do
-            {
-                for (i = 0; i < SDL_arraysize(mapper_processes); ++i) {
-                    if (SDL_strcasecmp(pe32.szExeFile, mapper_processes[i]) == 0) {
-                        found = SDL_TRUE;
-                    }
-                }
-            } while (Process32Next(hProcessSnap, &pe32) && !found);
-        }
-        CloseHandle(hProcessSnap);
-    }
-    return found;
-#else
-    return SDL_FALSE;
-#endif
 }
 
 SDL_bool SDL_ShouldIgnoreJoystick(const char *name, SDL_JoystickGUID guid)
@@ -2677,7 +2705,6 @@ SDL_bool SDL_ShouldIgnoreJoystick(const char *name, SDL_JoystickGUID guid)
     Uint32 id;
     Uint16 vendor;
     Uint16 product;
-    SDL_GameControllerType type;
 
     SDL_GetJoystickGUIDInfo(guid, &vendor, &product, NULL, NULL);
 
@@ -2694,11 +2721,6 @@ SDL_bool SDL_ShouldIgnoreJoystick(const char *name, SDL_JoystickGUID guid)
                 return SDL_TRUE;
             }
         }
-    }
-
-    type = SDL_GetJoystickGameControllerTypeFromVIDPID(vendor, product, name, SDL_FALSE);
-    if ((type == SDL_CONTROLLER_TYPE_PS4 || type == SDL_CONTROLLER_TYPE_PS5) && SDL_IsPS4RemapperRunning()) {
-        return SDL_TRUE;
     }
 
     if (SDL_ShouldIgnoreGameController(name, guid)) {
@@ -2878,7 +2900,7 @@ void SDL_PrivateJoystickBatteryLevel(SDL_Joystick *joystick, SDL_JoystickPowerLe
 {
     CHECK_JOYSTICK_MAGIC(joystick, );
 
-    SDL_assert(joystick->ref_count); /* make sure we are calling this only for update, not for initialisation */
+    SDL_assert(joystick->ref_count); /* make sure we are calling this only for update, not for initialization */
     if (ePowerLevel != joystick->epowerlevel) {
 #if !SDL_EVENTS_DISABLED
         if (SDL_GetEventState(SDL_JOYBATTERYUPDATED) == SDL_ENABLE) {
@@ -2991,7 +3013,7 @@ int SDL_PrivateJoystickTouchpad(SDL_Joystick *joystick, int touchpad, int finger
     return posted;
 }
 
-int SDL_PrivateJoystickSensor(SDL_Joystick *joystick, SDL_SensorType type, const float *data, int num_values)
+int SDL_PrivateJoystickSensor(SDL_Joystick *joystick, SDL_SensorType type, Uint64 timestamp_us, const float *data, int num_values)
 {
     int i;
     int posted = 0;
@@ -3012,6 +3034,7 @@ int SDL_PrivateJoystickSensor(SDL_Joystick *joystick, SDL_SensorType type, const
 
                 /* Update internal sensor state */
                 SDL_memcpy(sensor->data, data, num_values*sizeof(*data));
+                sensor->timestamp_us = timestamp_us;
 
                 /* Post the event, if desired */
 #if !SDL_EVENTS_DISABLED
@@ -3023,6 +3046,7 @@ int SDL_PrivateJoystickSensor(SDL_Joystick *joystick, SDL_SensorType type, const
                     num_values = SDL_min(num_values, SDL_arraysize(event.csensor.data));
                     SDL_memset(event.csensor.data, 0, sizeof(event.csensor.data));
                     SDL_memcpy(event.csensor.data, data, num_values*sizeof(*data));
+                    event.csensor.timestamp_us = timestamp_us;
                     posted = SDL_PushEvent(&event) == 1;
                 }
 #endif /* !SDL_EVENTS_DISABLED */
