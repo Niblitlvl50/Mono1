@@ -31,4 +31,5 @@ namespace mono
     class TextSystem;
 
     struct UpdateContext;
+    struct InputContext;
 }
