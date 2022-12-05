@@ -29,7 +29,6 @@
 namespace
 {
     System::ControllerState g_controller_states[System::ControllerId::N_Controllers];
-    SDL_Haptic* g_controller_haptic[System::ControllerId::N_Controllers];
 
     FILE* g_log_file = nullptr;
     char* g_user_path = nullptr; 
@@ -714,16 +713,6 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 Log("System|Controller connected (%s), index: %d, id: %d", SDL_GameControllerName(controller), free_index, g_controller_states[id].id);
 
-                SDL_Haptic* haptic_device = SDL_HapticOpenFromJoystick(joystick);
-                if(!haptic_device)
-                    Log("System|Controller, unable to open haptic device. [%s]", SDL_GetError());
-
-                const int result_code = SDL_HapticRumbleInit(haptic_device);
-                if(result_code != 0)
-                    Log("System[Controller, unable to initialize rumble. [%s]", SDL_GetError());
-
-                g_controller_haptic[free_index] = haptic_device;
-
                 handler->OnControllerAdded(free_index);
                 break;
             }
@@ -749,9 +738,6 @@ void System::ProcessSystemEvents(System::IInputHandler* handler)
 
                 handler->OnControllerRemoved(controller_index);
                 g_controller_states[controller_index].id = -1;
-
-                SDL_HapticClose(g_controller_haptic[controller_index]);
-                g_controller_haptic[controller_index] = nullptr;
 
                 SDL_GameController* controller = SDL_GameControllerFromInstanceID(instance_id);
                 Log("System|Controller disconnected (%s), index: %d, id: %d",
@@ -1080,11 +1066,4 @@ int System::GetControllerId(ControllerId controller_id)
 {
     const int id = static_cast<int>(controller_id);
     return g_controller_states[id].id;
-}
-
-void System::PlayRumble(ControllerId controller_id, float strength, uint32_t duration_ms)
-{
-    SDL_Haptic* haptic = g_controller_haptic[static_cast<int>(controller_id)];
-    if(haptic)
-        SDL_HapticRumblePlay(haptic, strength, duration_ms);
 }
