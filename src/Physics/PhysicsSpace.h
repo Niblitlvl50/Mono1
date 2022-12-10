@@ -48,13 +48,13 @@ namespace mono
         void Remove(IShape* shape);
         void Remove(IConstraint* constraint);
         
-        QueryResult QueryFirst(const math::Vector& start, const math::Vector& end, uint32_t category);
-        QueryResult QueryNearest(const math::Vector& point, float max_distance, uint32_t category);
-        QueryResult QueryNearest(const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func);
+        QueryResult QueryFirst(const math::Vector& start, const math::Vector& end, uint32_t category) const;
+        QueryResult QueryNearest(const math::Vector& point, float max_distance, uint32_t category) const;
+        QueryResult QueryNearest(const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func) const;
 
-        std::vector<QueryResult> QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category);
-        std::vector<QueryResult> QueryBox(const math::Quad& world_bb, uint32_t category);
-        std::vector<QueryResult> QueryRadius(const math::Vector& position, float radius, uint32_t category);
+        std::vector<QueryResult> QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category) const;
+        std::vector<QueryResult> QueryBox(const math::Quad& world_bb, uint32_t category) const;
+        std::vector<QueryResult> QueryRadius(const math::Vector& position, float radius, uint32_t category) const;
 
         void UpdateBodyShapes(IBody* body);
         IBody* GetStaticBody();

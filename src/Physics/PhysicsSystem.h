@@ -163,7 +163,7 @@ namespace mono
         mono::IConstraint* CreateSpring(IBody* first, IBody* second, float rest_length, float stiffness, float damping);
         void ReleaseConstraint(mono::IConstraint* constraint);
 
-        mono::PhysicsSpace* GetSpace();
+        mono::PhysicsSpace* GetSpace() const;
         PhysicsSystemStats GetStats() const;
 
         static uint32_t GetIdFromBody(const mono::IBody* body);

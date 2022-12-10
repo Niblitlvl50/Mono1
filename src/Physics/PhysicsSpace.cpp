@@ -106,7 +106,7 @@ void PhysicsSpace::Remove(IConstraint* constraint)
     cpSpaceRemoveConstraint(m_space, constraint->Handle());
 }
 
-QueryResult PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vector& end, uint32_t category)
+QueryResult PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vector& end, uint32_t category) const
 {
     QueryResult result = {};
 
@@ -128,7 +128,7 @@ QueryResult PhysicsSpace::QueryFirst(const math::Vector& start, const math::Vect
     return result;
 }
 
-std::vector<QueryResult> PhysicsSpace::QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category)
+std::vector<QueryResult> PhysicsSpace::QueryAllInLIne(const math::Vector& start, const math::Vector& end, float max_distance, uint32_t category) const
 {
     struct QueryData
     {
@@ -157,7 +157,7 @@ std::vector<QueryResult> PhysicsSpace::QueryAllInLIne(const math::Vector& start,
     return query_data.found_bodies;
 }
 
-std::vector<QueryResult> PhysicsSpace::QueryBox(const math::Quad& world_bb, uint32_t category)
+std::vector<QueryResult> PhysicsSpace::QueryBox(const math::Quad& world_bb, uint32_t category) const
 {
     struct QueryData
     {
@@ -204,7 +204,7 @@ CP_EXPORT void cpSpaceBBQuery(cpSpace *space, cpBB bb, cpShapeFilter filter, cpS
 */
 }
 
-std::vector<QueryResult> PhysicsSpace::QueryRadius(const math::Vector& position, float radius, uint32_t category)
+std::vector<QueryResult> PhysicsSpace::QueryRadius(const math::Vector& position, float radius, uint32_t category) const
 {
     cpCircleShape circle_shape;
     cpCircleShapeInit(&circle_shape, cpSpaceGetStaticBody(m_space), radius, cpv(position.x, position.y));
@@ -242,7 +242,7 @@ std::vector<QueryResult> PhysicsSpace::QueryRadius(const math::Vector& position,
     return query_data.found_bodies;
 }
 
-QueryResult PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category)
+QueryResult PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category) const
 {
     QueryResult result = {};
 
@@ -263,7 +263,7 @@ QueryResult PhysicsSpace::QueryNearest(const math::Vector& point, float max_dist
     return result;
 }
 
-QueryResult PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func)
+QueryResult PhysicsSpace::QueryNearest(const math::Vector& point, float max_distance, uint32_t category, const QueryFilter& filter_func) const
 {
     struct UserData
     {

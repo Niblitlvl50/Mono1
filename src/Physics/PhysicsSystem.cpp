@@ -507,7 +507,7 @@ void PhysicsSystem::ReleaseConstraint(mono::IConstraint* constraint)
     m_impl->constraints.ReleasePoolData((cm::ConstraintImpl*)constraint);
 }
 
-mono::PhysicsSpace* PhysicsSystem::GetSpace()
+mono::PhysicsSpace* PhysicsSystem::GetSpace() const
 {
     return &m_impl->space;
 }
