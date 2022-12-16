@@ -61,15 +61,17 @@ void InputSystem::Update(const mono::UpdateContext& update_context)
 
 }
 
-mono::InputContext* InputSystem::CreateContext(int priority, InputContextBehaviour context_behaviour)
+mono::InputContext* InputSystem::CreateContext(int priority, InputContextBehaviour context_behaviour, const char* debug_context)
 {
     mono::InputContext* context = new mono::InputContext;
     context->enabled = true;
     context->priority = priority;
     context->behaviour = context_behaviour;
+    context->most_recent_input = InputContextType::None;
     context->mouse_input = nullptr;
     context->keyboard_input = nullptr;
     context->controller_input = nullptr;
+    context->debug_context = debug_context;
 
     m_contexts.push_back(context);
 
@@ -91,7 +93,10 @@ mono::EventResult InputSystem::OnMouseMotionEvent(const event::MouseMotionEvent&
 {
     const auto apply_event = [&event](InputContext* context) {
         if(context->mouse_input)
+        {
+            context->most_recent_input = InputContextType::Mouse;
             return context->mouse_input->Move(event);
+        }
         return mono::InputResult::Pass;
     };
     ForEachContext(apply_event);
@@ -103,7 +108,10 @@ mono::EventResult InputSystem::OnMouseDownEvent(const event::MouseDownEvent& eve
 {
     const auto apply_event = [&event](InputContext* context) {
         if(context->mouse_input)
+        {
+            context->most_recent_input = InputContextType::Mouse;
             return context->mouse_input->ButtonDown(event);
+        }
         return mono::InputResult::Pass;
     };
     ForEachContext(apply_event);
@@ -115,7 +123,10 @@ mono::EventResult InputSystem::OnMouseUpEvent(const event::MouseUpEvent& event)
 {
     const auto apply_event = [&event](InputContext* context) {
         if(context->mouse_input)
+        {
+            context->most_recent_input = InputContextType::Mouse;
             return context->mouse_input->ButtonUp(event);
+        }
         return mono::InputResult::Pass;
     };
     ForEachContext(apply_event);
@@ -127,7 +138,11 @@ mono::EventResult InputSystem::OnMouseWheelEvent(const event::MouseWheelEvent& e
 {
     const auto apply_event = [&event](InputContext* context) {
         if(context->mouse_input)
+        {
+            context->most_recent_input = InputContextType::Mouse;
             return context->mouse_input->Wheel(event);
+        }
+
         return mono::InputResult::Pass;
     };
     ForEachContext(apply_event);
@@ -139,7 +154,10 @@ mono::EventResult InputSystem::OnKeyDown(const event::KeyDownEvent& event)
 {
     const auto apply_event = [&event](InputContext* context) {
         if(context->keyboard_input)
+        {
+            context->most_recent_input = InputContextType::Keyboard;
             return context->keyboard_input->KeyDown(event);
+        }
         return mono::InputResult::Pass;
     };
     ForEachContext(apply_event);
@@ -151,7 +169,10 @@ mono::EventResult InputSystem::OnKeyUp(const event::KeyUpEvent& event)
 {
     const auto apply_event = [&event](InputContext* context) {
         if(context->keyboard_input)
+        {
+            context->most_recent_input = InputContextType::Keyboard;
             return context->keyboard_input->KeyUp(event);
+        }
         return mono::InputResult::Pass;
     };
     ForEachContext(apply_event);
@@ -163,7 +184,10 @@ mono::EventResult InputSystem::OnControllerButton(const event::ControllerButtonD
 {
     const auto apply_event = [&event](InputContext* context) {
         if(context->controller_input)
+        {
+            context->most_recent_input = InputContextType::Controller;
             return context->controller_input->ButtonDown(event);
+        }
         return mono::InputResult::Pass;
     };
     ForEachContext(apply_event);
@@ -175,7 +199,10 @@ mono::EventResult InputSystem::OnControllerAxis(const event::ControllerAxisEvent
 {
     const auto apply_event = [&event](InputContext* context) {
         if(context->controller_input)
+        {
+            context->most_recent_input = InputContextType::Controller;
             return context->controller_input->Axis(event);
+        }
         return mono::InputResult::Pass;
     };
     ForEachContext(apply_event);

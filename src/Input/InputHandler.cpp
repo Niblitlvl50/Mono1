@@ -30,12 +30,6 @@ void InputHandler::OnKeyDown(Keycode key, bool ctrl, bool shift, bool alt, bool 
 
 void InputHandler::OnKeyUp(Keycode key, bool ctrl, bool shift, bool alt, bool super, uint32_t timestamp)
 {
-    if(key == Keycode::ESCAPE)
-    {
-        OnQuit();
-        return;
-    }
-
     const event::KeyUpEvent event(key, ctrl, shift, alt, super, timestamp);
     m_event_handler->DispatchEvent(event);
 }

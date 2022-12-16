@@ -190,6 +190,9 @@ void EntitySystem::SetEntityName(uint32_t entity_id, const char* name)
 
 const char* EntitySystem::GetEntityName(uint32_t entity_id) const
 {
+    if(entity_id == mono::INVALID_ID)
+        return "";
+
     const std::string& name = GetName(entity_id);
     return name.c_str();
 }
@@ -206,7 +209,10 @@ uint32_t EntitySystem::GetEntityIdFromUuid(uint32_t uuid) const
     };
 
     const auto it = std::find_if(m_entity_uuids.begin(), m_entity_uuids.end(), find_id);
-    return std::distance(m_entity_uuids.begin(), it);
+    if(it != m_entity_uuids.end())
+        return std::distance(m_entity_uuids.begin(), it);
+
+    return mono::INVALID_ID;
 }
 
 void EntitySystem::RegisterComponent(

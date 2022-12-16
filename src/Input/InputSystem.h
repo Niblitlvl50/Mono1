@@ -16,14 +16,24 @@ namespace mono
         PassOnAll
     };
 
+    enum class InputContextType
+    {
+        None,
+        Mouse,
+        Keyboard,
+        Controller
+    };
+
     struct InputContext
     {
         bool enabled;
         int priority;
         InputContextBehaviour behaviour;
+        InputContextType most_recent_input;
         IMouseInput* mouse_input;
         IControllerInput* controller_input;
         IKeyboardInput* keyboard_input;
+        const char* debug_context;
     };
 
     class InputSystem : public mono::IGameSystem
@@ -37,7 +47,7 @@ namespace mono
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
 
-        InputContext* CreateContext(int priority, InputContextBehaviour context_behaviour);
+        InputContext* CreateContext(int priority, InputContextBehaviour context_behaviour, const char* debug_context);
         void ReleaseContext(InputContext* context);
 
     private:
