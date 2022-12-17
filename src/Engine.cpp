@@ -10,7 +10,7 @@
 #include "Engine.h"
 #include "SystemContext.h"
 #include "Input/InputHandler.h"
-#include "Updater.h"
+#include "IUpdater.h"
 
 #include "Camera/ICamera.h"
 #include "Zone/IZone.h"
@@ -32,6 +32,30 @@
 
 #include "Math/Vector.h"
 #include "Math/Quad.h"
+
+
+namespace
+{
+    class Updater : public mono::IUpdater
+    {
+    public:
+
+        void AddUpdatable(mono::IUpdatable* updatable) override
+        {
+            m_updatables.push_back(updatable);
+        }
+
+        void Update(const mono::UpdateContext& update_context)
+        {
+            for(mono::IUpdatable* updatable : m_updatables)
+                updatable->Update(update_context);
+
+            m_updatables.clear();
+        }
+
+        std::vector<mono::IUpdatable*> m_updatables;
+    };
+}
 
 using namespace mono;
 
