@@ -93,9 +93,9 @@ void RendererSokol::SetDeltaAndTimestamp(float delta_s, uint32_t timestamp)
     m_timestamp = timestamp;
 }
 
-void RendererSokol::MakeOrUpdateOffscreenPass(RendererSokol::OffscreenPassData& offscreen_pass) const
+void RendererSokol::MakeOrUpdateOffscreenPass(RendererSokol::OffscreenPassData& offscreen_pass, const math::Vector& drawable_size) const
 {
-    if(offscreen_pass.image_size == m_drawable_size)
+    if(offscreen_pass.image_size == drawable_size)
         return;
 
     if(offscreen_pass.pass_handle.id != 0)
@@ -103,15 +103,15 @@ void RendererSokol::MakeOrUpdateOffscreenPass(RendererSokol::OffscreenPassData& 
 
     sg_image_desc offscreen_image_desc = {};
     offscreen_image_desc.render_target = true;
-    offscreen_image_desc.width = m_drawable_size.x;
-    offscreen_image_desc.height = m_drawable_size.y;
+    offscreen_image_desc.width = drawable_size.x;
+    offscreen_image_desc.height = drawable_size.y;
     sg_image image_handle = sg_make_image(offscreen_image_desc);
 
     sg_pass_desc pass_desc = {};
     pass_desc.color_attachments[0].image = image_handle;
     sg_pass pass_handle = sg_make_pass(&pass_desc);
 
-    offscreen_pass.image_size = m_drawable_size;
+    offscreen_pass.image_size = drawable_size;
     offscreen_pass.offscreen_texture = mono::GetTextureFactory()->CreateFromNativeHandle(image_handle.id);
     offscreen_pass.pass_handle = pass_handle;
 
@@ -204,8 +204,8 @@ void RendererSokol::PrepareDraw()
 
     m_model_stack.push(math::Matrix()); // Push identity
 
-    MakeOrUpdateOffscreenPass(m_offscreen_color_pass);
-    MakeOrUpdateOffscreenPass(m_offscreen_light_pass);
+    MakeOrUpdateOffscreenPass(m_offscreen_color_pass, m_drawable_size);
+    MakeOrUpdateOffscreenPass(m_offscreen_light_pass, m_drawable_size);
 
     sg_pass_action offscreen_pass_action = {};
     offscreen_pass_action.colors[0].action = SG_ACTION_CLEAR;

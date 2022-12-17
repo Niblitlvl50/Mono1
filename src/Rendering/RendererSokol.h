@@ -155,7 +155,7 @@ namespace mono
         OffscreenPassData m_offscreen_color_pass;
         OffscreenPassData m_offscreen_light_pass;
 
-        void MakeOrUpdateOffscreenPass(OffscreenPassData& offscreen_pass) const;
+        void MakeOrUpdateOffscreenPass(OffscreenPassData& offscreen_pass, const math::Vector& drawable_size) const;
         void DrawLights();
 
         void PrepareDraw();
