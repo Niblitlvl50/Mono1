@@ -17,7 +17,8 @@ namespace mono
             const IRenderBuffer* uv_coordinates,
             const IElementBuffer* indices,
             const ITexture* color_texture,
-            const ITexture* light_texture);
+            const ITexture* light_texture,
+            const ITexture* color_post_light_texture);
 
         static void FadeCorners(bool enable);
         static void InvertColors(bool enable);

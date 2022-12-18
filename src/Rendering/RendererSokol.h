@@ -146,8 +146,9 @@ namespace mono
             mono::ITexturePtr offscreen_texture;
             sg_pass pass_handle;
         };
-        OffscreenPassData m_offscreen_color_pass;
-        OffscreenPassData m_offscreen_light_pass;
+        OffscreenPassData m_color_pass;
+        OffscreenPassData m_light_pass;
+        OffscreenPassData m_color_post_light_pass;
 
         void MakeOrUpdateOffscreenPass(OffscreenPassData& offscreen_pass, const math::Vector& drawable_size) const;
         void DrawLights();

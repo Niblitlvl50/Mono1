@@ -30,8 +30,9 @@
 using namespace mono;
 
 RendererSokol::RendererSokol()
-    : m_offscreen_color_pass{}
-    , m_offscreen_light_pass{}
+    : m_color_pass{}
+    , m_light_pass{}
+    , m_color_post_light_pass{}
     , m_clear_color(0.7f, 0.7f, 0.7f)
     , m_ambient_shade(1.0f, 1.0f, 1.0f)
     , m_screen_fade_alpha(1.0f)
@@ -69,8 +70,9 @@ RendererSokol::RendererSokol()
 
 RendererSokol::~RendererSokol()
 {
-    sg_destroy_pass(m_offscreen_color_pass.pass_handle);
-    sg_destroy_pass(m_offscreen_light_pass.pass_handle);
+    sg_destroy_pass(m_color_pass.pass_handle);
+    sg_destroy_pass(m_light_pass.pass_handle);
+    sg_destroy_pass(m_color_post_light_pass.pass_handle);
 }
 
 void RendererSokol::SetWindowSize(const math::Vector& window_size)
@@ -131,7 +133,7 @@ void RendererSokol::DrawLights()
     offscreen_light_pass_action.colors[0].value.b = m_ambient_shade.blue;
     offscreen_light_pass_action.colors[0].value.a = m_ambient_shade.alpha;
 
-    sg_begin_pass(m_offscreen_light_pass.pass_handle, &offscreen_light_pass_action);
+    sg_begin_pass(m_light_pass.pass_handle, &offscreen_light_pass_action);
 
     if(m_light_mask_texture && !m_lights.empty())
     {
@@ -205,39 +207,71 @@ void RendererSokol::PrepareDraw()
 
     m_model_stack.push(math::Matrix()); // Push identity
 
-    MakeOrUpdateOffscreenPass(m_offscreen_color_pass, m_drawable_size);
-    MakeOrUpdateOffscreenPass(m_offscreen_light_pass, m_drawable_size);
+    MakeOrUpdateOffscreenPass(m_color_pass, m_drawable_size);
+    MakeOrUpdateOffscreenPass(m_light_pass, m_drawable_size);
+    MakeOrUpdateOffscreenPass(m_color_post_light_pass, m_drawable_size);
 
-    sg_pass_action offscreen_pass_action = {};
-    offscreen_pass_action.colors[0].action = SG_ACTION_CLEAR;
-    offscreen_pass_action.colors[0].value.r = m_clear_color.red;
-    offscreen_pass_action.colors[0].value.g = m_clear_color.green;
-    offscreen_pass_action.colors[0].value.b = m_clear_color.blue;
-    offscreen_pass_action.colors[0].value.a = m_clear_color.alpha;
-    sg_begin_pass(m_offscreen_color_pass.pass_handle, &offscreen_pass_action);
     sg_apply_viewport(0, 0, m_drawable_size.x, m_drawable_size.y, false);
 
     simgui_frame_desc_t imgui_frame_desc;
     imgui_frame_desc.width = m_drawable_size.x;
     imgui_frame_desc.height = m_drawable_size.y;
     imgui_frame_desc.delta_time = m_delta_time_s;
+    imgui_frame_desc.dpi_scale = 1.0f;
 
 #ifdef __APPLE__
     imgui_frame_desc.dpi_scale = std::round(m_drawable_size.x / m_window_size.x);
-    //imgui_frame_desc.dpi_scale = 2.0f; // could be 2.0f for retina mac
-#else
-    imgui_frame_desc.dpi_scale = 1.0f;
 #endif
 
     simgui_new_frame(imgui_frame_desc);
 }
 
-void RendererSokol::EndDraw()
+void RendererSokol::DrawFrame()
 {
-    sg_end_pass(); // End offscreen color render pass
+    PrepareDraw();
+
+    {
+        sg_pass_action offscreen_pass_action = {};
+        offscreen_pass_action.colors[0].action = SG_ACTION_CLEAR;
+        offscreen_pass_action.colors[0].value = {
+            m_clear_color.red, m_clear_color.green, m_clear_color.blue, m_clear_color.alpha
+        };
+        sg_begin_pass(m_color_pass.pass_handle, &offscreen_pass_action);
+
+        for(const IDrawable* drawable : m_drawables[RenderPass::GENERAL])
+        {
+            const bool visible = Cull(drawable->BoundingBox());
+            if(visible)
+                drawable->Draw(*this);
+        }
+
+        sg_end_pass(); // End offscreen color render pass
+    }
+
+    {
+        sg_pass_action offscreen_pass_action = {};
+        offscreen_pass_action.colors[0].action = SG_ACTION_CLEAR;
+        offscreen_pass_action.colors[0].value = {
+            0.5f, 0.5f, 0.5f, 0.0f
+        };
+        sg_begin_pass(m_color_post_light_pass.pass_handle, &offscreen_pass_action);
+
+        for(const IDrawable* drawable : m_drawables[RenderPass::POST_LIGHTING])
+        {
+            const bool visible = Cull(drawable->BoundingBox());
+            if(visible)
+                drawable->Draw(*this);
+        }
+
+        sg_end_pass(); // End offscreen color render pass
+    }
 
     DrawLights();
+    EndDraw();
+}
 
+void RendererSokol::EndDraw()
+{
     sg_pass_action default_pass_action = {};
     sg_begin_default_pass(default_pass_action, m_drawable_size.x, m_drawable_size.y);
 
@@ -246,8 +280,9 @@ void RendererSokol::EndDraw()
         m_screen_vertices.get(),
         m_screen_uv.get(),
         m_screen_indices.get(),
-        m_offscreen_color_pass.offscreen_texture.get(),
-        m_offscreen_light_pass.offscreen_texture.get());
+        m_color_pass.offscreen_texture.get(),
+        m_light_pass.offscreen_texture.get(),
+        m_color_post_light_pass.offscreen_texture.get());
     ScreenPipeline::FadeCorners(false);
     ScreenPipeline::InvertColors(false);
     ScreenPipeline::EnableLighting(m_lighting_enabled);
@@ -255,15 +290,7 @@ void RendererSokol::EndDraw()
 
     sg_draw(0, 6, 1);
 
-    for(const IDrawable* drawable : m_drawables[RenderPass::POST_LIGHTING])
-    {
-        const bool visible = Cull(drawable->BoundingBox());
-        if(visible)
-            drawable->Draw(*this);
-    }
-
     simgui_render();
-
     sg_end_pass(); // End default pass
     sg_commit();
 
@@ -275,20 +302,6 @@ void RendererSokol::EndDraw()
     // Clear all the stuff once the frame has been drawn
     for(uint32_t index = 0; index < RenderPass::N_RENDER_PASS; ++index)
         m_drawables[index].clear();
-}
-
-void RendererSokol::DrawFrame()
-{
-    PrepareDraw();
-
-    for(const IDrawable* drawable : m_drawables[RenderPass::GENERAL])
-    {
-        const bool visible = Cull(drawable->BoundingBox());
-        if(visible)
-            drawable->Draw(*this);
-    }
-
-    EndDraw();
 }
 
 void RendererSokol::AddDrawable(const IDrawable* drawable, RenderPass render_pass)

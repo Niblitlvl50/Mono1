@@ -32,6 +32,7 @@ namespace
 
         uniform sampler2D sampler;
         uniform sampler2D sampler_light;
+        uniform sampler2D sampler_post_light;
         uniform int fade_corners;
         uniform int invert_colors;
         uniform int lighting_enabled;
@@ -50,6 +51,9 @@ namespace
                 lights = texture(sampler_light, v_texture_coord);
 
             vec4 color = scene_color * lights;
+            vec4 post_light_color = texture(sampler_post_light, v_texture_coord);
+            if(post_light_color.a > 0.0f)
+                color = mix(color, post_light_color, post_light_color.a);
 
             if(fade_corners != 0)
             {
@@ -103,6 +107,9 @@ mono::IPipelinePtr ScreenPipeline::MakePipeline()
     shader_desc.fs.images[1].name = "sampler_light";
     shader_desc.fs.images[1].image_type = SG_IMAGETYPE_2D;
     shader_desc.fs.images[1].sampler_type = SG_SAMPLERTYPE_FLOAT;
+    shader_desc.fs.images[2].name = "sampler_post_light";
+    shader_desc.fs.images[2].image_type = SG_IMAGETYPE_2D;
+    shader_desc.fs.images[2].sampler_type = SG_SAMPLERTYPE_FLOAT;
 
     shader_desc.fs.uniform_blocks[U_FADE_CORNERS_BLOCK].size = sizeof(int);
     shader_desc.fs.uniform_blocks[U_FADE_CORNERS_BLOCK].uniforms[0].name = "fade_corners";
@@ -151,7 +158,8 @@ void ScreenPipeline::Apply(
     const IRenderBuffer* uv_coordinates,
     const IElementBuffer* indices,
     const ITexture* color_texture,
-    const ITexture* light_texture)
+    const ITexture* light_texture,
+    const ITexture* color_post_light_texture)
 {
     pipeline->Apply();
 
@@ -162,6 +170,7 @@ void ScreenPipeline::Apply(
     bindings.index_buffer.id = indices->Id();
     bindings.fs_images[0].id = color_texture->Id();
     bindings.fs_images[1].id = light_texture->Id();
+    bindings.fs_images[2].id = color_post_light_texture->Id();
 
     sg_apply_bindings(&bindings);
 }
