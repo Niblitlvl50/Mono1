@@ -45,21 +45,25 @@ void TextBatchDrawer::Draw(mono::IRenderer& renderer) const
             math::Translate(shadow_world_transform, text.shadow_offset);
 
             auto shadow_transform_scope = mono::MakeTransformScope(shadow_world_transform, &renderer);
-            renderer.RenderText(
+            renderer.DrawGeometry(
                 render_buffers->vertices.get(),
                 render_buffers->uv.get(),
                 render_buffers->indices.get(),
                 texture.get(),
-                text.shadow_color);
+                text.shadow_color,
+                false,
+                render_buffers->indices->Size());
         }
 
         auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
-        renderer.RenderText(
+        renderer.DrawGeometry(
             render_buffers->vertices.get(),
             render_buffers->uv.get(),
             render_buffers->indices.get(),
             texture.get(),
-            text.tint);
+            text.tint,
+            false,
+            render_buffers->indices->Size());
     };
 
     m_text_system->ForEach(draw_texts_func);

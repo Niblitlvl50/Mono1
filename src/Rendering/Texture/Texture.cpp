@@ -10,20 +10,20 @@ TextureImpl::TextureImpl(
     : m_width(width)
     , m_height(height)
 {
-    sg_pixel_format data_format = SG_PIXELFORMAT_R8;
+    m_pixel_format = SG_PIXELFORMAT_R8;
     if(color_components == 2)
-        data_format = SG_PIXELFORMAT_RG8;
+        m_pixel_format = SG_PIXELFORMAT_RG8;
     //else if(color_components == 3)
-    //    data_format = SG_PIXELFORMAT_RGB8;
+    //    m_data_format = SG_PIXELFORMAT_RGB8;
     else if(color_components == 4)
-        data_format = SG_PIXELFORMAT_RGBA8;
+        m_pixel_format = SG_PIXELFORMAT_RGBA8;
 
     sg_image_desc image_desc = {};
     image_desc.width = width;
     image_desc.height = height;
     //image_desc.wrap_u = SG_WRAP_CLAMP_TO_EDGE;
     //image_desc.wrap_v = SG_WRAP_CLAMP_TO_EDGE;
-    image_desc.pixel_format = data_format;
+    image_desc.pixel_format = m_pixel_format;
     image_desc.data.subimage[0][0].ptr = image_data;
     image_desc.data.subimage[0][0].size = width * height * color_components * sizeof(unsigned char);
 
@@ -51,6 +51,11 @@ TextureImpl::~TextureImpl()
     sg_destroy_image(m_handle);
 }
 
+uint32_t TextureImpl::Id() const
+{
+    return m_handle.id;
+}
+
 uint32_t TextureImpl::Width() const
 {
     return m_width;
@@ -61,7 +66,7 @@ uint32_t TextureImpl::Height() const
     return m_height;
 }
 
-uint32_t TextureImpl::Id() const
+bool TextureImpl::IsAlphaTexture() const
 {
-    return m_handle.id;
+    return (m_pixel_format == SG_PIXELFORMAT_R8);
 }

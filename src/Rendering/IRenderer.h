@@ -30,12 +30,6 @@ namespace mono
             const char* text,
             const mono::Color::RGBA& color,
             mono::FontCentering center_flags) const = 0;
-        virtual void RenderText(
-            const IRenderBuffer* vertices,
-            const IRenderBuffer* uv,
-            const IElementBuffer* indices,
-            const ITexture* texture,
-            const mono::Color::RGBA& color) const = 0;
 
         virtual void DrawSprite(
             const ISprite* sprite,
@@ -65,7 +59,7 @@ namespace mono
             const ITexture* texture,
             const mono::Color::RGBA& shade,
             bool blur,
-            uint32_t count) = 0;
+            uint32_t count) const = 0;
 
         virtual void DrawGeometry(
             const IRenderBuffer* vertices,
@@ -74,7 +68,7 @@ namespace mono
             const IElementBuffer* indices,
             const ITexture* texture,
             bool blur,
-            uint32_t count) = 0;
+            uint32_t count) const = 0;
 
         virtual void DrawParticlePoints(
             const IRenderBuffer* position,

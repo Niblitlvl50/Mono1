@@ -116,18 +116,10 @@ namespace
     {
     public:
 
-        uint32_t Id() const override
-        {
-            return 0;
-        }
-        uint32_t Width() const override
-        {
-            return 16;
-        }
-        uint32_t Height() const override
-        {
-            return 9;
-        }
+        uint32_t Id() const override { return 0; }
+        uint32_t Width() const override { return 16; }
+        uint32_t Height() const override { return 9; }
+        bool IsAlphaTexture() const override { return false; }
     };
 
     class NullTextureFactory : public mono::ITextureFactory

@@ -38,12 +38,6 @@ namespace mono
             const char* text,
             const mono::Color::RGBA& color,
             mono::FontCentering center_flags) const override;
-        void RenderText(
-            const IRenderBuffer* vertices,
-            const IRenderBuffer* uv,
-            const IElementBuffer* indices,
-            const ITexture* texture,
-            const mono::Color::RGBA& color) const override;
 
         void DrawSprite(
             const ISprite* sprite,
@@ -68,12 +62,12 @@ namespace mono
 
         void DrawGeometry(
             const IRenderBuffer* vertices,
-            const IRenderBuffer* texture_coordinates,
+            const IRenderBuffer* uv_coordinates,
             const IElementBuffer* indices,
             const ITexture* texture,
             const mono::Color::RGBA& shade,
             bool blur,
-            uint32_t count) override;
+            uint32_t count) const override;
 
         void DrawGeometry(
             const IRenderBuffer* vertices,
@@ -82,7 +76,7 @@ namespace mono
             const IElementBuffer* indices,
             const ITexture* texture,
             bool blur,
-            uint32_t count) override;
+            uint32_t count) const override;
 
         void DrawParticlePoints(
             const IRenderBuffer* position,

@@ -16,6 +16,7 @@
 
 #include "Rendering/RenderBuffer/BufferFactory.h"
 #include "Rendering/Texture/ITextureFactory.h"
+#include "Rendering/Texture/ITexture.h"
 #include "Rendering/Sprite/ISprite.h"
 #include "Rendering/Sprite/SpriteProperties.h"
 
@@ -314,23 +315,7 @@ void RendererSokol::RenderText(
     auto uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.uv_coords.size(), def.uv_coords.data());
     auto indices = CreateElementBuffer(BufferType::STATIC, def.indices.size(), def.indices.data());
 
-    RenderText(vertices.get(), uv.get(), indices.get(), texture.get(), color);
-}
-
-void RendererSokol::RenderText(
-    const IRenderBuffer* vertices,
-    const IRenderBuffer* uv,
-    const IElementBuffer* indices,
-    const ITexture* texture,
-    const mono::Color::RGBA& color) const
-{
-    TexturePipeline::Apply(m_texture_pipeline.get(), vertices, uv, indices, texture);
-    TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
-    TexturePipeline::SetIsAlpha(true);
-    TexturePipeline::SetBlur(false);
-    TexturePipeline::SetShade(color);
-
-    sg_draw(0, indices->Size(), 1);
+    DrawGeometry(vertices.get(), uv.get(), indices.get(), texture.get(), color, false, indices->Size());
 }
 
 void RendererSokol::DrawSprite(
@@ -547,18 +532,18 @@ void RendererSokol::DrawFilledQuad(const math::Quad& quad, const mono::Color::RG
 
 void RendererSokol::DrawGeometry(
     const IRenderBuffer* vertices,
-    const IRenderBuffer* texture_coordinates,
+    const IRenderBuffer* uv_coordinates,
     const IElementBuffer* indices,
     const ITexture* texture,
     const mono::Color::RGBA& shade,
     bool blur,
-    uint32_t count)
+    uint32_t count) const
 {
-    TexturePipeline::Apply(m_texture_pipeline.get(), vertices, texture_coordinates, indices, texture);
+    TexturePipeline::Apply(m_texture_pipeline.get(), vertices, uv_coordinates, indices, texture);
     //TexturePipeline::SetTime(m_texture_pipeline.get(), float(m_timestamp) / 1000.0f, m_delta_time_s);
     TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
-    TexturePipeline::SetIsAlpha(false);
+    TexturePipeline::SetIsAlpha(texture->IsAlphaTexture());
     TexturePipeline::SetBlur(blur);
     TexturePipeline::SetShade(shade);
 
@@ -572,7 +557,7 @@ void RendererSokol::DrawGeometry(
     const IElementBuffer* indices,
     const ITexture* texture,
     bool blur,
-    uint32_t count)
+    uint32_t count) const
 {
     TexturePipeline::Apply(m_texture_pipeline_color.get(), vertices, uv_coordinates, vertex_colors, indices, texture);
     //TexturePipeline::SetTime(m_texture_pipeline.get(), float(m_timestamp) / 1000.0f, m_delta_time_s);
