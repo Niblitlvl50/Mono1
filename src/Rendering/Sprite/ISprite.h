@@ -57,9 +57,7 @@ namespace mono
         //! Returns the current active animation
         virtual int GetActiveAnimation() const = 0;
 
-        //! Returns length in ms
-        virtual uint32_t GetAnimationLength(int animation_id) const = 0;
-        virtual uint32_t GetAnimationLength(const char* animation_name) const = 0;
+        virtual float GetAnimationLengthSeconds(int animation_id) const = 0;
 
         // Will return -1 on failure. 
         virtual int GetAnimationIdFromName(const char* animation_name) const = 0;

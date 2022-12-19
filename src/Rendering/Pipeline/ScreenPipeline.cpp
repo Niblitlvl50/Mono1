@@ -52,8 +52,7 @@ namespace
 
             vec4 color = scene_color * lights;
             vec4 post_light_color = texture(sampler_post_light, v_texture_coord);
-            if(post_light_color.a > 0.0f)
-                color = mix(color, post_light_color, post_light_color.a);
+            color = mix(color, post_light_color, post_light_color.a);
 
             if(fade_corners != 0)
             {

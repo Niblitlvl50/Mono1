@@ -120,8 +120,7 @@ void Sprite::Update(const UpdateContext& update_context)
     if(active_animation.frames.empty())
         return;
 
-    m_active_frame_time += update_context.delta_ms * m_playback_speed;
-
+    m_active_frame_time += (update_context.delta_s * 1000.0f) * m_playback_speed;
     if(m_active_frame_time > active_animation.frame_duration)
     {
         m_active_frame_time = 0; // Should we carry over the reminder from m_active_frame_time? (yes)
@@ -244,16 +243,10 @@ int Sprite::GetActiveAnimation() const
     return m_active_animation;
 }
 
-uint32_t Sprite::GetAnimationLength(int animation_id) const
+float Sprite::GetAnimationLengthSeconds(int animation_id) const
 {
     const mono::SpriteAnimation& animation = m_sprite_data->animations[animation_id];
-    return (animation.frames.size() * animation.frame_duration);
-}
-
-uint32_t Sprite::GetAnimationLength(const char* animation_name) const
-{
-    const int animation_id = GetAnimationIdFromName(animation_name);
-    return GetAnimationLength(animation_id);
+    return float(animation.frames.size() * animation.frame_duration) * 1000.0f;
 }
 
 int Sprite::GetAnimationIdFromName(const char* animation_name) const

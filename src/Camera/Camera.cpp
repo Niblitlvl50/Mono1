@@ -3,7 +3,6 @@
 #include "Math/Vector.h"
 #include "Math/MathFunctions.h"
 #include "Math/CriticalDampedSpring.h"
-//#include "Math/EasingFunctions.h"
 
 #include <cmath>
 
@@ -22,27 +21,6 @@ Camera::Camera()
 
 void Camera::Update(const UpdateContext& update_context)
 {
-/*
-    constexpr float camera_speed_zoom = 2.5f;
-    constexpr float camera_speed_translation = 5.0f;
-
-    const bool is_equal = math::IsPrettyMuchEquals(m_target_viewport_size.x, m_viewport_size.x);
-    if(!is_equal)
-    {
-        const float delta = (m_target_viewport_size.x - m_viewport_size.x) * camera_speed_zoom * update_context.delta_s;
-        const float aspect = m_viewport_size.x / m_viewport_size.y;
-
-        m_viewport_size.x += delta * aspect;
-        m_viewport_size.y += delta;
-    }
-    const bool is_position_equal = math::IsPrettyMuchEquals(m_target_position, m_position);
-    if(!is_position_equal)
-    {
-        const math::Vector delta = (m_target_position - m_position) * camera_speed_translation * update_context.delta_s;
-        m_position += delta;
-    }
-*/
-
     math::critical_spring_damper(
         m_viewport_size,
         m_zoom_velocity,

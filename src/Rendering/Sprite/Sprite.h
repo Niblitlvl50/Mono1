@@ -35,8 +35,7 @@ namespace mono
         void SetAnimationPlaybackSpeed(float speed_scale) override;
         void SetAnimationPlayback(PlaybackMode mode) override;
         int GetActiveAnimation() const override;
-        uint32_t GetAnimationLength(int animation_id) const override;
-        uint32_t GetAnimationLength(const char* animation_name) const override;
+        float GetAnimationLengthSeconds(int animation_id) const override;
         int GetAnimationIdFromName(const char* animation_name) const override;
         void SetActiveAnimationFrame(int frame) override;
         int GetActiveAnimationFrame() const override;
