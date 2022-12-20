@@ -110,18 +110,19 @@ namespace mono
             return gradient;
         }
 
-        constexpr mono::Color::RGBA WHITE       = mono::Color::RGBA(1.0f, 1.0f, 1.0f);
-        constexpr mono::Color::RGBA OFF_WHITE   = mono::Color::RGBA(0.9f, 0.9f, 0.9f);
-        constexpr mono::Color::RGBA GRAY        = mono::Color::RGBA(0.5f, 0.5f, 0.5f);
-        constexpr mono::Color::RGBA DARK_GRAY   = mono::Color::RGBA(0.25f, 0.25f, 0.25f);
-        constexpr mono::Color::RGBA BLACK       = mono::Color::RGBA(0.0f, 0.0f, 0.0f);
-        constexpr mono::Color::RGBA RED         = mono::Color::RGBA(1.0f, 0.0f, 0.0f);
-        constexpr mono::Color::RGBA ORANGE      = mono::Color::RGBA(1.0f, 0.5f, 0.0f);
-        constexpr mono::Color::RGBA GREEN       = mono::Color::RGBA(0.0f, 1.0f, 0.0f);
-        constexpr mono::Color::RGBA BLUE        = mono::Color::RGBA(0.0f, 0.0f, 1.0f);
-        constexpr mono::Color::RGBA MAGENTA     = mono::Color::RGBA(1.0f, 0.0f, 1.0f);
-        constexpr mono::Color::RGBA CYAN        = mono::Color::RGBA(0.0f, 1.0f, 1.0f);
-        constexpr mono::Color::RGBA YELLOW      = mono::Color::RGBA(1.0f, 1.0f, 0.0f);
-        constexpr mono::Color::RGBA SUNFLOWER   = mono::Color::RGBA(1.0f, 0.85f, 0.01f);
+        constexpr mono::Color::RGBA WHITE           = mono::Color::RGBA(1.0f, 1.0f, 1.0f);
+        constexpr mono::Color::RGBA OFF_WHITE       = mono::Color::RGBA(0.9f, 0.9f, 0.9f);
+        constexpr mono::Color::RGBA GRAY            = mono::Color::RGBA(0.5f, 0.5f, 0.5f);
+        constexpr mono::Color::RGBA DIM_GRAY        = mono::Color::RGBA(0.41f, 0.41f, 0.41f);
+        constexpr mono::Color::RGBA DARK_GRAY       = mono::Color::RGBA(0.25f, 0.25f, 0.25f);
+        constexpr mono::Color::RGBA BLACK           = mono::Color::RGBA(0.0f, 0.0f, 0.0f);
+        constexpr mono::Color::RGBA RED             = mono::Color::RGBA(1.0f, 0.0f, 0.0f);
+        constexpr mono::Color::RGBA ORANGE          = mono::Color::RGBA(1.0f, 0.5f, 0.0f);
+        constexpr mono::Color::RGBA GREEN           = mono::Color::RGBA(0.0f, 1.0f, 0.0f);
+        constexpr mono::Color::RGBA BLUE            = mono::Color::RGBA(0.0f, 0.0f, 1.0f);
+        constexpr mono::Color::RGBA MAGENTA         = mono::Color::RGBA(1.0f, 0.0f, 1.0f);
+        constexpr mono::Color::RGBA CYAN            = mono::Color::RGBA(0.0f, 1.0f, 1.0f);
+        constexpr mono::Color::RGBA YELLOW          = mono::Color::RGBA(1.0f, 1.0f, 0.0f);
+        constexpr mono::Color::RGBA GOLDEN_YELLOW   = mono::Color::RGBA(1.0f, 0.87f, 0.0f);
     }
 }
