@@ -31,6 +31,7 @@ namespace math
     Matrix CreateMatrixWithScale(const math::Vector& scale);
     Matrix CreateMatrixWithScale(float x, float y);
 
+    Matrix CreateMatrixWithPositionScale(const math::Vector& position, float uniform_scale);
     Matrix CreateMatrixWithPositionRotation(const math::Vector& position, float rotation_radians);
     Matrix CreateMatrixWithPositionRotationScale(const math::Vector& position, float rotation_radians, const math::Vector& scale);
 

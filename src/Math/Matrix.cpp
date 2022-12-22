@@ -62,6 +62,15 @@ math::Matrix math::CreateMatrixFromZRotation(float radians)
     return matrix;
 }
 
+math::Matrix math::CreateMatrixWithPositionScale(const math::Vector& position, float uniform_scale)
+{
+    math::Matrix matrix;
+    math::Position(matrix, position);
+    math::ScaleXY(matrix, math::Vector(uniform_scale, uniform_scale));
+
+    return matrix;
+}
+
 math::Matrix math::CreateMatrixWithPositionRotation(const math::Vector& position, float rotation_radians)
 {
     math::Matrix matrix = CreateMatrixFromZRotation(rotation_radians);

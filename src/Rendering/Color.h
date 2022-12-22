@@ -112,6 +112,7 @@ namespace mono
 
         constexpr mono::Color::RGBA WHITE           = mono::Color::RGBA(1.0f, 1.0f, 1.0f);
         constexpr mono::Color::RGBA OFF_WHITE       = mono::Color::RGBA(0.9f, 0.9f, 0.9f);
+        constexpr mono::Color::RGBA LIGHT_GRAY      = mono::Color::RGBA(0.75f, 0.75f, 0.75f);
         constexpr mono::Color::RGBA GRAY            = mono::Color::RGBA(0.5f, 0.5f, 0.5f);
         constexpr mono::Color::RGBA DIM_GRAY        = mono::Color::RGBA(0.41f, 0.41f, 0.41f);
         constexpr mono::Color::RGBA DARK_GRAY       = mono::Color::RGBA(0.25f, 0.25f, 0.25f);
