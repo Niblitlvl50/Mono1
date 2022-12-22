@@ -471,8 +471,8 @@ void System::Initialize(const InitializeContext& context)
         g_log_file = std::fopen(context.log_file, "w");
 
     // Init SDL video subsystem
-    const int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC);
-    if(result != 0)
+    const int init_result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC);
+    if(init_result != 0)
         throw std::runtime_error("System|Couldn't initialize libSDL" + std::string(SDL_GetError()));
 
     SDL_version version;
