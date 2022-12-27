@@ -108,6 +108,8 @@ namespace
             loaded_sound->sound.channels[0] = nullptr;
             loaded_sound->sound.channels[1] = nullptr;
 
+            System::Log("Audio|Loading sound '%s'.", file_name);
+
             const bool is_wave = file::IsExtension(file_name, "wav");
             if(is_wave)
                 loaded_sound->sound = cs_load_wav(file_name);
