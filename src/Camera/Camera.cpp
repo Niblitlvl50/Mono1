@@ -113,9 +113,13 @@ const math::Vector& Camera::GetWindowSize() const
 
 math::Vector Camera::ScreenToWorld(const math::Vector& screen_pos) const
 {
-    const float window_ratio = m_window_size.x / m_window_size.y;
+    return Camera::ScreenToWorld(screen_pos, m_window_size, GetViewport());
+}
 
-    const math::Quad viewport = GetViewport();
+math::Vector Camera::ScreenToWorld(const math::Vector& screen_pos, const math::Vector& window_size, const math::Quad& viewport)
+{
+    const float window_ratio = window_size.x / window_size.y;
+
     const math::Vector center = math::Center(viewport);
     const float half_new_height = math::Width(viewport) / window_ratio / 2.0f;
 
@@ -124,10 +128,10 @@ math::Vector Camera::ScreenToWorld(const math::Vector& screen_pos) const
     new_viewport.bottom_left.y = center.y - half_new_height;
 
     const math::Vector viewport_size = math::Size(new_viewport);
-    const math::Vector scale = viewport_size / m_window_size;
+    const math::Vector scale = viewport_size / window_size;
 
     const float screen_x = screen_pos.x;
-    const float screen_y = m_window_size.y - screen_pos.y;
+    const float screen_y = window_size.y - screen_pos.y;
 
     return viewport.bottom_left + (math::Vector(screen_x, screen_y) * scale);
 }

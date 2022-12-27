@@ -32,6 +32,8 @@ namespace mono
         const math::Vector& GetWindowSize() const override;
         math::Vector ScreenToWorld(const math::Vector& screen_pos) const override;
 
+        static math::Vector ScreenToWorld(const math::Vector& screen_pos, const math::Vector& window_size, const math::Quad& viewport);
+
     private:
 
         math::Vector m_position;
