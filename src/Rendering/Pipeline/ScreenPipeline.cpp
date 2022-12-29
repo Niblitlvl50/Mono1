@@ -51,8 +51,8 @@ namespace
                 lights = texture(sampler_light, v_texture_coord);
 
             vec4 color = scene_color * lights;
-            vec4 post_light_color = texture(sampler_post_light, v_texture_coord);
-            color = mix(color, post_light_color, post_light_color.a);
+            //vec4 post_light_color = texture(sampler_post_light, v_texture_coord);
+            //color = mix(color, post_light_color, 1.0 - post_light_color.a);
 
             if(fade_corners != 0)
             {

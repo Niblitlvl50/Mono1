@@ -248,6 +248,7 @@ void RendererSokol::DrawFrame()
         sg_end_pass(); // End offscreen color render pass
     }
 
+/*
     {
         sg_pass_action offscreen_pass_action = {};
         offscreen_pass_action.colors[0].action = SG_ACTION_CLEAR;
@@ -265,6 +266,7 @@ void RendererSokol::DrawFrame()
 
         sg_end_pass(); // End offscreen color render pass
     }
+*/
 
     DrawLights();
     EndDraw();
@@ -289,6 +291,15 @@ void RendererSokol::EndDraw()
     ScreenPipeline::FadeScreenAlpha(m_screen_fade_alpha);
 
     sg_draw(0, 6, 1);
+
+    // This is a bit stupid, it should go into a offscreen texture and then combined in
+    // a shader but i cant get that to work correctly.
+    for(const IDrawable* drawable : m_drawables[RenderPass::POST_LIGHTING])
+    {
+        const bool visible = Cull(drawable->BoundingBox());
+        if(visible)
+            drawable->Draw(*this);
+    }
 
     simgui_render();
     sg_end_pass(); // End default pass
