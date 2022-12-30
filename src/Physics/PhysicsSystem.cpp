@@ -358,11 +358,6 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const PolyComponent& pol
     return shape_impl;
 }
 
-uint32_t PhysicsSystem::Id() const
-{
-    return hash::Hash(Name());
-}
-
 const char* PhysicsSystem::Name() const
 {
     return "physicssystem";

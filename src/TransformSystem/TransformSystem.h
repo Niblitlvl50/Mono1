@@ -50,7 +50,6 @@ namespace mono
 
         void ResetTransformComponent(uint32_t id);
 
-        uint32_t Id() const override;
         const char* Name() const override;
         uint32_t Capacity() const;
         void Update(const UpdateContext& update_context) override;

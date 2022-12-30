@@ -32,7 +32,6 @@ namespace mono
         void ReleaseText(uint32_t id);
         void SetTextData(uint32_t id, const TextComponent& text_data);
 
-        uint32_t Id() const override;
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
 

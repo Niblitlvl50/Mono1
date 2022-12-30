@@ -109,7 +109,6 @@ namespace mono
         ParticleSystem(uint32_t count, uint32_t n_emitters, const mono::TransformSystem* transform_system);
         ~ParticleSystem();
 
-        uint32_t Id() const override;
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
         void Sync() override;

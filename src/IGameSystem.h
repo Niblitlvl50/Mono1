@@ -12,7 +12,6 @@ namespace mono
 
         virtual ~IGameSystem() = default;
 
-        virtual uint32_t Id() const = 0;
         virtual const char* Name() const = 0;
 
         // Once before a zone begins.

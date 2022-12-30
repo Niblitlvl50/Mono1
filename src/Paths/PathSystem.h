@@ -32,7 +32,6 @@ namespace mono
 
         const PathComponent* GetPath(uint32_t entity_id) const;
 
-        uint32_t Id() const override;
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
         void Sync() override;

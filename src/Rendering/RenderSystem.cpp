@@ -202,3 +202,44 @@ const mono::ITextureFactory* mono::GetTextureFactory()
 {
     return g_texture_factory;
 }
+
+using namespace mono;
+
+RenderSystem::RenderSystem(uint32_t n)
+    : m_layers(n)
+{ }
+
+const char* RenderSystem::Name() const
+{
+    return "rendersystem";
+}
+
+void RenderSystem::Update(const mono::UpdateContext& update_context)
+{
+
+}
+
+void RenderSystem::AllocateLayer(uint32_t entity_id)
+{
+    LayerComponent component;
+    component.layer = 0;
+
+    m_layers.Set(entity_id, std::move(component));
+}
+
+void RenderSystem::ReleaseLayer(uint32_t entity_id)
+{
+    m_layers.Release(entity_id);
+}
+
+void RenderSystem::UpdateLayer(uint32_t entity_id, int new_layer)
+{
+    LayerComponent* component = m_layers.Get(entity_id);
+    component->layer = new_layer;
+}
+
+int RenderSystem::GetRenderLayerForEntity(uint32_t entity_id)
+{
+    LayerComponent* component = m_layers.Get(entity_id);
+    return component->layer;
+}

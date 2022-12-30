@@ -36,11 +36,6 @@ void TextSystem::SetTextData(uint32_t id, const mono::TextComponent& text_data)
     m_text_dirty[id] = true;
 }
 
-uint32_t TextSystem::Id() const
-{
-    return hash::Hash(Name());
-}
-
 const char* TextSystem::Name() const
 {
     return "textsystem";

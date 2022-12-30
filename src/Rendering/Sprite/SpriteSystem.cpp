@@ -106,11 +106,6 @@ void SpriteSystem::SetSpriteEnabled(uint32_t sprite_id, bool enabled)
     m_enabled[sprite_id] = enabled;
 }
 
-uint32_t SpriteSystem::Id() const
-{
-    return hash::Hash(Name());
-}
-
 const char* SpriteSystem::Name() const
 {
     return "spritesystem";

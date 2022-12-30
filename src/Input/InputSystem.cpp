@@ -46,11 +46,6 @@ InputSystem::~InputSystem()
     m_event_handler->RemoveListener(m_controller_axis_token);
 }
 
-uint32_t InputSystem::Id() const
-{
-    return hash::Hash(Name());
-}
-
 const char* InputSystem::Name() const
 {
     return "inputsystem";

@@ -48,7 +48,6 @@ namespace mono
         void SetSpriteEnabled(uint32_t sprite_id, bool enabled);
         void ForEachSprite(const ForEachSpriteFunc& func);
 
-        uint32_t Id() const override;
         const char* Name() const override;
         void Update(const UpdateContext& update_context) override;
 

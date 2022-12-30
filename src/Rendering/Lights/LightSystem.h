@@ -31,7 +31,6 @@ namespace mono
 
         void SetLightEnabled(uint32_t light_id, bool enabled);
 
-        uint32_t Id() const override;
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
 

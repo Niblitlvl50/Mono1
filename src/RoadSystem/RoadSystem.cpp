@@ -26,11 +26,6 @@ void RoadSystem::SetData(uint32_t entity_id, const RoadComponent& component)
     m_roads[entity_id] = component;
 }
 
-uint32_t RoadSystem::Id() const
-{
-    return hash::Hash(Name());
-}
-
 const char* RoadSystem::Name() const
 {
     return "roadsystem";

@@ -103,11 +103,6 @@ void TransformSystem::ResetTransformComponent(uint32_t id)
     component.state = TransformState::NONE;
 }
 
-uint32_t TransformSystem::Id() const
-{
-    return hash::Hash(Name());
-}
-
 const char* TransformSystem::Name() const
 {
     return "transformsystem";

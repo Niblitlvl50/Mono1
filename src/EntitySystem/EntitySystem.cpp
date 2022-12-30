@@ -449,11 +449,6 @@ uint32_t EntitySystem::FindEntityByName(const char* name) const
     return INVALID_ID;
 }
 
-uint32_t EntitySystem::Id() const
-{
-    return hash::Hash(Name());
-}
-
 const char* EntitySystem::Name() const
 {
     return "entitysystem";

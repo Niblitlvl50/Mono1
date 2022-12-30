@@ -23,7 +23,6 @@ namespace mono
         void Release(uint32_t entity_id);
         void SetData(uint32_t entity_id, const RoadComponent& component);
 
-        uint32_t Id() const override;
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
 

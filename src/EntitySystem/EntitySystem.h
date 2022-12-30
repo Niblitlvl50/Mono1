@@ -96,7 +96,6 @@ namespace mono
             }
         }
 
-        uint32_t Id() const override;
         const char* Name() const override;
         void Update(const UpdateContext& update_context) override;
 

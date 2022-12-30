@@ -36,11 +36,6 @@ const PathComponent* PathSystem::GetPath(uint32_t entity_id) const
     return &m_path_components[entity_id];
 }
 
-uint32_t PathSystem::Id() const
-{
-    return hash::Hash(Name());
-}
-
 const char* PathSystem::Name() const
 {
     return "pathsystem";

@@ -44,11 +44,6 @@ void LightSystem::SetLightEnabled(uint32_t light_id, bool enabled)
     m_enabled[light_id] = enabled;
 }
 
-uint32_t LightSystem::Id() const
-{
-    return hash::Hash(Name());
-}
-
 const char* LightSystem::Name() const
 {
     return "lightsystem";

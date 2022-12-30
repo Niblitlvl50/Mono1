@@ -105,11 +105,6 @@ ParticleSystem::ParticleSystem(uint32_t count, uint32_t n_emitters, const mono::
 ParticleSystem::~ParticleSystem()
 { }
 
-uint32_t ParticleSystem::Id() const
-{
-    return hash::Hash(Name());
-}
-
 const char* ParticleSystem::Name() const
 {
     return "ParticleSystem";
