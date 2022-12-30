@@ -4,6 +4,7 @@
 #include "IGameSystem.h"
 #include "Math/Vector.h"
 #include "Rendering/Color.h"
+#include "Util/ActiveVector.h"
 
 #include <vector>
 #include <functional>
@@ -27,7 +28,7 @@ namespace mono
         float shadow_size;
     };
 
-    using ForEachSpriteFunc = std::function<void (mono::ISprite* sprite, int layer, uint32_t sprite_id)>;
+    using ForEachSpriteFunc = std::function<void (uint32_t sprite_id, mono::ISprite& sprite)>;
 
     class SpriteSystem : public mono::IGameSystem
     {
@@ -42,9 +43,6 @@ namespace mono
         void ReleaseSprite(uint32_t sprite_id);
 
         mono::Sprite* GetSprite(uint32_t sprite_id);
-        int GetSpriteLayer(uint32_t sprite_id) const;
-        void SetSpriteLayer(uint32_t sprite_id, int new_layer);
-        float GetSpriteSortOffset(uint32_t sprite_id) const;
         void SetSpriteEnabled(uint32_t sprite_id, bool enabled);
         void ForEachSprite(const ForEachSpriteFunc& func);
 
@@ -54,11 +52,8 @@ namespace mono
     private:
 
         mono::TransformSystem* m_transform_system;
-        std::vector<mono::Sprite> m_sprites;
-        std::vector<int> m_sprite_layers;
-        std::vector<float> m_sprite_sort_offsets;
+        mono::ActiveVector<mono::Sprite> m_sprites;
         std::vector<bool> m_enabled;
-        std::vector<bool> m_alive;
 
         std::vector<uint32_t> m_sprites_need_update;
     };

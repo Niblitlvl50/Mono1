@@ -13,24 +13,19 @@ using namespace mono;
 
 SpriteSystem::SpriteSystem(uint32_t n_sprites, mono::TransformSystem* transform_system)
     : m_transform_system(transform_system)
+    , m_sprites(n_sprites)
 {
-    m_sprites.resize(n_sprites);
-    m_sprite_layers.resize(n_sprites, 0);
-    m_sprite_sort_offsets.resize(n_sprites, 0.0f);
     m_enabled.resize(n_sprites, true);
-    m_alive.resize(n_sprites, false);
 }
 
 mono::Sprite* SpriteSystem::AllocateSprite(uint32_t sprite_id)
 {
-    MONO_ASSERT(!m_alive[sprite_id]);
-    m_alive[sprite_id] = true;
-    m_sprite_layers[sprite_id] = 0;
-    m_enabled[sprite_id] = true;
+    mono::Sprite* sprite = m_sprites.Set(sprite_id, mono::Sprite());
 
+    m_enabled[sprite_id] = true;
     m_sprites_need_update.push_back(sprite_id);
 
-    return &m_sprites[sprite_id];
+    return sprite;
 }
 
 mono::ISprite* SpriteSystem::AllocateSprite(uint32_t sprite_id, const SpriteComponents& sprite_args)
@@ -42,63 +37,43 @@ mono::ISprite* SpriteSystem::AllocateSprite(uint32_t sprite_id, const SpriteComp
 
 bool SpriteSystem::IsAllocated(uint32_t sprite_id)
 {
-    return m_alive[sprite_id];
+    return m_sprites.IsActive(sprite_id);
 }
 
 void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& sprite_args)
 {
-    MONO_ASSERT(m_alive[sprite_id]);
+    mono::Sprite* sprite = m_sprites.Get(sprite_id);
+    mono::GetSpriteFactory()->CreateSprite(*sprite, sprite_args.sprite_file);
 
-    mono::Sprite& sprite = m_sprites[sprite_id];
-    mono::GetSpriteFactory()->CreateSprite(sprite, sprite_args.sprite_file);
+    sprite->SetShade(sprite_args.shade);
+    sprite->SetProperties(sprite_args.properties);
+    sprite->SetShadowOffset(sprite_args.shadow_offset);
+    sprite->SetShadowSize(sprite_args.shadow_size);
 
-    sprite.SetShade(sprite_args.shade);
-    sprite.SetProperties(sprite_args.properties);
-    sprite.SetShadowOffset(sprite_args.shadow_offset);
-    sprite.SetShadowSize(sprite_args.shadow_size);
-
-    if(sprite_args.animation_id >= 0 && sprite_args.animation_id < sprite.GetDefinedAnimations())
+    if(sprite_args.animation_id >= 0 && sprite_args.animation_id < sprite->GetDefinedAnimations())
     {
-        sprite.SetAnimation(sprite_args.animation_id);
+        sprite->SetAnimation(sprite_args.animation_id);
 
         if(sprite_args.random_start_frame)
         {
-            const size_t n_frames = sprite.GetSpriteData()->animations[sprite.GetActiveAnimation()].frames.size();
+            const size_t n_frames = sprite->GetSpriteData()->animations[sprite->GetActiveAnimation()].frames.size();
             const int random_frame = mono::RandomInt(0, n_frames -1);
-            sprite.SetActiveAnimationFrame(random_frame);
+            sprite->SetActiveAnimationFrame(random_frame);
         }
     }
-
-    m_sprite_layers[sprite_id] = sprite_args.layer;
-    m_sprite_sort_offsets[sprite_id] = sprite_args.sort_offset;
 
     m_sprites_need_update.push_back(sprite_id);
 }
 
 void SpriteSystem::ReleaseSprite(uint32_t sprite_id)
 {
-    m_alive[sprite_id] = false;
-    m_sprites[sprite_id].Init(nullptr, nullptr);
+    m_sprites.Release(sprite_id);
+    //m_sprites[sprite_id].Init(nullptr, nullptr);
 }
 
 mono::Sprite* SpriteSystem::GetSprite(uint32_t sprite_id)
 {
-    return &m_sprites[sprite_id];
-}
-
-int SpriteSystem::GetSpriteLayer(uint32_t sprite_id) const
-{
-    return m_sprite_layers[sprite_id];
-}
-
-void SpriteSystem::SetSpriteLayer(uint32_t sprite_id, int new_layer)
-{
-    m_sprite_layers[sprite_id] = new_layer;
-}
-
-float SpriteSystem::GetSpriteSortOffset(uint32_t sprite_id) const
-{
-    return m_sprite_sort_offsets[sprite_id];
+    return m_sprites.Get(sprite_id);
 }
 
 void SpriteSystem::SetSpriteEnabled(uint32_t sprite_id, bool enabled)
@@ -113,19 +88,20 @@ const char* SpriteSystem::Name() const
 
 void SpriteSystem::Update(const UpdateContext& update_context)
 {
-    for(size_t index = 0; index < m_sprites.size(); ++index)
+    const auto update_sprite = [this, &update_context](uint32_t index, mono::Sprite& sprite)
     {
-        if(!m_alive[index] || !m_enabled[index])
-            continue;
+        const bool is_enabled = m_enabled[index];
+        if(!is_enabled)
+            return;
 
-        mono::Sprite& sprite = m_sprites[index];
         sprite.Update(update_context);
-    }
+    };
+    m_sprites.ForEach(update_sprite);
 
     for(uint32_t sprite_id : m_sprites_need_update)
     {
-        const mono::Sprite& sprite = m_sprites[sprite_id];
-        const mono::SpriteData* sprite_data = sprite.GetSpriteData();
+        const mono::Sprite* sprite = m_sprites.Get(sprite_id);
+        const mono::SpriteData* sprite_data = sprite->GetSpriteData();
 
         if(!sprite_data)
             continue;
@@ -153,9 +129,11 @@ void SpriteSystem::Update(const UpdateContext& update_context)
 
 void SpriteSystem::ForEachSprite(const ForEachSpriteFunc& func)
 {
-    for(uint32_t index = 0; index < m_sprites.size(); ++index)
+    const auto proxy_func = [this, &func](uint32_t id, mono::Sprite& sprite)
     {
-        if(m_alive[index] && m_enabled[index])
-            func(&m_sprites[index], m_sprite_layers[index], index);
-    }
+        const bool is_enabled = m_enabled[id];
+        if(is_enabled)
+            func(id, sprite);
+    };
+    m_sprites.ForEach(proxy_func);
 }

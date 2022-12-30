@@ -18,7 +18,10 @@ namespace mono
     {
     public:
 
-        SpriteBatchDrawer(const mono::TransformSystem* transform_system, mono::SpriteSystem* sprite_system);
+        SpriteBatchDrawer(
+            const mono::TransformSystem* transform_system,
+            mono::SpriteSystem* sprite_system,
+            const mono::RenderSystem* render_system);
         ~SpriteBatchDrawer();
 
         void PreloadSpriteData(const std::vector<std::string>& sprite_files);
@@ -31,6 +34,7 @@ namespace mono
 
         const mono::TransformSystem* m_transform_system;
         mono::SpriteSystem* m_sprite_system;
+        const mono::RenderSystem* m_render_system;
 
         std::unique_ptr<mono::IElementBuffer> m_sprite_indices;
         mono::ITexturePtr m_shadow_texture;

@@ -238,8 +238,26 @@ void RenderSystem::UpdateLayer(uint32_t entity_id, int new_layer)
     component->layer = new_layer;
 }
 
-int RenderSystem::GetRenderLayerForEntity(uint32_t entity_id)
+int RenderSystem::GetRenderLayerOrDefault(uint32_t entity_id) const
 {
-    LayerComponent* component = m_layers.Get(entity_id);
-    return component->layer;
+    const bool is_active = m_layers.IsActive(entity_id);
+    if(is_active)
+    {
+        const LayerComponent* component = m_layers.Get(entity_id);
+        return component->layer;
+    }
+
+    return 0;
+}
+
+float RenderSystem::GetRenderSortOffsetOrDefault(uint32_t entity_id) const
+{
+    const bool is_active = m_layers.IsActive(entity_id);
+    if(is_active)
+    {
+        const LayerComponent* component = m_layers.Get(entity_id);
+        return component->sort_offset;
+    }
+
+    return 0.0f;
 }

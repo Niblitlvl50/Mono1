@@ -35,6 +35,12 @@ namespace mono
             return &m_types[index];
         }
 
+        const T* Get(uint32_t index) const
+        {
+            MONO_ASSERT(m_active[index] == true);
+            return &m_types[index];
+        }
+
         void Release(uint32_t index)
         {
             MONO_ASSERT(m_active[index] == true);

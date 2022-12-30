@@ -38,6 +38,7 @@ namespace mono
     struct LayerComponent
     {
         int layer;
+        float sort_offset;
     };
 
     class RenderSystem : public mono::IGameSystem
@@ -53,7 +54,8 @@ namespace mono
         void ReleaseLayer(uint32_t entity_id);
         void UpdateLayer(uint32_t entity_id, int layer);
 
-        int GetRenderLayerForEntity(uint32_t entity_id);
+        int GetRenderLayerOrDefault(uint32_t entity_id) const;
+        float GetRenderSortOffsetOrDefault(uint32_t entity_id) const;
 
         mono::ActiveVector<LayerComponent> m_layers;
     };

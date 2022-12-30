@@ -26,6 +26,7 @@ namespace mono
     class ParticleSystem;
     class PathSystem;
     class PhysicsSystem;
+    class RenderSystem;
     class SpriteSystem;
     class TransformSystem;
     class TextSystem;
