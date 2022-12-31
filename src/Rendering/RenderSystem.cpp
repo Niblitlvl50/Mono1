@@ -232,10 +232,11 @@ void RenderSystem::ReleaseLayer(uint32_t entity_id)
     m_layers.Release(entity_id);
 }
 
-void RenderSystem::UpdateLayer(uint32_t entity_id, int new_layer)
+void RenderSystem::UpdateLayer(uint32_t entity_id, int new_layer, float new_sort_offset)
 {
     LayerComponent* component = m_layers.Get(entity_id);
     component->layer = new_layer;
+    component->sort_offset = new_sort_offset;
 }
 
 int RenderSystem::GetRenderLayerOrDefault(uint32_t entity_id) const

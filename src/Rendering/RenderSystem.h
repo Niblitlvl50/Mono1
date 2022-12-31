@@ -52,7 +52,7 @@ namespace mono
 
         void AllocateLayer(uint32_t entity_id);
         void ReleaseLayer(uint32_t entity_id);
-        void UpdateLayer(uint32_t entity_id, int layer);
+        void UpdateLayer(uint32_t entity_id, int new_layer, float new_sort_offset);
 
         int GetRenderLayerOrDefault(uint32_t entity_id) const;
         float GetRenderSortOffsetOrDefault(uint32_t entity_id) const;

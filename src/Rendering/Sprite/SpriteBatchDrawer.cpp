@@ -149,7 +149,6 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 
         return first.layer < second.layer;
     };
-
     std::sort(sprites_to_draw.begin(), sprites_to_draw.end(), sort_on_y_and_layer);
 
     if(m_shadow_texture)
