@@ -119,7 +119,7 @@ mono::ISpritePtr SpriteFactoryImpl::CreateSpriteFromRaw(const char* sprite_raw) 
     }
 
     const mono::SpriteData& sprite_data = it->second;
-    mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture(sprite_data.texture_file.c_str());
+    mono::ITexturePtr texture = mono::RenderSystem::GetTextureFactory()->CreateTexture(sprite_data.texture_file.c_str());
     return std::make_unique<mono::Sprite>(&sprite_data, texture);
 }
 
@@ -129,7 +129,7 @@ bool SpriteFactoryImpl::CreateSprite(mono::Sprite& sprite, const char* sprite_fi
     if(!sprite_data)
         return false;
 
-    mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture(sprite_data->texture_file.c_str());
+    mono::ITexturePtr texture = mono::RenderSystem::GetTextureFactory()->CreateTexture(sprite_data->texture_file.c_str());
     sprite.Init(sprite_data, texture);
     return true;
 }

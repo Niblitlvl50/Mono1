@@ -287,7 +287,7 @@ void ParticleSystem::SetPoolData(
     particle_pool.update_function = update_function;
     particle_pool.particle_damping = particle_damping;
 
-    mono::ITexturePtr texture = mono::GetTextureFactory()->CreateTexture(texture_file);
+    mono::ITexturePtr texture = mono::RenderSystem::GetTextureFactory()->CreateTexture(texture_file);
     SetPoolDrawData(id, texture, blend_mode, draw_layer, transform_space);
 }
 

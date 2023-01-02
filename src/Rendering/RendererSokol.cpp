@@ -63,9 +63,9 @@ RendererSokol::RendererSokol()
     m_screen_uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(uv_coordinates), uv_coordinates);
     m_screen_indices = CreateElementBuffer(BufferType::STATIC, std::size(indices), indices);
 
-    const char* light_mask_texture = mono::LightMaskTexture();
+    const char* light_mask_texture = mono::RenderSystem::LightMaskTexture();
     if(light_mask_texture)
-        m_light_mask_texture = mono::GetTextureFactory()->CreateTexture(light_mask_texture);
+        m_light_mask_texture = mono::RenderSystem::GetTextureFactory()->CreateTexture(light_mask_texture);
 }
 
 RendererSokol::~RendererSokol()
@@ -115,7 +115,7 @@ void RendererSokol::MakeOrUpdateOffscreenPass(RendererSokol::OffscreenPassData& 
     sg_pass pass_handle = sg_make_pass(&pass_desc);
 
     offscreen_pass.image_size = drawable_size;
-    offscreen_pass.offscreen_texture = mono::GetTextureFactory()->CreateFromNativeHandle(image_handle.id);
+    offscreen_pass.offscreen_texture = mono::RenderSystem::GetTextureFactory()->CreateFromNativeHandle(image_handle.id);
     offscreen_pass.pass_handle = pass_handle;
 
     const sg_resource_state state = sg_query_pass_state(offscreen_pass.pass_handle);

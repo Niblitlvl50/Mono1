@@ -26,17 +26,8 @@
 #include <cstdio>
 #include <stdexcept>
 
-
 namespace
 {
-    float g_pixels_per_meter = 1.0f;
-    const char* g_light_mask_texture = nullptr;
-    const char* g_sprite_shadow_texture = nullptr;
-    const System::IWindow* g_window = nullptr;
-
-    const mono::ISpriteFactory* g_sprite_factory = nullptr;
-    const mono::ITextureFactory* g_texture_factory = nullptr;
-
     void fail_buffer(sg_buffer buf_id, void* user_data)
     {
         MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_buffer.");
@@ -96,7 +87,17 @@ namespace
     }
 }
 
-void mono::InitializeRender(const RenderInitParams& init_params)
+using namespace mono;
+
+float RenderSystem::s_pixels_per_meter = 32.0f;
+const char* RenderSystem::s_light_mask_texture = nullptr;
+const char* RenderSystem::s_sprite_shadow_texture = nullptr;
+const System::IWindow* RenderSystem::s_window = nullptr;
+const mono::ISpriteFactory* RenderSystem::s_sprite_factory = nullptr;
+const mono::ITextureFactory* RenderSystem::s_texture_factory = nullptr;
+
+RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
+    : m_layers(n)
 {
     sg_desc desc = {};
     desc.buffer_pool_size = 2048;
@@ -125,19 +126,16 @@ void mono::InitializeRender(const RenderInitParams& init_params)
     imgui_desc.ini_filename = init_params.imgui_ini;
     simgui_setup(&imgui_desc);
 
-    g_pixels_per_meter = init_params.pixels_per_meter;
-    g_light_mask_texture = init_params.light_mask_texture;
-    g_sprite_shadow_texture = init_params.sprite_shadow_texture;
-    g_window = init_params.window;
+    s_pixels_per_meter = init_params.pixels_per_meter;
+    s_light_mask_texture = init_params.light_mask_texture;
+    s_sprite_shadow_texture = init_params.sprite_shadow_texture;
+    s_window = init_params.window;
 
-    g_sprite_factory = new SpriteFactoryImpl(init_params.pixels_per_meter);
-    g_texture_factory = new TextureFactoryImpl();
+    s_sprite_factory = new SpriteFactoryImpl(init_params.pixels_per_meter);
+    s_texture_factory = new TextureFactoryImpl();
 
-    // glEnable(GL_POINT_SMOOTH);
-    // glEnable(GL_LINE_SMOOTH);
-
-    const System::Size window_size = g_window->Size();
-    const System::Size drawable_size = g_window->DrawableSize();
+    const System::Size window_size = s_window->Size();
+    const System::Size drawable_size = s_window->DrawableSize();
 
     System::Log("Render\n"
                 "\tpixels per meter: %f", init_params.pixels_per_meter);
@@ -150,64 +148,19 @@ void mono::InitializeRender(const RenderInitParams& init_params)
                 drawable_size.width, drawable_size.height);
 }
 
-void mono::ShutdownRender()
+void RenderSystem::Destroy()
 {
-    delete g_sprite_factory;
-    g_sprite_factory = nullptr;
+    delete s_sprite_factory;
+    s_sprite_factory = nullptr;
 
-    delete g_texture_factory;
-    g_texture_factory = nullptr;
+    delete s_texture_factory;
+    s_texture_factory = nullptr;
 
     mono::UnloadFonts();
 
     simgui_shutdown();
     sg_shutdown();
 }
-
-float mono::PixelsPerMeter()
-{
-    return g_pixels_per_meter;
-}
-
-float mono::GetWindowAspect()
-{
-    System::Size window_size = g_window->Size();
-    return float(window_size.width) / float(window_size.height);
-}
-
-const char* mono::LightMaskTexture()
-{
-    return g_light_mask_texture;
-}
-
-const char* mono::SpriteShadowTexture()
-{
-    return g_sprite_shadow_texture;
-}
-
-void mono::LoadCustomTextureFactory(const ITextureFactory* texture_factory)
-{
-    if(g_texture_factory)
-        delete g_texture_factory;
-
-    g_texture_factory = texture_factory;
-}
-
-const mono::ISpriteFactory* mono::GetSpriteFactory()
-{
-    return g_sprite_factory;
-}
-
-const mono::ITextureFactory* mono::GetTextureFactory()
-{
-    return g_texture_factory;
-}
-
-using namespace mono;
-
-RenderSystem::RenderSystem(uint32_t n)
-    : m_layers(n)
-{ }
 
 const char* RenderSystem::Name() const
 {
@@ -261,4 +214,43 @@ float RenderSystem::GetRenderSortOffsetOrDefault(uint32_t entity_id) const
     }
 
     return 0.0f;
+}
+
+float RenderSystem::PixelsPerMeter()
+{
+    return s_pixels_per_meter;
+}
+
+float RenderSystem::GetWindowAspect()
+{
+    const System::Size window_size = s_window->Size();
+    return float(window_size.width) / float(window_size.height);
+}
+
+const char* RenderSystem::LightMaskTexture()
+{
+    return s_light_mask_texture;
+}
+
+const char* RenderSystem::SpriteShadowTexture()
+{
+    return s_sprite_shadow_texture;
+}
+
+void RenderSystem::LoadCustomTextureFactory(const ITextureFactory* texture_factory)
+{
+    if(s_texture_factory)
+        delete s_texture_factory;
+
+    s_texture_factory = texture_factory;
+}
+
+const ISpriteFactory* RenderSystem::GetSpriteFactory()
+{
+    return s_sprite_factory;
+}
+
+const ITextureFactory* RenderSystem::GetTextureFactory()
+{
+    return s_texture_factory;
 }

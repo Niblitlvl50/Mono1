@@ -49,9 +49,9 @@ SpriteBatchDrawer::SpriteBatchDrawer(
     };
     m_sprite_indices = mono::CreateElementBuffer(mono::BufferType::STATIC, 6, indices);
 
-    const char* sprite_shadow_texture = mono::SpriteShadowTexture();
+    const char* sprite_shadow_texture = mono::RenderSystem::SpriteShadowTexture();
     if(sprite_shadow_texture)
-        m_shadow_texture = mono::GetTextureFactory()->CreateTexture(sprite_shadow_texture);
+        m_shadow_texture = mono::RenderSystem::GetTextureFactory()->CreateTexture(sprite_shadow_texture);
 }
 
 SpriteBatchDrawer::~SpriteBatchDrawer()
@@ -61,7 +61,7 @@ void SpriteBatchDrawer::PreloadSpriteData(const std::vector<std::string>& sprite
 {
     for(const std::string& file : sprite_files)
     {
-        const mono::SpriteData* sprite_data = mono::GetSpriteFactory()->GetSpriteDataForFile(file.c_str());
+        const mono::SpriteData* sprite_data = mono::RenderSystem::GetSpriteFactory()->GetSpriteDataForFile(file.c_str());
         if(!sprite_data)
             continue; // Error
 

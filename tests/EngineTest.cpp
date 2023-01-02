@@ -153,7 +153,7 @@ TEST(EngineTest, DISABLED_Basic)
     mono::EventHandler handler;
     mono::SystemContext system_context;
     mono::Camera camera;
-    mono::LoadCustomTextureFactory(new NullTextureFactory);
+    mono::RenderSystem::LoadCustomTextureFactory(new NullTextureFactory);
 
     MocWindow window(handler);
     MocZone zone;

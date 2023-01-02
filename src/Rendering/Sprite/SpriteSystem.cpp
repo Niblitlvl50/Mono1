@@ -43,7 +43,7 @@ bool SpriteSystem::IsAllocated(uint32_t sprite_id)
 void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& sprite_args)
 {
     mono::Sprite* sprite = m_sprites.Get(sprite_id);
-    mono::GetSpriteFactory()->CreateSprite(*sprite, sprite_args.sprite_file);
+    mono::RenderSystem::GetSpriteFactory()->CreateSprite(*sprite, sprite_args.sprite_file);
 
     sprite->SetShade(sprite_args.shade);
     sprite->SetProperties(sprite_args.properties);

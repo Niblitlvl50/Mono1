@@ -3,7 +3,6 @@
 
 #include "IGameSystem.h"
 #include "Util/ActiveVector.h"
-#include <stddef.h>
 
 namespace System
 {
@@ -21,20 +20,6 @@ namespace mono
         System::IWindow* window = nullptr;
     };
 
-    void InitializeRender(const RenderInitParams& init_params);
-    void ShutdownRender();
-
-    float PixelsPerMeter();
-    float GetWindowAspect();
-
-    const char* LightMaskTexture();
-    const char* SpriteShadowTexture();
-
-    void LoadCustomTextureFactory(const class ITextureFactory* texture_factory);
-
-    const class ISpriteFactory* GetSpriteFactory();
-    const class ITextureFactory* GetTextureFactory();
-
     struct LayerComponent
     {
         int layer;
@@ -45,7 +30,8 @@ namespace mono
     {
     public:
 
-        RenderSystem(uint32_t n);
+        RenderSystem(uint32_t n, const RenderInitParams& init_params);
+        void Destroy() override;
 
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
@@ -57,6 +43,23 @@ namespace mono
         int GetRenderLayerOrDefault(uint32_t entity_id) const;
         float GetRenderSortOffsetOrDefault(uint32_t entity_id) const;
 
+        static float PixelsPerMeter();
+        static float GetWindowAspect();
+        static const char* LightMaskTexture();
+        static const char* SpriteShadowTexture();
+        static void LoadCustomTextureFactory(const class ITextureFactory* texture_factory);
+        static const class ISpriteFactory* GetSpriteFactory();
+        static const class ITextureFactory* GetTextureFactory();
+
+    private:
+
         mono::ActiveVector<LayerComponent> m_layers;
+
+        static float s_pixels_per_meter;
+        static const char* s_light_mask_texture;
+        static const char* s_sprite_shadow_texture;
+        static const System::IWindow* s_window;
+        static const mono::ISpriteFactory* s_sprite_factory;
+        static const mono::ITextureFactory* s_texture_factory;
     };
 }
