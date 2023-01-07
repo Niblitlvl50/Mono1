@@ -68,6 +68,11 @@ math::Quad& TransformSystem::GetBoundingBox(uint32_t id)
     return m_transforms[id].bounding_box;
 }
 
+void TransformSystem::SetBoundingBox(uint32_t id, const math::Quad& bb)
+{
+    m_transforms[id].bounding_box = bb;
+}
+
 uint32_t TransformSystem::GetParent(uint32_t id) const
 {
     return m_transforms[id].parent;

@@ -40,6 +40,7 @@ namespace mono
         math::Quad GetWorldBoundingBox(uint32_t id) const;
         const math::Quad& GetBoundingBox(uint32_t id) const;
         math::Quad& GetBoundingBox(uint32_t id);
+        void SetBoundingBox(uint32_t id, const math::Quad& bb);
 
         uint32_t GetParent(uint32_t id) const;
         void ChildTransform(uint32_t id, uint32_t parent);

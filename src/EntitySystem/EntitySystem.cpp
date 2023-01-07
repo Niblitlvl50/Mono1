@@ -59,26 +59,39 @@ mono::Entity EntitySystem::CreateEntity(const char* name, uint32_t uuid_hash, co
 
 mono::Entity EntitySystem::CreateEntity(const char* entity_file)
 {
+    const std::vector<mono::Entity>& loaded_entities = CreateEntityCollection(entity_file);
+    MONO_ASSERT(loaded_entities.size() == 1);
+    return loaded_entities.front();
+}
+
+std::vector<mono::Entity> EntitySystem::CreateEntityCollection(const char* entity_file)
+{
     const uint32_t entity_hash = hash::Hash(entity_file);
     const auto it = m_cached_entities.find(entity_hash);
     if(it == m_cached_entities.end())
         m_cached_entities[entity_hash] = m_load_func(entity_file);
 
-    const EntityData& entity_data = m_cached_entities[entity_hash];
+    std::vector<mono::Entity> loaded_entities;
 
-    mono::Entity* new_entity = AllocateEntity(entity_data.entity_name.c_str());
-    m_entity_uuids[new_entity->id] = entity_data.entity_uuid;
-    new_entity->properties = entity_data.entity_properties;
-
-    for(const ComponentData& component : entity_data.entity_components)
+    const std::vector<EntityData>& cached_entity_data = m_cached_entities[entity_hash];
+    for(const EntityData& entity_data : cached_entity_data)
     {
-        const uint32_t component_hash = hash::Hash(component.name.c_str());
-        if(AddComponent(new_entity->id, component_hash))
-            SetComponentData(new_entity->id, component_hash, component.properties);
+        mono::Entity* new_entity = AllocateEntity(entity_data.entity_name.c_str());
+        m_entity_uuids[new_entity->id] = entity_data.entity_uuid;
+        new_entity->properties = entity_data.entity_properties;
+
+        for(const ComponentData& component : entity_data.entity_components)
+        {
+            const uint32_t component_hash = hash::Hash(component.name.c_str());
+            if(AddComponent(new_entity->id, component_hash))
+                SetComponentData(new_entity->id, component_hash, component.properties);
+        }
+
+        m_spawn_events.push_back({ true, new_entity->id });
+        loaded_entities.push_back(*new_entity);
     }
 
-    m_spawn_events.push_back({ true, new_entity->id });
-    return *new_entity;
+    return loaded_entities;
 }
 
 bool EntitySystem::AddComponent(uint32_t entity_id, uint32_t component_hash)

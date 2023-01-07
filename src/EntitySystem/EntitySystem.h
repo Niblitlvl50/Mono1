@@ -13,7 +13,7 @@
 #include <unordered_set>
 #include <unordered_map>
 
-using EntityLoadFunc = mono::EntityData (*)(const char* entity_file);
+using EntityLoadFunc = std::vector<mono::EntityData> (*)(const char* entity_file);
 using ComponentNameLookupFunc = const char* (*)(uint32_t component_hash);
 
 namespace mono
@@ -32,6 +32,8 @@ namespace mono
         mono::Entity CreateEntity(const char* name, const std::vector<uint32_t>& components) override;
         mono::Entity CreateEntity(const char* name, uint32_t uuid_hash, const std::vector<uint32_t>& components) override;
         mono::Entity CreateEntity(const char* entity_file) override;
+
+        std::vector<mono::Entity> CreateEntityCollection(const char* entity_file) override;
 
         bool AddComponent(uint32_t entity_id, uint32_t component_hash) override;
         bool RemoveComponent(uint32_t entity_id, uint32_t component_hash) override;
@@ -116,7 +118,7 @@ namespace mono
         std::vector<ReleaseCallbacks> m_release_callbacks;
 
         std::unordered_set<uint32_t> m_entities_to_release;
-        std::unordered_map<uint32_t, EntityData> m_cached_entities;
+        std::unordered_map<uint32_t, std::vector<EntityData>> m_cached_entities;
 
         struct ComponentFuncs
         {

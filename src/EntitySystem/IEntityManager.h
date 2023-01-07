@@ -50,6 +50,8 @@ namespace mono
         virtual mono::Entity CreateEntity(const char* name, uint32_t uuid_hash, const std::vector<uint32_t>& components) = 0;
         virtual mono::Entity CreateEntity(const char* entity_file) = 0;
 
+        virtual std::vector<mono::Entity> CreateEntityCollection(const char* entity_file) = 0;
+
         virtual const mono::Entity* GetEntity(uint32_t id) const = 0;
 
         virtual bool AddComponent(uint32_t entity_id, uint32_t component_hash) = 0;
