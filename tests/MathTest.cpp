@@ -54,7 +54,7 @@ TEST(MathTest, QuadOperator)
     math::Quad first(-1.0f, -1.0f, 2.0f, 2.0f);
     const math::Quad second(5.0f, 5.0f, 6.0f, 6.0f);
     
-    first |= second;
+    math::ExpandBy(first, second);
     
     EXPECT_FLOAT_EQ(-1.0f, first.bottom_left.x);
     EXPECT_FLOAT_EQ(-1.0f, first.bottom_left.y);
@@ -64,7 +64,7 @@ TEST(MathTest, QuadOperator)
     math::Quad third(0.0f, -1.0f, 5.0f, 6.0f);
     const math::Quad fourth(-2.0f, -3.0f, 10.0f, 11.0f);
     
-    third |= fourth;
+    math::ExpandBy(third, fourth);
     
     EXPECT_FLOAT_EQ(-2.0f, third.bottom_left.x);
     EXPECT_FLOAT_EQ(-3.0f, third.bottom_left.y);
@@ -74,7 +74,7 @@ TEST(MathTest, QuadOperator)
     math::Quad fifth(-1.0f, -1.0f, 2.0f, 1.0f);
     const math::Quad sixth(1.0f, 1.0f, 2.0f, 2.0f);
     
-    fifth |= sixth;
+    math::ExpandBy(fifth, sixth);
     
     EXPECT_FLOAT_EQ(-1.0f, fifth.bottom_left.x);
     EXPECT_FLOAT_EQ(-1.0f, fifth.bottom_left.y);
@@ -99,11 +99,11 @@ TEST(MathTest, QuadOperator_second)
     const math::Quad left(-0.5f, 1.0f, 1.0f, 1.0f);
     const math::Quad right(2.5f, 1.0f, 1.0f, 1.0f);
     
-    first |= left;
-    first |= right;
+    math::ExpandBy(first, left);
+    math::ExpandBy(first, right);
     
-    second |= right;
-    second |= left;
+    math::ExpandBy(second, right);
+    math::ExpandBy(second, left);
     
     EXPECT_FLOAT_EQ(first.bottom_left.x, second.bottom_left.x);
     EXPECT_FLOAT_EQ(first.bottom_left.y, second.bottom_left.y);

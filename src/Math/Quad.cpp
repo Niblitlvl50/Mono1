@@ -19,26 +19,26 @@ math::Quad math::operator + (const math::Quad& quad, const math::Vector& offset)
     return math::Quad(quad.bottom_left + offset, quad.top_right + offset);
 }
 
-void math::operator |= (math::Quad& left, const math::Quad& right)
-{
-    left.bottom_left.x = std::min(left.bottom_left.x, right.bottom_left.x);
-    left.bottom_left.y = std::min(left.bottom_left.y, right.bottom_left.y);
-    left.top_right.x = std::max(left.top_right.x, right.top_right.x);
-    left.top_right.y = std::max(left.top_right.y, right.top_right.y);
-}
-
-void math::operator |= (math::Quad& left, const math::Vector& right)
-{
-    left.bottom_left.x = std::min(left.bottom_left.x, right.x);
-    left.bottom_left.y = std::min(left.bottom_left.y, right.y);
-
-    left.top_right.x = std::max(left.top_right.x, right.x);
-    left.top_right.y = std::max(left.top_right.y, right.y);
-}
-
 bool math::operator == (const math::Quad& left, const math::Quad& right)
 {
     return left.bottom_left == right.bottom_left && left.top_right == right.top_right;
+}
+
+void math::ExpandBy(math::Quad& quad, const math::Quad& other)
+{
+    quad.bottom_left.x = std::min(quad.bottom_left.x, other.bottom_left.x);
+    quad.bottom_left.y = std::min(quad.bottom_left.y, other.bottom_left.y);
+    quad.top_right.x = std::max(quad.top_right.x, other.top_right.x);
+    quad.top_right.y = std::max(quad.top_right.y, other.top_right.y);
+}
+
+void math::ExpandBy(math::Quad& quad, const math::Vector& point)
+{
+    quad.bottom_left.x = std::min(quad.bottom_left.x, point.x);
+    quad.bottom_left.y = std::min(quad.bottom_left.y, point.y);
+
+    quad.top_right.x = std::max(quad.top_right.x, point.x);
+    quad.top_right.y = std::max(quad.top_right.y, point.y);
 }
 
 void math::NormalizeQuad(math::Quad& quad)
@@ -137,3 +137,4 @@ math::Vector math::Center(const math::Quad& quad)
 }
 
 const math::Quad math::InfQuad = math::Quad(-math::INF, -math::INF, math::INF, math::INF);
+const math::Quad math::InverseInfQuad = math::Quad(math::INF, math::INF, -math::INF, -math::INF);

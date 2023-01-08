@@ -396,12 +396,12 @@ void math::Transform(const Matrix& matrix, math::Quad& quad)
     math::Transform(matrix, top_left);
     math::Transform(matrix, top_right);
 
-    quad = math::Quad(math::INF, math::INF, -math::INF, -math::INF);
+    quad = math::InverseInfQuad;
 
-    quad |= bottom_left;
-    quad |= bottom_right;
-    quad |= top_left;
-    quad |= top_right;
+    math::ExpandBy(quad, bottom_left);
+    math::ExpandBy(quad, bottom_right);
+    math::ExpandBy(quad, top_left);
+    math::ExpandBy(quad, top_right);
 }
 
 math::Vector math::Transformed(const Matrix& matrix, const math::Vector& vector)
