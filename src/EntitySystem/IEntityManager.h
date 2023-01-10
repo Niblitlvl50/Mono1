@@ -7,33 +7,15 @@
 
 #include <cstdint>
 #include <vector>
-#include <string>
 #include <functional>
-
-using ComponentCreateFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
-using ComponentReleaseFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
-using ComponentUpdateFunc = bool(*)(mono::Entity* entity, const std::vector<Attribute>& properties, mono::SystemContext* context);
-using ComponentEnableFunc = void(*)(mono::Entity* entity, bool enabled, mono::SystemContext* context);
-using ComponentGetFunc = std::vector<Attribute>(*)(const mono::Entity* entity, mono::SystemContext* context);
-
 
 namespace mono
 {
-    using ReleaseCallback = std::function<void (uint32_t entity_id)>;
-    
-    struct ComponentData
-    {
-        std::string name;
-        std::vector<Attribute> properties;
-    };
+    using ComponentCreateFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
+    using ComponentReleaseFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
+    using ComponentUpdateFunc = bool(*)(mono::Entity* entity, const std::vector<Attribute>& properties, mono::SystemContext* context);
 
-    struct EntityData
-    {
-        std::string entity_name;
-        uint32_t entity_uuid;
-        uint32_t entity_properties;
-        std::vector<ComponentData> entity_components;
-    };
+    using ReleaseCallback = std::function<void (uint32_t entity_id)>;
 
     class IEntityManager
     {
@@ -57,17 +39,12 @@ namespace mono
         virtual bool AddComponent(uint32_t entity_id, uint32_t component_hash) = 0;
         virtual bool RemoveComponent(uint32_t entity_id, uint32_t component_hash) = 0;
         virtual bool SetComponentData(uint32_t entity_id, uint32_t component_hash, const std::vector<Attribute>& properties) = 0;
-        virtual std::vector<Attribute> GetComponentData(uint32_t entity_id, uint32_t component_hash) const = 0;
 
         virtual void RegisterComponent(
             uint32_t component_hash,
             ComponentCreateFunc create_component,
             ComponentReleaseFunc release_component,
-            ComponentUpdateFunc update_component,
-            //ComponentEnableFunc enable_func,
-            ComponentGetFunc get_component = nullptr) = 0;
-
-        virtual void SetEntityEnabled(uint32_t entity_id, bool enable) = 0;
+            ComponentUpdateFunc update_component) = 0;
 
         virtual void SetEntityProperties(uint32_t entity_id, uint32_t properties) = 0;
         virtual uint32_t GetEntityProperties(uint32_t entity_id) const = 0;

@@ -1,10 +1,12 @@
 
 #pragma once
 
+#include "MonoFwd.h"
+
 #include "IEntityManager.h"
 #include "IGameSystem.h"
 
-#include "MonoFwd.h"
+#include "EntityTypes.h"
 #include "ObjectAttribute.h"
 
 #include <string>
@@ -15,6 +17,7 @@
 
 using EntityLoadFunc = std::vector<mono::EntityData> (*)(const char* entity_file);
 using ComponentNameLookupFunc = const char* (*)(uint32_t component_hash);
+using AttributeNameLookupFunc = const char* (*)(uint32_t attribute_hash);
 
 namespace mono
 {
@@ -26,7 +29,8 @@ namespace mono
             uint32_t n_entities,
             mono::SystemContext* system_context,
             EntityLoadFunc load_func,
-            ComponentNameLookupFunc component_lookup);
+            ComponentNameLookupFunc component_lookup,
+            AttributeNameLookupFunc attribute_lookup);
         ~EntitySystem();
 
         mono::Entity CreateEntity(const char* name, const std::vector<uint32_t>& components) override;
@@ -38,9 +42,6 @@ namespace mono
         bool AddComponent(uint32_t entity_id, uint32_t component_hash) override;
         bool RemoveComponent(uint32_t entity_id, uint32_t component_hash) override;
         bool SetComponentData(uint32_t entity_id, uint32_t component_hash, const std::vector<Attribute>& properties) override;
-        std::vector<Attribute> GetComponentData(uint32_t entity_id, uint32_t component_hash) const override;
-
-        void SetEntityEnabled(uint32_t entity_id, bool enable) override;
 
         void SetEntityProperties(uint32_t entity_id, uint32_t properties) override;
         uint32_t GetEntityProperties(uint32_t entity_id) const override;
@@ -68,9 +69,7 @@ namespace mono
             uint32_t component_hash,
             ComponentCreateFunc create_component,
             ComponentReleaseFunc release_component,
-            ComponentUpdateFunc update_component,
-            ComponentGetFunc get_component = nullptr) override;
-
+            ComponentUpdateFunc update_component) override;
 
 
         Entity* AllocateEntity(const char* name);
@@ -101,6 +100,8 @@ namespace mono
         const char* Name() const override;
         void Update(const UpdateContext& update_context) override;
 
+        static const char* AttributeNameLookup(uint32_t attribute_type_hash);
+
     private:
 
         void DeferredRelease();
@@ -108,6 +109,7 @@ namespace mono
         mono::SystemContext* m_system_context;
         EntityLoadFunc m_load_func;
         ComponentNameLookupFunc m_component_name_lookup;
+        static AttributeNameLookupFunc s_attribute_name_lookup;
 
         std::vector<Entity> m_entities;
         std::vector<uint32_t> m_entity_uuids;
@@ -125,8 +127,6 @@ namespace mono
             ComponentCreateFunc create;
             ComponentReleaseFunc release;
             ComponentUpdateFunc update;
-            ComponentEnableFunc enable;
-            ComponentGetFunc get;
         };
 
         std::unordered_map<uint32_t, ComponentFuncs> m_component_factories;

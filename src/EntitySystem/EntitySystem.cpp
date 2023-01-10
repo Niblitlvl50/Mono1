@@ -15,16 +15,21 @@
 
 using namespace mono;
 
+AttributeNameLookupFunc EntitySystem::s_attribute_name_lookup = nullptr;
+
 EntitySystem::EntitySystem(
     uint32_t n_entities,
     mono::SystemContext* system_context,
     EntityLoadFunc load_func,
-    ComponentNameLookupFunc component_lookup)
+    ComponentNameLookupFunc component_lookup,
+    AttributeNameLookupFunc attribute_lookup)
     : m_system_context(system_context)
     , m_load_func(load_func)
     , m_component_name_lookup(component_lookup)
     , m_full_release_on_next_sync(false)
 {
+    s_attribute_name_lookup = attribute_lookup;
+
     m_entities.resize(n_entities);
     m_entity_uuids.resize(n_entities, 0);
     m_free_indices.resize(n_entities);
@@ -80,15 +85,21 @@ std::vector<mono::Entity> EntitySystem::CreateEntityCollection(const char* entit
         m_entity_uuids[new_entity->id] = entity_data.entity_uuid;
         new_entity->properties = entity_data.entity_properties;
 
+        m_spawn_events.push_back({ true, new_entity->id });
+        loaded_entities.push_back(*new_entity);
+    }
+
+    for(uint32_t index = 0; index < loaded_entities.size(); ++index)
+    {
+        const mono::Entity& entity = loaded_entities[index];
+        const EntityData& entity_data = cached_entity_data[index];
+
         for(const ComponentData& component : entity_data.entity_components)
         {
             const uint32_t component_hash = hash::Hash(component.name.c_str());
-            if(AddComponent(new_entity->id, component_hash))
-                SetComponentData(new_entity->id, component_hash, component.properties);
+            if(AddComponent(entity.id, component_hash))
+                SetComponentData(entity.id, component_hash, component.properties);
         }
-
-        m_spawn_events.push_back({ true, new_entity->id });
-        loaded_entities.push_back(*new_entity);
     }
 
     return loaded_entities;
@@ -151,39 +162,6 @@ bool EntitySystem::SetComponentData(uint32_t entity_id, uint32_t component_hash,
     return false;
 }
 
-std::vector<Attribute> EntitySystem::GetComponentData(uint32_t entity_id, uint32_t component_hash) const
-{
-    const mono::Entity* entity = GetEntity(entity_id);
-
-    const auto factory_it = m_component_factories.find(component_hash);
-    if(factory_it != m_component_factories.end())
-    {
-        ComponentGetFunc get_func = factory_it->second.get;
-        if(get_func)
-            return factory_it->second.get(entity, m_system_context);
-    }
-
-    const char* component_name = m_component_name_lookup(component_hash);
-    System::Log("EntitySystem|Unable to get component with hash: %ul, %s", component_hash, component_name);
-    return { };
-}
-
-void EntitySystem::SetEntityEnabled(uint32_t entity_id, bool enable)
-{
-    mono::Entity* entity = GetEntity(entity_id);
-    
-    for(uint32_t component_hash : entity->components)
-    {
-        const auto it = m_component_factories.find(component_hash);
-        if(it != m_component_factories.end())
-        {
-            ComponentEnableFunc enable_func = it->second.enable;
-            if(enable_func)
-                enable_func(entity, enable, m_system_context);
-        }
-    }
-}
-
 void EntitySystem::SetEntityProperties(uint32_t entity_id, uint32_t properties)
 {
     mono::Entity* entity = GetEntity(entity_id);
@@ -232,15 +210,12 @@ void EntitySystem::RegisterComponent(
     uint32_t component_hash,
     ComponentCreateFunc create_component,
     ComponentReleaseFunc release_component,
-    ComponentUpdateFunc update_component,
-    ComponentGetFunc get_component)
+    ComponentUpdateFunc update_component)
 {
     m_component_factories[component_hash] = {
         create_component,
         release_component,
         update_component,
-        nullptr,
-        get_component
     };
 }
 
@@ -469,3 +444,10 @@ const char* EntitySystem::Name() const
 
 void EntitySystem::Update(const UpdateContext& update_context)
 { }
+
+const char* EntitySystem::AttributeNameLookup(uint32_t attribute_type_hash)
+{
+    if(s_attribute_name_lookup)
+        return s_attribute_name_lookup(attribute_type_hash);
+    return "Unknown";
+}
