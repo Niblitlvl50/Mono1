@@ -15,7 +15,6 @@
 #include <unordered_set>
 #include <unordered_map>
 
-using EntityLoadFunc = std::vector<mono::EntityData> (*)(const char* entity_file);
 using ComponentNameLookupFunc = const char* (*)(uint32_t component_hash);
 using AttributeNameLookupFunc = const char* (*)(uint32_t attribute_hash);
 
@@ -28,7 +27,6 @@ namespace mono
         EntitySystem(
             uint32_t n_entities,
             mono::SystemContext* system_context,
-            EntityLoadFunc load_func,
             ComponentNameLookupFunc component_lookup,
             AttributeNameLookupFunc attribute_lookup);
         ~EntitySystem();
@@ -107,7 +105,6 @@ namespace mono
         void DeferredRelease();
 
         mono::SystemContext* m_system_context;
-        EntityLoadFunc m_load_func;
         ComponentNameLookupFunc m_component_name_lookup;
         static AttributeNameLookupFunc s_attribute_name_lookup;
 

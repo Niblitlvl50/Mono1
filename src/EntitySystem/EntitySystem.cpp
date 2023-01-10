@@ -1,17 +1,47 @@
 
 #include "EntitySystem.h"
+#include "EntitySystem/Serialize.h"
 #include "SystemContext.h"
 
 #include "System/Hash.h"
 #include "System/System.h"
 #include "System/Uuid.h"
 #include "System/Debug.h"
+#include "System/File.h"
 #include "Util/Algorithm.h"
 
 #include <algorithm>
 #include <vector>
 #include <iterator>
 #include <numeric>
+
+#include "nlohmann/json.hpp"
+
+namespace
+{
+    std::vector<mono::EntityData> LoadEntityFile(const char* entity_file)
+    {
+        std::vector<mono::EntityData> loaded_entities;
+
+        file::FilePtr file = file::OpenAsciiFile(entity_file);
+        if(!file)
+            return loaded_entities;
+
+        std::vector<byte> file_data = file::FileRead(file);
+        file_data.push_back('\0');
+
+        const nlohmann::json& json = nlohmann::json::parse((const char*)file_data.data());
+        const nlohmann::json& entities = json["entities"];
+
+        for(const nlohmann::json& entity : entities)
+        {
+            const mono::EntityData& entity_data = entity;
+            loaded_entities.push_back(entity_data);
+        }
+
+        return loaded_entities;
+    }
+}
 
 using namespace mono;
 
@@ -20,11 +50,9 @@ AttributeNameLookupFunc EntitySystem::s_attribute_name_lookup = nullptr;
 EntitySystem::EntitySystem(
     uint32_t n_entities,
     mono::SystemContext* system_context,
-    EntityLoadFunc load_func,
     ComponentNameLookupFunc component_lookup,
     AttributeNameLookupFunc attribute_lookup)
     : m_system_context(system_context)
-    , m_load_func(load_func)
     , m_component_name_lookup(component_lookup)
     , m_full_release_on_next_sync(false)
 {
@@ -74,7 +102,7 @@ std::vector<mono::Entity> EntitySystem::CreateEntityCollection(const char* entit
     const uint32_t entity_hash = hash::Hash(entity_file);
     const auto it = m_cached_entities.find(entity_hash);
     if(it == m_cached_entities.end())
-        m_cached_entities[entity_hash] = m_load_func(entity_file);
+        m_cached_entities[entity_hash] = LoadEntityFile(entity_file);
 
     std::vector<mono::Entity> loaded_entities;
 
