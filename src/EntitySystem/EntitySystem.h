@@ -51,6 +51,7 @@ namespace mono
         uint32_t GetEntityIdFromUuid(uint32_t uuid) const override;
 
         void ReleaseEntity(uint32_t entity_id) override;
+        void ReleaseEntities(const std::vector<mono::Entity>& entities) override;
 
         void PushEntityStackRecord(const char* debug_name) override;
         void PopEntityStackRecord() override;

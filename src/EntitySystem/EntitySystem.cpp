@@ -253,6 +253,12 @@ void EntitySystem::ReleaseEntity(uint32_t entity_id)
     m_spawn_events.push_back({ false, entity_id });
 }
 
+void EntitySystem::ReleaseEntities(const std::vector<mono::Entity>& entities)
+{
+    for(const mono::Entity& entity : entities)
+        ReleaseEntity(entity.id);
+}
+
 void EntitySystem::PushEntityStackRecord(const char* debug_name)
 {
     EntityStackRecord record;

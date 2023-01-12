@@ -56,6 +56,7 @@ namespace mono
         virtual uint32_t GetEntityIdFromUuid(uint32_t uuid) const = 0;
 
         virtual void ReleaseEntity(uint32_t entity_id) = 0;
+        virtual void ReleaseEntities(const std::vector<mono::Entity>& entities) = 0;
 
         virtual void PushEntityStackRecord(const char* debug_name) = 0;
         virtual void PopEntityStackRecord() = 0;
