@@ -34,6 +34,7 @@ namespace mono
 
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
+        bool UpdateInPause() const override;
 
         template <typename T>
         inline void ForEach(T&& functor)

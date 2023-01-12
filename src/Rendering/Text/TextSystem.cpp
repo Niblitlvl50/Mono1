@@ -58,3 +58,8 @@ void TextSystem::Update(const mono::UpdateContext& update_context)
 
     ForEach(update_bb);
 }
+
+bool TextSystem::UpdateInPause() const
+{
+    return true;
+}
