@@ -19,6 +19,7 @@
 #include "Rendering/Texture/ITexture.h"
 #include "Rendering/Sprite/ISprite.h"
 #include "Rendering/Sprite/SpriteProperties.h"
+#include "Rendering/Sprite/SpriteBufferFactory.h"
 
 #include "Text/TextFunctions.h"
 
@@ -377,6 +378,21 @@ void RendererSokol::DrawSprite(
     SpritePipeline::SetFlashSprite(sprite->ShouldFlashSprite());
 
     sg_draw(0, 6, 1);
+}
+
+void RendererSokol::DrawSprite(
+    const ISprite* sprite, const SpriteDrawBuffers* buffers, const IElementBuffer* indices) const
+{
+    DrawSprite(
+        sprite,
+        buffers->vertices.get(),
+        buffers->offsets.get(),
+        buffers->uv.get(),
+        buffers->uv_flipped.get(),
+        buffers->heights.get(),
+        indices,
+        sprite->GetTexture(),
+        0);
 }
 
 void RendererSokol::DrawFog(const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture)

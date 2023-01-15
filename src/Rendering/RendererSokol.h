@@ -50,6 +50,11 @@ namespace mono
             const ITexture* texture,
             uint32_t buffer_offset) const override;
 
+        void DrawSprite(
+            const ISprite* sprite,
+            const SpriteDrawBuffers* buffers,
+            const IElementBuffer* indices) const override;
+
         void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float point_size) const override;
         void DrawPoints(const std::vector<math::Vector>& points, const std::vector<mono::Color::RGBA>& colors, float point_size) const override;
         void DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const override;
