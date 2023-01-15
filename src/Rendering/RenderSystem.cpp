@@ -148,7 +148,7 @@ RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
                 drawable_size.width, drawable_size.height);
 }
 
-void RenderSystem::Destroy()
+RenderSystem::~RenderSystem()
 {
     delete s_sprite_factory;
     s_sprite_factory = nullptr;
@@ -157,7 +157,6 @@ void RenderSystem::Destroy()
     s_texture_factory = nullptr;
 
     mono::UnloadFonts();
-
     simgui_shutdown();
     sg_shutdown();
 }

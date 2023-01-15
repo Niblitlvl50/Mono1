@@ -31,7 +31,7 @@ namespace mono
     public:
 
         RenderSystem(uint32_t n, const RenderInitParams& init_params);
-        void Destroy() override;
+        ~RenderSystem();
 
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
