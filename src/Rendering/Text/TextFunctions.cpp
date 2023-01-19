@@ -124,7 +124,10 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
 
     math::Vector current_position = math::ZeroVec;
     if(center_flags != 0)
-        current_position += TextOffsetFromFontCentering(MeasureString(font_id, text), center_flags);
+    {
+        const mono::TextMeasurement text_measurement = mono::MeasureString(font_id, text);
+        current_position += TextOffsetFromFontCentering(text_measurement.size, center_flags);
+    }
 
     const FontData& font_data = g_fonts.find(font_id)->second;
 
@@ -171,12 +174,12 @@ mono::TextDefinition mono::GenerateVertexDataFromString(int font_id, const char*
 }
 
 
-math::Vector mono::MeasureString(int font_id, const char* text)
+mono::TextMeasurement mono::MeasureString(int font_id, const char* text)
 {
     const FontData& font_data = g_fonts.find(font_id)->second;
     const uint32_t text_length = std::strlen(text);
 
-    math::Vector size;
+    mono::TextMeasurement measurement;
     
     for(uint32_t index = 0; index < text_length; ++index)
     {
@@ -189,12 +192,10 @@ math::Vector mono::MeasureString(int font_id, const char* text)
         const uint32_t offset_index = char_index - g_base;
         const CharData& data = font_data.chars[offset_index];
 
-        if(index == text_length -1)
-            size.x += data.width;
-        else
-            size.x += data.x_advance;
-        size.y = std::max(data.height, size.y);
+        measurement.size.x += ((index == text_length -1) ? data.width : data.x_advance);
+        measurement.size.y = std::max(data.height, measurement.size.y);
+        measurement.offset.y = std::max(data.y_offset, measurement.offset.y);
     }
 
-    return size;
+    return measurement;
 }

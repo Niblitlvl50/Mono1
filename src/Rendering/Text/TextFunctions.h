@@ -23,5 +23,11 @@ namespace mono
 
     math::Vector TextOffsetFromFontCentering(const math::Vector& text_size, FontCentering center_flags);
     TextDefinition GenerateVertexDataFromString(int font_id, const char* text, FontCentering center_flags);
-    math::Vector MeasureString(int font_id, const char* text);
+
+    struct TextMeasurement
+    {
+        math::Vector size;
+        math::Vector offset;
+    };
+    TextMeasurement MeasureString(int font_id, const char* text);
 }

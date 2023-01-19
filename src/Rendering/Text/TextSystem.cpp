@@ -47,11 +47,11 @@ void TextSystem::Update(const mono::UpdateContext& update_context)
         if(!m_text_dirty[index])
             return;
 
-        const math::Vector text_size = mono::MeasureString(text.font_id, text.text.c_str());
-        const math::Vector text_offset = mono::TextOffsetFromFontCentering(text_size, text.center_flags);
+        const mono::TextMeasurement text_measurement = mono::MeasureString(text.font_id, text.text.c_str());
+        const math::Vector text_offset = mono::TextOffsetFromFontCentering(text_measurement.size, text.center_flags) - text_measurement.offset;
 
         math::Quad& bounding_box = m_transform_system->GetBoundingBox(index);
-        bounding_box = math::Quad(text_offset, text_offset + text_size);
+        bounding_box = math::Quad(text_offset, text_offset + text_measurement.size);
 
         m_text_dirty[index] = false;
     };
