@@ -21,11 +21,16 @@ namespace
 {
     std::vector<mono::EntityData> LoadEntityFile(const char* entity_file)
     {
+        System::Log("EntitySystem|Loading entity '%s'.", entity_file);
+
         std::vector<mono::EntityData> loaded_entities;
 
         file::FilePtr file = file::OpenAsciiFile(entity_file);
         if(!file)
+        {
+            System::Log("EntitySystem|Failed to load entity...");
             return loaded_entities;
+        }
 
         std::vector<byte> file_data = file::FileRead(file);
         file_data.push_back('\0');
