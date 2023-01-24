@@ -49,6 +49,9 @@ namespace mono
         InputContext* CreateContext(int priority, InputContextBehaviour context_behaviour, const char* debug_context);
         void ReleaseContext(InputContext* context);
 
+        void EnableContext(InputContext* input_context);
+        void DisableContext(InputContext* input_context);
+
     private:
 
         template <typename T>

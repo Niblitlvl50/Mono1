@@ -84,6 +84,17 @@ void InputSystem::ReleaseContext(mono::InputContext* context)
     delete context;
 }
 
+void InputSystem::EnableContext(InputContext* input_context)
+{
+    input_context->enabled = true;
+}
+
+void InputSystem::DisableContext(InputContext* input_context)
+{
+    input_context->enabled = false;
+    input_context->most_recent_input = mono::InputContextType::None;
+}
+
 mono::EventResult InputSystem::OnMouseMotionEvent(const event::MouseMotionEvent& event)
 {
     const auto apply_event = [&event](InputContext* context) {
