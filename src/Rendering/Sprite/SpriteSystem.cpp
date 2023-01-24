@@ -143,7 +143,12 @@ uint32_t SpriteSystem::RunSpriteAnimSequence(uint32_t sprite_id, const std::vect
 
     const SpriteAnimSequence sequence = { 0, anim_sequence };
     m_active_anim_sequences[sprite_id] = sequence;
-    AnimSequenceCallback(sprite_id);
+
+    const SpriteAnimSequence& active_sequence = m_active_anim_sequences[sprite_id];
+    const SpriteAnimNode& active_node = active_sequence.nodes[active_sequence.index];
+
+    mono::Sprite* sprite = m_sprites.Get(sprite_id);
+    sprite->SetAnimation(active_node.anim_name, std::bind(&SpriteSystem::AnimSequenceCallback, this, std::placeholders::_1));
 
     return 0;
 }
@@ -158,7 +163,8 @@ void SpriteSystem::AnimSequenceCallback(uint32_t sprite_id)
 
     if(active_sequence.index < (int)active_sequence.nodes.size())
     {
+        const SpriteAnimNode& next_active_node = active_sequence.nodes[active_sequence.index];
         mono::Sprite* sprite = m_sprites.Get(sprite_id);
-        sprite->SetAnimation(active_node.anim_name, std::bind(&SpriteSystem::AnimSequenceCallback, this, std::placeholders::_1));
+        sprite->SetAnimation(next_active_node.anim_name, std::bind(&SpriteSystem::AnimSequenceCallback, this, std::placeholders::_1));
     }
 }
