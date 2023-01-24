@@ -45,6 +45,7 @@ void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& spr
     mono::Sprite* sprite = m_sprites.Get(sprite_id);
     mono::RenderSystem::GetSpriteFactory()->CreateSprite(*sprite, sprite_args.sprite_file);
 
+    sprite->SetUserId(sprite_id);
     sprite->SetShade(sprite_args.shade);
     sprite->SetProperties(sprite_args.properties);
     sprite->SetShadowOffset(sprite_args.shadow_offset);
@@ -88,13 +89,10 @@ const char* SpriteSystem::Name() const
 
 void SpriteSystem::Update(const UpdateContext& update_context)
 {
-    const auto update_sprite = [this, &update_context](uint32_t index, mono::Sprite& sprite)
-    {
+    const auto update_sprite = [this, &update_context](uint32_t index, mono::Sprite& sprite) {
         const bool is_enabled = m_enabled[index];
-        if(!is_enabled)
-            return;
-
-        sprite.Update(update_context);
+        if(is_enabled)
+            sprite.Update(update_context);
     };
     m_sprites.ForEach(update_sprite);
 
@@ -136,4 +134,31 @@ void SpriteSystem::ForEachSprite(const ForEachSpriteFunc& func)
             func(id, sprite);
     };
     m_sprites.ForEach(proxy_func);
+}
+
+uint32_t SpriteSystem::RunSpriteAnimSequence(uint32_t sprite_id, const std::vector<SpriteAnimNode>& anim_sequence)
+{
+    if(anim_sequence.empty())
+        return 0;
+
+    const SpriteAnimSequence sequence = { 0, anim_sequence };
+    m_active_anim_sequences[sprite_id] = sequence;
+    AnimSequenceCallback(sprite_id);
+
+    return 0;
+}
+
+void SpriteSystem::AnimSequenceCallback(uint32_t sprite_id)
+{
+    SpriteAnimSequence& active_sequence = m_active_anim_sequences[sprite_id];
+    const SpriteAnimNode& active_node = active_sequence.nodes[active_sequence.index];
+    active_node.callback(sprite_id);
+    
+    active_sequence.index++;
+
+    if(active_sequence.index < (int)active_sequence.nodes.size())
+    {
+        mono::Sprite* sprite = m_sprites.Get(sprite_id);
+        sprite->SetAnimation(active_node.anim_name, std::bind(&SpriteSystem::AnimSequenceCallback, this, std::placeholders::_1));
+    }
 }

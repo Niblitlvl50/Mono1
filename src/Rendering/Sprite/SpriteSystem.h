@@ -5,13 +5,14 @@
 #include "Math/Vector.h"
 #include "Rendering/Color.h"
 #include "Util/ActiveVector.h"
+#include "ISprite.h"
 
 #include <vector>
 #include <functional>
+#include <unordered_map>
 
 namespace mono
 {
-    class ISprite;
     class Sprite;
     class TransformSystem;
 
@@ -26,6 +27,18 @@ namespace mono
         uint32_t properties = 0;
         math::Vector shadow_offset;
         float shadow_size;
+    };
+
+    struct SpriteAnimNode
+    {
+        const char* anim_name = nullptr;
+        mono::SpriteAnimationCallback callback;
+    };
+
+    struct SpriteAnimSequence
+    {
+        int index;
+        std::vector<SpriteAnimNode> nodes;
     };
 
     using ForEachSpriteFunc = std::function<void (uint32_t sprite_id, mono::ISprite& sprite)>;
@@ -46,6 +59,9 @@ namespace mono
         void SetSpriteEnabled(uint32_t sprite_id, bool enabled);
         void ForEachSprite(const ForEachSpriteFunc& func);
 
+        uint32_t RunSpriteAnimSequence(uint32_t sprite_id, const std::vector<SpriteAnimNode>& anim_sequence);
+        void AnimSequenceCallback(uint32_t sprite_id);
+
         const char* Name() const override;
         void Update(const UpdateContext& update_context) override;
 
@@ -54,7 +70,8 @@ namespace mono
         mono::TransformSystem* m_transform_system;
         mono::ActiveVector<mono::Sprite> m_sprites;
         std::vector<bool> m_enabled;
-
         std::vector<uint32_t> m_sprites_need_update;
+
+        std::unordered_map<uint32_t, SpriteAnimSequence> m_active_anim_sequences;
     };
 }

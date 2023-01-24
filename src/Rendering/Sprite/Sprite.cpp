@@ -24,6 +24,7 @@ void Sprite::Init(const SpriteData* sprite_data, mono::ITexturePtr texture)
 {
     m_sprite_data = sprite_data;
     m_texture = texture;
+    m_sprite_user_id = -1;
 
     m_active_animation = 0;
     m_active_animation_done = false;
@@ -36,6 +37,11 @@ void Sprite::Init(const SpriteData* sprite_data, mono::ITexturePtr texture)
     m_color = mono::Color::RGBA();
     m_flash_timer = 0;
     m_callback = nullptr;
+}
+
+void Sprite::SetUserId(uint32_t id)
+{
+    m_sprite_user_id = id;
 }
 
 uint32_t Sprite::GetSpriteHash() const
@@ -134,7 +140,7 @@ void Sprite::Update(const UpdateContext& update_context)
                 m_active_animation_done = true;
 
             if(m_callback)
-                m_callback();
+                m_callback(m_sprite_user_id);
         }
         else
         {

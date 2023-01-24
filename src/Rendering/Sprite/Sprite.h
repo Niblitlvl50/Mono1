@@ -15,6 +15,7 @@ namespace mono
         Sprite();
         Sprite(const SpriteData* sprite_data, mono::ITexturePtr texture);
         void Init(const SpriteData* sprite_data, mono::ITexturePtr texture);
+        void SetUserId(uint32_t id);
 
         uint32_t GetSpriteHash() const override;
         ITexture* GetTexture() const override;
@@ -57,6 +58,7 @@ namespace mono
 
         const SpriteData* m_sprite_data;
         mono::ITexturePtr m_texture;
+        uint32_t m_sprite_user_id;
 
         int m_active_animation;
         bool m_active_animation_done;

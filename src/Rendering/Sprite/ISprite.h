@@ -6,6 +6,7 @@
 #include "SpriteData.h"
 
 #include <functional>
+#include <cstdint>
 
 namespace mono
 {
@@ -15,7 +16,7 @@ namespace mono
         PLAYING
     };
 
-    using SpriteAnimationCallback = std::function<void()>;
+    using SpriteAnimationCallback = std::function<void (uint32_t sprite_id)>;
 
     class ISprite : public IUpdatable
     {
