@@ -44,7 +44,9 @@ namespace mono
     public:
 
         virtual ~IBody() = default;
-        
+
+        virtual uint32_t GetId() const = 0;
+
         virtual void SetType(BodyType type) = 0;
         virtual BodyType GetType() const = 0;
         virtual bool IsSleeping() const = 0;

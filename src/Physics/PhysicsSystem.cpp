@@ -106,10 +106,13 @@ PhysicsSystem::PhysicsSystem(const PhysicsSystemInitParams& init_params, mono::T
     , m_transform_system(transform_system)
 {
     m_impl->bodies.reserve(init_params.n_bodies);
-    for(size_t index = 0; index < init_params.n_bodies; ++index)
+    for(uint32_t index = 0; index < init_params.n_bodies; ++index)
     {
         cpBody* body = m_impl->body_pool.GetPoolData();
-        m_impl->bodies.emplace_back(body);
+        m_impl->bodies.emplace_back(index, body);
+
+        cm::BodyImpl& body_impl = m_impl->bodies[index];
+        cpBodySetUserData(body, &body_impl);
     }
 
     m_impl->bodies_shapes.resize(init_params.n_bodies);
@@ -162,7 +165,6 @@ mono::IBody* PhysicsSystem::AllocateBody(uint32_t id, const BodyComponent& body_
 
     cpBodyInit(new_body.Handle(), body_params.mass, body_params.inertia);
     cpBodySetType(new_body.Handle(), static_cast<cpBodyType>(body_params.type));
-    cpBodySetUserData(new_body.Handle(), reinterpret_cast<void*>(id));
 
     m_impl->space.Add(&new_body);
     m_impl->active_bodies[id] = true;
@@ -411,11 +413,7 @@ mono::IBody* PhysicsSystem::GetBody(uint32_t body_id)
 uint32_t PhysicsSystem::GetIdFromBody(const mono::IBody* body)
 {
     if(body)
-    {
-        void* user_data = cpBodyGetUserData(body->Handle());
-        if(user_data != nullptr)
-            return reinterpret_cast<uint64_t>(user_data);
-    }
+        return body->GetId();
 
     return -1;
 }
@@ -442,7 +440,7 @@ void PhysicsSystem::PositionBody(uint32_t body_id, const math::Vector& position)
 mono::IBody* PhysicsSystem::CreateKinematicBody()
 {
     cpBody* kinematic_body = cpBodyNewKinematic();
-    mono::IBody* body_impl = new cm::BodyImpl(kinematic_body);
+    mono::IBody* body_impl = new cm::BodyImpl(-1, kinematic_body);
     m_impl->space.Add(body_impl);
 
     return body_impl;

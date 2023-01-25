@@ -3,6 +3,7 @@
 
 #include "Physics/IBody.h"
 #include <vector>
+#include <cstdint>
 
 namespace cm
 {
@@ -10,8 +11,9 @@ namespace cm
     {
     public:
     
-        BodyImpl(cpBody* body);
+        BodyImpl(uint32_t body_id, cpBody* body);
 
+        uint32_t GetId() const override;
         void SetType(mono::BodyType type) override;
         mono::BodyType GetType() const override;
         bool IsSleeping() const override;
@@ -44,8 +46,10 @@ namespace cm
         cpBody* Handle() const override;
 
         void ClearCollisionHandlers();
-        
+
     private:
+
+        const uint32_t m_body_id;
         cpBody* m_body_handle;
         bool m_auto_calculate_moment;
         bool m_prevent_rotation;

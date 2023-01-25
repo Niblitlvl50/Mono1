@@ -7,11 +7,17 @@
 
 using namespace cm;
 
-BodyImpl::BodyImpl(cpBody* body)
-    : m_body_handle(body)
+BodyImpl::BodyImpl(uint32_t body_id, cpBody* body)
+    : m_body_id(body_id)
+    , m_body_handle(body)
     , m_auto_calculate_moment(true)
     , m_prevent_rotation(false)
 { }
+
+uint32_t BodyImpl::GetId() const
+{
+    return m_body_id;
+}
 
 void BodyImpl::SetType(mono::BodyType type)
 {
