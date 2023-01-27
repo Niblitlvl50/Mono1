@@ -165,6 +165,7 @@ mono::IBody* PhysicsSystem::AllocateBody(uint32_t id, const BodyComponent& body_
 
     cpBodyInit(new_body.Handle(), body_params.mass, body_params.inertia);
     cpBodySetType(new_body.Handle(), static_cast<cpBodyType>(body_params.type));
+    cpBodySetUserData(new_body.Handle(), &new_body);
 
     m_impl->space.Add(&new_body);
     m_impl->active_bodies[id] = true;
