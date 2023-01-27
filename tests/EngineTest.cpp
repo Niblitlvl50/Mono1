@@ -41,6 +41,10 @@ namespace
         { }
         void SetFullscreen(System::FullscreenMode fullscreen_mode) override
         { }
+        bool IsFullscreen() const override
+        {
+            return false;
+        }
         void RestoreSize() override
         { }
         void SwapBuffers() const override

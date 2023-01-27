@@ -97,6 +97,7 @@ namespace System
         virtual void Minimize() = 0;
         virtual void SetWindowed() = 0;
         virtual void SetFullscreen(FullscreenMode fullscreen_mode) = 0;
+        virtual bool IsFullscreen() const = 0;
         virtual void RestoreSize() = 0;
         virtual void SwapBuffers() const = 0;
         virtual void MakeCurrent() = 0;

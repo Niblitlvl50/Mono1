@@ -109,6 +109,11 @@ namespace
                 (fullscreen_mode == System::FullscreenMode::FULLSCREEN) ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
             SDL_SetWindowFullscreen(m_window, flags);
         }
+        bool IsFullscreen() const override
+        {
+            const Uint32 window_flags = SDL_GetWindowFlags(m_window);
+            return (window_flags & SDL_WINDOW_FULLSCREEN_DESKTOP);
+        }
         void RestoreSize() override
         {
             SDL_RestoreWindow(m_window);
