@@ -75,7 +75,6 @@ EntitySystem::EntitySystem(
 
 EntitySystem::~EntitySystem()
 {
-    Sync();
 }
 
 mono::Entity EntitySystem::CreateEntity(const char* name, const std::vector<uint32_t>& components)
@@ -348,6 +347,11 @@ void EntitySystem::Sync()
 }
 
 void EntitySystem::Reset()
+{
+    Sync();
+}
+
+void EntitySystem::Destroy()
 {
     Sync();
 }
