@@ -76,13 +76,8 @@ namespace
                 throw std::runtime_error("System|Unable to create OpenGL context. (" + sdl_error + ")");
             }
 
-            //const int swap_result = SDL_GL_SetSwapInterval(-1);
-            //if(swap_result != 0)
-            {
-                //System::Log("System|Adaptive vsync not supported.");
-                const int vsync_value = (options & System::WindowOptions::DISABLE_VSYNC) ? 0 : 1;
-                SDL_GL_SetSwapInterval(vsync_value);
-            }
+            const int vsync_value = (options & System::WindowOptions::VSYNC) ? 1 : 0;
+            SDL_GL_SetSwapInterval(vsync_value);
 
             MakeCurrent();
         }

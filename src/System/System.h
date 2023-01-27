@@ -78,7 +78,7 @@ namespace System
         NONE                = 0,
         FULLSCREEN          = ENUM_BIT(0),
         FULLSCREEN_DESKTOP  = ENUM_BIT(1),
-        DISABLE_VSYNC       = ENUM_BIT(2),
+        VSYNC               = ENUM_BIT(2),
         BORDERLESS          = ENUM_BIT(3),
     };
 
