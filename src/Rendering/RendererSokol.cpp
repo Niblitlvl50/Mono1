@@ -381,7 +381,7 @@ void RendererSokol::DrawSprite(
 }
 
 void RendererSokol::DrawSprite(
-    const ISprite* sprite, const SpriteDrawBuffers* buffers, const IElementBuffer* indices) const
+    const ISprite* sprite, const SpriteDrawBuffers* buffers, const IElementBuffer* indices, uint32_t buffer_offset) const
 {
     DrawSprite(
         sprite,
@@ -392,7 +392,7 @@ void RendererSokol::DrawSprite(
         buffers->heights.get(),
         indices,
         sprite->GetTexture(),
-        0);
+        buffer_offset);
 }
 
 void RendererSokol::DrawFog(const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture)

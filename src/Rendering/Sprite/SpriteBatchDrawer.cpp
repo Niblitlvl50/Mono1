@@ -183,18 +183,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 
         const SpriteDrawBuffers& sprite_buffers = m_sprite_buffers[sprite->GetSpriteHash()];
         const int offset = sprite->GetCurrentFrameIndex() * sprite_buffers.vertices_per_sprite;
-        mono::ITexture* texture = sprite->GetTexture();
-
-        renderer.DrawSprite(
-            sprite_transform.sprite,
-            sprite_buffers.vertices.get(),
-            sprite_buffers.offsets.get(),
-            sprite_buffers.uv.get(),
-            sprite_buffers.uv_flipped.get(),
-            sprite_buffers.heights.get(),
-            m_sprite_indices.get(),
-            texture,
-            offset);
+        renderer.DrawSprite(sprite_transform.sprite, &sprite_buffers, m_sprite_indices.get(), offset);
     }
 }
 
