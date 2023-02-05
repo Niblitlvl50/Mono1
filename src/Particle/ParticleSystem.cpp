@@ -58,13 +58,13 @@ namespace
     }
 }
 
-void mono::DefaultGenerator(const math::Vector& position, ParticlePoolComponentView& particle_view)
+void mono::DefaultGenerator(const ParticleGeneratorContext& context, ParticlePoolComponentView& particle_view)
 {
     const float x = mono::Random(-2.0f, 2.0f);
     const float y = mono::Random(0.5f, 4.0f);
     const float life = mono::Random(0.0f, 0.5f);
 
-    particle_view.position = position;
+    particle_view.position = context.position;
     particle_view.velocity = math::Vector(x, y);
     particle_view.rotation = 0.0f;
     particle_view.angular_velocity = 0.0f;
@@ -197,10 +197,15 @@ void ParticleSystem::UpdateEmitter(
     const uint32_t start_index = particle_pool.count_alive;
     const uint32_t end_index = std::min(start_index + new_particles, particle_pool.pool_size -1);
 
+    ParticleGeneratorContext generator_context;
+    generator_context.position = emitter_position;
+    generator_context.particles_to_emit = end_index - start_index;
+
     for(uint32_t index = start_index; index < end_index; ++index)
     {
+        generator_context.particle_index = index - start_index;
         ParticlePoolComponentView view = MakeViewFromPool(particle_pool, index);
-        emitter->generator(emitter_position, view);
+        emitter->generator(generator_context, view);
     }
 
     for(uint32_t index = start_index; index < end_index; ++index)
@@ -361,7 +366,8 @@ void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, c
 
     MONO_ASSERT(valid_data);
 
-    const ParticleGenerator generator = [generator_properties](const math::Vector& position, ParticlePoolComponentView& component_view) {
+    const ParticleGenerator generator = [generator_properties]
+        (const ParticleGeneratorContext& context, ParticlePoolComponentView& component_view) {
 
         const math::Vector half_area = generator_properties.emit_area / 2.0f;
         const math::Vector offset = math::Vector(
@@ -373,7 +379,7 @@ void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, c
         const float magnitude_variation = mono::Random(generator_properties.magnitude_interval.min, generator_properties.magnitude_interval.max);
         const math::Vector& velocity = math::VectorFromAngle(math::ToRadians(direction_variation)) * magnitude_variation;
 
-        component_view.position         = position + offset;
+        component_view.position         = context.position + offset;
         component_view.velocity         = velocity;
         component_view.rotation         = 0.0f;
         component_view.angular_velocity = mono::Random(generator_properties.angular_velocity_interval.min, generator_properties.angular_velocity_interval.max);

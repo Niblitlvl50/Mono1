@@ -11,11 +11,12 @@ namespace mono
     struct ParticlePoolComponent;
     struct ParticlePoolComponentView;
     struct ParticleEmitterComponent;
+    struct ParticleGeneratorContext;
 
-    using ParticleGenerator = std::function<void (const math::Vector& position, ParticlePoolComponentView& component_view)>;
-    using ParticleUpdater   = std::function<void (ParticlePoolComponentView& component_view, float delta_s)>;
+    using ParticleGenerator = std::function<void (const ParticleGeneratorContext& context, ParticlePoolComponentView& view)>;
+    using ParticleUpdater   = std::function<void (ParticlePoolComponentView& view, float delta_s)>;
 
-    void DefaultGenerator(const math::Vector& position, ParticlePoolComponentView& particle_view);
-    void DefaultUpdater(ParticlePoolComponentView& component_view, float delta_s);
+    void DefaultGenerator(const ParticleGeneratorContext& context, ParticlePoolComponentView& view);
+    void DefaultUpdater(ParticlePoolComponentView& view, float delta_s);
 
 }

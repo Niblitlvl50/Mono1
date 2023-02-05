@@ -38,6 +38,13 @@ namespace mono
         math::ValueSpread end_size_spread;
     };
 
+    struct ParticleGeneratorContext
+    {
+        math::Vector position;
+        int particle_index;
+        int particles_to_emit;
+    };
+
     struct ParticleEmitterComponent
     {
         math::Vector position;
