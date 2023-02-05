@@ -27,8 +27,9 @@ namespace mono
         void SetShadowOffset(const math::Vector& shadow_offset);
         uint32_t GetProperties() const override;
         void SetProperties(uint32_t properties) override;
-        void SetProperty(uint32_t property) override;
-        void ClearProperty(uint32_t property) override;
+        void SetProperty(mono::SpriteProperty property) override;
+        bool HasProperty(mono::SpriteProperty property) const override;
+        void ClearProperty(mono::SpriteProperty property) override;
         void SetAnimation(int id) override;
         void SetAnimation(const char* name) override;
         void SetAnimation(int id, const SpriteAnimationCallback& callback) override;

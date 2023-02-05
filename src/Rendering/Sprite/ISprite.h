@@ -3,6 +3,7 @@
 
 #include "IUpdatable.h"
 #include "Rendering/RenderFwd.h"
+#include "Rendering/Sprite/SpriteProperties.h"
 #include "SpriteData.h"
 
 #include <functional>
@@ -41,8 +42,9 @@ namespace mono
 
         virtual uint32_t GetProperties() const = 0;
         virtual void SetProperties(uint32_t properties) = 0;
-        virtual void SetProperty(uint32_t property) = 0;
-        virtual void ClearProperty(uint32_t property) = 0;
+        virtual void SetProperty(mono::SpriteProperty property) = 0;
+        virtual bool HasProperty(mono::SpriteProperty property) const = 0;
+        virtual void ClearProperty(mono::SpriteProperty property) = 0;
 
         //! Tell the sprite to run a specific animation.
         virtual void SetAnimation(int animation_id) = 0;

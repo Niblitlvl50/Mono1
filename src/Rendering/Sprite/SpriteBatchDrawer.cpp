@@ -21,9 +21,8 @@ using namespace mono;
 
 namespace
 {
-    struct SpriteTransformPair
+    struct SpriteDrawData
     {
-        uint32_t entity_id;
         math::Matrix transform;
         math::Quad world_bb;
         mono::ISprite* sprite;
@@ -75,7 +74,7 @@ void SpriteBatchDrawer::ReloadSpriteData(uint32_t sprite_hash)
 
 void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 {
-    std::vector<SpriteTransformPair> sprites_to_draw;
+    std::vector<SpriteDrawData> sprites_to_draw;
     std::vector<ShadowDrawData> shadows_to_draw;
 
     sprites_to_draw.reserve(128);
@@ -101,10 +100,10 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
             world_bounds_offseted.bottom_left.y += sort_offset;
 
             const int render_layer = m_render_system->GetRenderLayerOrDefault(id);
-            sprites_to_draw.push_back({ id, transform, world_bounds_offseted, &sprite, render_layer });
+            sprites_to_draw.push_back({ transform, world_bounds_offseted, &sprite, render_layer });
         }
 
-        const bool has_shadow = (sprite.GetProperties() & mono::SpriteProperty::SHADOW);
+        const bool has_shadow = sprite.HasProperty(mono::SpriteProperty::SHADOW);
         if(has_shadow && m_shadow_texture)
         {
             const math::Vector& shadow_offset = sprite.GetShadowOffset();
@@ -141,7 +140,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
     };
     m_sprite_system->ForEachSprite(collect_sprites);
 
-    const auto sort_on_y_and_layer = [](const SpriteTransformPair& first, const SpriteTransformPair& second)
+    const auto sort_on_y_and_layer = [](const SpriteDrawData& first, const SpriteDrawData& second)
     {
         if(first.layer == second.layer)
             return math::Bottom(first.world_bb) > math::Bottom(second.world_bb);
@@ -170,16 +169,14 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
         }
     }
 
-    for(const SpriteTransformPair& sprite_transform : sprites_to_draw)
+    for(const SpriteDrawData& draw_data : sprites_to_draw)
     {
-        const math::Matrix& world_transform = renderer.GetTransform() * sprite_transform.transform;
+        const math::Matrix& world_transform = renderer.GetTransform() * draw_data.transform;
         auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
 
-        mono::ISprite* sprite = sprite_transform.sprite;
-
-        const SpriteDrawBuffers& sprite_buffers = m_sprite_buffers[sprite->GetSpriteHash()];
-        const int offset = sprite->GetCurrentFrameIndex() * sprite_buffers.vertices_per_sprite;
-        renderer.DrawSprite(sprite_transform.sprite, &sprite_buffers, m_sprite_indices.get(), offset);
+        const SpriteDrawBuffers& sprite_buffers = m_sprite_buffers[draw_data.sprite->GetSpriteHash()];
+        const int offset = draw_data.sprite->GetCurrentFrameIndex() * sprite_buffers.vertices_per_sprite;
+        renderer.DrawSprite(draw_data.sprite, &sprite_buffers, m_sprite_indices.get(), offset);
     }
 }
 

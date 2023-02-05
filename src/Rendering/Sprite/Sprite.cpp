@@ -98,12 +98,17 @@ void Sprite::SetProperties(uint32_t properties)
     m_properties = properties;
 }
 
-void Sprite::SetProperty(uint32_t property)
+void Sprite::SetProperty(mono::SpriteProperty property)
 {
     m_properties |= property;
 }
 
-void Sprite::ClearProperty(uint32_t property)
+bool Sprite::HasProperty(mono::SpriteProperty property) const
+{
+    return (m_properties & property);
+}
+
+void Sprite::ClearProperty(mono::SpriteProperty property)
 {
     m_properties &= ~property;
 }
