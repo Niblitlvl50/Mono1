@@ -30,6 +30,7 @@ namespace mono
     {
         math::Vector emit_area;
         math::Interval direction_degrees_interval;
+        bool uniform_direction;
         math::Interval magnitude_interval;
         math::Interval angular_velocity_interval;
         mono::Color::Gradient<4> color_gradient;

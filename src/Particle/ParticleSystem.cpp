@@ -375,9 +375,23 @@ void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, c
             mono::Random(-half_area.y, half_area.y)
         );
 
-        const float direction_variation = mono::Random(generator_properties.direction_degrees_interval.min, generator_properties.direction_degrees_interval.max);
+        float direction = 0;
+
+        if(generator_properties.uniform_direction)
+        {
+            const float delta_interval
+                = generator_properties.direction_degrees_interval.max - generator_properties.direction_degrees_interval.min;
+            const float delta_direction = delta_interval / context.particles_to_emit;
+
+            direction = generator_properties.direction_degrees_interval.min + (context.particle_index * delta_direction);
+        }
+        else
+        {
+            direction = mono::Random(generator_properties.direction_degrees_interval.min, generator_properties.direction_degrees_interval.max);
+        }
+
         const float magnitude_variation = mono::Random(generator_properties.magnitude_interval.min, generator_properties.magnitude_interval.max);
-        const math::Vector& velocity = math::VectorFromAngle(math::ToRadians(direction_variation)) * magnitude_variation;
+        const math::Vector& velocity = math::VectorFromAngle(math::ToRadians(direction)) * magnitude_variation;
 
         component_view.position         = context.position + offset;
         component_view.velocity         = velocity;
