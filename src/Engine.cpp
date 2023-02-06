@@ -123,8 +123,14 @@ int Engine::Run(IZone* zone)
             m_update_last_time = false;
         }
 
+        const bool slow_down = System::IsKeyDown(Keycode::TAB);
+        const float slow_down_multiplier = slow_down ? 0.25f : 1.0f;
+
         const uint32_t before_time = System::GetMilliseconds();
-        const uint32_t delta_ms = std::clamp(uint32_t((before_time - last_time) * m_time_scale), 1u, std::numeric_limits<uint32_t>::max());
+        const uint32_t delta_ms =
+            std::clamp(
+                uint32_t((before_time - last_time) * m_time_scale * slow_down_multiplier),
+                1u, std::numeric_limits<uint32_t>::max());
         update_context.timestamp += delta_ms;
 
         const System::Size size = m_window->Size();
