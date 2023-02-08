@@ -4,6 +4,7 @@
 #include "MonoFwd.h"
 #include "IGameSystem.h"
 #include "InputInterfaces.h"
+#include "InputSystemTypes.h"
 
 #include <vector>
 
@@ -14,14 +15,6 @@ namespace mono
         ConsumeIfHandled,
         ConsumeAll,
         PassOnAll
-    };
-
-    enum class InputContextType
-    {
-        None,
-        Mouse,
-        Keyboard,
-        Controller
     };
 
     struct InputContext
