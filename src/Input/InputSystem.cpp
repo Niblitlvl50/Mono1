@@ -10,6 +10,7 @@ using namespace mono;
 
 InputSystem::InputSystem(mono::EventHandler* event_handler)
     : m_event_handler(event_handler)
+    , m_most_recent_global_input(InputContextType::None)
 {
     using namespace std::placeholders;
 
@@ -95,6 +96,11 @@ void InputSystem::DisableContext(InputContext* input_context)
     input_context->most_recent_input = mono::InputContextType::None;
 }
 
+mono::InputContextType InputSystem::GetMostRecentGlobalInput() const
+{
+    return m_most_recent_global_input;
+}
+
 mono::EventResult InputSystem::OnMouseMotionEvent(const event::MouseMotionEvent& event)
 {
     const auto apply_event = [&event](InputContext* context) {
@@ -107,6 +113,7 @@ mono::EventResult InputSystem::OnMouseMotionEvent(const event::MouseMotionEvent&
     };
     ForEachContext(apply_event);
 
+    m_most_recent_global_input = mono::InputContextType::Mouse;
     return mono::EventResult::PASS_ON;
 }
 
@@ -122,6 +129,7 @@ mono::EventResult InputSystem::OnMouseDownEvent(const event::MouseDownEvent& eve
     };
     ForEachContext(apply_event);
 
+    m_most_recent_global_input = mono::InputContextType::Mouse;
     return mono::EventResult::PASS_ON;
 }
 
@@ -137,6 +145,7 @@ mono::EventResult InputSystem::OnMouseUpEvent(const event::MouseUpEvent& event)
     };
     ForEachContext(apply_event);
 
+    m_most_recent_global_input = mono::InputContextType::Mouse;
     return mono::EventResult::PASS_ON;
 }
 
@@ -153,6 +162,7 @@ mono::EventResult InputSystem::OnMouseWheelEvent(const event::MouseWheelEvent& e
     };
     ForEachContext(apply_event);
 
+    m_most_recent_global_input = mono::InputContextType::Mouse;
     return mono::EventResult::PASS_ON;
 }
 
@@ -168,6 +178,7 @@ mono::EventResult InputSystem::OnKeyDown(const event::KeyDownEvent& event)
     };
     ForEachContext(apply_event);
 
+    m_most_recent_global_input = mono::InputContextType::Keyboard;
     return mono::EventResult::PASS_ON;
 }
 
@@ -183,6 +194,7 @@ mono::EventResult InputSystem::OnKeyUp(const event::KeyUpEvent& event)
     };
     ForEachContext(apply_event);
 
+    m_most_recent_global_input = mono::InputContextType::Keyboard;
     return mono::EventResult::PASS_ON;
 }
 
@@ -198,6 +210,7 @@ mono::EventResult InputSystem::OnControllerButton(const event::ControllerButtonD
     };
     ForEachContext(apply_event);
 
+    m_most_recent_global_input = mono::InputContextType::Controller;
     return mono::EventResult::PASS_ON;
 }
 
@@ -213,6 +226,6 @@ mono::EventResult InputSystem::OnControllerAxis(const event::ControllerAxisEvent
     };
     ForEachContext(apply_event);
 
+    m_most_recent_global_input = mono::InputContextType::Controller;
     return mono::EventResult::PASS_ON;
 }
-

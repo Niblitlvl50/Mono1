@@ -45,6 +45,8 @@ namespace mono
         void EnableContext(InputContext* input_context);
         void DisableContext(InputContext* input_context);
 
+        mono::InputContextType GetMostRecentGlobalInput() const;
+
     private:
 
         template <typename T>
@@ -84,5 +86,7 @@ namespace mono
         mono::EventToken<event::KeyUpEvent> m_key_up_token;
         mono::EventToken<event::ControllerButtonDownEvent> m_controller_down_token;
         mono::EventToken<event::ControllerAxisEvent> m_controller_axis_token;
+
+        mono::InputContextType m_most_recent_global_input;
     };
 }
