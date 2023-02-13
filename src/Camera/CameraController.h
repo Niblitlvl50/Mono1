@@ -12,7 +12,7 @@ namespace mono
     {
     public:
         
-        MouseCameraController(ICamera* camera, EventHandler& event_handler);
+        MouseCameraController(ICamera* camera, EventHandler* event_handler);
         ~MouseCameraController();
 
         void Enable();
@@ -27,7 +27,7 @@ namespace mono
         mono::EventResult OnMouseWheel(const event::MouseWheelEvent& event);
         
         ICamera* m_camera;
-        EventHandler& m_event_handler;
+        EventHandler* m_event_handler;
         bool m_enabled;
 
         bool m_translate;

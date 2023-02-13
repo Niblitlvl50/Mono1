@@ -15,7 +15,7 @@
 
 using namespace mono;
 
-MouseCameraController::MouseCameraController(ICamera* camera, EventHandler& event_handler)
+MouseCameraController::MouseCameraController(ICamera* camera, EventHandler* event_handler)
     : m_camera(camera),
       m_event_handler(event_handler),
       m_enabled(false),
@@ -29,20 +29,20 @@ MouseCameraController::MouseCameraController(ICamera* camera, EventHandler& even
     const event::MultiGestureEventFunc multi_gesture_func = std::bind(&MouseCameraController::OnMultiGesture, this, _1);
     const event::MouseWheelEventFunc mouse_wheel_func = std::bind(&MouseCameraController::OnMouseWheel, this, _1);
 
-    m_mouse_down_token = m_event_handler.AddListener(mouse_down_func);
-    m_mouse_up_token = m_event_handler.AddListener(mouse_up_func);
-    m_mouse_move_token = m_event_handler.AddListener(mouse_move_func);
-    m_multi_gesture_token = m_event_handler.AddListener(multi_gesture_func);
-    m_mouse_wheel_token = m_event_handler.AddListener(mouse_wheel_func);
+    m_mouse_down_token = m_event_handler->AddListener(mouse_down_func);
+    m_mouse_up_token = m_event_handler->AddListener(mouse_up_func);
+    m_mouse_move_token = m_event_handler->AddListener(mouse_move_func);
+    m_multi_gesture_token = m_event_handler->AddListener(multi_gesture_func);
+    m_mouse_wheel_token = m_event_handler->AddListener(mouse_wheel_func);
 }
 
 MouseCameraController::~MouseCameraController()
 {
-    m_event_handler.RemoveListener(m_mouse_down_token);
-    m_event_handler.RemoveListener(m_mouse_up_token);
-    m_event_handler.RemoveListener(m_mouse_move_token);
-    m_event_handler.RemoveListener(m_multi_gesture_token);
-    m_event_handler.RemoveListener(m_mouse_wheel_token);
+    m_event_handler->RemoveListener(m_mouse_down_token);
+    m_event_handler->RemoveListener(m_mouse_up_token);
+    m_event_handler->RemoveListener(m_mouse_move_token);
+    m_event_handler->RemoveListener(m_multi_gesture_token);
+    m_event_handler->RemoveListener(m_mouse_wheel_token);
 }
 
 void MouseCameraController::Enable()
