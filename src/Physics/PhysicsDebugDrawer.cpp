@@ -328,12 +328,15 @@ void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
 
         ImGui::TextDisabled("SHAPES");
 
-        const bool shapes_table_success = ImGui::BeginTable("shapes_table", 3, ImGuiTableFlags_BordersInnerV);
+        const bool shapes_table_success = ImGui::BeginTable("shapes_table", 6, ImGuiTableFlags_BordersInnerV);
         if(shapes_table_success)
         {
             ImGui::TableSetupColumn("Sensor");
             ImGui::TableSetupColumn("Mass");
             ImGui::TableSetupColumn("Inertia");
+            ImGui::TableSetupColumn("Group");
+            ImGui::TableSetupColumn("Categories");
+            ImGui::TableSetupColumn("Mask");
             ImGui::TableHeadersRow();
 
             const std::vector<mono::IShape*>& shapes = m_physics_system->GetShapesAttachedToBody(m_body_id);
@@ -346,6 +349,11 @@ void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
                 ImGui::TableNextColumn(); ImGui::Text("%s", shape_native_handle->sensor ? "Yes" : "No");
                 ImGui::TableNextColumn(); ImGui::Text("%f", shape_native_handle->massInfo.m);
                 ImGui::TableNextColumn(); ImGui::Text("%f", shape_native_handle->massInfo.i);
+
+                const cpShapeFilter filter = shape_native_handle->filter;
+                ImGui::TableNextColumn(); ImGui::Text("%lu", filter.group);
+                ImGui::TableNextColumn(); ImGui::Text("%u", filter.categories);
+                ImGui::TableNextColumn(); ImGui::Text("%u", filter.mask);
             }
 
             ImGui::EndTable();
