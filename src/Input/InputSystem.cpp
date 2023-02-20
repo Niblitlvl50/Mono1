@@ -64,6 +64,7 @@ mono::InputContext* InputSystem::CreateContext(int priority, InputContextBehavio
     context->priority = priority;
     context->behaviour = context_behaviour;
     context->most_recent_input = InputContextType::None;
+    context->most_recent_input_timestamp = 0;
     context->mouse_input = nullptr;
     context->keyboard_input = nullptr;
     context->controller_input = nullptr;
@@ -107,6 +108,7 @@ mono::EventResult InputSystem::OnMouseMotionEvent(const event::MouseMotionEvent&
         if(context->mouse_input)
         {
             context->most_recent_input = InputContextType::Mouse;
+            context->most_recent_input_timestamp = event.timestamp;
             return context->mouse_input->Move(event);
         }
         return mono::InputResult::Pass;
@@ -123,6 +125,7 @@ mono::EventResult InputSystem::OnMouseDownEvent(const event::MouseDownEvent& eve
         if(context->mouse_input)
         {
             context->most_recent_input = InputContextType::Mouse;
+            context->most_recent_input_timestamp = event.timestamp;
             return context->mouse_input->ButtonDown(event);
         }
         return mono::InputResult::Pass;
@@ -139,6 +142,7 @@ mono::EventResult InputSystem::OnMouseUpEvent(const event::MouseUpEvent& event)
         if(context->mouse_input)
         {
             context->most_recent_input = InputContextType::Mouse;
+            context->most_recent_input_timestamp = event.timestamp;
             return context->mouse_input->ButtonUp(event);
         }
         return mono::InputResult::Pass;
@@ -155,6 +159,7 @@ mono::EventResult InputSystem::OnMouseWheelEvent(const event::MouseWheelEvent& e
         if(context->mouse_input)
         {
             context->most_recent_input = InputContextType::Mouse;
+            context->most_recent_input_timestamp = event.timestamp;
             return context->mouse_input->Wheel(event);
         }
 
@@ -172,6 +177,7 @@ mono::EventResult InputSystem::OnKeyDown(const event::KeyDownEvent& event)
         if(context->keyboard_input)
         {
             context->most_recent_input = InputContextType::Keyboard;
+            context->most_recent_input_timestamp = event.timestamp;
             return context->keyboard_input->KeyDown(event);
         }
         return mono::InputResult::Pass;
@@ -188,6 +194,7 @@ mono::EventResult InputSystem::OnKeyUp(const event::KeyUpEvent& event)
         if(context->keyboard_input)
         {
             context->most_recent_input = InputContextType::Keyboard;
+            context->most_recent_input_timestamp = event.timestamp;
             return context->keyboard_input->KeyUp(event);
         }
         return mono::InputResult::Pass;
@@ -204,6 +211,7 @@ mono::EventResult InputSystem::OnControllerButton(const event::ControllerButtonD
         if(context->controller_input)
         {
             context->most_recent_input = InputContextType::Controller;
+            context->most_recent_input_timestamp = event.timestamp;
             return context->controller_input->ButtonDown(event);
         }
         return mono::InputResult::Pass;
@@ -220,6 +228,7 @@ mono::EventResult InputSystem::OnControllerAxis(const event::ControllerAxisEvent
         if(context->controller_input)
         {
             context->most_recent_input = InputContextType::Controller;
+            context->most_recent_input_timestamp = event.timestamp;
             return context->controller_input->Axis(event);
         }
         return mono::InputResult::Pass;

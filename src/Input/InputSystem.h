@@ -7,6 +7,7 @@
 #include "InputSystemTypes.h"
 
 #include <vector>
+#include <cstdint>
 
 namespace mono
 {
@@ -23,9 +24,12 @@ namespace mono
         int priority;
         InputContextBehaviour behaviour;
         InputContextType most_recent_input;
+        uint32_t most_recent_input_timestamp;
+
         IMouseInput* mouse_input;
         IControllerInput* controller_input;
         IKeyboardInput* keyboard_input;
+
         const char* debug_context;
     };
 
