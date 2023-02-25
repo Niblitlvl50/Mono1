@@ -18,7 +18,7 @@ TextBatchDrawer::TextBatchDrawer(mono::TextSystem* text_system, mono::TransformS
     : m_text_system(text_system)
     , m_transform_system(transform_system)
 {
-    m_draw_buffers.resize(500);
+    m_draw_buffers.resize(1000);
 }
 
 TextBatchDrawer::~TextBatchDrawer()
