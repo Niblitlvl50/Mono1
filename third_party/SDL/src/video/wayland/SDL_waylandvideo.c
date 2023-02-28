@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -237,7 +237,6 @@ Wayland_CreateDevice(void)
     device->GL_UnloadLibrary = Wayland_GLES_UnloadLibrary;
     device->GL_GetProcAddress = Wayland_GLES_GetProcAddress;
     device->GL_DeleteContext = Wayland_GLES_DeleteContext;
-    device->GL_GetEGLSurface = Wayland_GLES_GetEGLSurface;
 #endif
 
     device->CreateSDLWindow = Wayland_CreateWindow;

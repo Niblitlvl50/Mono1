@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -19,9 +19,13 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
+/* We won't get fseeko64 on QNX if _LARGEFILE64_SOURCE is defined, but the
+   configure script knows the C runtime has it and enables it. */
+#ifndef __QNXNTO__
 /* Need this so Linux systems define fseek64o, ftell64o and off64_t */
 #ifndef _LARGEFILE64_SOURCE
 #define _LARGEFILE64_SOURCE
+#endif
 #endif
 
 #include "../SDL_internal.h"
@@ -33,6 +37,7 @@
 #ifdef HAVE_STDIO_H
 #include <stdio.h>
 #endif
+
 #ifdef HAVE_LIMITS_H
 #include <limits.h>
 #endif
@@ -55,6 +60,10 @@
 #ifdef __ANDROID__
 #include "../core/android/SDL_android.h"
 #include "SDL_system.h"
+#endif
+
+#if __NACL__
+#include "nacl_io/nacl_io.h"
 #endif
 
 #if defined(__WIN32__) || defined(__GDK__)

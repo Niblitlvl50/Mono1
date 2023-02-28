@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -39,7 +39,7 @@ __declspec(selectany) int _fltused = 1;
 #endif
 
 /* The optimizer on Visual Studio 2005 and later generates memcpy() and memset() calls.
-   Always provide it for the SDL3 DLL, but skip it when building static lib w/ static runtime. */
+   Always provide it for the SDL2 DLL, but skip it when building static lib w/ static runtime. */
 #if (_MSC_VER >= 1400) && (!defined(_MT) || defined(DLL_EXPORT))
 extern void *memcpy(void* dst, const void* src, size_t len);
 #pragma intrinsic(memcpy)

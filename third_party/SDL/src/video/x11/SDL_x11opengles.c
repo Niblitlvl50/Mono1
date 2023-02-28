@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -36,7 +36,6 @@ X11_GLES_LoadLibrary(_THIS, const char *path)
 
     /* If the profile requested is not GL ES, switch over to X11_GL functions  */
     if ((_this->gl_config.profile_mask != SDL_GL_CONTEXT_PROFILE_ES) &&
-        !SDL_GetHintBoolean(SDL_HINT_VIDEO_FORCE_EGL, SDL_FALSE) &&
         !SDL_GetHintBoolean(SDL_HINT_VIDEO_X11_FORCE_EGL, SDL_FALSE)) {
         #if SDL_VIDEO_OPENGL_GLX
         X11_GLES_UnloadLibrary(_this);
@@ -55,7 +54,7 @@ X11_GLES_LoadLibrary(_THIS, const char *path)
         #endif
     }
     
-    return SDL_EGL_LoadLibrary(_this, path, (NativeDisplayType) data->display, _this->gl_config.egl_platform);
+    return SDL_EGL_LoadLibrary(_this, path, (NativeDisplayType) data->display, 0);
 }
 
 XVisualInfo *
@@ -102,13 +101,6 @@ X11_GLES_CreateContext(_THIS, SDL_Window * window)
     X11_XSync(display, False);
 
     return context;
-}
-
-SDL_EGLSurface
-X11_GLES_GetEGLSurface(_THIS, SDL_Window * window)
-{
-    SDL_WindowData *data = (SDL_WindowData *) window->driverdata;
-    return data->egl_surface;
 }
 
 SDL_EGL_SwapWindow_impl(X11)

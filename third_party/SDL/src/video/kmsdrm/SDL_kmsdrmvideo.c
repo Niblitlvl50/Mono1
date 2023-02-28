@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -1435,7 +1435,7 @@ KMSDRM_CreateWindow(_THIS, SDL_Window * window)
 
         if (!(viddata->gbm_init)) {
 
-            /* After SDL_CreateWindow, most SDL programs will do SDL_CreateRenderer(),
+            /* After SDL_CreateWindow, most SDL2 programs will do SDL_CreateRenderer(),
                which will in turn call GL_CreateRenderer() or GLES2_CreateRenderer().
                In order for the GL_CreateRenderer() or GLES2_CreateRenderer() call to
                succeed without an unnecessary window re-creation, we must: 

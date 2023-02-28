@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -434,7 +434,7 @@ IBus_SetCapabilities(void *data, const char *name, const char *old_val,
 static SDL_bool
 IBus_SetupConnection(SDL_DBusContext *dbus, const char* addr)
 {
-    const char *client_name = "SDL3_Application";
+    const char *client_name = "SDL2_Application";
     const char *path = NULL;
     SDL_bool result = SDL_FALSE;
     DBusObjectPathVTable ibus_vtable;
@@ -477,6 +477,9 @@ IBus_SetupConnection(SDL_DBusContext *dbus, const char* addr)
         result = SDL_DBus_CallMethodOnConnection(ibus_conn, ibus_service, IBUS_PATH, ibus_interface, "CreateInputContext",
                                                  DBUS_TYPE_STRING, &client_name, DBUS_TYPE_INVALID,
                                                  DBUS_TYPE_OBJECT_PATH, &path, DBUS_TYPE_INVALID);
+    } else {
+        /* re-using dbus->session_conn */
+        dbus->connection_ref(ibus_conn);
     }
 
     if (result) {

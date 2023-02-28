@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -44,6 +44,23 @@ typedef unsigned long (__cdecl *pfnSDL_CurrentBeginThread) (void *, unsigned,
         unsigned (__stdcall *func)(void *), void *arg,
         unsigned, unsigned *threadID);
 typedef void (__cdecl *pfnSDL_CurrentEndThread)(unsigned code);
+
+#elif defined(__WATCOMC__)
+/* This is for Watcom targets except OS2 */
+#if __WATCOMC__ < 1240
+#define __watcall
+#endif
+typedef unsigned long (__watcall * pfnSDL_CurrentBeginThread) (void *,
+                                                               unsigned,
+                                                               unsigned
+                                                               (__stdcall *
+                                                                func) (void
+                                                                       *),
+                                                               void *arg,
+                                                               unsigned,
+                                                               unsigned
+                                                               *threadID);
+typedef void (__watcall * pfnSDL_CurrentEndThread) (unsigned code);
 
 #else
 typedef uintptr_t(__cdecl * pfnSDL_CurrentBeginThread) (void *, unsigned,

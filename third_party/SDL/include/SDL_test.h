@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -24,7 +24,7 @@
  *
  *  Include file for SDL test framework.
  *
- *  This code is a part of the SDL test library, not the main SDL library.
+ *  This code is a part of the SDL2_test library, not the main SDL library.
  */
 
 #ifndef SDL_test_h_

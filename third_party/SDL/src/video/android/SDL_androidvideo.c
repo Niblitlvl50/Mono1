@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -50,7 +50,7 @@ static void Android_VideoQuit(_THIS);
 int Android_GetDisplayDPI(_THIS, SDL_VideoDisplay *display, float *ddpi, float *hdpi, float *vdpi);
 
 #include "../SDL_egl_c.h"
-#define Android_GLES_GetProcAddress SDL_EGL_GetProcAddressInternal
+#define Android_GLES_GetProcAddress SDL_EGL_GetProcAddress
 #define Android_GLES_UnloadLibrary SDL_EGL_UnloadLibrary
 #define Android_GLES_SetSwapInterval SDL_EGL_SetSwapInterval
 #define Android_GLES_GetSwapInterval SDL_EGL_GetSwapInterval

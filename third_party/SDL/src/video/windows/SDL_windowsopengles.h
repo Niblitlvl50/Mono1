@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -30,7 +30,7 @@
 
 /* OpenGLES functions */
 #define WIN_GLES_GetAttribute SDL_EGL_GetAttribute
-#define WIN_GLES_GetProcAddress SDL_EGL_GetProcAddressInternal
+#define WIN_GLES_GetProcAddress SDL_EGL_GetProcAddress
 #define WIN_GLES_UnloadLibrary SDL_EGL_UnloadLibrary
 #define WIN_GLES_GetSwapInterval SDL_EGL_GetSwapInterval
 #define WIN_GLES_SetSwapInterval SDL_EGL_SetSwapInterval
@@ -41,7 +41,6 @@ extern int WIN_GLES_SwapWindow(_THIS, SDL_Window * window);
 extern int WIN_GLES_MakeCurrent(_THIS, SDL_Window * window, SDL_GLContext context);
 extern void WIN_GLES_DeleteContext(_THIS, SDL_GLContext context);
 extern int WIN_GLES_SetupWindow(_THIS, SDL_Window * window);
-extern SDL_EGLSurface WIN_GLES_GetEGLSurface(_THIS, SDL_Window * window);
 
 #endif /* SDL_VIDEO_OPENGL_EGL */
 

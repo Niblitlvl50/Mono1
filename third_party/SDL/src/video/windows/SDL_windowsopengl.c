@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -689,7 +689,6 @@ WIN_GL_CreateContext(_THIS, SDL_Window * window)
         _this->GL_GetSwapInterval = WIN_GLES_GetSwapInterval;
         _this->GL_SwapWindow = WIN_GLES_SwapWindow;
         _this->GL_DeleteContext = WIN_GLES_DeleteContext;
-        _this->GL_GetEGLSurface = WIN_GLES_GetEGLSurface;
         
         if (WIN_GLES_LoadLibrary(_this, NULL) != 0) {
             return NULL;

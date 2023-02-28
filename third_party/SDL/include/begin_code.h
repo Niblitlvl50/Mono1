@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -57,6 +57,12 @@
 #  else
 #   define DECLSPEC
 #  endif
+# elif defined(__OS2__)
+#   ifdef BUILD_SDL
+#    define DECLSPEC    __declspec(dllexport)
+#   else
+#    define DECLSPEC
+#   endif
 # else
 #  if defined(__GNUC__) && __GNUC__ >= 4
 #   define DECLSPEC __attribute__ ((visibility("default")))
@@ -70,6 +76,11 @@
 #ifndef SDLCALL
 #if (defined(__WIN32__) || defined(__WINRT__) || defined(__GDK__)) && !defined(__GNUC__)
 #define SDLCALL __cdecl
+#elif defined(__OS2__) || defined(__EMX__)
+#define SDLCALL _System
+# if defined (__GNUC__) && !defined(_System)
+#  define _System /* for old EMX/GCC compat.  */
+# endif
 #else
 #define SDLCALL
 #endif
@@ -174,34 +185,3 @@
 #undef _HAS_FALLTHROUGH
 #endif /* C++17 or C2x */
 #endif /* SDL_FALLTHROUGH not defined */
-
-#ifndef SDL_MALLOC
-#if defined(__GNUC__)
-#define SDL_MALLOC __attribute__((malloc))
-// FIXME
-//#elif defined(_MSC_VER)
-//#define SDL_MALLOC __declspec(allocator) __desclspec(restrict)
-#else
-#define SDL_MALLOC
-#endif
-#endif /* SDL_MALLOC not defined */
-
-#ifndef SDL_ALLOC_SIZE
-#if defined(__GNUC__)
-#define SDL_ALLOC_SIZE(p) __attribute__((alloc_size(p)))
-#elif defined(_MSC_VER)
-#define SDL_ALLOC_SIZE(p)
-#else
-#define SDL_ALLOC_SIZE(p)
-#endif
-#endif /* SDL_ALLOC_SIZE not defined */
-
-#ifndef SDL_ALLOC_SIZE2
-#if defined(__GNUC__)
-#define SDL_ALLOC_SIZE2(p1, p2) __attribute__((alloc_size(p1, p2)))
-#elif defined(_MSC_VER)
-#define SDL_ALLOC_SIZE2(p1, p2)
-#else
-#define SDL_ALLOC_SIZE2(p1, p2)
-#endif
-#endif /* SDL_ALLOC_SIZE2 not defined */

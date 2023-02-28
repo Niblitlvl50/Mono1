@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -139,26 +139,16 @@ Cocoa_CreateDevice(void)
     device->GL_GetSwapInterval = Cocoa_GL_GetSwapInterval;
     device->GL_SwapWindow = Cocoa_GL_SwapWindow;
     device->GL_DeleteContext = Cocoa_GL_DeleteContext;
-    device->GL_GetEGLSurface = NULL;
-#endif
-#if SDL_VIDEO_OPENGL_EGL
-#if SDL_VIDEO_OPENGL_CGL
-    if (SDL_GetHintBoolean(SDL_HINT_VIDEO_FORCE_EGL, SDL_FALSE)) {
-#endif
-        device->GL_LoadLibrary = Cocoa_GLES_LoadLibrary;
-        device->GL_GetProcAddress = Cocoa_GLES_GetProcAddress;
-        device->GL_UnloadLibrary = Cocoa_GLES_UnloadLibrary;
-        device->GL_CreateContext = Cocoa_GLES_CreateContext;
-        device->GL_MakeCurrent = Cocoa_GLES_MakeCurrent;
-        device->GL_GetDrawableSize = Cocoa_GLES_GetDrawableSize;
-        device->GL_SetSwapInterval = Cocoa_GLES_SetSwapInterval;
-        device->GL_GetSwapInterval = Cocoa_GLES_GetSwapInterval;
-        device->GL_SwapWindow = Cocoa_GLES_SwapWindow;
-        device->GL_DeleteContext = Cocoa_GLES_DeleteContext;
-        device->GL_GetEGLSurface = Cocoa_GLES_GetEGLSurface;
-#if SDL_VIDEO_OPENGL_CGL
-    }
-#endif
+#elif SDL_VIDEO_OPENGL_EGL
+    device->GL_LoadLibrary = Cocoa_GLES_LoadLibrary;
+    device->GL_GetProcAddress = Cocoa_GLES_GetProcAddress;
+    device->GL_UnloadLibrary = Cocoa_GLES_UnloadLibrary;
+    device->GL_CreateContext = Cocoa_GLES_CreateContext;
+    device->GL_MakeCurrent = Cocoa_GLES_MakeCurrent;
+    device->GL_SetSwapInterval = Cocoa_GLES_SetSwapInterval;
+    device->GL_GetSwapInterval = Cocoa_GLES_GetSwapInterval;
+    device->GL_SwapWindow = Cocoa_GLES_SwapWindow;
+    device->GL_DeleteContext = Cocoa_GLES_DeleteContext;
 #endif
 
 #if SDL_VIDEO_VULKAN

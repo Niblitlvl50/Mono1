@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -275,7 +275,6 @@ struct SDL_VideoDevice
       SDL_GLContext(*GL_CreateContext) (_THIS, SDL_Window * window);
     int (*GL_MakeCurrent) (_THIS, SDL_Window * window, SDL_GLContext context);
     void (*GL_GetDrawableSize) (_THIS, SDL_Window * window, int *w, int *h);
-    SDL_EGLSurface (*GL_GetEGLSurface) (_THIS, SDL_Window * window);
     int (*GL_SetSwapInterval) (_THIS, int interval);
     int (*GL_GetSwapInterval) (_THIS);
     int (*GL_SwapWindow) (_THIS, SDL_Window * window);
@@ -392,15 +391,10 @@ struct SDL_VideoDevice
         int framebuffer_srgb_capable;
         int no_error;
         int retained_backing;
-        int egl_platform;
         int driver_loaded;
         char driver_path[256];
         void *dll_handle;
     } gl_config;
-
-    SDL_EGLAttribArrayCallback egl_platformattrib_callback;
-    SDL_EGLIntArrayCallback egl_surfaceattrib_callback;
-    SDL_EGLIntArrayCallback egl_contextattrib_callback;
 
     /* * * */
     /* Cache current GL context; don't call the OS when it hasn't changed. */
@@ -456,6 +450,7 @@ typedef struct VideoBootStrap
 /* Not all of these are available in a given build. Use #ifdefs, etc. */
 extern VideoBootStrap COCOA_bootstrap;
 extern VideoBootStrap X11_bootstrap;
+extern VideoBootStrap DirectFB_bootstrap;
 extern VideoBootStrap WINDOWS_bootstrap;
 extern VideoBootStrap WINRT_bootstrap;
 extern VideoBootStrap HAIKU_bootstrap;
@@ -473,10 +468,14 @@ extern VideoBootStrap KMSDRM_LEGACY_bootstrap;
 extern VideoBootStrap DUMMY_bootstrap;
 extern VideoBootStrap DUMMY_evdev_bootstrap;
 extern VideoBootStrap Wayland_bootstrap;
+extern VideoBootStrap NACL_bootstrap;
 extern VideoBootStrap VIVANTE_bootstrap;
 extern VideoBootStrap Emscripten_bootstrap;
+extern VideoBootStrap QNX_bootstrap;
 extern VideoBootStrap OFFSCREEN_bootstrap;
 extern VideoBootStrap NGAGE_bootstrap;
+extern VideoBootStrap OS2DIVE_bootstrap;
+extern VideoBootStrap OS2VMAN_bootstrap;
 
 /* Use SDL_OnVideoThread() sparingly, to avoid regressions in use cases that currently happen to work */
 extern SDL_bool SDL_OnVideoThread(void);

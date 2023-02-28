@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -52,7 +52,7 @@ RPI_GLES_SwapWindow(_THIS, SDL_Window * window) {
     }
 
     /* Wait immediately for vsync (as if we only had two buffers), for low input-lag scenarios.
-     * Run your SDL program with "SDL_RPI_DOUBLE_BUFFER=1 <program_name>" to enable this. */
+     * Run your SDL2 program with "SDL_RPI_DOUBLE_BUFFER=1 <program_name>" to enable this. */
     if (wdata->double_buffer) {
         SDL_LockMutex(wdata->vsync_cond_mutex);
         SDL_CondWait(wdata->vsync_cond, wdata->vsync_cond_mutex);

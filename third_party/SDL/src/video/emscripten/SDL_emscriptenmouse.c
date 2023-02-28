@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -92,9 +92,28 @@ Emscripten_CreateCursor(SDL_Surface* surface, int hot_x, int hot_y)
         var image = ctx.createImageData(w, h);
         var data = image.data;
         var src = pixels >> 2;
-
-        var data32 = new Int32Array(data.buffer);
-        data32.set(HEAP32.subarray(src, src + data32.length));
+        var dst = 0;
+        var num;
+        if (typeof CanvasPixelArray !== 'undefined' && data instanceof CanvasPixelArray) {
+            // IE10/IE11: ImageData objects are backed by the deprecated CanvasPixelArray,
+            // not UInt8ClampedArray. These don't have buffers, so we need to revert
+            // to copying a byte at a time. We do the undefined check because modern
+            // browsers do not define CanvasPixelArray anymore.
+            num = data.length;
+            while (dst < num) {
+                var val = HEAP32[src]; // This is optimized. Instead, we could do {{{ makeGetValue('buffer', 'dst', 'i32') }}};
+                data[dst  ] = val & 0xff;
+                data[dst+1] = (val >> 8) & 0xff;
+                data[dst+2] = (val >> 16) & 0xff;
+                data[dst+3] = (val >> 24) & 0xff;
+                src++;
+                dst += 4;
+            }
+        } else {
+            var data32 = new Int32Array(data.buffer);
+            num = data32.length;
+            data32.set(HEAP32.subarray(src, src + num));
+        }
 
         ctx.putImageData(image, 0, 0);
         var url = hot_x === 0 && hot_y === 0

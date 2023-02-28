@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -20,7 +20,8 @@
 
 #include "SDL_test_common.h"
 
-#if defined(__IPHONEOS__) || defined(__ANDROID__) || defined(__EMSCRIPTEN__) || defined(__WINDOWS__) || defined(__LINUX__)
+#if defined(__IPHONEOS__) || defined(__ANDROID__) || defined(__EMSCRIPTEN__) || defined(__NACL__) \
+    || defined(__WINDOWS__) || defined(__LINUX__)
 #define HAVE_OPENGLES2
 #endif
 
@@ -70,6 +71,8 @@ static int LoadContext(GLES2_Context * data)
 #if SDL_VIDEO_DRIVER_UIKIT
 #define __SDL_NOGETPROCADDR__
 #elif SDL_VIDEO_DRIVER_ANDROID
+#define __SDL_NOGETPROCADDR__
+#elif SDL_VIDEO_DRIVER_PANDORA
 #define __SDL_NOGETPROCADDR__
 #endif
 
@@ -794,9 +797,9 @@ main(int argc, char *argv[])
         SDL_Log("%2.2f frames per second\n",
                ((double) frames * 1000) / (now - then));
     }
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__NACL__)  
     quit(0);
-#endif
+#endif    
     return 0;
 }
 

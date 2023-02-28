@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -86,6 +86,9 @@ static SDL_JoystickDriver *SDL_joystick_drivers[] = {
 #endif
 #ifdef SDL_JOYSTICK_USBHID  /* !!! FIXME: "USBHID" is a generic name, and doubly-confusing with HIDAPI next to it. This is the *BSD interface, rename this. */
     &SDL_BSD_JoystickDriver,
+#endif
+#ifdef SDL_JOYSTICK_OS2
+    &SDL_OS2_JoystickDriver,
 #endif
 #ifdef SDL_JOYSTICK_PS2
     &SDL_PS2_JoystickDriver,
@@ -1808,7 +1811,7 @@ void SDL_GetJoystickGUIDInfo(SDL_JoystickGUID guid, Uint16 *vendor, Uint16 *prod
     Uint16 *guid16 = (Uint16 *)guid.data;
     Uint16 bus = SDL_SwapLE16(guid16[0]);
 
-    if (bus < ' ' && guid16[3] == 0x0000 && guid16[5] == 0x0000) {
+    if ((bus < ' ' || bus == SDL_HARDWARE_BUS_VIRTUAL) && guid16[3] == 0x0000 && guid16[5] == 0x0000) {
         /* This GUID fits the standard form:
          * 16-bit bus
          * 16-bit CRC16 of the joystick name (can be zero)
@@ -2682,14 +2685,14 @@ SDL_bool SDL_ShouldIgnoreJoystick(const char *name, SDL_JoystickGUID guid)
         /* Additional entries                                            */
         /*****************************************************************/
 
-        MAKE_VIDPID(0x04d9, 0x8008),  /* OBINLB USB-HID Keyboard (Anne Pro II) */
-        MAKE_VIDPID(0x04d9, 0x8009),  /* OBINLB USB-HID Keyboard (Anne Pro II) */
-        MAKE_VIDPID(0x04d9, 0xa292),  /* OBINLB USB-HID Keyboard (Anne Pro II) */
-        MAKE_VIDPID(0x04d9, 0xa293),  /* OBINLB USB-HID Keyboard (Anne Pro II) */
-        MAKE_VIDPID(0x1532, 0x0266),  /* Razer Huntman V2 Analog, non-functional DInput device */
-        MAKE_VIDPID(0x1532, 0x0282),  /* Razer Huntman Mini Analog, non-functional DInput device */
-        MAKE_VIDPID(0x26ce, 0x01a2),  /* ASRock LED Controller */
-        MAKE_VIDPID(0x20d6, 0x0002),  /* PowerA Enhanced Wireless Controller for Nintendo Switch (charging port only) */
+        MAKE_VIDPID(0x04d9, 0x8008), /* OBINLB USB-HID Keyboard (Anne Pro II) */
+        MAKE_VIDPID(0x04d9, 0x8009), /* OBINLB USB-HID Keyboard (Anne Pro II) */
+        MAKE_VIDPID(0x04d9, 0xa292), /* OBINLB USB-HID Keyboard (Anne Pro II) */
+        MAKE_VIDPID(0x04d9, 0xa293), /* OBINLB USB-HID Keyboard (Anne Pro II) */
+        MAKE_VIDPID(0x1532, 0x0266), /* Razer Huntsman V2 Analog, non-functional DInput device */
+        MAKE_VIDPID(0x1532, 0x0282), /* Razer Huntsman Mini Analog, non-functional DInput device */
+        MAKE_VIDPID(0x26ce, 0x01a2), /* ASRock LED Controller */
+        MAKE_VIDPID(0x20d6, 0x0002), /* PowerA Enhanced Wireless Controller for Nintendo Switch (charging port only) */
     };
 
     static Uint32 rog_chakram_list[] = {

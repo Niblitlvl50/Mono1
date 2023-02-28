@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -69,7 +69,7 @@ int
 SDL_SemTryWait(SDL_sem *sem)
 {
     if (!sem) {
-        return SDL_InvalidParamError("sem");
+        return SDL_SetError("Passed a NULL semaphore");
     }
 
     return SDL_SemWaitTimeout(sem, 0);
@@ -81,7 +81,7 @@ SDL_SemWaitTimeout(SDL_sem *sem, Uint32 timeout)
     int retval;
 
     if (!sem) {
-        return SDL_InvalidParamError("sem");
+        return SDL_SetError("Passed a NULL semaphore");
     }
 
     if (timeout == SDL_MUTEX_MAXWAIT) {
@@ -114,7 +114,7 @@ Uint32
 SDL_SemValue(SDL_sem *sem)
 {
     if (!sem) {
-        return SDL_InvalidParamError("sem");
+        return SDL_SetError("Passed a NULL semaphore");
     }
     return sem->semaphore.current_count;
 }
@@ -123,7 +123,7 @@ int
 SDL_SemPost(SDL_sem *sem)
 {
     if (!sem) {
-        return SDL_InvalidParamError("sem");
+        return SDL_SetError("Passed a NULL semaphore");
     }
     LightSemaphore_Release(&sem->semaphore, 1);
     return 0;

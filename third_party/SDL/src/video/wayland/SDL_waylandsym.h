@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -211,7 +211,7 @@ SDL_WAYLAND_SYM(bool, libdecor_configuration_get_content_size, (struct libdecor_
                                                                 int *))
 SDL_WAYLAND_SYM(bool, libdecor_configuration_get_window_state, (struct libdecor_configuration *,\
                                                                 enum libdecor_window_state *))
-SDL_WAYLAND_SYM(bool, libdecor_dispatch, (struct libdecor *, int))
+SDL_WAYLAND_SYM(int, libdecor_dispatch, (struct libdecor *, int))
 #endif
 
 #undef SDL_WAYLAND_MODULE

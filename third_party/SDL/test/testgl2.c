@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -44,6 +44,8 @@ static int LoadContext(GL_Context * data)
 #if SDL_VIDEO_DRIVER_UIKIT
 #define __SDL_NOGETPROCADDR__
 #elif SDL_VIDEO_DRIVER_ANDROID
+#define __SDL_NOGETPROCADDR__
+#elif SDL_VIDEO_DRIVER_PANDORA
 #define __SDL_NOGETPROCADDR__
 #endif
 

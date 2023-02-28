@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -77,7 +77,8 @@ SDL_TryLockMutex(SDL_mutex * mutex)
 {
     if (mutex == NULL)
     {
-        return SDL_InvalidParamError("mutex");
+        SDL_SetError("Passed a NULL mutex.");
+        return -1;
     }
 
     // Not yet implemented.
@@ -91,7 +92,7 @@ SDL_LockMutex(SDL_mutex * mutex)
 {
     if (mutex == NULL)
     {
-        return SDL_InvalidParamError("mutex");
+        return SDL_SetError("Passed a NULL mutex.");
     }
 
     RMutex rmutex;
@@ -107,7 +108,7 @@ SDL_UnlockMutex(SDL_mutex * mutex)
 {
     if ( mutex == NULL )
     {
-        return SDL_InvalidParamError("mutex");
+        return SDL_SetError("Passed a NULL mutex.");
     }
 
     RMutex rmutex;

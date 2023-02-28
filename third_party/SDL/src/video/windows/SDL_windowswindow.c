@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -37,7 +37,6 @@
 #include "SDL_windowsshape.h"
 #include "SDL_hints.h"
 #include "SDL_timer.h"
-#include "SDL_version.h"
 
 /* Dropfile support */
 #include <shellapi.h>
@@ -543,10 +542,9 @@ WIN_CreateWindow(_THIS, SDL_Window * window)
 
     /* The rest of this macro mess is for OpenGL or OpenGL ES windows */
 #if SDL_VIDEO_OPENGL_ES2
-    if ((_this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES ||
-         SDL_GetHintBoolean(SDL_HINT_VIDEO_FORCE_EGL, SDL_FALSE)) &&
+    if (_this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES
 #if SDL_VIDEO_OPENGL_WGL
-        (!_this->gl_data || WIN_GL_UseEGL(_this))
+        && (!_this->gl_data || WIN_GL_UseEGL(_this))
 #endif /* SDL_VIDEO_OPENGL_WGL */
     ) {
 #if SDL_VIDEO_OPENGL_EGL
@@ -775,7 +773,7 @@ WIN_GetWindowBordersSize(_THIS, SDL_Window * window, int *top, int *left, int *b
 
     /* Now that both the inner and outer rects use the same coordinate system we can substract them to get the border size.
      * Keep in mind that the top/left coordinates of rcWindow are negative because the border lies slightly before {0,0},
-     * so switch them around because SDL3 wants them in positive. */
+     * so switch them around because SDL2 wants them in positive. */
     *top    = rcClient.top    - rcWindow.top;
     *left   = rcClient.left   - rcWindow.left;
     *bottom = rcWindow.bottom - rcClient.bottom;
@@ -1327,14 +1325,16 @@ WIN_UpdateClipCursor(SDL_Window *window)
         (window->flags & SDL_WINDOW_INPUT_FOCUS)) {
         if (mouse->relative_mode && !mouse->relative_mode_warp && data->mouse_relative_mode_center) {
             if (GetWindowRect(data->hwnd, &rect)) {
+                /* WIN_WarpCursor() jitters by +1, and remote desktop warp wobble is +/- 1 */
+                LONG remote_desktop_adjustment = GetSystemMetrics(SM_REMOTESESSION) ? 2 : 0;
                 LONG cx, cy;
 
                 cx = (rect.left + rect.right) / 2;
                 cy = (rect.top + rect.bottom) / 2;
 
                 /* Make an absurdly small clip rect */
-                rect.left = cx;
-                rect.right = cx + 1;
+                rect.left = cx - remote_desktop_adjustment;
+                rect.right = cx + 1 + remote_desktop_adjustment;
                 rect.top = cy;
                 rect.bottom = cy + 1;
 

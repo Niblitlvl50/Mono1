@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -46,6 +46,8 @@
 #if defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE  /* probably not useful on iOS. */
 #define SDL_DYNAMIC_API 0
 #elif defined(__ANDROID__) /* probably not useful on Android. */
+#define SDL_DYNAMIC_API 0
+#elif defined(__native_client__) && __native_client__  /* probably not useful on NACL. */
 #define SDL_DYNAMIC_API 0
 #elif defined(__EMSCRIPTEN__) && __EMSCRIPTEN__  /* probably not useful on Emscripten. */
 #define SDL_DYNAMIC_API 0

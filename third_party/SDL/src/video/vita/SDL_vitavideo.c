@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -47,7 +47,7 @@
 #if defined(SDL_VIDEO_VITA_PVR_OGL)
   #include "SDL_vitagl_pvr_c.h"
 #endif
-  #define VITA_GLES_GetProcAddress SDL_EGL_GetProcAddressInternal
+  #define VITA_GLES_GetProcAddress SDL_EGL_GetProcAddress
   #define VITA_GLES_UnloadLibrary SDL_EGL_UnloadLibrary
   #define VITA_GLES_SetSwapInterval SDL_EGL_SetSwapInterval
   #define VITA_GLES_GetSwapInterval SDL_EGL_GetSwapInterval

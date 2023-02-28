@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -111,6 +111,9 @@ static const SDL_RenderDriver *render_drivers[] = {
 #endif
 #if SDL_VIDEO_RENDER_OGL_ES
     &GLES_RenderDriver,
+#endif
+#if SDL_VIDEO_RENDER_DIRECTFB
+    &DirectFB_RenderDriver,
 #endif
 #if SDL_VIDEO_RENDER_PS2 && !SDL_RENDER_DISABLED
     &PS2_RenderDriver,
@@ -1478,6 +1481,18 @@ SDL_CreateTextureFromSurface(SDL_Renderer * renderer, SDL_Surface * surface)
         } else {
             SDL_UpdateTexture(texture, NULL, surface->pixels, surface->pitch);
         }
+
+#if SDL_VIDEO_RENDER_DIRECTFB
+        /* DirectFB allows palette format for textures.
+         * Copy SDL_Surface palette to the texture */
+        if (SDL_ISPIXELFORMAT_INDEXED(format)) {
+            if (SDL_strcasecmp(renderer->info.name, "directfb") == 0) {
+                extern void DirectFB_SetTexturePalette(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Palette *pal);
+                DirectFB_SetTexturePalette(renderer, texture, surface->format->palette);
+            }
+        }
+#endif
+
     } else {
         SDL_PixelFormat *dst_fmt;
         SDL_Surface *temp = NULL;

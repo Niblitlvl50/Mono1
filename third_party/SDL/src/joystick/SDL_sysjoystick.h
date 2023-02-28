@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -239,6 +239,7 @@ extern SDL_JoystickDriver SDL_VIRTUAL_JoystickDriver;
 extern SDL_JoystickDriver SDL_WGI_JoystickDriver;
 extern SDL_JoystickDriver SDL_WINDOWS_JoystickDriver;
 extern SDL_JoystickDriver SDL_WINMM_JoystickDriver;
+extern SDL_JoystickDriver SDL_OS2_JoystickDriver;
 extern SDL_JoystickDriver SDL_PS2_JoystickDriver;
 extern SDL_JoystickDriver SDL_PSP_JoystickDriver;
 extern SDL_JoystickDriver SDL_VITA_JoystickDriver;
