@@ -220,6 +220,18 @@ const char* EntitySystem::GetEntityName(uint32_t entity_id) const
     return name.c_str();
 }
 
+void EntitySystem::SetEntityEnabled(uint32_t entity_id, bool enable)
+{
+    mono::Entity* entity = GetEntity(entity_id);
+
+    for(uint32_t component_hash : entity->components)
+    {
+        const auto factory_it = m_component_factories.find(component_hash);
+        if(factory_it != m_component_factories.end() && factory_it->second.enable != nullptr)
+            factory_it->second.enable(entity, enable);
+    }
+}
+
 uint32_t EntitySystem::GetEntityUuid(uint32_t entity_id) const
 {
     return m_entity_uuids[entity_id];
@@ -242,12 +254,14 @@ void EntitySystem::RegisterComponent(
     uint32_t component_hash,
     ComponentCreateFunc create_component,
     ComponentReleaseFunc release_component,
-    ComponentUpdateFunc update_component)
+    ComponentUpdateFunc update_component,
+    ComponentEnableFunc enable_component)
 {
     m_component_factories[component_hash] = {
         create_component,
         release_component,
         update_component,
+        enable_component,
     };
 }
 

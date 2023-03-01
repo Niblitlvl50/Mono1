@@ -14,6 +14,7 @@ namespace mono
     using ComponentCreateFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
     using ComponentReleaseFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
     using ComponentUpdateFunc = bool(*)(mono::Entity* entity, const std::vector<Attribute>& properties, mono::SystemContext* context);
+    using ComponentEnableFunc = bool(*)(mono::Entity* entity, bool enable);
 
     using ReleaseCallback = std::function<void (uint32_t entity_id)>;
 
@@ -44,13 +45,16 @@ namespace mono
             uint32_t component_hash,
             ComponentCreateFunc create_component,
             ComponentReleaseFunc release_component,
-            ComponentUpdateFunc update_component) = 0;
+            ComponentUpdateFunc update_component,
+            ComponentEnableFunc enable_component = nullptr) = 0;
 
         virtual void SetEntityProperties(uint32_t entity_id, uint32_t properties) = 0;
         virtual uint32_t GetEntityProperties(uint32_t entity_id) const = 0;
 
         virtual void SetEntityName(uint32_t entity_id, const char* name) = 0;
         virtual const char* GetEntityName(uint32_t entity_id) const = 0;
+
+        virtual void SetEntityEnabled(uint32_t entity_id, bool enable) = 0;
 
         virtual uint32_t GetEntityUuid(uint32_t entity_id) const = 0;
         virtual uint32_t GetEntityIdFromUuid(uint32_t uuid) const = 0;

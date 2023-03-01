@@ -47,6 +47,8 @@ namespace mono
         void SetEntityName(uint32_t entity_id, const char* name) override;
         const char* GetEntityName(uint32_t entity_id) const override;
 
+        void SetEntityEnabled(uint32_t entity_id, bool enable) override;
+
         uint32_t GetEntityUuid(uint32_t entity_id) const override;
         uint32_t GetEntityIdFromUuid(uint32_t uuid) const override;
 
@@ -69,8 +71,8 @@ namespace mono
             uint32_t component_hash,
             ComponentCreateFunc create_component,
             ComponentReleaseFunc release_component,
-            ComponentUpdateFunc update_component) override;
-
+            ComponentUpdateFunc update_component,
+            ComponentEnableFunc enable_component) override;
 
         Entity* AllocateEntity(const char* name);
         void ReleaseEntity2(uint32_t entity_id);
@@ -126,6 +128,7 @@ namespace mono
             ComponentCreateFunc create;
             ComponentReleaseFunc release;
             ComponentUpdateFunc update;
+            ComponentEnableFunc enable;
         };
 
         std::unordered_map<uint32_t, ComponentFuncs> m_component_factories;
