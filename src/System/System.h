@@ -230,10 +230,8 @@ namespace System
         Fourth,
         N_Controllers
     };
-
     const ControllerState& GetController(ControllerId controller_id);
     bool IsControllerActive(ControllerId controller_id);
-    int GetControllerId(ControllerId controller_id);
 
     inline bool IsButtonDown(uint16_t button_state, ControllerButton button_bit)
     {

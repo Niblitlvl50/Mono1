@@ -1061,9 +1061,3 @@ bool System::IsControllerActive(ControllerId controller_id)
     const int id = static_cast<int>(controller_id);
     return g_controller_states[id].id != -1;
 }
-
-int System::GetControllerId(ControllerId controller_id)
-{
-    const int id = static_cast<int>(controller_id);
-    return g_controller_states[id].id;
-}
