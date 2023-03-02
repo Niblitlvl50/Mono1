@@ -32,6 +32,7 @@ namespace mono
         virtual ~IControllerInput() = default;
         virtual mono::InputResult ButtonDown(const event::ControllerButtonDownEvent& event) { return mono::InputResult::Pass; };
         virtual mono::InputResult Axis(const event::ControllerAxisEvent& event) { return mono::InputResult::Pass; };
+        virtual mono::InputResult UpdatedControllerState(const System::ControllerState& updated_state) { return mono::InputResult::Pass; };
     };
 
     class IKeyboardInput

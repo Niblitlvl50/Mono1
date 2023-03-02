@@ -6,6 +6,8 @@
 #include "InputInterfaces.h"
 #include "InputSystemTypes.h"
 
+#include "System/System.h"
+
 #include <vector>
 #include <cstdint>
 
@@ -27,8 +29,9 @@ namespace mono
         uint32_t most_recent_input_timestamp;
 
         IMouseInput* mouse_input;
-        IControllerInput* controller_input;
         IKeyboardInput* keyboard_input;
+        IControllerInput* controller_input;
+        System::ControllerId controller_id;
 
         const char* debug_context;
     };

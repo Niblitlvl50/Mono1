@@ -54,7 +54,12 @@ const char* InputSystem::Name() const
 
 void InputSystem::Update(const mono::UpdateContext& update_context)
 {
-
+    const auto apply_event = [](InputContext* context) {
+        if(context->controller_input)
+            return context->controller_input->UpdatedControllerState(System::GetController(context->controller_id));
+        return mono::InputResult::Pass;
+    };
+    ForEachContext(apply_event);
 }
 
 mono::InputContext* InputSystem::CreateContext(int priority, InputContextBehaviour context_behaviour, const char* debug_context)
@@ -68,6 +73,7 @@ mono::InputContext* InputSystem::CreateContext(int priority, InputContextBehavio
     context->mouse_input = nullptr;
     context->keyboard_input = nullptr;
     context->controller_input = nullptr;
+    context->controller_id = System::ControllerId::Primary;
     context->debug_context = debug_context;
 
     m_contexts.push_back(context);
