@@ -14,7 +14,7 @@ namespace mono
     using ComponentCreateFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
     using ComponentReleaseFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
     using ComponentUpdateFunc = bool(*)(mono::Entity* entity, const std::vector<Attribute>& properties, mono::SystemContext* context);
-    using ComponentEnableFunc = bool(*)(mono::Entity* entity, bool enable);
+    using ComponentEnableFunc = bool(*)(mono::Entity* entity, bool enable, mono::SystemContext* context);
 
     using ReleaseCallback = std::function<void (uint32_t entity_id)>;
 

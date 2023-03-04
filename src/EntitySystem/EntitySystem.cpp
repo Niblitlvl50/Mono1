@@ -228,7 +228,7 @@ void EntitySystem::SetEntityEnabled(uint32_t entity_id, bool enable)
     {
         const auto factory_it = m_component_factories.find(component_hash);
         if(factory_it != m_component_factories.end() && factory_it->second.enable != nullptr)
-            factory_it->second.enable(entity, enable);
+            factory_it->second.enable(entity, enable, m_system_context);
     }
 }
 
