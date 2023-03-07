@@ -6,6 +6,8 @@
 #include "Rendering/Texture/ITextureFactory.h"
 #include "Rendering/Texture/TextureFactoryImpl.h"
 
+#include "Math/EasingFunctions.h"
+
 #include "System/System.h"
 #include "System/Debug.h"
 
@@ -168,7 +170,41 @@ const char* RenderSystem::Name() const
 
 void RenderSystem::Update(const mono::UpdateContext& update_context)
 {
+    if(update_context.frame_count < 5)
+        return;
 
+    const bool process_screenfade = m_screen_fade.has_value();
+    if(process_screenfade)
+    {
+        ScreenFadeData& screen_fade = m_screen_fade.value();
+
+        if(screen_fade.state == ScreenFadeState::FADE_IN)
+            screen_fade.alpha = math::EaseOutCubic(screen_fade.timer_s, screen_fade.duration_s, 0.0f, 1.0f);
+        else if(screen_fade.state == ScreenFadeState::FADE_OUT || screen_fade.state == ScreenFadeState::FADE_OUT_PAUSE_IN)
+            screen_fade.alpha = math::EaseOutCubic(screen_fade.timer_s, screen_fade.duration_s, 1.0f, -1.0f);
+
+        screen_fade.timer_s += update_context.delta_s;
+
+        if(screen_fade.timer_s >= screen_fade.duration_s)
+        {
+            if(screen_fade.state == ScreenFadeState::FADE_OUT_PAUSE_IN)
+            {
+                screen_fade.timer_s = 0.0f;
+                screen_fade.duration_s = screen_fade.pause_duration_s;
+                screen_fade.state = ScreenFadeState::FADE_PAUSE;
+            }
+            else if(screen_fade.state == ScreenFadeState::FADE_PAUSE)
+            {
+                screen_fade.timer_s = 0.0f;
+                screen_fade.duration_s = screen_fade.fade_duration_s;
+                screen_fade.state = ScreenFadeState::FADE_IN;
+            }
+            else
+            {
+                m_screen_fade.reset();
+            }
+        }
+    }
 }
 
 void RenderSystem::AllocateLayer(uint32_t entity_id)
@@ -213,6 +249,30 @@ float RenderSystem::GetRenderSortOffsetOrDefault(uint32_t entity_id) const
     }
 
     return 0.0f;
+}
+
+void RenderSystem::TriggerScreenFade(ScreenFadeState state, float fade_time, float pause_time)
+{
+    MONO_ASSERT(!m_screen_fade.has_value());
+
+    ScreenFadeData screenfade_data;
+    screenfade_data.state = state;
+    screenfade_data.fade_duration_s = fade_time;
+    screenfade_data.pause_duration_s = pause_time;
+    screenfade_data.duration_s = fade_time;
+    screenfade_data.timer_s = 0.0f;
+    screenfade_data.alpha = (state == ScreenFadeState::FADE_IN) ? 0.0f : 1.0f;
+    m_screen_fade.emplace(screenfade_data);
+}
+
+bool RenderSystem::ShouldApplyScreenFadeAlpha() const
+{
+    return m_screen_fade.has_value();
+}
+
+float RenderSystem::GetFadeAlpha() const
+{
+    return m_screen_fade.value().alpha;
 }
 
 float RenderSystem::PixelsPerMeter()
