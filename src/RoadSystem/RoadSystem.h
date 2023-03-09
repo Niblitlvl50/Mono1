@@ -4,6 +4,7 @@
 #include "IGameSystem.h"
 #include <vector>
 #include <string>
+#include <cstdint>
 
 namespace mono
 {
@@ -29,7 +30,7 @@ namespace mono
         template <typename T>
         inline void ForEeach(T&& func) const
         {
-            for(size_t entity_id = 0; entity_id < m_active.size(); ++entity_id)
+            for(uint32_t entity_id = 0; entity_id < m_active.size(); ++entity_id)
             {
                 if(m_active[entity_id])
                     func(entity_id, m_roads[entity_id]);

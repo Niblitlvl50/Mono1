@@ -37,7 +37,7 @@ namespace mono
 
         void ReleasePoolData(const T* data)
         {
-            for(size_t index = 0; index < m_data.size(); ++index)
+            for(uint32_t index = 0; index < m_data.size(); ++index)
             {
                 T* other_data = &m_data[index];
                 if(data == other_data)

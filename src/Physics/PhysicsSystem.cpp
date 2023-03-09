@@ -371,7 +371,7 @@ void PhysicsSystem::Update(const UpdateContext& update_context)
     if(update_context.paused)
         return;
 
-    for(size_t index = 0; index < m_impl->active_bodies.size(); ++index)
+    for(uint32_t index = 0; index < m_impl->active_bodies.size(); ++index)
     {
         const bool is_active = m_impl->active_bodies[index];
         if(!is_active)
@@ -392,7 +392,7 @@ void PhysicsSystem::Update(const UpdateContext& update_context)
 
     m_impl->space.Tick(update_context.delta_s);
 
-    for(size_t index = 0; index < m_impl->active_bodies.size(); ++index)
+    for(uint32_t index = 0; index < m_impl->active_bodies.size(); ++index)
     {
         const bool is_active = m_impl->active_bodies[index];
         if(!is_active)

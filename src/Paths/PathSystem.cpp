@@ -43,7 +43,7 @@ const char* PathSystem::Name() const
 
 void PathSystem::Update(const mono::UpdateContext& update_context)
 {
-    for(size_t index = 0; index < m_active_paths.size(); ++index)
+    for(uint32_t index = 0; index < m_active_paths.size(); ++index)
     {
         const bool is_active = m_active_paths[index];
         if(!is_active)

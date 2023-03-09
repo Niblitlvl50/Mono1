@@ -416,9 +416,6 @@ namespace
             {
                 SDL_RemoveTimer(m_timer_id);
                 m_started = false;
-
-                if(m_properties & System::TimerProperties::AUTO_DELETE)
-                    delete this;
             }
         }
         void DoCallback()

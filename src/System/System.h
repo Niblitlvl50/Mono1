@@ -179,11 +179,10 @@ namespace System
     enum TimerProperties
     {
         TP_NONE     = 0,
-        ONE_SHOT    = ENUM_BIT(0),
-        AUTO_DELETE = ENUM_BIT(1)
+        ONE_SHOT    = ENUM_BIT(0)
     };
 
-    // The caller is responsible for deleting the pointer, unless the properties is set to AUTO_DELETE.
+    // The caller is responsible for deleting the pointer.
     ITimer* CreateTimer(uint32_t ms, uint32_t properties, timer_callback_t callback, void* context);
 
     // Gets the devices window size

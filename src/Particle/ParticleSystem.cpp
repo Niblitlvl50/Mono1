@@ -363,7 +363,7 @@ void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, c
         Validate(generator_properties.life_interval) &&
         Validate(generator_properties.start_size_spread) &&
         Validate(generator_properties.end_size_spread);
-
+    (void)valid_data;
     MONO_ASSERT(valid_data);
 
     const ParticleGenerator generator = [generator_properties]

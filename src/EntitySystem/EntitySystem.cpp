@@ -330,7 +330,7 @@ uint32_t EntitySystem::AddReleaseCallback(uint32_t entity_id, const ReleaseCallb
    uint32_t callback_id = std::numeric_limits<uint32_t>::max();
 
     const ReleaseCallbacks& callbacks = m_release_callbacks[entity_id];
-    for(size_t index = 0; index < callbacks.size(); ++index)
+    for(uint32_t index = 0; index < callbacks.size(); ++index)
     {
         if(callbacks[index] == nullptr)
         {

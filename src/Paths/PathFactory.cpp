@@ -143,6 +143,7 @@ mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector
     config.streamlines_seed_spacing = 0.0f;
     config.streamlines_seed_viewport = {};
     config.miter_limit = 0.0f;
+    config.u_mode = PAR_U_MODE_NORMALIZED_DISTANCE;
 
     if(options.uv_mode & UVMode::DISTANCE)
         config.u_mode = PAR_U_MODE_DISTANCE;
