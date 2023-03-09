@@ -77,10 +77,12 @@ if(NOT MSVC)
 endif()
 
 # Mono
-file(GLOB_RECURSE engine_source_files "src/*.cpp")
+file(GLOB_RECURSE engine_source_files "src/*.cpp" "src/*.h")
 add_library(mono STATIC ${engine_source_files})
 add_dependencies(mono delaunay huffandpuff imgui chipmunk_static)
 target_link_libraries(mono uuid4 delaunay huffandpuff par_streamlines imgui chipmunk_static SDL2-static OpenGL::GL ${AUDIOTOOLBOX})
+source_group(TREE ${CMAKE_SOURCE_DIR} FILES ${engine_source_files})
+
 
 # Unit test
 file(GLOB_RECURSE unittest_source_files "tests/*.cpp")
