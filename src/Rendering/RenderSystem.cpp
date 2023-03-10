@@ -170,9 +170,6 @@ const char* RenderSystem::Name() const
 
 void RenderSystem::Update(const mono::UpdateContext& update_context)
 {
-    if(update_context.frame_count < 5)
-        return;
-
     const bool process_screenfade = m_screen_fade.has_value();
     if(process_screenfade)
     {
