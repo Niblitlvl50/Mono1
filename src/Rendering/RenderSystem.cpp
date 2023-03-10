@@ -189,15 +189,24 @@ void RenderSystem::Update(const mono::UpdateContext& update_context)
                 screen_fade.timer_s = 0.0f;
                 screen_fade.duration_s = screen_fade.pause_duration_s;
                 screen_fade.state = ScreenFadeState::FADE_PAUSE;
+
+                if(screen_fade.callback)
+                    screen_fade.callback(ScreenFadeState::FADE_OUT);
             }
             else if(screen_fade.state == ScreenFadeState::FADE_PAUSE)
             {
                 screen_fade.timer_s = 0.0f;
                 screen_fade.duration_s = screen_fade.fade_duration_s;
                 screen_fade.state = ScreenFadeState::FADE_IN;
+
+                if(screen_fade.callback)
+                    screen_fade.callback(ScreenFadeState::FADE_PAUSE);
             }
             else
             {
+                if(screen_fade.callback)
+                    screen_fade.callback(ScreenFadeState::FADE_IN);
+
                 m_screen_fade.reset();
             }
         }
@@ -248,7 +257,8 @@ float RenderSystem::GetRenderSortOffsetOrDefault(uint32_t entity_id) const
     return 0.0f;
 }
 
-void RenderSystem::TriggerScreenFade(ScreenFadeState state, float fade_time, float pause_time)
+void RenderSystem::TriggerScreenFade(
+    ScreenFadeState state, float fade_time, float pause_time, ScreenFadeCallback callback)
 {
     MONO_ASSERT(!m_screen_fade.has_value());
 
@@ -256,6 +266,7 @@ void RenderSystem::TriggerScreenFade(ScreenFadeState state, float fade_time, flo
     screenfade_data.state = state;
     screenfade_data.fade_duration_s = fade_time;
     screenfade_data.pause_duration_s = pause_time;
+    screenfade_data.callback = callback;
     screenfade_data.duration_s = fade_time;
     screenfade_data.timer_s = 0.0f;
     screenfade_data.alpha = (state == ScreenFadeState::FADE_IN) ? 0.0f : 1.0f;

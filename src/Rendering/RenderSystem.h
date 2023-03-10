@@ -36,6 +36,8 @@ namespace mono
         FADE_OUT_PAUSE_IN
     };
 
+    using ScreenFadeCallback = std::function<void (mono::ScreenFadeState state)>;
+
     class RenderSystem : public mono::IGameSystem
     {
     public:
@@ -53,7 +55,8 @@ namespace mono
         int GetRenderLayerOrDefault(uint32_t entity_id) const;
         float GetRenderSortOffsetOrDefault(uint32_t entity_id) const;
 
-        void TriggerScreenFade(ScreenFadeState state, float fade_time, float pause_time);
+        void TriggerScreenFade(
+            ScreenFadeState state, float fade_time, float pause_time, ScreenFadeCallback callback = nullptr);
         bool ShouldApplyScreenFadeAlpha() const;
         float GetFadeAlpha() const;
 
@@ -75,6 +78,7 @@ namespace mono
             ScreenFadeState state;
             float fade_duration_s;
             float pause_duration_s;
+            ScreenFadeCallback callback;
 
             float duration_s;
             float timer_s;
