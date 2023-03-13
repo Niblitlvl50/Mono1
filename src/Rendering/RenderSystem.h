@@ -5,6 +5,7 @@
 #include "Util/ActiveVector.h"
 
 #include <optional>
+#include <functional>
 
 namespace System
 {
