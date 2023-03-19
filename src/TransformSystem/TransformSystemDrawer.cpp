@@ -30,7 +30,7 @@ void TransformSystemDrawer::Draw(mono::IRenderer& renderer) const
         const auto scope = mono::MakeTransformScope(world_transform, &renderer);
         
         char buffer[8] = { 0 };
-        std::sprintf(buffer, "%u", index);
+        std::snprintf(buffer, std::size(buffer), "%u", index);
         renderer.RenderText(0, buffer, mono::Color::RED, mono::FontCentering::HORIZONTAL_VERTICAL);
     };
 

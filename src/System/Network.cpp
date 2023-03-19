@@ -27,8 +27,11 @@ namespace
             if(open_result != 0)
             {
                 char buffer[128];
-                std::sprintf(
-                    buffer, "network|Failed to create socket on port %u, zed_net_error: %s\n", port, zed_net_get_error());
+                std::snprintf(
+                    buffer,
+                    std::size(buffer),
+                    "network|Failed to create socket on port %u, zed_net_error: %s\n", port,
+                    zed_net_get_error());
                 throw std::runtime_error(buffer);
             }
 
@@ -43,7 +46,7 @@ namespace
             if(set_timeout_result == -1)
             {
                 char buffer[128];
-                std::sprintf(buffer, "network|Unable to set socket timeout. Error: %d\n", set_timeout_result);
+                std::snprintf(buffer, std::size(buffer), "network|Unable to set socket timeout. Error: %d\n", set_timeout_result);
                 throw std::runtime_error(buffer);
             }
 
