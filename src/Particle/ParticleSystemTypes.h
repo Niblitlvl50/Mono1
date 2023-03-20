@@ -53,4 +53,19 @@ namespace mono
         return emitter_type_strings[static_cast<int>(emitter_type)];
     }
 
+    enum class EmitterMode : int
+    {
+        AUTO_ACTIVATED,
+        MANUAL_ACTIVATED,
+    };
+
+    constexpr const char* emitter_mode_strings[] = {
+        "Auto Activated",
+        "Manual Activated",
+    };
+
+    inline const char* EmitterModeToString(EmitterMode emitter_mode)
+    {
+        return emitter_mode_strings[static_cast<int>(emitter_mode)];
+    }
 }

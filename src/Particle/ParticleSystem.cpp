@@ -124,6 +124,12 @@ void ParticleSystem::Update(const mono::UpdateContext& update_context)
         std::vector<ParticleEmitterComponent*>& pool_emitters = m_particle_pools_emitters[active_pool_index];
         for(ParticleEmitterComponent* emitter : pool_emitters)
         {
+            const bool emitter_started = HasEmitterStarted(emitter);
+            if(!emitter_started)
+                continue;
+
+            emitter->started = true;
+
             const bool emitter_finished = IsEmitterFinished(emitter);
             if(emitter_finished)
             {
@@ -132,7 +138,8 @@ void ParticleSystem::Update(const mono::UpdateContext& update_context)
             }
             else
             {
-                UpdateEmitter(active_pool_index, emitter, pool_component, drawer_component.transform_space, update_context);
+                UpdateEmitter(
+                    active_pool_index, emitter, pool_component, drawer_component.transform_space, update_context);
             }
         }
 
@@ -315,7 +322,13 @@ void ParticleSystem::SetPoolDrawData(
 }
 
 ParticleEmitterComponent* ParticleSystem::AttachEmitter(
-    uint32_t pool_id, const math::Vector& position, float duration, float emit_rate, EmitterType emitter_type, ParticleGenerator generator)
+    uint32_t pool_id,
+    const math::Vector& position,
+    float duration,
+    float emit_rate,
+    EmitterType emitter_type,
+    EmitterMode emitter_mode,
+    ParticleGenerator generator)
 {
     ParticleEmitterComponent* emitter = m_particle_emitters.GetPoolData();
     if(!emitter)
@@ -327,7 +340,9 @@ ParticleEmitterComponent* ParticleSystem::AttachEmitter(
     emitter->carry_over = 0.0f;
     emitter->emit_rate = emit_rate;
     emitter->burst_emitted = false;
+    emitter->started = false;
     emitter->type = emitter_type;
+    emitter->mode = emitter_mode;
     emitter->generator = generator;
 
     m_particle_pools_emitters[pool_id].push_back(emitter);
@@ -336,9 +351,15 @@ ParticleEmitterComponent* ParticleSystem::AttachEmitter(
 }
 
 ParticleEmitterComponent* ParticleSystem::AttachAreaEmitter(
-    uint32_t pool_id, float duration_seconds, float emit_rate, EmitterType emitter_type, const ParticleGeneratorProperties& generator_properties)
+    uint32_t pool_id,
+    float duration_seconds,
+    float emit_rate,
+    EmitterType emitter_type,
+    EmitterMode emitter_mode,
+    const ParticleGeneratorProperties& generator_properties)
 {
-    ParticleEmitterComponent* emitter_component = AttachEmitter(pool_id, math::ZeroVec, duration_seconds, emit_rate, emitter_type, DefaultGenerator);
+    ParticleEmitterComponent* emitter_component = AttachEmitter(
+        pool_id, math::ZeroVec, duration_seconds, emit_rate, emitter_type, emitter_mode, DefaultGenerator);
     SetGeneratorProperties(emitter_component, generator_properties);
     return emitter_component;
 }
@@ -347,11 +368,6 @@ void ParticleSystem::ReleaseEmitter(uint32_t pool_id, ParticleEmitterComponent* 
 {
     m_particle_emitters.ReleasePoolData(emitter);
     mono::remove(m_particle_pools_emitters[pool_id], emitter);
-}
-
-void ParticleSystem::SetEmitterPosition(ParticleEmitterComponent* emitter, const math::Vector& position)
-{
-    emitter->position = position;
 }
 
 void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, const ParticleGeneratorProperties& generator_properties)
@@ -411,11 +427,22 @@ void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, c
     emitter->generator = generator;
 }
 
-void ParticleSystem::RestartEmitter(ParticleEmitterComponent* emitter)
+void ParticleSystem::RestartEmitter(ParticleEmitterComponent* emitter) const
 {
     emitter->elapsed_time = 0.0f;
     emitter->carry_over = 0.0f;
     emitter->burst_emitted = false;
+}
+
+bool ParticleSystem::HasEmitterStarted(const ParticleEmitterComponent* emitter) const
+{
+    if(emitter->mode == EmitterMode::AUTO_ACTIVATED)
+        return true;
+
+    if(emitter->started)
+        return true;
+
+    return false;
 }
 
 bool ParticleSystem::IsEmitterFinished(const ParticleEmitterComponent* emitter) const
@@ -425,6 +452,11 @@ bool ParticleSystem::IsEmitterFinished(const ParticleEmitterComponent* emitter) 
         return true;
 
     return (emitter->duration > 0.0f && emitter->elapsed_time >= emitter->duration);
+}
+
+void ParticleSystem::StartEmitter(ParticleEmitterComponent* emitter) const
+{
+    emitter->started = true;
 }
 
 const std::vector<ParticleEmitterComponent*>& ParticleSystem::GetAttachedEmitters(uint32_t pool_id) const

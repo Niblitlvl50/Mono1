@@ -52,12 +52,14 @@ namespace mono
         float duration;
         float emit_rate;
         EmitterType type;
+        EmitterMode mode;
         ParticleGenerator generator;
 
         // Internal data
         float elapsed_time;
         float carry_over;
         bool burst_emitted;
+        bool started;
     };
 
     struct ParticlePoolComponent
@@ -151,6 +153,7 @@ namespace mono
             float duration_seconds,
             float emit_rate,
             EmitterType emitter_type,
+            EmitterMode emitter_mode,
             ParticleGenerator generator);
 
         ParticleEmitterComponent* AttachAreaEmitter(
@@ -158,13 +161,18 @@ namespace mono
             float duration_seconds,
             float emit_rate,
             EmitterType emitter_type,
+            EmitterMode emitter_mode,
             const ParticleGeneratorProperties& generator_properties);
 
         void ReleaseEmitter(uint32_t pool_id, ParticleEmitterComponent* emitter);
-        void SetEmitterPosition(ParticleEmitterComponent* emitter, const math::Vector& position);
+
         void SetGeneratorProperties(ParticleEmitterComponent* emitter, const ParticleGeneratorProperties& generator_properties);
-        void RestartEmitter(ParticleEmitterComponent* emitter);
+
+        void RestartEmitter(ParticleEmitterComponent* emitter) const;
+        bool HasEmitterStarted(const ParticleEmitterComponent* emitter) const;
         bool IsEmitterFinished(const ParticleEmitterComponent* emitter) const;
+        void StartEmitter(ParticleEmitterComponent* emitter) const;
+
         const std::vector<ParticleEmitterComponent*>& GetAttachedEmitters(uint32_t pool_id) const;
 
         template<typename T>
