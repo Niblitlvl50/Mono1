@@ -2,6 +2,8 @@
 #pragma once
 
 #include "IGameSystem.h"
+#include "Rendering/Color.h"
+
 #include <vector>
 #include <string>
 #include <cstdint>
@@ -11,6 +13,7 @@ namespace mono
     struct RoadComponent
     {
         float width;
+        mono::Color::RGBA color;
         std::string texture_name;
     };
 

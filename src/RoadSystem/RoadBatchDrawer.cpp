@@ -52,7 +52,7 @@ void RoadBatchDrawer::Draw(mono::IRenderer& renderer) const
             road.buffers.anotations.get(),
             road.buffers.indices.get(),
             road.texture.get(),
-            mono::Color::WHITE,
+            component.color,
             0,
             road.buffers.indices->Size());
     };
@@ -71,7 +71,7 @@ RoadBatchDrawer::CachedRoad RoadBatchDrawer::CacheRoadData(uint32_t entity_id, c
 
     mono::PathOptions path_options;
     path_options.width = component.width;
-    path_options.color = mono::Color::OFF_WHITE;
+    path_options.color = component.color;
     path_options.uv_mode = mono::UVMode(mono::UVMode::DISTANCE | mono::UVMode::NORMALIZED_WIDTH);
     path_options.closed = false;
 
