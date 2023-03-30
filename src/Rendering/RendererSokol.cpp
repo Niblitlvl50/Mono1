@@ -28,6 +28,11 @@
 #define SOKOL_IMGUI_NO_SOKOL_APP
 #include "sokol/sokol_imgui.h"
 
+namespace
+{
+    constexpr bool g_debug_viewport = false;
+}
+
 using namespace mono;
 
 RendererSokol::RendererSokol()
@@ -198,12 +203,16 @@ void RendererSokol::PrepareDraw()
     m_view_stack = {};
     m_model_stack = {};
 
-    const float viewport_width = math::Width(m_viewport);
+    const float viewport_size = g_debug_viewport ? 1.0f : 0.0f;
+    math::Quad modifier_viewport = m_viewport;
+    math::ResizeQuad(modifier_viewport, viewport_size, math::Ratio(m_viewport));
+
+    const float viewport_width = math::Width(modifier_viewport);
     const float ratio = m_window_size.x / m_window_size.y;
     m_projection_stack.push(math::Ortho(0.0f, viewport_width, 0.0f, viewport_width / ratio, -10.0f, 10.0f));
 
     math::Matrix view_transform;
-    math::Translate(view_transform, -m_viewport.bottom_left);
+    math::Translate(view_transform, -modifier_viewport.bottom_left);
     m_view_stack.push(view_transform);
 
     m_model_stack.push(math::Matrix()); // Push identity
@@ -300,6 +309,11 @@ void RendererSokol::EndDraw()
         const bool visible = Cull(drawable->BoundingBox());
         if(visible)
             drawable->Draw(*this);
+    }
+
+    if(g_debug_viewport)
+    {
+        DrawQuad(m_viewport, mono::Color::CYAN, 1.0f);
     }
 
     simgui_render();

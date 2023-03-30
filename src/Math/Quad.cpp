@@ -65,6 +65,12 @@ math::Vector math::Size(const math::Quad& quad)
     return math::Vector(math::Width(quad), math::Height(quad));
 }
 
+float math::Ratio(const math::Quad& quad)
+{
+    const math::Vector& size = math::Size(quad);
+    return size.x / size.y;
+}
+
 float math::Left(const math::Quad& quad)
 {
     return quad.bottom_left.x;

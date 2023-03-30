@@ -104,6 +104,9 @@ void Camera::SetPositionOffset(const math::Vector& offset)
 void Camera::SetWindowSize(const math::Vector& window_size)
 {
     m_window_size = window_size;
+
+    const float ratio = window_size.x / window_size.y;
+    m_viewport_size.y = m_viewport_size.x / ratio;
 }
 
 const math::Vector& Camera::GetWindowSize() const
