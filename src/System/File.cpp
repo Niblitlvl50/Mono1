@@ -14,7 +14,7 @@ namespace
         FILE* file = std::fopen(file_name, mode);
         if(!file)
         {
-            System::Log("file|Unable to open file: %s, with mode: %s.", file_name, mode);
+            System::Log("file|Unable to open file: %s, with mode: %s. Errno: %s", file_name, mode, std::strerror(errno));
             return file::FilePtr(nullptr, nullptr);
         }
 
@@ -92,6 +92,11 @@ std::vector<byte> file::FileRead(const file::FilePtr& file)
     bytes.resize(n_read);
 
     return bytes;
+}
+
+bool file::EnsurePath(const char* path_name)
+{
+    return std::filesystem::create_directories(path_name);
 }
 
 bool file::Exists(const char* file_name)

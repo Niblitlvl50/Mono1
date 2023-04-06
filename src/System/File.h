@@ -36,6 +36,8 @@ namespace file
     //! Read the file into a buffer
     std::vector<byte> FileRead(const FilePtr& file);
 
+    bool EnsurePath(const char* path_name);
+
     bool Exists(const char* file_name);
     bool IsExtension(const char* file_name, const char* extension);
 }
