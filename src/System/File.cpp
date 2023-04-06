@@ -4,6 +4,7 @@
 #include "Debug.h"
 
 #include <cstdio>
+#include <cstring>
 #include <string_view>
 #include <filesystem>
 
