@@ -139,7 +139,7 @@ namespace mono
         void PopViewTransform() override;
 
         const math::Quad& GetViewport() const override;
-        bool Cull(const math::Quad& world_bb) const override;
+        CullResult Cull(const math::Quad& world_bb) const override;
 
         float GetDeltaTime() const override;
         uint32_t GetTimestamp() const override;

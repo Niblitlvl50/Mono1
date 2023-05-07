@@ -32,7 +32,7 @@ void TextBatchDrawer::Draw(mono::IRenderer& renderer) const
             return;
 
         const math::Quad world_bb = m_transform_system->GetWorldBoundingBox(index);
-        if(!renderer.Cull(world_bb))
+        if(renderer.Cull(world_bb) == mono::CullResult::OUTSIDE_VIEW)
             return;
 
         const math::Matrix& world_transform = m_transform_system->GetWorld(index);

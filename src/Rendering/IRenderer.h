@@ -18,6 +18,12 @@ namespace mono
         N_RENDER_PASS
     };
 
+    enum class CullResult
+    {
+        IN_VIEW,
+        OUTSIDE_VIEW
+    };
+
     class IRenderer
     {
     public:
@@ -131,7 +137,7 @@ namespace mono
         virtual void PopViewTransform() = 0;
 
         virtual const math::Quad& GetViewport() const = 0;
-        virtual bool Cull(const math::Quad& world_bb) const = 0;
+        virtual CullResult Cull(const math::Quad& world_bb) const = 0;
 
         virtual float GetDeltaTime() const = 0;
         virtual uint32_t GetTimestamp() const = 0;

@@ -21,7 +21,7 @@ void TransformSystemDrawer::Draw(mono::IRenderer& renderer) const
 
     const auto draw_bounding_boxes = [this, &renderer](const TransformSystem::Component& component, uint32_t index) {
         const math::Quad& bb = m_transform_system->GetWorldBoundingBox(index);
-        if(!renderer.Cull(bb))
+        if(renderer.Cull(bb) == mono::CullResult::OUTSIDE_VIEW)
             return;
 
         renderer.DrawQuad(bb, mono::Color::RED, 1.0f);

@@ -23,7 +23,7 @@ void LightSystemDrawer::Draw(mono::IRenderer& renderer) const
         const math::Vector world_position = math::GetPosition(world_transform) + light.offset;
 
         const math::Quad light_bb = math::Quad(world_position, light.radius);
-        if(renderer.Cull(light_bb))
+        if(renderer.Cull(light_bb) == mono::CullResult::IN_VIEW)
         {
             float radius_flicker = 0.0f;
 

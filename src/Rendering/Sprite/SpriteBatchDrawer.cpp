@@ -88,7 +88,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
         const math::Matrix& transform = m_transform_system->GetWorld(id);
         const math::Quad world_bounds = m_transform_system->GetWorldBoundingBox(id);
 
-        if(renderer.Cull(world_bounds))
+        if(renderer.Cull(world_bounds) == mono::CullResult::IN_VIEW)
         {
             const uint32_t sprite_hash = sprite.GetSpriteHash();
             auto it = m_sprite_buffers.find(sprite_hash);
@@ -110,7 +110,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
             const float shadow_radius = sprite.GetShadowSize();
             const math::Quad shadow_bb = math::Quad(math::Center(world_bounds) + shadow_offset, shadow_radius * 2.0f, shadow_radius);
 
-            const bool is_shadow_visible = renderer.Cull(shadow_bb);
+            const bool is_shadow_visible = (renderer.Cull(shadow_bb) == mono::CullResult::IN_VIEW);
             if(is_shadow_visible)
             {
                 bool need_update = false;

@@ -250,7 +250,7 @@ void RendererSokol::DrawFrame()
 
         for(const IDrawable* drawable : m_drawables[RenderPass::GENERAL])
         {
-            const bool visible = Cull(drawable->BoundingBox());
+            const bool visible = (Cull(drawable->BoundingBox()) == mono::CullResult::IN_VIEW);
             if(visible)
                 drawable->Draw(*this);
         }
@@ -306,7 +306,7 @@ void RendererSokol::EndDraw()
     // a shader but i cant get that to work correctly.
     for(const IDrawable* drawable : m_drawables[RenderPass::POST_LIGHTING])
     {
-        const bool visible = Cull(drawable->BoundingBox());
+        const bool visible = (Cull(drawable->BoundingBox()) == mono::CullResult::IN_VIEW);
         if(visible)
             drawable->Draw(*this);
     }
@@ -789,9 +789,9 @@ const math::Quad& RendererSokol::GetViewport() const
     return m_viewport;
 }
 
-bool RendererSokol::Cull(const math::Quad& world_bb) const
+CullResult RendererSokol::Cull(const math::Quad& world_bb) const
 {
-    return math::QuadOverlaps(m_viewport, world_bb);
+    return math::QuadOverlaps(m_viewport, world_bb) ? CullResult::IN_VIEW : CullResult::OUTSIDE_VIEW;
 }
 
 float RendererSokol::GetDeltaTime() const
