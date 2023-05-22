@@ -54,6 +54,9 @@ namespace mono
         virtual void SetEntityName(uint32_t entity_id, const char* name) = 0;
         virtual const char* GetEntityName(uint32_t entity_id) const = 0;
 
+        virtual void SetEntityTags(uint32_t entity_id, const std::vector<uint32_t>& tags) = 0;
+        virtual bool HasEntityTag(uint32_t entity_id, uint32_t tag) const = 0;
+
         virtual void SetEntityEnabled(uint32_t entity_id, bool enable) = 0;
 
         virtual uint32_t GetEntityUuid(uint32_t entity_id) const = 0;

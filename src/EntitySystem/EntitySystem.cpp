@@ -65,6 +65,7 @@ EntitySystem::EntitySystem(
 
     m_entities.resize(n_entities);
     m_entity_uuids.resize(n_entities, 0);
+    m_entity_tags.resize(n_entities);
     m_free_indices.resize(n_entities);
     m_debug_names.resize(n_entities);
     m_release_callbacks.resize(n_entities);
@@ -218,6 +219,16 @@ const char* EntitySystem::GetEntityName(uint32_t entity_id) const
 
     const std::string& name = GetName(entity_id);
     return name.c_str();
+}
+
+void EntitySystem::SetEntityTags(uint32_t entity_id, const std::vector<uint32_t>& tags)
+{
+    m_entity_tags[entity_id] = tags;
+}
+
+bool EntitySystem::HasEntityTag(uint32_t entity_id, uint32_t tag) const
+{
+    return mono::contains(m_entity_tags[entity_id], tag);
 }
 
 void EntitySystem::SetEntityEnabled(uint32_t entity_id, bool enable)
@@ -492,6 +503,20 @@ uint32_t EntitySystem::FindEntityByName(const char* name) const
         return std::distance(m_debug_names.begin(), it);
 
     return INVALID_ID;
+}
+
+std::vector<uint32_t> EntitySystem::CollectEntitiesWithTag(uint32_t tag) const
+{
+    std::vector<uint32_t> found_entities;
+
+    for(uint32_t index = 0; index < m_entity_tags.size(); ++index)
+    {
+        const std::vector<uint32_t>& tags = m_entity_tags[index];
+        if(mono::contains(tags, tag))
+            found_entities.push_back(index);
+    }
+
+    return found_entities;
 }
 
 const char* EntitySystem::Name() const
