@@ -56,6 +56,7 @@ namespace mono
 
         virtual void SetEntityTags(uint32_t entity_id, const std::vector<uint32_t>& tags) = 0;
         virtual bool HasEntityTag(uint32_t entity_id, uint32_t tag) const = 0;
+        virtual std::vector<uint32_t> CollectEntitiesWithTag(uint32_t tag) const = 0;
 
         virtual void SetEntityEnabled(uint32_t entity_id, bool enable) = 0;
 

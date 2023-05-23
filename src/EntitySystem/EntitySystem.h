@@ -102,7 +102,7 @@ namespace mono
             }
         }
 
-        std::vector<uint32_t> CollectEntitiesWithTag(uint32_t tag) const;
+        std::vector<uint32_t> CollectEntitiesWithTag(uint32_t tag) const override;
 
         const char* Name() const override;
         void Update(const UpdateContext& update_context) override;
