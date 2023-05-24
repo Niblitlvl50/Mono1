@@ -95,14 +95,14 @@ mono::Entity EntitySystem::CreateEntity(const char* name, uint32_t uuid_hash, co
     return *new_entity;
 }
 
-mono::Entity EntitySystem::CreateEntity(const char* entity_file)
+mono::Entity EntitySystem::SpawnEntity(const char* entity_file)
 {
-    const std::vector<mono::Entity>& loaded_entities = CreateEntityCollection(entity_file);
+    const std::vector<mono::Entity>& loaded_entities = SpawnEntityCollection(entity_file);
     MONO_ASSERT(loaded_entities.size() == 1);
     return loaded_entities.front();
 }
 
-std::vector<mono::Entity> EntitySystem::CreateEntityCollection(const char* entity_file)
+std::vector<mono::Entity> EntitySystem::SpawnEntityCollection(const char* entity_file)
 {
     const uint32_t entity_hash = hash::Hash(entity_file);
     const auto it = m_cached_entities.find(entity_hash);

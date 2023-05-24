@@ -33,9 +33,9 @@ namespace mono
 
         mono::Entity CreateEntity(const char* name, const std::vector<uint32_t>& components) override;
         mono::Entity CreateEntity(const char* name, uint32_t uuid_hash, const std::vector<uint32_t>& components) override;
-        mono::Entity CreateEntity(const char* entity_file) override;
 
-        std::vector<mono::Entity> CreateEntityCollection(const char* entity_file) override;
+        mono::Entity SpawnEntity(const char* entity_file) override;
+        std::vector<mono::Entity> SpawnEntityCollection(const char* entity_file) override;
 
         bool AddComponent(uint32_t entity_id, uint32_t component_hash) override;
         bool RemoveComponent(uint32_t entity_id, uint32_t component_hash) override;
