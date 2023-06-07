@@ -9,6 +9,21 @@
 
 #include "nlohmann/json.hpp"
 
+namespace mono
+{
+    inline void to_json(nlohmann::json& json, const mono::Event& event)
+    {
+        json["type"] = event.type;
+        json["text"] = event.text;
+    }
+
+    inline void from_json(const nlohmann::json& json, mono::Event& event)
+    {
+        event.type = json["type"];
+        event.text = json["text"];
+    }
+}
+
 inline void to_json(nlohmann::json& json, const Attribute& attribute)
 {
     json["id"] = attribute.id;
@@ -61,6 +76,9 @@ inline void from_json(const nlohmann::json& json, Attribute& attribute)
         break;
     case VariantTypeIndex::GRADIENT_4:
         attribute.value = json["variant_value"].get<mono::Color::Gradient<4>>();
+        break;
+    case VariantTypeIndex::EVENT:
+        attribute.value = json["variant_value"].get<mono::Event>();
         break;
     }
 }

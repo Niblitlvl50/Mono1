@@ -122,6 +122,10 @@ std::vector<mono::Entity> EntitySystem::SpawnEntityCollection(const char* entity
         loaded_entities.push_back(*new_entity);
     }
 
+    // Need to make a copy of component.properties somewhere so that i can patch
+    // the event types with unique id, append an spawn index or something. At least 
+    // for local events, and entity events.
+
     for(uint32_t index = 0; index < loaded_entities.size(); ++index)
     {
         const mono::Entity& entity = loaded_entities[index];

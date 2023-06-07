@@ -4,12 +4,27 @@
 #include "Math/Interval.h"
 #include "Math/Vector.h"
 #include "Rendering/Color.h"
+#include "EntityTypes.h"
 
 #include <variant>
 #include <string>
 #include <vector>
 
-constexpr int VariantStringMaxLength = 512;
+namespace mono
+{
+    enum class EventType : int
+    {
+        Global,
+        Local,
+        Entity
+    };
+
+    struct Event
+    {
+        EventType type;
+        std::string text;
+    };
+}
 
 using Variant = std::variant<
     bool,
@@ -22,7 +37,8 @@ using Variant = std::variant<
     std::vector<math::Vector>,
     math::Interval,
     math::ValueSpread,
-    mono::Color::Gradient<4>>;
+    mono::Color::Gradient<4>,
+    mono::Event>;
 
 struct Attribute
 {
@@ -46,7 +62,8 @@ enum VariantTypeIndex
     POLYGON,
     INTERVAL,
     VALUE_SPREAD,
-    GRADIENT_4
+    GRADIENT_4,
+    EVENT
 };
 
 static_assert(std::is_same_v<bool,                      std::variant_alternative_t<VariantTypeIndex::BOOL, Variant>>);
@@ -60,3 +77,4 @@ static_assert(std::is_same_v<std::vector<math::Vector>, std::variant_alternative
 static_assert(std::is_same_v<math::Interval,            std::variant_alternative_t<VariantTypeIndex::INTERVAL, Variant>>);
 static_assert(std::is_same_v<math::ValueSpread,         std::variant_alternative_t<VariantTypeIndex::VALUE_SPREAD, Variant>>);
 static_assert(std::is_same_v<mono::Color::Gradient<4>,  std::variant_alternative_t<VariantTypeIndex::GRADIENT_4, Variant>>);
+static_assert(std::is_same_v<mono::Event,               std::variant_alternative_t<VariantTypeIndex::EVENT, Variant>>);

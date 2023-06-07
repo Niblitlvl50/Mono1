@@ -7,6 +7,8 @@
 #include <vector>
 #include <string>
 
+struct Attribute;
+
 namespace mono
 {
     struct ComponentData
