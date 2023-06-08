@@ -59,6 +59,7 @@ EntitySystem::EntitySystem(
     AttributeNameLookupFunc attribute_lookup)
     : m_system_context(system_context)
     , m_component_name_lookup(component_lookup)
+    , m_spawn_index(0)
     , m_full_release_on_next_sync(false)
 {
     s_attribute_name_lookup = attribute_lookup;
@@ -104,6 +105,8 @@ mono::Entity EntitySystem::SpawnEntity(const char* entity_file)
 
 std::vector<mono::Entity> EntitySystem::SpawnEntityCollection(const char* entity_file)
 {
+    m_spawn_index++;
+
     const uint32_t entity_hash = hash::Hash(entity_file);
     const auto it = m_cached_entities.find(entity_hash);
     if(it == m_cached_entities.end())
@@ -135,7 +138,33 @@ std::vector<mono::Entity> EntitySystem::SpawnEntityCollection(const char* entity
         {
             const uint32_t component_hash = hash::Hash(component.name.c_str());
             if(AddComponent(entity.id, component_hash))
-                SetComponentData(entity.id, component_hash, component.properties);
+            {
+                std::vector<Attribute> local_attributes = component.properties;
+
+                for(Attribute attribute : local_attributes)
+                {
+                    mono::Event* event = std::get_if<mono::Event>(&attribute.value);
+                    if(event)
+                    {
+                        if(event->type == mono::EventType::Global)
+                        {
+                            // Do nothing...
+                        }
+                        else if(event->type == mono::EventType::Local)
+                        {
+                            // Make event string unique to spawn
+                            event->text += std::to_string(m_spawn_index);
+                        }
+                        else if(event->type == mono::EventType::Entity)
+                        {
+                            // Make event string unique to entity name
+                            event->text += entity_file;
+                        }
+                    }
+                }
+
+                SetComponentData(entity.id, component_hash, local_attributes);
+            }
         }
     }
 

@@ -139,6 +139,7 @@ namespace mono
 
         std::unordered_map<uint32_t, ComponentFuncs> m_component_factories;
         std::vector<SpawnEvent> m_spawn_events;
+        uint32_t m_spawn_index;
 
         struct EntityStackRecord
         {

@@ -102,7 +102,7 @@ bool file::EnsurePath(const char* path_name)
 
 bool file::Exists(const char* file_name)
 {
-    return std::filesystem::exists(file_name);
+    return std::filesystem::is_regular_file(file_name);
 }
 
 bool file::IsExtension(const char* file_name, const char* extension)
