@@ -141,7 +141,7 @@ std::vector<mono::Entity> EntitySystem::SpawnEntityCollection(const char* entity
             {
                 std::vector<Attribute> local_attributes = component.properties;
 
-                for(Attribute attribute : local_attributes)
+                for(Attribute& attribute : local_attributes)
                 {
                     mono::Event* event = std::get_if<mono::Event>(&attribute.value);
                     if(event)
