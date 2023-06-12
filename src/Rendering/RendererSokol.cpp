@@ -221,7 +221,8 @@ void RendererSokol::PrepareDraw()
     MakeOrUpdateOffscreenPass(m_light_pass, m_drawable_size);
     MakeOrUpdateOffscreenPass(m_color_post_light_pass, m_drawable_size);
 
-    sg_apply_viewport(0, 0, m_drawable_size.x, m_drawable_size.y, false);
+    // This seems to be unnessesary? And ommits an error on the first frame.
+    //sg_apply_viewport(0, 0, m_drawable_size.x, m_drawable_size.y, false);
 
     simgui_frame_desc_t imgui_frame_desc;
     imgui_frame_desc.width = m_drawable_size.x;
