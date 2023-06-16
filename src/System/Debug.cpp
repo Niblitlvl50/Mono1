@@ -41,4 +41,6 @@ void debug::LogAssert(const char* condition, const char* message, const char* fi
     {
         System::Log("[%s(%d)] Assert! Condition: '%s'.", file, line, condition);
     }
+
+    //debug::PrintStacktrace(2, 10); 
 }
