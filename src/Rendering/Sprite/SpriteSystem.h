@@ -10,6 +10,7 @@
 #include <vector>
 #include <functional>
 #include <unordered_map>
+#include <unordered_set>
 
 namespace mono
 {
@@ -70,7 +71,7 @@ namespace mono
         mono::TransformSystem* m_transform_system;
         mono::ActiveVector<mono::Sprite> m_sprites;
         std::vector<bool> m_enabled;
-        std::vector<uint32_t> m_sprites_need_update;
+        std::unordered_set<uint32_t> m_sprites_need_update;
 
         std::unordered_map<uint32_t, SpriteAnimSequence> m_active_anim_sequences;
     };

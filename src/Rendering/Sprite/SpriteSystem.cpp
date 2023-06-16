@@ -23,7 +23,7 @@ mono::Sprite* SpriteSystem::AllocateSprite(uint32_t sprite_id)
     mono::Sprite* sprite = m_sprites.Set(sprite_id, mono::Sprite());
 
     m_enabled[sprite_id] = true;
-    m_sprites_need_update.push_back(sprite_id);
+    m_sprites_need_update.insert(sprite_id);
 
     return sprite;
 }
@@ -63,12 +63,13 @@ void SpriteSystem::SetSpriteData(uint32_t sprite_id, const SpriteComponents& spr
         }
     }
 
-    m_sprites_need_update.push_back(sprite_id);
+    m_sprites_need_update.insert(sprite_id);
 }
 
 void SpriteSystem::ReleaseSprite(uint32_t sprite_id)
 {
     m_sprites.Release(sprite_id);
+    m_sprites_need_update.erase(sprite_id);
     //m_sprites[sprite_id].Init(nullptr, nullptr);
 }
 
