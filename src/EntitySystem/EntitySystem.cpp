@@ -369,28 +369,18 @@ void EntitySystem::PopEntityStackRecord()
     m_full_release_on_next_sync = true;
 }
 
-uint32_t EntitySystem::AddReleaseCallback(uint32_t entity_id, const ReleaseCallback& callback)
+uint32_t EntitySystem::AddReleaseCallback(uint32_t entity_id, uint32_t callback_phases, const ReleaseCallback& callback)
 {
-   uint32_t callback_id = std::numeric_limits<uint32_t>::max();
-
-    const ReleaseCallbacks& callbacks = m_release_callbacks[entity_id];
-    for(uint32_t index = 0; index < callbacks.size(); ++index)
-    {
-        if(callbacks[index] == nullptr)
-        {
-            callback_id = index;
-            break;
-        }
-    }
-
-    MONO_ASSERT(callback_id != std::numeric_limits<uint32_t>::max());
-    m_release_callbacks[entity_id][callback_id] = callback;
-    return callback_id;
+    ReleaseCallbacks& callbacks = m_release_callbacks[entity_id];
+    const uint32_t free_index = FindFreeCallbackIndex(callbacks);
+    MONO_ASSERT(free_index != std::numeric_limits<uint32_t>::max());
+    callbacks[free_index] = { callback_phases, callback };
+    return free_index;
 }
 
 void EntitySystem::RemoveReleaseCallback(uint32_t entity_id, uint32_t callback_id)
 {
-    m_release_callbacks[entity_id][callback_id] = nullptr;
+    m_release_callbacks[entity_id][callback_id].callback = nullptr;
 }
 
 const std::vector<EntitySystem::SpawnEvent>& EntitySystem::GetSpawnEvents() const
@@ -416,11 +406,26 @@ void EntitySystem::Destroy()
 
 void EntitySystem::DeferredRelease()
 {
+    const auto execute_callbacks = [](uint32_t entity_id, const ReleaseCallbacks& callbacks, mono::ReleasePhase phase) {
+
+        for(const ReleaseCallbackData& callback_data : callbacks)
+        {
+            const bool valid_callback_type = (callback_data.callback_types & phase);
+            if(!valid_callback_type || callback_data.callback == nullptr)
+                continue;
+
+            callback_data.callback(entity_id, phase);
+        }
+    };
+
     std::unordered_set<uint32_t> local_entities_to_release = m_entities_to_release;
     m_entities_to_release.clear();
 
     for(uint32_t entity_id : local_entities_to_release)
     {
+        ReleaseCallbacks& callbacks = m_release_callbacks[entity_id];
+        execute_callbacks(entity_id, callbacks, mono::ReleasePhase::PRE_RELEASE);
+
         mono::Entity* entity = GetEntity(entity_id);
         std::reverse(entity->components.begin(), entity->components.end()); // We should release the components in reverse.
 
@@ -433,7 +438,14 @@ void EntitySystem::DeferredRelease()
                 System::Log("entitysystem|Found component hash but no release function. Hash: %u", component_hash);
         }
 
-        ReleaseEntity2(entity_id);
+        m_entities[entity_id] = Entity();
+        m_debug_names[entity_id].clear();
+
+        execute_callbacks(entity_id, callbacks, mono::ReleasePhase::POST_RELEASE);
+        for(ReleaseCallbackData& callback_data : callbacks)
+            callback_data.callback = nullptr;
+
+        m_free_indices.push_back(entity_id);
     }
 
     if(!m_entities_to_release.empty())
@@ -450,7 +462,16 @@ void EntitySystem::DeferredRelease()
     }
 }
 
+uint32_t EntitySystem::FindFreeCallbackIndex(const ReleaseCallbacks& callbacks) const
+{
+    for(uint32_t index = 0; index < std::size(callbacks); ++index)
+    {
+        if(callbacks[index].callback == nullptr)
+            return index;
+    }
 
+    return std::numeric_limits<uint32_t>::max();
+}
 
 Entity* EntitySystem::AllocateEntity(const char* name)
 {
@@ -470,23 +491,6 @@ Entity* EntitySystem::AllocateEntity(const char* name)
     entity.name = m_debug_names[entity_id].c_str();
 
     return &entity;
-}
-
-void EntitySystem::ReleaseEntity2(uint32_t entity_id)
-{
-    m_entities[entity_id] = Entity();
-    m_debug_names[entity_id].clear();
-    
-    ReleaseCallbacks& callbacks = m_release_callbacks[entity_id];
-    for(auto& callback : callbacks)
-    {
-        if(callback != nullptr)
-            callback(entity_id);
-
-        callback = nullptr;
-    }
-
-    m_free_indices.push_back(entity_id);
 }
 
 Entity* EntitySystem::GetEntity(uint32_t entity_id)

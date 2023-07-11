@@ -62,7 +62,7 @@ namespace mono
         void PopEntityStackRecord() override;
 
 
-        uint32_t AddReleaseCallback(uint32_t entity_id, const ReleaseCallback& callback) override;
+        uint32_t AddReleaseCallback(uint32_t entity_id, uint32_t callback_phases, const ReleaseCallback& callback) override;
         void RemoveReleaseCallback(uint32_t entity_id, uint32_t callback_id) override;
 
         const std::vector<SpawnEvent>& GetSpawnEvents() const override;
@@ -78,7 +78,6 @@ namespace mono
             ComponentEnableFunc enable_component) override;
 
         Entity* AllocateEntity(const char* name);
-        void ReleaseEntity2(uint32_t entity_id);
         Entity* GetEntity(uint32_t entity_id);
         const Entity* GetEntity(uint32_t entity_id) const override;
 
@@ -111,7 +110,15 @@ namespace mono
 
     private:
 
+        struct ReleaseCallbackData
+        {
+            uint32_t callback_types;
+            ReleaseCallback callback;
+        };
+        using ReleaseCallbacks = std::array<ReleaseCallbackData, 8>;
+
         void DeferredRelease();
+        uint32_t FindFreeCallbackIndex(const ReleaseCallbacks& callbacks) const;
 
         mono::SystemContext* m_system_context;
         ComponentNameLookupFunc m_component_name_lookup;
@@ -122,8 +129,6 @@ namespace mono
         std::vector<std::vector<uint32_t>> m_entity_tags;
         std::vector<uint32_t> m_free_indices;
         std::vector<std::string> m_debug_names;
-
-        using ReleaseCallbacks = std::array<ReleaseCallback, 8>;
         std::vector<ReleaseCallbacks> m_release_callbacks;
 
         std::unordered_set<uint32_t> m_entities_to_release;

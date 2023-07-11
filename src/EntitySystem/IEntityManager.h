@@ -9,6 +9,8 @@
 #include <vector>
 #include <functional>
 
+#define ENUM_BIT(n) (1 << (n))
+
 namespace mono
 {
     using ComponentCreateFunc = bool(*)(mono::Entity* entity, mono::SystemContext* context);
@@ -16,7 +18,15 @@ namespace mono
     using ComponentUpdateFunc = bool(*)(mono::Entity* entity, const std::vector<Attribute>& properties, mono::SystemContext* context);
     using ComponentEnableFunc = bool(*)(mono::Entity* entity, bool enable, mono::SystemContext* context);
 
-    using ReleaseCallback = std::function<void (uint32_t entity_id)>;
+    // Use PreRelease if you want to do something with the object that is going to be released, this is before its actually released.
+    enum ReleasePhase : int
+    {
+        PRE_RELEASE = ENUM_BIT(0),
+        POST_RELEASE = ENUM_BIT(1),
+        PRE_POST_RELEASE = PRE_RELEASE | POST_RELEASE
+    };
+
+    using ReleaseCallback = std::function<void (uint32_t entity_id, mono::ReleasePhase phase)>;
 
     class IEntityManager
     {
@@ -69,7 +79,7 @@ namespace mono
         virtual void PushEntityStackRecord(const char* debug_name) = 0;
         virtual void PopEntityStackRecord() = 0;
 
-        virtual uint32_t AddReleaseCallback(uint32_t entity_id, const ReleaseCallback& callback) = 0;
+        virtual uint32_t AddReleaseCallback(uint32_t entity_id, uint32_t callback_phases, const ReleaseCallback& callback) = 0;
         virtual void RemoveReleaseCallback(uint32_t entity_id, uint32_t callback_id) = 0;
 
         virtual const std::vector<SpawnEvent>& GetSpawnEvents() const = 0;
