@@ -19,9 +19,16 @@ namespace mono
         Entity
     };
 
+    enum class EventDirection : int
+    {
+        Input,
+        Output
+    };
+
     struct Event
     {
         EventType type;
+        EventDirection direction;
         std::string text;
     };
 }

@@ -13,13 +13,15 @@ namespace mono
 {
     inline void to_json(nlohmann::json& json, const mono::Event& event)
     {
-        json["type"] = event.type;
-        json["text"] = event.text;
+        json["type"]        = event.type;
+        json["direction"]   = event.direction;
+        json["text"]        = event.text;
     }
 
     inline void from_json(const nlohmann::json& json, mono::Event& event)
     {
         event.type = json["type"];
+        event.direction = json.value("direction", mono::EventDirection::Input);
         event.text = json["text"];
     }
 }
