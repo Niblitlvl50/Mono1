@@ -40,6 +40,14 @@ namespace mono
         return it != collection.end();
     }
 
+    template <typename T>
+    inline void make_unique(std::vector<T>& collection)
+    {
+        std::sort(collection.begin(), collection.end());
+        const auto new_end_it = std::unique(collection.begin(), collection.end());
+        collection.erase(new_end_it, collection.end());
+    }
+
     template<typename ForwardIt, typename T, typename Compare>
     inline std::pair<ForwardIt, ForwardIt> equal_range(ForwardIt first, ForwardIt last, const T& value, Compare comp)
     {
