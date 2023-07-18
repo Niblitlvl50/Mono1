@@ -18,7 +18,7 @@ SpriteSystem::SpriteSystem(uint32_t n_sprites, mono::TransformSystem* transform_
     m_enabled.resize(n_sprites, true);
 }
 
-mono::Sprite* SpriteSystem::AllocateSprite(uint32_t sprite_id)
+mono::ISprite* SpriteSystem::AllocateSprite(uint32_t sprite_id)
 {
     mono::Sprite* sprite = m_sprites.Set(sprite_id, mono::Sprite());
 
@@ -30,7 +30,7 @@ mono::Sprite* SpriteSystem::AllocateSprite(uint32_t sprite_id)
 
 mono::ISprite* SpriteSystem::AllocateSprite(uint32_t sprite_id, const SpriteComponents& sprite_args)
 {
-    mono::Sprite* new_sprite = AllocateSprite(sprite_id);
+    mono::ISprite* new_sprite = AllocateSprite(sprite_id);
     SetSpriteData(sprite_id, sprite_args);
     return new_sprite;
 }

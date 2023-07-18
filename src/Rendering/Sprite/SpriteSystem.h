@@ -50,7 +50,7 @@ namespace mono
 
         SpriteSystem(uint32_t n_sprites, mono::TransformSystem* transform_system);
 
-        mono::Sprite* AllocateSprite(uint32_t sprite_id);
+        mono::ISprite* AllocateSprite(uint32_t sprite_id);
         mono::ISprite* AllocateSprite(uint32_t sprite_id, const SpriteComponents& sprite_args);
         bool IsAllocated(uint32_t sprite_id);
         void SetSpriteData(uint32_t sprite_id, const SpriteComponents& component_data);
