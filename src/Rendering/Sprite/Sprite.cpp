@@ -64,6 +64,7 @@ mono::SpriteFrame Sprite::GetCurrentFrame() const
 
 int Sprite::GetCurrentFrameIndex() const
 {
+    MONO_ASSERT(m_active_animation >= 0);
     const SpriteAnimation& animation = m_sprite_data->animations[m_active_animation];
     return  animation.frames[m_active_frame];
 }
