@@ -99,9 +99,12 @@ mono::IPipelinePtr FogPipeline::MakePipeline()
 
     shader_desc.fs.source = fragment_source;
 
-    shader_desc.fs.images[0].name = "sampler";
+    shader_desc.fs.images[0].used = true;
     shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
-    shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
+    shader_desc.fs.images[0].sample_type = SG_IMAGESAMPLETYPE_FLOAT;
+    shader_desc.fs.samplers[0].used = true;
+    shader_desc.fs.samplers[0].sampler_type = SG_SAMPLERTYPE_SAMPLE;
+    shader_desc.fs.image_sampler_pairs[0] = { true, 0, 0, "sampler" };
 
     shader_desc.fs.uniform_blocks[U_COLOR_SHADE_BLOCK].size = sizeof(mono::Color::RGBA);
     shader_desc.fs.uniform_blocks[U_COLOR_SHADE_BLOCK].uniforms[0].name = "color_shade";
@@ -148,7 +151,7 @@ void FogPipeline::Apply(
     bindings.vertex_buffers[ATTR_POSITION].id = position->Id();
 
     bindings.index_buffer.id = indices->Id();
-    bindings.fs_images[0].id = texture->Id();
+    bindings.fs.images[0].id = texture->Id();
 
     sg_apply_bindings(&bindings);
 }

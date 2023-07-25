@@ -282,9 +282,12 @@ mono::IPipelinePtr TexturePipeline::MakePipeline()
 
     shader_desc.fs.source = fragment_source;
 
-    shader_desc.fs.images[0].name = "sampler";
+    shader_desc.fs.images[0].used = true;
     shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
-    shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
+    shader_desc.fs.images[0].sample_type = SG_IMAGESAMPLETYPE_FLOAT;
+    shader_desc.fs.samplers[0].used = true;
+    shader_desc.fs.samplers[0].sampler_type = SG_SAMPLERTYPE_SAMPLE;
+    shader_desc.fs.image_sampler_pairs[0] = { true, 0, 0, "sampler" };
 
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].size = sizeof(float);
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].uniforms[0].name = "is_alpha_texture";
@@ -355,9 +358,12 @@ mono::IPipelinePtr TexturePipeline::MakeAnnotationPipeline()
 
     shader_desc.fs.source = fragment_source_annotation;
 
-    shader_desc.fs.images[0].name = "sampler";
+    shader_desc.fs.images[0].used = true;
     shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
-    shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
+    shader_desc.fs.images[0].sample_type = SG_IMAGESAMPLETYPE_FLOAT;
+    shader_desc.fs.samplers[0].used = true;
+    shader_desc.fs.samplers[0].sampler_type = SG_SAMPLERTYPE_SAMPLE;
+    shader_desc.fs.image_sampler_pairs[0] = { true, 0, 0, "sampler" };
 
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].size = sizeof(float);
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].uniforms[0].name = "is_alpha_texture";
@@ -429,9 +435,12 @@ mono::IPipelinePtr TexturePipeline::MakeVertexColorPipeline()
 
     shader_desc.fs.source = fragment_source_color;
 
-    shader_desc.fs.images[0].name = "sampler";
+    shader_desc.fs.images[0].used = true;
     shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
-    shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
+    shader_desc.fs.images[0].sample_type = SG_IMAGESAMPLETYPE_FLOAT;
+    shader_desc.fs.samplers[0].used = true;
+    shader_desc.fs.samplers[0].sampler_type = SG_SAMPLERTYPE_SAMPLE;
+    shader_desc.fs.image_sampler_pairs[0] = { true, 0, 0, "sampler" };
 
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].size = sizeof(float);
     shader_desc.fs.uniform_blocks[U_IS_ALPHA_BLOCK].uniforms[0].name = "is_alpha_texture";
@@ -486,7 +495,8 @@ void TexturePipeline::Apply(
     const IRenderBuffer* position,
     const IRenderBuffer* uv_coordinates,
     const IElementBuffer* indices,
-    const ITexture* texture)
+    const ITexture* texture,
+    const ISampler* sampler)
 {
     pipeline->Apply();
 
@@ -495,7 +505,8 @@ void TexturePipeline::Apply(
     bindings.vertex_buffers[ATTR_UV].id = uv_coordinates->Id();
 
     bindings.index_buffer.id = indices->Id();
-    bindings.fs_images[0].id = texture->Id();
+    bindings.fs.images[0].id = texture->Id();
+    bindings.fs.samplers[0].id = sampler->Id();
 
     sg_apply_bindings(&bindings);
 }
@@ -506,7 +517,8 @@ void TexturePipeline::Apply(
     const IRenderBuffer* uv_coordinates,
     const IRenderBuffer* vertex_colors,
     const IElementBuffer* indices,
-    const ITexture* texture)
+    const ITexture* texture,
+    const ISampler* sampler)
 {
     pipeline->Apply();
 
@@ -516,7 +528,8 @@ void TexturePipeline::Apply(
     bindings.vertex_buffers[ATTR_COLOR].id = vertex_colors->Id();
 
     bindings.index_buffer.id = indices->Id();
-    bindings.fs_images[0].id = texture->Id();
+    bindings.fs.images[0].id = texture->Id();
+    bindings.fs.samplers[0].id = sampler->Id();
 
     sg_apply_bindings(&bindings);
 }

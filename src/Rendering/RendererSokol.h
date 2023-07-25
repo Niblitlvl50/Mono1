@@ -189,6 +189,8 @@ namespace mono
         std::unique_ptr<IPipeline> m_fog_pipeline;
         std::unique_ptr<IPipeline> m_screen_pipeline;
 
+        std::unique_ptr<ISampler> m_sampler;
+
         std::unique_ptr<IRenderBuffer> m_screen_vertices;
         std::unique_ptr<IRenderBuffer> m_screen_uv;
         std::unique_ptr<IElementBuffer> m_screen_indices;

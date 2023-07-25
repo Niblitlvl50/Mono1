@@ -28,5 +28,16 @@ namespace mono
         sg_pixel_format m_pixel_format;
         sg_image m_handle;
     };
+
+    class SamplerImpl : public ISampler
+    {
+    public:
+    
+        SamplerImpl();
+        ~SamplerImpl();
+        uint32_t Id() const override;
+
+        sg_sampler m_handle;
+    };
 }
 

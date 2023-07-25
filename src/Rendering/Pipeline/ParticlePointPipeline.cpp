@@ -103,9 +103,12 @@ mono::IPipelinePtr ParticlePointPipeline::MakePipeline(mono::BlendMode blend_mod
     shader_desc.vs.uniform_blocks[U_TRANSFORM_BLOCK].uniforms[2].type = SG_UNIFORMTYPE_MAT4;
 
     shader_desc.fs.source = fragment_source;
-    shader_desc.fs.images[0].name = "sampler";
+
+    shader_desc.fs.images[0].used = true;
     shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
-    shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
+    shader_desc.fs.images[0].sample_type = SG_IMAGESAMPLETYPE_FLOAT;
+    shader_desc.fs.samplers[0] = { true, SG_SAMPLERTYPE_SAMPLE };
+    shader_desc.fs.image_sampler_pairs[0] = { true, 0, 0, "sampler" };
     
     shader_desc.attrs[ATTR_POSITION].name = "vertex_position";
     shader_desc.attrs[ATTR_ROTATION].name = "vertex_rotation";
@@ -158,7 +161,8 @@ void ParticlePointPipeline::Apply(
     const IRenderBuffer* rotation,
     const IRenderBuffer* color,
     const IRenderBuffer* point_size,
-    const ITexture* texture)
+    const ITexture* texture,
+    const ISampler* sampler)
 {
     pipeline->Apply();
 
@@ -168,7 +172,8 @@ void ParticlePointPipeline::Apply(
     bindings.vertex_buffers[ATTR_COLOR].id = color->Id();
     bindings.vertex_buffers[ATTR_POINT_SIZE].id = point_size->Id();
 
-    bindings.fs_images[0].id = texture->Id();
+    bindings.fs.images[0].id = texture->Id();
+    bindings.fs.samplers[0].id = sampler->Id();
 
     sg_apply_bindings(&bindings);
 }

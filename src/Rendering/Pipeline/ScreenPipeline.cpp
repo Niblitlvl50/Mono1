@@ -100,15 +100,23 @@ mono::IPipelinePtr ScreenPipeline::MakePipeline()
 
     shader_desc.fs.source = fragment_source;
 
-    shader_desc.fs.images[0].name = "sampler";
+    shader_desc.fs.images[0].used = true;
     shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
-    shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
-    shader_desc.fs.images[1].name = "sampler_light";
+    shader_desc.fs.images[0].sample_type = SG_IMAGESAMPLETYPE_FLOAT;
+    shader_desc.fs.samplers[0] = { true, SG_SAMPLERTYPE_SAMPLE };
+    shader_desc.fs.image_sampler_pairs[0] = { true, 0, 0, "sampler" };
+
+    shader_desc.fs.images[1].used = true;
     shader_desc.fs.images[1].image_type = SG_IMAGETYPE_2D;
-    shader_desc.fs.images[1].sampler_type = SG_SAMPLERTYPE_FLOAT;
-    shader_desc.fs.images[2].name = "sampler_post_light";
+    shader_desc.fs.images[1].sample_type = SG_IMAGESAMPLETYPE_FLOAT;
+    shader_desc.fs.samplers[1] = { true, SG_SAMPLERTYPE_SAMPLE };
+    shader_desc.fs.image_sampler_pairs[1] = { true, 1, 1, "sampler_light" };
+
+    shader_desc.fs.images[2].used = true;
     shader_desc.fs.images[2].image_type = SG_IMAGETYPE_2D;
-    shader_desc.fs.images[2].sampler_type = SG_SAMPLERTYPE_FLOAT;
+    shader_desc.fs.images[2].sample_type = SG_IMAGESAMPLETYPE_FLOAT;
+    shader_desc.fs.samplers[2] = { true, SG_SAMPLERTYPE_SAMPLE };
+    shader_desc.fs.image_sampler_pairs[2] = { true, 2, 2, "sampler_post_light" };
 
     shader_desc.fs.uniform_blocks[U_FADE_CORNERS_BLOCK].size = sizeof(int);
     shader_desc.fs.uniform_blocks[U_FADE_CORNERS_BLOCK].uniforms[0].name = "fade_corners";
@@ -158,7 +166,8 @@ void ScreenPipeline::Apply(
     const IElementBuffer* indices,
     const ITexture* color_texture,
     const ITexture* light_texture,
-    const ITexture* color_post_light_texture)
+    const ITexture* color_post_light_texture,
+    const ISampler* sampler)
 {
     pipeline->Apply();
 
@@ -167,9 +176,13 @@ void ScreenPipeline::Apply(
     bindings.vertex_buffers[ATTR_UV].id = uv_coordinates->Id();
 
     bindings.index_buffer.id = indices->Id();
-    bindings.fs_images[0].id = color_texture->Id();
-    bindings.fs_images[1].id = light_texture->Id();
-    bindings.fs_images[2].id = color_post_light_texture->Id();
+    bindings.fs.images[0].id = color_texture->Id();
+    bindings.fs.images[1].id = light_texture->Id();
+    bindings.fs.images[2].id = color_post_light_texture->Id();
+
+    bindings.fs.samplers[0].id = sampler->Id();
+    bindings.fs.samplers[1].id = sampler->Id();
+    bindings.fs.samplers[2].id = sampler->Id();
 
     sg_apply_bindings(&bindings);
 }

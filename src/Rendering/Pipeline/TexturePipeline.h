@@ -20,7 +20,8 @@ namespace mono
             const IRenderBuffer* position,
             const IRenderBuffer* uv_coordinates,
             const IElementBuffer* indices,
-            const ITexture* texture);
+            const ITexture* texture,
+            const ISampler* sampler);
 
         static void Apply(
             IPipeline* pipeline,
@@ -28,7 +29,8 @@ namespace mono
             const IRenderBuffer* uv_coordinates,
             const IRenderBuffer* vertex_colors,
             const IElementBuffer* indices,
-            const ITexture* texture);
+            const ITexture* texture,
+            const ISampler* sampler);
 
         //static void SetTime(float total_time_s, float delta_time_s);
         static void SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model);

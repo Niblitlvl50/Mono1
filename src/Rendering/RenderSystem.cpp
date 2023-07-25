@@ -17,7 +17,7 @@
 
 #define SOKOL_TRACE_HOOKS
 #define SOKOL_GLCORE33
-#define SOKOL_GFX_IMPL
+#define SOKOL_IMPL
 #define SOKOL_DEBUG
 #include "sokol/sokol_gfx.h"
 
@@ -38,6 +38,10 @@ namespace
     {
         MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_image.");
     }
+    void fail_sampler(sg_sampler smp_id, void* user_data)
+    {
+        MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_sampler.");
+    }
     void fail_shader(sg_shader shd_id, void* user_data)
     {
         MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_shader.");
@@ -49,43 +53,6 @@ namespace
     void fail_pass(sg_pass pass_id, void* user_data)
     {
         MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_pass.");
-    }
-
-    void err_buffer_pool_exhausted(void* user_date)
-    {
-        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_buffer_pool_exhausted.");
-    }
-    void err_image_pool_exhausted(void* user_data)
-    {
-        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_image_pool_exhausted.");
-    }
-    void err_shader_pool_exhausted(void* user_data)
-    {
-        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_shader_pool_exhausted.");
-    }
-    void err_pipeline_pool_exhausted(void* user_data)
-    {
-        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_pipeline_pool_exhausted.");
-    }
-    void err_pass_pool_exhausted(void* user_data)
-    {
-        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_pass_pool_exhausted.");
-    }
-    void err_context_mismatch(void* user_data)
-    {
-        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_context_mismatch.");
-    }
-    void err_pass_invalid(void* user_data)
-    {
-        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_pass_invalid.");
-    }
-    void err_draw_invalid(void* user_data)
-    {
-        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_draw_invalid.");
-    }
-    void err_bindings_invalid(void* user_data)
-    {
-        MONO_ASSERT_MESSAGE(false, "RenderSystem|err_bindings_invalid.");
     }
 }
 
@@ -109,19 +76,10 @@ RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
     sg_trace_hooks trace_hooks = {};
     trace_hooks.fail_buffer = fail_buffer;
     trace_hooks.fail_image = fail_image;
-    trace_hooks.fail_pass = fail_pass;
-    trace_hooks.fail_pipeline = fail_pipeline;
+    trace_hooks.fail_sampler = fail_sampler;
     trace_hooks.fail_shader = fail_shader;
-
-    trace_hooks.err_buffer_pool_exhausted = err_buffer_pool_exhausted;
-    trace_hooks.err_image_pool_exhausted = err_image_pool_exhausted;
-    trace_hooks.err_shader_pool_exhausted = err_shader_pool_exhausted;
-    trace_hooks.err_pipeline_pool_exhausted = err_pipeline_pool_exhausted;
-    trace_hooks.err_pass_pool_exhausted = err_pass_pool_exhausted;
-    trace_hooks.err_context_mismatch = err_context_mismatch;
-    trace_hooks.err_pass_invalid = err_pass_invalid;
-    trace_hooks.err_draw_invalid = err_draw_invalid;
-    trace_hooks.err_bindings_invalid = err_bindings_invalid;
+    trace_hooks.fail_pipeline = fail_pipeline;
+    trace_hooks.fail_pass = fail_pass;
     sg_install_trace_hooks(&trace_hooks);
 
     simgui_desc_t imgui_desc = {};

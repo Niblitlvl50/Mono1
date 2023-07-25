@@ -61,6 +61,8 @@ RendererSokol::RendererSokol()
     m_fog_pipeline = mono::FogPipeline::MakePipeline();
     m_screen_pipeline = mono::ScreenPipeline::MakePipeline();
 
+    m_sampler = mono::RenderSystem::GetTextureFactory()->CreateSampler();
+
     constexpr math::Vector vertices[] = { {-1.0f, -1.0f}, {-1.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, -1.0f} };
     constexpr math::Vector uv_coordinates[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f} };
     constexpr uint16_t indices[] = { 0, 1, 2, 0, 2, 3, };
@@ -132,12 +134,12 @@ void RendererSokol::MakeOrUpdateOffscreenPass(RendererSokol::OffscreenPassData& 
 void RendererSokol::DrawLights()
 {
     sg_pass_action offscreen_light_pass_action = {};
-    offscreen_light_pass_action.colors[0].action = SG_ACTION_CLEAR;
+    offscreen_light_pass_action.colors[0].load_action = SG_LOADACTION_CLEAR;
 
-    offscreen_light_pass_action.colors[0].value.r = m_ambient_shade.red;
-    offscreen_light_pass_action.colors[0].value.g = m_ambient_shade.green;
-    offscreen_light_pass_action.colors[0].value.b = m_ambient_shade.blue;
-    offscreen_light_pass_action.colors[0].value.a = m_ambient_shade.alpha;
+    offscreen_light_pass_action.colors[0].clear_value.r = m_ambient_shade.red;
+    offscreen_light_pass_action.colors[0].clear_value.g = m_ambient_shade.green;
+    offscreen_light_pass_action.colors[0].clear_value.b = m_ambient_shade.blue;
+    offscreen_light_pass_action.colors[0].clear_value.a = m_ambient_shade.alpha;
 
     sg_begin_pass(m_light_pass.pass_handle, &offscreen_light_pass_action);
 
@@ -243,8 +245,8 @@ void RendererSokol::DrawFrame()
 
     {
         sg_pass_action offscreen_pass_action = {};
-        offscreen_pass_action.colors[0].action = SG_ACTION_CLEAR;
-        offscreen_pass_action.colors[0].value = {
+        offscreen_pass_action.colors[0].load_action = SG_LOADACTION_CLEAR;
+        offscreen_pass_action.colors[0].clear_value = {
             m_clear_color.red, m_clear_color.green, m_clear_color.blue, m_clear_color.alpha
         };
         sg_begin_pass(m_color_pass.pass_handle, &offscreen_pass_action);
@@ -295,7 +297,8 @@ void RendererSokol::EndDraw()
         m_screen_indices.get(),
         m_color_pass.offscreen_texture.get(),
         m_light_pass.offscreen_texture.get(),
-        m_color_post_light_pass.offscreen_texture.get());
+        m_color_post_light_pass.offscreen_texture.get(),
+        m_sampler.get());
     ScreenPipeline::FadeCorners(false);
     ScreenPipeline::InvertColors(false);
     ScreenPipeline::EnableLighting(m_lighting_enabled);
@@ -378,6 +381,7 @@ void RendererSokol::DrawSprite(
         height_values,
         indices,
         texture,
+        m_sampler.get(),
         buffer_offset);
 
     SpritePipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
@@ -594,8 +598,7 @@ void RendererSokol::DrawGeometry(
     bool blur,
     uint32_t count) const
 {
-    TexturePipeline::Apply(m_texture_pipeline.get(), vertices, uv_coordinates, indices, texture);
-    //TexturePipeline::SetTime(m_texture_pipeline.get(), float(m_timestamp) / 1000.0f, m_delta_time_s);
+    TexturePipeline::Apply(m_texture_pipeline.get(), vertices, uv_coordinates, indices, texture, m_sampler.get());
     TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
     TexturePipeline::SetIsAlpha(texture->IsAlphaTexture());
@@ -614,8 +617,7 @@ void RendererSokol::DrawGeometry(
     bool blur,
     uint32_t count) const
 {
-    TexturePipeline::Apply(m_texture_pipeline_color.get(), vertices, uv_coordinates, vertex_colors, indices, texture);
-    //TexturePipeline::SetTime(m_texture_pipeline.get(), float(m_timestamp) / 1000.0f, m_delta_time_s);
+    TexturePipeline::Apply(m_texture_pipeline_color.get(), vertices, uv_coordinates, vertex_colors, indices, texture, m_sampler.get());
     TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
     TexturePipeline::SetIsAlpha(false);
@@ -635,7 +637,7 @@ void RendererSokol::DrawParticlePoints(
     uint32_t count)
 {
     mono::IPipeline* pipeline = (blend_mode == mono::BlendMode::ONE) ? m_particle_pipeline_one.get() : m_particle_pipeline_sa.get();
-    ParticlePointPipeline::Apply(pipeline, position, rotation, color, point_size, texture);
+    ParticlePointPipeline::Apply(pipeline, position, rotation, color, point_size, texture, m_sampler.get());
     //ParticlePointPipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
     ParticlePointPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
@@ -715,7 +717,7 @@ void RendererSokol::DrawAnnotatedTrianges(
     uint32_t offset,
     uint32_t count) const
 {
-    TexturePipeline::Apply(m_texture_annotation_pipeline.get(), vertices, annotations, indices, texture);
+    TexturePipeline::Apply(m_texture_annotation_pipeline.get(), vertices, annotations, indices, texture, m_sampler.get());
     //TexturePipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
     TexturePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
     TexturePipeline::SetIsAlpha(false);

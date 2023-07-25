@@ -69,6 +69,11 @@ mono::ITexturePtr TextureFactoryImpl::CreateFromNativeHandle(uint32_t native_han
     return std::make_shared<TextureImpl>(handle);
 }
 
+mono::ISamplerPtr TextureFactoryImpl::CreateSampler() const
+{
+    return std::make_unique<SamplerImpl>();
+}
+
 mono::ITexturePtr TextureFactoryImpl::GetTextureFromCache(uint32_t texture_hash) const
 {
     auto it = m_texture_storage.find(texture_hash);

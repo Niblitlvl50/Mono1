@@ -19,7 +19,8 @@ namespace mono
             const IRenderBuffer* rotation,
             const IRenderBuffer* color,
             const IRenderBuffer* point_size,
-            const ITexture* texture);
+            const ITexture* texture,
+            const ISampler* sampler);
 
         //static void SetTime(float total_time_s, float delta_time_s);
         static void SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model);

@@ -220,9 +220,11 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
 
     shader_desc.fs.source = fragment_source;
 
-    shader_desc.fs.images[0].name = "sampler";
+    shader_desc.fs.images[0].used = true;
     shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
-    shader_desc.fs.images[0].sampler_type = SG_SAMPLERTYPE_FLOAT;
+    shader_desc.fs.images[0].sample_type = SG_IMAGESAMPLETYPE_FLOAT;
+    shader_desc.fs.samplers[0] = { true, SG_SAMPLERTYPE_SAMPLE };
+    shader_desc.fs.image_sampler_pairs[0] = { true, 0, 0, "sampler" };
 
     shader_desc.fs.uniform_blocks[U_FS_COLOR_SHADE_BLOCK].size = sizeof(mono::Color::RGBA);
     shader_desc.fs.uniform_blocks[U_FS_COLOR_SHADE_BLOCK].uniforms[0].name = "color_shade";
@@ -284,6 +286,7 @@ void SpritePipeline::Apply(
     const IRenderBuffer* heights,
     const IElementBuffer* indices,
     const ITexture* texture,
+    const ISampler* sampler,
     uint32_t buffer_offset)
 {
     pipeline->Apply();
@@ -301,7 +304,8 @@ void SpritePipeline::Apply(
     bindings.vertex_buffer_offsets[ATTR_UV_FLIPPED] = uv_coordinates_flipped->ByteOffsetToIndex(buffer_offset);
     bindings.vertex_buffer_offsets[ATTR_HEIGHT] = heights->ByteOffsetToIndex(buffer_offset);
 
-    bindings.fs_images[0].id = texture->Id();
+    bindings.fs.images[0].id = texture->Id();
+    bindings.fs.samplers[0].id = sampler->Id();
     bindings.index_buffer.id = indices->Id();
 
     sg_apply_bindings(&bindings);
