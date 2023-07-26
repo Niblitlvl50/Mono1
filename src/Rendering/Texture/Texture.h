@@ -19,6 +19,7 @@ namespace mono
         ~TextureImpl();
 
         uint32_t Id() const override;
+        uint32_t SamplerId() const override;
         uint32_t Width() const override;
         uint32_t Height() const override;
         bool IsAlphaTexture() const override;
@@ -27,17 +28,7 @@ namespace mono
         uint32_t m_height;
         sg_pixel_format m_pixel_format;
         sg_image m_handle;
-    };
-
-    class SamplerImpl : public ISampler
-    {
-    public:
-    
-        SamplerImpl();
-        ~SamplerImpl();
-        uint32_t Id() const override;
-
-        sg_sampler m_handle;
+        sg_sampler m_sampler_handle;
     };
 }
 

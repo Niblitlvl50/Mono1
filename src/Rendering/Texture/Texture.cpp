@@ -32,6 +32,9 @@ TextureImpl::TextureImpl(
     const sg_resource_state state = sg_query_image_state(m_handle);
     if(state != SG_RESOURCESTATE_VALID)
         System::Log("Failed to create texture.");
+
+    sg_sampler_desc sampler_desc = { };
+    m_sampler_handle = sg_make_sampler(sampler_desc);
 }
 
 TextureImpl::TextureImpl(sg_image image_handle)
@@ -44,16 +47,25 @@ TextureImpl::TextureImpl(sg_image image_handle)
     const sg_image_desc info = sg_query_image_desc(m_handle);
     m_width = info.width;
     m_height = info.height;
+
+    sg_sampler_desc sampler_desc = { };
+    m_sampler_handle = sg_make_sampler(sampler_desc);
 }
 
 TextureImpl::~TextureImpl()
 {
+    sg_destroy_sampler(m_sampler_handle);
     sg_destroy_image(m_handle);
 }
 
 uint32_t TextureImpl::Id() const
 {
     return m_handle.id;
+}
+
+uint32_t TextureImpl::SamplerId() const
+{
+    return m_sampler_handle.id;
 }
 
 uint32_t TextureImpl::Width() const
@@ -69,21 +81,4 @@ uint32_t TextureImpl::Height() const
 bool TextureImpl::IsAlphaTexture() const
 {
     return (m_pixel_format == SG_PIXELFORMAT_R8);
-}
-
-
-SamplerImpl::SamplerImpl()
-{
-    sg_sampler_desc sampler_desc = { };
-    m_handle = sg_make_sampler(sampler_desc);
-}
-
-SamplerImpl::~SamplerImpl()
-{
-    sg_destroy_sampler(m_handle);
-}
-
-uint32_t SamplerImpl::Id() const
-{
-    return m_handle.id;
 }

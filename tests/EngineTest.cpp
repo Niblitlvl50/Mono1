@@ -121,15 +121,10 @@ namespace
     public:
 
         uint32_t Id() const override { return 0; }
+        uint32_t SamplerId() const override { return 0; }
         uint32_t Width() const override { return 16; }
         uint32_t Height() const override { return 9; }
         bool IsAlphaTexture() const override { return false; }
-    };
-
-    class NullSampler : public mono::ISampler
-    {
-    public:
-        uint32_t Id() const override { return 0; }
     };
 
     class NullTextureFactory : public mono::ITextureFactory
@@ -154,11 +149,6 @@ namespace
         mono::ITexturePtr CreateFromNativeHandle(uint32_t native_handle) const
         {
             return std::make_shared<NullTexture>();
-        }
-
-        mono::ISamplerPtr CreateSampler() const
-        {
-            return std::make_unique<NullSampler>();
         }
     };
 }

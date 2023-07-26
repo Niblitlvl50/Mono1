@@ -21,7 +21,6 @@ namespace mono
             const IRenderBuffer* heights,
             const IElementBuffer* indices,
             const ITexture* texture,
-            const ISampler* sampler,
             uint32_t buffer_offset);
 
         static void SetTime(float total_time_s, float delta_time_s);

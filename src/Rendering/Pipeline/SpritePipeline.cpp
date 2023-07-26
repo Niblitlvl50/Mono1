@@ -286,7 +286,6 @@ void SpritePipeline::Apply(
     const IRenderBuffer* heights,
     const IElementBuffer* indices,
     const ITexture* texture,
-    const ISampler* sampler,
     uint32_t buffer_offset)
 {
     pipeline->Apply();
@@ -305,7 +304,7 @@ void SpritePipeline::Apply(
     bindings.vertex_buffer_offsets[ATTR_HEIGHT] = heights->ByteOffsetToIndex(buffer_offset);
 
     bindings.fs.images[0].id = texture->Id();
-    bindings.fs.samplers[0].id = sampler->Id();
+    bindings.fs.samplers[0].id = texture->SamplerId();
     bindings.index_buffer.id = indices->Id();
 
     sg_apply_bindings(&bindings);

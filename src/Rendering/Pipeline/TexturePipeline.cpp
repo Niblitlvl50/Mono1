@@ -495,8 +495,7 @@ void TexturePipeline::Apply(
     const IRenderBuffer* position,
     const IRenderBuffer* uv_coordinates,
     const IElementBuffer* indices,
-    const ITexture* texture,
-    const ISampler* sampler)
+    const ITexture* texture)
 {
     pipeline->Apply();
 
@@ -506,7 +505,7 @@ void TexturePipeline::Apply(
 
     bindings.index_buffer.id = indices->Id();
     bindings.fs.images[0].id = texture->Id();
-    bindings.fs.samplers[0].id = sampler->Id();
+    bindings.fs.samplers[0].id = texture->SamplerId();
 
     sg_apply_bindings(&bindings);
 }
@@ -517,8 +516,7 @@ void TexturePipeline::Apply(
     const IRenderBuffer* uv_coordinates,
     const IRenderBuffer* vertex_colors,
     const IElementBuffer* indices,
-    const ITexture* texture,
-    const ISampler* sampler)
+    const ITexture* texture)
 {
     pipeline->Apply();
 
@@ -529,7 +527,7 @@ void TexturePipeline::Apply(
 
     bindings.index_buffer.id = indices->Id();
     bindings.fs.images[0].id = texture->Id();
-    bindings.fs.samplers[0].id = sampler->Id();
+    bindings.fs.samplers[0].id = texture->SamplerId();
 
     sg_apply_bindings(&bindings);
 }

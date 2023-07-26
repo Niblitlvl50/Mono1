@@ -8,7 +8,6 @@ using byte = unsigned char;
 namespace mono
 {
     using ITexturePtr = std::shared_ptr<class ITexture>;
-    using ISamplerPtr = std::unique_ptr<class ISampler>;
 
     class ITextureFactory
     {
@@ -26,7 +25,5 @@ namespace mono
         virtual ITexturePtr CreateTexture(const byte* data, int width, int height, int color_components) const = 0;
 
         virtual ITexturePtr CreateFromNativeHandle(uint32_t native_handle) const = 0;
-
-        virtual ISamplerPtr CreateSampler() const = 0;
     };
 }

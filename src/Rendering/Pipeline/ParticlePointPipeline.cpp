@@ -161,8 +161,7 @@ void ParticlePointPipeline::Apply(
     const IRenderBuffer* rotation,
     const IRenderBuffer* color,
     const IRenderBuffer* point_size,
-    const ITexture* texture,
-    const ISampler* sampler)
+    const ITexture* texture)
 {
     pipeline->Apply();
 
@@ -173,7 +172,7 @@ void ParticlePointPipeline::Apply(
     bindings.vertex_buffers[ATTR_POINT_SIZE].id = point_size->Id();
 
     bindings.fs.images[0].id = texture->Id();
-    bindings.fs.samplers[0].id = sampler->Id();
+    bindings.fs.samplers[0].id = texture->SamplerId();
 
     sg_apply_bindings(&bindings);
 }

@@ -16,8 +16,6 @@ namespace mono
         ITexturePtr CreateTexture(const byte* data, int width, int height, int color_components) const override;
         ITexturePtr CreateFromNativeHandle(uint32_t native_handle) const override;
 
-        ISamplerPtr CreateSampler() const override;
-
     private:
 
         mono::ITexturePtr GetTextureFromCache(uint32_t texture_hash) const;

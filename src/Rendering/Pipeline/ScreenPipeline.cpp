@@ -166,8 +166,7 @@ void ScreenPipeline::Apply(
     const IElementBuffer* indices,
     const ITexture* color_texture,
     const ITexture* light_texture,
-    const ITexture* color_post_light_texture,
-    const ISampler* sampler)
+    const ITexture* color_post_light_texture)
 {
     pipeline->Apply();
 
@@ -180,9 +179,9 @@ void ScreenPipeline::Apply(
     bindings.fs.images[1].id = light_texture->Id();
     bindings.fs.images[2].id = color_post_light_texture->Id();
 
-    bindings.fs.samplers[0].id = sampler->Id();
-    bindings.fs.samplers[1].id = sampler->Id();
-    bindings.fs.samplers[2].id = sampler->Id();
+    bindings.fs.samplers[0].id = color_texture->SamplerId();
+    bindings.fs.samplers[1].id = light_texture->SamplerId();
+    bindings.fs.samplers[2].id = color_post_light_texture->SamplerId();
 
     sg_apply_bindings(&bindings);
 }
