@@ -54,6 +54,18 @@ namespace
     {
         MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_pass.");
     }
+
+    void sokol_imgui_logger(
+        const char* tag,                // always "simgui"
+        uint32_t log_level,             // 0=panic, 1=error, 2=warning, 3=info
+        uint32_t log_item_id,           // SIMGUI_LOGITEM_*
+        const char* message_or_null,    // a message string, may be nullptr in release mode
+        uint32_t line_nr,               // line number in sokol_imgui.h
+        const char* filename_or_null,   // source filename, may be nullptr in release mode
+        void* user_data)
+    {
+        MONO_ASSERT_MESSAGE(log_level >= 3, message_or_null);
+    }    
 }
 
 using namespace mono;
@@ -84,6 +96,8 @@ RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
 
     simgui_desc_t imgui_desc = {};
     imgui_desc.ini_filename = init_params.imgui_ini;
+    imgui_desc.image_pool_size = 512;
+    imgui_desc.logger = { sokol_imgui_logger, nullptr };
     simgui_setup(&imgui_desc);
 
     s_pixels_per_meter = init_params.pixels_per_meter;
