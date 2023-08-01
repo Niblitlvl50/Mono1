@@ -53,6 +53,12 @@ void TransformSystem::SetTransform(uint32_t id, const math::Matrix& new_transfor
     m_transforms[id].transform = new_transform;
 }
 
+void TransformSystem::SetTransform(uint32_t id, const math::Matrix& new_transform, TransformState new_state)
+{
+    SetTransform(id, new_transform);
+    SetTransformState(id, new_state);
+}
+
 math::Quad TransformSystem::GetWorldBoundingBox(uint32_t id) const
 {
     return math::Transformed(GetWorld(id), GetBoundingBox(id));
