@@ -431,7 +431,7 @@ void RendererSokol::DrawSprite(
             sprite_properties & mono::SpriteProperty::FLIP_VERTICAL);
         SpritePipeline::SetWindSway(sprite_properties & mono::SpriteProperty::WIND_SWAY);
 
-        SpritePipeline::SetOutlineColor(mono::Color::MAGENTA);
+        SpritePipeline::SetOutlineColor(mono::Color::GOLDEN_YELLOW);
         sg_draw(0, 6, 1);
     }
 }

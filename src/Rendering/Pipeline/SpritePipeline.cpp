@@ -374,6 +374,8 @@ mono::IPipelinePtr SpritePipeline::MakeOutlinePipeline()
 
     pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_DEPTH_STENCIL;
 
+    //pipeline_desc.depth.compare
+
     // Write fragment where stencil is not equal to 1
     pipeline_desc.stencil.enabled = true;
     pipeline_desc.stencil.read_mask = 0xFF;
