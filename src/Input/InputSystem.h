@@ -52,6 +52,8 @@ namespace mono
         void EnableContext(InputContext* input_context);
         void DisableContext(InputContext* input_context);
 
+        void ResetAllInput();
+
         mono::InputContextType GetMostRecentGlobalInput() const;
 
     private:

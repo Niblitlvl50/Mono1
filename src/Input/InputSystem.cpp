@@ -103,6 +103,18 @@ void InputSystem::DisableContext(InputContext* input_context)
     input_context->most_recent_input = mono::InputContextType::None;
 }
 
+void InputSystem::ResetAllInput()
+{
+    const System::ControllerState default_state = { };
+
+    const auto apply_event = [default_state](InputContext* context) {
+        if(context->controller_input)
+            return context->controller_input->UpdatedControllerState(default_state);
+        return mono::InputResult::Pass;
+    };
+    ForEachContext(apply_event);
+}
+
 mono::InputContextType InputSystem::GetMostRecentGlobalInput() const
 {
     return m_most_recent_global_input;
