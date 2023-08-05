@@ -36,6 +36,7 @@ void Sprite::Init(const SpriteData* sprite_data, mono::ITexturePtr texture)
     m_properties = 0;
     m_color = mono::Color::RGBA();
     m_flash_timer = 0;
+    m_outline = false;
     m_callback = nullptr;
 }
 
@@ -248,6 +249,16 @@ void Sprite::FlashSprite()
 bool Sprite::ShouldFlashSprite() const
 {
     return m_flash_timer > 0;
+}
+
+void Sprite::SetOutlineSprite(bool outline)
+{
+    m_outline = outline;
+}
+
+bool Sprite::ShouldOutlineSprite() const
+{
+    return m_outline;
 }
 
 int Sprite::GetActiveAnimation() const

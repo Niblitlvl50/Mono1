@@ -158,10 +158,31 @@ namespace
             if(flash_sprite != 0)
                 color.rgb = vec3(1.0);
 
+            if(color.a < 0.1)
+                discard;
+
             frag_color = color;
         }
     )";
 
+    constexpr const char* outline_fragment_source = R"(
+        #version 330
+
+        uniform sampler2D sampler;
+        uniform vec4 color_shade;
+
+        in vec2 v_texture_coord;
+        out vec4 frag_color;
+
+        void main()
+        {
+            vec4 color = texture(sampler, v_texture_coord);
+            if(color.a < 0.1)
+                discard;
+
+            frag_color = color_shade;
+        }
+    )";
 
     constexpr int U_VS_TIME_BLOCK = 0;
     constexpr int U_VS_TRANSFORM_BLOCK = 1;
@@ -183,16 +204,8 @@ using namespace mono;
 mono::IPipelinePtr SpritePipeline::MakePipeline()
 {
     sg_shader_desc shader_desc = {};
+
     shader_desc.vs.source = vertex_source;
-    
-    //
-    // This caused the shader to not work under windows, disabled for now. Apparently its needed for OpenGL ES2 or something.
-    //
-    // shader_desc.attrs[ATTR_POSITION].name = "a_vertex_position";
-    // shader_desc.attrs[ATTR_POSITION_OFFSET].name = "a_vertex_offset";
-    // shader_desc.attrs[ATTR_UV].name = "a_uv";
-    // shader_desc.attrs[ATTR_UV_FLIPPED].name = "a_uv_flipped";
-    // shader_desc.attrs[ATTR_HEIGHT].name = "a_vertex_height";
 
     shader_desc.vs.uniform_blocks[U_VS_TIME_BLOCK].size = sizeof(float) * 2;
     shader_desc.vs.uniform_blocks[U_VS_TIME_BLOCK].uniforms[0].name = "time_input.total_time";
@@ -267,7 +280,14 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
     pipeline_desc.colors[0].blend.src_factor_alpha = SG_BLENDFACTOR_SRC_ALPHA;
     pipeline_desc.colors[0].blend.dst_factor_alpha = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
 
-    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
+    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_DEPTH_STENCIL;
+
+    // Write 1 to stencil buffer where we output a fragment
+    pipeline_desc.stencil.enabled = true;
+    pipeline_desc.stencil.read_mask = 0x00;
+    pipeline_desc.stencil.write_mask = 0xFF;
+    pipeline_desc.stencil.ref = 1;
+    pipeline_desc.stencil.front = { SG_COMPAREFUNC_ALWAYS, SG_STENCILOP_KEEP, SG_STENCILOP_KEEP, SG_STENCILOP_REPLACE };
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -276,6 +296,99 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
 
     return std::make_unique<PipelineImpl>(pipeline_handle, shader_handle);
 }
+
+mono::IPipelinePtr SpritePipeline::MakeOutlinePipeline()
+{
+    sg_shader_desc shader_desc = {};
+
+    shader_desc.vs.source = vertex_source;
+
+    shader_desc.vs.uniform_blocks[U_VS_TIME_BLOCK].size = sizeof(float) * 2;
+    shader_desc.vs.uniform_blocks[U_VS_TIME_BLOCK].uniforms[0].name = "time_input.total_time";
+    shader_desc.vs.uniform_blocks[U_VS_TIME_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
+    shader_desc.vs.uniform_blocks[U_VS_TIME_BLOCK].uniforms[1].name = "time_input.delta_time";
+    shader_desc.vs.uniform_blocks[U_VS_TIME_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_FLOAT;
+
+    shader_desc.vs.uniform_blocks[U_VS_TRANSFORM_BLOCK].size = sizeof(math::Matrix) * 3;
+    shader_desc.vs.uniform_blocks[U_VS_TRANSFORM_BLOCK].uniforms[0].name = "transform_input.projection";
+    shader_desc.vs.uniform_blocks[U_VS_TRANSFORM_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_MAT4;
+    shader_desc.vs.uniform_blocks[U_VS_TRANSFORM_BLOCK].uniforms[1].name = "transform_input.view";
+    shader_desc.vs.uniform_blocks[U_VS_TRANSFORM_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_MAT4;
+    shader_desc.vs.uniform_blocks[U_VS_TRANSFORM_BLOCK].uniforms[2].name = "transform_input.model";
+    shader_desc.vs.uniform_blocks[U_VS_TRANSFORM_BLOCK].uniforms[2].type = SG_UNIFORMTYPE_MAT4;
+
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].size = sizeof(int) * 2;
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[0].name = "flip_input.flip_horizontal";
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_INT;
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].name = "flip_input.flip_vertical";
+    shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_INT;
+
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].size = sizeof(int);
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].name = "wind_sway_enabled";
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_INT;
+
+    shader_desc.fs.source = outline_fragment_source;
+
+    shader_desc.fs.images[0].used = true;
+    shader_desc.fs.images[0].image_type = SG_IMAGETYPE_2D;
+    shader_desc.fs.images[0].sample_type = SG_IMAGESAMPLETYPE_FLOAT;
+    shader_desc.fs.samplers[0] = { true, SG_SAMPLERTYPE_SAMPLE };
+    shader_desc.fs.image_sampler_pairs[0] = { true, 0, 0, "sampler" };
+
+    shader_desc.fs.uniform_blocks[U_FS_COLOR_SHADE_BLOCK].size = sizeof(mono::Color::RGBA);
+    shader_desc.fs.uniform_blocks[U_FS_COLOR_SHADE_BLOCK].uniforms[0].name = "color_shade";
+    shader_desc.fs.uniform_blocks[U_FS_COLOR_SHADE_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT4;
+
+    sg_shader shader_handle = sg_make_shader(&shader_desc);
+
+    const sg_resource_state state = sg_query_shader_state(shader_handle);
+    if(state != SG_RESOURCESTATE_VALID)
+        System::Log("Failed to create sprite shader.");
+
+    sg_pipeline_desc pipeline_desc = {};
+    pipeline_desc.primitive_type = SG_PRIMITIVETYPE_TRIANGLES;
+    pipeline_desc.index_type = SG_INDEXTYPE_UINT16;
+    pipeline_desc.shader = shader_handle;
+
+    pipeline_desc.layout.attrs[ATTR_POSITION].format = SG_VERTEXFORMAT_FLOAT2;
+    pipeline_desc.layout.attrs[ATTR_POSITION].buffer_index = ATTR_POSITION;
+
+    pipeline_desc.layout.attrs[ATTR_POSITION_OFFSET].format = SG_VERTEXFORMAT_FLOAT2;
+    pipeline_desc.layout.attrs[ATTR_POSITION_OFFSET].buffer_index = ATTR_POSITION_OFFSET;
+
+    pipeline_desc.layout.attrs[ATTR_UV].format = SG_VERTEXFORMAT_FLOAT2;
+    pipeline_desc.layout.attrs[ATTR_UV].buffer_index = ATTR_UV;
+
+    pipeline_desc.layout.attrs[ATTR_UV_FLIPPED].format = SG_VERTEXFORMAT_FLOAT2;
+    pipeline_desc.layout.attrs[ATTR_UV_FLIPPED].buffer_index = ATTR_UV_FLIPPED;
+
+    pipeline_desc.layout.attrs[ATTR_HEIGHT].format = SG_VERTEXFORMAT_FLOAT;
+    pipeline_desc.layout.attrs[ATTR_HEIGHT].buffer_index = ATTR_HEIGHT;
+
+    //pipeline_desc.rasterizer.face_winding = SG_FACEWINDING_CCW;
+    pipeline_desc.colors[0].blend.enabled = true;
+    pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
+    pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+    pipeline_desc.colors[0].blend.src_factor_alpha = SG_BLENDFACTOR_SRC_ALPHA;
+    pipeline_desc.colors[0].blend.dst_factor_alpha = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
+
+    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_DEPTH_STENCIL;
+
+    // Write fragment where stencil is not equal to 1
+    pipeline_desc.stencil.enabled = true;
+    pipeline_desc.stencil.read_mask = 0xFF;
+    pipeline_desc.stencil.write_mask = 0xFF;
+    pipeline_desc.stencil.ref = 1;
+    pipeline_desc.stencil.front = { SG_COMPAREFUNC_NOT_EQUAL, SG_STENCILOP_KEEP, SG_STENCILOP_KEEP, SG_STENCILOP_KEEP };
+
+    sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
+    const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
+    if(pipeline_state != SG_RESOURCESTATE_VALID)
+        System::Log("Failed to create sprite pipeline.");
+        
+    return std::make_unique<PipelineImpl>(pipeline_handle, shader_handle);
+}
+
 
 void SpritePipeline::Apply(
     IPipeline* pipeline,
@@ -303,9 +416,10 @@ void SpritePipeline::Apply(
     bindings.vertex_buffer_offsets[ATTR_UV_FLIPPED] = uv_coordinates_flipped->ByteOffsetToIndex(buffer_offset);
     bindings.vertex_buffer_offsets[ATTR_HEIGHT] = heights->ByteOffsetToIndex(buffer_offset);
 
+    bindings.index_buffer.id = indices->Id();
+
     bindings.fs.images[0].id = texture->Id();
     bindings.fs.samplers[0].id = texture->SamplerId();
-    bindings.index_buffer.id = indices->Id();
 
     sg_apply_bindings(&bindings);
 }
@@ -369,4 +483,9 @@ void SpritePipeline::SetFlashSprite(bool flash)
 {
     const int value = flash ? 1 : 0;
     sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FS_FLASH_BLOCK, { &value, sizeof(int) });
+}
+
+void SpritePipeline::SetOutlineColor(const mono::Color::RGBA& outline_color)
+{
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_FS_COLOR_SHADE_BLOCK, { &outline_color, sizeof(mono::Color::RGBA) });
 }

@@ -70,7 +70,10 @@ namespace mono
         virtual bool IsActiveAnimationDone() const = 0;
 
         virtual bool ShouldFlashSprite() const = 0;
-        
+
+        virtual void SetOutlineSprite(bool outline) = 0;
+        virtual bool ShouldOutlineSprite() const = 0;
+
         virtual void RestartAnimation() = 0;
 
         virtual const SpriteData* GetSpriteData() const = 0;

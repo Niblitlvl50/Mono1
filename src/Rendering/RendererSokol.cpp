@@ -57,7 +57,10 @@ RendererSokol::RendererSokol()
     m_texture_pipeline = mono::TexturePipeline::MakePipeline();
     m_texture_annotation_pipeline = mono::TexturePipeline::MakeAnnotationPipeline();
     m_texture_pipeline_color = mono::TexturePipeline::MakeVertexColorPipeline();
+    
     m_sprite_pipeline = mono::SpritePipeline::MakePipeline();
+    m_sprite_outline_pipeline = mono::SpritePipeline::MakeOutlinePipeline();
+
     m_fog_pipeline = mono::FogPipeline::MakePipeline();
     m_screen_pipeline = mono::ScreenPipeline::MakePipeline();
 
@@ -116,17 +119,26 @@ void RendererSokol::MakeOrUpdateOffscreenPass(RendererSokol::OffscreenPassData& 
     offscreen_image_desc.height = drawable_size.y;
     sg_image image_handle = sg_make_image(offscreen_image_desc);
 
+    sg_image_desc offscreen_depth_stencil_image_desc = {};
+    offscreen_depth_stencil_image_desc.render_target = true;
+    offscreen_depth_stencil_image_desc.width = drawable_size.x;
+    offscreen_depth_stencil_image_desc.height = drawable_size.y;
+    offscreen_depth_stencil_image_desc.pixel_format = SG_PIXELFORMAT_DEPTH_STENCIL;
+    sg_image depth_stencil_handle = sg_make_image(offscreen_depth_stencil_image_desc);
+
     sg_pass_desc pass_desc = {};
     pass_desc.color_attachments[0].image = image_handle;
+    pass_desc.depth_stencil_attachment.image = depth_stencil_handle;
     sg_pass pass_handle = sg_make_pass(&pass_desc);
 
     offscreen_pass.image_size = drawable_size;
     offscreen_pass.offscreen_texture = mono::RenderSystem::GetTextureFactory()->CreateFromNativeHandle(image_handle.id);
+    offscreen_pass.depth_stencil_texture = mono::RenderSystem::GetTextureFactory()->CreateFromNativeHandle(depth_stencil_handle.id);
     offscreen_pass.pass_handle = pass_handle;
 
     const sg_resource_state state = sg_query_pass_state(offscreen_pass.pass_handle);
     if(state != SG_RESOURCESTATE_VALID)
-        System::Log("Failed to create render pass.");
+        System::Log("RendererSokol|Failed to create render pass.");
 }
 
 void RendererSokol::DrawLights()
@@ -393,6 +405,35 @@ void RendererSokol::DrawSprite(
     SpritePipeline::SetFlashSprite(sprite->ShouldFlashSprite());
 
     sg_draw(0, 6, 1);
+
+    const bool draw_outline = sprite->ShouldOutlineSprite();
+    if(draw_outline)
+    {
+        SpritePipeline::Apply(
+            m_sprite_outline_pipeline.get(),
+            vertices,
+            offsets,
+            uv_coordinates,
+            uv_coordinates_flipped,
+            height_values,
+            indices,
+            texture,
+            buffer_offset);
+
+        math::Matrix transform = m_model_stack.top();
+        math::ScaleXY(transform, math::Vector(1.2f, 1.2f));
+
+        SpritePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), transform);
+        SpritePipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
+
+        SpritePipeline::SetFlipSprite(
+            sprite_properties & mono::SpriteProperty::FLIP_HORIZONTAL,
+            sprite_properties & mono::SpriteProperty::FLIP_VERTICAL);
+        SpritePipeline::SetWindSway(sprite_properties & mono::SpriteProperty::WIND_SWAY);
+
+        SpritePipeline::SetOutlineColor(mono::Color::MAGENTA);
+        sg_draw(0, 6, 1);
+    }
 }
 
 void RendererSokol::DrawSprite(

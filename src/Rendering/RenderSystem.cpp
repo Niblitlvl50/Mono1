@@ -55,6 +55,18 @@ namespace
         MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_pass.");
     }
 
+    void sokol_gfx_logger(
+        const char* tag,                // always "sg"
+        uint32_t log_level,             // 0=panic, 1=error, 2=warning, 3=info
+        uint32_t log_item_id,           // SG_LOGITEM_*
+        const char* message_or_null,    // a message string, may be nullptr in release mode
+        uint32_t line_nr,               // line number in sokol_gfx.h
+        const char* filename_or_null,   // source filename, may be nullptr in release mode
+        void* user_data)
+    {
+        MONO_ASSERT_MESSAGE(log_level >= 3, message_or_null);
+    }
+
     void sokol_imgui_logger(
         const char* tag,                // always "simgui"
         uint32_t log_level,             // 0=panic, 1=error, 2=warning, 3=info
@@ -82,7 +94,7 @@ RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
 {
     sg_desc desc = {};
     desc.buffer_pool_size = 2048;
-    desc.context.depth_format = SG_PIXELFORMAT_NONE;
+    desc.logger.func = sokol_gfx_logger;
     sg_setup(&desc);
 
     sg_trace_hooks trace_hooks = {};

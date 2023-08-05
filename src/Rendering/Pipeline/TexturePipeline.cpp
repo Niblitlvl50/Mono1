@@ -264,14 +264,6 @@ mono::IPipelinePtr TexturePipeline::MakePipeline()
     shader_desc.attrs[ATTR_POSITION].name = "vertex_position";
     shader_desc.attrs[ATTR_UV].name = "texture_coord";
 
-    /*
-    shader_desc.vs.uniform_blocks[0].size = sizeof(float) * 2;
-    shader_desc.vs.uniform_blocks[0].uniforms[0].name = "time_input.total_time";
-    shader_desc.vs.uniform_blocks[0].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
-    shader_desc.vs.uniform_blocks[0].uniforms[1].name = "time_input.delta_time";
-    shader_desc.vs.uniform_blocks[0].uniforms[1].type = SG_UNIFORMTYPE_FLOAT;
-    */
-
     shader_desc.vs.uniform_blocks[U_TRANSFORM_BLOCK].size = sizeof(math::Matrix) * 3;
     shader_desc.vs.uniform_blocks[U_TRANSFORM_BLOCK].uniforms[0].name = "transform_input.projection";
     shader_desc.vs.uniform_blocks[U_TRANSFORM_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_MAT4;
@@ -318,12 +310,9 @@ mono::IPipelinePtr TexturePipeline::MakePipeline()
     pipeline_desc.layout.attrs[ATTR_UV].format = SG_VERTEXFORMAT_FLOAT2;
     pipeline_desc.layout.attrs[ATTR_UV].buffer_index = ATTR_UV;
 
-    //pipeline_desc.rasterizer.face_winding = SG_FACEWINDING_CCW;
     pipeline_desc.colors[0].blend.enabled = true;
     pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
     pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-
-    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -339,14 +328,6 @@ mono::IPipelinePtr TexturePipeline::MakeAnnotationPipeline()
     shader_desc.vs.source = vertex_source_annotation;
     shader_desc.attrs[ATTR_POSITION].name = "vertex_position";
     shader_desc.attrs[ATTR_ANNOTATION].name = "annotation";
-
-    /*
-    shader_desc.vs.uniform_blocks[0].size = sizeof(float) * 2;
-    shader_desc.vs.uniform_blocks[0].uniforms[0].name = "time_input.total_time";
-    shader_desc.vs.uniform_blocks[0].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
-    shader_desc.vs.uniform_blocks[0].uniforms[1].name = "time_input.delta_time";
-    shader_desc.vs.uniform_blocks[0].uniforms[1].type = SG_UNIFORMTYPE_FLOAT;
-    */
 
     shader_desc.vs.uniform_blocks[U_TRANSFORM_BLOCK].size = sizeof(math::Matrix) * 3;
     shader_desc.vs.uniform_blocks[U_TRANSFORM_BLOCK].uniforms[0].name = "transform_input.projection";
@@ -394,12 +375,9 @@ mono::IPipelinePtr TexturePipeline::MakeAnnotationPipeline()
     pipeline_desc.layout.attrs[ATTR_ANNOTATION].format = SG_VERTEXFORMAT_FLOAT4;
     pipeline_desc.layout.attrs[ATTR_ANNOTATION].buffer_index = ATTR_ANNOTATION;
 
-    //pipeline_desc.rasterizer.face_winding = SG_FACEWINDING_CCW;
     pipeline_desc.colors[0].blend.enabled = true;
     pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
     pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-
-    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -416,14 +394,6 @@ mono::IPipelinePtr TexturePipeline::MakeVertexColorPipeline()
     shader_desc.attrs[ATTR_POSITION].name = "vertex_position";
     shader_desc.attrs[ATTR_UV].name = "texture_coord";
     shader_desc.attrs[ATTR_COLOR].name = "vertex_color";
-
-    /*
-    shader_desc.vs.uniform_blocks[0].size = sizeof(float) * 2;
-    shader_desc.vs.uniform_blocks[0].uniforms[0].name = "time_input.total_time";
-    shader_desc.vs.uniform_blocks[0].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
-    shader_desc.vs.uniform_blocks[0].uniforms[1].name = "time_input.delta_time";
-    shader_desc.vs.uniform_blocks[0].uniforms[1].type = SG_UNIFORMTYPE_FLOAT;
-    */
 
     shader_desc.vs.uniform_blocks[U_TRANSFORM_BLOCK].size = sizeof(math::Matrix) * 3;
     shader_desc.vs.uniform_blocks[U_TRANSFORM_BLOCK].uniforms[0].name = "transform_input.projection";
@@ -474,12 +444,9 @@ mono::IPipelinePtr TexturePipeline::MakeVertexColorPipeline()
     pipeline_desc.layout.attrs[ATTR_COLOR].format = SG_VERTEXFORMAT_FLOAT4;
     pipeline_desc.layout.attrs[ATTR_COLOR].buffer_index = ATTR_COLOR;
 
-    //pipeline_desc.rasterizer.face_winding = SG_FACEWINDING_CCW;
     pipeline_desc.colors[0].blend.enabled = true;
     pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
     pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-
-    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
@@ -531,22 +498,6 @@ void TexturePipeline::Apply(
 
     sg_apply_bindings(&bindings);
 }
-
-/*
-void TexturePipeline::SetTime(IPipeline* pipeline, float total_time_s, float delta_time_s)
-{
-    struct TimeBlock
-    {
-        float total_time;
-        float delta_time;
-    } time_block;
-
-    time_block.total_time = total_time_s;
-    time_block.delta_time = delta_time_s;
-
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_TIME_BLOCK, &time_block, sizeof(TimeBlock));
-}
-*/
 
 void TexturePipeline::SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model)
 {

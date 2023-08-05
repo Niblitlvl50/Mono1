@@ -12,6 +12,8 @@ namespace mono
     public:
 
         static mono::IPipelinePtr MakePipeline();
+        static mono::IPipelinePtr MakeOutlinePipeline();
+
         static void Apply(
             IPipeline* pipeline,
             const IRenderBuffer* position,
@@ -30,5 +32,6 @@ namespace mono
         static void SetWindSway(bool enable_wind);
         static void SetShade(const mono::Color::RGBA& color);
         static void SetFlashSprite(bool flash);
+        static void SetOutlineColor(const mono::Color::RGBA& outline_color);
     };
 }

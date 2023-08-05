@@ -124,12 +124,9 @@ mono::IPipelinePtr FogPipeline::MakePipeline()
     pipeline_desc.layout.attrs[ATTR_POSITION].format = SG_VERTEXFORMAT_FLOAT2;
     pipeline_desc.layout.attrs[ATTR_POSITION].buffer_index = ATTR_POSITION;
 
-    //pipeline_desc.rasterizer.face_winding = SG_FACEWINDING_CCW;
     pipeline_desc.colors[0].blend.enabled = true;
     pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
     pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
-
-    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);

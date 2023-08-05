@@ -55,6 +55,9 @@ namespace mono
         void FlashSprite();
         bool ShouldFlashSprite() const override;
 
+        void SetOutlineSprite(bool outline) override;
+        bool ShouldOutlineSprite() const override;
+
     private:
 
         const SpriteData* m_sprite_data;
@@ -73,6 +76,7 @@ namespace mono
         math::Vector m_shadow_offset;
         float m_shadow_size;
         int m_flash_timer;
+        bool m_outline;
         SpriteAnimationCallback m_callback;
     };
 }

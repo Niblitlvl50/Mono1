@@ -112,7 +112,7 @@ namespace
         pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
         pipeline_desc.colors[0].blend.dst_factor_rgb = SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
 
-        pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
+        //pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
         sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
         const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);

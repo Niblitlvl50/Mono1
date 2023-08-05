@@ -137,15 +137,11 @@ mono::IPipelinePtr ParticlePointPipeline::MakePipeline(mono::BlendMode blend_mod
     pipeline_desc.layout.attrs[ATTR_POINT_SIZE].format = SG_VERTEXFORMAT_FLOAT;
     pipeline_desc.layout.attrs[ATTR_POINT_SIZE].buffer_index = ATTR_POINT_SIZE;
 
-    //pipeline_desc.rasterizer.face_winding = SG_FACEWINDING_CCW;
-
     pipeline_desc.colors[0].blend.enabled = true;
     pipeline_desc.colors[0].blend.src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA;
 
     const sg_blend_factor blend_factor = (blend_mode == mono::BlendMode::ONE) ? SG_BLENDFACTOR_ONE : SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA;
     pipeline_desc.colors[0].blend.dst_factor_rgb = blend_factor;
-
-    pipeline_desc.depth.pixel_format = SG_PIXELFORMAT_NONE;
 
     sg_pipeline pipeline_handle = sg_make_pipeline(pipeline_desc);
     const sg_resource_state pipeline_state = sg_query_pipeline_state(pipeline_handle);
