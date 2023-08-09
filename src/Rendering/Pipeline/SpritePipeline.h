@@ -12,6 +12,7 @@ namespace mono
     public:
 
         static mono::IPipelinePtr MakePipeline();
+        static mono::IPipelinePtr MakePipelineWithStencil();
         static mono::IPipelinePtr MakeOutlinePipeline();
 
         static void Apply(

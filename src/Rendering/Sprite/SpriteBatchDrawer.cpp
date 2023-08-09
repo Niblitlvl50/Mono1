@@ -178,6 +178,21 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
         const int offset = draw_data.sprite->GetCurrentFrameIndex() * sprite_buffers.vertices_per_sprite;
         renderer.DrawSprite(draw_data.sprite, &sprite_buffers, m_sprite_indices.get(), offset);
     }
+
+    // Draw outline
+    for(const SpriteDrawData& draw_data : sprites_to_draw)
+    {
+        const bool draw_outline = draw_data.sprite->ShouldOutlineSprite();
+        if(!draw_outline)
+            continue;
+
+        const math::Matrix& world_transform = renderer.GetTransform() * draw_data.transform;
+        auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
+
+        const SpriteDrawBuffers& sprite_buffers = m_sprite_buffers[draw_data.sprite->GetSpriteHash()];
+        const int offset = draw_data.sprite->GetCurrentFrameIndex() * sprite_buffers.vertices_per_sprite;
+        renderer.DrawSpriteOutline(draw_data.sprite, &sprite_buffers, m_sprite_indices.get(), offset);
+    }
 }
 
 math::Quad SpriteBatchDrawer::BoundingBox() const

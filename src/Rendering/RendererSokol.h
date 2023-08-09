@@ -56,6 +56,12 @@ namespace mono
             const IElementBuffer* indices,
             uint32_t buffer_offset) const override;
 
+        void DrawSpriteOutline(
+            const ISprite* sprite,
+            const SpriteDrawBuffers* buffers,
+            const IElementBuffer* indices,
+            uint32_t buffer_offset) const override;
+
         void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float point_size) const override;
         void DrawPoints(const std::vector<math::Vector>& points, const std::vector<mono::Color::RGBA>& colors, float point_size) const override;
         void DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float width) const override;
@@ -187,6 +193,7 @@ namespace mono
         std::unique_ptr<IPipeline> m_texture_annotation_pipeline;
         std::unique_ptr<IPipeline> m_texture_pipeline_color;
         std::unique_ptr<IPipeline> m_sprite_pipeline;
+        std::unique_ptr<IPipeline> m_sprite_stencil_pipeline;
         std::unique_ptr<IPipeline> m_sprite_outline_pipeline;
         std::unique_ptr<IPipeline> m_fog_pipeline;
         std::unique_ptr<IPipeline> m_screen_pipeline;

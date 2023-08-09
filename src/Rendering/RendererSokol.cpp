@@ -59,6 +59,7 @@ RendererSokol::RendererSokol()
     m_texture_pipeline_color = mono::TexturePipeline::MakeVertexColorPipeline();
     
     m_sprite_pipeline = mono::SpritePipeline::MakePipeline();
+    m_sprite_stencil_pipeline = mono::SpritePipeline::MakePipelineWithStencil();
     m_sprite_outline_pipeline = mono::SpritePipeline::MakeOutlinePipeline();
 
     m_fog_pipeline = mono::FogPipeline::MakePipeline();
@@ -381,8 +382,11 @@ void RendererSokol::DrawSprite(
     const ITexture* texture,
     uint32_t buffer_offset) const
 {
+    const bool draw_outline = sprite->ShouldOutlineSprite();
+    mono::IPipeline* selected_pipeline = draw_outline ? m_sprite_stencil_pipeline.get() : m_sprite_pipeline.get();
+
     SpritePipeline::Apply(
-        m_sprite_pipeline.get(),
+        selected_pipeline,
         vertices,
         offsets,
         uv_coordinates,
@@ -405,35 +409,6 @@ void RendererSokol::DrawSprite(
     SpritePipeline::SetFlashSprite(sprite->ShouldFlashSprite());
 
     sg_draw(0, 6, 1);
-
-    const bool draw_outline = sprite->ShouldOutlineSprite();
-    if(draw_outline)
-    {
-        SpritePipeline::Apply(
-            m_sprite_outline_pipeline.get(),
-            vertices,
-            offsets,
-            uv_coordinates,
-            uv_coordinates_flipped,
-            height_values,
-            indices,
-            texture,
-            buffer_offset);
-
-        math::Matrix transform = m_model_stack.top();
-        math::ScaleXY(transform, math::Vector(1.2f, 1.2f));
-
-        SpritePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), transform);
-        SpritePipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
-
-        SpritePipeline::SetFlipSprite(
-            sprite_properties & mono::SpriteProperty::FLIP_HORIZONTAL,
-            sprite_properties & mono::SpriteProperty::FLIP_VERTICAL);
-        SpritePipeline::SetWindSway(sprite_properties & mono::SpriteProperty::WIND_SWAY);
-
-        SpritePipeline::SetOutlineColor(mono::Color::GOLDEN_YELLOW);
-        sg_draw(0, 6, 1);
-    }
 }
 
 void RendererSokol::DrawSprite(
@@ -449,6 +424,45 @@ void RendererSokol::DrawSprite(
         indices,
         sprite->GetTexture(),
         buffer_offset);
+}
+
+void RendererSokol::DrawSpriteOutline(
+    const ISprite* sprite, const SpriteDrawBuffers* buffers, const IElementBuffer* indices, uint32_t buffer_offset) const
+{
+    SpritePipeline::Apply(
+        m_sprite_outline_pipeline.get(),
+        buffers->vertices.get(),
+        buffers->offsets.get(),
+        buffers->uv.get(),
+        buffers->uv_flipped.get(),
+        buffers->heights.get(),
+        indices,
+        sprite->GetTexture(),
+        buffer_offset);
+
+    const uint32_t sprite_properties = sprite->GetProperties();
+    const float ppm = mono::RenderSystem::PixelsPerMeter();
+    const mono::SpriteFrame& sprite_frame = sprite->GetCurrentFrame();
+
+    const float ratio = sprite_frame.size.y / sprite_frame.size.x;
+    const float x_scale = (1.0f / ppm * ratio) * 5.0f;
+    const float y_scale = (1.0f / ppm * 1.0f)  * 5.0f;
+
+    const math::Vector scale_vector = math::Vector(1.0f, 1.0f) + math::Vector(x_scale, y_scale);
+
+    math::Matrix transform = m_model_stack.top();
+    math::ScaleXY(transform, scale_vector);
+
+    SpritePipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), transform);
+    SpritePipeline::SetTime(float(m_timestamp) / 1000.0f, m_delta_time_s);
+
+    SpritePipeline::SetFlipSprite(
+        sprite_properties & mono::SpriteProperty::FLIP_HORIZONTAL,
+        sprite_properties & mono::SpriteProperty::FLIP_VERTICAL);
+    SpritePipeline::SetWindSway(sprite_properties & mono::SpriteProperty::WIND_SWAY);
+
+    SpritePipeline::SetOutlineColor(mono::Color::GOLDEN_YELLOW);
+    sg_draw(0, 6, 1);
 }
 
 void RendererSokol::DrawFog(const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture)

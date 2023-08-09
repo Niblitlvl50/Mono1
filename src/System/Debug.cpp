@@ -44,3 +44,28 @@ void debug::LogAssert(const char* condition, const char* message, const char* fi
 
     //debug::PrintStacktrace(2, 10); 
 }
+
+#ifdef __APPLE__
+
+void debug::DebugBreak()
+{
+    __builtin_debugtrap()
+}
+
+#elif _WIN32
+
+#include "Windows.h"
+
+void debug::DebugBreak()
+{
+    ::DebugBreak();
+}
+
+#else
+
+void debug::DebugBreak()
+{
+}
+
+#endif
+
