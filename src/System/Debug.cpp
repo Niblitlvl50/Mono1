@@ -49,7 +49,7 @@ void debug::LogAssert(const char* condition, const char* message, const char* fi
 
 void debug::DebugBreak()
 {
-    __builtin_debugtrap()
+    __builtin_debugtrap();
 }
 
 #elif _WIN32
