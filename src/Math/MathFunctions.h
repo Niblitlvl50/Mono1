@@ -58,6 +58,33 @@ namespace math
 
     bool IsPrettyMuchEquals(float left, float right, float tolerance = FLT_EPSILON);
 
+	inline float Square(float A)
+	{
+		return A * A;
+	}
+
+    /**
+    * Returns an approximation of Exp(-X) based on a Taylor expansion that has had the coefficients adjusted (using
+    * optimisation) to minimise the error in the range 0 < X < 1, which is below 0.1%. Note that it returns exactly 1
+    * when X is 0, and the return value is greater than the real value for values of X > 1 (but it still tends
+    * to zero for large X). 
+    */
+    template<class T>
+    inline constexpr T InvExpApprox(T X)
+    {
+        constexpr T A(1.00746054f); // 1 / 1! in Taylor series
+        constexpr T B(0.45053901f); // 1 / 2! in Taylor series
+        constexpr T C(0.25724632f); // 1 / 3! in Taylor series
+        return 1 / (1 + A * X + B * X * X + C * X * X * X);
+    }
+
+    inline void SinCos(float* ScalarSin, float* ScalarCos, float Value)
+    {
+        // No approximations for doubles
+        *ScalarSin = std::sin(Value);
+        *ScalarCos = std::cos(Value);
+    }
+
     inline float Align(float value, float size)
     {
         return std::floor(value / size) * size;
