@@ -153,6 +153,76 @@ namespace math
 		}
 	}
 
+	inline void SpringDamper(
+		math::Vector& in_out_position,
+		math::Vector& in_out_velocity,
+        const math::Vector& position_goal,
+        const math::Vector& velocity_goal,
+		float delta_s,
+	    float InUndampedFrequency,
+	    float InDampingRatio)
+	{
+		SpringDamper(in_out_position.x, in_out_velocity.x, position_goal.x, velocity_goal.x, delta_s, InUndampedFrequency, InDampingRatio);
+		SpringDamper(in_out_position.y, in_out_velocity.y, position_goal.y, velocity_goal.y, delta_s, InUndampedFrequency, InDampingRatio);
+	}
+
+	/**
+	* Smooths a value using a spring damper towards a target.
+	* 
+	* The implementation uses approximations for Exp/Sin/Cos. These are accurate for all sensible values of 
+	* DampingRatio and InSmoothingTime so long as InDeltaTime < 0.5 * InSmoothingTime, but are generally well behaved 
+	* even for larger timesteps etc. 
+	* 
+	* @param  InOutValue        The value to be smoothed
+	* @param  InOutValueRate    The rate of change of the value
+	* @param  InTargetValue     The target to smooth towards
+	* @param  InTargetValueRate The target rate of change smooth towards. Note that if this is discontinuous, then the output will have discontinuous velocity too.
+	* @param  InDeltaTime       Time interval
+	* @param  InSmoothingTime   Timescale over which to smooth. Larger values result in more smoothed behaviour. Can be zero.
+	* @param  InDampingRatio    1 is critical damping. <1 results in under-damped motion (i.e. with overshoot), and >1 results in over-damped motion. 
+	*/
+	template<class T>
+	static void SpringDamperSmoothing(
+		T&          InOutValue,
+		T&          InOutValueRate,
+		const T&    InTargetValue,
+		const T&    InTargetValueRate,
+		const float InDeltaTime,
+		const float InSmoothingTime,
+		const float InDampingRatio)
+	{
+        constexpr float UE_SMALL_NUMBER = (1.e-8f);
+
+		if (InSmoothingTime < UE_SMALL_NUMBER)
+		{
+			if (InDeltaTime <= 0.0f)
+			{
+				return;
+			}
+			InOutValueRate = (InTargetValue - InOutValue) / InDeltaTime;
+			InOutValue = InTargetValue;
+			return;
+		}
+
+		// Undamped frequency
+		float UndampedFrequency = 1.0f / (math::PI() * InSmoothingTime);
+		SpringDamper(InOutValue, InOutValueRate, InTargetValue, InTargetValueRate, InDeltaTime, UndampedFrequency, InDampingRatio);
+	}
+
+	inline void SpringDamperSmoothing(
+		math::Vector& in_out_position,
+		math::Vector& in_out_velocity,
+        const math::Vector& position_goal,
+        const math::Vector& velocity_goal,
+		float delta_s,
+	    float InUndampedFrequency,
+	    float InDampingRatio)
+	{
+		SpringDamperSmoothing(in_out_position.x, in_out_velocity.x, position_goal.x, velocity_goal.x, delta_s, InUndampedFrequency, InDampingRatio);
+		SpringDamperSmoothing(in_out_position.y, in_out_velocity.y, position_goal.y, velocity_goal.y, delta_s, InUndampedFrequency, InDampingRatio);
+	}
+
+
     inline void critical_spring_damper(
         math::Vector& in_out_position,
         math::Vector& in_out_velocity,

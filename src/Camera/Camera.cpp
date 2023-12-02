@@ -79,6 +79,8 @@ void Camera::SetPosition(const math::Vector& position)
 {
     m_position = position;
     m_target_position = position;
+
+    m_move_velocity = math::ZeroVec;
 }
 
 void Camera::SetTargetPosition(const math::Vector& position)
