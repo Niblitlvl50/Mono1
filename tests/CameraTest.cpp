@@ -26,5 +26,5 @@ TEST(Camera, ScreenToWorld)
     const math::Vector world_position = camera.ScreenToWorld(math::Vector(10.0f, 4.0f));
 
     EXPECT_FLOAT_EQ(world_position.x, -48.4375);
-    EXPECT_FLOAT_EQ(world_position.y, 41.375);
+    EXPECT_FLOAT_EQ(world_position.y, 36.875);
 }

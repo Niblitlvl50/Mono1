@@ -6,7 +6,9 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceRoot}/bin/unittest",
-//            "args": ["world.world"],
+            "args": [
+//                "world.world"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],
