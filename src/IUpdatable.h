@@ -11,6 +11,7 @@ namespace mono
         uint32_t frame_count;
         uint32_t delta_ms;
         float delta_s;
+        float delta_s_raw;
         bool paused;
     };
 

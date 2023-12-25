@@ -33,7 +33,6 @@
 #include "Math/Vector.h"
 #include "Math/Quad.h"
 
-
 namespace
 {
     class Updater : public mono::IUpdater
@@ -103,7 +102,7 @@ int Engine::Run(IZone* zone)
     };
 
     InputHandler input_handler(screen_to_world_func, m_event_handler);
-    UpdateContext update_context = { 0, 0, 0, 0.0f, false };
+    UpdateContext update_context = { 0, 0, 0, 0.0f, 0.0f, false };
     Updater updater;
 
     zone->OnLoad(m_camera, &renderer);
@@ -127,11 +126,18 @@ int Engine::Run(IZone* zone)
         const float slow_down_multiplier = slow_down ? 0.25f : 1.0f;
 
         const uint32_t before_time = System::GetMilliseconds();
-        const uint32_t delta_ms =
+        const uint32_t delta_ms = before_time - last_time;
+        const uint32_t delta_ms_timescaled =
             std::clamp(
-                uint32_t((before_time - last_time) * m_time_scale * slow_down_multiplier),
+                uint32_t(delta_ms * m_time_scale * slow_down_multiplier),
                 1u, std::numeric_limits<uint32_t>::max());
-        update_context.timestamp += delta_ms;
+
+        update_context.frame_count++;
+        update_context.delta_ms = delta_ms_timescaled;
+        update_context.delta_s = float(delta_ms_timescaled) / 1000.0f;
+        update_context.delta_s_raw = float(delta_ms) / 1000.0f;
+        update_context.paused = m_pause;
+        update_context.timestamp += delta_ms_timescaled;
 
         const System::Size size = m_window->Size();
         const System::Size drawable_size = m_window->DrawableSize();
@@ -149,11 +155,6 @@ int Engine::Run(IZone* zone)
         if(!m_suspended)
         {
             audio::MixSounds();
-
-            update_context.frame_count++;
-            update_context.delta_ms = delta_ms;
-            update_context.delta_s = float(delta_ms) / 1000.0f;
-            update_context.paused = m_pause;
 
             renderer.SetDeltaAndTimestamp(update_context.delta_s, update_context.timestamp);
 

@@ -47,6 +47,11 @@ namespace mono
             return m_data[real_index];
         }
 
+        uint32_t Offset() const
+        {
+            return m_offset_index;
+        }
+
         uint32_t Length() const
         {
             return m_length;
@@ -55,6 +60,11 @@ namespace mono
         bool IsFull() const
         {
             return m_length == SIZE;
+        }
+
+        const T* Data() const
+        {
+            return m_data;
         }
 
         template <typename F>
