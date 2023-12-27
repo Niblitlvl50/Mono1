@@ -30,7 +30,7 @@ namespace mono
     {
     public:
 
-        ScopedTimerCallback(T&& callback)
+        ScopedTimerCallback(const T& callback)
             : m_start_time(System::GetPerformanceCounter())
             , m_callback(callback)
         { }
@@ -42,7 +42,7 @@ namespace mono
         }
 
         const uint64_t m_start_time;
-        T m_callback;
+        const T& m_callback;
     };
 }
 
