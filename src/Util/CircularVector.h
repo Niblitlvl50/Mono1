@@ -18,6 +18,7 @@ namespace mono
             , m_length(0)
         {
             m_data = new T[SIZE];
+            std::memset(m_data, 0, SIZE * sizeof(float));
         }
 
         ~CircularVector()
@@ -55,6 +56,11 @@ namespace mono
         uint32_t Length() const
         {
             return m_length;
+        }
+
+        uint32_t MaxSize() const
+        {
+            return SIZE;
         }
 
         bool IsFull() const
