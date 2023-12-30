@@ -4,6 +4,10 @@
 #include "System/System.h"
 #include <cstdio>
 
+#ifdef _MSC_VER
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#endif
+
 namespace mono
 {
     class ScopedTimer
@@ -51,4 +55,7 @@ namespace mono
 
 #define SCOPED_TIMER_AUTO() \
     const mono::ScopedTimer UNIQUE_NAME(scoped_timer, __LINE__)(__PRETTY_FUNCTION__);
+
+#define SCOPED_TIMER_AUTO_CB(callback) \
+    const mono::ScopedTimerCallback UNIQUE_NAME(scoped_timer, __LINE__)(callback);
 
