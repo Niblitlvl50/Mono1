@@ -482,9 +482,10 @@ void System::Initialize(const InitializeContext& context)
     if(working_directory)
     {
         ChangeDirectory(working_directory);
-        const std::string set_working_dir = GetWorkingDirectory();
-        Log("\tresouce directory: %s", set_working_dir.c_str());
     }
+
+    const std::string set_working_dir = GetWorkingDirectory();
+    Log("\tresouce directory: %s", set_working_dir.c_str());
 
     Log("Desktop Display Modes");
     for(int index = 0; index < SDL_GetNumVideoDisplays(); ++index)
