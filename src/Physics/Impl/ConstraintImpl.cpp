@@ -1,5 +1,6 @@
 
 #include "ConstraintImpl.h"
+#include "Physics/IBody.h"
 
 #include "chipmunk/chipmunk.h"
 
@@ -46,6 +47,14 @@ void ConstraintImpl::SetErrorBias(float bias)
 float ConstraintImpl::GetErrorBias() const 
 {
     return cpConstraintGetErrorBias(m_constraint);
+}
+
+mono::ConstraintBodyPair ConstraintImpl::GetBodies()
+{
+    return {
+        (mono::IBody*)cpBodyGetUserData(cpConstraintGetBodyA(m_constraint)),
+        (mono::IBody*)cpBodyGetUserData(cpConstraintGetBodyB(m_constraint))
+    };
 }
 
 cpConstraint* ConstraintImpl::Handle() 

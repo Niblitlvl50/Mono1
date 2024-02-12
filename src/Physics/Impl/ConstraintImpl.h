@@ -20,6 +20,7 @@ namespace cm
         float GetMaxBias() const override;
         void SetErrorBias(float bias) override;
         float GetErrorBias() const override;
+        mono::ConstraintBodyPair GetBodies() override;
         cpConstraint* Handle() override;
 
     private:

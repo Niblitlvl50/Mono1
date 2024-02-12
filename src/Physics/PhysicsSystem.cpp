@@ -9,6 +9,7 @@
 #include "Impl/ConstraintImpl.h"
 
 #include "Math/MathFunctions.h"
+#include "Util/Algorithm.h"
 #include "Util/ObjectPool.h"
 #include "System/System.h"
 #include "System/Debug.h"
@@ -90,6 +91,7 @@ struct PhysicsSystem::Impl
 
     std::vector<cm::BodyImpl> bodies;
     std::vector<std::vector<cm::ShapeImpl*>> bodies_shapes;
+    std::vector<std::vector<cm::ConstraintImpl*>> bodies_constraints;
     std::vector<bool> active_bodies;
 
     mono::PhysicsSpace space;
@@ -116,6 +118,7 @@ PhysicsSystem::PhysicsSystem(const PhysicsSystemInitParams& init_params, mono::T
     }
 
     m_impl->bodies_shapes.resize(init_params.n_bodies);
+    m_impl->bodies_constraints.resize(init_params.n_bodies);
     m_impl->active_bodies.resize(init_params.n_bodies, false);
 
     System::Log(
@@ -180,6 +183,7 @@ void PhysicsSystem::ReleaseBody(uint32_t body_id)
     // Dynamic is the default type, and needs to be reset to that so the cpBodyInit works
     // as expected when this body is reused again. 
     cpBodySetType(body.Handle(), CP_BODY_TYPE_DYNAMIC);
+    cpBodySetMass(body.Handle(), 1.0f);
 
     body.ClearCollisionHandlers();
     body.ResetForces();
@@ -195,6 +199,11 @@ void PhysicsSystem::ReleaseBody(uint32_t body_id)
 
         m_impl->shapes.ReleasePoolData(shape);
     }
+
+    const std::vector<cm::ConstraintImpl*>& constraints_for_body = m_impl->bodies_constraints[body_id];
+    (void)constraints_for_body;
+    MONO_ASSERT(constraints_for_body.empty());
+
     body_shapes.clear();
 
     m_impl->space.Remove(&body);
@@ -473,6 +482,12 @@ mono::IConstraint* PhysicsSystem::CreateSlideJoint(
     m_impl->m_constraint_release_funcs[constraint_impl] = &PhysicsSystem::Impl::ReleaseSlideJoint;
     m_impl->space.Add(constraint_impl);
 
+    std::vector<cm::ConstraintImpl*>& constraints_for_body_1 = m_impl->bodies_constraints[first->GetId()];
+    constraints_for_body_1.push_back(constraint_impl);
+
+    std::vector<cm::ConstraintImpl*>& constraints_for_body_2 = m_impl->bodies_constraints[second->GetId()];
+    constraints_for_body_2.push_back(constraint_impl);
+
     return constraint_impl;
 }
 
@@ -487,18 +502,36 @@ mono::IConstraint* PhysicsSystem::CreateSpring(IBody* first, IBody* second, floa
     m_impl->m_constraint_release_funcs[constraint_impl] = &PhysicsSystem::Impl::ReleaseSpring;
     m_impl->space.Add(constraint_impl);
 
+    std::vector<cm::ConstraintImpl*>& constraints_for_body_1 = m_impl->bodies_constraints[first->GetId()];
+    constraints_for_body_1.push_back(constraint_impl);
+
+    std::vector<cm::ConstraintImpl*>& constraints_for_body_2 = m_impl->bodies_constraints[second->GetId()];
+    constraints_for_body_2.push_back(constraint_impl);
+
     return constraint_impl;
 }
 
 void PhysicsSystem::ReleaseConstraint(mono::IConstraint* constraint)
 {
+    cm::ConstraintImpl* constraint_impl = (cm::ConstraintImpl*)constraint;
+
+    const mono::ConstraintBodyPair body_pair = constraint->GetBodies();
+    const uint32_t first_body_id = body_pair.first->GetId();
+    const uint32_t second_body_id = body_pair.second->GetId();
+
+    std::vector<cm::ConstraintImpl*>& constraints_for_body_1 = m_impl->bodies_constraints[first_body_id];
+    mono::remove(constraints_for_body_1, constraint_impl);
+
+    std::vector<cm::ConstraintImpl*>& constraints_for_body_2 = m_impl->bodies_constraints[second_body_id];
+    mono::remove(constraints_for_body_2, constraint_impl);
+
     m_impl->space.Remove(constraint);
 
     Impl::ReleaseConstraintFunc release_func = m_impl->m_constraint_release_funcs[constraint];
     (*m_impl.*release_func)(constraint->Handle());
     m_impl->m_constraint_release_funcs.erase(constraint);
 
-    m_impl->constraints.ReleasePoolData((cm::ConstraintImpl*)constraint);
+    m_impl->constraints.ReleasePoolData(constraint_impl);
 }
 
 mono::PhysicsSpace* PhysicsSystem::GetSpace() const

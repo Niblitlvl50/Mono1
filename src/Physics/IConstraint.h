@@ -5,6 +5,14 @@ struct cpConstraint;
 
 namespace mono
 {
+    class IBody;
+    
+    struct ConstraintBodyPair
+    {
+        mono::IBody* first;
+        mono::IBody* second;
+    };
+
     class IConstraint
     {
     public:
@@ -19,6 +27,8 @@ namespace mono
 
         virtual void SetErrorBias(float bias) = 0;
         virtual float GetErrorBias() const = 0;
+
+        virtual ConstraintBodyPair GetBodies() = 0;
 
         //! Native chipmunk handle
         virtual cpConstraint* Handle() = 0;
