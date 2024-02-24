@@ -28,6 +28,10 @@ namespace mono
         virtual void SetErrorBias(float bias) = 0;
         virtual float GetErrorBias() const = 0;
 
+        virtual float GetAppliedImpulse() const = 0;
+        virtual float GetAppliedForce() const = 0;
+        virtual float GetAppliedForcePercentage() const = 0;
+
         virtual ConstraintBodyPair GetBodies() = 0;
 
         //! Native chipmunk handle

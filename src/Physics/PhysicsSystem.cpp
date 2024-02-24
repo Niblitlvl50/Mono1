@@ -415,6 +415,14 @@ void PhysicsSystem::Update(const UpdateContext& update_context)
     }
 }
 
+void PhysicsSystem::Sync()
+{
+    for(mono::IConstraint* constraint : m_released_constraints)
+        ReleaseConstraintInternal(constraint);
+
+    m_released_constraints.clear();
+}
+
 mono::IBody* PhysicsSystem::GetBody(uint32_t body_id)
 {
     return &m_impl->bodies[body_id];
@@ -436,15 +444,6 @@ std::vector<mono::IShape*> PhysicsSystem::GetShapesAttachedToBody(uint32_t body_
         body_shapes.push_back(shape_impl);
 
     return body_shapes;
-}
-
-void PhysicsSystem::PositionBody(uint32_t body_id, const math::Vector& position)
-{
-    mono::IBody* body = GetBody(body_id);
-    body->SetPosition(position);
-
-    math::Matrix& transform = m_transform_system->GetTransform(body_id);
-    math::Position(transform, position);
 }
 
 mono::IBody* PhysicsSystem::CreateKinematicBody()
@@ -477,6 +476,7 @@ mono::IConstraint* PhysicsSystem::CreateSlideJoint(
         max_length);
 
     cm::ConstraintImpl* constraint_impl = m_impl->constraints.GetPoolData();
+    constraint_impl->Init(this);
     constraint_impl->SetHandle((cpConstraint*)slide_joint_data);
 
     m_impl->m_constraint_release_funcs[constraint_impl] = &PhysicsSystem::Impl::ReleaseSlideJoint;
@@ -491,12 +491,15 @@ mono::IConstraint* PhysicsSystem::CreateSlideJoint(
     return constraint_impl;
 }
 
-mono::IConstraint* PhysicsSystem::CreateSpring(IBody* first, IBody* second, float rest_length, float stiffness, float damping)
+mono::IConstraint* PhysicsSystem::CreateSpring(
+    IBody* first, IBody* second, const math::Vector& anchor_first, const math::Vector& anchor_second, float rest_length, float stiffness, float damping)
 {
     cpDampedSpring* damped_spring_data = m_impl->damped_spring_pool.GetPoolData();
-    cpDampedSpringInit(damped_spring_data, first->Handle(), second->Handle(), cpvzero, cpvzero, rest_length, stiffness, damping);
+    cpDampedSpringInit(
+        damped_spring_data, first->Handle(), second->Handle(), cpv(anchor_first.x, anchor_first.y), cpv(anchor_second.x, anchor_second.y), rest_length, stiffness, damping);
 
     cm::ConstraintImpl* constraint_impl = m_impl->constraints.GetPoolData();
+    constraint_impl->Init(this);
     constraint_impl->SetHandle((cpConstraint*)damped_spring_data);
 
     m_impl->m_constraint_release_funcs[constraint_impl] = &PhysicsSystem::Impl::ReleaseSpring;
@@ -512,6 +515,11 @@ mono::IConstraint* PhysicsSystem::CreateSpring(IBody* first, IBody* second, floa
 }
 
 void PhysicsSystem::ReleaseConstraint(mono::IConstraint* constraint)
+{
+    m_released_constraints.push_back(constraint);
+}
+
+void PhysicsSystem::ReleaseConstraintInternal(mono::IConstraint* constraint)
 {
     cm::ConstraintImpl* constraint_impl = (cm::ConstraintImpl*)constraint;
 

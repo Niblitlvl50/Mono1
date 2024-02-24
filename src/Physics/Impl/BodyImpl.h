@@ -29,6 +29,8 @@ namespace cm
         bool AutoCalculateMoment() const override;
         void SetPosition(const math::Vector& position) override;
         math::Vector GetPosition() const override;
+        math::Vector LocalToWorld(const math::Vector& local_point) const override;
+        math::Vector WorldToLocal(const math::Vector& world_point) const override;
         void ApplyForce(const math::Vector& force, const math::Vector& offset) override;
         void ApplyLocalForce(const math::Vector& force, const math::Vector& offset) override;
         void ApplyImpulse(const math::Vector& impulse, const math::Vector& offset) override;

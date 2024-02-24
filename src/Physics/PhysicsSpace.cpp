@@ -65,6 +65,11 @@ void PhysicsSpace::SetDamping(float damping)
     cpSpaceSetDamping(m_space, damping);
 }
 
+float PhysicsSpace::GetTimeStep() const
+{
+    return cpSpaceGetCurrentTimeStep(m_space);
+}
+
 void PhysicsSpace::Add(IBody* body)
 {
     if(body->GetType() != mono::BodyType::STATIC)

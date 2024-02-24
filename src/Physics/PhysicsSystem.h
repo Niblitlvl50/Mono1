@@ -140,6 +140,7 @@ namespace mono
 
         const char* Name() const override;
         void Update(const UpdateContext& update_context) override;
+        void Sync() override;
 
         mono::IBody* AllocateBody(uint32_t body_id, const BodyComponent& body_params);
         void ReleaseBody(uint32_t body_id);
@@ -152,14 +153,14 @@ namespace mono
         mono::IShape* AddShape(uint32_t body_id, const PolyComponent& poly_params);
 
         std::vector<mono::IShape*> GetShapesAttachedToBody(uint32_t body_id) const;
-        void PositionBody(uint32_t body_id, const math::Vector& position);
 
         mono::IBody* CreateKinematicBody();
         void ReleaseKinematicBody(mono::IBody* body);
 
         mono::IConstraint* CreateSlideJoint(
             IBody* first, IBody* second, const math::Vector& anchor_first, const math::Vector& anchor_second, float min_length, float max_length);
-        mono::IConstraint* CreateSpring(IBody* first, IBody* second, float rest_length, float stiffness, float damping);
+        mono::IConstraint* CreateSpring(
+            IBody* first, IBody* second, const math::Vector& anchor_first, const math::Vector& anchor_second, float rest_length, float stiffness, float damping);
         void ReleaseConstraint(mono::IConstraint* constraint);
 
         mono::PhysicsSpace* GetSpace() const;
@@ -169,8 +170,12 @@ namespace mono
 
     private:
 
+        void ReleaseConstraintInternal(mono::IConstraint* constraint);
+
         struct Impl;
         std::unique_ptr<Impl> m_impl;
         mono::TransformSystem* m_transform_system;
+
+        std::vector<mono::IConstraint*> m_released_constraints;
     };
 }

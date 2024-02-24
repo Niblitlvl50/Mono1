@@ -1,6 +1,8 @@
 
 #include "ConstraintImpl.h"
 #include "Physics/IBody.h"
+#include "Physics/PhysicsSystem.h"
+#include "Physics/PhysicsSpace.h"
 
 #include "chipmunk/chipmunk.h"
 
@@ -8,11 +10,18 @@ using namespace cm;
 
 ConstraintImpl::ConstraintImpl()
     : m_constraint(nullptr)
+    , m_physics_system(nullptr)
 { }
 
 ConstraintImpl::ConstraintImpl(cpConstraint* constraint)
     : m_constraint(constraint)
+    , m_physics_system(nullptr)
 { }
+
+void ConstraintImpl::Init(mono::PhysicsSystem* physics_system)
+{
+    m_physics_system = physics_system;
+}
 
 void ConstraintImpl::SetHandle(cpConstraint* constraint)
 {
@@ -47,6 +56,23 @@ void ConstraintImpl::SetErrorBias(float bias)
 float ConstraintImpl::GetErrorBias() const 
 {
     return cpConstraintGetErrorBias(m_constraint);
+}
+
+float ConstraintImpl::GetAppliedImpulse() const
+{
+    return cpConstraintGetImpulse(m_constraint);
+}
+
+float ConstraintImpl::GetAppliedForce() const
+{
+    const mono::PhysicsSpace* space = m_physics_system->GetSpace();
+    const float applied_force = GetAppliedImpulse() / space->GetTimeStep();
+    return applied_force;
+}
+
+float ConstraintImpl::GetAppliedForcePercentage() const
+{
+    return GetAppliedForce() / GetMaxForce();
 }
 
 mono::ConstraintBodyPair ConstraintImpl::GetBodies()

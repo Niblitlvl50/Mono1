@@ -96,6 +96,18 @@ math::Vector BodyImpl::GetPosition() const
     return math::Vector(position.x, position.y);
 }
 
+math::Vector BodyImpl::LocalToWorld(const math::Vector& local_point) const
+{
+    const cpVect& world_point = cpBodyLocalToWorld(m_body_handle, cpv(local_point.x, local_point.y));
+    return math::Vector(world_point.x, world_point.y);
+}
+
+math::Vector BodyImpl::WorldToLocal(const math::Vector& world_point) const
+{
+    const cpVect& local_point = cpBodyWorldToLocal(m_body_handle, cpv(world_point.x, world_point.y));
+    return math::Vector(local_point.x, local_point.y);
+}
+
 void BodyImpl::ApplyForce(const math::Vector& force, const math::Vector& offset) 
 {
     cpBodyApplyForceAtWorldPoint(m_body_handle, cpv(force.x, force.y), cpv(offset.x, offset.y));

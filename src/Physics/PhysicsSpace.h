@@ -39,6 +39,8 @@ namespace mono
 
         void SetGravity(const math::Vector& gravity);
         void SetDamping(float damping);
+
+        float GetTimeStep() const;
         
         void Add(IBody* body);
         void Add(IShape* shape);

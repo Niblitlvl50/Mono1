@@ -89,6 +89,9 @@ namespace mono
         //! @return math::Vector The position
         virtual math::Vector GetPosition() const = 0;
 
+        virtual math::Vector LocalToWorld(const math::Vector& local_point) const = 0;
+        virtual math::Vector WorldToLocal(const math::Vector& world_point) const = 0;
+
         //! Apply a force to the body
         //! @param force The force
         //! @param offset From where to apply it
