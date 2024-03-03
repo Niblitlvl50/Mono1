@@ -8,6 +8,13 @@
 #include <memory>
 #include <vector>
 
+class PhysicsShapeHelper;
+
+namespace cm
+{
+    struct PhysicsImpl;
+}
+
 namespace mono
 {
     class IBody;
@@ -34,14 +41,6 @@ namespace mono
         float mass;
         float inertia;
         BodyType type;
-    };
-
-    enum class ShapeType : int
-    {
-        CIRCLE,
-        BOX,
-        SEGMENT,
-        POLYGON
     };
 
     struct CircleComponent
@@ -79,29 +78,6 @@ namespace mono
         std::vector<math::Vector> vertices;
         math::Vector offset;
         bool is_sensor;
-    };
-
-    struct PivotComponent
-    {
-        uint32_t body_a;
-        uint32_t body_b;
-    };
-
-    struct GearComponent
-    {
-        uint32_t body_a;
-        uint32_t body_b;
-        float phase;
-        float ratio;
-    };
-
-    struct SpringComponent
-    {
-        uint32_t body_a;
-        uint32_t body_b;
-        float rest_length;
-        float stiffness;
-        float damping;
     };
 
     struct PhysicsSystemStats
@@ -172,10 +148,14 @@ namespace mono
 
         void ReleaseConstraintInternal(mono::IConstraint* constraint);
 
-        struct Impl;
-        std::unique_ptr<Impl> m_impl;
+        friend class PhysicsShapeHelper;
+
+        std::unique_ptr<cm::PhysicsImpl> m_impl;
         mono::TransformSystem* m_transform_system;
 
+        std::vector<mono::IBody*> m_deferred_add_bodies;
+        std::vector<mono::IShape*> m_deferred_add_shapes;
+        std::vector<mono::IConstraint*> m_deferred_add_constraints;
         std::vector<mono::IConstraint*> m_released_constraints;
     };
 }

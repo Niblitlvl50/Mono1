@@ -14,4 +14,6 @@ namespace mono
     class IShape;
     class IConstraint;
     class ICollisionHandler;
+
+    struct QueryResult;
 }

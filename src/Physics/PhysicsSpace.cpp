@@ -72,8 +72,7 @@ float PhysicsSpace::GetTimeStep() const
 
 void PhysicsSpace::Add(IBody* body)
 {
-    if(body->GetType() != mono::BodyType::STATIC)
-        cpSpaceAddBody(m_space, body->Handle());
+    cpSpaceAddBody(m_space, body->Handle());
 }
 
 void PhysicsSpace::Remove(IBody* body)

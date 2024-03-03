@@ -4,6 +4,7 @@
 #include "PhysicsSpace.h"
 #include "System/Hash.h"
 
+#include "Impl/PhysicsImpl.h"
 #include "Impl/BodyImpl.h"
 #include "Impl/ShapeImpl.h"
 #include "Impl/ConstraintImpl.h"
@@ -25,86 +26,48 @@
 
 using namespace mono;
 
-static_assert(static_cast<int>(BodyType::DYNAMIC) == cpBodyType::CP_BODY_TYPE_DYNAMIC);
-static_assert(static_cast<int>(BodyType::KINEMATIC) == cpBodyType::CP_BODY_TYPE_KINEMATIC);
-static_assert(static_cast<int>(BodyType::STATIC) == cpBodyType::CP_BODY_TYPE_STATIC);
-
-struct PhysicsSystem::Impl
+class PhysicsShapeHelper
 {
-    Impl(const PhysicsSystemInitParams& init_params, PhysicsSystem* physics_system)
-        : body_pool(init_params.n_bodies)
-        , circle_shape_pool(init_params.n_circle_shapes)
-        , segment_shape_pool(init_params.n_segment_shapes)
-        , poly_shape_pool(init_params.n_polygon_shapes)
-        , pivot_joint_pool(init_params.n_pivot_joints)
-        , slide_joint_pool(init_params.n_slide_joints)
-        , gear_joint_pool(init_params.n_gear_joints)
-        , damped_spring_pool(init_params.n_damped_springs)
-        , shapes(init_params.n_circle_shapes + init_params.n_segment_shapes + init_params.n_polygon_shapes)
-        , constraints(init_params.n_pivot_joints + init_params.n_gear_joints + init_params.n_damped_springs)
-        , space(physics_system)
-    { }
+public:
 
-    void ReleaseCircleShape(cpShape* shape)
+    static mono::IShape* FinalizeAddShape(
+        cm::PhysicsImpl* impl,
+        mono::PhysicsSystem* physics_system,
+        mono::IBody* body,
+        cpShape* shape_handle,
+        cm::PhysicsImpl::ReleaseShapeFunc release_func,
+        float inertia_value,
+        bool is_sensor,
+        uint32_t category,
+        uint32_t mask)
     {
-        circle_shape_pool.ReleasePoolData((cpCircleShape*)shape);
+        cm::ShapeImpl* shape_impl = impl->shapes.GetPoolData();
+        shape_impl->SetShapeHandle(shape_handle);
+        shape_impl->SetInertia(inertia_value);
+        shape_impl->SetSensor(is_sensor);
+        shape_impl->SetCollisionFilter(category, mask);
+
+        impl->m_shape_release_funcs[shape_impl] = release_func;
+
+        std::vector<cm::ShapeImpl*>& shapes_for_body = impl->bodies_shapes[body->GetId()];
+        shapes_for_body.push_back(shape_impl);
+
+        if(body->AutoCalculateMoment())
+        {
+            float inertia = 0.0f;
+            for(const cm::ShapeImpl* shape : shapes_for_body)
+                inertia += shape->GetInertiaValue();
+            body->SetMoment(inertia);
+        }
+
+        physics_system->m_deferred_add_shapes.push_back(shape_impl);
+        return shape_impl;
     }
-
-    void ReleaseSegmentShape(cpShape* shape)
-    {
-        segment_shape_pool.ReleasePoolData((cpSegmentShape*)shape);
-    }
-
-    void ReleasePolyShape(cpShape* shape)
-    {
-        poly_shape_pool.ReleasePoolData((cpPolyShape*)shape);
-    }
-
-    void ReleasePivotJoint(cpConstraint* constraint)
-    {
-        pivot_joint_pool.ReleasePoolData((cpPivotJoint*)constraint);
-    }
-
-    void ReleaseSlideJoint(cpConstraint* constraint)
-    {
-        slide_joint_pool.ReleasePoolData((cpSlideJoint*)constraint);
-    }
-
-    void ReleaseSpring(cpConstraint* constraint)
-    {
-        damped_spring_pool.ReleasePoolData((cpDampedSpring*)constraint);
-    }
-
-    mono::ObjectPool<cpBody> body_pool;
-
-    mono::ObjectPool<cpCircleShape> circle_shape_pool;
-    mono::ObjectPool<cpSegmentShape> segment_shape_pool;
-    mono::ObjectPool<cpPolyShape> poly_shape_pool;
-
-    mono::ObjectPool<cpPivotJoint> pivot_joint_pool;
-    mono::ObjectPool<cpSlideJoint> slide_joint_pool;
-    mono::ObjectPool<cpGearJoint> gear_joint_pool;
-    mono::ObjectPool<cpDampedSpring> damped_spring_pool;
-
-    mono::ObjectPool<cm::ShapeImpl> shapes;
-    mono::ObjectPool<cm::ConstraintImpl> constraints;
-
-    std::vector<cm::BodyImpl> bodies;
-    std::vector<std::vector<cm::ShapeImpl*>> bodies_shapes;
-    std::vector<std::vector<cm::ConstraintImpl*>> bodies_constraints;
-    std::vector<bool> active_bodies;
-
-    mono::PhysicsSpace space;
-
-    using ReleaseShapeFunc = void (Impl::*)(cpShape* handle);
-    std::unordered_map<cm::ShapeImpl*, ReleaseShapeFunc> m_shape_release_funcs;
-
-    using ReleaseConstraintFunc = void (Impl::*)(cpConstraint* handle);
-    std::unordered_map<IConstraint*, ReleaseConstraintFunc> m_constraint_release_funcs;
 };
 
+
 PhysicsSystem::PhysicsSystem(const PhysicsSystemInitParams& init_params, mono::TransformSystem* transform_system)
-    : m_impl(std::make_unique<Impl>(init_params, this))
+    : m_impl(std::make_unique<cm::PhysicsImpl>(init_params, this))
     , m_transform_system(transform_system)
 {
     m_impl->bodies.reserve(init_params.n_bodies);
@@ -170,9 +133,7 @@ mono::IBody* PhysicsSystem::AllocateBody(uint32_t id, const BodyComponent& body_
     cpBodySetType(new_body.Handle(), static_cast<cpBodyType>(body_params.type));
     cpBodySetUserData(new_body.Handle(), &new_body);
 
-    m_impl->space.Add(&new_body);
-    m_impl->active_bodies[id] = true;
-
+    m_deferred_add_bodies.push_back(&new_body);
     return &new_body;
 }
 
@@ -193,7 +154,7 @@ void PhysicsSystem::ReleaseBody(uint32_t body_id)
     {
         m_impl->space.Remove(shape);
 
-        Impl::ReleaseShapeFunc release_func = m_impl->m_shape_release_funcs[shape];
+        cm::PhysicsImpl::ReleaseShapeFunc release_func = m_impl->m_shape_release_funcs[shape];
         (*m_impl.*release_func)(shape->Handle());
         m_impl->m_shape_release_funcs.erase(shape);
 
@@ -220,122 +181,62 @@ bool PhysicsSystem::IsAllocated(uint32_t body_id) const
 
 mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const CircleComponent& params)
 {
-    const cpVect offset = cpv(params.offset.x, params.offset.y);
-
     mono::IBody& body = m_impl->bodies[body_id];
+
     cpCircleShape* shape_data = m_impl->circle_shape_pool.GetPoolData();
     MONO_ASSERT(shape_data != nullptr);
 
+    const cpVect offset = cpv(params.offset.x, params.offset.y);
     cpCircleShapeInit(shape_data, body.Handle(), params.radius, offset);
 
     const float inertia_value = cpMomentForCircle(body.GetMass(), 0.0f, params.radius, offset);
-
-    cm::ShapeImpl* shape_impl = m_impl->shapes.GetPoolData();
-    shape_impl->SetShapeHandle((cpShape*)shape_data);
-    shape_impl->SetInertia(inertia_value);
-    shape_impl->SetSensor(params.is_sensor);
-    shape_impl->SetCollisionFilter(params.category, params.mask);
-
-    m_impl->m_shape_release_funcs[shape_impl] = &PhysicsSystem::Impl::ReleaseCircleShape;
-
-    std::vector<cm::ShapeImpl*>& shapes_for_body = m_impl->bodies_shapes[body_id];
-    shapes_for_body.push_back(shape_impl);
-
-    if(body.AutoCalculateMoment())
-    {
-        float inertia = 0.0f;
-        for(const cm::ShapeImpl* shape : shapes_for_body)
-            inertia += shape->GetInertiaValue();
-        body.SetMoment(inertia);
-    }
-
-    m_impl->space.Add(shape_impl);
-    return shape_impl;
+    return ::PhysicsShapeHelper::FinalizeAddShape(
+        m_impl.get(), this, &body, (cpShape*)shape_data, &cm::PhysicsImpl::ReleaseCircleShape, inertia_value, params.is_sensor, params.category, params.mask);
 }
 
-mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const BoxComponent& box_params)
+mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const BoxComponent& params)
 {
     mono::IBody& body = m_impl->bodies[body_id];
     cpPolyShape* shape_data = m_impl->poly_shape_pool.GetPoolData();
     MONO_ASSERT(shape_data != nullptr);
 
-    const float hw = box_params.size.x / 2.0f;
-    const float hh = box_params.size.y / 2.0f;
-    const cpBB box = cpBBOffset(cpBBNew(-hw, -hh, hw, hh), cpv(box_params.offset.x, box_params.offset.y));
+    const float hw = params.size.x / 2.0f;
+    const float hh = params.size.y / 2.0f;
+    const cpBB box = cpBBOffset(cpBBNew(-hw, -hh, hw, hh), cpv(params.offset.x, params.offset.y));
 
     cpBoxShapeInit2(shape_data, body.Handle(), box, 0.0f);
 
-    const float inertia_value = cpMomentForBox(body.GetMass(), box_params.size.x, box_params.size.y);
-
-    cm::ShapeImpl* shape_impl = m_impl->shapes.GetPoolData();
-    shape_impl->SetShapeHandle((cpShape*)shape_data);
-    shape_impl->SetInertia(inertia_value);
-    shape_impl->SetSensor(box_params.is_sensor);
-    shape_impl->SetCollisionFilter(box_params.category, box_params.mask);
-
-    m_impl->m_shape_release_funcs[shape_impl] = &PhysicsSystem::Impl::ReleasePolyShape;
-
-    std::vector<cm::ShapeImpl*>& shapes_for_body = m_impl->bodies_shapes[body_id];
-    shapes_for_body.push_back(shape_impl);
-
-    if(body.AutoCalculateMoment())
-    {
-        float inertia = 0.0f;
-        for(const cm::ShapeImpl* shape : shapes_for_body)
-            inertia += shape->GetInertiaValue();
-        body.SetMoment(inertia);
-    }
-
-    m_impl->space.Add(shape_impl);
-    return shape_impl;
+    const float inertia_value = cpMomentForBox(body.GetMass(), params.size.x, params.size.y);
+    return ::PhysicsShapeHelper::FinalizeAddShape(
+        m_impl.get(), this, &body, (cpShape*)shape_data, &cm::PhysicsImpl::ReleasePolyShape, inertia_value, params.is_sensor, params.category, params.mask);
 }
 
-mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const SegmentComponent& segment_params)
+mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const SegmentComponent& params)
 {
-    const cpVect start = cpv(segment_params.start.x, segment_params.start.y);
-    const cpVect end = cpv(segment_params.end.x, segment_params.end.y);
+    const cpVect start = cpv(params.start.x, params.start.y);
+    const cpVect end = cpv(params.end.x, params.end.y);
 
     mono::IBody& body = m_impl->bodies[body_id];
     cpSegmentShape* shape_data = m_impl->segment_shape_pool.GetPoolData();
     MONO_ASSERT(shape_data != nullptr);
 
-    cpSegmentShapeInit(shape_data, body.Handle(), start, end, segment_params.radius);
+    cpSegmentShapeInit(shape_data, body.Handle(), start, end, params.radius);
 
-    const float inertia_value = cpMomentForSegment(body.GetMass(), start, end, segment_params.radius);
-
-    cm::ShapeImpl* shape_impl = m_impl->shapes.GetPoolData();
-    shape_impl->SetShapeHandle((cpShape*)shape_data);
-    shape_impl->SetInertia(inertia_value);
-    shape_impl->SetSensor(segment_params.is_sensor);
-    shape_impl->SetCollisionFilter(segment_params.category, segment_params.mask);
-
-    m_impl->m_shape_release_funcs[shape_impl] = &PhysicsSystem::Impl::ReleaseSegmentShape;
-
-    std::vector<cm::ShapeImpl*>& shapes_for_body = m_impl->bodies_shapes[body_id];
-    shapes_for_body.push_back(shape_impl);
-
-    if(body.AutoCalculateMoment())
-    {
-        float inertia = 0.0f;
-        for(const cm::ShapeImpl* shape : shapes_for_body)
-            inertia += shape->GetInertiaValue();
-        body.SetMoment(inertia);
-    }
-
-    m_impl->space.Add(shape_impl);
-    return shape_impl;
+    const float inertia_value = cpMomentForSegment(body.GetMass(), start, end, params.radius);
+    return ::PhysicsShapeHelper::FinalizeAddShape(
+        m_impl.get(), this, &body, (cpShape*)shape_data, &cm::PhysicsImpl::ReleaseSegmentShape, inertia_value, params.is_sensor, params.category, params.mask);
 }
 
-mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const PolyComponent& poly_params)
+mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const PolyComponent& params)
 {
-    const auto transform_vector_to_cpv = [&poly_params](const math::Vector& position) {
-        return cpv(position.x + poly_params.offset.x, position.y + poly_params.offset.x);
+    const auto transform_vector_to_cpv = [&params](const math::Vector& position) {
+        return cpv(position.x + params.offset.x, position.y + params.offset.x);
     };
 
-    std::vector<cpVect> vects(poly_params.vertices.size());
-    std::transform(poly_params.vertices.begin(), poly_params.vertices.end(), vects.begin(), transform_vector_to_cpv);
+    std::vector<cpVect> vects(params.vertices.size());
+    std::transform(params.vertices.begin(), params.vertices.end(), vects.begin(), transform_vector_to_cpv);
 
-    const bool clockwice = math::IsPolygonClockwise(poly_params.vertices);
+    const bool clockwice = math::IsPolygonClockwise(params.vertices);
     if(clockwice)
         std::reverse(vects.begin(), vects.end());
 
@@ -346,28 +247,8 @@ mono::IShape* PhysicsSystem::AddShape(uint32_t body_id, const PolyComponent& pol
     cpPolyShapeInitRaw(shape_data, body.Handle(), (int)vects.size(), vects.data(), 0.1f);
 
     const float inertia_value = cpMomentForPoly(body.GetMass(), (int)vects.size(), vects.data(), cpvzero, 1.0f);
-
-    cm::ShapeImpl* shape_impl = m_impl->shapes.GetPoolData();
-    shape_impl->SetShapeHandle((cpShape*)shape_data);
-    shape_impl->SetInertia(inertia_value);
-    shape_impl->SetSensor(poly_params.is_sensor);
-    shape_impl->SetCollisionFilter(poly_params.category, poly_params.mask);
-
-    m_impl->m_shape_release_funcs[shape_impl] = &PhysicsSystem::Impl::ReleasePolyShape;
-
-    std::vector<cm::ShapeImpl*>& shapes_for_body = m_impl->bodies_shapes[body_id];
-    shapes_for_body.push_back(shape_impl);
-
-    if(body.AutoCalculateMoment())
-    {
-        float inertia = 0.0f;
-        for(const cm::ShapeImpl* shape : shapes_for_body)
-            inertia += shape->GetInertiaValue();
-        body.SetMoment(inertia);
-    }
-
-    m_impl->space.Add(shape_impl);
-    return shape_impl;
+    return ::PhysicsShapeHelper::FinalizeAddShape(
+        m_impl.get(), this, &body, (cpShape*)shape_data, &cm::PhysicsImpl::ReleasePolyShape, inertia_value, params.is_sensor, params.category, params.mask);
 }
 
 const char* PhysicsSystem::Name() const
@@ -417,9 +298,23 @@ void PhysicsSystem::Update(const UpdateContext& update_context)
 
 void PhysicsSystem::Sync()
 {
+    for(mono::IBody* body : m_deferred_add_bodies)
+    {
+        m_impl->active_bodies[body->GetId()] = true;
+        m_impl->space.Add(body);
+    }
+    m_deferred_add_bodies.clear();
+
+    for(mono::IShape* shape : m_deferred_add_shapes)
+        m_impl->space.Add(shape);
+    m_deferred_add_shapes.clear();
+
+    for(mono::IConstraint* constraint : m_deferred_add_constraints)
+        m_impl->space.Add(constraint);
+    m_deferred_add_constraints.clear();
+
     for(mono::IConstraint* constraint : m_released_constraints)
         ReleaseConstraintInternal(constraint);
-
     m_released_constraints.clear();
 }
 
@@ -479,8 +374,7 @@ mono::IConstraint* PhysicsSystem::CreateSlideJoint(
     constraint_impl->Init(this);
     constraint_impl->SetHandle((cpConstraint*)slide_joint_data);
 
-    m_impl->m_constraint_release_funcs[constraint_impl] = &PhysicsSystem::Impl::ReleaseSlideJoint;
-    m_impl->space.Add(constraint_impl);
+    m_impl->m_constraint_release_funcs[constraint_impl] = &cm::PhysicsImpl::ReleaseSlideJoint;
 
     std::vector<cm::ConstraintImpl*>& constraints_for_body_1 = m_impl->bodies_constraints[first->GetId()];
     constraints_for_body_1.push_back(constraint_impl);
@@ -488,6 +382,7 @@ mono::IConstraint* PhysicsSystem::CreateSlideJoint(
     std::vector<cm::ConstraintImpl*>& constraints_for_body_2 = m_impl->bodies_constraints[second->GetId()];
     constraints_for_body_2.push_back(constraint_impl);
 
+    m_deferred_add_constraints.push_back(constraint_impl);
     return constraint_impl;
 }
 
@@ -502,8 +397,7 @@ mono::IConstraint* PhysicsSystem::CreateSpring(
     constraint_impl->Init(this);
     constraint_impl->SetHandle((cpConstraint*)damped_spring_data);
 
-    m_impl->m_constraint_release_funcs[constraint_impl] = &PhysicsSystem::Impl::ReleaseSpring;
-    m_impl->space.Add(constraint_impl);
+    m_impl->m_constraint_release_funcs[constraint_impl] = &cm::PhysicsImpl::ReleaseSpring;
 
     std::vector<cm::ConstraintImpl*>& constraints_for_body_1 = m_impl->bodies_constraints[first->GetId()];
     constraints_for_body_1.push_back(constraint_impl);
@@ -511,6 +405,7 @@ mono::IConstraint* PhysicsSystem::CreateSpring(
     std::vector<cm::ConstraintImpl*>& constraints_for_body_2 = m_impl->bodies_constraints[second->GetId()];
     constraints_for_body_2.push_back(constraint_impl);
 
+    m_deferred_add_constraints.push_back(constraint_impl);
     return constraint_impl;
 }
 
@@ -535,7 +430,7 @@ void PhysicsSystem::ReleaseConstraintInternal(mono::IConstraint* constraint)
 
     m_impl->space.Remove(constraint);
 
-    Impl::ReleaseConstraintFunc release_func = m_impl->m_constraint_release_funcs[constraint];
+    cm::PhysicsImpl::ReleaseConstraintFunc release_func = m_impl->m_constraint_release_funcs[constraint];
     (*m_impl.*release_func)(constraint->Handle());
     m_impl->m_constraint_release_funcs.erase(constraint);
 
