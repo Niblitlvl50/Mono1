@@ -13,11 +13,6 @@ ConstraintImpl::ConstraintImpl()
     , m_constraint(nullptr)
 { }
 
-ConstraintImpl::ConstraintImpl(cpConstraint* constraint)
-    : m_constraint(constraint)
-    , m_physics_system(nullptr)
-{ }
-
 void ConstraintImpl::Init(mono::PhysicsSystem* physics_system)
 {
     m_physics_system = physics_system;

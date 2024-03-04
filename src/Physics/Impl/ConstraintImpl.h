@@ -11,7 +11,6 @@ namespace cm
     public:
 
         ConstraintImpl();
-        ConstraintImpl(cpConstraint* constraint);
 
         void Init(mono::PhysicsSystem* physics_system);
         void SetHandle(cpConstraint* constraint);

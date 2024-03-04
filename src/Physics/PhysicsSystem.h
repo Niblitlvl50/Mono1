@@ -148,7 +148,7 @@ namespace mono
 
         void ReleaseConstraintInternal(mono::IConstraint* constraint);
 
-        friend class PhysicsShapeHelper;
+        friend class ::PhysicsShapeHelper;
 
         std::unique_ptr<cm::PhysicsImpl> m_impl;
         mono::TransformSystem* m_transform_system;
