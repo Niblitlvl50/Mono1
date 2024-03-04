@@ -108,7 +108,7 @@ macro(CheckALSA)
         if(HAVE_SDL_LOADSO)
           FindLibraryAndSONAME("asound")
           if(ASOUND_LIB AND ASOUND_SHARED)
-            target_include_directories(sdl-build-options INTERFACE $<TARGET_PROPERTY:ALSA::ALSA,INTERFACE_INCLUDE_DIRECTORIES>)
+            target_include_directories(sdl-build-options SYSTEM INTERFACE $<TARGET_PROPERTY:ALSA::ALSA,INTERFACE_INCLUDE_DIRECTORIES>)
             set(SDL_AUDIO_DRIVER_ALSA_DYNAMIC "\"${ASOUND_LIB_SONAME}\"")
             set(HAVE_ALSA_SHARED TRUE)
           else()
@@ -380,7 +380,7 @@ macro(CheckLibSampleRate)
       set(HAVE_LIBSAMPLERATE TRUE)
       set(HAVE_LIBSAMPLERATE_H TRUE)
       if(SDL_LIBSAMPLERATE_SHARED)
-        target_include_directories(sdl-build-options INTERFACE $<TARGET_PROPERTY:SampleRate::samplerate,INTERFACE_INCLUDE_DIRECTORIES>)
+        target_include_directories(sdl-build-options SYSTEM INTERFACE $<TARGET_PROPERTY:SampleRate::samplerate,INTERFACE_INCLUDE_DIRECTORIES>)
         if(NOT HAVE_SDL_LOADSO)
           message_warn("You must have SDL_LoadObject() support for dynamic libsamplerate loading")
         else()
@@ -471,7 +471,9 @@ macro(CheckX11)
       list(APPEND SOURCE_FILES ${X11_SOURCES})
       set(SDL_VIDEO_DRIVER_X11 1)
 
-      # !!! FIXME: why is this disabled for Apple?
+      # Note: Disabled on Apple because the dynamic mode backend for X11 doesn't
+      # work properly on Apple during several issues like inconsistent paths
+      # among platforms. See #6778 (https://github.com/libsdl-org/SDL/issues/6778)
       if(APPLE)
         set(SDL_X11_SHARED OFF)
       endif()
@@ -683,7 +685,7 @@ macro(CheckWayland)
 
     if(WAYLAND_FOUND)
       target_link_directories(sdl-build-options INTERFACE "${PKG_WAYLAND_LIBRARY_DIRS}")
-      target_include_directories(sdl-build-options INTERFACE "${PKG_WAYLAND_INCLUDE_DIRS}")
+      target_include_directories(sdl-build-options SYSTEM INTERFACE "${PKG_WAYLAND_INCLUDE_DIRS}")
 
       set(HAVE_WAYLAND TRUE)
       set(HAVE_SDL_VIDEO TRUE)
@@ -693,7 +695,7 @@ macro(CheckWayland)
 
       # We have to generate some protocol interface code for some unstable Wayland features.
       file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/wayland-generated-protocols")
-      target_include_directories(sdl-build-options INTERFACE "${CMAKE_CURRENT_BINARY_DIR}/wayland-generated-protocols")
+      target_include_directories(sdl-build-options SYSTEM INTERFACE "${CMAKE_CURRENT_BINARY_DIR}/wayland-generated-protocols")
 
       file(GLOB WAYLAND_PROTOCOLS_XML RELATIVE "${SDL2_SOURCE_DIR}/wayland-protocols/" "${SDL2_SOURCE_DIR}/wayland-protocols/*.xml")
       foreach(_XML ${WAYLAND_PROTOCOLS_XML})
@@ -729,7 +731,7 @@ macro(CheckWayland)
             set(HAVE_WAYLAND_LIBDECOR TRUE)
             set(HAVE_LIBDECOR_H 1)
             target_link_directories(sdl-build-options INTERFACE "${PKG_LIBDECOR_LIBRARY_DIRS}")
-            target_include_directories(sdl-build-options INTERFACE "${PKG_LIBDECOR_INCLUDE_DIRS}")
+            target_include_directories(sdl-build-options SYSTEM INTERFACE "${PKG_LIBDECOR_INCLUDE_DIRS}")
             if(SDL_WAYLAND_LIBDECOR_SHARED AND NOT HAVE_SDL_LOADSO)
                 message_warn("You must have SDL_LoadObject() support for dynamic libdecor loading")
             endif()
@@ -912,6 +914,22 @@ macro(CheckOpenGLES)
 endmacro()
 
 # Requires:
+# - EGL
+macro(CheckQNXScreen)
+  if(QNX AND HAVE_OPENGL_EGL)
+    check_c_source_compiles("
+        #include <screen/screen.h>
+        int main (int argc, char** argv) { return 0; }" HAVE_QNX_SCREEN)
+    if(HAVE_QNX_SCREEN)
+      set(SDL_VIDEO_DRIVER_QNX 1)
+      file(GLOB QNX_VIDEO_SOURCES ${SDL2_SOURCE_DIR}/src/video/qnx/*.c)
+      list(APPEND SOURCE_FILES ${QNX_VIDEO_SOURCES})
+      list(APPEND EXTRA_LIBS screen EGL)
+    endif()
+  endif()
+endmacro()
+
+# Requires:
 # - nada
 # Optional:
 # - THREADS opt
@@ -961,6 +979,8 @@ macro(CheckPTHREAD)
     elseif(EMSCRIPTEN)
       set(PTHREAD_CFLAGS "-D_REENTRANT -pthread")
       set(PTHREAD_LDFLAGS "-pthread")
+    elseif(QNX)
+      # pthread support is baked in
     else()
       set(PTHREAD_CFLAGS "-D_REENTRANT")
       set(PTHREAD_LDFLAGS "-lpthread")
@@ -1303,7 +1323,7 @@ macro(CheckKMSDRM)
     pkg_check_modules(PKG_KMSDRM libdrm gbm egl)
     if(PKG_KMSDRM_FOUND AND HAVE_OPENGL_EGL)
       target_link_directories(sdl-build-options INTERFACE ${PKG_KMSDRM_LIBRARY_DIRS})
-      target_include_directories(sdl-build-options INTERFACE "${PKG_KMSDRM_INCLUDE_DIRS}")
+      target_include_directories(sdl-build-options SYSTEM INTERFACE "${PKG_KMSDRM_INCLUDE_DIRS}")
       set(HAVE_KMSDRM TRUE)
       set(HAVE_SDL_VIDEO TRUE)
 
