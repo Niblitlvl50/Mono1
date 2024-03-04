@@ -9,8 +9,8 @@
 using namespace cm;
 
 ConstraintImpl::ConstraintImpl()
-    : m_constraint(nullptr)
-    , m_physics_system(nullptr)
+    : m_physics_system(nullptr)
+    , m_constraint(nullptr)
 { }
 
 ConstraintImpl::ConstraintImpl(cpConstraint* constraint)

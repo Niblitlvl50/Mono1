@@ -4,9 +4,9 @@
 #include "Physics/PhysicsSystem.h"
 #include "Physics/PhysicsSpace.h"
 
-#include "Impl/BodyImpl.h"
-#include "Impl/ShapeImpl.h"
-#include "Impl/ConstraintImpl.h"
+#include "Physics/Impl/BodyImpl.h"
+#include "Physics/Impl/ShapeImpl.h"
+#include "Physics/Impl/ConstraintImpl.h"
 
 #include "Util/ObjectPool.h"
 
