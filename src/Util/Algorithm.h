@@ -50,6 +50,16 @@ namespace mono
         return nullptr;
     }
 
+    template <typename T, typename F>
+    inline const T* find_if(const std::vector<T>& collection, const F& find_func)
+    {
+        const auto it = std::find_if(collection.begin(), collection.end(), find_func);
+        if(it != collection.end())
+            return &*it;
+
+        return nullptr;
+    }
+
     template <typename T>
     inline void make_unique(std::vector<T>& collection)
     {
