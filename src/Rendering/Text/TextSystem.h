@@ -31,6 +31,7 @@ namespace mono
         TextComponent* AllocateText(uint32_t id);
         void ReleaseText(uint32_t id);
         void SetTextData(uint32_t id, const TextComponent& text_data);
+        void SetTextColor(uint32_t id, const mono::Color::RGBA& new_color);
 
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;

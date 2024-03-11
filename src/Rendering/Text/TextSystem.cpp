@@ -36,6 +36,13 @@ void TextSystem::SetTextData(uint32_t id, const mono::TextComponent& text_data)
     m_text_dirty[id] = true;
 }
 
+void TextSystem::SetTextColor(uint32_t id, const mono::Color::RGBA& new_color)
+{
+    TextComponent& component = m_texts[id];
+    component.tint = new_color;
+    component.shadow_color.alpha = new_color.alpha;
+}
+
 const char* TextSystem::Name() const
 {
     return "textsystem";
