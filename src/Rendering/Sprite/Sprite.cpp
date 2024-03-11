@@ -35,7 +35,7 @@ void Sprite::Init(const SpriteData* sprite_data, mono::ITexturePtr texture)
 
     m_properties = 0;
     m_color = mono::Color::RGBA();
-    m_flash_timer = 0;
+    m_flash_timer = 0.0f;
     m_outline = false;
     m_callback = nullptr;
 }
@@ -117,7 +117,7 @@ void Sprite::ClearProperty(mono::SpriteProperty property)
 
 void Sprite::Update(const UpdateContext& update_context)
 {
-    m_flash_timer -= 1;
+    m_flash_timer -= update_context.delta_s;
 
     if(m_active_animation_done || m_playback_mode == PlaybackMode::PAUSED)
         return;
@@ -243,12 +243,12 @@ float Sprite::GetShadowSize() const
 
 void Sprite::FlashSprite()
 {
-    m_flash_timer = 3;
+    m_flash_timer = 0.064f;
 }
 
 bool Sprite::ShouldFlashSprite() const
 {
-    return m_flash_timer > 0;
+    return m_flash_timer > 0.0f;
 }
 
 void Sprite::SetOutlineSprite(bool outline)

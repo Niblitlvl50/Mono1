@@ -75,7 +75,7 @@ namespace mono
         Color::RGBA m_color;
         math::Vector m_shadow_offset;
         float m_shadow_size;
-        int m_flash_timer;
+        float m_flash_timer;
         bool m_outline;
         SpriteAnimationCallback m_callback;
     };
