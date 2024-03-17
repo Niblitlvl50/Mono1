@@ -19,6 +19,7 @@ namespace mono
         DRAW_SHAPES = 1,
         DRAW_CONSTRAINTS = 2,
         DRAW_COLLISION_POINTS = 4,
+        DRAW_BODY_FORCES = 8,
     };
 
     enum class PhysicsDebugInteractionFunction
@@ -31,6 +32,7 @@ namespace mono
         PhysicsDebugComponents::DRAW_SHAPES,
         PhysicsDebugComponents::DRAW_CONSTRAINTS,
         PhysicsDebugComponents::DRAW_COLLISION_POINTS,
+        PhysicsDebugComponents::DRAW_BODY_FORCES,
     };
 
     inline const char* PhsicsDebugComponentToString(uint32_t debug_component)
@@ -45,6 +47,8 @@ namespace mono
             return "Constraints";
         case DRAW_COLLISION_POINTS:
             return "Collisions";
+        case DRAW_BODY_FORCES:
+            return "Forces";
         }
 
         return "Unknown";
@@ -67,6 +71,8 @@ namespace mono
         math::Quad BoundingBox() const override;
 
         void DrawBodyIntrospection(mono::IRenderer& renderer) const;
+        void DrawPhysics(const mono::IRenderer& renderer) const;
+        void DrawForces(mono::IRenderer& renderer) const;
 
         mono::EventResult OnMouseDown(const event::MouseDownEvent& event);
         mono::EventResult OnMouseUp(const event::MouseUpEvent& event);

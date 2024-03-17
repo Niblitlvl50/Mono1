@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <vector>
+#include <functional>
 
 class PhysicsShapeHelper;
 
@@ -107,6 +108,8 @@ namespace mono
 
     class TransformSystem;
 
+    using ForEachBodyFunc = std::function<void (uint32_t body_id, mono::IBody& body)>;
+
     class PhysicsSystem : public mono::IGameSystem
     {
     public:
@@ -141,6 +144,8 @@ namespace mono
 
         mono::PhysicsSpace* GetSpace() const;
         PhysicsSystemStats GetStats() const;
+
+        void ForEachBody(const ForEachBodyFunc& func);
 
         static uint32_t GetIdFromBody(const mono::IBody* body);
 

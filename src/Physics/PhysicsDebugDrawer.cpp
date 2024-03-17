@@ -4,6 +4,7 @@
 #include "PhysicsSpace.h"
 #include "IShape.h"
 #include "Math/Quad.h"
+#include "Math/Matrix.h"
 #include "Rendering/Color.h"
 #include "Rendering/IRenderer.h"
 
@@ -190,40 +191,10 @@ void PhysicsDebugDrawer::Draw(mono::IRenderer& renderer) const
     if(!m_enabled_drawing)
         return;
 
-    DebugDrawCollection debug_collection;
+    DrawPhysics(renderer);
 
-    mono::PhysicsSpace* physics_space = m_physics_system->GetSpace();
-    cpSpace* cm_space = physics_space->Handle();
-
-    cpSpaceDebugDrawOptions options;
-    options.flags = cpSpaceDebugDrawFlags(m_debug_components);
-    options.shapeOutlineColor = ConvertColor(mono::Color::RED);
-    options.constraintColor = ConvertColor(mono::Color::GREEN);
-    options.collisionPointColor = ConvertColor(mono::Color::BLUE);
-    options.drawCircle = DebugDrawCircle;
-    options.drawSegment = DebugDrawSegment;
-    options.drawFatSegment = DebugDrawFatSegment;
-    options.drawPolygon = DebugDrawPolygon;
-    options.drawDot = DebugDrawDot;
-    options.colorForShape = DebugDrawColorForShape;
-    options.data = &debug_collection;
-
-    cpSpaceDebugDraw(cm_space, &options);
-
-    if(!debug_collection.dots.empty())
-        renderer.DrawPoints(debug_collection.dots, mono::Color::GREEN, 2.0f);
-
-    for(const CircleData& circle_data : debug_collection.circles)
-        renderer.DrawCircle(circle_data.position, circle_data.radius, 16, 1.0f, circle_data.fill_color);
-
-    if(!debug_collection.segments.empty())
-        renderer.DrawLines(debug_collection.segments, mono::Color::MAGENTA, 1.0f);
-
-    if(!debug_collection.fat_segments.empty())
-        renderer.DrawLines(debug_collection.fat_segments, mono::Color::MAGENTA, 4.0f);
-
-    for(const PolygonData& polygon_data : debug_collection.polygons)
-        renderer.DrawClosedPolyline(polygon_data.vertices, polygon_data.fill_color, 2.0f);
+    if(m_debug_components & mono::PhysicsDebugComponents::DRAW_BODY_FORCES)
+        DrawForces(renderer);
 
     if(m_click_timestamp != std::numeric_limits<uint32_t>::max())
     {
@@ -368,6 +339,73 @@ void PhysicsDebugDrawer::DrawBodyIntrospection(mono::IRenderer& renderer) const
     }
 
     ImGui::End();
+}
+
+void PhysicsDebugDrawer::DrawPhysics(const mono::IRenderer& renderer) const
+{
+    DebugDrawCollection debug_collection;
+
+    cpSpaceDebugDrawOptions options;
+    options.flags = cpSpaceDebugDrawFlags(m_debug_components);
+    options.shapeOutlineColor = ConvertColor(mono::Color::RED);
+    options.constraintColor = ConvertColor(mono::Color::GREEN);
+    options.collisionPointColor = ConvertColor(mono::Color::BLUE);
+    options.drawCircle = DebugDrawCircle;
+    options.drawSegment = DebugDrawSegment;
+    options.drawFatSegment = DebugDrawFatSegment;
+    options.drawPolygon = DebugDrawPolygon;
+    options.drawDot = DebugDrawDot;
+    options.colorForShape = DebugDrawColorForShape;
+    options.data = &debug_collection;
+
+    mono::PhysicsSpace* physics_space = m_physics_system->GetSpace();
+    cpSpaceDebugDraw(physics_space->Handle(), &options);
+
+    if(!debug_collection.dots.empty())
+        renderer.DrawPoints(debug_collection.dots, mono::Color::GREEN, 2.0f);
+
+    for(const CircleData& circle_data : debug_collection.circles)
+        renderer.DrawCircle(circle_data.position, circle_data.radius, 16, 1.0f, circle_data.fill_color);
+
+    if(!debug_collection.segments.empty())
+        renderer.DrawLines(debug_collection.segments, mono::Color::MAGENTA, 1.0f);
+
+    if(!debug_collection.fat_segments.empty())
+        renderer.DrawLines(debug_collection.fat_segments, mono::Color::MAGENTA, 4.0f);
+
+    for(const PolygonData& polygon_data : debug_collection.polygons)
+        renderer.DrawClosedPolyline(polygon_data.vertices, polygon_data.fill_color, 2.0f);    
+}
+
+void PhysicsDebugDrawer::DrawForces(mono::IRenderer& renderer) const
+{
+    std::vector<math::Vector> lines;
+
+    char text_buffer[256] = { 0 };
+
+    const mono::ForEachBodyFunc body_func = [&renderer, &lines, &text_buffer](uint32_t id, mono::IBody& body) {
+
+        if(body.GetType() == mono::BodyType::STATIC)
+            return;
+
+        const math::Vector& world_position = body.GetPosition();
+        const mono::CullResult cull_result = renderer.Cull(math::Quad(world_position, 0.5f));
+        if(cull_result != mono::CullResult::IN_VIEW)
+            return;
+
+        const math::Vector& velocity = body.GetVelocity();
+        lines.push_back(world_position);
+        lines.push_back(world_position + velocity);
+
+        const float speed = math::Length(velocity);
+
+        const auto transform_scope = mono::MakeTransformScope(math::CreateMatrixWithPosition(world_position), &renderer);
+        std::snprintf(text_buffer, std::size(text_buffer), "%.2f", speed);
+        renderer.RenderText(0, text_buffer, mono::Color::CYAN, mono::FontCentering::DEFAULT_CENTER);
+    };
+    m_physics_system->ForEachBody(body_func);
+
+    renderer.DrawLines(lines, mono::Color::CYAN, 1.0f);
 }
 
 mono::EventResult PhysicsDebugDrawer::OnMouseDown(const event::MouseDownEvent& event)

@@ -16,4 +16,5 @@ namespace mono
     class ICollisionHandler;
 
     struct QueryResult;
+    struct ConstraintBodyPair;
 }

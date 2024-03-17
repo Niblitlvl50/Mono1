@@ -323,6 +323,16 @@ mono::IBody* PhysicsSystem::GetBody(uint32_t body_id)
     return &m_impl->bodies[body_id];
 }
 
+void PhysicsSystem::ForEachBody(const ForEachBodyFunc& func)
+{
+    for(uint32_t index = 0; index < m_impl->active_bodies.size(); ++index)
+    {
+        const bool is_enabled = m_impl->active_bodies[index];
+        if(is_enabled)
+            func(index, m_impl->bodies[index]);
+    }
+}
+
 uint32_t PhysicsSystem::GetIdFromBody(const mono::IBody* body)
 {
     if(body)
