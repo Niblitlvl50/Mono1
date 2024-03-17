@@ -149,6 +149,8 @@ namespace
     {
         switch(sdl_scancode)
         {
+            case SDL_SCANCODE_F1:
+                return Keycode::F1;
             case SDL_SCANCODE_0:
                 return Keycode::ZERO;
             case SDL_SCANCODE_1:
@@ -864,6 +866,8 @@ int System::KeycodeToNative(Keycode key)
 {
     switch(key)
     {
+        case Keycode::F1:
+            return SDL_SCANCODE_F1;
         case Keycode::ZERO:
             return SDL_SCANCODE_0;
         case Keycode::ONE:

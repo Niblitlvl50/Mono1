@@ -7,6 +7,8 @@ enum class Keycode
 {
     NONE,
 
+    F1,
+
     ZERO,
     ONE,
     TWO,

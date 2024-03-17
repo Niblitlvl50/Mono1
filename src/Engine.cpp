@@ -122,7 +122,7 @@ int Engine::Run(IZone* zone)
             m_update_last_time = false;
         }
 
-        const bool slow_down = System::IsKeyDown(Keycode::TAB);
+        const bool slow_down = System::IsKeyDown(Keycode::F1);
         const float slow_down_multiplier = slow_down ? 0.25f : 1.0f;
 
         const uint32_t before_time = System::GetMilliseconds();
