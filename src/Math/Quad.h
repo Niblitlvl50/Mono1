@@ -62,6 +62,7 @@ namespace math
     float Bottom(const math::Quad& quad);
 
     math::Vector Center(const math::Quad& quad);
+    float ShortestSide(const math::Quad& quad);
 
     math::Vector BottomLeft(const math::Quad& quad);
     math::Vector BottomRight(const math::Quad& quad);

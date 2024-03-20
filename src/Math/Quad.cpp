@@ -142,5 +142,12 @@ math::Vector math::Center(const math::Quad& quad)
     return math::Vector(quad.bottom_left.x + half_width, quad.bottom_left.y + half_height);
 }
 
+float math::ShortestSide(const math::Quad& quad)
+{
+    const float width = math::Width(quad);
+    const float height = math::Height(quad);
+    return width < height ? width : height;
+}
+
 const math::Quad math::InfQuad = math::Quad(-math::INF, -math::INF, math::INF, math::INF);
 const math::Quad math::InverseInfQuad = math::Quad(math::INF, math::INF, -math::INF, -math::INF);
