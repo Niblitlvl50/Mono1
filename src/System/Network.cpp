@@ -192,6 +192,9 @@ static network::Address FindSystemAddress(uint32_t address_type, uint16_t port)
 network::Address network::GetBroadcastAddress(uint16_t port)
 {
     zed_net_interfaceinfo_t interfaces[16];
+    for(zed_net_interfaceinfo_t& table : interfaces)
+        std::memset(table.netmask, '\0', sizeof(table.netmask));
+
     const int n_interfaces = zed_net_enumerate_interfaces(interfaces, std::size(interfaces), true, false);
     for(int index = 0; index < n_interfaces; ++index)
     {
