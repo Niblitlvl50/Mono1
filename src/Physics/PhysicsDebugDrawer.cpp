@@ -18,6 +18,8 @@
 #include "chipmunk/chipmunk_structs.h"
 #include "imgui/imgui.h"
 
+#include <cstdio>
+
 using namespace mono;
 
 namespace
