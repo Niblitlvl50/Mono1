@@ -3,6 +3,7 @@
 #include "System.h"
 #include <stdexcept>
 #include <cstdio>
+#include <cstring>
 
 #define ZED_NET_IMPLEMENTATION
 #define ZED_NET_STATIC
