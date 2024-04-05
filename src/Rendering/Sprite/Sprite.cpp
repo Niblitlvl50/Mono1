@@ -169,6 +169,14 @@ void Sprite::SetAnimation(const char* name)
 void Sprite::SetAnimation(const char* animation_name, const SpriteAnimationCallback& callback)
 {
     const int animation_id = GetAnimationIdFromName(animation_name);
+    if(animation_id == -1)
+    {
+        // This is some stupid code to make it more resilient to content error.
+        if(callback)
+            callback(m_sprite_user_id);
+        return;
+    }
+
     SetAnimation(animation_id, callback);
 }
 
