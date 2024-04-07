@@ -69,6 +69,7 @@ EntitySystem::EntitySystem(
     m_entity_tags.resize(n_entities);
     m_free_indices.resize(n_entities);
     m_debug_names.resize(n_entities);
+    m_release_dependencies.resize(n_entities);
     m_release_callbacks.resize(n_entities);
 
     std::iota(m_free_indices.begin(), m_free_indices.end(), 0);
@@ -313,6 +314,11 @@ void EntitySystem::ReleaseEntity(uint32_t entity_id)
 {
     m_entities_to_release.insert(entity_id);
     m_spawn_events.push_back({ false, entity_id });
+
+    for(uint32_t dependant_release_entity_id : m_release_dependencies[entity_id])
+        ReleaseEntity(dependant_release_entity_id);
+
+    m_release_dependencies[entity_id].clear();
 }
 
 void EntitySystem::ReleaseEntities(const std::vector<mono::Entity>& entities)
@@ -367,6 +373,11 @@ void EntitySystem::PopEntityStackRecord()
 
     m_entity_allocation_stack.pop_back();
     m_full_release_on_next_sync = true;
+}
+
+void EntitySystem::SetLifetimeDependency(uint32_t entity_id, uint32_t dependency_entity_id)
+{
+    m_release_dependencies[entity_id].push_back(dependency_entity_id);
 }
 
 uint32_t EntitySystem::AddReleaseCallback(uint32_t entity_id, uint32_t callback_phases, const ReleaseCallback& callback)

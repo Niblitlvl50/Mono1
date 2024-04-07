@@ -61,6 +61,7 @@ namespace mono
         void PushEntityStackRecord(const char* debug_name) override;
         void PopEntityStackRecord() override;
 
+        void SetLifetimeDependency(uint32_t entity_id, uint32_t dependency_entity_id) override;
 
         uint32_t AddReleaseCallback(uint32_t entity_id, uint32_t callback_phases, const ReleaseCallback& callback) override;
         void RemoveReleaseCallback(uint32_t entity_id, uint32_t callback_id) override;
@@ -129,6 +130,7 @@ namespace mono
         std::vector<std::vector<uint32_t>> m_entity_tags;
         std::vector<uint32_t> m_free_indices;
         std::vector<std::string> m_debug_names;
+        std::vector<std::vector<uint32_t>> m_release_dependencies;
         std::vector<ReleaseCallbacks> m_release_callbacks;
 
         std::unordered_set<uint32_t> m_entities_to_release;
