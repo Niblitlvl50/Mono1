@@ -78,6 +78,12 @@ mono::Sprite* SpriteSystem::GetSprite(uint32_t sprite_id)
     return m_sprites.Get(sprite_id);
 }
 
+void SpriteSystem::SetSpriteFile(uint32_t sprite_id, const char* sprite_file)
+{
+    mono::Sprite* sprite = m_sprites.Get(sprite_id);
+    mono::RenderSystem::GetSpriteFactory()->CreateSprite(*sprite, sprite_file);
+}
+
 void SpriteSystem::SetSpriteEnabled(uint32_t sprite_id, bool enabled)
 {
     m_enabled[sprite_id] = enabled;

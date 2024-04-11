@@ -57,6 +57,7 @@ namespace mono
         void ReleaseSprite(uint32_t sprite_id);
 
         mono::Sprite* GetSprite(uint32_t sprite_id);
+        void SetSpriteFile(uint32_t sprite_id, const char* sprite_file);
         void SetSpriteEnabled(uint32_t sprite_id, bool enabled);
         void ForEachSprite(const ForEachSpriteFunc& func);
 
