@@ -10,12 +10,18 @@ RandomGenerator::RandomGenerator(int seed)
 
 float RandomGenerator::GetFloat(float min, float max)
 {
+    if(max < min)
+        max = min;
+
     std::uniform_real_distribution<float> distribution(min, max);
     return distribution(m_random_engine);
 }
 
 int RandomGenerator::GetInteger(int min, int max)
 {
+    if(max < min)
+        max = min;
+
     std::uniform_int_distribution<int> distribution(min, max);
     return distribution(m_random_engine);
 }
