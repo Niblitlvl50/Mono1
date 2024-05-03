@@ -61,6 +61,16 @@ namespace mono
     }
 
     template <typename T>
+    inline uint32_t find_index_of(const std::vector<T>& collection, const T& value)
+    {
+        const auto it = std::find(collection.begin(), collection.end(), value);
+        if(it == collection.end())
+            return -1;
+
+        return std::distance(collection.begin(), it);
+    }
+
+    template <typename T>
     inline void make_unique(std::vector<T>& collection)
     {
         std::sort(collection.begin(), collection.end());
