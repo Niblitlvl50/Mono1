@@ -25,5 +25,8 @@ namespace mono
 
         // Before the destructor is called.
         virtual void Destroy() { }
+
+        // On tick
+        virtual void Update(const mono::UpdateContext& update_context) override { }
     };
 }
