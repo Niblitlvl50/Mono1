@@ -24,7 +24,7 @@ namespace mono
         const Color::RGBA& GetShade() const override;
         void SetShade(const mono::Color::RGBA& color) override;
         math::Vector GetShadowOffset() const override;
-        void SetShadowOffset(const math::Vector& shadow_offset);
+        void SetShadowOffset(const math::Vector& shadow_offset) override;
         uint32_t GetProperties() const override;
         void SetProperties(uint32_t properties) override;
         void SetProperty(mono::SpriteProperty property) override;

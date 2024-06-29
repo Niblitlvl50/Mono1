@@ -38,6 +38,7 @@ namespace mono
         virtual void SetShade(const mono::Color::RGBA& color) = 0;
 
         virtual math::Vector GetShadowOffset() const = 0;
+        virtual void SetShadowOffset(const math::Vector& shadow_offset) = 0;
         virtual float GetShadowSize() const = 0;
 
         virtual uint32_t GetProperties() const = 0;
