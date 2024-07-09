@@ -14,6 +14,11 @@ math::Quad math::operator * (const math::Quad& left, const math::Vector& right)
     return math::Quad(left.bottom_left * right, left.top_right * right);
 }
 
+math::Quad math::operator / (const math::Quad& left, float value)
+{
+    return math::Quad(left.bottom_left / value, left.top_right / value);
+}
+
 math::Quad math::operator + (const math::Quad& quad, const math::Vector& offset)
 {
     return math::Quad(quad.bottom_left + offset, quad.top_right + offset);
