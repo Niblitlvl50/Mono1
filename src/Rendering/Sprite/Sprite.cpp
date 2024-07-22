@@ -138,20 +138,33 @@ void Sprite::Update(const UpdateContext& update_context)
     {
         m_active_frame_time = 0; // Should we carry over the reminder from m_active_frame_time? (yes)
 
-        const bool is_last_frame = (m_active_frame == int(active_animation.frames.size() - 1));
-        if(is_last_frame)
+        const int last_frame_index = int(active_animation.frames.size() -1);
+        const bool is_end_frame =
+            (m_playback_mode == mono::PlaybackMode::PLAYING && m_active_frame == last_frame_index) ||
+            (m_playback_mode == mono::PlaybackMode::PLAYING_REVERSE && m_active_frame == 0);
+
+        if(is_end_frame)
         {
             if(active_animation.looping)
-                m_active_frame = 0;
+            {
+                // Wrap around
+                if(m_active_frame <= 0)
+                    m_active_frame = last_frame_index;
+                else if(m_active_frame >= last_frame_index)
+                    m_active_frame = 0;
+            }
             else
+            {
                 m_active_animation_done = true;
+            }
 
             if(m_callback)
                 m_callback(m_sprite_user_id);
         }
         else
         {
-            m_active_frame++;
+            const int frame_increment_value = (m_playback_mode == mono::PlaybackMode::PLAYING) ? 1 : -1;
+            m_active_frame += frame_increment_value;
         }
     }
 }

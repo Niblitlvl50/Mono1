@@ -14,7 +14,8 @@ namespace mono
     enum class PlaybackMode
     {
         PAUSED,
-        PLAYING
+        PLAYING,
+        PLAYING_REVERSE
     };
 
     using SpriteAnimationCallback = std::function<void (uint32_t sprite_id)>;
