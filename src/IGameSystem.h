@@ -28,5 +28,6 @@ namespace mono
 
         // On tick
         virtual void Update(const mono::UpdateContext& update_context) override { }
+        virtual void PostUpdate() { }
     };
 }

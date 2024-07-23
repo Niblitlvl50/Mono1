@@ -159,12 +159,15 @@ int Engine::Run(IZone* zone)
             renderer.SetDeltaAndTimestamp(update_context.delta_s, update_context.timestamp);
 
             m_window->MakeCurrent();
-            m_system_context->Update(update_context);
 
             // Update all the stuff...
+            m_system_context->Update(update_context);
+
             zone->Accept(updater);
             updater.AddUpdatable(m_camera);
             updater.Update(update_context);
+
+            m_system_context->PostUpdate(update_context);
 
             // Draw...
             zone->Accept(renderer);

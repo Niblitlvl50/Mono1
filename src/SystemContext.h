@@ -56,6 +56,17 @@ namespace mono
             }
         }
 
+        inline void PostUpdate(const UpdateContext& update_context)
+        {
+            const bool paused = update_context.paused;
+
+            for(IGameSystem* game_system : m_systems)
+            {
+                if(!paused || (paused && game_system->UpdateInPause()))
+                    game_system->PostUpdate();
+            }
+        }
+
         inline void BeginSystems()
         {
             for(IGameSystem* system : m_systems)
