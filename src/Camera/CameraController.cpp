@@ -129,8 +129,8 @@ mono::EventResult MouseCameraController::OnMouseWheel(const event::MouseWheelEve
 
     math::Vector viewport_size = m_camera->GetViewportSize();
 
-    const float multiplier = (event.y < 0.0f) ? 0.5f : -0.5f;
-    const float resize_value = viewport_size.x * multiplier;
+    const float multiplier = (event.y < 0.0f) ? 1.0f : -1.0f;
+    const float resize_value = viewport_size.x * multiplier * 0.15f;
     const float aspect = viewport_size.x / viewport_size.y;
 
     viewport_size.x += resize_value * aspect;
