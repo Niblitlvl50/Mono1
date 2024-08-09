@@ -42,6 +42,13 @@ namespace mono
     }
 
     template <typename T, typename F>
+    inline bool contains(const std::vector<T>& collection, const F& pred_func)
+    {
+        const auto it = std::find_if(collection.begin(), collection.end(), pred_func);
+        return it != collection.end();
+    }
+
+    template <typename T, typename F>
     inline T* find_if(std::vector<T>& collection, const F& find_func)
     {
         const auto it = std::find_if(collection.begin(), collection.end(), find_func);
