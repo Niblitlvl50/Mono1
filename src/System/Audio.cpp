@@ -299,7 +299,10 @@ void audio::Shutdown()
 
 audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback playback)
 {
-    return g_sound_engine->CreateSound(file_name, playback);
+    if(g_sound_engine)
+        return g_sound_engine->CreateSound(file_name, playback);
+
+    return CreateNullSound();
 }
 
 audio::ISoundPtr audio::CreateNullSound()

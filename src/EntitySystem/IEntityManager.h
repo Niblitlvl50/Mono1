@@ -55,7 +55,7 @@ namespace mono
             uint32_t component_hash,
             ComponentCreateFunc create_component,
             ComponentReleaseFunc release_component,
-            ComponentUpdateFunc update_component,
+            ComponentUpdateFunc update_component = nullptr,
             ComponentEnableFunc enable_component = nullptr) = 0;
 
         virtual void SetEntityProperties(uint32_t entity_id, uint32_t properties) = 0;
