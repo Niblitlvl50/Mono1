@@ -136,6 +136,9 @@ namespace mono
 
         //! Disable damping on this body, will cause no slowdowns. 
         virtual void SetNoDamping() = 0;
+
+        virtual uint32_t GetMaterial() const = 0;
+        virtual void SetMaterial(uint32_t material) = 0;
         
         //! Gets the underlying cpBody object, dont use this one
         //! @return cpBody* A pointer to a cpBody struct

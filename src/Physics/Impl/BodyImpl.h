@@ -45,6 +45,8 @@ namespace cm
             mono::IBody* body, const math::Vector& collision_point, const math::Vector& collision_normal, uint32_t categories) override;
         void OnSeparateFrom(mono::IBody* body) override;
         void SetNoDamping() override;
+        uint32_t GetMaterial() const override;
+        void SetMaterial(uint32_t material) override;
         cpBody* Handle() const override;
 
         void ClearCollisionHandlers();
@@ -55,6 +57,7 @@ namespace cm
         cpBody* m_body_handle;
         bool m_auto_calculate_moment;
         bool m_prevent_rotation;
+        uint32_t m_material;
         std::vector<mono::ICollisionHandler*> m_collision_handlers;
     };
 }

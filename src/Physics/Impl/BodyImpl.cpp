@@ -12,6 +12,7 @@ BodyImpl::BodyImpl(uint32_t body_id, cpBody* body)
     , m_body_handle(body)
     , m_auto_calculate_moment(true)
     , m_prevent_rotation(false)
+    , m_material(0)
 { }
 
 uint32_t BodyImpl::GetId() const
@@ -189,6 +190,16 @@ void BodyImpl::SetNoDamping()
     };
 
     cpBodySetVelocityUpdateFunc(m_body_handle, null_func);
+}
+
+uint32_t BodyImpl::GetMaterial() const
+{
+    return m_material;
+}
+
+void BodyImpl::SetMaterial(uint32_t material)
+{
+    m_material = material;
 }
 
 cpBody* BodyImpl::Handle() const
