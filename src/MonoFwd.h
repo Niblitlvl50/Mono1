@@ -29,8 +29,9 @@ namespace mono
     class PhysicsSystem;
     class RenderSystem;
     class SpriteSystem;
-    class TransformSystem;
     class TextSystem;
+    class TransformSystem;
+    class TriggerSystem;
 
     struct UpdateContext;
     struct InputContext;
