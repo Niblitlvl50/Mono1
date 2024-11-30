@@ -28,6 +28,7 @@ namespace mono
 
     struct ParticleGeneratorProperties
     {
+        math::Vector offset;
         math::Vector emit_area;
         math::Interval direction_degrees_interval;
         bool uniform_direction;

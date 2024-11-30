@@ -38,6 +38,7 @@ namespace math
     math::Quad operator * (const math::Quad& left, const math::Vector& right);
     math::Quad operator / (const math::Quad& left, float value);
     math::Quad operator + (const math::Quad& quad, const math::Vector& offset);
+    math::Quad operator - (const math::Quad& quad, const math::Vector& offset);
     
     bool operator == (const math::Quad& left, const math::Quad& right);
 

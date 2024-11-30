@@ -24,6 +24,11 @@ math::Quad math::operator + (const math::Quad& quad, const math::Vector& offset)
     return math::Quad(quad.bottom_left + offset, quad.top_right + offset);
 }
 
+math::Quad math::operator - (const math::Quad& quad, const math::Vector& offset)
+{
+    return math::Quad(quad.bottom_left - offset, quad.top_right - offset);
+}
+
 bool math::operator == (const math::Quad& left, const math::Quad& right)
 {
     return left.bottom_left == right.bottom_left && left.top_right == right.top_right;

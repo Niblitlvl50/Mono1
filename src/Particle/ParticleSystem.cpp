@@ -386,7 +386,7 @@ void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, c
         (const ParticleGeneratorContext& context, ParticlePoolComponentView& component_view) {
 
         const math::Vector half_area = generator_properties.emit_area / 2.0f;
-        const math::Vector offset = math::Vector(
+        const math::Vector emit_position = math::Vector(
             mono::Random(-half_area.x, half_area.x),
             mono::Random(-half_area.y, half_area.y)
         );
@@ -409,7 +409,7 @@ void ParticleSystem::SetGeneratorProperties(ParticleEmitterComponent* emitter, c
         const float magnitude_variation = mono::Random(generator_properties.magnitude_interval.min, generator_properties.magnitude_interval.max);
         const math::Vector& velocity = math::VectorFromAngle(math::ToRadians(direction)) * magnitude_variation;
 
-        component_view.position         = context.position + offset;
+        component_view.position         = context.position + emit_position + generator_properties.offset;
         component_view.velocity         = velocity;
         component_view.rotation         = 0.0f;
         component_view.angular_velocity = mono::Random(generator_properties.angular_velocity_interval.min, generator_properties.angular_velocity_interval.max);
