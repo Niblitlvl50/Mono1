@@ -20,6 +20,7 @@ namespace mono
         DRAW_CONSTRAINTS = 2,
         DRAW_COLLISION_POINTS = 4,
         DRAW_BODY_FORCES = 8,
+        DRAW_SLEEP_STATE = 16,
     };
 
     enum class PhysicsDebugInteractionFunction
@@ -33,6 +34,7 @@ namespace mono
         PhysicsDebugComponents::DRAW_CONSTRAINTS,
         PhysicsDebugComponents::DRAW_COLLISION_POINTS,
         PhysicsDebugComponents::DRAW_BODY_FORCES,
+        PhysicsDebugComponents::DRAW_SLEEP_STATE,
     };
 
     inline const char* PhsicsDebugComponentToString(uint32_t debug_component)
@@ -49,6 +51,8 @@ namespace mono
             return "Collisions";
         case DRAW_BODY_FORCES:
             return "Forces";
+        case DRAW_SLEEP_STATE:
+            return "Sleep State";
         }
 
         return "Unknown";
@@ -73,6 +77,7 @@ namespace mono
         void DrawBodyIntrospection(mono::IRenderer& renderer) const;
         void DrawPhysics(const mono::IRenderer& renderer) const;
         void DrawForces(mono::IRenderer& renderer) const;
+        void DrawSleepState(mono::IRenderer& renderer) const;
 
         mono::EventResult OnMouseDown(const event::MouseDownEvent& event);
         mono::EventResult OnMouseUp(const event::MouseUpEvent& event);

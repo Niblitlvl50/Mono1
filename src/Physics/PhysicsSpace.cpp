@@ -26,6 +26,8 @@ PhysicsSpace::PhysicsSpace(PhysicsSystem* physics_system, const math::Vector& gr
 {
     cpSpaceSetGravity(m_space, cpv(gravity.x, gravity.y));
     cpSpaceSetDamping(m_space, damping);
+    cpSpaceSetSleepTimeThreshold(m_space, 1.0f);
+    cpSpaceSetIdleSpeedThreshold(m_space, 1.0f);
 
     const auto begin_func = [](cpArbiter* arb, cpSpace* space, cpDataPointer user_data) -> cpBool {
         PhysicsSpace* physics_space = static_cast<PhysicsSpace*>(user_data);

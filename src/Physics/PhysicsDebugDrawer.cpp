@@ -198,6 +198,9 @@ void PhysicsDebugDrawer::Draw(mono::IRenderer& renderer) const
     if(m_debug_components & mono::PhysicsDebugComponents::DRAW_BODY_FORCES)
         DrawForces(renderer);
 
+    if(m_debug_components & mono::PhysicsDebugComponents::DRAW_SLEEP_STATE)
+        DrawSleepState(renderer);
+
     if(m_click_timestamp != std::numeric_limits<uint32_t>::max())
     {
         renderer.DrawCircle(m_mouse_down_position, 0.25f, 6, 2.0f, mono::Color::RED);
@@ -408,6 +411,26 @@ void PhysicsDebugDrawer::DrawForces(mono::IRenderer& renderer) const
     m_physics_system->ForEachBody(body_func);
 
     renderer.DrawLines(lines, mono::Color::CYAN, 1.0f);
+}
+
+void PhysicsDebugDrawer::DrawSleepState(mono::IRenderer& renderer) const
+{
+    std::vector<math::Vector> points;
+
+    const mono::ForEachBodyFunc body_func = [&renderer, &points](uint32_t id, mono::IBody& body) {
+
+        const math::Vector& world_position = body.GetPosition();
+        const mono::CullResult cull_result = renderer.Cull(math::Quad(world_position, 0.5f));
+        if(cull_result != mono::CullResult::IN_VIEW)
+            return;
+
+        const bool is_sleeping = body.IsSleeping();
+        if(is_sleeping)
+            points.push_back(world_position);
+    };
+    m_physics_system->ForEachBody(body_func);
+
+    renderer.DrawPoints(points, mono::Color::GREEN_VIVID, 5.0f);
 }
 
 mono::EventResult PhysicsDebugDrawer::OnMouseDown(const event::MouseDownEvent& event)
