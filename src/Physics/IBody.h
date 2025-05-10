@@ -78,6 +78,10 @@ namespace mono
         //! @return float moment
         virtual float GetMoment() const = 0;
 
+        virtual void SetCustomDamping(float damping) = 0;
+        virtual float GetCustomDamping() const = 0;
+        virtual void ClearCustomDamping() = 0;
+
         virtual void SetAutoCalculateMoment(bool calculate_moment) = 0;
         virtual bool AutoCalculateMoment() const = 0;
 

@@ -25,6 +25,9 @@ namespace cm
         bool PreventRotation() const override;
         void SetMoment(float moment) override;
         float GetMoment() const override;
+        void SetCustomDamping(float damping) override;
+        float GetCustomDamping() const override;
+        void ClearCustomDamping() override;
         void SetAutoCalculateMoment(bool calculate_moment) override;
         bool AutoCalculateMoment() const override;
         void SetPosition(const math::Vector& position) override;
@@ -57,6 +60,7 @@ namespace cm
         cpBody* m_body_handle;
         bool m_auto_calculate_moment;
         bool m_prevent_rotation;
+        float m_custom_damping;
         uint32_t m_material;
         std::vector<mono::ICollisionHandler*> m_collision_handlers;
     };

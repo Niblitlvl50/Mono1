@@ -12,6 +12,7 @@ BodyImpl::BodyImpl(uint32_t body_id, cpBody* body)
     , m_body_handle(body)
     , m_auto_calculate_moment(true)
     , m_prevent_rotation(false)
+    , m_custom_damping(1.0f)
     , m_material(0)
 { }
 
@@ -74,6 +75,37 @@ void BodyImpl::SetMoment(float moment)
 float BodyImpl::GetMoment() const 
 {
     return cpBodyGetMoment(m_body_handle);
+}
+
+void BodyImpl::SetCustomDamping(float damping)
+{
+    m_custom_damping = damping;
+
+    const cpBodyVelocityFunc custom_damping_func = [](cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
+    {
+        const mono::IBody* body_impl = (mono::IBody*)cpBodyGetUserData(body);
+        const float custom_damping = body_impl->GetCustomDamping();
+
+        // Use default but set no damping.
+        cpBodyUpdateVelocity(body, gravity, custom_damping, dt);
+    };
+
+    cpBodySetVelocityUpdateFunc(m_body_handle, custom_damping_func);
+}
+
+float BodyImpl::GetCustomDamping() const
+{
+    return m_custom_damping;
+}
+
+void BodyImpl::ClearCustomDamping()
+{
+    cpBodySetVelocityUpdateFunc(m_body_handle, cpBodyUpdateVelocity);
+}
+
+void BodyImpl::SetNoDamping() 
+{
+    SetCustomDamping(1.0f);
 }
 
 void BodyImpl::SetAutoCalculateMoment(bool calculate_moment)
@@ -179,17 +211,6 @@ void BodyImpl::OnSeparateFrom(IBody* body)
 {
     for(mono::ICollisionHandler* handler : m_collision_handlers)
         handler->OnSeparateFrom(body);
-}
-
-void BodyImpl::SetNoDamping() 
-{
-    const cpBodyVelocityFunc null_func = [](cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
-    {
-        // Use default but set no damping.
-        cpBodyUpdateVelocity(body, gravity, 1.0f, dt);
-    };
-
-    cpBodySetVelocityUpdateFunc(m_body_handle, null_func);
 }
 
 uint32_t BodyImpl::GetMaterial() const
