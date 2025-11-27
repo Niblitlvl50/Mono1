@@ -30,6 +30,16 @@
 
 namespace
 {
+    void make_buffer(const sg_buffer_desc* desc, sg_buffer result, void* user_data)
+    {
+        mono::RenderSystem::s_buffer_status.allocated_buffers++;
+    }
+
+    void destroy_buffer(sg_buffer buf, void* user_data)
+    {
+        mono::RenderSystem::s_buffer_status.allocated_buffers--;
+    }
+
     void fail_buffer(sg_buffer buf_id, void* user_data)
     {
         MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_buffer.");
@@ -77,7 +87,32 @@ namespace
         void* user_data)
     {
         MONO_ASSERT_MESSAGE(log_level >= 3, message_or_null);
-    }    
+    }
+
+    const char* backend_to_string(sg_backend backend)
+    {
+        switch(backend)
+        {
+        case SG_BACKEND_GLCORE33:
+            return "GLCORE33";
+        case SG_BACKEND_GLES3:
+            return "GLES 33";
+        case SG_BACKEND_D3D11:
+            return "D3D11";
+        case SG_BACKEND_METAL_IOS:
+            return "METAL_IOS";
+        case SG_BACKEND_METAL_MACOS:
+            return "METAL_MACOS";
+        case SG_BACKEND_METAL_SIMULATOR:
+            return "METAL_SIMULATOR";
+        case SG_BACKEND_WGPU:
+            return "WGPU";
+        case SG_BACKEND_DUMMY:
+            return "DUMMY";
+        }
+
+        return "Unknown";
+    }
 }
 
 using namespace mono;
@@ -88,6 +123,7 @@ const char* RenderSystem::s_sprite_shadow_texture = nullptr;
 const System::IWindow* RenderSystem::s_window = nullptr;
 const mono::ISpriteFactory* RenderSystem::s_sprite_factory = nullptr;
 const mono::ITextureFactory* RenderSystem::s_texture_factory = nullptr;
+BufferStatus RenderSystem::s_buffer_status;
 
 RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
     : m_layers(n)
@@ -98,6 +134,8 @@ RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
     sg_setup(&desc);
 
     sg_trace_hooks trace_hooks = {};
+    trace_hooks.make_buffer = make_buffer;
+    trace_hooks.destroy_buffer = destroy_buffer;
     trace_hooks.fail_buffer = fail_buffer;
     trace_hooks.fail_image = fail_image;
     trace_hooks.fail_sampler = fail_sampler;
@@ -112,6 +150,9 @@ RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
     imgui_desc.logger = { sokol_imgui_logger, nullptr };
     simgui_setup(&imgui_desc);
 
+    const sg_backend gfx_backend = sg_query_backend();
+    const char* gfx_backend_string = backend_to_string(gfx_backend);
+
     s_pixels_per_meter = init_params.pixels_per_meter;
     s_light_mask_texture = init_params.light_mask_texture;
     s_sprite_shadow_texture = init_params.sprite_shadow_texture;
@@ -124,7 +165,9 @@ RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
     const System::Size drawable_size = s_window->DrawableSize();
 
     System::Log("Render\n"
-                "\tpixels per meter: %f", init_params.pixels_per_meter);
+                "\tpixels per meter: %f\n"
+                "\tbackend: %s",
+                init_params.pixels_per_meter, gfx_backend_string);
     System::Log("imgui\n"
                 "\tversion: %s", IMGUI_VERSION);
     System::Log("Game Window\n"
@@ -304,4 +347,9 @@ const ISpriteFactory* RenderSystem::GetSpriteFactory()
 const ITextureFactory* RenderSystem::GetTextureFactory()
 {
     return s_texture_factory;
+}
+
+const BufferStatus& RenderSystem::GetBufferStatus()
+{
+    return s_buffer_status;
 }

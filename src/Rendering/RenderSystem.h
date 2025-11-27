@@ -23,6 +23,11 @@ namespace mono
         System::IWindow* window = nullptr;
     };
 
+    struct BufferStatus
+    {
+        int allocated_buffers;
+    };
+
     struct LayerComponent
     {
         int layer;
@@ -68,6 +73,10 @@ namespace mono
         static void LoadCustomTextureFactory(const class ITextureFactory* texture_factory);
         static const class ISpriteFactory* GetSpriteFactory();
         static const class ITextureFactory* GetTextureFactory();
+
+        static const BufferStatus& GetBufferStatus();
+        
+        static BufferStatus s_buffer_status;
 
     private:
 

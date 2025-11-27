@@ -16,6 +16,28 @@ namespace
     {
         return data_type_sizes[(int)data_type] * components * count;
     }
+
+    const char* ResourceStateToString(sg_resource_state state)
+    {
+        switch(state)
+        {
+        case SG_RESOURCESTATE_INITIAL:
+            return "Initial";
+        case SG_RESOURCESTATE_ALLOC:
+            return "Alloc";
+        case SG_RESOURCESTATE_VALID:
+            return "Valid";
+        case SG_RESOURCESTATE_FAILED:
+            return "Failed";
+        case SG_RESOURCESTATE_INVALID:
+            return "Invalid";
+
+        default:
+            break;
+        }
+
+        return "Unknown";
+    }
 }
 
 RenderBufferImpl::RenderBufferImpl(
@@ -34,7 +56,7 @@ RenderBufferImpl::RenderBufferImpl(
 
     const sg_resource_state state = sg_query_buffer_state(m_handle);
     if(state != SG_RESOURCESTATE_VALID)
-        System::Log("Failed to create render buffer");
+        System::Log("Failed to create render buffer. Error: %s", ResourceStateToString(state));
 }
 
 RenderBufferImpl::~RenderBufferImpl()
@@ -77,7 +99,7 @@ IndexBufferImpl::IndexBufferImpl(mono::BufferType buffer_type, uint32_t count, c
 
     const sg_resource_state state = sg_query_buffer_state(m_handle);
     if(state != SG_RESOURCESTATE_VALID)
-        System::Log("Failed to create index buffer");
+        System::Log("Failed to create index buffer. Error: %s", ResourceStateToString(state));
 }
 
 IndexBufferImpl::~IndexBufferImpl()
