@@ -3,6 +3,7 @@
 
 #include "IRenderer.h"
 #include "Rendering/Texture/ITextureFactory.h"
+#include "Rendering/Lights/LightBufferFactory.h"
 
 #include "Color.h"
 #include "Math/Vector.h"
@@ -202,6 +203,8 @@ namespace mono
         std::unique_ptr<IRenderBuffer> m_screen_uv;
         std::unique_ptr<IElementBuffer> m_screen_indices;
 
+        uint32_t m_number_of_lights;
+        mono::LightDrawBuffers m_light_draw_buffers;
         mono::ITexturePtr m_light_mask_texture;
 
         float m_delta_time_s = 0.0f;
