@@ -25,7 +25,10 @@ namespace mono
 
     struct BufferStatus
     {
-        int allocated_buffers;
+        int make_buffers;
+        int destroyed_buffers;
+        int make_images;
+        int destroy_images;
     };
 
     struct LayerComponent

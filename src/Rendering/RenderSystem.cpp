@@ -32,22 +32,30 @@ namespace
 {
     void make_buffer(const sg_buffer_desc* desc, sg_buffer result, void* user_data)
     {
-        mono::RenderSystem::s_buffer_status.allocated_buffers++;
+        mono::RenderSystem::s_buffer_status.make_buffers++;
     }
-
     void destroy_buffer(sg_buffer buf, void* user_data)
     {
-        mono::RenderSystem::s_buffer_status.allocated_buffers--;
+        mono::RenderSystem::s_buffer_status.destroyed_buffers++;
     }
-
     void fail_buffer(sg_buffer buf_id, void* user_data)
     {
         MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_buffer.");
+    }
+
+    void make_image(const sg_image_desc* desc, sg_image result, void* user_data)
+    {
+        mono::RenderSystem::s_buffer_status.make_images++;
+    }
+    void destroy_image(sg_image img, void* user_data)
+    {
+        mono::RenderSystem::s_buffer_status.destroy_images++;
     }
     void fail_image(sg_image img_id, void* user_data)
     {
         MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_image.");
     }
+
     void fail_sampler(sg_sampler smp_id, void* user_data)
     {
         MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_sampler.");
@@ -128,6 +136,11 @@ BufferStatus RenderSystem::s_buffer_status;
 RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
     : m_layers(n)
 {
+    s_buffer_status.make_buffers = 0;
+    s_buffer_status.destroyed_buffers = 0;
+    s_buffer_status.make_images = 0;
+    s_buffer_status.destroy_images = 0;
+
     sg_desc desc = {};
     desc.buffer_pool_size = 2048;
     desc.logger.func = sokol_gfx_logger;
@@ -137,7 +150,11 @@ RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
     trace_hooks.make_buffer = make_buffer;
     trace_hooks.destroy_buffer = destroy_buffer;
     trace_hooks.fail_buffer = fail_buffer;
+
+    trace_hooks.make_image = make_image;
+    trace_hooks.destroy_image = destroy_image;
     trace_hooks.fail_image = fail_image;
+
     trace_hooks.fail_sampler = fail_sampler;
     trace_hooks.fail_shader = fail_shader;
     trace_hooks.fail_pipeline = fail_pipeline;

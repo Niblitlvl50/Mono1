@@ -15,4 +15,9 @@ namespace mono
     };
 
     TextDrawBuffers BuildTextDrawBuffers(int font_id, const char* text, mono::FontCentering center_flags);
+
+    mono::TextDrawBuffers AllocateTextDrawBuffers(uint32_t size);
+
+    void UpdateTextBuffer(
+        int font_id, const char* text, mono::FontCentering center_flags, TextDrawBuffers& draw_buffers);
 }
