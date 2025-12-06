@@ -70,9 +70,9 @@ RendererSokol::RendererSokol()
     constexpr math::Vector uv_coordinates[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f} };
     constexpr uint16_t indices[] = { 0, 1, 2, 0, 2, 3, };
 
-    m_screen_vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(vertices), vertices);
-    m_screen_uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(uv_coordinates), uv_coordinates);
-    m_screen_indices = CreateElementBuffer(BufferType::STATIC, std::size(indices), indices);
+    m_screen_vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(vertices), vertices, "screen_render_buffer");
+    m_screen_uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(uv_coordinates), uv_coordinates, "screen_render_buffer");
+    m_screen_indices = CreateElementBuffer(BufferType::STATIC, std::size(indices), indices, "screen_render_buffer");
 
     const char* light_mask_texture = mono::RenderSystem::LightMaskTexture();
     if(light_mask_texture)
@@ -382,9 +382,9 @@ void RendererSokol::RenderText(
 
     const TextDefinition& def = mono::GenerateVertexDataFromString(font_id, text, center_flags);
 
-    auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.vertices.size(), def.vertices.data());
-    auto uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.uv_coords.size(), def.uv_coords.data());
-    auto indices = CreateElementBuffer(BufferType::STATIC, def.indices.size(), def.indices.data());
+    auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.vertices.size(), def.vertices.data(), "render_text");
+    auto uv = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, def.uv_coords.size(), def.uv_coords.data(), "render_text");
+    auto indices = CreateElementBuffer(BufferType::STATIC, def.indices.size(), def.indices.data(), "render_text");
 
     DrawGeometry(vertices.get(), uv.get(), indices.get(), texture.get(), color, false, indices->Size());
 }
@@ -507,8 +507,8 @@ void RendererSokol::DrawPoints(const std::vector<math::Vector>& points, const st
     if(points.empty())
         return;
 
-    auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, points.size(), points.data());
-    auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data());
+    auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, points.size(), points.data(), "draw_points");
+    auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data(), "draw_points");
 
     ColorPipeline::Apply(m_color_points_pipeline.get(), vertices.get(), color_buffer.get());
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
@@ -524,8 +524,8 @@ void RendererSokol::DrawLines(const std::vector<math::Vector>& line_points, cons
 
     const std::vector<mono::Color::RGBA> colors(line_points.size(), color);
 
-    auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, line_points.size(), line_points.data());
-    auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data());
+    auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, line_points.size(), line_points.data(), "draw_lines");
+    auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data(), "draw_lines");
 
     ColorPipeline::Apply(m_color_lines_pipeline.get(), vertices.get(), color_buffer.get());
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
@@ -541,8 +541,8 @@ void RendererSokol::DrawPolyline(const std::vector<math::Vector>& line_points, c
 
     const std::vector<mono::Color::RGBA> colors(line_points.size(), color);
 
-    auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, line_points.size(), line_points.data());
-    auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data());
+    auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, line_points.size(), line_points.data(), "draw_polyline");
+    auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data(), "draw_polyline");
 
     ColorPipeline::Apply(m_color_line_strip_pipeline.get(), vertices.get(), color_buffer.get());
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
@@ -612,9 +612,9 @@ void RendererSokol::DrawFilledCircle(const math::Vector& position, const math::V
 
     const std::vector<mono::Color::RGBA> colors(vertices.size(), color);
 
-    auto vertex_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertices.size(), vertices.data());
-    auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data());
-    auto index_buffer = CreateElementBuffer(BufferType::STATIC, indices.size(), indices.data());
+    auto vertex_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertices.size(), vertices.data(), "draw_filled_circle");
+    auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data(), "draw_filled_circle");
+    auto index_buffer = CreateElementBuffer(BufferType::STATIC, indices.size(), indices.data(), "draw_filled_circle");
 
     ColorPipeline::Apply(
         m_color_triangles_pipeline.get(), vertex_buffer.get(), color_buffer.get(), index_buffer.get());
@@ -648,9 +648,9 @@ void RendererSokol::DrawFilledQuad(const math::Quad& quad, const mono::Color::RG
     const std::vector<mono::Color::RGBA> colors(line_points.size(), color);
     constexpr uint16_t indices[] = { 0, 1, 2, 0, 2, 3};
 
-    auto vertex_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, line_points.size(), line_points.data());
-    auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data());
-    auto index_buffer = CreateElementBuffer(BufferType::STATIC, std::size(indices), indices);
+    auto vertex_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, line_points.size(), line_points.data(), "draw_quad");
+    auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data(), "draw_quad");
+    auto index_buffer = CreateElementBuffer(BufferType::STATIC, std::size(indices), indices, "draw_quad");
 
     ColorPipeline::Apply(m_color_triangles_pipeline.get(), vertex_buffer.get(), color_buffer.get(), index_buffer.get());
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());

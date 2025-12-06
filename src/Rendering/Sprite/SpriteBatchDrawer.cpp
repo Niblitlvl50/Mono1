@@ -45,7 +45,7 @@ SpriteBatchDrawer::SpriteBatchDrawer(
     constexpr uint16_t indices[] = {
         0, 1, 2, 0, 2, 3
     };
-    m_sprite_indices = mono::CreateElementBuffer(mono::BufferType::STATIC, 6, indices);
+    m_sprite_indices = mono::CreateElementBuffer(mono::BufferType::STATIC, 6, indices, "sprite_batch_drawer");
 
     const char* sprite_shadow_texture = mono::RenderSystem::SpriteShadowTexture();
     if(sprite_shadow_texture)

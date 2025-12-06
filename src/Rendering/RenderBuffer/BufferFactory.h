@@ -25,11 +25,11 @@ namespace mono
         uint32_t components,
         uint32_t count,
         const void* data_ptr,
-        const char* debug_label = nullptr);
+        const char* debug_label);
     
     std::unique_ptr<IElementBuffer> CreateElementBuffer(
         BufferType type,
         uint32_t count,
         const uint16_t* data_ptr,
-        const char* debug_label = nullptr);
+        const char* debug_label);
 }
