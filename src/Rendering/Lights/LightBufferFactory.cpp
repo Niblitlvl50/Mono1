@@ -7,9 +7,9 @@
 mono::LightDrawBuffers mono::AllocateLightDrawBuffers(uint32_t num_lights)
 {
     mono::LightDrawBuffers draw_buffers;
-    draw_buffers.vertices   = CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 2, num_lights * 4, nullptr);
-    draw_buffers.uv         = CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 2, num_lights * 4, nullptr);
-    draw_buffers.colors     = CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 4, num_lights * 4, nullptr);
+    draw_buffers.vertices   = CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 2, num_lights * 4, nullptr, "light_draw_buffer");
+    draw_buffers.uv         = CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 2, num_lights * 4, nullptr, "light_draw_buffer");
+    draw_buffers.colors     = CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 4, num_lights * 4, nullptr, "light_draw_buffer");
     draw_buffers.indices    = CreateElementBuffer(BufferType::DYNAMIC, num_lights * 6, nullptr);
 
     return draw_buffers;

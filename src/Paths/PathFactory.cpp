@@ -196,10 +196,14 @@ mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector
         indices[index] = generated_mesh->triangle_indices[index];
 
     mono::PathDrawBuffer buffers;
-    buffers.vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, generated_mesh->num_vertices, generated_mesh->positions);
-    buffers.colors = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, generated_mesh->num_vertices, colors.data());
-    buffers.anotations = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, generated_mesh->num_vertices, generated_mesh->annotations);
-    buffers.indices = CreateElementBuffer(BufferType::STATIC, indices.size(), indices.data());
+    buffers.vertices =
+        CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, generated_mesh->num_vertices, generated_mesh->positions, "path_draw_buffer");
+    buffers.colors =
+        CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, generated_mesh->num_vertices, colors.data(), "path_draw_buffer");
+    buffers.anotations =
+        CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, generated_mesh->num_vertices, generated_mesh->annotations, "path_draw_buffer");
+    buffers.indices =
+        CreateElementBuffer(BufferType::STATIC, indices.size(), indices.data(), "path_draw_buffer");
 
     parsl_destroy_context(ctx);
 

@@ -67,11 +67,16 @@ mono::SpriteDrawBuffers mono::BuildSpriteDrawBuffers(const mono::SpriteData* spr
 
     SpriteDrawBuffers buffers;
     buffers.vertices_per_sprite = 4;
-    buffers.vertices = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertices.size(), vertices.data());
-    buffers.offsets = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertex_offsets.size(), vertex_offsets.data());
-    buffers.uv = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, uv_coordinates.size(), uv_coordinates.data());
-    buffers.uv_flipped = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, uv_coordinates_flipped.size(), uv_coordinates_flipped.data());
-    buffers.heights = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 1, height_values.size(), height_values.data());
+    buffers.vertices =
+        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertices.size(), vertices.data(), "sprite_draw_buffer");
+    buffers.offsets =
+        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertex_offsets.size(), vertex_offsets.data(), "sprite_draw_buffer");
+    buffers.uv =
+        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, uv_coordinates.size(), uv_coordinates.data(), "sprite_draw_buffer");
+    buffers.uv_flipped =
+        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, uv_coordinates_flipped.size(), uv_coordinates_flipped.data(), "sprite_draw_buffer");
+    buffers.heights =
+        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 1, height_values.size(), height_values.data(), "sprite_draw_buffer");
 
     return buffers;
 }
@@ -95,8 +100,8 @@ mono::SpriteShadowBuffers mono::BuildSpriteShadowBuffers(const math::Vector& sha
     };
 
     SpriteShadowBuffers buffers;
-    buffers.vertices = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(vertices), vertices);
-    buffers.uv = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(uvs), uvs);
+    buffers.vertices = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(vertices), vertices, "sprite_shadow_buffer");
+    buffers.uv = mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, std::size(uvs), uvs, "sprite_shadow_buffer");
 
     return buffers;
 }

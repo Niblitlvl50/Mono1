@@ -20,6 +20,16 @@ namespace mono
     };
 
     std::unique_ptr<IRenderBuffer> CreateRenderBuffer(
-        BufferType type, BufferData data, uint32_t components, uint32_t count, const void* data_ptr);
-    std::unique_ptr<IElementBuffer> CreateElementBuffer(BufferType type, uint32_t count, const uint16_t* data_ptr);
+        BufferType type,
+        BufferData data,
+        uint32_t components,
+        uint32_t count,
+        const void* data_ptr,
+        const char* debug_label = nullptr);
+    
+    std::unique_ptr<IElementBuffer> CreateElementBuffer(
+        BufferType type,
+        uint32_t count,
+        const uint16_t* data_ptr,
+        const char* debug_label = nullptr);
 }

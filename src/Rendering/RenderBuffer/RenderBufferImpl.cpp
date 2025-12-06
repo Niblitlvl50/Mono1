@@ -41,7 +41,7 @@ namespace
 }
 
 RenderBufferImpl::RenderBufferImpl(
-    mono::BufferType buffer_type, mono::BufferData data_type, uint32_t components, uint32_t count, const void* data_ptr)
+    mono::BufferType buffer_type, mono::BufferData data_type, uint32_t components, uint32_t count, const void* data_ptr, const char* debug_label)
     : m_data_type(data_type)
     , m_components(components)
     , m_count(count)
@@ -51,6 +51,7 @@ RenderBufferImpl::RenderBufferImpl(
     buffer_desc.type = SG_BUFFERTYPE_VERTEXBUFFER;
     buffer_desc.usage = (buffer_type == mono::BufferType::STATIC) ? SG_USAGE_IMMUTABLE : SG_USAGE_DYNAMIC;
     buffer_desc.data = { data_ptr, buffer_desc.size };
+    buffer_desc.label = debug_label;
 
     m_handle = sg_make_buffer(&buffer_desc);
 
@@ -86,7 +87,7 @@ uint32_t RenderBufferImpl::Id() const
 }
 
 
-IndexBufferImpl::IndexBufferImpl(mono::BufferType buffer_type, uint32_t count, const uint16_t* data_ptr)
+IndexBufferImpl::IndexBufferImpl(mono::BufferType buffer_type, uint32_t count, const uint16_t* data_ptr, const char* debug_label)
     : m_count(count)
 {
     sg_buffer_desc buffer_desc = {};
@@ -94,6 +95,7 @@ IndexBufferImpl::IndexBufferImpl(mono::BufferType buffer_type, uint32_t count, c
     buffer_desc.type = SG_BUFFERTYPE_INDEXBUFFER;
     buffer_desc.usage = (buffer_type == mono::BufferType::STATIC) ? SG_USAGE_IMMUTABLE : SG_USAGE_DYNAMIC;
     buffer_desc.data = { data_ptr, buffer_desc.size };
+    buffer_desc.label = debug_label;
 
     m_handle = sg_make_buffer(&buffer_desc);
 

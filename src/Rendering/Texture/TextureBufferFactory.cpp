@@ -32,9 +32,9 @@ mono::TextureDrawBuffers mono::BuildTextureDrawBuffers(const mono::ITexture* tex
     };
 
     mono::TextureDrawBuffers draw_buffers;
-    draw_buffers.vertices = mono::CreateRenderBuffer(mono::BufferType::STATIC, mono::BufferData::FLOAT, 2, 4, vertex_data);
-    draw_buffers.uv = mono::CreateRenderBuffer(mono::BufferType::STATIC, mono::BufferData::FLOAT, 2, 4, uv_data);
-    draw_buffers.indices = mono::CreateElementBuffer(mono::BufferType::STATIC, 6, index_data);
+    draw_buffers.vertices = mono::CreateRenderBuffer(mono::BufferType::STATIC, mono::BufferData::FLOAT, 2, 4, vertex_data, "texture_draw_buffer");
+    draw_buffers.uv = mono::CreateRenderBuffer(mono::BufferType::STATIC, mono::BufferData::FLOAT, 2, 4, uv_data, "texture_draw_buffer");
+    draw_buffers.indices = mono::CreateElementBuffer(mono::BufferType::STATIC, 6, index_data, "texture_draw_buffer");
 
     return draw_buffers;
 }

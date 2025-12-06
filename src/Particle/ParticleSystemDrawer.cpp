@@ -36,10 +36,14 @@ void ParticleSystemDrawer::Draw(mono::IRenderer& renderer) const
         if(it == m_render_data.end() || it->second.position_buffer->Size() < pool.pool_size)
         {
             InternalRenderData new_render_data;
-            new_render_data.position_buffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 2, pool.pool_size, nullptr);
-            new_render_data.rotation_buffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 1, pool.pool_size, nullptr);
-            new_render_data.color_buffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 4, pool.pool_size, nullptr);
-            new_render_data.point_size_buffer = mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 1, pool.pool_size, nullptr);
+            new_render_data.position_buffer =
+                mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 2, pool.pool_size, nullptr, "particle_system");
+            new_render_data.rotation_buffer =
+                mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 1, pool.pool_size, nullptr, "particle_system");
+            new_render_data.color_buffer =
+                mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 4, pool.pool_size, nullptr, "particle_system");
+            new_render_data.point_size_buffer =
+                mono::CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 1, pool.pool_size, nullptr, "particle_system");
 
             it = m_render_data.insert_or_assign(pool_index, std::move(new_render_data)).first;
         }
