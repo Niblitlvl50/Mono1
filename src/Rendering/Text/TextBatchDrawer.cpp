@@ -12,6 +12,9 @@
 #include "Rendering/RenderBuffer/IRenderBuffer.h"
 #include "Rendering/RenderBuffer/BufferFactory.h"
 
+#include <algorithm>
+#include <iterator>
+
 using namespace mono;
 
 TextBatchDrawer::TextBatchDrawer(mono::TextSystem* text_system, mono::TransformSystem* transform_system)
