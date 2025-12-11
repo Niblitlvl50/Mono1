@@ -32,5 +32,6 @@ namespace mono
 
         mutable std::vector<TextDrawBuffers> m_draw_buffers;
         mutable std::unordered_map<uint32_t, mono::TextComponent> m_current_data;
+        mutable std::vector<uint32_t> m_last_active_entities;
     };
 }

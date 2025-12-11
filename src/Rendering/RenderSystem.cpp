@@ -33,10 +33,16 @@ namespace
     void make_buffer(const sg_buffer_desc* desc, sg_buffer result, void* user_data)
     {
         mono::RenderSystem::s_buffer_status.make_buffers++;
+
+        mono::RenderSystem* render_system = (mono::RenderSystem*)user_data;
+        render_system->AddDebugLabel(desc->label, result.id);
     }
     void destroy_buffer(sg_buffer buf, void* user_data)
     {
         mono::RenderSystem::s_buffer_status.destroyed_buffers++;
+
+        mono::RenderSystem* render_system = (mono::RenderSystem*)user_data;
+        render_system->RemoveDebugLabel(buf.id);
     }
     void fail_buffer(sg_buffer buf_id, void* user_data)
     {
@@ -72,6 +78,14 @@ namespace
     {
         MONO_ASSERT_MESSAGE(false, "RenderSystem|fail_pass.");
     }
+
+    void push_debug_group(const char* name, void* user_data)
+    {
+    }
+    void pop_debug_group(void* user_data)
+    {
+    }
+
 
     void sokol_gfx_logger(
         const char* tag,                // always "sg"
@@ -147,6 +161,7 @@ RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
     sg_setup(&desc);
 
     sg_trace_hooks trace_hooks = {};
+    trace_hooks.user_data = this;
     trace_hooks.make_buffer = make_buffer;
     trace_hooks.destroy_buffer = destroy_buffer;
     trace_hooks.fail_buffer = fail_buffer;
@@ -159,6 +174,9 @@ RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
     trace_hooks.fail_shader = fail_shader;
     trace_hooks.fail_pipeline = fail_pipeline;
     trace_hooks.fail_pass = fail_pass;
+    trace_hooks.push_debug_group = push_debug_group;
+    trace_hooks.pop_debug_group = pop_debug_group;
+
     sg_install_trace_hooks(&trace_hooks);
 
     simgui_desc_t imgui_desc = {};
@@ -325,6 +343,32 @@ bool RenderSystem::ShouldApplyScreenFadeAlpha() const
 float RenderSystem::GetFadeAlpha() const
 {
     return m_screen_fade.value().alpha;
+}
+
+void RenderSystem::AddDebugLabel(const char* label, uint32_t id)
+{
+    m_buffer_count[label]++;
+    m_id_to_label.insert_or_assign(id, label);
+}
+
+void RenderSystem::RemoveDebugLabel(uint32_t id)
+{
+    const auto it = m_id_to_label.find(id);
+    if(it != m_id_to_label.end())
+    {
+        const auto buffer_it = m_buffer_count.find(it->second);
+        if(buffer_it != m_buffer_count.end())
+        {
+            buffer_it->second--;
+        }
+
+        m_id_to_label.erase(id);
+    }
+}
+
+const std::unordered_map<const char*, uint32_t>& RenderSystem::GetBufferCount() const
+{
+    return m_buffer_count;
 }
 
 float RenderSystem::PixelsPerMeter()

@@ -23,6 +23,6 @@ namespace mono
         std::unique_ptr<IRenderBuffer> uv;
     };
 
-    SpriteDrawBuffers BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data);
+    SpriteDrawBuffers BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data, const char* debug_context);
     SpriteShadowBuffers BuildSpriteShadowBuffers(const math::Vector& shadow_offset, float shadow_radius);
 }

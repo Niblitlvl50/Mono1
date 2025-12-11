@@ -26,7 +26,9 @@ TextBatchDrawer::~TextBatchDrawer()
 
 void TextBatchDrawer::Draw(mono::IRenderer& renderer) const
 {
-    const auto draw_texts_func = [this, &renderer](mono::TextComponent& text, uint32_t index) {
+    std::vector<uint32_t> active_entities;
+
+    const auto draw_texts_func = [this, &renderer, &active_entities](mono::TextComponent& text, uint32_t index) {
         
         if(text.text.empty())
             return;
@@ -34,6 +36,8 @@ void TextBatchDrawer::Draw(mono::IRenderer& renderer) const
         const math::Quad world_bb = m_transform_system->GetWorldBoundingBox(index);
         if(renderer.Cull(world_bb) == mono::CullResult::OUTSIDE_VIEW)
             return;
+
+        active_entities.push_back(index);
 
         const math::Matrix& world_transform = m_transform_system->GetWorld(index);
         const TextDrawBuffers* render_buffers = UpdateDrawBuffers(text, index);
@@ -67,6 +71,23 @@ void TextBatchDrawer::Draw(mono::IRenderer& renderer) const
     };
 
     m_text_system->ForEach(draw_texts_func);
+
+
+    std::vector<uint32_t> diff_result;
+    std::set_difference(
+        m_last_active_entities.begin(),
+        m_last_active_entities.end(),
+        active_entities.begin(),
+        active_entities.end(),
+        std::back_inserter(diff_result));
+
+    m_last_active_entities = active_entities;
+    
+    for(uint32_t id : diff_result)
+    {
+        m_draw_buffers[id] = mono::TextDrawBuffers();
+        m_current_data.erase(id);
+    }
 }
 
 math::Quad TextBatchDrawer::BoundingBox() const

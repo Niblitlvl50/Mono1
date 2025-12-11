@@ -48,5 +48,6 @@ namespace mono
         };
         mutable std::unordered_map<uint32_t, ShadowData> m_shadow_data_cache;
         mutable std::unordered_map<uint32_t, SpriteShadowBuffers> m_shadow_buffers;
+        mutable std::vector<uint32_t> m_last_active_sprites;
     };
 }

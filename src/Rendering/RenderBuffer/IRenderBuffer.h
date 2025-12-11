@@ -11,6 +11,8 @@ namespace mono
 
         virtual ~IRenderBuffer() = default;
         virtual void UpdateData(const void* data, uint32_t offset, uint32_t count) = 0;
+        virtual void ReplaceData(const void* data, uint32_t count) = 0;
+        virtual uint32_t Capacity() const = 0;
         virtual uint32_t Size() const = 0;
         virtual uint32_t ByteOffsetToIndex(uint32_t index) const = 0;
         virtual uint32_t Id() const = 0;
@@ -22,6 +24,8 @@ namespace mono
 
         virtual ~IElementBuffer() = default;
         virtual void UpdateData(const uint16_t* data, uint32_t offset, uint32_t count) = 0;
+        virtual void ReplaceData(const uint16_t* data, uint32_t count) = 0;
+        virtual uint32_t Capacity() const = 0;
         virtual uint32_t Size() const = 0;
         virtual uint32_t Id() const = 0;
     };

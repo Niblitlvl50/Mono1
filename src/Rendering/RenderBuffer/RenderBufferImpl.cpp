@@ -40,11 +40,15 @@ namespace
     }
 }
 
+int RenderBufferImpl::s_counter = 0;
+
+
 RenderBufferImpl::RenderBufferImpl(
     mono::BufferType buffer_type, mono::BufferData data_type, uint32_t components, uint32_t count, const void* data_ptr, const char* debug_label)
     : m_data_type(data_type)
     , m_components(components)
-    , m_count(count)
+    , m_capacity(count)
+    , m_size(count)
 {
     sg_buffer_desc buffer_desc = {};
     buffer_desc.size = CalculateByteSize(m_data_type, m_components, count);
@@ -58,11 +62,14 @@ RenderBufferImpl::RenderBufferImpl(
     const sg_resource_state state = sg_query_buffer_state(m_handle);
     if(state != SG_RESOURCESTATE_VALID)
         System::Log("Failed to create render buffer. Error: %s", ResourceStateToString(state));
+
+    s_counter++;
 }
 
 RenderBufferImpl::~RenderBufferImpl()
 {
     sg_destroy_buffer(m_handle);
+    s_counter--;
 }
 
 void RenderBufferImpl::UpdateData(const void* data_ptr, uint32_t offset, uint32_t count)
@@ -71,9 +78,20 @@ void RenderBufferImpl::UpdateData(const void* data_ptr, uint32_t offset, uint32_
     sg_update_buffer(m_handle, { data_ptr, data_size });
 }
 
+void RenderBufferImpl::ReplaceData(const void* data, uint32_t count)
+{
+    UpdateData(data, 0, count);
+    m_size = count;
+}
+
+uint32_t RenderBufferImpl::Capacity() const
+{
+    return m_capacity;
+}
+
 uint32_t RenderBufferImpl::Size() const
 {
-    return m_count;
+    return m_size;
 }
 
 uint32_t RenderBufferImpl::ByteOffsetToIndex(uint32_t index) const
@@ -88,7 +106,8 @@ uint32_t RenderBufferImpl::Id() const
 
 
 IndexBufferImpl::IndexBufferImpl(mono::BufferType buffer_type, uint32_t count, const uint16_t* data_ptr, const char* debug_label)
-    : m_count(count)
+    : m_capacity(count)
+    , m_size(count)
 {
     sg_buffer_desc buffer_desc = {};
     buffer_desc.size = CalculateByteSize(mono::BufferData::INT_16, 1, count);
@@ -114,9 +133,20 @@ void IndexBufferImpl::UpdateData(const uint16_t* data_ptr, uint32_t offset, uint
     sg_update_buffer(m_handle, { data_ptr, CalculateByteSize(mono::BufferData::INT_16, 1, count) });
 }
 
+void IndexBufferImpl::ReplaceData(const uint16_t* data, uint32_t count)
+{
+    UpdateData(data, 0, count);
+    m_size = count;
+}
+
+uint32_t IndexBufferImpl::Capacity() const
+{
+    return m_capacity;
+}
+
 uint32_t IndexBufferImpl::Size() const
 {
-    return m_count;
+    return m_size;
 }
 
 uint32_t IndexBufferImpl::Id() const

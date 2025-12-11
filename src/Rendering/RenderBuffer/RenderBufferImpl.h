@@ -21,14 +21,19 @@ namespace mono
         ~RenderBufferImpl();
         
         void UpdateData(const void* data, uint32_t offset, uint32_t count) override;
+        void ReplaceData(const void* data, uint32_t count) override;
+        uint32_t Capacity() const override;
         uint32_t Size() const override;
         uint32_t ByteOffsetToIndex(uint32_t index) const override;
         uint32_t Id() const override;
 
         mono::BufferData m_data_type;
         uint32_t m_components;
-        uint32_t m_count;
+        uint32_t m_capacity;
+        uint32_t m_size;
         sg_buffer m_handle;
+
+        static int s_counter;
     };
 
     class IndexBufferImpl : public mono::IElementBuffer
@@ -40,10 +45,13 @@ namespace mono
         ~IndexBufferImpl();
 
         void UpdateData(const uint16_t* data, uint32_t offset, uint32_t count) override;
+        void ReplaceData(const uint16_t* data, uint32_t count) override;
+        uint32_t Capacity() const override;
         uint32_t Size() const override;
         uint32_t Id() const override;
 
-        uint32_t m_count;
+        uint32_t m_capacity;
+        uint32_t m_size;
         sg_buffer m_handle;
     };
 }

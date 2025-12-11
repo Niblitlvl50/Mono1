@@ -6,7 +6,7 @@
 
 #include "Math/MathFunctions.h"
 
-mono::SpriteDrawBuffers mono::BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data)
+mono::SpriteDrawBuffers mono::BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data, const char* debug_context)
 {
     std::vector<math::Vector> vertices;
     std::vector<math::Vector> vertex_offsets;
@@ -68,15 +68,15 @@ mono::SpriteDrawBuffers mono::BuildSpriteDrawBuffers(const mono::SpriteData* spr
     SpriteDrawBuffers buffers;
     buffers.vertices_per_sprite = 4;
     buffers.vertices =
-        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertices.size(), vertices.data(), "sprite_draw_buffer");
+        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertices.size(), vertices.data(), debug_context);
     buffers.offsets =
-        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertex_offsets.size(), vertex_offsets.data(), "sprite_draw_buffer");
+        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertex_offsets.size(), vertex_offsets.data(), debug_context);
     buffers.uv =
-        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, uv_coordinates.size(), uv_coordinates.data(), "sprite_draw_buffer");
+        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, uv_coordinates.size(), uv_coordinates.data(), debug_context);
     buffers.uv_flipped =
-        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, uv_coordinates_flipped.size(), uv_coordinates_flipped.data(), "sprite_draw_buffer");
+        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, uv_coordinates_flipped.size(), uv_coordinates_flipped.data(), debug_context);
     buffers.heights =
-        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 1, height_values.size(), height_values.data(), "sprite_draw_buffer");
+        mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 1, height_values.size(), height_values.data(), debug_context);
 
     return buffers;
 }

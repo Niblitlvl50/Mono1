@@ -6,6 +6,7 @@
 
 #include <optional>
 #include <functional>
+#include <unordered_map>
 
 namespace System
 {
@@ -69,6 +70,12 @@ namespace mono
         bool ShouldApplyScreenFadeAlpha() const;
         float GetFadeAlpha() const;
 
+        void AddDebugLabel(const char* label, uint32_t id);
+        void RemoveDebugLabel(uint32_t id);
+
+        const std::unordered_map<const char*, uint32_t>& GetBufferCount() const;
+
+
         static float PixelsPerMeter();
         static float GetWindowAspect();
         static const char* LightMaskTexture();
@@ -98,6 +105,9 @@ namespace mono
             float alpha;
         };
         std::optional<ScreenFadeData> m_screen_fade;
+
+        std::unordered_map<const char*, uint32_t> m_buffer_count;
+        std::unordered_map<uint32_t, const char*> m_id_to_label;
 
         static float s_pixels_per_meter;
         static const char* s_light_mask_texture;

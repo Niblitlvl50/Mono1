@@ -22,8 +22,8 @@ void mono::UpdateLightDrawBuffer(
     const std::vector<uint16_t>& index_data,
     mono::LightDrawBuffers& draw_buffers)
 {
-    draw_buffers.vertices->UpdateData(vertex_data.data(), 0, vertex_data.size());
-    draw_buffers.uv->UpdateData(uv_data.data(), 0, uv_data.size());
-    draw_buffers.colors->UpdateData(color_data.data(), 0, color_data.size());
-    draw_buffers.indices->UpdateData(index_data.data(), 0, index_data.size());
+    draw_buffers.vertices->ReplaceData(vertex_data.data(), vertex_data.size());
+    draw_buffers.uv->ReplaceData(uv_data.data(), uv_data.size());
+    draw_buffers.colors->ReplaceData(color_data.data(), color_data.size());
+    draw_buffers.indices->ReplaceData(index_data.data(), index_data.size());
 }
