@@ -32,6 +32,12 @@ namespace mono
         int destroy_images;
     };
 
+    struct BufferDebug
+    {
+        int current;
+        int total;
+    };
+
     struct LayerComponent
     {
         int layer;
@@ -73,7 +79,7 @@ namespace mono
         void AddDebugLabel(const char* label, uint32_t id);
         void RemoveDebugLabel(uint32_t id);
 
-        const std::unordered_map<const char*, uint32_t>& GetBufferCount() const;
+        const std::unordered_map<const char*, BufferDebug>& GetBufferCount() const;
 
 
         static float PixelsPerMeter();
@@ -106,7 +112,7 @@ namespace mono
         };
         std::optional<ScreenFadeData> m_screen_fade;
 
-        std::unordered_map<const char*, uint32_t> m_buffer_count;
+        std::unordered_map<const char*, BufferDebug> m_buffer_count;
         std::unordered_map<uint32_t, const char*> m_id_to_label;
 
         static float s_pixels_per_meter;

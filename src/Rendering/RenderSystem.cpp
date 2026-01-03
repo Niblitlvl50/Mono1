@@ -347,7 +347,8 @@ float RenderSystem::GetFadeAlpha() const
 
 void RenderSystem::AddDebugLabel(const char* label, uint32_t id)
 {
-    m_buffer_count[label]++;
+    m_buffer_count[label].current++;
+    m_buffer_count[label].total++;
     m_id_to_label.insert_or_assign(id, label);
 }
 
@@ -359,14 +360,14 @@ void RenderSystem::RemoveDebugLabel(uint32_t id)
         const auto buffer_it = m_buffer_count.find(it->second);
         if(buffer_it != m_buffer_count.end())
         {
-            buffer_it->second--;
+            buffer_it->second.current--;
         }
 
         m_id_to_label.erase(id);
     }
 }
 
-const std::unordered_map<const char*, uint32_t>& RenderSystem::GetBufferCount() const
+const std::unordered_map<const char*, BufferDebug>& RenderSystem::GetBufferCount() const
 {
     return m_buffer_count;
 }
