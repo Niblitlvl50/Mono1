@@ -20,6 +20,7 @@
 #include "Rendering/Sprite/ISprite.h"
 #include "Rendering/Sprite/SpriteProperties.h"
 #include "Rendering/Sprite/SpriteBufferFactory.h"
+#include "Rendering/Primitives/PrimitiveBufferFactory.h"
 
 #include "Text/TextFunctions.h"
 
@@ -577,50 +578,17 @@ void RendererSokol::DrawCircle(const math::Vector& position, float radie, int se
     DrawClosedPolyline(vertices, color, line_width);
 }
 
-void RendererSokol::DrawFilledCircle(const math::Vector& position, const math::Vector& size, int segments, const mono::Color::RGBA& color) const
+void RendererSokol::DrawFilledCircle(const math::Vector& size, int segments, const mono::Color::RGBA& color) const
 {
-    if((segments % 2) != 0)
-        segments += 1;
-
-    std::vector<math::Vector> vertices;
-    vertices.reserve(segments +1);
-    vertices.push_back(position);
-
-    const uint16_t n_indices = segments * 3;
-    std::vector<uint16_t> indices;
-    indices.reserve(n_indices);
-
-    const float coef = 2.0f * math::PI() / float(segments);
-
-    for(int index = 0; index < segments; ++index)
-    {
-        const float radians = index * coef;
-        const float x = size.x * std::cos(radians) + position.x;
-        const float y = size.y * std::sin(radians) + position.y;
-        vertices.emplace_back(x, y);
-
-        indices.push_back(0);
-        indices.push_back(index +1);
-        indices.push_back(index +2);
-    }
-
-    indices.pop_back();
-    indices.pop_back();
-
-    indices.push_back(vertices.size() -1);
-    indices.push_back(1);
-
-    const std::vector<mono::Color::RGBA> colors(vertices.size(), color);
-
-    auto vertex_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertices.size(), vertices.data(), "draw_filled_circle");
-    auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data(), "draw_filled_circle");
-    auto index_buffer = CreateElementBuffer(BufferType::STATIC, indices.size(), indices.data(), "draw_filled_circle");
-
+    const mono::PrimitiveDrawBuffers prim_draw_buffers = mono::BuildCircleDrawBuffers(size, segments, color);
     ColorPipeline::Apply(
-        m_color_triangles_pipeline.get(), vertex_buffer.get(), color_buffer.get(), index_buffer.get());
+        m_color_triangles_pipeline.get(),
+        prim_draw_buffers.vertices.get(),
+        prim_draw_buffers.colors.get(),
+        prim_draw_buffers.indices.get());
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
 
-    sg_draw(0, indices.size(), 1);
+    sg_draw(0, prim_draw_buffers.indices->Size(), 1);
 }
 
 void RendererSokol::DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const

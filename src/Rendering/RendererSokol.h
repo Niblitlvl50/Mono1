@@ -71,7 +71,7 @@ namespace mono
         void DrawQuad(const math::Quad& quad, const mono::Color::RGBA& color, float width) const override;
         void DrawFilledQuad(const math::Quad& quad, const mono::Color::RGBA& color) const override;
         void DrawCircle(const math::Vector& pos, float radie, int segments, float line_width, const mono::Color::RGBA& color) const override;
-        void DrawFilledCircle(const math::Vector& pos, const math::Vector& size, int segments, const mono::Color::RGBA& color) const override;
+        void DrawFilledCircle(const math::Vector& size, int segments, const mono::Color::RGBA& color) const override;
 
         void DrawGeometry(
             const IRenderBuffer* vertices,
