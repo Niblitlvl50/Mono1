@@ -104,7 +104,7 @@ namespace mono
             const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture) override;
 
         void DrawPoints(
-            const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count) override;
+            const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count) const override;
 
         void DrawLines(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, uint32_t offset, uint32_t count) override;

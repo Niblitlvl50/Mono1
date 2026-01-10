@@ -508,14 +508,8 @@ void RendererSokol::DrawPoints(const std::vector<math::Vector>& points, const st
     if(points.empty())
         return;
 
-    auto vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, points.size(), points.data(), "draw_points");
-    auto color_buffer = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data(), "draw_points");
-
-    ColorPipeline::Apply(m_color_points_pipeline.get(), vertices.get(), color_buffer.get());
-    ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
-    ColorPipeline::SetPointSize(point_size);
-
-    sg_draw(0, points.size(), 1);
+    const mono::PrimitiveDrawBuffers& draw_buffers = BuildPointsDrawBuffers(points, colors);
+    DrawPoints(draw_buffers.vertices.get(), draw_buffers.colors.get(), point_size, 0, points.size());
 }
 
 void RendererSokol::DrawLines(const std::vector<math::Vector>& line_points, const mono::Color::RGBA& color, float line_width) const
@@ -682,7 +676,7 @@ void RendererSokol::DrawParticlePoints(
 }
 
 void RendererSokol::DrawPoints(
-    const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count)
+    const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count) const
 {
     ColorPipeline::Apply(m_color_points_pipeline.get(), vertices, colors);
     ColorPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());

@@ -49,3 +49,37 @@ mono::PrimitiveDrawBuffers mono::BuildCircleDrawBuffers(const math::Vector& size
 
     return draw_buffers;
 }
+
+mono::PrimitiveDrawBuffers mono::BuildPointsDrawBuffers(const std::vector<math::Vector>& points, const std::vector<mono::Color::RGBA>& colors)
+{
+    PrimitiveDrawBuffers draw_buffers;
+    draw_buffers.vertices = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, points.size(), points.data(), "prim_points_points");
+    draw_buffers.colors = CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, colors.size(), colors.data(), "prim_points_points");
+
+    return draw_buffers;
+}
+
+mono::PrimitiveDrawBuffers mono::BuildMutablePointsDrawBuffers(const std::vector<math::Vector>& points, const std::vector<mono::Color::RGBA>& colors)
+{
+    PrimitiveDrawBuffers draw_buffers;
+    draw_buffers.vertices = CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 2, points.size(), nullptr, "prim_points_points");
+    draw_buffers.colors = CreateRenderBuffer(BufferType::DYNAMIC, BufferData::FLOAT, 4, colors.size(), nullptr, "prim_points_points");
+
+    return draw_buffers;
+}
+
+void mono::UpdateMutablePoints(const std::vector<math::Vector>& points, mono::PrimitiveDrawBuffers& draw_buffers)
+{
+    if(points.empty())
+        return;
+
+    draw_buffers.vertices->ReplaceData(points.data(), points.size());
+}
+
+void mono::UpdateMutablePointColors(const std::vector<mono::Color::RGBA>& colors, mono::PrimitiveDrawBuffers& draw_buffers)
+{
+    if(colors.empty())
+        return;
+
+    draw_buffers.colors->ReplaceData(colors.data(), colors.size());
+}

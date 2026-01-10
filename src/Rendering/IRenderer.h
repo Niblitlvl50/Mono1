@@ -101,7 +101,7 @@ namespace mono
             const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture) = 0;
 
         virtual void DrawPoints(
-            const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count) = 0;
+            const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count) const = 0;
 
         virtual void DrawLines(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, uint32_t offset, uint32_t count) = 0;
