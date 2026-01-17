@@ -18,6 +18,9 @@ namespace mono
         // Get a position from a length value
         virtual math::Vector GetPositionByLength(float length) const = 0;
 
+        // Get the end point of the path
+        virtual math::Vector GetEndPoint() const = 0;
+
         virtual float GetLengthFromPosition(const math::Vector& position) const = 0;
 
         // Get a collection of all the points that defines the path

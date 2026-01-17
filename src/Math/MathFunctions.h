@@ -50,6 +50,8 @@ namespace math
     float AngleFromVector(const math::Vector& normal);
     float NormalizeAngle(float radians);
 
+    math::Vector RandomPointInCircle(float radius);
+
     // Pass in at least 3 points, else you will get "nan nan" back.
     math::Vector CentroidOfPolygon(const std::vector<math::Vector>& points);
     bool PointInsidePolygon(const math::Vector& point, const std::vector<math::Vector>& polygon);

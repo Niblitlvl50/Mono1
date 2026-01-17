@@ -2,6 +2,7 @@
 #include "MathFunctions.h"
 #include "Vector.h"
 #include "Quad.h"
+#include "Util/Random.h"
 
 #include <cmath>
 #include <stdlib.h>
@@ -120,6 +121,13 @@ math::Vector math::VectorFromAngle(float radians)
 float math::AngleFromVector(const math::Vector& normal)
 {
     return std::atan2(-normal.x, normal.y);
+}
+
+math::Vector math::RandomPointInCircle(float radius)
+{
+    const float random_tau = mono::Random() * math::TAU();
+    const math::Vector& random_vector = math::VectorFromAngle(random_tau);
+    return random_vector * mono::Random();
 }
 
 math::Vector math::CentroidOfPolygon(const std::vector<math::Vector>& points)

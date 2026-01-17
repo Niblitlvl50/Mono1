@@ -76,6 +76,11 @@ namespace
             return pos;
         }
 
+        math::Vector GetEndPoint() const override
+        {
+            return m_points.empty() ? math::ZeroVec : m_points.back();
+        }
+
         float GetLengthFromPosition(const math::Vector& position) const override
         {
             if(m_points.empty())
