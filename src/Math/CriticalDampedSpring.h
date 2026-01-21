@@ -26,6 +26,19 @@ namespace math
         return 1.0f / (1.0f + x + 0.48f * x * x + 0.235f * x * x * x);
     }
 
+	inline void spring_character_update(float& x, float& v, float& a, float v_goal, float halflife, float dt)
+	{
+		float y = halflife_to_damping(halflife) / 2.0f;	
+		float j0 = v - v_goal;
+		float j1 = a + j0*y;
+		float eydt = fast_negexp(y*dt);
+
+		x = eydt*(((-j1)/(y*y)) + ((-j0 - j1*dt)/y)) + 
+			(j1/(y*y)) + j0/y + v_goal * dt + x;
+		v = eydt*(j0 + j1*dt) + v_goal;
+		a = eydt*(a - j1*y*dt);
+	}
+
     inline void simple_spring_damper_implicit(float& x, float& v, float x_goal, float halflife, float dt)
     {
         float y = halflife_to_damping(halflife) / 2.0f;	
