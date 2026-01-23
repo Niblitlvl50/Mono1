@@ -45,10 +45,13 @@ namespace
             return m_points;
         }
 
-        math::Vector GetPositionByLength(float length) const override
+        mono::PositionResult GetPositionByLength(float length) const override
         {
+            mono::PositionResult result;
+            result.valid_position = false;
+
             if(m_length_table.empty())
-                return math::ZeroVec;
+                return result;
 
             const auto find_func = [length](float start_length) {
                 return length <= start_length;
@@ -56,7 +59,7 @@ namespace
 
             auto it = std::find_if(m_length_table.begin(), m_length_table.end(), find_func);
             if(it == m_length_table.end())
-                return math::ZeroVec;
+                return result;
 
             if(it != m_length_table.begin())
                 --it;
@@ -73,7 +76,11 @@ namespace
             const float percent = local_length / diff_length;
             
             const math::Vector& pos = previous_point + (diff * percent);
-            return pos;
+
+            result.path_position = pos;
+            result.valid_position = true;
+
+            return result;
         }
 
         math::Vector GetEndPoint() const override
@@ -81,10 +88,14 @@ namespace
             return m_points.empty() ? math::ZeroVec : m_points.back();
         }
 
-        float GetLengthFromPosition(const math::Vector& position) const override
+        mono::LengthResult GetLengthFromPosition(const math::Vector& position) const override
         {
+            mono::LengthResult result;
+            result.valid_length = false;
+            result.path_length = 0.0f;
+
             if(m_points.empty())
-                return 0.0f;
+                return result;
 
             math::Vector best_point;
             uint32_t first_index = -1;
@@ -106,12 +117,15 @@ namespace
             }
 
             if(shortest_distance == math::INF)
-                return 0.0f;
+                return result;
     
             const float distance_to_first = m_length_table[first_index];
             const float distance_to_point = math::DistanceBetween(m_points[first_index], best_point);
 
-            return distance_to_first + distance_to_point;
+            result.path_length = distance_to_first + distance_to_point;
+            result.valid_length = true;
+
+            return result;
         }
 
         const std::vector<math::Vector> m_points;

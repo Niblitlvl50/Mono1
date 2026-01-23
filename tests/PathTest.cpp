@@ -24,7 +24,8 @@ TEST(PathTest, GetPathAtFullLength)
     coords.push_back(math::Vector(10, 0));
     
     mono::IPathPtr path = mono::CreatePath(coords);
-    const math::Vector atLength10 = path->GetPositionByLength(10);
+    const mono::PositionResult result = path->GetPositionByLength(10);
+    const math::Vector atLength10 = result.path_position;
     EXPECT_EQ(10, atLength10.x);
     EXPECT_EQ(0, atLength10.y);
 }
@@ -36,7 +37,8 @@ TEST(PathTest, GetPathAtHalfLength)
     coords.push_back(math::Vector(10, 0));
     
     mono::IPathPtr path = mono::CreatePath(coords);
-    const math::Vector atLength5 = path->GetPositionByLength(5);
+    const mono::PositionResult result = path->GetPositionByLength(5);
+    const math::Vector atLength5 = result.path_position;
     EXPECT_EQ(5, atLength5.x);
     EXPECT_EQ(0, atLength5.y);
 }
@@ -48,7 +50,8 @@ TEST(PathTest, GetPathAtZeroLength)
     coords.push_back(math::Vector(10, 0));
     
     mono::IPathPtr path = mono::CreatePath(coords);
-    const math::Vector atLength0 = path->GetPositionByLength(0);
+    const mono::PositionResult result = path->GetPositionByLength(0);
+    const math::Vector atLength0 = result.path_position;
     EXPECT_EQ(0, atLength0.x);
     EXPECT_EQ(0, atLength0.y);
 }
@@ -64,20 +67,24 @@ TEST(PathTest, GetPositionFromComplexPath)
     mono::IPathPtr path = mono::CreatePath(coords);
     const float length = path->Length();
     
-    const math::Vector atLength0 = path->GetPositionByLength(0);
+    const mono::PositionResult result1 = path->GetPositionByLength(0);
+    const math::Vector atLength0 = result1.path_position;
     EXPECT_EQ(0, atLength0.x);
     EXPECT_EQ(-5, atLength0.y);
     
-    const math::Vector atLength2 = path->GetPositionByLength(length);
+    const mono::PositionResult result2 = path->GetPositionByLength(length);
+    const math::Vector atLength2 = result2.path_position;
     EXPECT_EQ(2, atLength2.x);
     EXPECT_EQ(10, atLength2.y);
 }
 
 TEST(PathTest, CreatePathAndGetPointsAndVerifyTheSame)
 {
-    const std::vector<math::Vector> coords = { math::Vector(0, 0),
-                                                 math::Vector(10, 10),
-                                                 math::Vector(-100, -777) };
+    const std::vector<math::Vector> coords = {
+        math::Vector(0, 0),
+        math::Vector(10, 10),
+        math::Vector(-100, -777)
+    };
 
     const mono::IPathPtr path = mono::CreatePath(coords);
     EXPECT_EQ(coords, path->GetPathPoints());
