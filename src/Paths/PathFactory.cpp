@@ -47,6 +47,7 @@ namespace
 
         mono::PositionResult GetPositionByLength(float length) const override
         {
+            length = std::clamp(length, 0.0f, Length());
             mono::PositionResult result;
             result.valid_position = false;
 
