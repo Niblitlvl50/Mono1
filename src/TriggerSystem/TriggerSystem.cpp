@@ -96,7 +96,7 @@ void TriggerSystem::ReleaseShapeTrigger(uint32_t entity_id)
 }
 
 void TriggerSystem::AddShapeTrigger(
-    uint32_t entity_id, uint32_t trigger_hash_enter, uint32_t trigger_hash_exit, uint32_t collision_mask, bool trigger_once)
+    uint32_t entity_id, uint32_t trigger_hash_enter, uint32_t trigger_hash_exit, bool trigger_once)
 {
     ShapeTriggerComponent* allocated_trigger = m_shape_triggers.Get(entity_id);
     allocated_trigger->trigger_hash_enter = trigger_hash_enter;
@@ -110,13 +110,6 @@ void TriggerSystem::AddShapeTrigger(
 
         allocated_trigger->shape_trigger_handler = std::make_unique<TriggerHandler>(trigger_hash_enter, trigger_hash_exit, trigger_once, this);
         body->AddCollisionHandler(allocated_trigger->shape_trigger_handler.get());
-
-        std::vector<mono::IShape*> shapes = m_physics_system->GetShapesAttachedToBody(entity_id);
-        for(mono::IShape* shape : shapes)
-        {
-            if(shape->IsSensor())
-                shape->SetCollisionMask(collision_mask);
-        }
     }
 }
 

@@ -80,7 +80,7 @@ namespace mono
         ShapeTriggerComponent* AllocateShapeTrigger(uint32_t entity_id);
         void ReleaseShapeTrigger(uint32_t entity_id);
         void AddShapeTrigger(
-            uint32_t entity_id, uint32_t trigger_hash_enter, uint32_t trigger_hash_exit, uint32_t collision_mask, bool trigger_once);
+            uint32_t entity_id, uint32_t trigger_hash_enter, uint32_t trigger_hash_exit, bool trigger_once);
 
         AreaEntityTriggerComponent* AllocateAreaTrigger(uint32_t entity_id);
         void ReleaseAreaTrigger(uint32_t entity_id);
