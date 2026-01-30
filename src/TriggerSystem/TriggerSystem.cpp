@@ -146,7 +146,10 @@ TimeTriggerComponent* TriggerSystem::AllocateTimeTrigger(uint32_t entity_id)
 
 void TriggerSystem::ReleaseTimeTrigger(uint32_t entity_id)
 {
-    m_time_triggers.Release(entity_id);
+    // Time triggers can be released at an earlier stage.
+    const bool is_active = m_time_triggers.IsActive(entity_id);
+    if(is_active)
+        m_time_triggers.Release(entity_id);
 }
 
 void TriggerSystem::AddTimeTrigger(uint32_t entity_id, uint32_t trigger_hash, float timeout_ms, bool repeating)
