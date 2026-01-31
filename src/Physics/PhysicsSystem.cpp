@@ -318,6 +318,11 @@ void PhysicsSystem::Sync()
     m_released_constraints.clear();
 }
 
+void PhysicsSystem::Reset()
+{
+    Sync();
+}
+
 mono::IBody* PhysicsSystem::GetBody(uint32_t body_id)
 {
     return &m_impl->bodies[body_id];
@@ -421,7 +426,8 @@ mono::IConstraint* PhysicsSystem::CreateSpring(
 
 void PhysicsSystem::ReleaseConstraint(mono::IConstraint* constraint)
 {
-    m_released_constraints.push_back(constraint);
+    //m_released_constraints.push_back(constraint);
+    ReleaseConstraintInternal(constraint);
 }
 
 void PhysicsSystem::ReleaseConstraintInternal(mono::IConstraint* constraint)

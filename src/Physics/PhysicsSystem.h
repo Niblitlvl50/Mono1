@@ -120,6 +120,7 @@ namespace mono
         const char* Name() const override;
         void Update(const UpdateContext& update_context) override;
         void Sync() override;
+        void Reset() override;
 
         mono::IBody* AllocateBody(uint32_t body_id, const BodyComponent& body_params);
         void ReleaseBody(uint32_t body_id);
