@@ -106,6 +106,8 @@ int Engine::Run(IZone* zone)
     Updater updater;
 
     zone->OnLoad(m_camera, &renderer);
+    m_system_context->SyncSystems();
+    zone->PostLoad();
     m_system_context->BeginSystems();
 
     uint32_t last_time = System::GetMilliseconds();

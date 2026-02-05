@@ -91,6 +91,8 @@ namespace
         {
             m_on_load_called = true;
         }
+        void PostLoad() override
+        { }
         int OnUnload() override
         {
             m_on_unload_called = true;

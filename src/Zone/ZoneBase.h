@@ -18,6 +18,9 @@ namespace mono
     {
     public:
 
+        void PostLoad() override
+        { }
+
         void PostUpdate() override
         { }
 

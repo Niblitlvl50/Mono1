@@ -13,6 +13,8 @@ namespace mono
         virtual ~IZone() = default;
 
         virtual void OnLoad(mono::ICamera* camera, mono::IRenderer* renderer) = 0;
+        virtual void PostLoad() = 0;
+        
         virtual int OnUnload() = 0;
 
         virtual void PostUpdate() = 0;
