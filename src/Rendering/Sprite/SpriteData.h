@@ -17,10 +17,16 @@ namespace mono
         math::Vector size;
     };
 
+    struct SpriteAnimationFrame
+    {
+        int frame;
+        std::string notify;
+    };
+
     struct SpriteAnimation
     {
         std::string name;
-        std::vector<int> frames;
+        std::vector<SpriteAnimationFrame> frames;
         bool looping;
         int frame_duration;
     };

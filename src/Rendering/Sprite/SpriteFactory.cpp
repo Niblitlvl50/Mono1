@@ -14,6 +14,9 @@
 #include "SpriteFactory.h"
 #include "Sprite.h"
 
+#include "SpriteData.h"
+#include "Serialize.h"
+
 #include "Rendering/RenderSystem.h"
 #include "Rendering/Texture/ITexture.h"
 #include "Rendering/Texture/ITextureFactory.h"
@@ -34,60 +37,14 @@ namespace
     mono::SpriteData LoadSpriteData(const char* sprite_raw_data, float pixels_per_meter, uint32_t sprite_hash)
     {
         const nlohmann::json& json = nlohmann::json::parse(sprite_raw_data);
-        const nlohmann::json& texture_size = json["texture_size"];
 
-        mono::SpriteData sprite_data;
-        sprite_data.hash = sprite_hash;
-        sprite_data.texture_file = json["texture"];
-        sprite_data.source_folder = json.value("source_folder", "");
-        sprite_data.texture_size = math::Vector(texture_size["w"], texture_size["h"]);
+        mono::SpriteData serialize_data = json.get<mono::SpriteData>();
+        serialize_data.hash = sprite_hash;
 
-        const nlohmann::json& frames = json["frames"];
-        const nlohmann::json& frames_offsets = json["frames_offsets"];
+        for(auto& frame : serialize_data.frames)
+            frame.size = (frame.size / pixels_per_meter);
 
-        sprite_data.frames.reserve(frames.size());
-
-        for(size_t index = 0; index < frames.size(); ++index)
-        {
-            const nlohmann::json& frame = frames[index];
-
-            const float x = float(frame["x"]) / sprite_data.texture_size.x;
-            const float y = float(frame["y"]) / sprite_data.texture_size.y;
-            const float w = float(frame["w"]) / sprite_data.texture_size.x;
-            const float h = float(frame["h"]) / sprite_data.texture_size.y;
-
-            const nlohmann::json& frame_offset = frames_offsets[index];
-
-            mono::SpriteFrame sprite_frame;
-            sprite_frame.center_offset.x = frame_offset["x"];
-            sprite_frame.center_offset.y = frame_offset["y"];
-            sprite_frame.uv_upper_left = math::Vector(x, y + h);
-            sprite_frame.uv_lower_right = math::Vector(x + w, y);
-
-            const float width =
-                (sprite_frame.uv_lower_right.x - sprite_frame.uv_upper_left.x) * sprite_data.texture_size.x;
-            const float height =
-                (sprite_frame.uv_upper_left.y - sprite_frame.uv_lower_right.y) * sprite_data.texture_size.y;
-
-            sprite_frame.size = math::Vector(width, height) / pixels_per_meter;
-            sprite_data.frames.push_back(sprite_frame);
-        }
-
-        const nlohmann::json& animations = json["animations"];
-        sprite_data.animations.reserve(animations.size());
-
-        for(const auto& animation : animations)
-        {
-            mono::SpriteAnimation sprite_animation;
-            sprite_animation.name = animation["name"];
-            sprite_animation.looping = animation["loop"];
-            sprite_animation.frame_duration = animation["frame_duration"];
-            sprite_animation.frames = animation["frames"].get<std::vector<int>>();
-
-            sprite_data.animations.push_back(sprite_animation);
-        }
-
-        return sprite_data;
+        return serialize_data;
     }
 }
 
