@@ -68,10 +68,10 @@ TEST(SpriteSerizlieTest, ReadSpriteFile)
         ASSERT_EQ(frame1.size.x, 7.0f);
         ASSERT_EQ(frame1.size.y, 17.0f);
     
-        ASSERT_EQ(frame1.uv_upper_left.x * sprite_data.texture_size.x, 191.0f);
-        ASSERT_EQ(frame1.uv_upper_left.y * sprite_data.texture_size.y, 486.0f + 17.0f);
-        ASSERT_EQ(frame1.uv_lower_right.x * sprite_data.texture_size.x, 191.0f + 7.0f);
-        ASSERT_EQ(frame1.uv_lower_right.y * sprite_data.texture_size.y, 486.0f);
+        ASSERT_EQ(frame1.uv_upper_left.x, 191.0f);
+        ASSERT_EQ(frame1.uv_upper_left.y, 486.0f + 17.0f);
+        ASSERT_EQ(frame1.uv_lower_right.x, 191.0f + 7.0f);
+        ASSERT_EQ(frame1.uv_lower_right.y, 486.0f);
     
         ASSERT_EQ(frame1.center_offset.x, 0.0f);
         ASSERT_EQ(frame1.center_offset.y, 0.0f);
@@ -83,10 +83,10 @@ TEST(SpriteSerizlieTest, ReadSpriteFile)
         ASSERT_EQ(frame2.size.x, 4.0f);
         ASSERT_EQ(frame2.size.y, 12.0f);
     
-        ASSERT_EQ(frame2.uv_upper_left.x * sprite_data.texture_size.x, 391.0f);
-        ASSERT_EQ(frame2.uv_upper_left.y * sprite_data.texture_size.y, 586.0f + 12.0f);
-        ASSERT_EQ(frame2.uv_lower_right.x * sprite_data.texture_size.x, 391.0f + 4.0f);
-        ASSERT_EQ(frame2.uv_lower_right.y * sprite_data.texture_size.y, 586.0f);
+        ASSERT_EQ(frame2.uv_upper_left.x, 391.0f);
+        ASSERT_EQ(frame2.uv_upper_left.y, 586.0f + 12.0f);
+        ASSERT_EQ(frame2.uv_lower_right.x, 391.0f + 4.0f);
+        ASSERT_EQ(frame2.uv_lower_right.y, 586.0f);
     
         ASSERT_EQ(frame2.center_offset.x, 1.0f);
         ASSERT_EQ(frame2.center_offset.y, 1.0f);
@@ -164,10 +164,10 @@ TEST(SpriteSerizlieTest, WriteSpriteData)
             ASSERT_EQ(frame1.size.x, 7.0f);
             ASSERT_EQ(frame1.size.y, 17.0f);
         
-            ASSERT_EQ(frame1.uv_upper_left.x * sprite_data_deserialized.texture_size.x, 191.0f);
-            ASSERT_EQ(frame1.uv_upper_left.y * sprite_data_deserialized.texture_size.y, 486.0f + 17.0f);
-            ASSERT_EQ(frame1.uv_lower_right.x * sprite_data_deserialized.texture_size.x, 191.0f + 7.0f);
-            ASSERT_EQ(frame1.uv_lower_right.y * sprite_data_deserialized.texture_size.y, 486.0f);
+            ASSERT_EQ(frame1.uv_upper_left.x, 191.0f);
+            ASSERT_EQ(frame1.uv_upper_left.y, 486.0f + 17.0f);
+            ASSERT_EQ(frame1.uv_lower_right.x, 191.0f + 7.0f);
+            ASSERT_EQ(frame1.uv_lower_right.y, 486.0f);
         
             ASSERT_EQ(frame1.center_offset.x, 0.0f);
             ASSERT_EQ(frame1.center_offset.y, 0.0f);
@@ -179,10 +179,10 @@ TEST(SpriteSerizlieTest, WriteSpriteData)
             ASSERT_EQ(frame2.size.x, 4.0f);
             ASSERT_EQ(frame2.size.y, 12.0f);
         
-            ASSERT_EQ(frame2.uv_upper_left.x * sprite_data_deserialized.texture_size.x, 391.0f);
-            ASSERT_EQ(frame2.uv_upper_left.y * sprite_data_deserialized.texture_size.y, 586.0f + 12.0f);
-            ASSERT_EQ(frame2.uv_lower_right.x * sprite_data_deserialized.texture_size.x, 391.0f + 4.0f);
-            ASSERT_EQ(frame2.uv_lower_right.y * sprite_data_deserialized.texture_size.y, 586.0f);
+            ASSERT_EQ(frame2.uv_upper_left.x, 391.0f);
+            ASSERT_EQ(frame2.uv_upper_left.y, 586.0f + 12.0f);
+            ASSERT_EQ(frame2.uv_lower_right.x, 391.0f + 4.0f);
+            ASSERT_EQ(frame2.uv_lower_right.y, 586.0f);
         
             ASSERT_EQ(frame2.center_offset.x, 1.0f);
             ASSERT_EQ(frame2.center_offset.y, 1.0f);

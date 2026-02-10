@@ -39,10 +39,20 @@ namespace
         const nlohmann::json& json = nlohmann::json::parse(sprite_raw_data);
 
         mono::SpriteData serialize_data = json.get<mono::SpriteData>();
-        serialize_data.hash = sprite_hash;
 
-        for(auto& frame : serialize_data.frames)
-            frame.size = (frame.size / pixels_per_meter);
+        {
+            // Make game ready
+
+            serialize_data.hash = sprite_hash;
+    
+            for(mono::SpriteFrame& frame : serialize_data.frames)
+            {
+                frame.size = (frame.size / pixels_per_meter);
+
+                frame.uv_upper_left = (frame.uv_upper_left / serialize_data.texture_size);
+                frame.uv_lower_right = (frame.uv_lower_right / serialize_data.texture_size);
+            }
+        }
 
         return serialize_data;
     }

@@ -13,8 +13,8 @@ namespace mono
         json["source_folder"] = sprite_data.source_folder;
 
         nlohmann::json texture_size_json;
-        texture_size_json["w"] = sprite_data.texture_size.x;
-        texture_size_json["h"] = sprite_data.texture_size.y;
+        texture_size_json["w"] = (int)sprite_data.texture_size.x;
+        texture_size_json["h"] = (int)sprite_data.texture_size.y;
         json["texture_size"] = texture_size_json;
 
         // Frames
@@ -26,10 +26,10 @@ namespace mono
 
                 nlohmann::json frame_json;
                 frame_json["name"] = "unknown";
-                frame_json["w"] = frame.size.x;
-                frame_json["h"] = frame.size.y;
-                frame_json["x"] = frame.uv_upper_left.x;
-                frame_json["y"] = frame.uv_lower_right.y;
+                frame_json["w"] = (int)frame.size.x;
+                frame_json["h"] = (int)frame.size.y;
+                frame_json["x"] = (int)frame.uv_upper_left.x;
+                frame_json["y"] = (int)frame.uv_lower_right.y;
 
                 frames_json.push_back(frame_json);
             }
@@ -92,10 +92,10 @@ namespace mono
         {
             const nlohmann::json& frame = frames[index];
 
-            const float x = float(frame["x"]) / sprite_data.texture_size.x;
-            const float y = float(frame["y"]) / sprite_data.texture_size.y;
-            const float w = float(frame["w"]) / sprite_data.texture_size.x;
-            const float h = float(frame["h"]) / sprite_data.texture_size.y;
+            const float x = float(frame["x"]);
+            const float y = float(frame["y"]);
+            const float w = float(frame["w"]);
+            const float h = float(frame["h"]);
 
             const nlohmann::json& frame_offset = frames_offsets[index];
 
@@ -105,12 +105,10 @@ namespace mono
             sprite_frame.uv_upper_left = math::Vector(x, y + h);
             sprite_frame.uv_lower_right = math::Vector(x + w, y);
 
-            const float width =
-                (sprite_frame.uv_lower_right.x - sprite_frame.uv_upper_left.x) * sprite_data.texture_size.x;
-            const float height =
-                (sprite_frame.uv_upper_left.y - sprite_frame.uv_lower_right.y) * sprite_data.texture_size.y;
+            const float width = (sprite_frame.uv_lower_right.x - sprite_frame.uv_upper_left.x);
+            const float height = (sprite_frame.uv_upper_left.y - sprite_frame.uv_lower_right.y);
 
-            sprite_frame.size = math::Vector(width, height); // / pixels_per_meter;
+            sprite_frame.size = math::Vector(width, height);
             sprite_data.frames.push_back(sprite_frame);
         }
 
