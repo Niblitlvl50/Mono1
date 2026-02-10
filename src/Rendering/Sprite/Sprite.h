@@ -34,6 +34,7 @@ namespace mono
         void SetAnimation(const char* name) override;
         void SetAnimation(int id, const SpriteAnimationCallback& callback) override;
         void SetAnimation(const char* name, const SpriteAnimationCallback& callback) override;
+        void SetNotifyCallback(const SpriteAnimationNotifyCallback& callback) override;
         void SetAnimationPlaybackSpeed(float speed_scale) override;
         void SetAnimationPlayback(PlaybackMode mode) override;
         int GetActiveAnimation() const override;
@@ -78,5 +79,6 @@ namespace mono
         float m_flash_timer;
         bool m_outline;
         SpriteAnimationCallback m_callback;
+        SpriteAnimationNotifyCallback m_notify_callback;
     };
 }

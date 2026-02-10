@@ -5,6 +5,7 @@
 
 #include "System/System.h"
 #include "System/Debug.h"
+#include "System/Hash.h"
 
 #include <stdexcept>
 #include <cstring>
@@ -166,6 +167,13 @@ void Sprite::Update(const UpdateContext& update_context)
         {
             const int frame_increment_value = (m_playback_mode == mono::PlaybackMode::PLAYING) ? 1 : -1;
             m_active_frame += frame_increment_value;
+
+            const std::string& frame_notify = active_animation.frames[m_active_frame].notify;
+            if(!frame_notify.empty() && m_notify_callback)
+            {
+                const uint32_t notify_hash = hash::Hash(frame_notify.c_str());
+                m_notify_callback(m_sprite_user_id, notify_hash);
+            }
         }
     }
 }
@@ -202,6 +210,11 @@ void Sprite::SetAnimation(int id, const SpriteAnimationCallback& callback)
     m_active_animation = id;
     m_callback = callback;
     RestartAnimation();
+}
+
+void Sprite::SetNotifyCallback(const SpriteAnimationNotifyCallback& callback)
+{
+    m_notify_callback = callback;
 }
 
 void Sprite::SetAnimationPlaybackSpeed(float speed_scale)

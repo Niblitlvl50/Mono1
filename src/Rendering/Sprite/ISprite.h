@@ -19,6 +19,7 @@ namespace mono
     };
 
     using SpriteAnimationCallback = std::function<void (uint32_t sprite_id)>;
+    using SpriteAnimationNotifyCallback = std::function<void (uint32_t sprite_id, uint32_t notify_hash)>;
 
     class ISprite : public IUpdatable
     {
@@ -55,6 +56,8 @@ namespace mono
         //! Tell the sprite to run a specific animation, and get a callback when finished
         virtual void SetAnimation(int animation_id, const SpriteAnimationCallback& callback) = 0;
         virtual void SetAnimation(const char* animation_name, const SpriteAnimationCallback& callback) = 0;
+
+        virtual void SetNotifyCallback(const SpriteAnimationNotifyCallback& callback) = 0;
 
         virtual void SetAnimationPlayback(PlaybackMode mode) = 0;
         virtual void SetAnimationPlaybackSpeed(float speed_scale) = 0;
