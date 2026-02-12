@@ -7,6 +7,8 @@
 #include "Physics/IBody.h"
 #include "Physics/PhysicsSystem.h"
 #include "Physics/PhysicsSpace.h"
+#include "Rendering/Sprite/SpriteSystem.h"
+#include "Rendering/Sprite/Sprite.h"
 
 #include <cassert>
 #include <string>
@@ -62,13 +64,15 @@ namespace
 }
 
 TriggerSystem::TriggerSystem(
-    uint32_t n_triggers, mono::PhysicsSystem* physics_system)
+    uint32_t n_triggers, mono::PhysicsSystem* physics_system, mono::SpriteSystem* sprite_system)
     : m_physics_system(physics_system)
+    , m_sprite_system(sprite_system)
     , m_shape_triggers(n_triggers)
     , m_area_triggers(n_triggers)
     , m_time_triggers(n_triggers)
     , m_counter_triggers(n_triggers)
     , m_relay_triggers(n_triggers)
+    , m_anim_notify_triggers(n_triggers)
     , m_area_trigger_timer_s(0.0f)
 { }
 
@@ -262,6 +266,39 @@ void TriggerSystem::AddRelayTrigger(uint32_t entity_id, uint32_t listener_hash, 
     };
 
     trigger->callback_id = RegisterTriggerCallback(trigger->listen_trigger_hash, counter_callback, entity_id);
+}
+
+AnimNotifyTriggerComponent* TriggerSystem::AllocateAnimNotifyTrigger(uint32_t entity_id)
+{
+    AnimNotifyTriggerComponent component;
+    return m_anim_notify_triggers.Set(entity_id, std::move(component));
+}
+
+void TriggerSystem::ReleaseAnimNotifyTrigger(uint32_t entity_id)
+{
+    mono::Sprite* sprite = m_sprite_system->GetSprite(entity_id);
+    sprite->SetNotifyCallback(nullptr);
+
+    m_anim_notify_triggers.Release(entity_id);
+}
+
+void TriggerSystem::AddAnimNotifyTrigger(uint32_t entity_id, uint32_t anim_notify_hash, uint32_t completed_hash)
+{
+    AnimNotifyTriggerComponent* trigger = m_anim_notify_triggers.Get(entity_id);
+    trigger->anim_notify_hash = anim_notify_hash;
+    trigger->completed_trigger_hash = completed_hash;
+
+    mono::Sprite* sprite = m_sprite_system->GetSprite(entity_id);
+    if(sprite)
+    {
+        const mono::SpriteAnimationNotifyCallback notify_callback = [this, trigger](uint32_t sprite_id, uint32_t notify_hash) {
+            if(notify_hash == trigger->anim_notify_hash)
+            {
+                EmitTrigger(trigger->completed_trigger_hash);
+            }
+        };
+        sprite->SetNotifyCallback(notify_callback);
+    }
 }
 
 uint32_t TriggerSystem::RegisterTriggerCallback(uint32_t trigger_hash, TriggerCallback callback, uint32_t debug_entity_id)

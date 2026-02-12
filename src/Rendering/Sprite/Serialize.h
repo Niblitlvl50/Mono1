@@ -115,21 +115,21 @@ namespace mono
         const nlohmann::json& animations = json["animations"];
         sprite_data.animations.reserve(animations.size());
 
-        for(const auto& animation : animations)
+        for(const nlohmann::json& animation_json : animations)
         {
             mono::SpriteAnimation sprite_animation;
-            sprite_animation.name = animation["name"];
-            sprite_animation.looping = animation["loop"];
-            sprite_animation.frame_duration = animation["frame_duration"];
+            sprite_animation.name = animation_json["name"];
+            sprite_animation.looping = animation_json["loop"];
+            sprite_animation.frame_duration = animation_json["frame_duration"];
 
-            const std::vector<int> frames = animation["frames"].get<std::vector<int>>();
-            const std::vector<std::string> frame_notifies; // = animation["notifies"].get<std::vector<std::string>>();
+            const std::vector<int> frames = animation_json["frames"].get<std::vector<int>>();
+            const std::vector<std::string> frame_notifies = animation_json.value("notifies", std::vector<std::string>(frames.size()));
 
             for(size_t index = 0; index < frames.size(); ++index)
             {
                 mono::SpriteAnimationFrame animation_frame;
                 animation_frame.frame = frames[index];
-                //animation_frame.notify = frame_notifies[index];
+                animation_frame.notify = frame_notifies[index];
 
                 sprite_animation.frames.push_back(animation_frame);
             }
