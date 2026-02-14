@@ -25,7 +25,7 @@ namespace mono
                 const mono::SpriteFrame& frame = sprite_data.frames[index];
 
                 nlohmann::json frame_json;
-                frame_json["name"] = "unknown";
+                frame_json["name"] = "";
                 frame_json["w"] = (int)frame.size.x;
                 frame_json["h"] = (int)frame.size.y;
                 frame_json["x"] = (int)frame.uv_upper_left.x;
