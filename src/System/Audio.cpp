@@ -27,8 +27,9 @@
 #include "cute_headers/cute_sound.h"
 
 
-// #define MINIAUDIO_IMPLEMENTATION
-// #include "miniaudio/miniaudio.h"
+#define MINIAUDIO_IMPLEMENTATION
+#define STB_VORBIS_INCLUDE_STB_VORBIS_H
+#include "miniaudio/miniaudio.h"
 
 namespace
 {
@@ -208,43 +209,45 @@ namespace
     };
 
 
-/*
     class MiniAuidioSoundImpl : public ISoundEngine
     {
         class MiniaudioSound : public audio::ISound
         {
         public:
-            MiniaudioSound(const ma_sound& sound)
+            MiniaudioSound(ma_sound* sound)
                 : m_ma_sound(sound)
             {}
 
             ~MiniaudioSound()
             {
-                ma_sound_uninit(&m_ma_sound);
+                ma_sound_uninit(m_ma_sound);
+                delete m_ma_sound;
             }
         
             void Play() override
             {
-                //const ma_result result = ma_sound_start(&m_ma_sound);
+                if(IsPlaying())
+                    ma_sound_seek_to_pcm_frame(m_ma_sound, 0);
+                else
+                    const ma_result result = ma_sound_start(m_ma_sound);
             }
             void Pause() override
             {
             }
             void Stop() override
             {
-                //const ma_result result = ma_sound_stop(&m_ma_sound);
+                const ma_result result = ma_sound_stop(m_ma_sound);
             }
             bool IsPlaying() const override
             {
-                return false;
-                //return (ma_sound_is_playing(&m_ma_sound) != MA_FALSE);
+                return (ma_sound_is_playing(m_ma_sound) != MA_FALSE);
             }
             void SetVolume(float volume) override
             {
-                //ma_sound_set_volume(&m_ma_sound, volume);
+                ma_sound_set_volume(m_ma_sound, volume);
             }
 
-            ma_sound m_ma_sound;
+            ma_sound* m_ma_sound;
         };
 
     public:
@@ -266,28 +269,31 @@ namespace
 
         audio::ISoundPtr CreateSound(const char* file_name, audio::SoundPlayback playback) override
         {
-            ma_sound sound;
-            const ma_result result = ma_sound_init_from_file(&m_ma_engine, file_name, MA_SOUND_FLAG_DECODE, nullptr, nullptr, &sound);
+            ma_sound* sound = new ma_sound;
+            const ma_result result = ma_sound_init_from_file(&m_ma_engine, file_name, MA_SOUND_FLAG_DECODE, nullptr, nullptr, sound);
             if(result != MA_SUCCESS)
             {
+                ma_sound_uninit(sound);
+                delete sound;
                 return std::make_unique<NullSound>();
             }
 
-
+            const bool looping_sound = (playback == audio::SoundPlayback::LOOPING);
+            if(looping_sound)
+                ma_sound_set_looping(sound, MA_TRUE);
             return std::make_unique<MiniaudioSound>(sound);
         }
 
         ma_engine m_ma_engine; 
     };
-    */
 
     ISoundEngine* g_sound_engine = nullptr;
 }
 
 void audio::Initialize()
 {
-    g_sound_engine = new CuteSoundImpl();
-    //g_sound_engine = new MiniAuidioSoundImpl();
+    //g_sound_engine = new CuteSoundImpl();
+    g_sound_engine = new MiniAuidioSoundImpl();
 
 }
 
