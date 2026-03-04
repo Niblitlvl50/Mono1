@@ -41,6 +41,7 @@ namespace
         void Stop() override { }
         bool IsPlaying() const override { return false; }
         void SetVolume(float volume) override { }
+        void SetPosition(float x, float y) override { }
     };
 
     class ISoundEngine
@@ -48,6 +49,7 @@ namespace
     public:
 
         virtual ~ISoundEngine() = default;
+        virtual void SetListenerPosition(float x, float y) = 0;
         virtual audio::ISoundPtr CreateSound(const char* file_name, audio::SoundPlayback playback) = 0;
     };
 
@@ -85,6 +87,11 @@ namespace
             StopAllSounds();
             m_sound_repository.clear();
             cs_shutdown_context(m_context);
+        }
+
+        void SetListenerPosition(float x, float y) override
+        {
+
         }
 
         audio::ISoundPtr CreateSound(const char* file_name, audio::SoundPlayback playback) override
@@ -198,6 +205,8 @@ namespace
                 }
             }
 
+            void SetPosition(float x, float y) override { }
+
             cs_context_t* m_context;
             std::shared_ptr<SoundData> m_sound_data;
             cs_playing_sound_t* m_playing_sound;
@@ -223,7 +232,7 @@ namespace
                 ma_sound_uninit(m_ma_sound);
                 delete m_ma_sound;
             }
-        
+            
             void Play() override
             {
                 if(IsPlaying())
@@ -246,6 +255,10 @@ namespace
             {
                 ma_sound_set_volume(m_ma_sound, volume);
             }
+            void SetPosition(float x, float y) override
+            {
+                ma_sound_set_position(m_ma_sound, x, y, 0.0f);
+            }
 
             ma_sound* m_ma_sound;
         };
@@ -267,10 +280,15 @@ namespace
             ma_engine_uninit(&m_ma_engine);
         }
 
+        void SetListenerPosition(float x, float y) override
+        {
+            ma_engine_listener_set_position(&m_ma_engine, 0, x, y, 0.0f);
+        }
+
         audio::ISoundPtr CreateSound(const char* file_name, audio::SoundPlayback playback) override
         {
             ma_sound* sound = new ma_sound;
-            const ma_result result = ma_sound_init_from_file(&m_ma_engine, file_name, MA_SOUND_FLAG_DECODE, nullptr, nullptr, sound);
+            const ma_result result = ma_sound_init_from_file(&m_ma_engine, file_name, MA_SOUND_FLAG_DECODE | MA_SOUND_FLAG_NO_SPATIALIZATION, nullptr, nullptr, sound);
             if(result != MA_SUCCESS)
             {
                 ma_sound_uninit(sound);
@@ -301,6 +319,12 @@ void audio::Shutdown()
 {
     delete g_sound_engine;
     g_sound_engine = nullptr;
+}
+
+void audio::SetListenerPosition(float x, float y)
+{
+    if(g_sound_engine)
+        g_sound_engine->SetListenerPosition(x, y);
 }
 
 audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback playback)

@@ -16,17 +16,21 @@ namespace audio
     public:
 
         virtual ~ISound() = default;
+
         virtual void Play() = 0;
         virtual void Pause() = 0;
         virtual void Stop() = 0;
         virtual bool IsPlaying() const = 0;
         virtual void SetVolume(float volume) = 0;
+        virtual void SetPosition(float x, float y) = 0;
     };
 
     using ISoundPtr = std::unique_ptr<ISound>;
 
     void Initialize();
     void Shutdown();
+
+    void SetListenerPosition(float x, float y);
 
     audio::ISoundPtr CreateSound(const char* file_name, SoundPlayback playback);
     audio::ISoundPtr CreateNullSound();
