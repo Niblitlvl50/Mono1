@@ -50,7 +50,7 @@ namespace
 
         virtual ~ISoundEngine() = default;
         virtual void SetListenerPosition(float x, float y) = 0;
-        virtual audio::ISoundPtr CreateSound(const char* file_name, audio::SoundPlayback playback) = 0;
+        virtual audio::ISoundPtr CreateSound(const char* file_name, audio::SoundPlayback playback, audio::SoundSpatiality spatiality) = 0;
     };
 
     class CuteSoundImpl : public ISoundEngine
@@ -94,7 +94,7 @@ namespace
 
         }
 
-        audio::ISoundPtr CreateSound(const char* file_name, audio::SoundPlayback playback) override
+        audio::ISoundPtr CreateSound(const char* file_name, audio::SoundPlayback playback, audio::SoundSpatiality spatiality) override
         {
             const uint32_t sound_hash = hash::Hash(file_name);
             auto it = m_sound_repository.find(sound_hash);
@@ -285,10 +285,15 @@ namespace
             ma_engine_listener_set_position(&m_ma_engine, 0, x, y, 0.0f);
         }
 
-        audio::ISoundPtr CreateSound(const char* file_name, audio::SoundPlayback playback) override
+        audio::ISoundPtr CreateSound(const char* file_name, audio::SoundPlayback playback, audio::SoundSpatiality spatiality) override
         {
             ma_sound* sound = new ma_sound;
-            const ma_result result = ma_sound_init_from_file(&m_ma_engine, file_name, MA_SOUND_FLAG_DECODE | MA_SOUND_FLAG_NO_SPATIALIZATION, nullptr, nullptr, sound);
+
+            ma_uint32 flags = MA_SOUND_FLAG_DECODE;
+            if(spatiality == audio::SoundSpatiality::NONE)
+                flags |= MA_SOUND_FLAG_NO_SPATIALIZATION;
+
+                const ma_result result = ma_sound_init_from_file(&m_ma_engine, file_name, flags, nullptr, nullptr, sound);
             if(result != MA_SUCCESS)
             {
                 ma_sound_uninit(sound);
@@ -327,10 +332,10 @@ void audio::SetListenerPosition(float x, float y)
         g_sound_engine->SetListenerPosition(x, y);
 }
 
-audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback playback)
+audio::ISoundPtr audio::CreateSound(const char* file_name, audio::SoundPlayback playback, audio::SoundSpatiality spatiality)
 {
     if(g_sound_engine)
-        return g_sound_engine->CreateSound(file_name, playback);
+        return g_sound_engine->CreateSound(file_name, playback, spatiality);
 
     return CreateNullSound();
 }

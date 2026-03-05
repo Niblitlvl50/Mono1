@@ -11,6 +11,12 @@ namespace audio
         ONCE
     };
 
+    enum class SoundSpatiality
+    {
+        NONE,
+        SPATIAL
+    };
+
     class ISound
     {
     public:
@@ -32,7 +38,7 @@ namespace audio
 
     void SetListenerPosition(float x, float y);
 
-    audio::ISoundPtr CreateSound(const char* file_name, SoundPlayback playback);
+    audio::ISoundPtr CreateSound(const char* file_name, SoundPlayback playback, SoundSpatiality spatiality);
     audio::ISoundPtr CreateNullSound();
 
     void MixSounds();
