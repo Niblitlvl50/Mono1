@@ -289,7 +289,7 @@ namespace
         {
             ma_sound* sound = new ma_sound;
 
-            ma_uint32 flags = MA_SOUND_FLAG_DECODE;
+            ma_uint32 flags = MA_SOUND_FLAG_DECODE | MA_SOUND_FLAG_NO_PITCH;
             if(spatiality == audio::SoundSpatiality::NONE)
                 flags |= MA_SOUND_FLAG_NO_SPATIALIZATION;
 
