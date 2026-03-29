@@ -141,7 +141,7 @@ TEST(SpriteSerizlieTest, WriteSpriteData)
     animation1.frame_duration = 100;
     animation1.frames = {
         { 0, ""},
-        { 1, " "}
+        { 1, ""}
     };
     sprite_data_source.animations = { animation1 };
 
@@ -159,52 +159,52 @@ TEST(SpriteSerizlieTest, WriteSpriteData)
         ASSERT_EQ(sprite_data_deserialized.animations.size(), sprite_data_source.animations.size());
 
         {
-            const mono::SpriteFrame& frame1 = sprite_data_deserialized.frames[0];
+            const mono::SpriteFrame& deserialized_frame1 = sprite_data_deserialized.frames[0];
 
-            ASSERT_EQ(frame1.size.x, 7.0f);
-            ASSERT_EQ(frame1.size.y, 17.0f);
+            ASSERT_EQ(deserialized_frame1.size.x, 7.0f);
+            ASSERT_EQ(deserialized_frame1.size.y, 17.0f);
         
-            ASSERT_EQ(frame1.uv_upper_left.x, 191.0f);
-            ASSERT_EQ(frame1.uv_upper_left.y, 486.0f + 17.0f);
-            ASSERT_EQ(frame1.uv_lower_right.x, 191.0f + 7.0f);
-            ASSERT_EQ(frame1.uv_lower_right.y, 486.0f);
+            ASSERT_EQ(deserialized_frame1.uv_upper_left.x, 191.0f);
+            ASSERT_EQ(deserialized_frame1.uv_upper_left.y, 486.0f + 17.0f);
+            ASSERT_EQ(deserialized_frame1.uv_lower_right.x, 191.0f + 7.0f);
+            ASSERT_EQ(deserialized_frame1.uv_lower_right.y, 486.0f);
         
-            ASSERT_EQ(frame1.center_offset.x, 0.0f);
-            ASSERT_EQ(frame1.center_offset.y, 0.0f);
+            ASSERT_EQ(deserialized_frame1.center_offset.x, 0.0f);
+            ASSERT_EQ(deserialized_frame1.center_offset.y, 0.0f);
         }
 
         {
-            const mono::SpriteFrame& frame2 = sprite_data_deserialized.frames[1];
+            const mono::SpriteFrame& deserialized_frame2 = sprite_data_deserialized.frames[1];
 
-            ASSERT_EQ(frame2.size.x, 4.0f);
-            ASSERT_EQ(frame2.size.y, 12.0f);
+            ASSERT_EQ(deserialized_frame2.size.x, 4.0f);
+            ASSERT_EQ(deserialized_frame2.size.y, 12.0f);
         
-            ASSERT_EQ(frame2.uv_upper_left.x, 391.0f);
-            ASSERT_EQ(frame2.uv_upper_left.y, 586.0f + 12.0f);
-            ASSERT_EQ(frame2.uv_lower_right.x, 391.0f + 4.0f);
-            ASSERT_EQ(frame2.uv_lower_right.y, 586.0f);
+            ASSERT_EQ(deserialized_frame2.uv_upper_left.x, 391.0f);
+            ASSERT_EQ(deserialized_frame2.uv_upper_left.y, 586.0f + 12.0f);
+            ASSERT_EQ(deserialized_frame2.uv_lower_right.x, 391.0f + 4.0f);
+            ASSERT_EQ(deserialized_frame2.uv_lower_right.y, 586.0f);
         
-            ASSERT_EQ(frame2.center_offset.x, 1.0f);
-            ASSERT_EQ(frame2.center_offset.y, 1.0f);
+            ASSERT_EQ(deserialized_frame2.center_offset.x, 1.0f);
+            ASSERT_EQ(deserialized_frame2.center_offset.y, 1.0f);
         }
 
         {
-            const mono::SpriteAnimation& animation1 = sprite_data_deserialized.animations[0];
-            ASSERT_EQ(animation1.name, "default");
-            ASSERT_TRUE(animation1.looping);
-            ASSERT_EQ(animation1.frame_duration, 100);
-            ASSERT_EQ(animation1.frames.size(), 2ul);
+            const mono::SpriteAnimation& deserialized_animation1 = sprite_data_deserialized.animations[0];
+            ASSERT_EQ(deserialized_animation1.name, "default");
+            ASSERT_TRUE(deserialized_animation1.looping);
+            ASSERT_EQ(deserialized_animation1.frame_duration, 100);
+            ASSERT_EQ(deserialized_animation1.frames.size(), 2ul);
 
             {
-                const mono::SpriteAnimationFrame& frame1 = animation1.frames[0];
-                ASSERT_EQ(frame1.frame, 0);
-                ASSERT_EQ(frame1.notify, "");
+                const mono::SpriteAnimationFrame& deserialized_frame1 = deserialized_animation1.frames[0];
+                ASSERT_EQ(deserialized_frame1.frame, 0);
+                ASSERT_EQ(deserialized_frame1.notify, "");
             }
 
             {
-                const mono::SpriteAnimationFrame& frame2 = animation1.frames[1];
-                ASSERT_EQ(frame2.frame, 1);
-                ASSERT_EQ(frame2.notify, "");
+                const mono::SpriteAnimationFrame& deserialized_frame2 = deserialized_animation1.frames[1];
+                ASSERT_EQ(deserialized_frame2.frame, 1);
+                ASSERT_EQ(deserialized_frame2.notify, "");
             }
         }
     }

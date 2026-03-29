@@ -78,7 +78,7 @@ namespace mono
     inline void from_json(const nlohmann::json& json, mono::SpriteData& sprite_data)
     {
         const nlohmann::json& texture_size = json["texture_size"];
-        const nlohmann::json& frames = json["frames"];
+        const nlohmann::json& json_frames = json["frames"];
         const nlohmann::json& frames_offsets = json["frames_offsets"];
 
         //sprite_data.hash = sprite_hash;
@@ -86,11 +86,11 @@ namespace mono
         sprite_data.source_folder = json.value("source_folder", "");
         sprite_data.texture_size = math::Vector(texture_size["w"], texture_size["h"]);
 
-        sprite_data.frames.reserve(frames.size());
+        sprite_data.frames.reserve(json_frames.size());
 
-        for(size_t index = 0; index < frames.size(); ++index)
+        for(size_t index = 0; index < json_frames.size(); ++index)
         {
-            const nlohmann::json& frame = frames[index];
+            const nlohmann::json& frame = json_frames[index];
 
             const float x = float(frame["x"]);
             const float y = float(frame["y"]);
