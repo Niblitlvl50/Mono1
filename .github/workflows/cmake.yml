@@ -16,7 +16,7 @@ jobs:
           - os: ubuntu-22.04
             bin_subdir: ''
             exe_suffix: ''
-          - os: macos-13
+          - os: macos-15-intel
             bin_subdir: ''
             exe_suffix: ''
           - os: windows-latest
