@@ -103,33 +103,38 @@ void SpriteSystem::Update(const UpdateContext& update_context)
     };
     m_sprites.ForEach(update_sprite);
 
+}
+
+void SpriteSystem::Sync()
+{
     for(uint32_t sprite_id : m_sprites_need_update)
-    {
-        const mono::Sprite* sprite = m_sprites.Get(sprite_id);
-        const mono::SpriteData* sprite_data = sprite->GetSpriteData();
-
-        if(!sprite_data)
-            continue;
-
-        math::Vector frame_size;
-
-        for(const mono::SpriteFrame& frame : sprite_data->frames)
-        {
-            frame_size.x = std::max(frame_size.x, frame.size.x);
-            frame_size.y = std::max(frame_size.y, frame.size.y);
-        }
-
-        if(frame_size.x != 0.0f && frame_size.y != 0.0f)
-        {
-            const math::Vector& half_sprite_size = frame_size / 2.0f;
-
-            math::Quad& bounding_box = m_transform_system->GetBoundingBox(sprite_id);
-            bounding_box.bottom_left = -half_sprite_size;
-            bounding_box.top_right = half_sprite_size;
-        }
-    }
+        UpdateBoundingBoxForSprite(sprite_id);
 
     m_sprites_need_update.clear();
+}
+
+void SpriteSystem::UpdateBoundingBoxForSprite(uint32_t sprite_id)
+{
+    const mono::Sprite* sprite = m_sprites.Get(sprite_id);
+    const mono::SpriteData* sprite_data = sprite->GetSpriteData();
+
+    if(!sprite_data)
+        return;
+
+    math::Vector frame_size;
+    for(const mono::SpriteFrame& frame : sprite_data->frames)
+    {
+        frame_size.x = std::max(frame_size.x, frame.size.x);
+        frame_size.y = std::max(frame_size.y, frame.size.y);
+    }
+
+    if(frame_size.x != 0.0f && frame_size.y != 0.0f)
+    {
+        const math::Vector half_sprite_size = frame_size / 2.0f;
+        math::Quad& bounding_box = m_transform_system->GetBoundingBox(sprite_id);
+        bounding_box.bottom_left = -half_sprite_size;
+        bounding_box.top_right = half_sprite_size;
+    }
 }
 
 void SpriteSystem::ForEachSprite(const ForEachSpriteFunc& func)

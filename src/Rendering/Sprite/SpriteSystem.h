@@ -66,8 +66,11 @@ namespace mono
 
         const char* Name() const override;
         void Update(const UpdateContext& update_context) override;
+        void Sync() override;
 
     private:
+
+        void UpdateBoundingBoxForSprite(uint32_t sprite_id);
 
         mono::TransformSystem* m_transform_system;
         mono::ActiveVector<mono::Sprite> m_sprites;
