@@ -73,10 +73,20 @@ namespace mono
                 system->Begin();
         }
 
+        // Should sync be done in reverse order?
         inline void SyncSystems(bool paused = false)
         {
+            /*
             for(IGameSystem* game_system : m_systems)
             {
+                if(!paused || (paused && game_system->UpdateInPause()))
+                game_system->Sync();
+            }
+            */
+
+            for(auto it = m_systems.rbegin(), end = m_systems.rend(); it != end; ++it)
+            {
+                IGameSystem* game_system = *it;
                 if(!paused || (paused && game_system->UpdateInPause()))
                     game_system->Sync();
             }
@@ -86,18 +96,12 @@ namespace mono
         {
             for(auto it = m_systems.rbegin(), end = m_systems.rend(); it != end; ++it)
                 (*it)->Reset();
-
-            //for(IGameSystem* game_system : m_systems)
-            //    game_system->Reset();
         }
 
         inline void DestroySystems()
         {
             for(auto it = m_systems.rbegin(), end = m_systems.rend(); it != end; ++it)
                 (*it)->Destroy();
-
-            //for(IGameSystem* system : m_systems)
-            //    system->Destroy();
         }
 
     private:

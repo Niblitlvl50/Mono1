@@ -60,7 +60,6 @@ EntitySystem::EntitySystem(
     : m_system_context(system_context)
     , m_component_name_lookup(component_lookup)
     , m_spawn_index(0)
-    , m_full_release_on_next_sync(false)
 {
     s_attribute_name_lookup = attribute_lookup;
 
@@ -71,6 +70,7 @@ EntitySystem::EntitySystem(
     m_debug_names.resize(n_entities);
     m_release_dependencies.resize(n_entities);
     m_release_callbacks.resize(n_entities);
+    m_pending_release.resize(n_entities, false);
 
     std::iota(m_free_indices.begin(), m_free_indices.end(), 0);
     std::reverse(m_free_indices.begin(), m_free_indices.end());
@@ -176,22 +176,21 @@ bool EntitySystem::AddComponent(uint32_t entity_id, uint32_t component_hash)
 {
     mono::Entity* entity = GetEntity(entity_id);
 
+    /*
+    const bool duplicated_component = mono::contains(entity->components, component_hash);
+    if(duplicated_component)
+    {
+        System::Log("EntitySystem|Attempting to add a duplicated component to an entity. This is not allowed. Component: %s", m_component_name_lookup(component_hash));
+        MONO_ASSERT(false);
+    }
+    */
+
     const auto factory_it = m_component_factories.find(component_hash);
     if(factory_it != m_component_factories.end())
     {
         const bool success = factory_it->second.create(entity, m_system_context);
         if(success)
-        {
-            /*
-            const bool duplicated_component = mono::contains(entity->components, component_hash);
-            if(duplicated_component)
-            {
-                const char* component_name = m_component_name_lookup(component_hash);
-                System::Log("EntitySystem|Adding a duplicated component '%s' to entity '[%u] %s'", component_name, entity_id, entity->name);
-            }
-            */
             entity->components.push_back(component_hash);
-        }
         return success;
     }
 
@@ -312,13 +311,24 @@ void EntitySystem::RegisterComponent(
 
 void EntitySystem::ReleaseEntity(uint32_t entity_id)
 {
-    m_entities_to_release.insert(entity_id);
-    m_spawn_events.push_back({ false, entity_id });
+    MONO_ASSERT_MESSAGE(m_entities[entity_id].id == entity_id, "ReleaseEntity called on an entity that is not currently allocated. Likely a stale id being released twice.");
+
+    // Guard against being asked to release an entity that's already queued/being
+    // released, e.g. a release callback releasing an entity that's also part of the
+    // current batch. Without this the entity_id would end up pushed onto
+    // m_free_indices twice, and later handed out to two live entities at once.
+    if(m_pending_release[entity_id])
+        return;
+
+    m_pending_release[entity_id] = true;
 
     for(uint32_t dependant_release_entity_id : m_release_dependencies[entity_id])
         ReleaseEntity(dependant_release_entity_id);
 
     m_release_dependencies[entity_id].clear();
+
+    m_entities_to_release.insert(entity_id);
+    m_spawn_events.push_back({ false, entity_id });
 }
 
 void EntitySystem::ReleaseEntities(const std::vector<mono::Entity>& entities)
@@ -372,7 +382,6 @@ void EntitySystem::PopEntityStackRecord()
     }
 
     m_entity_allocation_stack.pop_back();
-    m_full_release_on_next_sync = true;
 }
 
 void EntitySystem::SetLifetimeDependency(uint32_t entity_id, uint32_t dependency_entity_id)
@@ -429,47 +438,47 @@ void EntitySystem::DeferredRelease()
         }
     };
 
-    std::unordered_set<uint32_t> local_entities_to_release = m_entities_to_release;
-    m_entities_to_release.clear();
+    std::vector<uint32_t> entities_that_was_released;
 
-    for(uint32_t entity_id : local_entities_to_release)
+    // Release callbacks can themselves call ReleaseEntity, queuing more work into
+    // m_entities_to_release. Keep draining until nothing new gets queued, otherwise
+    // those entities are silently leaked: never released, never returned to the free list.
+    while(!m_entities_to_release.empty())
     {
-        ReleaseCallbacks& callbacks = m_release_callbacks[entity_id];
-        execute_callbacks(entity_id, callbacks, mono::ReleasePhase::PRE_RELEASE);
+        std::unordered_set<uint32_t> local_entities_to_release;
+        std::swap(local_entities_to_release, m_entities_to_release);
 
-        mono::Entity* entity = GetEntity(entity_id);
-        std::reverse(entity->components.begin(), entity->components.end()); // We should release the components in reverse.
-
-        for(uint32_t component_hash : entity->components)
+        for(uint32_t entity_id : local_entities_to_release)
         {
-            const auto factory_it = m_component_factories.find(component_hash);
-            if(factory_it != m_component_factories.end())
-                factory_it->second.release(entity, m_system_context);
-            else
-                System::Log("entitysystem|Found component hash but no release function. Hash: %u", component_hash);
+            ReleaseCallbacks& callbacks = m_release_callbacks[entity_id];
+            execute_callbacks(entity_id, callbacks, mono::ReleasePhase::PRE_RELEASE);
+
+            mono::Entity* entity = GetEntity(entity_id);
+            std::reverse(entity->components.begin(), entity->components.end()); // We should release the components in reverse.
+
+            for(uint32_t component_hash : entity->components)
+            {
+                const auto factory_it = m_component_factories.find(component_hash);
+                if(factory_it != m_component_factories.end())
+                    factory_it->second.release(entity, m_system_context);
+                else
+                    System::Log("entitysystem|Found component hash but no release function. Hash: %u", component_hash);
+            }
+
+            execute_callbacks(entity_id, callbacks, mono::ReleasePhase::POST_RELEASE);
+            for(ReleaseCallbackData& callback_data : callbacks)
+                callback_data.callback = nullptr;
+
+            entities_that_was_released.push_back(entity_id);
         }
-
-        m_entities[entity_id] = Entity();
-        m_debug_names[entity_id].clear();
-
-        execute_callbacks(entity_id, callbacks, mono::ReleasePhase::POST_RELEASE);
-        for(ReleaseCallbackData& callback_data : callbacks)
-            callback_data.callback = nullptr;
-
-        m_free_indices.push_back(entity_id);
     }
 
-    if(!m_entities_to_release.empty())
+    for(uint32_t entity_id : entities_that_was_released)
     {
-        //System::Log("entitysystem|Additional entities to release after a deferred release. %u", m_entities_to_release.size());
-        //for(uint32_t id : m_entities_to_release)
-        //    System::Log("\t[%u] %s", id, GetEntityName(id));
-    
-        if(m_full_release_on_next_sync)
-        {
-            m_entities_to_release.clear();
-            m_full_release_on_next_sync = false;
-        }
+        m_entities[entity_id] = Entity();
+        m_debug_names[entity_id].append(" (released)");
+        m_pending_release[entity_id] = false;
+        m_free_indices.push_back(entity_id);
     }
 }
 
@@ -494,7 +503,7 @@ Entity* EntitySystem::AllocateEntity(const char* name)
     Entity& entity = m_entities[entity_id];
     MONO_ASSERT(entity.id == INVALID_ID);
     MONO_ASSERT(entity.components.empty());
-    MONO_ASSERT(m_debug_names[entity_id].empty());
+    //MONO_ASSERT(m_debug_names[entity_id].empty());
 
     m_debug_names[entity_id] = name;
 

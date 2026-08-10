@@ -127,6 +127,18 @@ PhysicsSystem::~PhysicsSystem()
 
 mono::IBody* PhysicsSystem::AllocateBody(uint32_t id, const BodyComponent& body_params)
 {
+    const auto check_body = [id](mono::IBody* body) {
+        return body->GetId() == id;
+    };
+
+    const bool body_already_allocated = IsAllocated(id) || mono::contains(m_deferred_add_bodies, check_body);
+    if(body_already_allocated)
+    {
+        System::Log("physics|Trying to allocate body with id %u, but it's already allocated.", id);
+        MONO_ASSERT(false);
+        return nullptr;
+    }
+
     cm::BodyImpl& new_body = m_impl->bodies[id];
 
     cpBodyInit(new_body.Handle(), body_params.mass, body_params.inertia);

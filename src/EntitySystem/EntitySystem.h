@@ -133,6 +133,7 @@ namespace mono
         std::vector<std::vector<uint32_t>> m_release_dependencies;
         std::vector<ReleaseCallbacks> m_release_callbacks;
 
+        std::vector<bool> m_pending_release;
         std::unordered_set<uint32_t> m_entities_to_release;
         std::unordered_map<uint32_t, std::vector<EntityData>> m_cached_entities;
 
@@ -154,6 +155,5 @@ namespace mono
             std::vector<uint32_t> allocated_entities;
         };
         std::vector<EntityStackRecord> m_entity_allocation_stack;
-        bool m_full_release_on_next_sync;
     };
 }

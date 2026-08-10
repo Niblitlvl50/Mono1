@@ -1,6 +1,7 @@
 
 #include "TransformSystem.h"
 #include "System/Hash.h"
+#include "System/Debug.h"
 #include <limits>
 #include <cstdint>
 
@@ -86,6 +87,7 @@ uint32_t TransformSystem::GetParent(uint32_t id) const
 
 void TransformSystem::ChildTransform(uint32_t id, uint32_t parent_id)
 {
+    MONO_ASSERT_MESSAGE(id != parent_id, "Cannot child a transform to itself.");
     m_transforms[id].parent = parent_id;
 }
 
