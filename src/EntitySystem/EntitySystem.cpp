@@ -68,6 +68,8 @@ EntitySystem::EntitySystem(
     m_entity_tags.resize(n_entities);
     m_free_indices.resize(n_entities);
     m_debug_names.resize(n_entities);
+
+    m_entity_dependencies.resize(n_entities, mono::INVALID_ID);
     m_release_dependencies.resize(n_entities);
     m_release_callbacks.resize(n_entities);
     m_pending_release.resize(n_entities, false);
@@ -322,10 +324,21 @@ void EntitySystem::ReleaseEntity(uint32_t entity_id)
 
     m_pending_release[entity_id] = true;
 
-    for(uint32_t dependant_release_entity_id : m_release_dependencies[entity_id])
-        ReleaseEntity(dependant_release_entity_id);
+    const uint32_t dependency_id = m_entity_dependencies[entity_id];
+    if(dependency_id != mono::INVALID_ID)
+        RemoveLifetimeDependency(dependency_id, entity_id);
 
-    m_release_dependencies[entity_id].clear();
+    // Swap out before iterating: the recursive ReleaseEntity call would otherwise
+    // call RemoveLifetimeDependency back into this same vector and invalidate iterators.
+    // Pre-clearing the reverse mapping stops the recursion from entering that path.
+    std::vector<uint32_t> deps;
+    std::swap(deps, m_release_dependencies[entity_id]);
+
+    for(uint32_t dep_id : deps)
+    {
+        m_entity_dependencies[dep_id] = mono::INVALID_ID;
+        ReleaseEntity(dep_id);
+    }
 
     m_entities_to_release.insert(entity_id);
     m_spawn_events.push_back({ false, entity_id });
@@ -386,7 +399,14 @@ void EntitySystem::PopEntityStackRecord()
 
 void EntitySystem::SetLifetimeDependency(uint32_t entity_id, uint32_t dependency_entity_id)
 {
+    m_entity_dependencies[dependency_entity_id] = entity_id;
     m_release_dependencies[entity_id].push_back(dependency_entity_id);
+}
+
+void EntitySystem::RemoveLifetimeDependency(uint32_t entity_id, uint32_t dependency_entity_id)
+{
+    m_entity_dependencies[dependency_entity_id] = mono::INVALID_ID;
+    mono::remove(m_release_dependencies[entity_id], dependency_entity_id);
 }
 
 uint32_t EntitySystem::AddReleaseCallback(uint32_t entity_id, uint32_t callback_phases, const ReleaseCallback& callback)

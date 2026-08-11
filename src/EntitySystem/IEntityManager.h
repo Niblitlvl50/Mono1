@@ -80,7 +80,8 @@ namespace mono
         virtual void PopEntityStackRecord() = 0;
 
         virtual void SetLifetimeDependency(uint32_t entity_id, uint32_t dependency_entity_id) = 0;
-
+        virtual void RemoveLifetimeDependency(uint32_t entity_id, uint32_t dependency_entity_id) = 0;
+        
         virtual uint32_t AddReleaseCallback(uint32_t entity_id, uint32_t callback_phases, const ReleaseCallback& callback) = 0;
         virtual void RemoveReleaseCallback(uint32_t entity_id, uint32_t callback_id) = 0;
 
