@@ -82,6 +82,7 @@ namespace mono
         Entity* AllocateEntity(const char* name);
         Entity* GetEntity(uint32_t entity_id);
         const Entity* GetEntity(uint32_t entity_id) const override;
+        bool IsAllocated(uint32_t entity_id) const override;
 
         void SetProperty(Entity entity, uint32_t property);
         bool HasProperty(Entity entity, uint32_t property) const;

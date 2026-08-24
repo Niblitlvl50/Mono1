@@ -547,6 +547,11 @@ const Entity* EntitySystem::GetEntity(uint32_t entity_id) const
     return &m_entities[entity_id];
 }
 
+bool EntitySystem::IsAllocated(uint32_t entity_id) const
+{
+    return GetEntity(entity_id) != nullptr;
+}
+
 void EntitySystem::SetProperty(Entity entity, uint32_t property)
 {
     m_entities[entity.id].properties |= property;

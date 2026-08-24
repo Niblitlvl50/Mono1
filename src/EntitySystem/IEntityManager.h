@@ -46,6 +46,7 @@ namespace mono
         virtual std::vector<mono::Entity> SpawnEntityCollection(const char* entity_file) = 0;
 
         virtual const mono::Entity* GetEntity(uint32_t id) const = 0;
+        virtual bool IsAllocated(uint32_t entity_id) const = 0;
 
         virtual bool AddComponent(uint32_t entity_id, uint32_t component_hash) = 0;
         virtual bool RemoveComponent(uint32_t entity_id, uint32_t component_hash) = 0;
