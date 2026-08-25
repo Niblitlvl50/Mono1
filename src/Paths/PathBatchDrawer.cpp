@@ -39,6 +39,10 @@ void PathBatchDrawer::Draw(mono::IRenderer& renderer) const
         if(component.points.empty())
             return;
 
+        const bool valid_path = mono::ValidatePathParameters(component.type, component.points);
+        if(!valid_path)
+            return;
+
         draw_data.push_back({
             mono::BuildPathDrawBuffers(component.type, component.points, {1.0f, mono::Color::OFF_WHITE, UVMode::DISTANCE, component.closed}),
             m_transform_system->GetWorld(index),

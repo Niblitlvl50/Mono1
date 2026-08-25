@@ -6,6 +6,8 @@
 #include "Math/MathFunctions.h"
 #include "Rendering/RenderBuffer/BufferFactory.h"
 
+#include "System/Debug.h"
+
 #include "par_streamlines/par_streamlines.h"
 
 namespace
@@ -104,14 +106,14 @@ namespace
 
             for(uint32_t index = 0; index < m_points.size() - 1; ++index)
             {
-                const math::PointOnLineResult result = math::ClosestPointOnLine(m_points[index], m_points[index +1], position);
-                if(result.t < 0.0f || result.t > 1.0f)
+                const math::PointOnLineResult closest_point_result = math::ClosestPointOnLine(m_points[index], m_points[index +1], position);
+                if(closest_point_result.t < 0.0f || closest_point_result.t > 1.0f)
                     continue; // Not on line
 
-                const float distance = math::DistanceBetween(result.point, position);
+                const float distance = math::DistanceBetween(closest_point_result.point, position);
                 if(distance < shortest_distance)
                 {
-                    best_point = result.point;
+                    best_point = closest_point_result.point;
                     shortest_distance = distance;
                     first_index = index;
                 }
@@ -150,6 +152,20 @@ mono::IPathPtr mono::CreatePath(const std::vector<math::Vector>& coords, const m
     return mono::CreatePath(world_points);
 }
 
+bool mono::ValidatePathParameters(PathType type, const std::vector<math::Vector>& points)
+{
+    switch(type)
+    {
+    case mono::PathType::REGULAR:
+        return !points.empty();
+    case mono::PathType::BEZIER_QUADRATIC:
+        return points.size() >= 3 && (points.size() % 2) == 1;
+    case mono::PathType::BEZIER_CUBIC:
+        return points.size() >= 4 && (points.size() % 2) == 0;
+    default:
+        return false;
+    }
+}
 
 mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector<math::Vector>& points, const PathOptions& options)
 {
@@ -186,14 +202,39 @@ mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector
     switch(type)
     {
     case mono::PathType::REGULAR:
+    {
+        MONO_ASSERT(points.size() >= 2);
         generated_mesh = parsl_mesh_from_lines(ctx, spine_list);
         break;
+    }
     case mono::PathType::BEZIER_QUADRATIC:
+    {
+        // The number of vertices in each spine should be 3+(n-1)*2 where n is the number of piecewise curves.
+        //3 + (points.size() - 1) * 2;
+        
+        const bool valid_quadratic_num_points = points.size() >= 3;
+        const bool valid_quadratic_num_points_odd = (points.size() % 2) == 1;
+        
+        MONO_ASSERT(valid_quadratic_num_points);
+        MONO_ASSERT(valid_quadratic_num_points_odd);
+        
         generated_mesh = parsl_mesh_from_curves_quadratic(ctx, spine_list);
         break;
+    }
     case mono::PathType::BEZIER_CUBIC:
+    {
+        // The number of vertices in each spine should be 4+(n-1)*2 where n is the number of piecewise curves.
+        //4 + (points.size() - 1) * 2;
+        
+        const bool valid_cubic_num_points = points.size() >= 4;
+        const bool valid_cubic_num_points_even = (points.size() % 2) == 0;
+        
+        MONO_ASSERT(valid_cubic_num_points);
+        MONO_ASSERT(valid_cubic_num_points_even);
+        
         generated_mesh = parsl_mesh_from_curves_cubic(ctx, spine_list);
         break;
+    }
     }
 
     if(options.uv_mode & UVMode::NORMALIZED_WIDTH)

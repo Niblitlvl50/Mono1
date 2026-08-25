@@ -34,5 +34,6 @@ namespace mono
         bool closed;
     };
 
+    bool ValidatePathParameters(PathType type, const std::vector<math::Vector>& points);
     PathDrawBuffer BuildPathDrawBuffers(PathType type, const std::vector<math::Vector>& points, const PathOptions& options);
 }

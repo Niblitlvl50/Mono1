@@ -80,7 +80,9 @@ RoadBatchDrawer::CachedRoad RoadBatchDrawer::CacheRoadData(uint32_t entity_id, c
     cached_road.width = component.width;
     cached_road.texture_name = component.texture_name;
     cached_road.texture = mono::RenderSystem::GetTextureFactory()->CreateTexture(component.texture_name.c_str());
-    cached_road.buffers = mono::BuildPathDrawBuffers(path->type, path->points, path_options);
+
+    if(mono::ValidatePathParameters(path->type, path->points))
+        cached_road.buffers = mono::BuildPathDrawBuffers(path->type, path->points, path_options);
     
     return cached_road;
 }
