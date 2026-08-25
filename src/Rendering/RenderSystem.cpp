@@ -212,7 +212,12 @@ RenderSystem::RenderSystem(uint32_t n, const RenderInitParams& init_params)
                 drawable_size.width, drawable_size.height);
 }
 
-RenderSystem::~RenderSystem()
+const char* RenderSystem::Name() const
+{
+    return "rendersystem";
+}
+
+void RenderSystem::Destroy()
 {
     delete s_sprite_factory;
     s_sprite_factory = nullptr;
@@ -223,11 +228,6 @@ RenderSystem::~RenderSystem()
     mono::UnloadFonts();
     simgui_shutdown();
     sg_shutdown();
-}
-
-const char* RenderSystem::Name() const
-{
-    return "rendersystem";
 }
 
 void RenderSystem::Update(const mono::UpdateContext& update_context)

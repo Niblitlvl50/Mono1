@@ -59,10 +59,10 @@ namespace mono
     public:
 
         RenderSystem(uint32_t n, const RenderInitParams& init_params);
-        ~RenderSystem();
 
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
+        void Destroy() override;
 
         void AllocateLayer(uint32_t entity_id);
         void ReleaseLayer(uint32_t entity_id);
