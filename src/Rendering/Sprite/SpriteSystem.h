@@ -67,6 +67,7 @@ namespace mono
         const char* Name() const override;
         void Update(const UpdateContext& update_context) override;
         void Sync() override;
+        void Destroy() override;
 
     private:
 

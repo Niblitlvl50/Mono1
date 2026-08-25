@@ -113,6 +113,12 @@ void SpriteSystem::Sync()
     m_sprites_need_update.clear();
 }
 
+void SpriteSystem::Destroy()
+{
+    m_sprites.m_types.clear();
+    m_sprites_need_update.clear();
+}
+
 void SpriteSystem::UpdateBoundingBoxForSprite(uint32_t sprite_id)
 {
     const mono::Sprite* sprite = m_sprites.Get(sprite_id);
