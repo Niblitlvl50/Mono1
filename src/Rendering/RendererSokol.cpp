@@ -13,6 +13,7 @@
 #include "Rendering/Pipeline/ScreenPipeline.h"
 #include "Rendering/Pipeline/SpritePipeline.h"
 #include "Rendering/Pipeline/FogPipeline.h"
+#include "Rendering/Pipeline/WaterPipeline.h"
 
 #include "Rendering/RenderBuffer/BufferFactory.h"
 #include "Rendering/Texture/ITextureFactory.h"
@@ -65,6 +66,8 @@ RendererSokol::RendererSokol()
     m_sprite_outline_pipeline = mono::SpritePipeline::MakeOutlinePipeline();
 
     m_fog_pipeline = mono::FogPipeline::MakePipeline();
+    m_water_pipeline = mono::WaterPipeline::MakePipeline();
+    m_water_annotation_pipeline = mono::WaterPipeline::MakeAnnotationPipeline();
     m_screen_pipeline = mono::ScreenPipeline::MakePipeline();
 
     constexpr math::Vector vertices[] = { {-1.0f, -1.0f}, {-1.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, -1.0f} };
@@ -482,6 +485,34 @@ void RendererSokol::DrawSpriteOutline(
 
     SpritePipeline::SetOutlineColor(mono::Color::GOLDEN_YELLOW);
     sg_draw(0, 6, 1);
+}
+
+void RendererSokol::DrawWater(
+    const IRenderBuffer* vertices, const IRenderBuffer* uv_coordinates, const IElementBuffer* indices, const ITexture* texture)
+{
+    WaterPipeline::Apply(m_water_pipeline.get(), vertices, uv_coordinates, indices, texture);
+    WaterPipeline::SetTime(float(m_timestamp) / 1000.0f);
+    WaterPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    WaterPipeline::SetShade(mono::Color::WHITE);
+
+    sg_draw(0, indices->Size(), 1);
+}
+
+void RendererSokol::DrawRiver(
+    const IRenderBuffer* vertices,
+    const IRenderBuffer* annotations,
+    const IElementBuffer* indices,
+    const ITexture* texture,
+    const mono::Color::RGBA& shade,
+    uint32_t offset,
+    uint32_t count)
+{
+    WaterPipeline::ApplyAnnotation(m_water_annotation_pipeline.get(), vertices, annotations, indices, texture);
+    WaterPipeline::SetTime(float(m_timestamp) / 1000.0f);
+    WaterPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    WaterPipeline::SetShade(shade);
+
+    sg_draw(offset, count, 1);
 }
 
 void RendererSokol::DrawFog(const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture)

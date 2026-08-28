@@ -103,6 +103,18 @@ namespace mono
         void DrawFog(
             const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture) override;
 
+        void DrawWater(
+            const IRenderBuffer* vertices, const IRenderBuffer* uv_coordinates, const IElementBuffer* indices, const ITexture* texture) override;
+
+        void DrawRiver(
+            const IRenderBuffer* vertices,
+            const IRenderBuffer* annotations,
+            const IElementBuffer* indices,
+            const ITexture* texture,
+            const mono::Color::RGBA& shade,
+            uint32_t offset,
+            uint32_t count) override;
+
         void DrawPoints(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count) const override;
 
@@ -197,6 +209,8 @@ namespace mono
         std::unique_ptr<IPipeline> m_sprite_stencil_pipeline;
         std::unique_ptr<IPipeline> m_sprite_outline_pipeline;
         std::unique_ptr<IPipeline> m_fog_pipeline;
+        std::unique_ptr<IPipeline> m_water_pipeline;
+        std::unique_ptr<IPipeline> m_water_annotation_pipeline;
         std::unique_ptr<IPipeline> m_screen_pipeline;
 
         std::unique_ptr<IRenderBuffer> m_screen_vertices;

@@ -100,6 +100,18 @@ namespace mono
         virtual void DrawFog(
             const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture) = 0;
 
+        virtual void DrawWater(
+            const IRenderBuffer* vertices, const IRenderBuffer* uv_coordinates, const IElementBuffer* indices, const ITexture* texture) = 0;
+
+        virtual void DrawRiver(
+            const IRenderBuffer* vertices,
+            const IRenderBuffer* annotations,
+            const IElementBuffer* indices,
+            const ITexture* texture,
+            const mono::Color::RGBA& shade,
+            uint32_t offset,
+            uint32_t count) = 0;
+
         virtual void DrawPoints(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count) const = 0;
 
