@@ -69,21 +69,26 @@ RoadBatchDrawer::CachedRoad RoadBatchDrawer::CacheRoadData(uint32_t entity_id, c
 {
     const mono::PathComponent* path = m_path_system->GetPath(entity_id);
 
+    CachedRoad cached_road;
+    cached_road.dirty = false;
+    cached_road.width = component.width;
+    cached_road.texture_name = component.texture_name;
+    cached_road.stretch_to_width = component.stretch_to_width;
+    cached_road.texture = mono::RenderSystem::GetTextureFactory()->CreateTexture(component.texture_name.c_str());
+
     mono::PathOptions path_options;
     path_options.width = component.width;
     path_options.color = component.color;
     path_options.uv_mode = mono::UVMode(mono::UVMode::DISTANCE | mono::UVMode::NORMALIZED_WIDTH);
     path_options.closed = false;
-
-    CachedRoad cached_road;
-    cached_road.dirty = false;
-    cached_road.width = component.width;
-    cached_road.texture_name = component.texture_name;
-    cached_road.texture = mono::RenderSystem::GetTextureFactory()->CreateTexture(component.texture_name.c_str());
+    path_options.texture_scale = cached_road.texture
+        ? float(cached_road.texture->Width()) / mono::RenderSystem::PixelsPerMeter()
+        : 1.0f;
+    path_options.stretch_to_width = component.stretch_to_width;
 
     if(mono::ValidatePathParameters(path->type, path->points))
         cached_road.buffers = mono::BuildPathDrawBuffers(path->type, path->points, path_options);
-    
+
     return cached_road;
 }
 
@@ -92,5 +97,6 @@ bool RoadBatchDrawer::NeedsUpdate(const CachedRoad& road, const RoadComponent& c
     return
         road.dirty ||
         road.width != component.width ||
-        road.texture_name != component.texture_name;
+        road.texture_name != component.texture_name ||
+        road.stretch_to_width != component.stretch_to_width;
 }

@@ -107,11 +107,12 @@ namespace
 
             vec4 sampled_color = texture(sampler, uv) * color_shade;
 
+            float v_norm = v_annotation.z;
             float fade_end = 1.0 - edge_fade;
-            if(v_annotation.y < edge_fade)
-                sampled_color.a *= smoothstep(0.0, edge_fade, v_annotation.y);
-            else if(v_annotation.y > fade_end)
-                sampled_color.a *= 1.0 - smoothstep(fade_end, 1.0, v_annotation.y);
+            if(v_norm < edge_fade)
+                sampled_color.a *= smoothstep(0.0, edge_fade, v_norm);
+            else if(v_norm > fade_end)
+                sampled_color.a *= 1.0 - smoothstep(fade_end, 1.0, v_norm);
 
             frag_color = sampled_color;
         }

@@ -32,6 +32,8 @@ namespace mono
         mono::Color::RGBA color;
         UVMode uv_mode;
         bool closed;
+        float texture_scale = 1.0f;
+        bool stretch_to_width = false;
     };
 
     bool ValidatePathParameters(PathType type, const std::vector<math::Vector>& points);

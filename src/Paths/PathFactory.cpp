@@ -256,13 +256,23 @@ mono::PathDrawBuffer mono::BuildPathDrawBuffers(PathType type, const std::vector
     for(uint32_t index = 0; index < num_indices; ++index)
         indices[index] = generated_mesh->triangle_indices[index];
 
+    const float inv_scale = (options.texture_scale > 0.0f) ? 1.0f / options.texture_scale : 1.0f;
+    const float v_scale = (!options.stretch_to_width && options.texture_scale > 0.0f) ? options.width / options.texture_scale : 1.0f;
+    std::vector<parsl_annotation> annotations(generated_mesh->annotations, generated_mesh->annotations + generated_mesh->num_vertices);
+    for(parsl_annotation& a : annotations)
+    {
+        a.spine_to_edge_x = a.v_across_curve; // store pre-scaling v (0-1) in z for edge fade
+        a.u_along_curve *= inv_scale;
+        a.v_across_curve *= v_scale;
+    }
+
     mono::PathDrawBuffer buffers;
     buffers.vertices =
         CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, generated_mesh->num_vertices, generated_mesh->positions, "path_draw_buffer");
     buffers.colors =
         CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, generated_mesh->num_vertices, colors.data(), "path_draw_buffer");
     buffers.anotations =
-        CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, generated_mesh->num_vertices, generated_mesh->annotations, "path_draw_buffer");
+        CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 4, generated_mesh->num_vertices, annotations.data(), "path_draw_buffer");
     buffers.indices =
         CreateElementBuffer(BufferType::STATIC, indices.size(), indices.data(), "path_draw_buffer");
 

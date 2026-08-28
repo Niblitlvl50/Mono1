@@ -31,6 +31,7 @@ namespace mono
             bool dirty;
             float width;
             std::string texture_name;
+            bool stretch_to_width;
             mono::ITexturePtr texture;
             mono::PathDrawBuffer buffers;
         };

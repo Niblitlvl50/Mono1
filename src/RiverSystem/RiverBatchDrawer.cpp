@@ -70,17 +70,22 @@ RiverBatchDrawer::CachedRiver RiverBatchDrawer::CacheRiverData(uint32_t entity_i
 {
     const mono::PathComponent* path = m_path_system->GetPath(entity_id);
 
+    CachedRiver cached_river;
+    cached_river.dirty = false;
+    cached_river.width = component.width;
+    cached_river.texture_name = component.texture_name;
+    cached_river.stretch_to_width = component.stretch_to_width;
+    cached_river.texture = mono::RenderSystem::GetTextureFactory()->CreateTexture(component.texture_name.c_str());
+
     mono::PathOptions path_options;
     path_options.width = component.width;
     path_options.color = component.color;
     path_options.uv_mode = mono::UVMode(mono::UVMode::DISTANCE | mono::UVMode::NORMALIZED_WIDTH);
     path_options.closed = false;
-
-    CachedRiver cached_river;
-    cached_river.dirty = false;
-    cached_river.width = component.width;
-    cached_river.texture_name = component.texture_name;
-    cached_river.texture = mono::RenderSystem::GetTextureFactory()->CreateTexture(component.texture_name.c_str());
+    path_options.texture_scale = cached_river.texture
+        ? float(cached_river.texture->Width()) / mono::RenderSystem::PixelsPerMeter()
+        : 1.0f;
+    path_options.stretch_to_width = component.stretch_to_width;
 
     if(mono::ValidatePathParameters(path->type, path->points))
         cached_river.buffers = mono::BuildPathDrawBuffers(path->type, path->points, path_options);
@@ -93,5 +98,6 @@ bool RiverBatchDrawer::NeedsUpdate(const CachedRiver& river, const RiverComponen
     return
         river.dirty ||
         river.width != component.width ||
-        river.texture_name != component.texture_name;
+        river.texture_name != component.texture_name ||
+        river.stretch_to_width != component.stretch_to_width;
 }

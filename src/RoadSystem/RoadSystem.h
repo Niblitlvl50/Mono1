@@ -15,6 +15,7 @@ namespace mono
         float width;
         mono::Color::RGBA color;
         std::string texture_name;
+        bool stretch_to_width;
     };
 
     class RoadSystem : public mono::IGameSystem
