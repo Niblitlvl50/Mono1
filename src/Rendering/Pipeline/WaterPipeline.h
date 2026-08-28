@@ -31,5 +31,6 @@ namespace mono
         static void SetTime(float total_time_s);
         static void SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model);
         static void SetShade(const mono::Color::RGBA& color);
+        static void SetEdgeFade(float edge_fade);
     };
 }

@@ -15,6 +15,7 @@ namespace mono
         float width;
         mono::Color::RGBA color;
         std::string texture_name;
+        float edge_fade;
     };
 
     class RiverSystem : public mono::IGameSystem

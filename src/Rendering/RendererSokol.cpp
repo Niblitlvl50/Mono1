@@ -504,6 +504,7 @@ void RendererSokol::DrawRiver(
     const IElementBuffer* indices,
     const ITexture* texture,
     const mono::Color::RGBA& shade,
+    float edge_fade,
     uint32_t offset,
     uint32_t count)
 {
@@ -511,6 +512,7 @@ void RendererSokol::DrawRiver(
     WaterPipeline::SetTime(float(m_timestamp) / 1000.0f);
     WaterPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
     WaterPipeline::SetShade(shade);
+    WaterPipeline::SetEdgeFade(edge_fade);
 
     sg_draw(offset, count, 1);
 }

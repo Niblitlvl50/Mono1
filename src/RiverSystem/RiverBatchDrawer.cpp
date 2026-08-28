@@ -53,6 +53,7 @@ void RiverBatchDrawer::Draw(mono::IRenderer& renderer) const
             river.buffers.indices.get(),
             river.texture.get(),
             component.color,
+            component.edge_fade,
             0,
             river.buffers.indices->Size());
     };

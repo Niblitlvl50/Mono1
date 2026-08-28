@@ -94,6 +94,7 @@ namespace
         uniform sampler2D sampler;
         uniform float total_time;
         uniform vec4 color_shade;
+        uniform float edge_fade;
 
         in vec4 v_annotation;
         out vec4 frag_color;
@@ -106,10 +107,11 @@ namespace
 
             vec4 sampled_color = texture(sampler, uv) * color_shade;
 
-            if(v_annotation.y < 0.1)
-                sampled_color.a *= smoothstep(0.0, 0.1, v_annotation.y);
-            else if(v_annotation.y > 0.9)
-                sampled_color.a *= 1.0 - smoothstep(0.9, 1.0, v_annotation.y);
+            float fade_end = 1.0 - edge_fade;
+            if(v_annotation.y < edge_fade)
+                sampled_color.a *= smoothstep(0.0, edge_fade, v_annotation.y);
+            else if(v_annotation.y > fade_end)
+                sampled_color.a *= 1.0 - smoothstep(fade_end, 1.0, v_annotation.y);
 
             frag_color = sampled_color;
         }
@@ -122,6 +124,8 @@ namespace
     constexpr int ATTR_POSITION    = 0;
     constexpr int ATTR_UV          = 1;
     constexpr int ATTR_ANNOTATION  = 1;
+
+    constexpr int U_EDGE_FADE_BLOCK = 2;
 }
 
 using namespace mono;
@@ -264,6 +268,10 @@ mono::IPipelinePtr WaterPipeline::MakeAnnotationPipeline()
     shader_desc.fs.uniform_blocks[U_COLOR_BLOCK].uniforms[0].name = "color_shade";
     shader_desc.fs.uniform_blocks[U_COLOR_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT4;
 
+    shader_desc.fs.uniform_blocks[U_EDGE_FADE_BLOCK].size = sizeof(float);
+    shader_desc.fs.uniform_blocks[U_EDGE_FADE_BLOCK].uniforms[0].name = "edge_fade";
+    shader_desc.fs.uniform_blocks[U_EDGE_FADE_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT;
+
     sg_shader shader_handle = sg_make_shader(&shader_desc);
 
     const sg_resource_state shader_state = sg_query_shader_state(shader_handle);
@@ -310,4 +318,9 @@ void WaterPipeline::ApplyAnnotation(
     bindings.fs.samplers[0].id = texture->SamplerId();
 
     sg_apply_bindings(&bindings);
+}
+
+void WaterPipeline::SetEdgeFade(float edge_fade)
+{
+    sg_apply_uniforms(SG_SHADERSTAGE_FS, U_EDGE_FADE_BLOCK, { &edge_fade, sizeof(float) });
 }

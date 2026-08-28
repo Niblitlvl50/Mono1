@@ -112,6 +112,7 @@ namespace mono
             const IElementBuffer* indices,
             const ITexture* texture,
             const mono::Color::RGBA& shade,
+            float edge_fade,
             uint32_t offset,
             uint32_t count) override;
 
