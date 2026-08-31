@@ -360,7 +360,11 @@ ParticleEmitterComponent* ParticleSystem::AttachAreaEmitter(
 {
     ParticleEmitterComponent* emitter_component = AttachEmitter(
         pool_id, math::ZeroVec, duration_seconds, emit_rate, emitter_type, emitter_mode, DefaultGenerator);
-    SetGeneratorProperties(emitter_component, generator_properties);
+    if(emitter_component)
+    {
+        SetGeneratorProperties(emitter_component, generator_properties);
+    }
+
     return emitter_component;
 }
 
