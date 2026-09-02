@@ -36,6 +36,9 @@ ImGuiInputHandler::ImGuiInputHandler(mono::EventHandler& event_handler)
     m_mouseWheelToken = m_eventHandler.AddListener(mouse_wheel);
     m_multiGestureToken = m_eventHandler.AddListener(multi_gesture);
 
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.ScrollbarSize = 24.0f;
+
     ImGuiIO& io = ImGui::GetIO();
     io.KeyMap[ImGuiKey_Tab] = System::KeycodeToNative(Keycode::TAB);
     io.KeyMap[ImGuiKey_LeftArrow] = System::KeycodeToNative(Keycode::LEFT);
