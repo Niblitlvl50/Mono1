@@ -136,6 +136,87 @@ namespace
     };
 }
 
+namespace
+{
+    // par_streamlines cubic layout: P0, C1out, C2in, P3, [C2in, P3]*
+    // First segment has both controls explicit; subsequent segments supply only the incoming
+    // control — the outgoing is auto-computed as the reflection of the previous C2in over P3.
+    std::vector<math::Vector> TessellateCubic(const std::vector<math::Vector>& pts, int steps_per_segment)
+    {
+        const int num_segments = 1 + (int(pts.size()) - 4) / 2;
+        std::vector<math::Vector> out;
+        out.reserve(num_segments * steps_per_segment + 1);
+
+        math::Vector P0 = pts[0];
+        math::Vector C1 = pts[1];
+        math::Vector C2 = pts[2];
+        math::Vector P3 = pts[3];
+
+        for(int i = 0; i <= steps_per_segment; ++i)
+        {
+            const float t = float(i) / float(steps_per_segment);
+            const float u = 1.0f - t;
+            out.push_back(P0*(u*u*u) + C1*(3.0f*u*u*t) + C2*(3.0f*u*t*t) + P3*(t*t*t));
+        }
+
+        for(int seg = 1; seg < num_segments; ++seg)
+        {
+            P0 = P3;
+            C1 = P0 * 2.0f - C2;        // reflection of previous C2 over P0
+            C2 = pts[2 + seg * 2];
+            P3 = pts[3 + seg * 2];
+
+            for(int i = 1; i <= steps_per_segment; ++i)
+            {
+                const float t = float(i) / float(steps_per_segment);
+                const float u = 1.0f - t;
+                out.push_back(P0*(u*u*u) + C1*(3.0f*u*u*t) + C2*(3.0f*u*t*t) + P3*(t*t*t));
+            }
+        }
+
+        return out;
+    }
+
+    // Points layout: A0, C0, A1, C1, A2, ...
+    // Segment i goes from A[i] to A[i+1] with control C[i].
+    std::vector<math::Vector> TessellateQuadratic(const std::vector<math::Vector>& pts, int steps_per_segment)
+    {
+        const int num_segments = int(pts.size()) / 2;
+        std::vector<math::Vector> out;
+        out.reserve(num_segments * steps_per_segment + 1);
+
+        for(int seg = 0; seg < num_segments; ++seg)
+        {
+            const math::Vector P0 = pts[seg * 2];
+            const math::Vector P1 = pts[seg * 2 + 1];
+            const math::Vector P2 = pts[seg * 2 + 2];
+
+            const int start_i = (seg == 0) ? 0 : 1;
+            for(int i = start_i; i <= steps_per_segment; ++i)
+            {
+                const float t = float(i) / float(steps_per_segment);
+                const float u = 1.0f - t;
+                out.push_back(P0 * (u*u) + P1 * (2.0f*u*t) + P2 * (t*t));
+            }
+        }
+        return out;
+    }
+}
+
+mono::IPathPtr mono::CreatePath(const std::vector<math::Vector>& control_points, PathType type)
+{
+    constexpr int steps_per_segment = 24;
+    switch(type)
+    {
+    case PathType::BEZIER_CUBIC:
+        return CreatePath(TessellateCubic(control_points, steps_per_segment));
+    case PathType::BEZIER_QUADRATIC:
+        return CreatePath(TessellateQuadratic(control_points, steps_per_segment));
+    default:
+        return CreatePath(control_points);
+    }
+}
+
 mono::IPathPtr mono::CreatePath(const std::vector<math::Vector>& coords)
 {
     return std::make_unique<PathImpl>(coords);

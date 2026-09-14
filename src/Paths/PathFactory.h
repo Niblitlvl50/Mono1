@@ -15,6 +15,7 @@ namespace mono
 {
     IPathPtr CreatePath(const std::vector<math::Vector>& coords);
     IPathPtr CreatePath(const std::vector<math::Vector>& coords, const math::Matrix& transform);
+    IPathPtr CreatePath(const std::vector<math::Vector>& control_points, PathType type);
 
     enum UVMode
     {
