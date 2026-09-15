@@ -86,6 +86,28 @@ namespace
             return result;
         }
 
+        math::Vector GetTangentByLength(float length) const override
+        {
+            length = std::clamp(length, 0.0f, Length());
+
+            if(m_points.size() < 2)
+                return { 1.0f, 0.0f };
+
+            const auto find_func = [length](float start_length) {
+                return length <= start_length;
+            };
+
+            auto it = std::find_if(m_length_table.begin(), m_length_table.end(), find_func);
+            if(it == m_length_table.end())
+                --it;
+            if(it != m_length_table.begin())
+                --it;
+
+            const size_t index = std::distance(m_length_table.begin(), it);
+            const size_t next = std::min(index + 1, m_points.size() - 1);
+            return math::Normalized(m_points[next] - m_points[index]);
+        }
+
         math::Vector GetEndPoint() const override
         {
             return m_points.empty() ? math::ZeroVec : m_points.back();

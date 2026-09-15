@@ -31,6 +31,9 @@ namespace mono
         // Get a position from a length value
         virtual PositionResult GetPositionByLength(float length) const = 0;
 
+        // Get the normalized tangent direction at a given length
+        virtual math::Vector GetTangentByLength(float length) const = 0;
+
         virtual LengthResult GetLengthFromPosition(const math::Vector& position) const = 0;
 
         // Get the end point of the path
