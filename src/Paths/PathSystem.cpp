@@ -5,6 +5,8 @@
 #include "TransformSystem/TransformSystem.h"
 #include "System/Hash.h"
 
+#include <algorithm>
+
 using namespace mono;
 
 PathSystem::PathSystem(uint32_t n, mono::TransformSystem* transform_system)
@@ -34,6 +36,59 @@ void PathSystem::SetPathData(uint32_t entity_id, const PathComponent& path_compo
 const PathComponent* PathSystem::GetPath(uint32_t entity_id) const
 {
     return &m_path_components[entity_id];
+}
+
+PathNotifierComponent* PathSystem::AllocateNotifier(uint32_t entity_id)
+{
+    std::vector<PathNotifierComponent>& notifiers = m_notifiers[entity_id];
+    notifiers.emplace_back();
+    return &notifiers.back();
+}
+
+void PathSystem::ReleaseNotifier(uint32_t entity_id)
+{
+    m_notifiers.erase(entity_id);
+}
+
+void PathSystem::SetNotifierData(uint32_t entity_id, float distance, const std::string& tag)
+{
+    const auto it = m_notifiers.find(entity_id);
+    if(it == m_notifiers.end() || it->second.empty())
+        return;
+
+    // SetNotifierData always follows the AllocateNotifier call for the same instance.
+    PathNotifierComponent& notifier = it->second.back();
+    notifier.distance = distance;
+    notifier.tag = tag;
+
+    // Keep notifiers ordered by distance so callers can walk "what's next" in sequence.
+    std::sort(it->second.begin(), it->second.end(), [](const PathNotifierComponent& a, const PathNotifierComponent& b) {
+        return a.distance < b.distance;
+    });
+}
+
+const std::vector<PathNotifierComponent>* PathSystem::GetNotifiers(uint32_t entity_id) const
+{
+    const auto it = m_notifiers.find(entity_id);
+    return (it != m_notifiers.end()) ? &it->second : nullptr;
+}
+
+std::vector<PathNotifierComponent> PathSystem::CollectNotifiersInRange(
+    uint32_t path_entity_id, float min_distance, float max_distance) const
+{
+    std::vector<PathNotifierComponent> result;
+
+    const auto it = m_notifiers.find(path_entity_id);
+    if(it == m_notifiers.end())
+        return result;
+
+    for(const PathNotifierComponent& notifier : it->second)
+    {
+        if(notifier.distance >= min_distance && notifier.distance <= max_distance)
+            result.push_back(notifier);
+    }
+
+    return result;
 }
 
 const char* PathSystem::Name() const
