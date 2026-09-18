@@ -26,6 +26,7 @@ namespace
         bool IsPlaying() const override { return false; }
         void SetVolume(float volume) override { }
         void SetPosition(float x, float y) override { }
+        void SetPlaybackSpeed(float speed) override { }
     };
 
     class ISoundEngine
@@ -78,6 +79,10 @@ namespace
             {
                 ma_sound_set_position(m_ma_sound, x, y, 0.0f);
             }
+            void SetPlaybackSpeed(float speed) override
+            {
+                ma_sound_set_pitch(m_ma_sound, speed);
+            }
 
             ma_sound* m_ma_sound;
         };
@@ -108,7 +113,7 @@ namespace
         {
             ma_sound* sound = new ma_sound;
 
-            ma_uint32 flags = MA_SOUND_FLAG_DECODE | MA_SOUND_FLAG_NO_PITCH;
+            ma_uint32 flags = MA_SOUND_FLAG_DECODE;
             if(spatiality == audio::SoundSpatiality::NONE)
                 flags |= MA_SOUND_FLAG_NO_SPATIALIZATION;
 

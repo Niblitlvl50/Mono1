@@ -29,6 +29,9 @@ namespace audio
         virtual bool IsPlaying() const = 0;
         virtual void SetVolume(float volume) = 0;
         virtual void SetPosition(float x, float y) = 0;
+
+        // 1.0 is normal speed; higher plays faster (and higher pitched), lower plays slower.
+        virtual void SetPlaybackSpeed(float speed) = 0;
     };
 
     using ISoundPtr = std::unique_ptr<ISound>;
