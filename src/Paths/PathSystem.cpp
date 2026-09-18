@@ -2,6 +2,7 @@
 #include "PathSystem.h"
 #include "PathFactory.h"
 
+#include "EntitySystem/Entity.h"
 #include "TransformSystem/TransformSystem.h"
 #include "System/Hash.h"
 
@@ -89,6 +90,23 @@ std::vector<PathNotifierComponent> PathSystem::CollectNotifiersInRange(
     }
 
     return result;
+}
+
+uint32_t PathSystem::FindPathFromNotifierTag(const std::string& tag, float& out_distance) const
+{
+    for(const auto& entity_notifiers_pair : m_notifiers)
+    {
+        for(const PathNotifierComponent& notifier : entity_notifiers_pair.second)
+        {
+            if(tag == notifier.tag)
+            {
+                out_distance = notifier.distance;
+                return entity_notifiers_pair.first;
+            }
+        }
+    }
+
+    return mono::INVALID_ID;
 }
 
 const char* PathSystem::Name() const

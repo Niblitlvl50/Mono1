@@ -52,6 +52,8 @@ namespace mono
         // Notifiers on `path_entity_id` whose distance falls within [min_distance, max_distance].
         std::vector<PathNotifierComponent> CollectNotifiersInRange(uint32_t path_entity_id, float min_distance, float max_distance) const;
 
+        uint32_t FindPathFromNotifierTag(const std::string& tag, float& out_distance) const;
+
         template <typename T>
         inline void ForEachNotifier(T&& callback) const
         {
