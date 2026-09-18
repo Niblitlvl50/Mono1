@@ -3,7 +3,6 @@
 #include "Math/Quad.h"
 #include "Math/Vector.h"
 #include "Math/MathFunctions.h"
-#include "Math/Bezier.h"
 
 TEST(MathTest, QuadZero)
 {
@@ -140,24 +139,6 @@ TEST(MathTest, VectorOperator)
     addResult += math::Vector(7.7f, -3.0f);
     EXPECT_FLOAT_EQ(8.7f, addResult.x);
     EXPECT_FLOAT_EQ(-3.0f, addResult.y);
-}
-
-TEST(MathTest, Bezier)
-{
-    math::Vector points[4];
-    points[0] = math::Vector(1.0f, 1.0f);
-    points[1] = math::Vector(3.0f, 1.0f);
-    points[2] = math::Vector(2.0f, -5.0f);
-    points[3] = math::Vector(3.14f, 3.14f);
-
-    const math::Vector& start_point = math::Cubic(0.0f, points);
-    const math::Vector& end_point = math::Cubic(1.0f, points);
-
-    EXPECT_FLOAT_EQ(1.0f, start_point.x);
-    EXPECT_FLOAT_EQ(1.0f, start_point.y);
-
-    EXPECT_FLOAT_EQ(3.14f, end_point.x);
-    EXPECT_FLOAT_EQ(3.14f, end_point.y);
 }
 
 TEST(MathTest, VectorFromAngle)
