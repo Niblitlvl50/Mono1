@@ -104,6 +104,12 @@ namespace math
         return std::clamp(Scale01(value, min, max), 0.0f, 1.0f);
     }
 
+    template <typename T>
+    inline T FractionToRange(float fraction, T min, T max)
+    {
+        return (fraction * (float(max) - float(min))) + float(min);
+    }
+
     constexpr float PI() {
         return 3.14159265358979323846264338327950288f;
     }
