@@ -108,6 +108,23 @@ namespace
             return math::Normalized(m_points[next] - m_points[index]);
         }
 
+        float GetCurvatureByLength(float length) const override
+        {
+            if(m_points.size() < 3)
+                return 0.0f;
+
+            constexpr float step = 0.5f;
+            const float clamped_length = std::clamp(length, 0.0f, Length());
+            const float length_before = std::max(0.0f, clamped_length - step);
+            const float length_after = std::min(Length(), clamped_length + step);
+
+            const math::Vector tangent_before = GetTangentByLength(length_before);
+            const math::Vector tangent_after = GetTangentByLength(length_after);
+
+            const float delta_length = std::max(length_after - length_before, 0.0001f);
+            return math::AngleBetweenPoints(tangent_before, tangent_after) / delta_length;
+        }
+
         math::Vector GetEndPoint() const override
         {
             return m_points.empty() ? math::ZeroVec : m_points.back();

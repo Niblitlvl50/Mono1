@@ -34,6 +34,11 @@ namespace mono
         // Get the normalized tangent direction at a given length
         virtual math::Vector GetTangentByLength(float length) const = 0;
 
+        // Get the curvature (radians of turn per meter travelled) at a given length, via a
+        // finite difference of the tangent direction just before/after the point; signed by
+        // turn direction. Zero for a straight line, larger magnitude for a tighter bend.
+        virtual float GetCurvatureByLength(float length) const = 0;
+
         virtual LengthResult GetLengthFromPosition(const math::Vector& position) const = 0;
 
         // Get the end point of the path
