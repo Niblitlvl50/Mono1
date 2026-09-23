@@ -8,6 +8,7 @@
 #include "TransformSystem/TransformSystem.h"
 #include "Util/Algorithm.h"
 #include "Util/Random.h"
+#include <algorithm>
 
 
 using namespace mono;
@@ -190,7 +191,7 @@ void ParticleSystem::UpdateEmitter(
     uint32_t new_particles = 0;
     if(emitter->type == EmitterType::BURST || emitter->type == EmitterType::BURST_REMOVE_ON_FINISH)
     {
-        new_particles = emitter->emit_rate * emitter->duration;
+        new_particles = std::max(1u, uint32_t(emitter->emit_rate * emitter->duration));
     }
     else
     {
