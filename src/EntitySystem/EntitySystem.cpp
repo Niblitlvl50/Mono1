@@ -313,6 +313,9 @@ void EntitySystem::RegisterComponent(
 
 void EntitySystem::ReleaseEntity(uint32_t entity_id)
 {
+    if(entity_id == mono::INVALID_ID)
+        return;
+        
     MONO_ASSERT_MESSAGE(m_entities[entity_id].id == entity_id, "ReleaseEntity called on an entity that is not currently allocated. Likely a stale id being released twice.");
 
     // Guard against being asked to release an entity that's already queued/being
