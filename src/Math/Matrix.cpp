@@ -526,3 +526,10 @@ float math::GetZRotation(const math::Matrix& matrix)
 
     return z;
 }
+
+math::Vector math::GetScale(const math::Matrix& matrix)
+{
+    return math::Vector(
+        std::sqrt(matrix.data[0] * matrix.data[0] + matrix.data[1] * matrix.data[1]),
+        std::sqrt(matrix.data[4] * matrix.data[4] + matrix.data[5] * matrix.data[5]));
+}

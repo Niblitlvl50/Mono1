@@ -47,6 +47,9 @@ namespace math
 
     float GetZRotation(const Matrix& matrix);
 
+    // Always positive, a mirrored (negative) scale can't be told apart from a rotation.
+    math::Vector GetScale(const Matrix& matrix);
+
     void Inverse(Matrix& matrix);
     math::Matrix Inverse(const Matrix& matrix);
 
