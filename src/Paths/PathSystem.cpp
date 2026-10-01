@@ -51,7 +51,7 @@ void PathSystem::ReleaseNotifier(uint32_t entity_id)
     m_notifiers.erase(entity_id);
 }
 
-void PathSystem::SetNotifierData(uint32_t entity_id, float distance, const std::string& tag)
+void PathSystem::SetNotifierData(uint32_t entity_id, float start_distance, float end_distance, const std::string& tag)
 {
     const auto it = m_notifiers.find(entity_id);
     if(it == m_notifiers.end() || it->second.empty())
@@ -59,12 +59,13 @@ void PathSystem::SetNotifierData(uint32_t entity_id, float distance, const std::
 
     // SetNotifierData always follows the AllocateNotifier call for the same instance.
     PathNotifierComponent& notifier = it->second.back();
-    notifier.distance = distance;
+    notifier.start_distance = start_distance;
+    notifier.end_distance = std::max(start_distance, end_distance);
     notifier.tag = tag;
 
-    // Keep notifiers ordered by distance so callers can walk "what's next" in sequence.
+    // Keep notifiers ordered by start so callers can walk "what's next" in sequence.
     std::sort(it->second.begin(), it->second.end(), [](const PathNotifierComponent& a, const PathNotifierComponent& b) {
-        return a.distance < b.distance;
+        return a.start_distance < b.start_distance;
     });
 }
 
@@ -85,11 +86,16 @@ std::vector<PathNotifierComponent> PathSystem::CollectNotifiersInRange(
 
     for(const PathNotifierComponent& notifier : it->second)
     {
-        if(notifier.distance >= min_distance && notifier.distance <= max_distance)
+        if(notifier.start_distance <= max_distance && notifier.end_distance >= min_distance)
             result.push_back(notifier);
     }
 
     return result;
+}
+
+std::vector<PathNotifierComponent> PathSystem::CollectActiveNotifiers(uint32_t path_entity_id, float distance) const
+{
+    return CollectNotifiersInRange(path_entity_id, distance, distance);
 }
 
 uint32_t PathSystem::FindPathFromNotifierTag(const std::string& tag, float& out_distance) const
@@ -100,7 +106,7 @@ uint32_t PathSystem::FindPathFromNotifierTag(const std::string& tag, float& out_
         {
             if(tag == notifier.tag)
             {
-                out_distance = notifier.distance;
+                out_distance = notifier.start_distance;
                 return entity_notifiers_pair.first;
             }
         }

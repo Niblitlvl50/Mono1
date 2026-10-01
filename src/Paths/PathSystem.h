@@ -20,11 +20,13 @@ namespace mono
         std::vector<math::Vector> points;
     };
 
-    // A named tag at a distance along the path on the same entity - purely data, for
-    // other code to query later (e.g. "what's coming up next on this track").
+    // A named tag that's active over a stretch of the path on the same entity, from
+    // start_distance to end_distance - purely data, for other code to query later (e.g.
+    // "what's coming up next on this track"). A zero-length range marks a single point.
     struct PathNotifierComponent
     {
-        float distance = 0.0f;
+        float start_distance = 0.0f;
+        float end_distance = 0.0f;
         std::string tag;
     };
 
@@ -46,12 +48,17 @@ namespace mono
         // appends one, and the following SetNotifierData call fills in the one just added.
         PathNotifierComponent* AllocateNotifier(uint32_t entity_id);
         void ReleaseNotifier(uint32_t entity_id);
-        void SetNotifierData(uint32_t entity_id, float distance, const std::string& tag);
+        // An end_distance before start_distance is treated as a single point at start_distance.
+        void SetNotifierData(uint32_t entity_id, float start_distance, float end_distance, const std::string& tag);
         const std::vector<PathNotifierComponent>* GetNotifiers(uint32_t entity_id) const;
 
-        // Notifiers on `path_entity_id` whose distance falls within [min_distance, max_distance].
+        // Notifiers on `path_entity_id` whose range overlaps [min_distance, max_distance].
         std::vector<PathNotifierComponent> CollectNotifiersInRange(uint32_t path_entity_id, float min_distance, float max_distance) const;
 
+        // Notifiers on `path_entity_id` that are active at `distance`.
+        std::vector<PathNotifierComponent> CollectActiveNotifiers(uint32_t path_entity_id, float distance) const;
+
+        // out_distance is the start of the notifier's range.
         uint32_t FindPathFromNotifierTag(const std::string& tag, float& out_distance) const;
 
         template <typename T>
