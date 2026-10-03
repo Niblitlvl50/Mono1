@@ -3,6 +3,7 @@
 
 #include "Util/Algorithm.h"
 #include "System/Hash.h"
+#include "System/System.h"
 #include "Physics/IShape.h"
 #include "Physics/IBody.h"
 #include "Physics/PhysicsSystem.h"
@@ -370,29 +371,7 @@ void TriggerSystem::Update(const mono::UpdateContext& update_context)
             }
         }
 
-/*
-        if(game::g_draw_triggers)
-        {
-            math::Vector text_position = math::Vector(1.0f, 4.0f);
-
-            const char* hash_string = hash::HashLookup(trigger_hash);
-            game::g_debug_drawer->DrawScreenTextFading(hash_string, text_position, mono::Color::GRAY, 1.0f);
-
-            const auto entity_ids_it = m_trigger_hash_to_entity_ids.find(trigger_hash);
-            if(entity_ids_it != m_trigger_hash_to_entity_ids.end())
-            {
-                for(uint32_t entity_id : entity_ids_it->second)
-                {
-                    if(entity_id == mono::INVALID_ID)
-                        continue;
-
-                    text_position -= math::Vector(0.0f, 0.5f);
-                    const char* entity_name = m_entity_system->GetEntityName(entity_id);
-                    game::g_debug_drawer->DrawScreenTextFading(entity_name, text_position, mono::Color::OFF_WHITE, 1.0f);
-                }
-            }
-        }
-*/
+        System::Log("Trigger emitted: %s", hash::HashLookup(trigger_hash));
     }
 }
 
