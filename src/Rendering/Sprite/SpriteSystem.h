@@ -23,8 +23,6 @@ namespace mono
         mono::Color::RGBA shade;
         bool random_start_frame = false;
         int animation_id = 0;
-        int layer = 0;
-        float sort_offset = 0.0f;
         uint32_t properties = 0;
         math::Vector shadow_offset;
         float shadow_size;

@@ -279,6 +279,9 @@ void RenderSystem::AllocateLayer(uint32_t entity_id)
 {
     LayerComponent component;
     component.layer = 0;
+    component.sort_offset = 0.0f;
+    component.use_initial_y_position = false;
+    component.initial_y_position.reset();
 
     m_layers.Set(entity_id, std::move(component));
 }
@@ -288,11 +291,37 @@ void RenderSystem::ReleaseLayer(uint32_t entity_id)
     m_layers.Release(entity_id);
 }
 
-void RenderSystem::UpdateLayer(uint32_t entity_id, int new_layer, float new_sort_offset)
+void RenderSystem::UpdateLayer(uint32_t entity_id, int new_layer, float new_sort_offset, bool use_initial_y_position)
 {
     LayerComponent* component = m_layers.Get(entity_id);
     component->layer = new_layer;
     component->sort_offset = new_sort_offset;
+    component->use_initial_y_position = use_initial_y_position;
+    component->initial_y_position.reset();
+}
+
+float RenderSystem::GetSortPosition(uint32_t entity_id, float bottom_y)
+{
+    if(!m_layers.IsActive(entity_id))
+        return bottom_y;
+
+    LayerComponent* component = m_layers.Get(entity_id);
+    if(!component->use_initial_y_position)
+        return bottom_y + component->sort_offset;
+
+    if(!component->initial_y_position)
+        component->initial_y_position = bottom_y;
+
+    return *component->initial_y_position + component->sort_offset;
+}
+
+const LayerComponent* RenderSystem::GetLayerComponent(uint32_t entity_id) const
+{
+    const bool is_active = m_layers.IsActive(entity_id);
+    if(is_active)
+        return m_layers.Get(entity_id);
+
+    return nullptr;
 }
 
 int RenderSystem::GetRenderLayerOrDefault(uint32_t entity_id) const

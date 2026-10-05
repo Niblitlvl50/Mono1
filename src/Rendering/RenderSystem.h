@@ -42,6 +42,10 @@ namespace mono
     {
         int layer;
         float sort_offset;
+        bool use_initial_y_position;
+
+        // Internal data for sorting, not to be set by the user.
+        std::optional<float> initial_y_position;
     };
 
     enum class ScreenFadeState
@@ -66,7 +70,14 @@ namespace mono
 
         void AllocateLayer(uint32_t entity_id);
         void ReleaseLayer(uint32_t entity_id);
-        void UpdateLayer(uint32_t entity_id, int new_layer, float new_sort_offset);
+        void UpdateLayer(uint32_t entity_id, int new_layer, float new_sort_offset, bool use_initial_y_position);
+
+        const LayerComponent* GetLayerComponent(uint32_t entity_id) const;
+
+        // The y position to depth sort entity_id on, bottom_y plus the layer's sort offset. With
+        // use_initial_y_position the first bottom_y passed in is kept, so the entity keeps sorting
+        // where it first showed up even when it moves.
+        float GetSortPosition(uint32_t entity_id, float bottom_y);
 
         int GetRenderLayerOrDefault(uint32_t entity_id) const;
         float GetRenderSortOffsetOrDefault(uint32_t entity_id) const;

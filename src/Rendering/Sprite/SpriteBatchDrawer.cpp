@@ -25,7 +25,7 @@ namespace
     struct SpriteDrawData
     {
         math::Matrix transform;
-        math::Quad world_bb;
+        float sort_y;
         mono::ISprite* sprite;
         int layer;
     };
@@ -38,7 +38,7 @@ namespace
 }
 
 SpriteBatchDrawer::SpriteBatchDrawer(
-    const mono::TransformSystem* transform_system, mono::SpriteSystem* sprite_system, const mono::RenderSystem* render_system)
+    const mono::TransformSystem* transform_system, mono::SpriteSystem* sprite_system, mono::RenderSystem* render_system)
     : m_transform_system(transform_system)
     , m_sprite_system(sprite_system)
     , m_render_system(render_system)
@@ -91,6 +91,9 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
         const math::Matrix& transform = m_transform_system->GetWorld(id);
         const math::Quad world_bounds = m_transform_system->GetWorldBoundingBox(id);
 
+        // Asked before culling, so an entity using its initial y records where it spawned, not where it first came into view.
+        const float sort_y = m_render_system->GetSortPosition(id, math::Bottom(world_bounds));
+
         const bool sprite_is_visible = (renderer.Cull(world_bounds) == mono::CullResult::IN_VIEW);
         if(sprite_is_visible)
         {
@@ -99,12 +102,8 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
             if(it == m_sprite_buffers.end())
                 m_sprite_buffers[sprite_hash] = BuildSpriteDrawBuffers(sprite.GetSpriteData(), "sprite_buffer-sprite_batch_drawer");
 
-            const float sort_offset = m_render_system->GetRenderSortOffsetOrDefault(id);
-            math::Quad world_bounds_offseted = world_bounds;
-            world_bounds_offseted.bottom_left.y += sort_offset;
-
             const int render_layer = m_render_system->GetRenderLayerOrDefault(id);
-            sprites_to_draw.push_back({ transform, world_bounds_offseted, &sprite, render_layer });
+            sprites_to_draw.push_back({ transform, sort_y, &sprite, render_layer });
         }
 
         bool shadow_is_visible = false;
@@ -152,7 +151,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
     const auto sort_on_y_and_layer = [](const SpriteDrawData& first, const SpriteDrawData& second)
     {
         if(first.layer == second.layer)
-            return math::Bottom(first.world_bb) > math::Bottom(second.world_bb);
+            return first.sort_y > second.sort_y;
 
         return first.layer < second.layer;
     };
