@@ -64,6 +64,11 @@ void ShapeImpl::SetCollisionMask(uint32_t mask)
     cpShapeSetFilter(m_shape, filter);
 }
 
+uint32_t ShapeImpl::GetCollisionMask() const
+{
+    return static_cast<uint32_t>(cpShapeGetFilter(m_shape).mask);
+}
+
 void ShapeImpl::SetCollisionBit(uint32_t collision_category)
 {
     cpShapeFilter filter = cpShapeGetFilter(m_shape);

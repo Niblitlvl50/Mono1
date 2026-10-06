@@ -30,6 +30,7 @@ namespace mono
         //! categories the shape should collide with
         virtual void SetCollisionFilter(uint32_t category, uint32_t mask) = 0;
         virtual void SetCollisionMask(uint32_t mask) = 0;
+        virtual uint32_t GetCollisionMask() const = 0;
 
         virtual void SetCollisionBit(uint32_t collision_category) = 0;
         virtual void ClearCollisionBit(uint32_t collision_category) = 0;
