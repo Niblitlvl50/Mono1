@@ -329,6 +329,24 @@ void TriggerSystem::RemoveTriggerCallback(uint32_t trigger_hash, uint32_t callba
     mono::remove(m_trigger_hash_to_entity_ids[trigger_hash], debug_entity_id);
 }
 
+uint32_t TriggerSystem::RegisterGlobalTriggerCallback(TriggerCallback callback)
+{
+    const auto it = std::find(m_global_trigger_callbacks.begin(), m_global_trigger_callbacks.end(), nullptr);
+    if(it != m_global_trigger_callbacks.end())
+    {
+        (*it) = callback;
+        return std::distance(m_global_trigger_callbacks.begin(), it);
+    }
+
+    return std::numeric_limits<uint32_t>::max();
+}
+
+void TriggerSystem::RemoveGlobalTriggerCallback(uint32_t callback_id)
+{
+    if(callback_id < m_global_trigger_callbacks.size())
+        m_global_trigger_callbacks[callback_id] = nullptr;
+}
+
 const std::unordered_map<uint32_t, std::vector<uint32_t>>& TriggerSystem::GetTriggerTargets() const
 {
     return m_trigger_hash_to_entity_ids;
@@ -369,6 +387,12 @@ void TriggerSystem::Update(const mono::UpdateContext& update_context)
                 if(callback)
                     callback(trigger_hash);
             }
+        }
+
+        for(TriggerCallback callback : m_global_trigger_callbacks)
+        {
+            if(callback)
+                callback(trigger_hash);
         }
 
         System::Log("Trigger emitted: %s", hash::HashLookup(trigger_hash));

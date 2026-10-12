@@ -115,6 +115,11 @@ namespace mono
         uint32_t RegisterTriggerCallback(uint32_t trigger_hash, TriggerCallback callback, uint32_t debug_entity_id);
         void RemoveTriggerCallback(uint32_t trigger_hash, uint32_t callback_id, uint32_t debug_entity_id);
 
+        // A global callback is called for every trigger that's emitted, with the emitted trigger's hash.
+        [[nodiscard]]
+        uint32_t RegisterGlobalTriggerCallback(TriggerCallback callback);
+        void RemoveGlobalTriggerCallback(uint32_t callback_id);
+
         const std::unordered_map<uint32_t, std::vector<uint32_t>>& GetTriggerTargets() const;
 
         void EmitTrigger(uint32_t trigger_hash);
@@ -169,6 +174,7 @@ namespace mono
 
         using TriggerCallbacks = std::array<TriggerCallback, 8>;
         std::unordered_map<uint32_t, TriggerCallbacks> m_trigger_callbacks;
+        TriggerCallbacks m_global_trigger_callbacks;
 
         mono::ActiveVector<ShapeTriggerComponent> m_shape_triggers;
         mono::ActiveVector<AreaEntityTriggerComponent> m_area_triggers;
