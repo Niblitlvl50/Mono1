@@ -354,6 +354,9 @@ const std::unordered_map<uint32_t, std::vector<uint32_t>>& TriggerSystem::GetTri
 
 void TriggerSystem::EmitTrigger(uint32_t trigger_hash)
 {
+    if(trigger_hash == hash::NO_HASH)
+        return;
+        
     m_triggers_to_emit.push_back(trigger_hash);
 }
 
