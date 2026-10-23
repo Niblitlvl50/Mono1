@@ -6,6 +6,15 @@
 
 #include "Math/MathFunctions.h"
 
+namespace
+{
+    // Each sprite frame is a stack of strips rather than a single quad, so the wind sway can bend
+    // the sprite from some way up instead of only leaning the whole of it.
+    constexpr int SPRITE_STRIPS = 4;
+    constexpr int SPRITE_ROWS = SPRITE_STRIPS + 1;
+    constexpr int VERTICES_PER_SPRITE = SPRITE_ROWS * 2;
+}
+
 mono::SpriteDrawBuffers mono::BuildSpriteDrawBuffers(const mono::SpriteData* sprite_data, const char* debug_context)
 {
     std::vector<math::Vector> vertices;
@@ -18,55 +27,49 @@ mono::SpriteDrawBuffers mono::BuildSpriteDrawBuffers(const mono::SpriteData* spr
     {
         const math::Vector& sprite_half_size = frame.size / 2.0f;
 
-        vertices.emplace_back(-sprite_half_size.x, -sprite_half_size.y);
-        vertices.emplace_back(-sprite_half_size.x,  sprite_half_size.y);
-        vertices.emplace_back( sprite_half_size.x,  sprite_half_size.y);
-        vertices.emplace_back( sprite_half_size.x, -sprite_half_size.y);
+        // The bottom of the sprite is at the upper left uv's y, as with the quad this replaces.
+        const math::Vector uv_upper_left = frame.uv_upper_left;
+        const math::Vector uv_lower_right = frame.uv_lower_right;
 
-        vertex_offsets.emplace_back(frame.center_offset);
-        vertex_offsets.emplace_back(frame.center_offset);
-        vertex_offsets.emplace_back(frame.center_offset);
-        vertex_offsets.emplace_back(frame.center_offset);
+        // Rows go from the bottom to the top, a left and a right vertex in each.
+        for(int row = 0; row < SPRITE_ROWS; ++row)
+        {
+            const float t = float(row) / float(SPRITE_STRIPS);
+            const float y = -sprite_half_size.y + (frame.size.y * t);
+            const float uv_y = uv_upper_left.y + (uv_lower_right.y - uv_upper_left.y) * t;
+            const float uv_y_flipped = uv_lower_right.y + (uv_upper_left.y - uv_lower_right.y) * t;
 
-        math::Vector uv_upper_left = frame.uv_upper_left;
-        math::Vector uv_lower_right = frame.uv_lower_right;
-        uv_coordinates.emplace_back(uv_upper_left.x, uv_upper_left.y);
-        uv_coordinates.emplace_back(uv_upper_left.x, uv_lower_right.y);
-        uv_coordinates.emplace_back(uv_lower_right.x, uv_lower_right.y);
-        uv_coordinates.emplace_back(uv_lower_right.x, uv_upper_left.y);
+            vertices.emplace_back(-sprite_half_size.x, y);
+            vertices.emplace_back( sprite_half_size.x, y);
 
-        std::swap(uv_upper_left.x, uv_lower_right.x);
-        std::swap(uv_lower_right.y, uv_upper_left.y);
-        uv_coordinates_flipped.emplace_back(uv_upper_left.x, uv_upper_left.y);
-        uv_coordinates_flipped.emplace_back(uv_upper_left.x, uv_lower_right.y);
-        uv_coordinates_flipped.emplace_back(uv_lower_right.x, uv_lower_right.y);
-        uv_coordinates_flipped.emplace_back(uv_lower_right.x, uv_upper_left.y);
+            vertex_offsets.emplace_back(frame.center_offset);
+            vertex_offsets.emplace_back(frame.center_offset);
 
-        height_values.push_back(0.0f);
-        height_values.push_back(frame.size.y);
-        height_values.push_back(frame.size.y);
-        height_values.push_back(0.0f);
+            uv_coordinates.emplace_back(uv_upper_left.x, uv_y);
+            uv_coordinates.emplace_back(uv_lower_right.x, uv_y);
+
+            uv_coordinates_flipped.emplace_back(uv_lower_right.x, uv_y_flipped);
+            uv_coordinates_flipped.emplace_back(uv_upper_left.x, uv_y_flipped);
+
+            // Distance from the bottom of the sprite.
+            height_values.push_back(frame.size.y * t);
+            height_values.push_back(frame.size.y * t);
+        }
     }
 
-/*
-    // Add flipped uv coordinates at the end...
-    for(const mono::SpriteFrame& frame : sprite_data->frames)
+    std::vector<uint16_t> indices;
+    for(int strip = 0; strip < SPRITE_STRIPS; ++strip)
     {
-        math::Vector uv_upper_left = frame.uv_upper_left;
-        math::Vector uv_lower_right = frame.uv_lower_right;
+        const uint16_t bottom_left = uint16_t(strip * 2);
+        const uint16_t bottom_right = uint16_t(bottom_left + 1);
+        const uint16_t top_left = uint16_t(bottom_left + 2);
+        const uint16_t top_right = uint16_t(bottom_left + 3);
 
-        std::swap(uv_upper_left.x, uv_lower_right.x);
-        std::swap(uv_lower_right.y, uv_upper_left.y);
-
-        uv_coordinates.emplace_back(uv_upper_left.x, uv_upper_left.y);
-        uv_coordinates.emplace_back(uv_upper_left.x, uv_lower_right.y);
-        uv_coordinates.emplace_back(uv_lower_right.x, uv_lower_right.y);
-        uv_coordinates.emplace_back(uv_lower_right.x, uv_upper_left.y);
+        indices.insert(indices.end(), { bottom_left, top_left, top_right, bottom_left, top_right, bottom_right });
     }
-    */
 
     SpriteDrawBuffers buffers;
-    buffers.vertices_per_sprite = 4;
+    buffers.vertices_per_sprite = VERTICES_PER_SPRITE;
     buffers.vertices =
         mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, vertices.size(), vertices.data(), debug_context);
     buffers.offsets =
@@ -77,6 +80,8 @@ mono::SpriteDrawBuffers mono::BuildSpriteDrawBuffers(const mono::SpriteData* spr
         mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 2, uv_coordinates_flipped.size(), uv_coordinates_flipped.data(), debug_context);
     buffers.heights =
         mono::CreateRenderBuffer(BufferType::STATIC, BufferData::FLOAT, 1, height_values.size(), height_values.data(), debug_context);
+    buffers.indices =
+        mono::CreateElementBuffer(BufferType::STATIC, indices.size(), indices.data(), debug_context);
 
     return buffers;
 }

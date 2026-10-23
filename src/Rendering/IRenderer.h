@@ -48,16 +48,15 @@ namespace mono
             const ITexture* texture,
             uint32_t buffer_offset) const = 0;
 
+        // buffer_offset picks the frame, as frame index * buffers->vertices_per_sprite.
         virtual void DrawSprite(
             const ISprite* sprite,
             const SpriteDrawBuffers* buffers,
-            const IElementBuffer* indices,
             uint32_t buffer_offset) const = 0;
 
         virtual void DrawSpriteOutline(
             const ISprite* sprite,
             const SpriteDrawBuffers* buffers,
-            const IElementBuffer* indices,
             uint32_t buffer_offset) const = 0;
 
         virtual void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float point_size) const = 0;

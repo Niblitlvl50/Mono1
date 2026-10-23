@@ -426,15 +426,17 @@ void RendererSokol::DrawSprite(
     SpritePipeline::SetFlipSprite(
         sprite_properties & mono::SpriteProperty::FLIP_HORIZONTAL,
         sprite_properties & mono::SpriteProperty::FLIP_VERTICAL);
-    SpritePipeline::SetWindSway(sprite_properties & mono::SpriteProperty::WIND_SWAY);
+    SpritePipeline::SetWindSway(
+        sprite_properties & mono::SpriteProperty::WIND_SWAY,
+        sprite->GetSpriteData()->wind_sway_start,
+        sprite->GetCurrentFrame().size.y);
     SpritePipeline::SetShade(sprite->GetShade());
     SpritePipeline::SetFlashSprite(sprite->ShouldFlashSprite());
 
-    sg_draw(0, 6, 1);
+    sg_draw(0, indices->Size(), 1);
 }
 
-void RendererSokol::DrawSprite(
-    const ISprite* sprite, const SpriteDrawBuffers* buffers, const IElementBuffer* indices, uint32_t buffer_offset) const
+void RendererSokol::DrawSprite(const ISprite* sprite, const SpriteDrawBuffers* buffers, uint32_t buffer_offset) const
 {
     DrawSprite(
         sprite,
@@ -443,13 +445,12 @@ void RendererSokol::DrawSprite(
         buffers->uv.get(),
         buffers->uv_flipped.get(),
         buffers->heights.get(),
-        indices,
+        buffers->indices.get(),
         sprite->GetTexture(),
         buffer_offset);
 }
 
-void RendererSokol::DrawSpriteOutline(
-    const ISprite* sprite, const SpriteDrawBuffers* buffers, const IElementBuffer* indices, uint32_t buffer_offset) const
+void RendererSokol::DrawSpriteOutline(const ISprite* sprite, const SpriteDrawBuffers* buffers, uint32_t buffer_offset) const
 {
     SpritePipeline::Apply(
         m_sprite_outline_pipeline.get(),
@@ -458,7 +459,7 @@ void RendererSokol::DrawSpriteOutline(
         buffers->uv.get(),
         buffers->uv_flipped.get(),
         buffers->heights.get(),
-        indices,
+        buffers->indices.get(),
         sprite->GetTexture(),
         buffer_offset);
 
@@ -481,10 +482,13 @@ void RendererSokol::DrawSpriteOutline(
     SpritePipeline::SetFlipSprite(
         sprite_properties & mono::SpriteProperty::FLIP_HORIZONTAL,
         sprite_properties & mono::SpriteProperty::FLIP_VERTICAL);
-    SpritePipeline::SetWindSway(sprite_properties & mono::SpriteProperty::WIND_SWAY);
+    SpritePipeline::SetWindSway(
+        sprite_properties & mono::SpriteProperty::WIND_SWAY,
+        sprite->GetSpriteData()->wind_sway_start,
+        sprite->GetCurrentFrame().size.y);
 
     SpritePipeline::SetOutlineColor(mono::Color::GOLDEN_YELLOW);
-    sg_draw(0, 6, 1);
+    sg_draw(0, buffers->indices->Size(), 1);
 }
 
 void RendererSokol::DrawWater(

@@ -11,6 +11,8 @@ namespace mono
     {
         json["texture"] = sprite_data.texture_file;
         json["source_folder"] = sprite_data.source_folder;
+        if(sprite_data.wind_sway_start > 0.0f)
+            json["wind_sway_start"] = sprite_data.wind_sway_start;
 
         nlohmann::json texture_size_json;
         texture_size_json["w"] = (int)sprite_data.texture_size.x;
@@ -84,6 +86,7 @@ namespace mono
         //sprite_data.hash = sprite_hash;
         sprite_data.texture_file = json["texture"];
         sprite_data.source_folder = json.value("source_folder", "");
+        sprite_data.wind_sway_start = json.value("wind_sway_start", 0.0f);
         sprite_data.texture_size = math::Vector(texture_size["w"], texture_size["h"]);
 
         sprite_data.frames.reserve(json_frames.size());

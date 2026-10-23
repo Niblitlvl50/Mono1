@@ -99,7 +99,14 @@ namespace
         uniform TimeInput time_input;
         uniform TransformInput transform_input;
         uniform FlipSpriteInput flip_input;
-        uniform int wind_sway_enabled;
+        struct WindSwayInput
+        {
+            int enabled;
+            float start;
+            float sprite_height;
+        };
+
+        uniform WindSwayInput wind_input;
 
         layout (location = 0) in vec2 a_vertex_position;
         layout (location = 1) in vec2 a_vertex_offset;
@@ -112,13 +119,18 @@ namespace
         void main()
         {
             vec2 wind_sway_offset = vec2(0.0, 0.0);
-            if(wind_sway_enabled != 0)
+            if(wind_input.enabled != 0)
             {
                 // Use world x as noise parameter to make some difference.
                 //float noise = abs(noise3(transform_input.model[3].xyz).x);
                 float noise = snoise(transform_input.model[3].xy);
                 //float noise = transform_input.model[3].x;
-                wind_sway_offset.x = sin(time_input.total_time * noise * 3.0) * (a_vertex_height * 0.025);
+
+                // Nothing moves below the start, above it the sway grows towards the top. With the start
+                // at the bottom this is the same as swaying by the vertex height.
+                float t = (wind_input.sprite_height > 0.0) ? clamp(a_vertex_height / wind_input.sprite_height, 0.0, 1.0) : 0.0;
+                float weight = clamp((t - wind_input.start) / max(1.0 - wind_input.start, 0.001), 0.0, 1.0);
+                wind_sway_offset.x = sin(time_input.total_time * noise * 3.0) * (weight * wind_input.sprite_height * 0.025);
             }
 
             vec2 vertex_offset = a_vertex_offset;
@@ -227,9 +239,13 @@ mono::IPipelinePtr SpritePipeline::MakePipeline()
     shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].name = "flip_input.flip_vertical";
     shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_INT;
 
-    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].size = sizeof(int);
-    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].name = "wind_sway_enabled";
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].size = sizeof(int) + sizeof(float) * 2;
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].name = "wind_input.enabled";
     shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_INT;
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[1].name = "wind_input.start";
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_FLOAT;
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[2].name = "wind_input.sprite_height";
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[2].type = SG_UNIFORMTYPE_FLOAT;
 
     shader_desc.fs.source = fragment_source;
 
@@ -316,9 +332,13 @@ mono::IPipelinePtr SpritePipeline::MakePipelineWithStencil()
     shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].name = "flip_input.flip_vertical";
     shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_INT;
 
-    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].size = sizeof(int);
-    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].name = "wind_sway_enabled";
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].size = sizeof(int) + sizeof(float) * 2;
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].name = "wind_input.enabled";
     shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_INT;
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[1].name = "wind_input.start";
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_FLOAT;
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[2].name = "wind_input.sprite_height";
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[2].type = SG_UNIFORMTYPE_FLOAT;
 
     shader_desc.fs.source = fragment_source;
 
@@ -412,9 +432,13 @@ mono::IPipelinePtr SpritePipeline::MakeOutlinePipeline()
     shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].name = "flip_input.flip_vertical";
     shader_desc.vs.uniform_blocks[U_VS_FLIP_SPRITE_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_INT;
 
-    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].size = sizeof(int);
-    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].name = "wind_sway_enabled";
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].size = sizeof(int) + sizeof(float) * 2;
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].name = "wind_input.enabled";
     shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_INT;
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[1].name = "wind_input.start";
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[1].type = SG_UNIFORMTYPE_FLOAT;
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[2].name = "wind_input.sprite_height";
+    shader_desc.vs.uniform_blocks[U_VS_WIND_SWAY_BLOCK].uniforms[2].type = SG_UNIFORMTYPE_FLOAT;
 
     shader_desc.fs.source = outline_fragment_source;
 
@@ -559,10 +583,20 @@ void SpritePipeline::SetFlipSprite(bool flip_horizontal, bool flip_vertical)
     sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_FLIP_SPRITE_BLOCK, { &flip_sprite_block, sizeof(FlipInputBlock) });
 }
 
-void SpritePipeline::SetWindSway(bool enable_wind)
+void SpritePipeline::SetWindSway(bool enable_wind, float sway_start, float sprite_height)
 {
-    const int value = enable_wind ? 1 : 0;
-    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_WIND_SWAY_BLOCK, { &value, sizeof(int) });
+    struct WindSwayBlock
+    {
+        int enabled;
+        float start;
+        float sprite_height;
+    } wind_sway_block;
+
+    wind_sway_block.enabled = enable_wind ? 1 : 0;
+    wind_sway_block.start = sway_start;
+    wind_sway_block.sprite_height = sprite_height;
+
+    sg_apply_uniforms(SG_SHADERSTAGE_VS, U_VS_WIND_SWAY_BLOCK, { &wind_sway_block, sizeof(WindSwayBlock) });
 }
 
 void SpritePipeline::SetShade(const mono::Color::RGBA& color)

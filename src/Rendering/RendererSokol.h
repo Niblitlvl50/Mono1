@@ -54,13 +54,11 @@ namespace mono
         void DrawSprite(
             const ISprite* sprite,
             const SpriteDrawBuffers* buffers,
-            const IElementBuffer* indices,
             uint32_t buffer_offset) const override;
 
         void DrawSpriteOutline(
             const ISprite* sprite,
             const SpriteDrawBuffers* buffers,
-            const IElementBuffer* indices,
             uint32_t buffer_offset) const override;
 
         void DrawPoints(const std::vector<math::Vector>& points, const mono::Color::RGBA& color, float point_size) const override;

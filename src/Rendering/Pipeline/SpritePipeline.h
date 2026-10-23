@@ -30,7 +30,8 @@ namespace mono
         static void SetTransforms(const math::Matrix& projection, const math::Matrix& view, const math::Matrix& model);
 
         static void SetFlipSprite(bool flip_horizontal, bool flip_vertical);
-        static void SetWindSway(bool enable_wind);
+        // sway_start is a fraction of the sprite height, sprite_height is in world units.
+        static void SetWindSway(bool enable_wind, float sway_start, float sprite_height);
         static void SetShade(const mono::Color::RGBA& color);
         static void SetFlashSprite(bool flash);
         static void SetOutlineColor(const mono::Color::RGBA& outline_color);

@@ -39,5 +39,9 @@ namespace mono
         math::Vector texture_size;
         std::vector<SpriteFrame> frames;
         std::vector<SpriteAnimation> animations;
+
+        // How far up the sprite the wind sway starts, 0 is the bottom and 1 the top. Everything
+        // below stays still, like a tree trunk.
+        float wind_sway_start = 0.0f;
     };
 }

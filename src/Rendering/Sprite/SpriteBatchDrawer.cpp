@@ -184,7 +184,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 
         const SpriteDrawBuffers& sprite_buffers = m_sprite_buffers[draw_data.sprite->GetSpriteHash()];
         const int offset = draw_data.sprite->GetCurrentFrameIndex() * sprite_buffers.vertices_per_sprite;
-        renderer.DrawSprite(draw_data.sprite, &sprite_buffers, m_sprite_indices.get(), offset);
+        renderer.DrawSprite(draw_data.sprite, &sprite_buffers, offset);
     }
 
     // Draw outline
@@ -199,7 +199,7 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 
         const SpriteDrawBuffers& sprite_buffers = m_sprite_buffers[draw_data.sprite->GetSpriteHash()];
         const int offset = draw_data.sprite->GetCurrentFrameIndex() * sprite_buffers.vertices_per_sprite;
-        renderer.DrawSpriteOutline(draw_data.sprite, &sprite_buffers, m_sprite_indices.get(), offset);
+        renderer.DrawSpriteOutline(draw_data.sprite, &sprite_buffers, offset);
     }
 
 

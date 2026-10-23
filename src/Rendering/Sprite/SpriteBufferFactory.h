@@ -14,6 +14,9 @@ namespace mono
         std::unique_ptr<IRenderBuffer> uv;
         std::unique_ptr<IRenderBuffer> uv_flipped;
         std::unique_ptr<IRenderBuffer> heights;
+
+        // Same for every frame, frames are picked with the vertex offset.
+        std::unique_ptr<IElementBuffer> indices;
         int vertices_per_sprite;
     };
 
