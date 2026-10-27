@@ -9,7 +9,7 @@
 namespace tweak_values
 {
     constexpr float zoom_halflife = 0.1f;
-    constexpr float move_halflife = 0.1f;
+    constexpr float move_halflife = 0.25f;
 }
 
 using namespace mono;
