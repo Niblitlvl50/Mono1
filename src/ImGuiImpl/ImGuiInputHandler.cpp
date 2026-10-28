@@ -13,6 +13,8 @@
 
 #include "imgui/imgui.h"
 
+using namespace mono;
+
 ImGuiInputHandler::ImGuiInputHandler(mono::EventHandler& event_handler)
     : m_eventHandler(event_handler)
 {

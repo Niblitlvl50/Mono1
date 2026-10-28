@@ -7,10 +7,10 @@
 #include <vector>
 #include <string>
 
-struct Attribute;
-
 namespace mono
 {
+    struct Attribute;
+
     struct ComponentData
     {
         uint32_t hash;

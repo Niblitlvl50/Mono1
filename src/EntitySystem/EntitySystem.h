@@ -15,11 +15,11 @@
 #include <unordered_set>
 #include <unordered_map>
 
-using ComponentNameLookupFunc = const char* (*)(uint32_t component_hash);
-using AttributeNameLookupFunc = const char* (*)(uint32_t attribute_hash);
-
 namespace mono
 {
+    using ComponentNameLookupFunc = const char* (*)(uint32_t component_hash);
+    using AttributeNameLookupFunc = const char* (*)(uint32_t attribute_hash);
+
     class EntitySystem : public mono::IGameSystem, public mono::IEntityManager
     {
     public:

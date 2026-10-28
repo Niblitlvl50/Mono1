@@ -17,6 +17,7 @@ namespace mono
     class EventHandler;
 
     struct Event;
+    struct Attribute;
     struct Entity;
     class IEntityManager;
 

@@ -24,64 +24,64 @@ namespace mono
         event.direction = json.value("direction", mono::EventDirection::Input);
         event.text = json["text"];
     }
-}
 
-inline void to_json(nlohmann::json& json, const Attribute& attribute)
-{
-    json["id"] = attribute.id;
-    json["name"] = mono::EntitySystem::AttributeNameLookup(attribute.id);
-    json["variant_type"] = attribute.value.index();
-
-    const auto visitor = [&json](const auto& value)
+    inline void to_json(nlohmann::json& json, const Attribute& attribute)
     {
-        json["variant_value"] = value;
-    };
-    std::visit(visitor, attribute.value);
-}
+        json["id"] = attribute.id;
+        json["name"] = mono::EntitySystem::AttributeNameLookup(attribute.id);
+        json["variant_type"] = attribute.value.index();
 
-inline void from_json(const nlohmann::json& json, Attribute& attribute)
-{
-    attribute.id = json["id"].get<uint32_t>();
+        const auto visitor = [&json](const auto& value)
+        {
+            json["variant_value"] = value;
+        };
+        std::visit(visitor, attribute.value);
+    }
 
-    const uint32_t value_index = json["variant_type"].get<int>();
-    switch(value_index)
+    inline void from_json(const nlohmann::json& json, Attribute& attribute)
     {
-    case VariantTypeIndex::BOOL:
-        attribute.value = json["variant_value"].get<bool>();
-        break;
-    case VariantTypeIndex::INT:
-        attribute.value = json["variant_value"].get<int>();
-        break;
-    case VariantTypeIndex::UINT:
-        attribute.value = json["variant_value"].get<uint32_t>();
-        break;
-    case VariantTypeIndex::FLOAT:
-        attribute.value = json["variant_value"].get<float>();
-        break;
-    case VariantTypeIndex::POINT:
-        attribute.value = json["variant_value"].get<math::Vector>();
-        break;
-    case VariantTypeIndex::COLOR:
-        attribute.value = json["variant_value"].get<mono::Color::RGBA>();
-        break;
-    case VariantTypeIndex::STRING:
-        attribute.value = json["variant_value"].get<std::string>();
-        break;
-    case VariantTypeIndex::POLYGON:
-        attribute.value = json["variant_value"].get<std::vector<math::Vector>>();
-        break;
-    case VariantTypeIndex::INTERVAL:
-        attribute.value = json["variant_value"].get<math::Interval>();
-        break;
-    case VariantTypeIndex::VALUE_SPREAD:
-        attribute.value = json["variant_value"].get<math::ValueSpread>();
-        break;
-    case VariantTypeIndex::GRADIENT_4:
-        attribute.value = json["variant_value"].get<mono::Color::Gradient<4>>();
-        break;
-    case VariantTypeIndex::EVENT:
-        attribute.value = json["variant_value"].get<mono::Event>();
-        break;
+        attribute.id = json["id"].get<uint32_t>();
+
+        const uint32_t value_index = json["variant_type"].get<int>();
+        switch(value_index)
+        {
+        case VariantTypeIndex::BOOL:
+            attribute.value = json["variant_value"].get<bool>();
+            break;
+        case VariantTypeIndex::INT:
+            attribute.value = json["variant_value"].get<int>();
+            break;
+        case VariantTypeIndex::UINT:
+            attribute.value = json["variant_value"].get<uint32_t>();
+            break;
+        case VariantTypeIndex::FLOAT:
+            attribute.value = json["variant_value"].get<float>();
+            break;
+        case VariantTypeIndex::POINT:
+            attribute.value = json["variant_value"].get<math::Vector>();
+            break;
+        case VariantTypeIndex::COLOR:
+            attribute.value = json["variant_value"].get<mono::Color::RGBA>();
+            break;
+        case VariantTypeIndex::STRING:
+            attribute.value = json["variant_value"].get<std::string>();
+            break;
+        case VariantTypeIndex::POLYGON:
+            attribute.value = json["variant_value"].get<std::vector<math::Vector>>();
+            break;
+        case VariantTypeIndex::INTERVAL:
+            attribute.value = json["variant_value"].get<math::Interval>();
+            break;
+        case VariantTypeIndex::VALUE_SPREAD:
+            attribute.value = json["variant_value"].get<math::ValueSpread>();
+            break;
+        case VariantTypeIndex::GRADIENT_4:
+            attribute.value = json["variant_value"].get<mono::Color::Gradient<4>>();
+            break;
+        case VariantTypeIndex::EVENT:
+            attribute.value = json["variant_value"].get<mono::Event>();
+            break;
+        }
     }
 }
 
