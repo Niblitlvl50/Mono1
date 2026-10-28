@@ -499,6 +499,7 @@ void EntitySystem::DeferredRelease()
     for(uint32_t entity_id : entities_that_was_released)
     {
         m_entities[entity_id] = Entity();
+        m_entity_tags[entity_id].clear();
         m_debug_names[entity_id].append(" (released)");
         m_pending_release[entity_id] = false;
         m_free_indices.push_back(entity_id);
