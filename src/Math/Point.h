@@ -20,4 +20,6 @@ namespace math
     Point operator + (const math::Point& left, const math::Point& right);
     Point operator - (const math::Point& left, const math::Point& right);
     Point operator / (const math::Point& left, int value);
+
+    bool operator == (const math::Point& left, const math::Point& right);
 }
