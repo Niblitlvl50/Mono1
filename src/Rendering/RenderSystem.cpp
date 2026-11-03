@@ -238,9 +238,9 @@ void RenderSystem::Update(const mono::UpdateContext& update_context)
         ScreenFadeData& screen_fade = m_screen_fade.value();
 
         if(screen_fade.state == ScreenFadeState::FADE_IN)
-            screen_fade.alpha = math::EaseOutCubic(screen_fade.timer_s, screen_fade.duration_s, 0.0f, 1.0f);
+            screen_fade.alpha = math::EaseInOutCubic(screen_fade.timer_s, screen_fade.duration_s, 0.0f, 1.0f);
         else if(screen_fade.state == ScreenFadeState::FADE_OUT || screen_fade.state == ScreenFadeState::FADE_OUT_PAUSE_IN)
-            screen_fade.alpha = math::EaseOutCubic(screen_fade.timer_s, screen_fade.duration_s, 1.0f, -1.0f);
+            screen_fade.alpha = math::EaseInOutCubic(screen_fade.timer_s, screen_fade.duration_s, 1.0f, -1.0f);
 
         screen_fade.timer_s += update_context.delta_s;
 
@@ -346,6 +346,11 @@ float RenderSystem::GetRenderSortOffsetOrDefault(uint32_t entity_id) const
     }
 
     return 0.0f;
+}
+
+void RenderSystem::Reset()
+{
+    m_screen_fade.reset();
 }
 
 void RenderSystem::TriggerScreenFade(

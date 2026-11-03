@@ -66,6 +66,7 @@ namespace mono
 
         const char* Name() const override;
         void Update(const mono::UpdateContext& update_context) override;
+        void Reset() override;
         void Destroy() override;
 
         void AllocateLayer(uint32_t entity_id);

@@ -34,6 +34,7 @@ namespace hash
         return Hash(text, length);
     }
 
-    void HashRegisterString(const char* string);
+    // Registers the string so HashLookup can find it, returns its hash.
+    uint32_t HashRegisterString(const char* string);
     const char* HashLookup(uint32_t hash_value);
 }

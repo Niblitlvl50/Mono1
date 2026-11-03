@@ -8,9 +8,13 @@ namespace
     std::unordered_map<uint32_t, std::string> g_hash_register;
 }
 
-void hash::HashRegisterString(const char* string)
+uint32_t hash::HashRegisterString(const char* string)
 {
-    g_hash_register[hash::Hash(string)] = string;
+    const uint32_t hash_value = hash::Hash(string);
+    if(hash_value != hash::NO_HASH)
+        g_hash_register[hash_value] = string;
+
+    return hash_value;
 }
 
 const char* hash::HashLookup(uint32_t hash_value)
