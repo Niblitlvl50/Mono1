@@ -6,6 +6,7 @@
 #include "EntitySystem/ObjectAttribute.h"
 
 #include <cstdint>
+#include <string>
 #include <vector>
 #include <functional>
 
@@ -64,6 +65,9 @@ namespace mono
 
         virtual void SetEntityName(uint32_t entity_id, const char* name) = 0;
         virtual const char* GetEntityName(uint32_t entity_id) const = 0;
+
+        // The entity file the entity was spawned from, empty if it wasn't spawned from a file.
+        virtual const std::string& GetEntityFile(uint32_t entity_id) const = 0;
 
         virtual void SetEntityTags(uint32_t entity_id, const std::vector<uint32_t>& tags) = 0;
         virtual bool HasEntityTag(uint32_t entity_id, uint32_t tag) const = 0;

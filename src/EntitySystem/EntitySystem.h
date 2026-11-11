@@ -46,6 +46,7 @@ namespace mono
 
         void SetEntityName(uint32_t entity_id, const char* name) override;
         const char* GetEntityName(uint32_t entity_id) const override;
+        const std::string& GetEntityFile(uint32_t entity_id) const override;
 
         void SetEntityTags(uint32_t entity_id, const std::vector<uint32_t>& tags) override;
         bool HasEntityTag(uint32_t entity_id, uint32_t tag) const override;
@@ -130,6 +131,7 @@ namespace mono
         std::vector<Entity> m_entities;
         std::vector<uint32_t> m_entity_uuids;
         std::vector<std::vector<uint32_t>> m_entity_tags;
+        std::vector<std::string> m_entity_files;
         std::vector<uint32_t> m_free_indices;
         std::vector<std::string> m_debug_names;
 

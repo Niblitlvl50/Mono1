@@ -66,6 +66,7 @@ EntitySystem::EntitySystem(
     m_entities.resize(n_entities);
     m_entity_uuids.resize(n_entities, 0);
     m_entity_tags.resize(n_entities);
+    m_entity_files.resize(n_entities);
     m_free_indices.resize(n_entities);
     m_debug_names.resize(n_entities);
 
@@ -122,6 +123,7 @@ std::vector<mono::Entity> EntitySystem::SpawnEntityCollection(const char* entity
     {
         mono::Entity* new_entity = AllocateEntity(entity_data.entity_name.c_str());
         m_entity_uuids[new_entity->id] = entity_data.entity_uuid;
+        m_entity_files[new_entity->id] = entity_file;
         new_entity->properties = entity_data.entity_properties;
 
         m_spawn_events.push_back({ true, new_entity->id });
@@ -276,6 +278,11 @@ void EntitySystem::SetEntityEnabled(uint32_t entity_id, bool enable)
         if(factory_it != m_component_factories.end() && factory_it->second.enable != nullptr)
             factory_it->second.enable(entity, enable, m_system_context);
     }
+}
+
+const std::string& EntitySystem::GetEntityFile(uint32_t entity_id) const
+{
+    return m_entity_files[entity_id];
 }
 
 uint32_t EntitySystem::GetEntityUuid(uint32_t entity_id) const
@@ -500,6 +507,7 @@ void EntitySystem::DeferredRelease()
     {
         m_entities[entity_id] = Entity();
         m_entity_tags[entity_id].clear();
+        m_entity_files[entity_id].clear();
         m_debug_names[entity_id].append(" (released)");
         m_pending_release[entity_id] = false;
         m_free_indices.push_back(entity_id);
@@ -519,7 +527,12 @@ uint32_t EntitySystem::FindFreeCallbackIndex(const ReleaseCallbacks& callbacks) 
 
 Entity* EntitySystem::AllocateEntity(const char* name)
 {
-    MONO_ASSERT(!m_free_indices.empty());
+    if(m_free_indices.empty())
+    {
+        MONO_ASSERT(false && "EntitySystem::AllocateEntity failed to allocate entity, no free indices available.");
+        System::Log("EntitySystem|Failed to allocate entity, no free indices available.");
+        return nullptr;
+    }
 
     const uint32_t entity_id = m_free_indices.back();
     m_free_indices.pop_back();
