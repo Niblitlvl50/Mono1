@@ -15,6 +15,7 @@ namespace mono
         ITexturePtr CreateTextureFromData(const byte* data, int data_length, const char* cache_name) const override;
         ITexturePtr CreateTexture(const byte* data, int width, int height, int color_components) const override;
         ITexturePtr CreateFromNativeHandle(uint32_t native_handle) const override;
+        ITexturePtr CreateDynamicTexture(int width, int height, int color_components) const override;
 
     private:
 

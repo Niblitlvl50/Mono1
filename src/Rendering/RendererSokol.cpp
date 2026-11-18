@@ -14,6 +14,8 @@
 #include "Rendering/Pipeline/SpritePipeline.h"
 #include "Rendering/Pipeline/FogPipeline.h"
 #include "Rendering/Pipeline/WaterPipeline.h"
+#include "Rendering/Pipeline/GroundPaintPipeline.h"
+#include "Rendering/GroundPaint.h"
 
 #include "Rendering/RenderBuffer/BufferFactory.h"
 #include "Rendering/Texture/ITextureFactory.h"
@@ -68,6 +70,7 @@ RendererSokol::RendererSokol()
     m_fog_pipeline = mono::FogPipeline::MakePipeline();
     m_water_pipeline = mono::WaterPipeline::MakePipeline();
     m_water_annotation_pipeline = mono::WaterPipeline::MakeAnnotationPipeline();
+    m_ground_paint_pipeline = mono::GroundPaintPipeline::MakePipeline();
     m_screen_pipeline = mono::ScreenPipeline::MakePipeline();
 
     constexpr math::Vector vertices[] = { {-1.0f, -1.0f}, {-1.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, -1.0f} };
@@ -519,6 +522,15 @@ void RendererSokol::DrawRiver(
     WaterPipeline::SetEdgeFade(edge_fade);
 
     sg_draw(offset, count, 1);
+}
+
+void RendererSokol::DrawGroundPaint(const IRenderBuffer* vertices, const IElementBuffer* indices, const GroundPaintDrawParams& params)
+{
+    GroundPaintPipeline::Apply(m_ground_paint_pipeline.get(), vertices, indices, params);
+    GroundPaintPipeline::SetTransforms(m_projection_stack.top(), m_view_stack.top(), m_model_stack.top());
+    GroundPaintPipeline::SetParams(params, mono::RenderSystem::PixelsPerMeter());
+
+    sg_draw(0, indices->Size(), 1);
 }
 
 void RendererSokol::DrawFog(const IRenderBuffer* vertices, const IElementBuffer* indices, const ITexture* texture)

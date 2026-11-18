@@ -114,6 +114,9 @@ namespace mono
             uint32_t offset,
             uint32_t count) override;
 
+        void DrawGroundPaint(
+            const IRenderBuffer* vertices, const IElementBuffer* indices, const struct GroundPaintDrawParams& params) override;
+
         void DrawPoints(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count) const override;
 
@@ -210,6 +213,7 @@ namespace mono
         std::unique_ptr<IPipeline> m_fog_pipeline;
         std::unique_ptr<IPipeline> m_water_pipeline;
         std::unique_ptr<IPipeline> m_water_annotation_pipeline;
+        std::unique_ptr<IPipeline> m_ground_paint_pipeline;
         std::unique_ptr<IPipeline> m_screen_pipeline;
 
         std::unique_ptr<IRenderBuffer> m_screen_vertices;

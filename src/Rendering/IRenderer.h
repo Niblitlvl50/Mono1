@@ -112,6 +112,9 @@ namespace mono
             uint32_t offset,
             uint32_t count) = 0;
 
+        virtual void DrawGroundPaint(
+            const IRenderBuffer* vertices, const IElementBuffer* indices, const struct GroundPaintDrawParams& params) = 0;
+
         virtual void DrawPoints(
             const IRenderBuffer* vertices, const IRenderBuffer* colors, float point_size, uint32_t offset, uint32_t count) const = 0;
 

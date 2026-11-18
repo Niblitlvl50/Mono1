@@ -16,6 +16,9 @@ namespace mono
             uint32_t color_components,
             const unsigned char* image_data);
         TextureImpl(sg_image image_handle);
+
+        // A dynamic texture, see ITextureFactory::CreateDynamicTexture.
+        TextureImpl(uint32_t width, uint32_t height, uint32_t color_components);
         ~TextureImpl();
 
         uint32_t Id() const override;
@@ -23,9 +26,12 @@ namespace mono
         uint32_t Width() const override;
         uint32_t Height() const override;
         bool IsAlphaTexture() const override;
+        void UpdateData(const unsigned char* image_data) override;
 
         uint32_t m_width;
         uint32_t m_height;
+        uint32_t m_color_components = 0;
+        bool m_dynamic = false;
         sg_pixel_format m_pixel_format;
         sg_image m_handle;
         sg_sampler m_sampler_handle;

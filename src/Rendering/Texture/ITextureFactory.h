@@ -25,5 +25,9 @@ namespace mono
         virtual ITexturePtr CreateTexture(const byte* data, int width, int height, int color_components) const = 0;
 
         virtual ITexturePtr CreateFromNativeHandle(uint32_t native_handle) const = 0;
+
+        //! A texture whose pixels can be replaced with UpdateData, sampled with linear filtering and
+        //! clamped at the edges. It starts out with undefined pixels, not cached.
+        virtual ITexturePtr CreateDynamicTexture(int width, int height, int color_components) const = 0;
     };
 }

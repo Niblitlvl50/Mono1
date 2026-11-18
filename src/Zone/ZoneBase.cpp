@@ -106,7 +106,7 @@ void ZoneBase::AddDrawable(mono::IDrawable* drawable, int layer)
 
     // Keep the drawable vector sorted so that we draw everything
     // in the correct order according to layers
-    std::sort(m_drawables.begin(), m_drawables.end(), DrawableSortFunc);
+    std::stable_sort(m_drawables.begin(), m_drawables.end(), DrawableSortFunc);
 }
 
 void ZoneBase::RemoveDrawable(mono::IDrawable* drawable)
@@ -124,7 +124,7 @@ void ZoneBase::SetDrawableLayer(const mono::IDrawable* drawable, int new_layer)
     if(it != m_drawables.end())
     {
         it->layer = new_layer;
-        std::sort(m_drawables.begin(), m_drawables.end(), DrawableSortFunc);
+        std::stable_sort(m_drawables.begin(), m_drawables.end(), DrawableSortFunc);
     }
 }
 

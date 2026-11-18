@@ -127,6 +127,7 @@ namespace
         uint32_t Width() const override { return 16; }
         uint32_t Height() const override { return 9; }
         bool IsAlphaTexture() const override { return false; }
+        void UpdateData(const unsigned char* image_data) override { }
     };
 
     class NullTextureFactory : public mono::ITextureFactory
@@ -149,6 +150,11 @@ namespace
         }
 
         mono::ITexturePtr CreateFromNativeHandle(uint32_t native_handle) const
+        {
+            return std::make_shared<NullTexture>();
+        }
+
+        mono::ITexturePtr CreateDynamicTexture(int width, int height, int color_components) const
         {
             return std::make_shared<NullTexture>();
         }
