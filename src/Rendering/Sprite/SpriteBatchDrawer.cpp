@@ -9,6 +9,7 @@
 #include "Rendering/IRenderer.h"
 #include "Rendering/RenderBuffer/BufferFactory.h"
 #include "Rendering/Sprite/ISpriteFactory.h"
+#include "Rendering/Sprite/SpriteData.h"
 #include "Rendering/Texture/ITextureFactory.h"
 
 #include "TransformSystem/TransformSystem.h"
@@ -16,6 +17,7 @@
 #include "Math/MathFunctions.h"
 
 #include <algorithm>
+#include <cmath>
 #include <iterator>
 
 using namespace mono;
@@ -35,6 +37,65 @@ namespace
         uint32_t entity_id;
         math::Matrix transform;
     };
+
+    // Calls draw_func with the transform and frame index of the animation facing the entity's heading.
+    template <typename T>
+    void DrawDirectional(const SpriteDrawData& draw_data, int vertices_per_sprite, T&& draw_func)
+    {
+        static const char* direction_names[] = {
+            "east", "north_east", "north", "north_west", "west", "south_west", "south", "south_east"
+        };
+
+        // The entity's local x axis is its heading.
+        const float heading = math::ToDegrees(std::atan2(draw_data.transform.data[1], draw_data.transform.data[0]));
+        const int sector = int(std::floor((heading + 22.5f) / 45.0f));
+        const char* direction_name = direction_names[((sector % 8) + 8) % 8];
+
+        const mono::SpriteData* sprite_data = draw_data.sprite->GetSpriteData();
+        for(const mono::SpriteAnimation& animation : sprite_data->animations)
+        {
+            if(animation.name != direction_name || animation.frames.empty())
+                continue;
+
+            const int frame = draw_data.sprite->GetActiveAnimationFrame() % int(animation.frames.size());
+            const math::Matrix unrotated = math::CreateMatrixWithPosition(math::GetPosition(draw_data.transform));
+            draw_func(unrotated, animation.frames[frame].frame * vertices_per_sprite);
+            return;
+        }
+    }
+
+    // Calls draw_func with the model transform and frame index of each slice, from the bottom up.
+    template <typename T>
+    void ForEachSlice(const SpriteDrawData& draw_data, int vertices_per_sprite, T&& draw_func)
+    {
+        const mono::ISprite* sprite = draw_data.sprite;
+        if(sprite->HasProperty(mono::SpriteProperty::DIRECTIONAL))
+        {
+            DrawDirectional(draw_data, vertices_per_sprite, draw_func);
+            return;
+        }
+
+        if(!sprite->HasProperty(mono::SpriteProperty::STACKED))
+        {
+            draw_func(draw_data.transform, sprite->GetCurrentFrameIndex() * vertices_per_sprite);
+            return;
+        }
+
+        const mono::SpriteData* sprite_data = sprite->GetSpriteData();
+        const int animation_id = sprite->GetActiveAnimation();
+        if(animation_id < 0 || animation_id >= int(sprite_data->animations.size()))
+            return;
+
+        // Up on screen, not rotated with the entity.
+        const float slice_height = 1.0f / mono::RenderSystem::PixelsPerMeter();
+
+        const std::vector<mono::SpriteAnimationFrame>& slices = sprite_data->animations[animation_id].frames;
+        for(size_t index = 0; index < slices.size(); ++index)
+        {
+            const math::Matrix slice_offset = math::CreateMatrixWithPosition(math::Vector(0.0f, slice_height * float(index)));
+            draw_func(slice_offset * draw_data.transform, slices[index].frame * vertices_per_sprite);
+        }
+    }
 }
 
 SpriteBatchDrawer::SpriteBatchDrawer(
@@ -179,12 +240,12 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
 
     for(const SpriteDrawData& draw_data : sprites_to_draw)
     {
-        const math::Matrix& world_transform = renderer.GetTransform() * draw_data.transform;
-        auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
-
         const SpriteDrawBuffers& sprite_buffers = m_sprite_buffers[draw_data.sprite->GetSpriteHash()];
-        const int offset = draw_data.sprite->GetCurrentFrameIndex() * sprite_buffers.vertices_per_sprite;
-        renderer.DrawSprite(draw_data.sprite, &sprite_buffers, offset);
+        ForEachSlice(draw_data, sprite_buffers.vertices_per_sprite, [&](const math::Matrix& transform, int offset) {
+            const math::Matrix& world_transform = renderer.GetTransform() * transform;
+            auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
+            renderer.DrawSprite(draw_data.sprite, &sprite_buffers, offset);
+        });
     }
 
     // Draw outline
@@ -194,12 +255,12 @@ void SpriteBatchDrawer::Draw(mono::IRenderer& renderer) const
         if(!draw_outline)
             continue;
 
-        const math::Matrix& world_transform = renderer.GetTransform() * draw_data.transform;
-        auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
-
         const SpriteDrawBuffers& sprite_buffers = m_sprite_buffers[draw_data.sprite->GetSpriteHash()];
-        const int offset = draw_data.sprite->GetCurrentFrameIndex() * sprite_buffers.vertices_per_sprite;
-        renderer.DrawSpriteOutline(draw_data.sprite, &sprite_buffers, offset);
+        ForEachSlice(draw_data, sprite_buffers.vertices_per_sprite, [&](const math::Matrix& transform, int offset) {
+            const math::Matrix& world_transform = renderer.GetTransform() * transform;
+            auto transform_scope = mono::MakeTransformScope(world_transform, &renderer);
+            renderer.DrawSpriteOutline(draw_data.sprite, &sprite_buffers, offset);
+        });
     }
 
 

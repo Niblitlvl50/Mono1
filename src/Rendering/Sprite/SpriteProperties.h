@@ -15,6 +15,14 @@ namespace mono
         FLIP_HORIZONTAL = ENUM_BIT(2),
         FLIP_VERTICAL   = ENUM_BIT(3),
         FLASH           = ENUM_BIT(4),
+
+        // A sprite stack, the frames of the active animation are slices drawn from the bottom up,
+        // each one texel higher on screen than the one below.
+        STACKED         = ENUM_BIT(5),
+
+        // Eight directions, the animation named after the entity's heading is drawn unrotated:
+        // east, north_east, north, north_west, west, south_west, south and south_east.
+        DIRECTIONAL     = ENUM_BIT(6),
     };
 
     inline const char* SpritePropertyToString(uint32_t category)
@@ -33,6 +41,10 @@ namespace mono
             return "Flip Vertical";
         case SpriteProperty::FLASH:
             return "Flash";
+        case SpriteProperty::STACKED:
+            return "Stacked";
+        case SpriteProperty::DIRECTIONAL:
+            return "Directional";
         };
 
         return "Unknown";
