@@ -121,14 +121,25 @@ namespace
 
             if(options.x > 0.5)
             {
-                // The noise roughens up the blend too. The layers with a texture give the color and
-                // the ones without make it see through.
+                // The noise roughens up the blend too, but only where a layer is partly painted, so
+                // it doesn't add any of a layer where there is none. The layers with a texture give
+                // the color and the ones without make it see through.
+                float raw_weights[5];
+                raw_weights[0] = base_weight;
+                raw_weights[1] = weights.r;
+                raw_weights[2] = weights.g;
+                raw_weights[3] = weights.b;
+                raw_weights[4] = weights.a;
+
                 float blend_weights[5];
                 float total_weight = 0.0;
                 float visible_weight = 0.0;
                 for(int index = 0; index < 5; ++index)
                 {
-                    blend_weights[index] = max(scores[index], 0.0);
+                    float raw_weight = raw_weights[index];
+                    float noise = scores[index] - raw_weight;
+                    float partly_painted = 4.0 * raw_weight * (1.0 - raw_weight);
+                    blend_weights[index] = clamp(raw_weight + noise * partly_painted, 0.0, 1.0);
                     total_weight += blend_weights[index];
                     visible_weight += blend_weights[index] * enabled[index];
                 }
