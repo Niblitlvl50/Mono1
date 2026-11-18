@@ -55,8 +55,11 @@ namespace
         // Base layer scale, edge roughness, pixels per meter and noise size in meters.
         uniform vec4 params;
 
-        // Blend the layers by weight instead of picking one, in x.
+        // Blend the layers by weight instead of picking one in x, if the base layer has a texture in y.
         uniform vec4 options;
+
+        // If layer 1 to 4 have a texture, a layer without one is see through.
+        uniform vec4 layer_enabled;
 
         in vec2 v_world_position;
         out vec4 frag_color;
@@ -109,30 +112,46 @@ namespace
             scores[3] = weights.b + (value_noise(noise_position + vec2(43.9, -21.6)) - 0.5) * roughness;
             scores[4] = weights.a + (value_noise(noise_position + vec2(-37.2, -13.8)) - 0.5) * roughness;
 
+            float enabled[5];
+            enabled[0] = options.y;
+            enabled[1] = layer_enabled.x;
+            enabled[2] = layer_enabled.y;
+            enabled[3] = layer_enabled.z;
+            enabled[4] = layer_enabled.w;
+
             if(options.x > 0.5)
             {
-                // The noise roughens up the blend too, then the weights are normalized.
+                // The noise roughens up the blend too. The layers with a texture give the color and
+                // the ones without make it see through.
                 float blend_weights[5];
                 float total_weight = 0.0;
+                float visible_weight = 0.0;
                 for(int index = 0; index < 5; ++index)
                 {
                     blend_weights[index] = max(scores[index], 0.0);
                     total_weight += blend_weights[index];
+                    visible_weight += blend_weights[index] * enabled[index];
                 }
 
                 if(total_weight <= 0.0)
                 {
                     blend_weights[0] = 1.0;
                     total_weight = 1.0;
+                    visible_weight = enabled[0];
                 }
 
-                frag_color =
-                    sample_layer(layer0_sampler, pixel_position, params.x) * blend_weights[0] +
-                    sample_layer(layer1_sampler, pixel_position, layer_scales.x) * blend_weights[1] +
-                    sample_layer(layer2_sampler, pixel_position, layer_scales.y) * blend_weights[2] +
-                    sample_layer(layer3_sampler, pixel_position, layer_scales.z) * blend_weights[3] +
-                    sample_layer(layer4_sampler, pixel_position, layer_scales.w) * blend_weights[4];
-                frag_color /= total_weight;
+                if(visible_weight <= 0.0)
+                    discard;
+
+                vec4 color =
+                    sample_layer(layer0_sampler, pixel_position, params.x) * blend_weights[0] * enabled[0] +
+                    sample_layer(layer1_sampler, pixel_position, layer_scales.x) * blend_weights[1] * enabled[1] +
+                    sample_layer(layer2_sampler, pixel_position, layer_scales.y) * blend_weights[2] * enabled[2] +
+                    sample_layer(layer3_sampler, pixel_position, layer_scales.z) * blend_weights[3] * enabled[3] +
+                    sample_layer(layer4_sampler, pixel_position, layer_scales.w) * blend_weights[4] * enabled[4];
+
+                frag_color = color / visible_weight;
+                frag_color.a *= visible_weight / total_weight;
                 return;
             }
 
@@ -142,6 +161,9 @@ namespace
                 if(scores[index] > scores[best])
                     best = index;
             }
+
+            if(enabled[best] < 0.5)
+                discard;
 
             if(best == 0)
                 frag_color = sample_layer(layer0_sampler, pixel_position, params.x);
@@ -198,7 +220,7 @@ mono::IPipelinePtr GroundPaintPipeline::MakePipeline()
         shader_desc.fs.image_sampler_pairs[index] = { true, index, index, sampler_names[index] };
     }
 
-    shader_desc.fs.uniform_blocks[U_PARAMS_BLOCK].size = sizeof(float) * 4 * 4;
+    shader_desc.fs.uniform_blocks[U_PARAMS_BLOCK].size = sizeof(float) * 4 * 5;
     shader_desc.fs.uniform_blocks[U_PARAMS_BLOCK].uniforms[0].name = "splat_rect";
     shader_desc.fs.uniform_blocks[U_PARAMS_BLOCK].uniforms[0].type = SG_UNIFORMTYPE_FLOAT4;
     shader_desc.fs.uniform_blocks[U_PARAMS_BLOCK].uniforms[1].name = "layer_scales";
@@ -207,6 +229,8 @@ mono::IPipelinePtr GroundPaintPipeline::MakePipeline()
     shader_desc.fs.uniform_blocks[U_PARAMS_BLOCK].uniforms[2].type = SG_UNIFORMTYPE_FLOAT4;
     shader_desc.fs.uniform_blocks[U_PARAMS_BLOCK].uniforms[3].name = "options";
     shader_desc.fs.uniform_blocks[U_PARAMS_BLOCK].uniforms[3].type = SG_UNIFORMTYPE_FLOAT4;
+    shader_desc.fs.uniform_blocks[U_PARAMS_BLOCK].uniforms[4].name = "layer_enabled";
+    shader_desc.fs.uniform_blocks[U_PARAMS_BLOCK].uniforms[4].type = SG_UNIFORMTYPE_FLOAT4;
 
     sg_shader shader_handle = sg_make_shader(&shader_desc);
 
@@ -248,7 +272,8 @@ void GroundPaintPipeline::Apply(
 
     for(int index = 0; index < GROUND_PAINT_LAYERS; ++index)
     {
-        const ITexture* texture = params.layer_textures[index];
+        // A layer without a texture is see through, but something has to be bound.
+        const ITexture* texture = params.layer_textures[index] ? params.layer_textures[index] : params.splat_map;
         bindings.fs.images[index + 1].id = texture->Id();
         bindings.fs.samplers[index + 1].id = texture->SamplerId();
     }
@@ -280,7 +305,11 @@ void GroundPaintPipeline::SetParams(const GroundPaintDrawParams& params, float p
         params.splat_rect.bottom_left.x, params.splat_rect.bottom_left.y, rect_size.x, rect_size.y,
         params.layer_scales[1], params.layer_scales[2], params.layer_scales[3], params.layer_scales[4],
         params.layer_scales[0], params.edge_roughness, pixels_per_meter, noise_size_meters,
-        params.blend_layers ? 1.0f : 0.0f, 0.0f, 0.0f, 0.0f,
+        params.blend_layers ? 1.0f : 0.0f, params.layer_textures[0] ? 1.0f : 0.0f, 0.0f, 0.0f,
+        params.layer_textures[1] ? 1.0f : 0.0f,
+        params.layer_textures[2] ? 1.0f : 0.0f,
+        params.layer_textures[3] ? 1.0f : 0.0f,
+        params.layer_textures[4] ? 1.0f : 0.0f,
     };
 
     sg_apply_uniforms(SG_SHADERSTAGE_FS, U_PARAMS_BLOCK, { params_block, sizeof(params_block) });

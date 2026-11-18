@@ -13,6 +13,7 @@ namespace mono
     {
         // RGBA weights of layer 1 to 4 over splat_rect, what's left over is the base layer.
         const ITexture* splat_map = nullptr;
+        // A layer without a texture is see through.
         const ITexture* layer_textures[GROUND_PAINT_LAYERS] = { };
 
         // One means one texel of a layer texture to one pixel on screen.
